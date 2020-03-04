@@ -14,14 +14,24 @@
 
 <style>
 	nav {
-		border-bottom: 1px solid rgba(255,62,0,0.1);
+		box-sizing: border-box;
+
+		/* border-bottom: 1px solid rgba(255,62,0,0.1); */
 		font-weight: 300;
 		padding: 0 1em;
+
+		bottom: 0;
+		position: absolute;
+
+		width: 100%;
+		height: 87px;
+
+		box-shadow: 0 -2px 5px 0 rgba(0,0,0,0.15);
 	}
 
 	a {
 		text-decoration: none;
-		padding: 1em 0.4em;
+		padding: 1em 0.35em;
 		display: block;
 
     	font-size: 0.98em;
@@ -54,7 +64,7 @@
 		content: '';
 		width: calc(100% - 1em);
 		height: 2px;
-		background-color: rgb(255,62,0);
+		background-color: #333333;
 		display: block;
 		bottom: -1px;
 	}

@@ -46,7 +46,7 @@
 
 	a {
 		text-decoration: none;
-		padding: 22px 0;
+		padding-top: 16px;
 		display: block;
 
 		/* font-size: 0.98em; */

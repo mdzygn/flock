@@ -7,7 +7,7 @@
 </script>
 
 <script>
-	import Newsfeed from './../_components/Newsfeed.svelte';
+	import Feed from './../_components/Feed.svelte';
 
 	// export let projects;
 </script>
@@ -16,7 +16,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-<Newsfeed />
+<Feed />
 
 <!-- <div class="content">
 

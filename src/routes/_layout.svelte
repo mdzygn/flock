@@ -7,11 +7,11 @@
 
 <appContainer>
 	<appContent>
-		<pageContent>
+		<div class="pageContent">
 			<main>
 				<slot></slot>
 			</main>
-		</pageContent>
+		</div>
 		<HeaderBar {segment}/>
 		<Nav {segment}/>
 	</appContent>
@@ -49,7 +49,7 @@
 		}
 	}
 
-	pageContent {
+	.pageContent {
 		position: absolute;
 		top: 60px; /* header height */
 		bottom: 76px; /* nav height */
@@ -63,13 +63,15 @@
 		-ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
 	}
 
-	pageContent::-webkit-scrollbar {
+	.pageContent::-webkit-scrollbar {
 		/* Hide scrollbar for Chrome, Safari and Opera */
 		display: none;
 	}
 
 	main {
 		position: absolute;
+
+    	line-height: 0;
 	}
 
 </style>

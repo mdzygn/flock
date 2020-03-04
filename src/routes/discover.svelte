@@ -1,9 +1,11 @@
 <script>
-	import Newsfeed from './_components/Newsfeed.svelte';
+	import Feed from './_components/Feed.svelte';
 </script>
 
 <svelte:head>
 	<title>Flock</title>
 </svelte:head>
 
-<Newsfeed />
+<img src="content/proxy/discover_search.jpg" style="width: 100%" alt="search" />
+
+<Feed />

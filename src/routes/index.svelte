@@ -1,12 +1,12 @@
 <script>
-	import Newsfeed from './_components/Newsfeed.svelte';
+	import Feed from './_components/Feed.svelte';
 </script>
 
 <svelte:head>
 	<title>Flock</title>
 </svelte:head>
 
-<Newsfeed />
+<Feed />
 
 <style>
 	/* seems to need any css to compile */

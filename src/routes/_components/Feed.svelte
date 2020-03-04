@@ -1,11 +1,13 @@
 <script>
 	let numNewsItems = 6;
+
+	export let type = 'proxy';
 </script>
 
 <div class="feed">
 	{#each new Array(numNewsItems) as item, index}
 		<div class="feedItem">
-			<img src="content/proxy/feed{index + 1}.jpg" />
+			<img src="content/{type}/feed{index + 1}.jpg" alt="post" />
 		</div>
 	{/each}
 </div>

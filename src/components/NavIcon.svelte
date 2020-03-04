@@ -1,6 +1,5 @@
 <script>
-    // import NavIcon from "../../assets/svg/nav_following.html";
-    // import NavIconActive from "../../assets/svg/nav_following_active.html";
+    import icon from "./assets/icons/nav_home_active.png";
 
     export let iconId = 'home';
 
@@ -8,11 +7,10 @@
 </script>
 
 {#if active}
-    <img src='icons/nav_{iconId}_active.png' alt='Following' />
-    <!-- <NavIconActive /> -->
+    <img src='{icon}' alt='Following' />
+    <!-- <img src='assets/icons/nav_{iconId}_active.png' alt='Following' /> -->
 {:else}
-    <img src='icons/nav_{iconId}.png' alt='Following' />
-    <!-- <NavIcon /> -->
+    <img src='assets/icons/nav_{iconId}.png' alt='Following' />
 {/if}
 
 <style>

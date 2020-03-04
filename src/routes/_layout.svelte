@@ -51,14 +51,16 @@
 
 	pageContent {
 		position: absolute;
-		top: 0;
-		bottom: 0;
+		top: 60px; /* header height */
+		bottom: 76px; /* nav height */
 		width: 100%;
 
 		background-color: #DDDDDD;
 
 		overflow: hidden;
 		overflow-y: scroll;
+
+		-ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
 	}
 
 	pageContent::-webkit-scrollbar {
@@ -68,11 +70,6 @@
 
 	main {
 		position: absolute;
-
-        margin-top: 60px; /* header height */
-        margin-bottom: 76px; /* nav height */
-
-		-ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
 	}
 
 </style>

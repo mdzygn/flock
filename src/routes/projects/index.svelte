@@ -7,32 +7,26 @@
 </script>
 
 <script>
-	export let projects;
+	import Newsfeed from './../_components/Newsfeed.svelte';
+
+	// export let projects;
 </script>
 
 <svelte:head>
 	<title>Flock</title>
 </svelte:head>
 
-<div class="content">
+<Newsfeed />
 
-	<!-- <h1>Test</h1>
-
-	<h2>Test</h2>
-
-	<h3>Test</h3> -->
+<!-- <div class="content">
 
 	<ul>
 		{#each projects as project}
-			<!-- we're using the non-standard `rel=prefetch` attribute to
-					tell Sapper to load the data for the page as soon as
-					the user hovers over the link or taps it, instead of
-					waiting for the 'click' event -->
 			<li><a rel='prefetch' href='projects/{project.slug}'>{project.title}</a></li>
 		{/each}
 	</ul>
 
-</div>
+</div> -->
 
 <style>
 	.content {

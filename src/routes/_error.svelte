@@ -5,7 +5,23 @@
 	const dev = process.env.NODE_ENV === 'development';
 </script>
 
+<svelte:head>
+	<title>{status}</title>
+</svelte:head>
+
+<h1>{status}</h1>
+
+<p>{error.message}</p>
+
+{#if dev && error.stack}
+	<pre>{error.stack}</pre>
+{/if}
+
 <style>
+	/* seems to need any css to compile */
+	* {
+	}
+
 	/* h1, p {
 		margin: 0 auto;
 	}
@@ -26,15 +42,3 @@
 		}
 	} */
 </style>
-
-<svelte:head>
-	<title>{status}</title>
-</svelte:head>
-
-<h1>{status}</h1>
-
-<p>{error.message}</p>
-
-{#if dev && error.stack}
-	<pre>{error.stack}</pre>
-{/if}

@@ -1,10 +1,12 @@
 <script>
+	import HeaderBar from './_components/HeaderBar.svelte';
 	import Nav from './_components/Nav.svelte';
 
 	export let segment;
 </script>
 
 <appContent>
+	<HeaderBar {segment}/>
 	<Nav {segment}/>
 
 	<main>
@@ -34,6 +36,8 @@
 
 	main {
 		padding: 1.5em;
+
+        margin-top: 60px; /* header height */
 	}
 
 </style>

@@ -40,6 +40,7 @@
 		width: 100%;
 		height: 87px;
 
+		background: #ffffff;
 		box-shadow: 0 -2px 5px 0 rgba(0,0,0,0.15);
 	}
 

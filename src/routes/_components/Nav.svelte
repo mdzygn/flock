@@ -1,5 +1,9 @@
 <script>
 	import NavHomeIcon from "../../assets/svg/nav_home.html";
+	import NavExploreIcon from "../../assets/svg/nav_explore.html";
+	import NavFollowingIcon from "../../assets/svg/nav_following.html";
+	import NavActivityIcon from "../../assets/svg/nav_activity.html";
+	import NavMessagesIcon from "../../assets/svg/nav_messages.html";
 
 	export let segment;
 </script>
@@ -9,10 +13,18 @@
 		<li><a aria-current='{segment === undefined ? "page" : undefined}' href='.'>
 			<NavHomeIcon />
 		</a></li>
-		<li><a aria-current='{segment === "discover" ? "discover" : undefined}' href='discover'>discover</a></li>
-		<li><a rel=prefetch aria-current='{segment === "projects" ? "page" : undefined}' href='projects'>projects</a></li>
-		<li><a rel=prefetch aria-current='{segment === "activity" ? "page" : undefined}' href='activity'>activity</a></li>
-		<li><a rel=prefetch aria-current='{segment === "messages" ? "page" : undefined}' href='messages'>messages</a></li>
+		<li><a aria-current='{segment === "discover" ? "discover" : undefined}' href='discover'>
+			<NavExploreIcon />
+		</a></li>
+		<li><a rel=prefetch aria-current='{segment === "projects" ? "page" : undefined}' href='projects'>
+			<NavFollowingIcon />
+		</a></li>
+		<li><a rel=prefetch aria-current='{segment === "activity" ? "page" : undefined}' href='activity'>
+			<NavActivityIcon />
+		</a></li>
+		<li><a rel=prefetch aria-current='{segment === "messages" ? "page" : undefined}' href='messages'>
+			<NavMessagesIcon />
+		</a></li>
 	</ul>
 </nav>
 

@@ -7,12 +7,13 @@
 
 <appContainer>
 	<appContent>
+		<pageContent>
+			<main>
+				<slot></slot>
+			</main>
+		</pageContent>
 		<HeaderBar {segment}/>
 		<Nav {segment}/>
-
-		<main>
-			<slot></slot>
-		</main>
 	</appContent>
 </appContainer>
 
@@ -48,8 +49,30 @@
 		}
 	}
 
+	pageContent {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 100%;
+
+		background-color: #DDDDDD;
+
+		overflow: hidden;
+		overflow-y: scroll;
+	}
+
+	pageContent::-webkit-scrollbar {
+		/* Hide scrollbar for Chrome, Safari and Opera */
+		display: none;
+	}
+
 	main {
+		position: absolute;
+
         margin-top: 60px; /* header height */
+        margin-bottom: 76px; /* nav height */
+
+		-ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
 	}
 
 </style>

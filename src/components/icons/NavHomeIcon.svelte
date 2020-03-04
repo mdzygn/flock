@@ -1,6 +1,6 @@
 <script>
-    import NavHomeIcon from "../../assets/svg/nav_home.html";
-    import NavHomeIconActive from "../../assets/svg/nav_home_active.html";
+    import NavIcon from "../../assets/svg/nav_home.html";
+    import NavIconActive from "../../assets/svg/nav_home_active.html";
 
     export let active = false;
 </script>
@@ -9,7 +9,7 @@
 </style>
 
 {#if active}
-    <NavHomeIconActive />
+    <NavIconActive />
 {:else}
-    <NavHomeIcon />
+    <NavIcon />
 {/if}

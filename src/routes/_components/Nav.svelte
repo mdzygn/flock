@@ -1,9 +1,9 @@
 <script>
 	import NavHomeIcon from "../../components/icons/NavHomeIcon.svelte";
-	import NavExploreIcon from "../../assets/svg/nav_explore.html";
-	import NavFollowingIcon from "../../assets/svg/nav_following.html";
-	import NavActivityIcon from "../../assets/svg/nav_activity.html";
-	import NavMessagesIcon from "../../assets/svg/nav_messages.html";
+	import NavExploreIcon from "../../components/icons/NavExploreIcon.svelte";
+	import NavFollowingIcon from "../../components/icons/NavFollowingIcon.svelte";
+	import NavActivityIcon from "../../components/icons/NavActivityIcon.svelte";
+	import NavMessagesIcon from "../../components/icons/NavMessagesIcon.svelte";
 
 	export let segment;
 </script>
@@ -14,16 +14,16 @@
 			<NavHomeIcon active='{segment === undefined}'/>
 		</a></li>
 		<li><a aria-current='{segment === "discover" ? "discover" : undefined}' href='discover'>
-			<NavExploreIcon />
+			<NavExploreIcon active='{segment === "discover"}' />
 		</a></li>
 		<li><a rel=prefetch aria-current='{segment === "projects" ? "page" : undefined}' href='projects'>
-			<NavFollowingIcon />
+			<NavFollowingIcon active='{segment === "projects"}' />
 		</a></li>
 		<li><a rel=prefetch aria-current='{segment === "activity" ? "page" : undefined}' href='activity'>
-			<NavActivityIcon />
+			<NavActivityIcon active='{segment === "activity"}' />
 		</a></li>
 		<li><a rel=prefetch aria-current='{segment === "messages" ? "page" : undefined}' href='messages'>
-			<NavMessagesIcon />
+			<NavMessagesIcon active='{segment === "messages"}' />
 		</a></li>
 	</ul>
 </nav>

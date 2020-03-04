@@ -1,5 +1,5 @@
 <script>
-	import NavHomeIcon from "../../assets/svg/nav_home.html";
+	import NavHomeIcon from "../../components/icons/NavHomeIcon.svelte";
 	import NavExploreIcon from "../../assets/svg/nav_explore.html";
 	import NavFollowingIcon from "../../assets/svg/nav_following.html";
 	import NavActivityIcon from "../../assets/svg/nav_activity.html";
@@ -11,7 +11,7 @@
 <nav>
 	<ul>
 		<li><a aria-current='{segment === undefined ? "page" : undefined}' href='.'>
-			<NavHomeIcon />
+			<NavHomeIcon active='{segment === undefined}'/>
 		</a></li>
 		<li><a aria-current='{segment === "discover" ? "discover" : undefined}' href='discover'>
 			<NavExploreIcon />

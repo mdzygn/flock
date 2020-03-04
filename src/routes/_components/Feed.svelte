@@ -1,13 +1,12 @@
 <script>
-	let numNewsItems = 6;
-
-	export let type = 'proxy';
+	export let type = 'feed';
+	export let count = 6;
 </script>
 
 <div class="feed">
-	{#each new Array(numNewsItems) as item, index}
+	{#each new Array(count) as item, index}
 		<div class="feedItem">
-			<img src="content/{type}/feed{index + 1}.jpg" alt="post" />
+			<img src="content/proxy/{type}{index + 1}.jpg" alt="post" />
 		</div>
 	{/each}
 </div>

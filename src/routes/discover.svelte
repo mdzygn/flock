@@ -8,4 +8,4 @@
 
 <img src="content/proxy/discover_search.jpg" style="width: 100%" alt="search" />
 
-<Feed />
+<Feed type="discover" count="{5}"/>

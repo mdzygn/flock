@@ -8,6 +8,8 @@
 
 	let scrollRegion;
 
+	$: showFeedBg = (segment === undefined || segment === 'discover');
+
 	// afterUpdate(() => {
 	// 	console.log('afterUpdate scrollRegion.scrollHeight: ' + scrollRegion.scrollHeight)
 	// 	switch (segment) {
@@ -17,10 +19,10 @@
 	// 	}
 	// });
 </script>
-
+.showFeedBg
 <appContainer>
 	<appContent>
-		<div class="pageContent" bind:this={scrollRegion}>
+		<div class="pageContent" class:showFeedBg="{showFeedBg}" bind:this="{scrollRegion}">
 			<main>
 				<slot></slot>
 			</main>
@@ -68,12 +70,14 @@
 		bottom: 76px; /* nav height */
 		width: 100%;
 
-		background-color: #DDDDDD;
-
 		overflow: hidden;
 		overflow-y: scroll;
 
 		-ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+	}
+
+	.showFeedBg {
+		background-color: #DDDDDD;
 	}
 
 	.pageContent::-webkit-scrollbar {

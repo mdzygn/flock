@@ -25,8 +25,8 @@
             <img src='assets/logo.png' alt="Flock">
         </div>
     {:else}
-        <div class="header" class:hasBack="{curSection.parentSection}">{sectionLabel}</div>
-        {#if curSection.parentSection}
+        <div class="header" class:hasBack="{parentSection}">{sectionLabel}</div>
+        {#if parentSection}
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
         {/if}
     {/if}

@@ -30,7 +30,7 @@
 			transform: translate(-50%,-50%);
 
 			border: 1px solid #e0e0e0;
-			box-shadow: rgba(8, 8, 8, 0.4) 0px 10px 50px -15px;
+        	box-shadow: rgba(8, 8, 8, 0.2) 0px 5px 30px -5px;
 		}
 	}
 

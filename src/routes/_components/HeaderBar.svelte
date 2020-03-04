@@ -1,15 +1,23 @@
 <script>
-    // import Logo from "../../assets/svg/logo.html";
+    import AvatarIcon from './AvatarIcon.svelte';
 </script>
 
 <headerBar>
     <div class="logo">
         <img src='assets/logo.png' alt="Flock">
-        <!-- <Logo /> -->
+    </div>
+    <div class="avatarIcon">
+        <AvatarIcon />
     </div>
 </headerBar>
 
 <style>
+    .avatarIcon {
+        position: absolute;
+        right: 11px;
+        top: 11px;
+    }
+
     headerBar {
         position: absolute;
         top: 0;

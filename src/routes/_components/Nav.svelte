@@ -3,11 +3,11 @@
 	export let segment;
 
 	let sections = [
-		{segment: undefined, iconId: 'home'},
-		{segment: 'discover', iconId: 'discover'},
-		{segment: 'projects', iconId: 'following'},
-		{segment: 'activity', iconId: 'activity'},
-		{segment: 'messages', iconId: 'messages'},
+		{segment: undefined, iconId: 'home', label: 'Home'},
+		{segment: 'discover', iconId: 'discover', label: 'Discover'},
+		{segment: 'projects', iconId: 'following', label: 'Following'},
+		{segment: 'activity', iconId: 'activity', label: 'Activity'},
+		{segment: 'messages', iconId: 'messages', label: 'Messages'},
 	];
 </script>
 
@@ -15,7 +15,7 @@
 	<ul>
 		{#each sections as section}
 			<li><a aria-current='{segment === section.segment ? "page" : undefined}' href='{section.segment ? section.segment : "."}'>
-				<NavIcon iconId='{section.iconId}' active='{segment === section.segment}' />
+				<NavIcon iconId='{section.iconId}' active='{segment === section.segment}' label='{section.label}' />
 			</a></li>
 		{/each}
 	</ul>

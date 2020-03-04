@@ -33,7 +33,7 @@
 		position: absolute;
 
 		width: 100%;
-		height: 87px;
+    	height: 76px;
 
 		background: #ffffff;
 		box-shadow: 0 -2px 5px 0 rgba(0,0,0,0.15);
@@ -41,7 +41,7 @@
 
 	a {
 		text-decoration: none;
-		padding: 16px 0;
+    	padding: 10px 0;
 		display: block;
 
 		/* font-size: 0.98em; */

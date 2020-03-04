@@ -19,6 +19,14 @@
 		padding: 0 1em;
 	}
 
+	a {
+		text-decoration: none;
+		padding: 1em 0.4em;
+		display: block;
+
+    	font-size: 0.98em;
+	}
+
 	ul {
 		margin: 0;
 		padding: 0;
@@ -49,11 +57,5 @@
 		background-color: rgb(255,62,0);
 		display: block;
 		bottom: -1px;
-	}
-
-	a {
-		text-decoration: none;
-		padding: 1em 0.5em;
-		display: block;
 	}
 </style>

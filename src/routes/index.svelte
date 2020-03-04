@@ -2,7 +2,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-<h1>Flock</h1>
+<h1>Flock 1</h1>
 
 <style>
 	/* seems to need any css to compile */

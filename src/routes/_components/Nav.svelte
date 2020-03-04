@@ -6,25 +6,23 @@
 	import NavMessagesIcon from "../../components/icons/NavMessagesIcon.svelte";
 
 	export let segment;
+
+	let sections = [
+		{segment: undefined, icon: NavHomeIcon},
+		{segment: 'discover', icon: NavExploreIcon},
+		{segment: 'projects', icon: NavFollowingIcon},
+		{segment: 'activity', icon: NavActivityIcon},
+		{segment: 'messages', icon: NavMessagesIcon},
+	];
 </script>
 
 <nav>
 	<ul>
-		<li><a aria-current='{segment === undefined ? "page" : undefined}' href='.'>
-			<NavHomeIcon active='{segment === undefined}'/>
-		</a></li>
-		<li><a aria-current='{segment === "discover" ? "discover" : undefined}' href='discover'>
-			<NavExploreIcon active='{segment === "discover"}' />
-		</a></li>
-		<li><a rel=prefetch aria-current='{segment === "projects" ? "page" : undefined}' href='projects'>
-			<NavFollowingIcon active='{segment === "projects"}' />
-		</a></li>
-		<li><a rel=prefetch aria-current='{segment === "activity" ? "page" : undefined}' href='activity'>
-			<NavActivityIcon active='{segment === "activity"}' />
-		</a></li>
-		<li><a rel=prefetch aria-current='{segment === "messages" ? "page" : undefined}' href='messages'>
-			<NavMessagesIcon active='{segment === "messages"}' />
-		</a></li>
+		{#each sections as section}
+			<li><a aria-current='{segment === section.segment ? "page" : undefined}' href='{section.segment ? section.segment : "."}'>
+				<svelte:component this={section.icon} active='{segment === section.segment}'/>
+			</a></li>
+		{/each}
 	</ul>
 </nav>
 

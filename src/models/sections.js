@@ -33,6 +33,7 @@ export const sections = [
 		segment: 'message_view',
 		id: 'message_view',
 		label: 'Mia',
+		parentSection: 'messages',
 	},
 ];
 

@@ -1,4 +1,7 @@
 <script>
+    import { goto } from '@sapper/app'
+
+    import BackIcon from "../../assets/icons/back.png";
     import AvatarIcon from './AvatarIcon.svelte';
 
 	import sections from "../../models/sections.js";
@@ -7,7 +10,11 @@
 
     $: curSection = sections.find(item => item.segment === segment);
     $: sectionLabel = curSection ? curSection.label : '';
+    $: parentSection = curSection.parentSection;
 
+    function goBack () {
+        goto(parentSection);
+    }
 </script>
 
 <headerBar>
@@ -16,7 +23,10 @@
             <img src='assets/logo.png' alt="Flock">
         </div>
     {:else}
-        <div class="header">{sectionLabel}</div>
+        <div class="header" class:hasBack="{curSection.parentSection}">{sectionLabel}</div>
+        {#if curSection.parentSection}
+            <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
+        {/if}
     {/if}
     <div class="avatarIcon">
         <AvatarIcon />
@@ -59,5 +69,19 @@
         position: absolute;
         top: 14px;
         left: 20px;
+    }
+
+    .backButton {
+        position: absolute;
+        top: 8px;
+        left: 5px;
+        padding: 10px;
+
+        width: 26px;
+        height: 26px;
+    }
+
+    .hasBack {
+        padding-left: 30px;
     }
 </style>

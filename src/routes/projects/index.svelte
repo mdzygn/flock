@@ -1,13 +1,13 @@
 <script context="module">
-	export function preload({ params, query }) {
-		return this.fetch(`projects.json`).then(r => r.json()).then(projects => {
-			return { projects };
-		});
-	}
+	// export function preload({ params, query }) {
+	// 	return this.fetch(`projects.json`).then(r => r.json()).then(projects => {
+	// 		return { projects };
+	// 	});
+	// }
 </script>
 
 <script>
-	import Feed from './../_components/Feed.svelte';
+	// import Feed from './../_components/Feed.svelte';
 
 	// export let projects;
 </script>
@@ -16,7 +16,9 @@
 	<title>Flock</title>
 </svelte:head>
 
-<Feed />
+<img src="content/proxy/projects.jpg" style="width: 100%" alt="search" />
+
+<!-- <Feed /> -->
 
 <!-- <div class="content">
 

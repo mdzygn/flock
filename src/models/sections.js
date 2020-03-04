@@ -2,27 +2,37 @@ export const sections = [
 	{
 		segment: undefined,
 		id: 'home',
-		label: 'Home'
+		label: 'Home',
+		main: true,
 	},
 	{
 		segment: 'discover',
 		id: 'discover',
-		label: 'Discover'
+		label: 'Discover',
+		main: true,
 	},
 	{
 		segment: 'projects',
 		id: 'following',
-		label: 'Following'
+		label: 'Following',
+		main: true,
 	},
 	{
 		segment: 'activity',
 		id: 'activity',
-		label: 'Activity'
+		label: 'Activity',
+		main: true,
 	},
 	{
 		segment: 'messages',
 		id: 'messages',
-		label: 'Messages'
+		label: 'Messages',
+		main: true,
+	},
+	{
+		segment: 'message_view',
+		id: 'message_view',
+		label: 'Mia',
 	},
 ];
 

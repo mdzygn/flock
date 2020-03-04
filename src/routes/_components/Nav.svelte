@@ -7,11 +7,11 @@
 
 <nav>
 	<ul>
-		{#each sections as section}
+		{#each sections as section}{#if section.main}
 			<li><a aria-current='{segment === section.segment ? "page" : undefined}' href='{section.segment ? section.segment : "."}' title='{section.label}'>
 				<NavIcon iconId='{section.id}' active='{segment === section.segment}' label='{section.label}' />
 			</a></li>
-		{/each}
+		{/if}{/each}
 	</ul>
 </nav>
 

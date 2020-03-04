@@ -49,8 +49,6 @@
 	}
 
 	main {
-		padding: 1.5em;
-
         margin-top: 60px; /* header height */
 	}
 

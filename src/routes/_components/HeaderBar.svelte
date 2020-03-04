@@ -1,11 +1,23 @@
 <script>
     import AvatarIcon from './AvatarIcon.svelte';
+
+	import sections from "../../models/sections.js";
+
+    export let segment;
+
+    $: curSection = sections.find(item => item.segment === segment);
+    $: sectionLabel = curSection ? curSection.label : '';
+
 </script>
 
 <headerBar>
-    <div class="logo">
-        <img src='assets/logo.png' alt="Flock">
-    </div>
+    {#if segment === undefined}
+        <div class="logo">
+            <img src='assets/logo.png' alt="Flock">
+        </div>
+    {:else}
+        <div class="header">{sectionLabel}</div>
+    {/if}
     <div class="avatarIcon">
         <AvatarIcon />
     </div>
@@ -38,5 +50,14 @@
 
     .logo img {
         width: 50%;
+    }
+
+    .header {
+        font-size: 2.2rem;
+        font-weight: 400;
+
+        position: absolute;
+        top: 14px;
+        left: 20px;
     }
 </style>

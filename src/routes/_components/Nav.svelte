@@ -1,10 +1,14 @@
 <script>
+	import NavHomeIcon from "../../assets/svg/nav_home.html";
+
 	export let segment;
 </script>
 
 <nav>
 	<ul>
-		<li><a aria-current='{segment === undefined ? "page" : undefined}' href='.'>home</a></li>
+		<li><a aria-current='{segment === undefined ? "page" : undefined}' href='.'>
+			<NavHomeIcon />
+		</a></li>
 		<li><a aria-current='{segment === "discover" ? "discover" : undefined}' href='discover'>discover</a></li>
 		<li><a rel=prefetch aria-current='{segment === "projects" ? "page" : undefined}' href='projects'>projects</a></li>
 		<li><a rel=prefetch aria-current='{segment === "activity" ? "page" : undefined}' href='activity'>activity</a></li>

@@ -47,15 +47,22 @@
 
 	a {
 		text-decoration: none;
-		padding: 1em 0.35em;
+		padding: 22px 0;
 		display: block;
 
-    	font-size: 0.98em;
+		/* font-size: 0.98em; */
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	ul {
 		margin: 0;
 		padding: 0;
+
+		display: flex;
+		justify-content: space-between;
 	}
 
 	/* clearfix */
@@ -68,9 +75,11 @@
 	li {
 		display: block;
 		float: left;
+
+  		flex: 1;
 	}
 
-	[aria-current] {
+	/* [aria-current] {
 		position: relative;
 		display: inline-block;
 	}
@@ -83,5 +92,5 @@
 		background-color: #333333;
 		display: block;
 		bottom: -1px;
-	}
+	} */
 </style>

@@ -54,7 +54,7 @@
 </style>
 
 <svelte:head>
-	<title>{post.title}</title>
+	<title>{post.title} - Flock</title>
 </svelte:head>
 
 <h1>{post.title}</h1>

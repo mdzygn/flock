@@ -41,7 +41,7 @@
 
 	a {
 		text-decoration: none;
-		padding-top: 16px;
+		padding: 16px 0;
 		display: block;
 
 		/* font-size: 0.98em; */

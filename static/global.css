@@ -20,6 +20,15 @@ a {
 	color: inherit;
 }
 
+/* hide blue highlight */
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
 /* @media (min-width: 400px) {
 	body {
 		font-size: 16px;

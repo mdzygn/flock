@@ -1,9 +1,12 @@
 <script>
-    import Logo from "../../assets/svg/logo.html";
+    // import Logo from "../../assets/svg/logo.html";
 </script>
 
 <headerBar>
-    <div class="logo"><Logo /></div>
+    <div class="logo">
+        <img src='assets/logo.png' alt="Flock">
+        <!-- <Logo /> -->
+    </div>
 </headerBar>
 
 <style>
@@ -23,5 +26,9 @@
         position: absolute;
         top: 12px;
         left: 15px;
+    }
+
+    .logo img {
+        width: 50%;
     }
 </style>

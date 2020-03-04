@@ -10,10 +10,12 @@
 
     $: curSection = sections.find(item => item.segment === segment);
     $: sectionLabel = curSection ? curSection.label : '';
-    $: parentSection = curSection.parentSection;
+    $: parentSection = curSection ? curSection.parentSection : null;
 
     function goBack () {
-        goto(parentSection);
+        if (parentSection) {
+            goto(parentSection);
+        }
     }
 </script>
 

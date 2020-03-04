@@ -31,7 +31,7 @@
 </div> -->
 
 <style>
-	.content {
+	/* .content {
 		padding: 20px;
 	}
 
@@ -41,5 +41,5 @@
 
 	ul li {
 		list-style-type: none;
-	}
+	} */
 </style>

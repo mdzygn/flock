@@ -1,13 +1,26 @@
 <script>
+	import { afterUpdate } from 'svelte';
+
 	import HeaderBar from './_components/HeaderBar.svelte';
 	import Nav from './_components/Nav.svelte';
 
 	export let segment;
+
+	let scrollRegion;
+
+	// afterUpdate(() => {
+	// 	console.log('afterUpdate scrollRegion.scrollHeight: ' + scrollRegion.scrollHeight)
+	// 	switch (segment) {
+	// 		case 'message_view':
+	// 			scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+	// 			break;
+	// 	}
+	// });
 </script>
 
 <appContainer>
 	<appContent>
-		<div class="pageContent">
+		<div class="pageContent" bind:this={scrollRegion}>
 			<main>
 				<slot></slot>
 			</main>

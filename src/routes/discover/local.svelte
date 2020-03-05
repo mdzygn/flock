@@ -28,5 +28,5 @@
 		<img class="contentItem" src="content/proxy/discover_search_local.jpg" style="width: 100%" alt="search" />
 	</div>
 
-	<Feed type="discover" count="{5}" offset="{3}"/>
+	<Feed type="discover" linkToProjects="{true}" count="{5}" offset="{3}"/>
 </ScrollView>

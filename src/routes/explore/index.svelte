@@ -50,6 +50,10 @@
 		background-color: #0B0B0B;
 	}
 
+	.content :global(.hotspotContainer) {
+		height: 100%;
+	}
+
 	.filterBar {
 		position: absolute;
 	}

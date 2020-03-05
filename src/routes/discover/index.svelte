@@ -28,5 +28,5 @@
 		<img class="contentItem" src="content/proxy/discover_search.jpg" style="width: 100%" alt="search" />
 	</div>
 
-	<Feed type="discover" count="{5}"/>
+	<Feed type="discover" linkToProjects="{true}" count="{5}"/>
 </ScrollView>

@@ -2,12 +2,20 @@
 	export let type = 'feed';
 	export let count = 6;
 	export let offset = 0;
+
+	export let linkToProjects = false;
 </script>
 
 <div class="feed">
 	{#each new Array(count) as item, index}
 		<div class="feedItem">
-			<img src="content/proxy/{type}{((index + offset) % count) + 1}.jpg" alt="post" />
+			{#if linkToProjects}
+				<a href="projects/m62lsp2o">
+					<img src="content/proxy/{type}{((index + offset) % count) + 1}.jpg" alt="post" />
+				</a>
+			{:else}
+				<img src="content/proxy/{type}{((index + offset) % count) + 1}.jpg" alt="post" />
+			{/if}
 		</div>
 	{/each}
 </div>

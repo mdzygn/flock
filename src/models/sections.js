@@ -59,6 +59,7 @@ export const sections = [
 		id: 'project',
 		label: 'World Creator',
 		darkBg: true,
+		parentSection: 'discover',
 	},
 
 	{

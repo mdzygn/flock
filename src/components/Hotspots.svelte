@@ -1,19 +1,18 @@
 <script>
 </script>
 
-<div class="container">
+<div class="hotspotContainer">
     <slot></slot>
 </div>
 
 <style>
-    .container {
+    .hotspotContainer {
         position: absolute;
 
         width: 100%;
-        height: 100%;
     }
 
-    .container :global(a) {
+    .hotspotContainer :global(a) {
         position: absolute;
 
         text-decoration: none;

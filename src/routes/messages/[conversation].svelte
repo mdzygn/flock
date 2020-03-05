@@ -18,12 +18,7 @@
 
 <style>
 	.messagesView {
-		position: absolute;
-		top: 0;
 		bottom: 48px;
-		width: 100%;
-
-		overflow: hidden;
 	}
 
 	.messageInput {

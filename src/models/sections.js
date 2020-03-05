@@ -28,6 +28,12 @@ export const sections = [
 	},
 
 	{
+		path: '/contacts',
+		id: 'contacts',
+		label: 'Connections',
+		parentSection: 'messages',
+	},
+	{
 		path: '/messages/.*',
 		id: 'message_view',
 		label: 'Mia',

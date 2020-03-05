@@ -1,4 +1,6 @@
 <script>
+	import ScrollView from '../components/ScrollView.svelte';
+
 	import Feed from './_components/Feed.svelte';
 </script>
 
@@ -6,6 +8,8 @@
 	<title>Flock</title>
 </svelte:head>
 
-<img src="content/proxy/discover_search.jpg" style="width: 100%" alt="search" />
+<ScrollView>
+	<img src="content/proxy/discover_search.jpg" style="width: 100%" alt="search" />
 
-<Feed type="discover" count="{5}"/>
+	<Feed type="discover" count="{5}"/>
+</ScrollView>

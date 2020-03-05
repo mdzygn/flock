@@ -1,7 +1,5 @@
 <script>
 	import ScrollView from '../components/ScrollView.svelte';
-
-	import Feed from './_components/Feed.svelte';
 </script>
 
 <svelte:head>
@@ -9,11 +7,8 @@
 </svelte:head>
 
 <ScrollView>
-	<Feed />
+	<img src="content/proxy/projects.jpg" style="width: 100%" alt="search" />
 </ScrollView>
 
 <style>
-	/* seems to need any css to compile */
-	* {
-	}
 </style>

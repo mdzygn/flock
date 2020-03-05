@@ -11,28 +11,17 @@
 	export let segment;
 	$: path = $page ? $page.path : '';
 
-	let scrollRegion;
-
 	$: showFeedBg = (segment === undefined || segment === 'discover');
 
-	// afterUpdate(() => {
-	// 	console.log('afterUpdate scrollRegion.scrollHeight: ' + scrollRegion.scrollHeight)
-	// 	switch (segment) {
-	// 		case 'message_view':
-	// 			scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
-	// 			break;
-	// 	}
-	// });
+	let scrollRegion;
 </script>
 
 <appContainer>
 	<appContent class:showFeedBg="{showFeedBg}">
 		<div class="pageContent">
-			<ScrollView>
-				<main>
-					<slot></slot>
-				</main>
-			</ScrollView>
+			<main>
+				<slot></slot>
+			</main>
 		</div>
 		<HeaderBar {segment} {path} />
 		<Nav {segment} {path} />
@@ -54,12 +43,6 @@
 		appContent {
 			position: relative;
 
-			/* position: absolute;
-
-			left: 50%;
-			top: 50%;
-			transform: translate(-50%,-50%); */
-
 			width: 100%;
 			height: 100%;
 
@@ -77,22 +60,6 @@
 		bottom: 76px; /* nav height */
 		width: 100%;
 	}
-
-	/* .pageContent {
-		position: absolute;
-		top: 60px;
-		bottom: 76px;
-		width: 100%;
-
-		overflow: hidden;
-		overflow-y: scroll;
-
-		-ms-overflow-style: none;
-	}
-
-	.pageContent::-webkit-scrollbar {
-		display: none;
-	} */
 
 	.showFeedBg {
 		background-color: #DDDDDD;

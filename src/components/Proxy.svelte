@@ -2,6 +2,7 @@
     import Hotspots from './Hotspots.svelte';
 
     export let image;
+    export let href;
 </script>
 
 <div>
@@ -9,7 +10,13 @@
         <slot></slot>
     </Hotspots>
 
-    <img src="content/proxy/{image}.jpg" alt="proxy" />
+    {#if href}
+        <a href="{href}">
+            <img src="content/proxy/{image}.jpg" alt="proxy" />
+        </a>
+    {:else}
+        <img src="content/proxy/{image}.jpg" alt="proxy" />
+    {/if}
 </div>
 
 <style>

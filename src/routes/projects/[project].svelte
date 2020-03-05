@@ -26,7 +26,7 @@
 		<div class="contentItem"><img src="content/proxy/project_team.jpg" alt="search" /></div>
 		<div class="contentItem"><img src="content/proxy/project_skills.jpg" alt="search" /></div>
 		<div class="contentItem"><img src="content/proxy/project_links.jpg" alt="search" /></div>
-		<div class="contentItem"><img src="content/proxy/project_channels.jpg" alt="search" /></div>
+		<div class="contentItem"><Proxy image="project_channels" href="channels/7m2ldksm" /></div>
 		<div class="contentItem"><img src="content/proxy/project_post_1.jpg" alt="search" /></div>
 		<div class="contentItem"><img src="content/proxy/project_post_2.jpg" alt="search" /></div>
 		<div class="contentItem"><img src="content/proxy/project_post_3.jpg" alt="search" /></div>

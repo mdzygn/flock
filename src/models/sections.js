@@ -63,6 +63,21 @@ export const sections = [
 	},
 
 	{
+		path: '/channels/.*',
+		id: 'channel',
+		label: '#Questions',
+		parentSection: 'projects/a',
+		darkBg: true,
+	},
+	{
+		path: '/threads/.*',
+		id: 'threads',
+		label: '#Questions',
+		parentSection: 'channels/a',
+		darkBg: true,
+	},
+
+	{
 		path: '/messages/group',
 		id: 'message_group_view',
 		label: 'World Creator',

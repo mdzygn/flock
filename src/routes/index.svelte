@@ -13,7 +13,4 @@
 </ScrollView>
 
 <style>
-	/* seems to need any css to compile */
-	* {
-	}
 </style>

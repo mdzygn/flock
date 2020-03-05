@@ -31,14 +31,18 @@ export const sections = [
 
 	{
 		segment: 'contacts',
-		path: '/contacts',
 		label: 'Connections',
 		parentSection: 'messages',
 	},
 	{
 		segment: 'profile',
-		path: '/profile',
 		label: 'Sasha Holmer',
+		darkBg: true,
+	},
+	{
+		segment: 'explore',
+		mainSection: 'discover',
+		label: 'Explore',
 		darkBg: true,
 	},
 
@@ -60,6 +64,11 @@ export const getIconForSection = (section) => {
 
 export const getPathForSection = (section) => {
 	return section.path || '/' + getIdForSection(section);
+}
+
+export const getMainSectionForSegment = (segment) => {
+	const section = getSectionBySegment(segment);
+	return section ? (section.mainSection || section.segment) : undefined;
 }
 
 export const isDarkBgForSegment = (segment) => {

@@ -8,12 +8,12 @@
 <style>
     .container {
         position: absolute;
+
+        width: 100%;
     }
 
     .container :global(a) {
         position: absolute;
-        top: 0;
-        left: 0;
 
         text-decoration: none;
         line-height: 0;

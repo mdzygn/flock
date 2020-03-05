@@ -1,6 +1,6 @@
 <script>
 	import { stores } from '@sapper/app';
-	import {isDarkBgForSegment} from "../models/sections.js";
+	import { isDarkBgForSegment } from "../models/sections.js";
 
 	// import { afterUpdate } from 'svelte';
 
@@ -31,6 +31,13 @@
 </appContainer>
 
 <style>
+	appContent {
+		position: absolute;
+
+		width: 100%;
+		height: 100%;
+	}
+
 	@media (min-width: 480px) {
 		appContainer {
 			position: absolute;
@@ -44,9 +51,6 @@
 
 		appContent {
 			position: relative;
-
-			width: 100%;
-			height: 100%;
 
 			max-width: 375px;
 			max-height: 667px;

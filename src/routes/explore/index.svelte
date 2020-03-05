@@ -1,7 +1,7 @@
 <script>
-	import Hotspots from '../components/Hotspots.svelte';
+	import Hotspots from '../../components/Hotspots.svelte';
 
-	import ScrollView from '../components/ScrollView.svelte';
+	import ScrollView from '../../components/ScrollView.svelte';
 </script>
 
 <svelte:head>
@@ -14,16 +14,21 @@
 	</a>
 
 	<div class="filterBar">
+		<Hotspots>
+			<a href="discover" style="
+				left: 7px;
+				top: 5px;
+				width: 44px;
+				height: 46px;">&nbsp;</a>
+			<a href="explore/local" style="
+				right: 10px;
+				top: 5px;
+				width: 232px;
+				height: 46px;">&nbsp;</a>
+		</Hotspots>
+
 		<img src="content/proxy/explore_filter.jpg" style="width: 100%" alt="search" />
 	</div>
-
-	<Hotspots>
-		<a href="contacts" style="
-			left: 5px;
-			top: 5px;
-			width: 40px;
-			height: 39px;">&nbsp;</a>
-	</Hotspots>
 </div>
 
 <style>

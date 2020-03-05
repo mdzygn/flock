@@ -7,9 +7,7 @@
 </svelte:head>
 
 <ScrollView>
-	<a href="messages/a4kcmsd3">
-		<img src="content/proxy/profile.jpg" style="width: 100%; padding-bottom: 40px" alt="search" />
-	</a>
+	<img src="content/proxy/profile.jpg" style="width: 100%; padding-bottom: 40px" alt="search" />
 </ScrollView>
 
 <style>

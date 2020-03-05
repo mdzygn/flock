@@ -17,7 +17,7 @@
 				left: 7px;
 				top: 5px;
 				width: 44px;
-				height: 40px;">&nbsp;</a>
+				height: 46px;">&nbsp;</a>
 		</Hotspots>
 
 		<img class="contentItem" src="content/proxy/discover_search.jpg" style="width: 100%" alt="search" />

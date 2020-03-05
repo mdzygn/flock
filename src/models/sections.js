@@ -45,6 +45,13 @@ export const sections = [
 		label: 'Explore',
 		darkBg: true,
 	},
+	{
+		segment: 'explore',
+		path: '/explore/local',
+		mainSection: 'discover',
+		label: 'Explore',
+		darkBg: true,
+	},
 
 	{
 		path: '/messages/.*',

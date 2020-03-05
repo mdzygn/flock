@@ -14,7 +14,7 @@
 			<a href="explore" style="
 				width: 100%;
 				height: 100%;">&nbsp;</a>
-			<a href="discover" style="
+			<a href="projects/m62lsp2o" style="
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);

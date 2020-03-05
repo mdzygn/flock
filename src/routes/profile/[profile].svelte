@@ -7,7 +7,7 @@
 </svelte:head>
 
 <ScrollView>
-	<img src="content/proxy/profile.jpg" style="width: 100%; padding-bottom: 40px" alt="search" />
+	<img src="content/proxy/my_profile.jpg" style="width: 100%; padding-bottom: 40px" alt="search" />
 </ScrollView>
 
 <style>

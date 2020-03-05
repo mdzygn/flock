@@ -55,6 +55,13 @@ export const sections = [
 	},
 
 	{
+		path: '/projects/.*',
+		id: 'project',
+		label: 'World Creator',
+		darkBg: true,
+	},
+
+	{
 		path: '/messages/.*',
 		id: 'message_view',
 		label: 'Mia',

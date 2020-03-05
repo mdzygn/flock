@@ -7,8 +7,11 @@
 	import sections from "../../models/sections.js";
 
     export let segment;
+    export let path;
 
-    $: curSection = sections.find(item => item.segment === segment);
+    $: console.log('path: ' + path);
+
+    $: curSection = sections.find(item => new RegExp('^' + item.path + '$').test(path));
     $: sectionLabel = curSection ? curSection.label : '';
     $: parentSection = curSection ? curSection.parentSection : null;
 

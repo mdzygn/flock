@@ -3,6 +3,7 @@
 	import sections from "../../models/sections.js";
 
 	export let segment;
+	export let path;
 </script>
 
 <nav>

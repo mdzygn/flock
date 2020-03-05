@@ -5,7 +5,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-<a href="message_view" class="messageView">
+<a href="messages/a4kcmsd3" class="messageView">
 	<img src="content/proxy/messages.jpg" style="width: 100%" alt="search" />
 </a>
 

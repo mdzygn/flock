@@ -1,10 +1,15 @@
 <script>
-	import { afterUpdate } from 'svelte';
+	import { stores } from '@sapper/app';
+	// import { afterUpdate } from 'svelte';
 
+	const { page } = stores();
+
+	import ScrollView from '../components/ScrollView.svelte';
 	import HeaderBar from './_components/HeaderBar.svelte';
 	import Nav from './_components/Nav.svelte';
 
 	export let segment;
+	$: path = $page ? $page.path : '';
 
 	let scrollRegion;
 
@@ -19,16 +24,18 @@
 	// 	}
 	// });
 </script>
-.showFeedBg
+
 <appContainer>
-	<appContent>
-		<div class="pageContent" class:showFeedBg="{showFeedBg}" bind:this="{scrollRegion}">
-			<main>
-				<slot></slot>
-			</main>
+	<appContent class:showFeedBg="{showFeedBg}">
+		<div class="pageContent">
+			<ScrollView>
+				<main>
+					<slot></slot>
+				</main>
+			</ScrollView>
 		</div>
-		<HeaderBar {segment}/>
-		<Nav {segment}/>
+		<HeaderBar {segment} {path} />
+		<Nav {segment} {path} />
 	</appContent>
 </appContainer>
 
@@ -69,24 +76,32 @@
 		top: 60px; /* header height */
 		bottom: 76px; /* nav height */
 		width: 100%;
+	}
+
+	/* .pageContent {
+		position: absolute;
+		top: 60px;
+		bottom: 76px;
+		width: 100%;
 
 		overflow: hidden;
 		overflow-y: scroll;
 
-		-ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+		-ms-overflow-style: none;
 	}
+
+	.pageContent::-webkit-scrollbar {
+		display: none;
+	} */
 
 	.showFeedBg {
 		background-color: #DDDDDD;
 	}
 
-	.pageContent::-webkit-scrollbar {
-		/* Hide scrollbar for Chrome, Safari and Opera */
-		display: none;
-	}
-
 	main {
 		position: absolute;
+		height: 100%;
+		width: 100%;
 
     	line-height: 0;
 	}

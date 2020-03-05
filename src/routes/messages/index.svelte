@@ -10,8 +10,6 @@
 
 <ScrollView>
 	<a href="messages/a4kcmsd3" class="messageView">
-		<img class="contentItem" src="content/proxy/messages.jpg" style="width: 100%" alt="search" />
-
 		<Hotspots>
 			<a href="contacts" style="
 				left: 7px;
@@ -19,11 +17,10 @@
 				width: 44px;
 				height: 40px;">&nbsp;</a>
 		</Hotspots>
+
+		<img src="content/proxy/messages.jpg" style="width: 100%" alt="search" />
 	</a>
 </ScrollView>
 
 <style>
-	.contentItem {
-		position: absolute;
-	}
 </style>

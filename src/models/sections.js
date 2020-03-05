@@ -60,6 +60,12 @@ export const sections = [
 		label: 'Mia',
 		parentSection: 'messages',
 	},
+	{
+		path: '/profile/.*',
+		id: 'profile_view',
+		label: 'Sasha Holmer',
+		darkBg: true,
+	},
 ];
 
 export const getIdForSection = (section) => {

@@ -10,6 +10,16 @@
 
 <div class="content">
 	<a class="contentArea" href="messages/a4kcmsd3">
+		<Hotspots>
+			<a href="explore/zoom" style="
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				width: 350px;
+				height: 350px;
+				border-radius: 999px;">&nbsp;</a>
+		</Hotspots>
+
 		<img src="content/proxy/explore_content.jpg" style="width: 100%" alt="search" />
 	</a>
 

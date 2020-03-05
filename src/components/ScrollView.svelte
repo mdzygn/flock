@@ -1,15 +1,28 @@
 <script>
-    import { onMount, afterUpdate, tick } from 'svelte';
+    import { onMount } from 'svelte';
 
     export let anchorToBottom = false;
 
     let scrollRegion;
 
+    // let curScrollTop = 0;
+    // let scrollInited = false;
+
     onMount(async () => {
         if (anchorToBottom) {
+
+            // TODO: components don't remember properties
+
+            // if (!scrollInited) {
+            //     curScrollTop = scrollRegion.scrollHeight;
+            //     console.log('init curScrollTop: ' + curScrollTop);
+            //     scrollInited = true;
+            // }
+
+            // console.log('curScrollTop: ' + curScrollTop);
+
             // TODO: not correctly getting values when screen is navigated to
 
-            // console.log('onMount: ' + scrollRegion.scrollHeight);
 			scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
         }
     });

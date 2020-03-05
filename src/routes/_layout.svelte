@@ -1,8 +1,6 @@
 <script>
 	import { stores } from '@sapper/app';
-	import { isDarkBgForSegment } from "../models/sections.js";
-
-	// import { afterUpdate } from 'svelte';
+	import { isDarkBgForPath } from "../models/sections.js";
 
 	const { page } = stores();
 
@@ -13,7 +11,7 @@
 	export let segment;
 	$: path = $page ? $page.path : '';
 
-	$: showFeedBg = isDarkBgForSegment(segment);
+	$: showFeedBg = isDarkBgForPath(path);
 
 	let scrollRegion;
 </script>

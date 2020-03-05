@@ -84,7 +84,11 @@ export const getIconForSection = (section) => {
 }
 
 export const getPathForSection = (section) => {
-	return section.path || '/' + getIdForSection(section);
+	if (section.id === 'home') {
+		return '/';
+	}
+	const sectionId = getIdForSection(section);
+	return section.path || '/' + sectionId;
 }
 
 export const getMainSectionForSegment = (segment) => {
@@ -92,10 +96,14 @@ export const getMainSectionForSegment = (segment) => {
 	return section ? (section.mainSection || section.segment) : undefined;
 }
 
-export const isDarkBgForSegment = (segment) => {
-	const section = getSectionBySegment(segment);
+export const isDarkBgForPath = (segment) => {
+	const section = getSectionByPath(segment);
 	return section ? section.darkBg : false;
 }
+// export const isDarkBgForSegment = (segment) => {
+// 	const section = getSectionBySegment(segment);
+// 	return section ? section.darkBg : false;
+// }
 
 export const getSectionByPath = (path) => {
 	return sections.find(item => {

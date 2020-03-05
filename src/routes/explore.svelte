@@ -9,9 +9,13 @@
 </svelte:head>
 
 <div class="content">
-	<a class="contentItem" href="messages/a4kcmsd3">
-		<img src="content/proxy/explore.jpg" style="width: 100%" alt="search" />
+	<a class="contentArea" href="messages/a4kcmsd3">
+		<img src="content/proxy/explore_content.jpg" style="width: 100%" alt="search" />
 	</a>
+
+	<div class="filterBar">
+		<img src="content/proxy/explore_filter.jpg" style="width: 100%" alt="search" />
+	</div>
 
 	<Hotspots>
 		<a href="contacts" style="
@@ -29,12 +33,19 @@
 		height: 100%;
 
 		background-color: #0B0B0B;
-
-		/* display:flex;
-		align-items: center;
-		justify-content: center; */
 	}
 
-	.contentItem {
+	.filterBar {
+		position: absolute;
+	}
+
+	.contentArea {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+
+		display:flex;
+		align-items: center;
+		justify-content: center;
 	}
 </style>

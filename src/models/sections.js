@@ -41,13 +41,14 @@ export const sections = [
 	},
 	{
 		segment: 'explore',
+		path: '/discover.*',
 		mainSection: 'discover',
-		label: 'Explore',
+		label: 'Discover',
 		darkBg: true,
 	},
 	{
 		segment: 'explore',
-		path: '/explore/local',
+		path: '/explore.*',
 		mainSection: 'discover',
 		label: 'Explore',
 		darkBg: true,

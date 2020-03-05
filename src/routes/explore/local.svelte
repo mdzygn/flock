@@ -15,7 +15,7 @@
 
 	<div class="filterBar">
 		<Hotspots>
-			<a href="discover" style="
+			<a href="discover/local" style="
 				left: 7px;
 				top: 5px;
 				width: 44px;

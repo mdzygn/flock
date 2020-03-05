@@ -1,9 +1,9 @@
 <script>
-	import ScrollView from '../components/ScrollView.svelte';
+	import ScrollView from '../../components/ScrollView.svelte';
 
-	import Hotspots from '../components/Hotspots.svelte';
+	import Hotspots from '../../components/Hotspots.svelte';
 
-	import Feed from './_components/Feed.svelte';
+	import Feed from './../_components/Feed.svelte';
 </script>
 
 <svelte:head>
@@ -17,6 +17,11 @@
 				left: 7px;
 				top: 5px;
 				width: 44px;
+				height: 46px;">&nbsp;</a>
+			<a href="discover/local" style="
+				right: 10px;
+				top: 5px;
+				width: 232px;
 				height: 46px;">&nbsp;</a>
 		</Hotspots>
 

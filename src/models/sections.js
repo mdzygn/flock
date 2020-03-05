@@ -4,11 +4,13 @@ export const sections = [
 		id: 'home',
 		label: 'Home',
 		main: true,
+		darkBg: true,
 	},
 	{
 		segment: 'discover',
 		label: 'Discover',
 		main: true,
+		darkBg: true,
 	},
 	{
 		segment: 'projects',
@@ -28,11 +30,18 @@ export const sections = [
 	},
 
 	{
+		segment: 'contacts',
 		path: '/contacts',
-		id: 'contacts',
 		label: 'Connections',
 		parentSection: 'messages',
 	},
+	{
+		segment: 'profile',
+		path: '/profile',
+		label: 'Sasha Holmer',
+		darkBg: true,
+	},
+
 	{
 		path: '/messages/.*',
 		id: 'message_view',
@@ -53,11 +62,20 @@ export const getPathForSection = (section) => {
 	return section.path || '/' + getIdForSection(section);
 }
 
+export const isDarkBgForSegment = (segment) => {
+	const section = getSectionBySegment(segment);
+	return section ? section.darkBg : false;
+}
+
 export const getSectionByPath = (path) => {
 	return sections.find(item => {
 		let sectionPath = getPathForSection(item);
 		return new RegExp('^' + sectionPath + '$').test(path)
 	});
+}
+
+export const getSectionBySegment = (segment) => {
+	return sections.find(item => item.segment === segment);
 }
 
 export default sections;

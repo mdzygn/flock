@@ -9,7 +9,7 @@
     export let segment;
     export let path;
 
-    $: curSection = getSectionByPath(path); // sections.find(item => new RegExp('^' + item.path + '$').test(path));
+    $: curSection = getSectionByPath(path);
     $: sectionLabel = curSection ? curSection.label : '';
     $: parentSection = curSection ? curSection.parentSection : null;
 
@@ -31,9 +31,9 @@
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
         {/if}
     {/if}
-    <div class="avatarIcon">
+    <a class="avatarIcon" href="profile">
         <AvatarIcon />
-    </div>
+    </a>
 </headerBar>
 
 <style>

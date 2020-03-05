@@ -1,16 +1,16 @@
 <script>
 	import NavIcon from "../../components/NavIcon.svelte";
-	import sections from "../../models/sections.js";
+	import sections, {getIconForSection} from "../../models/sections.js";
 
 	export let segment;
-	export let path;
+	// export let path;
 </script>
 
 <nav>
 	<ul>
 		{#each sections as section}{#if section.main}
 			<li><a aria-current='{segment === section.segment ? "page" : undefined}' href='{section.segment ? section.segment : "."}' title='{section.label}'>
-				<NavIcon iconId='{section.id}' active='{segment === section.segment}' label='{section.label}' />
+				<NavIcon iconId='{getIconForSection(section)}' active='{segment === section.segment}' label='{section.label}' />
 			</a></li>
 		{/if}{/each}
 	</ul>

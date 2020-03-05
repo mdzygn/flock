@@ -4,14 +4,12 @@
     import BackIcon from "../../assets/icons/back.png";
     import AvatarIcon from './AvatarIcon.svelte';
 
-	import sections from "../../models/sections.js";
+	import sections, {getSectionByPath} from "../../models/sections.js";
 
     export let segment;
     export let path;
 
-    $: console.log('path: ' + path);
-
-    $: curSection = sections.find(item => new RegExp('^' + item.path + '$').test(path));
+    $: curSection = getSectionByPath(path); // sections.find(item => new RegExp('^' + item.path + '$').test(path));
     $: sectionLabel = curSection ? curSection.label : '';
     $: parentSection = curSection ? curSection.parentSection : null;
 
@@ -84,6 +82,8 @@
 
         width: 26px;
         height: 26px;
+
+        cursor: pointer;
     }
 
     .hasBack {

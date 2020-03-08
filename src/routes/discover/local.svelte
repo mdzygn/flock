@@ -11,7 +11,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView>
+<ScrollView id="discover/local">
 	<div>
 		<Hotspots>
 			<a href="explore/local" style="

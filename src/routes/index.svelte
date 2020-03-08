@@ -9,7 +9,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView>
+<ScrollView id="newsfeed">
 	<!-- <Feed /> -->
 
 	<div class="feed">

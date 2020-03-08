@@ -4,13 +4,15 @@
 
 	import ProfileOverview from './../_components/ProfileOverview.svelte';
 	import ProjectList from './../_components/ProjectList.svelte';
+
+	let profileId = 'bl20a8lm';
 </script>
 
 <svelte:head>
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView>
+<ScrollView id="profile/{profileId}">
 	<div class="content">
 		<div class="contentItem">
 			<Proxy image="profile_actions">

@@ -1,6 +1,8 @@
 <script>
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
+
+	let conversationId = 'a4kcmsd3';
 </script>
 
 <svelte:head>
@@ -8,7 +10,7 @@
 </svelte:head>
 
 <div class="messagesView">
-	<ScrollView anchorToBottom="{true}">
+	<ScrollView anchorToBottom="{true}" id="messages/{conversationId}">
 		<Proxy image="message_view" />
 	</ScrollView>
 </div>

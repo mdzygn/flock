@@ -3,13 +3,15 @@
 	import Proxy from '../../components/Proxy.svelte';
 
 	import NewPostButton from '../../components/NewPostButton.svelte';
+
+	let threadId = 'sm2ld9p2';
 </script>
 
 <svelte:head>
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView>
+<ScrollView> <!--  id="thread/{threadId}" -->
 	<div class="content">
 		<Proxy image="thread_post" className="threadPost" />
 		<Proxy image="thread_actions" className="threadActions" />

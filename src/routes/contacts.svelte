@@ -7,7 +7,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView>
+<ScrollView id="contacts">
 	<Proxy image="contacts">
 		<!-- Contact Profiles -->
 		<a href="profile/bl20a8lm" style="

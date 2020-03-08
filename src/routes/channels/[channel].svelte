@@ -2,13 +2,15 @@
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 	import NewPostButton from '../../components/NewPostButton.svelte';
+
+	let channelId = '7m2ldksm';
 </script>
 
 <svelte:head>
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView>
+<ScrollView id="channel/{channelId}">
 	<div class="content">
 		<Proxy image="channel_actions" className="channelActions" />
 		<Proxy image="channel_posts" className="channelPosts" href="threads/sm2ld9p2" />

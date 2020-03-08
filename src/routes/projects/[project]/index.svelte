@@ -13,7 +13,7 @@
 	<title>World Creator - Flock</title>
 </svelte:head>
 
-<ScrollView>
+<ScrollView id="project/{projectId}">
 	<div class="content">
 		<div class="contentItem">
 			<Proxy image="project_actions">

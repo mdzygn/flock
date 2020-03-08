@@ -3,13 +3,14 @@
 	import Proxy from '../../components/Proxy.svelte';
 
 	let projectId = 'm62lsp2o';
+	let profileId = 'bl20a8lm';
 </script>
 
 <svelte:head>
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView>
+<ScrollView id="likes/{profileId}">
 	<Proxy image="likes">
         <!-- Project Links -->
         <a href="projects/{projectId}" style="

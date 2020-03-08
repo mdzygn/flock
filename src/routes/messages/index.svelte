@@ -9,7 +9,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView>
+<ScrollView id="messages">
 	<a href="messages/a4kcmsd3" class="messageView">
 		<Hotspots>
 			<a href="contacts" style="

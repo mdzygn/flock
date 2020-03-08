@@ -9,7 +9,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView>
+<ScrollView id="projects">
 	<Proxy image="projects">
 		<a href="projects/{projectId}/my" style="
 			left: 0;

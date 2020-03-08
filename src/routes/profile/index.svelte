@@ -10,7 +10,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView>
+<ScrollView id="profile">
 	<div class="content">
 		<div class="contentItem">
 			<Proxy image="profile_actions_owner">

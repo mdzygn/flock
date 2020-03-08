@@ -15,10 +15,10 @@
 </script>
 
 <script>
-	import { stores } from '@sapper/app';
-	const { page } = stores();
+	// import { stores } from '@sapper/app';
+	// const { page } = stores();
 
-    import { onMount, onDestroy, afterUpdate, tick } from 'svelte';
+    import { onMount, onDestroy, tick } from 'svelte'; // afterUpdate
 
     export let anchorToBottom = false;
 
@@ -29,7 +29,7 @@
 
     function updateScroll() {
         regionProps.scrollTop = scrollRegion.scrollTop;
-        console.log('update scroll ' + regionProps.scrollTop);
+        // console.log('update scroll ' + regionProps.scrollTop);
     }
 
     onMount(async () => {
@@ -66,6 +66,9 @@
         // TODO: check scroll if region height changes (e.g. image load)
         setTimeout(() => {
             curScrollRegion.scrollTo(0, regionProps.scrollTop);
+        }, 2);
+        setTimeout(() => {
+            curScrollRegion.scrollTo(0, regionProps.scrollTop);
         }, 10);
         setTimeout(() => {
             curScrollRegion.scrollTo(0, regionProps.scrollTop);
@@ -74,7 +77,7 @@
             curScrollRegion.scrollTo(0, regionProps.scrollTop);
         }, 100);
 
-        console.log('load scroll "' + id + '": ' + regionProps.scrollTop);
+        // console.log('load scroll "' + id + '": ' + regionProps.scrollTop);
 
         scrollRegion.scrollTo(0, regionProps.scrollTop);
 

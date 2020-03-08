@@ -2,8 +2,8 @@
     import Hotspots from './Hotspots.svelte';
 
     export let image;
-    export let href;
-    export let className;
+    export let href = null;
+    export let className = '';
 
     let hasSlots = $$props.$$slots;
 </script>

@@ -32,12 +32,14 @@ export const sections = [
 	{
 		segment: 'contacts',
 		label: 'Connections',
-		parentSection: 'messages',
+		showBack: true,
+		// parentSection: 'messages',
 	},
 	{
 		segment: 'profile',
 		label: 'Sasha Holmer',
 		darkBg: true,
+		showBack: true,
 	},
 	{
 		segment: 'explore',
@@ -58,7 +60,8 @@ export const sections = [
 		path: '/projects/.*/details',
 		id: 'create',
 		label: 'World Creator',
-		parentSection: 'projects/m62lsp2o/populate',
+		showBack: true,
+		// parentSection: 'projects/m62lsp2o/populate',
 	},
 	{
 		path: '/projects/create',
@@ -70,21 +73,24 @@ export const sections = [
 		id: 'project',
 		label: 'World Creator',
 		darkBg: true,
-		parentSection: 'discover',
+		showBack: true,
+		// parentSection: 'discover',
 	},
 
 	{
 		path: '/channels/.*',
 		id: 'channel',
 		label: '#Questions',
-		parentSection: 'projects/m62lsp2o',
+		showBack: true,
+		// parentSection: 'projects/m62lsp2o',
 		darkBg: true,
 	},
 	{
 		path: '/threads/.*',
 		id: 'thread',
 		label: '#Questions',
-		parentSection: 'channels/7m2ldksm',
+		showBack: true,
+		// parentSection: 'channels/7m2ldksm',
 		darkBg: true,
 	},
 
@@ -92,19 +98,31 @@ export const sections = [
 		path: '/messages/group',
 		id: 'message_group_view',
 		label: 'World Creator',
-		parentSection: 'projects/m62lsp2o',
+		showBack: true,
+		// parentSection: 'projects/m62lsp2o',
 	},
 	{
 		path: '/messages/.*',
 		id: 'message_view',
 		label: 'Mia',
-		parentSection: 'messages',
+		showBack: true,
+		// parentSection: 'messages',
+	},
+	{
+		path: '/profile/likes',
+		id: 'profile_view',
+		label: 'Likes',
+		darkBg: true,
+		showBack: true,
+		// parentSection: 'messages',
 	},
 	{
 		path: '/profile/.*',
 		id: 'profile_view',
 		label: 'Sasha Holmer',
 		darkBg: true,
+		showBack: true,
+		// parentSection: 'messages',
 	},
 ];
 

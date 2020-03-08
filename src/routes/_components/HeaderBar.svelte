@@ -12,9 +12,12 @@
     $: curSection = getSectionByPath(path);
     $: sectionLabel = curSection ? curSection.label : '';
     $: parentSection = curSection ? curSection.parentSection : null;
+    $: showBack = curSection ? curSection.showBack : false;
 
     function goBack () {
-        if (parentSection) {
+        if (showBack) {
+            history.back();
+        } else if (parentSection) {
             goto(parentSection);
         }
     }
@@ -26,8 +29,8 @@
             <img src='assets/logo.png' alt="Flock">
         </div>
     {:else}
-        <div class="header" class:hasBack="{parentSection}">{sectionLabel}</div>
-        {#if parentSection}
+        <div class="header" class:hasBack="{showBack || parentSection}">{sectionLabel}</div>
+        {#if showBack || parentSection}
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
         {/if}
     {/if}

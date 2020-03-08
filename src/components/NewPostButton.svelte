@@ -1,9 +1,11 @@
 <script>
-	import Proxy from './Proxy.svelte';
+    import Proxy from './Proxy.svelte';
+
+    export let type = 'new_post';
 </script>
 
 <div class="content">
-    <Proxy image="new_post" className="newPostButton" />
+    <Proxy image="{type}" className="newPostButton" />
 </div>
 
 <style>
@@ -11,6 +13,6 @@
         margin-top: 10px;
         margin-bottom: 10px;
 
-        cursor: pointer;
+        /* cursor: pointer; */
 	}
 </style>

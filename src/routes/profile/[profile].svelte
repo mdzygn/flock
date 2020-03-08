@@ -2,6 +2,7 @@
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 
+	import ProfileOverview from './../_components/ProfileOverview.svelte';
 	import ProjectList from './../_components/ProjectList.svelte';
 </script>
 
@@ -27,7 +28,7 @@
 					width: 132px;
 					height: 47px;">&nbsp;</a>
 			</Proxy>
-			<Proxy image="profile_overview" />
+			<ProfileOverview />
 			<Proxy image="profile_overview_actions">
 				<!-- Send Message -->
 				<a href="messages/l40smlp3" style="

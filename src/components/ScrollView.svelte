@@ -84,9 +84,10 @@
         scrollRegion.addEventListener('scroll', updateScroll);
     });
 
-	onDestroy(() => {
-        scrollRegion.removeEventListener('scroll', updateScroll);
-	});
+    // causes export 500 on index error
+	// onDestroy(() => {
+    //     scrollRegion.removeEventListener('scroll', updateScroll);
+	// });
 </script>
 
 <div class="scrollView" bind:this="{scrollRegion}">

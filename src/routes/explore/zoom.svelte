@@ -59,6 +59,6 @@
 	}
 
 	.contentArea :global(.exploreZoomed) {
-		margin-top: 70px;
+		margin-top: 55px;
 	}
 </style>

@@ -69,12 +69,20 @@ export const sections = [
 		label: 'New Project',
 	},
 	{
+		path: '/projects/.*/.*',
+		id: 'project',
+		label: 'World Creator',
+		darkBg: true,
+		// showBack: true,
+		parentSection: 'projects',
+	},
+	{
 		path: '/projects/.*',
 		id: 'project',
 		label: 'World Creator',
 		darkBg: true,
-		showBack: true,
-		// parentSection: 'discover',
+		// showBack: true,
+		parentSection: 'discover',
 	},
 
 	{

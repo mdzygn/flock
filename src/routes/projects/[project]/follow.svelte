@@ -1,8 +1,10 @@
 <script>
-	import ScrollView from '../../components/ScrollView.svelte';
-	import Proxy from '../../components/Proxy.svelte';
+	import ScrollView from '../../../components/ScrollView.svelte';
+	import Proxy from '../../../components/Proxy.svelte';
 
-	import Feed from './../_components/Feed.svelte';
+	import Feed from './../../_components/Feed.svelte';
+
+	let projectId = 'm62lsp2o';
 </script>
 
 <svelte:head>
@@ -12,20 +14,31 @@
 <ScrollView>
 	<div class="content">
 		<div class="contentItem">
-			<Proxy image="project_actions" />
+			<Proxy image="project_actions_following">
+				<a href="projects/{projectId}" style="
+					left: 120px;
+					top: 0px;
+					width: 106px;
+					height: 47px;">&nbsp;</a>
+			</Proxy>
 			<Proxy image="project_header_image" />
-			<Proxy image="project_overview">
+			<Proxy image="project_overview_following_changed">
 				<a href="messages/group" style="
 					left: 7px;
 					top: 155px;
 					width: 121px;
+					height: 46px;">&nbsp;</a>
+				<a href="projects/{projectId}" style="
+					right: 35px;
+					top: 155px;
+					width: 110px;
 					height: 46px;">&nbsp;</a>
 			</Proxy>
 		</div>
 		<Proxy image="project_team" className="contentItem"/>
 		<Proxy image="project_skills" className="contentItem" />
 		<Proxy image="project_links" className="contentItem" />
-		<Proxy image="project_channels" className="contentItem" href="channels/7m2ldksm" />
+		<Proxy image="project_channels_following" className="contentItem" href="channels/7m2ldksm" />
 		<Proxy image="project_post_1" className="contentItem" />
 		<Proxy image="project_post_2" className="contentItem" />
 		<Proxy image="project_post_3" className="contentItem" />

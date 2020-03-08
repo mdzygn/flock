@@ -5,6 +5,8 @@
 	export let count = 6;
 	export let offset = 0;
 
+	let projectId = 'm62lsp2o';
+
 	export let linkToProjects = false;
 </script>
 
@@ -12,7 +14,7 @@
 	{#each new Array(count) as item, index}
 		<div class="feedItem">
 			{#if linkToProjects}
-				<a href="projects/m62lsp2o">
+				<a href="projects/{projectId}">
 					<Proxy image="{type}{((index + offset) % count) + 1}" />
 				</a>
 			{:else}

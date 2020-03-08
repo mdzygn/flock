@@ -3,6 +3,8 @@
 	import Proxy from '../../components/Proxy.svelte';
 
 	import ScrollView from '../../components/ScrollView.svelte';
+
+	let projectId = 'm62lsp2o';
 </script>
 
 <svelte:head>
@@ -17,7 +19,7 @@
 				left: 0;
 				width: 100%;
 				height: 100%;">&nbsp;</a>
-			<a href="projects/m62lsp2o" style="
+			<a href="projects/{projectId}" style="
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);

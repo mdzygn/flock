@@ -15,6 +15,7 @@
 	<div class="content">
 		<div class="contentItem">
 			<Proxy image="project_actions_following">
+				<!-- Action Unfollow -->
 				<a href="projects/{projectId}" style="
 					left: 120px;
 					top: 0px;
@@ -23,11 +24,26 @@
 			</Proxy>
 			<Proxy image="project_header_image" />
 			<Proxy image="project_overview_following_changed">
+				<!-- Read More -->
+				<a href="projects/{projectId}/info" style="
+					left: 0;
+					top: 55px;
+					width: 100%;
+					height: 70px;">&nbsp;</a>
+				<a href="projects/{projectId}/info" style="
+					left: 8px;
+					top: 125px;
+					width: 110px;
+    				height: 30px;">&nbsp;</a>
+
+				<!-- Messages -->
 				<a href="messages/group" style="
 					left: 7px;
 					top: 155px;
 					width: 121px;
 					height: 46px;">&nbsp;</a>
+
+				<!-- Unfollow -->
 				<a href="projects/{projectId}" style="
 					right: 35px;
 					top: 155px;

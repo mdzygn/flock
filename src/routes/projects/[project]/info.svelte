@@ -23,30 +23,25 @@
 					height: 47px;">&nbsp;</a>
 			</Proxy>
 			<Proxy image="project_header_image" />
-			<Proxy image="project_overview">
-				<!-- Read More -->
-				<a href="projects/{projectId}/info" style="
-					left: 0;
-					top: 55px;
-					width: 100%;
-					height: 70px;">&nbsp;</a>
-				<a href="projects/{projectId}/info" style="
-					left: 8px;
-					top: 125px;
-					width: 110px;
-    				height: 30px;">&nbsp;</a>
-
+			<Proxy image="project_overview_info" />
+			<Proxy image="project_info_image_1" />
+			<Proxy image="project_info_content_1" />
+			<Proxy image="project_info_image_2" />
+			<Proxy image="project_info_content_2" />
+			<Proxy image="project_info_image_3" />
+			<Proxy image="project_info_content_3" />
+			<Proxy image="project_info_actions">
 				<!-- Messages -->
 				<a href="messages/group" style="
 					left: 7px;
-					top: 155px;
+					top: 8px;
 					width: 121px;
 					height: 46px;">&nbsp;</a>
 
 				<!-- Follow -->
 				<a href="projects/{projectId}/follow" style="
 					right: 35px;
-					top: 155px;
+					top: 8px;
 					width: 110px;
 					height: 46px;">&nbsp;</a>
 			</Proxy>

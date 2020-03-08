@@ -24,7 +24,7 @@
 					width: 106px;
 					height: 47px;">&nbsp;</a>
 			</Proxy>
-			<Proxy image="project_header_image_compact" />
+			<Proxy image="project_header_image" />
 			<Proxy image="project_overview_following_changed">
 				<!-- Read More -->
 				<a href="projects/{projectId}/info" style="

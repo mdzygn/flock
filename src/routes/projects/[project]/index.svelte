@@ -36,7 +36,7 @@
 					width: 110px;
     				height: 30px;">&nbsp;</a>
 
-				<!-- Messages -->
+				<!-- Message -->
 				<a href="messages/group" style="
 					left: 7px;
 					top: 155px;

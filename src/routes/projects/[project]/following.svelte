@@ -22,7 +22,7 @@
 					width: 106px;
 					height: 47px;">&nbsp;</a>
 			</Proxy>
-			<Proxy image="project_header_image" />
+			<Proxy image="project_header_image_compact" />
 			<Proxy image="project_overview_following">
 				<!-- Read More -->
 				<a href="projects/{projectId}/info" style="
@@ -36,7 +36,7 @@
 					width: 110px;
 					height: 36px;">&nbsp;</a>
 
-				<!-- Messages -->
+				<!-- Message -->
 				<a href="messages/group" style="
 					right: 14px;
 					top: 122px;

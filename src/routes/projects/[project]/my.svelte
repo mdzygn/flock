@@ -4,6 +4,8 @@
 
 	import Feed from './../../_components/Feed.svelte';
 
+	import NewPostButton from '../../../components/NewPostButton.svelte';
+
 	let projectId = 'm62lsp2o';
 </script>
 
@@ -13,17 +15,11 @@
 
 <ScrollView>
 	<div class="content">
-		<div class="contentItem">
-			<Proxy image="project_actions_following">
-				<!-- Action Unfollow -->
-				<a href="projects/{projectId}" style="
-					left: 120px;
-					top: 0px;
-					width: 106px;
-					height: 47px;">&nbsp;</a>
+		<div class="header">
+			<Proxy image="project_actions_owner">
 			</Proxy>
 			<Proxy image="project_header_image_compact" />
-			<Proxy image="project_overview_following_changed">
+			<Proxy image="project_overview_owner">
 				<!-- Read More -->
 				<a href="projects/{projectId}/info" style="
 					left: 0;
@@ -34,30 +30,25 @@
 					left: 8px;
 					top: 125px;
 					width: 110px;
-    				height: 30px;">&nbsp;</a>
+					height: 36px;">&nbsp;</a>
 
-				<!-- Message -->
-				<a href="messages/group" style="
-					left: 7px;
-					top: 155px;
-					width: 121px;
-					height: 46px;">&nbsp;</a>
-
-				<!-- Unfollow -->
-				<a href="projects/{projectId}" style="
-					right: 35px;
-					top: 155px;
-					width: 110px;
-					height: 46px;">&nbsp;</a>
+				<!-- Messages -->
+				<!-- <a href="messages/group" style="
+					right: 7px;
+					top: 122px;
+					width: 150px;
+					height: 39px;">&nbsp;</a> -->
 			</Proxy>
 		</div>
-		<Proxy image="project_team" className="contentItem"/>
-		<Proxy image="project_skills" className="contentItem" />
-		<Proxy image="project_links" className="contentItem" />
-		<Proxy image="project_channels_following" className="contentItem" href="channels/7m2ldksm" />
+		<Proxy image="project_channels_owner" className="contentItem" href="channels/7m2ldksm" />
+		<NewPostButton type="project_post_update" />
+		<Proxy image="project_links_owner" className="contentItem" />
+		<Proxy image="project_skills_owner" className="contentItem" />
+		<Proxy image="project_team_owner" className="contentItem"/>
 		<Proxy image="project_post_1" className="contentItem" />
 		<Proxy image="project_post_2" className="contentItem" />
 		<Proxy image="project_post_3" className="contentItem" />
+		<NewPostButton type="project_post_update" />
 	</div>
 </ScrollView>
 
@@ -66,6 +57,9 @@
 		width: 100%;
 
     	line-height: 0;
+	}
+	.content :global(.header) {
+		margin-bottom: 3px;
 	}
 	.content :global(.contentItem) {
 		width: 100%;

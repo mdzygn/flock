@@ -31,7 +31,7 @@
 			<Proxy image="project_info_image_3" />
 			<Proxy image="project_info_content_3" />
 			<Proxy image="project_info_actions">
-				<!-- Messages -->
+				<!-- Message -->
 				<a href="messages/group" style="
 					left: 7px;
 					top: 8px;

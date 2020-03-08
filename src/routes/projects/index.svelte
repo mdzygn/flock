@@ -11,11 +11,16 @@
 
 <ScrollView>
 	<Proxy image="projects">
-		<a href="projects/{projectId}/following" style="
+		<a href="projects/{projectId}/my" style="
 			left: 0;
-			top: 81px;
 			width: 100%;
+			top: 81px;
 			height: 196px;">&nbsp;</a>
+		<a href="projects/{projectId}/following" style="
+			left: 0px;
+			width: 100%;
+			top: 359px;
+			height: 527px;">&nbsp;</a>
 		<a href="create" style="
 			right: 10px;
 			top: 277px;

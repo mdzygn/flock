@@ -8,9 +8,21 @@
 </svelte:head>
 
 <ScrollView>
-	<a href="messages/a4kcmsd3">
-		<Proxy image="contacts" />
-	</a>
+	<Proxy image="contacts">
+		<!-- Contact Profiles -->
+		<a href="profile/bl20a8lm" style="
+			left: 9px;
+			top: 46px;
+			width: 256px;
+			height: 693px;">&nbsp;</a>
+
+		<!-- Send Message -->
+		<a href="messages/l40smlp3" style="
+			right: 7px;
+			top: 51px;
+			width: 59px;
+			height: 678px;">&nbsp;</a>
+	</Proxy>
 </ScrollView>
 
 <style>

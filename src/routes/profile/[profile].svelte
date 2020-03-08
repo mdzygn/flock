@@ -11,14 +11,14 @@
 	<div class="content">
 		<div class="contentItem">
 			<Proxy image="profile_actions">
-				<!-- Connect -->
+				<!-- Action Connect -->
 				<!-- <a href="contacts" style="
 					left: 0px;
 					top: 0px;
 					width: 122px;
 					height: 47px;">&nbsp;</a> -->
 
-				<!-- Message -->
+				<!-- Action Message -->
 				<a href="messages/l40smlp3" style="
 					left: 128px;
 					top: 0px;
@@ -27,7 +27,7 @@
 			</Proxy>
 			<Proxy image="profile_overview" />
 			<Proxy image="profile_overview_actions">
-				<!-- Message -->
+				<!-- Send Message -->
 				<a href="messages/l40smlp3" style="
 					left: 11px;
 					top: 7px;

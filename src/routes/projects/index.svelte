@@ -21,7 +21,7 @@
 			width: 100%;
 			top: 359px;
 			height: 527px;">&nbsp;</a>
-		<a href="create" style="
+		<a href="projects/create" style="
 			right: 10px;
 			top: 277px;
 			width: 142px;

@@ -55,11 +55,15 @@ export const sections = [
 	},
 
 	{
-		path: '/projects/new',
-		id: 'project',
+		path: '/projects/.*/details',
+		id: 'create',
 		label: 'World Creator',
-		darkBg: true,
-		parentSection: 'projects',
+		parentSection: 'projects/m62lsp2o/populate',
+	},
+	{
+		path: '/projects/create',
+		id: 'create',
+		label: 'New Project',
 	},
 	{
 		path: '/projects/.*',
@@ -101,17 +105,6 @@ export const sections = [
 		id: 'profile_view',
 		label: 'Sasha Holmer',
 		darkBg: true,
-	},
-
-	{
-		path: '/create/details',
-		id: 'create',
-		label: 'World Creator',
-	},
-	{
-		path: '/create',
-		id: 'create',
-		label: 'New Project',
 	},
 ];
 

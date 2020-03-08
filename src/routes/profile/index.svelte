@@ -8,8 +8,35 @@
 </svelte:head>
 
 <ScrollView>
-	<Proxy image="my_profile" />
+	<div class="content">
+		<div class="contentItem">
+			<Proxy image="profile_actions_owner">
+				<!-- Connections -->
+				<a href="contacts" style="
+					left: 0px;
+					top: 0px;
+					width: 122px;
+					height: 47px;">&nbsp;</a>
+
+				<!-- Messages -->
+				<a href="messages" style="
+					left: 152px;
+					top: 0px;
+					width: 129px;
+					height: 47px;">&nbsp;</a>
+			</Proxy>
+			<Proxy image="profile_overview_owner" />
+			<Proxy image="profile_overview_owner_actions" />
+		</div>
+		<Proxy image="profile_skills_owner" className="contentItem" />
+		<Proxy image="profile_projects" className="contentItem" />
+	</div>
 </ScrollView>
 
 <style>
+	.content :global(.contentItem) {
+		width: 100%;
+
+		margin-bottom: 10px;
+	}
 </style>

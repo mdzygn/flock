@@ -2,7 +2,7 @@
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 
-	import ProjectListView from './../_components/ProjectListView.svelte';
+	import ProjectList from './../_components/ProjectList.svelte';
 </script>
 
 <svelte:head>
@@ -31,7 +31,7 @@
 			<Proxy image="profile_overview_owner_actions" />
 		</div>
 		<Proxy image="profile_skills_owner" className="contentItem" />
-		<ProjectListView />
+		<ProjectList />
 	</div>
 </ScrollView>
 

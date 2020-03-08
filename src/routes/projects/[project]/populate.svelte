@@ -6,7 +6,7 @@
 
 	import NewPostButton from '../../../components/NewPostButton.svelte';
 
-	import ProjectTeamView from './../../_components/ProjectTeamView.svelte';
+	import ProjectTeamList from './../../_components/ProjectTeamList.svelte';
 
 	let projectId = 'm62lsp2o';
 </script>
@@ -37,7 +37,7 @@
 					height: 41px;">&nbsp;</a>
 			</Proxy>
 		</div>
-		<ProjectTeamView isNew="{true}" isOwner="{true}" />
+		<ProjectTeamList isNew="{true}" isOwner="{true}" />
 		<Proxy image="project_links_populate" className="contentItem" />
 		<Proxy image="project_skills_populate" className="contentItem" />
 		<Proxy image="project_channels_populate" className="contentItem" href="channels/7m2ldksm" />

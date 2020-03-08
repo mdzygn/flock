@@ -8,7 +8,6 @@
 <style>
     .hotspotContainer {
         position: absolute;
-
         width: 100%;
     }
 

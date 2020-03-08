@@ -4,12 +4,16 @@
     export let image;
     export let href;
     export let className;
+
+    let hasSlots = $$props.$$slots;
 </script>
 
 <div class="{className}">
-    <Hotspots>
-        <slot></slot>
-    </Hotspots>
+    {#if hasSlots}
+        <Hotspots>
+            <slot></slot>
+        </Hotspots>
+    {/if}
 
     {#if href}
         <a href="{href}">

@@ -12,9 +12,8 @@
 <ScrollView>
 	<div class="content">
 		<div class="contentItem">
-			<img src="content/proxy/project_actions.jpg" alt="search" />
-			<img src="content/proxy/project_header_image.jpg" alt="search" />
-			<!-- <img src="content/proxy/project_overview.jpg" alt="search" /> -->
+			<Proxy image="project_actions" />
+			<Proxy image="project_header_image" />
 			<Proxy image="project_overview">
 				<a href="messages/group" style="
 					left: 7px;
@@ -23,13 +22,13 @@
 					height: 46px;">&nbsp;</a>
 			</Proxy>
 		</div>
-		<div class="contentItem"><img src="content/proxy/project_team.jpg" alt="search" /></div>
-		<div class="contentItem"><img src="content/proxy/project_skills.jpg" alt="search" /></div>
-		<div class="contentItem"><img src="content/proxy/project_links.jpg" alt="search" /></div>
-		<div class="contentItem"><Proxy image="project_channels" href="channels/7m2ldksm" /></div>
-		<div class="contentItem"><img src="content/proxy/project_post_1.jpg" alt="search" /></div>
-		<div class="contentItem"><img src="content/proxy/project_post_2.jpg" alt="search" /></div>
-		<div class="contentItem"><img src="content/proxy/project_post_3.jpg" alt="search" /></div>
+		<Proxy image="project_team" className="contentItem"/>
+		<Proxy image="project_skills" className="contentItem" />
+		<Proxy image="project_links" className="contentItem" />
+		<Proxy image="project_channels" className="contentItem" href="channels/7m2ldksm" />
+		<Proxy image="project_post_1" className="contentItem" />
+		<Proxy image="project_post_2" className="contentItem" />
+		<Proxy image="project_post_3" className="contentItem" />
 	</div>
 </ScrollView>
 
@@ -39,12 +38,9 @@
 
     	line-height: 0;
 	}
-	.contentItem {
+	.content :global(.contentItem) {
 		width: 100%;
 
 		margin-bottom: 10px;
-	}
-	img {
-		width: 100%;
 	}
 </style>

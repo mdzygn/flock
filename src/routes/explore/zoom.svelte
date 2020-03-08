@@ -1,5 +1,6 @@
 <script>
 	import Hotspots from '../../components/Hotspots.svelte';
+	import Proxy from '../../components/Proxy.svelte';
 
 	import ScrollView from '../../components/ScrollView.svelte';
 </script>
@@ -9,9 +10,11 @@
 </svelte:head>
 
 <div class="content">
-	<a class="contentArea" href="messages/a4kcmsd3">
+	<div class="contentArea">
 		<Hotspots>
 			<a href="explore" style="
+				top: 0;
+				left: 0;
 				width: 100%;
 				height: 100%;">&nbsp;</a>
 			<a href="projects/m62lsp2o" style="
@@ -23,8 +26,8 @@
 				border-radius: 999px;">&nbsp;</a>
 		</Hotspots>
 
-		<img src="content/proxy/explore_zoomed.jpg" style="width: 100%; margin-top: 70px;" alt="search" />
-	</a>
+		<Proxy image="explore_zoomed" className="exploreZoomed" />
+	</div>
 </div>
 
 <style>
@@ -38,6 +41,11 @@
 		overflow: hidden;
 	}
 
+	.content :global(.hotspotContainer) {
+		top: 0;
+		height: 100%;
+	}
+
 	.contentArea {
 		position: absolute;
 		width: 100%;
@@ -46,5 +54,9 @@
 		display:flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.contentArea :global(.exploreZoomed) {
+		margin-top: 70px;
 	}
 </style>

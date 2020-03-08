@@ -1,5 +1,6 @@
 <script>
 	import ScrollView from '../../components/ScrollView.svelte';
+	import Proxy from '../../components/Proxy.svelte';
 
 	import Hotspots from '../../components/Hotspots.svelte';
 </script>
@@ -18,7 +19,7 @@
 				height: 40px;">&nbsp;</a>
 		</Hotspots>
 
-		<img src="content/proxy/messages.jpg" style="width: 100%" alt="search" />
+		<Proxy image="messages" />
 	</a>
 </ScrollView>
 

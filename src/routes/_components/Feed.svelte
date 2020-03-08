@@ -1,4 +1,6 @@
 <script>
+	import Proxy from '../../components/Proxy.svelte';
+
 	export let type = 'feed';
 	export let count = 6;
 	export let offset = 0;
@@ -11,10 +13,10 @@
 		<div class="feedItem">
 			{#if linkToProjects}
 				<a href="projects/m62lsp2o">
-					<img src="content/proxy/{type}{((index + offset) % count) + 1}.jpg" alt="post" />
+					<Proxy image="{type}{((index + offset) % count) + 1}" />
 				</a>
 			{:else}
-				<img src="content/proxy/{type}{((index + offset) % count) + 1}.jpg" alt="post" />
+				<Proxy image="{type}{((index + offset) % count) + 1}" />
 			{/if}
 		</div>
 	{/each}
@@ -29,11 +31,7 @@
     	line-height: 0;
 	}
 
-	.feedItem img {
+	.feedItem {
 		padding-bottom: 10px;
-	}
-
-	.feedItem img {
-		width: 100%;
 	}
 </style>

@@ -1,5 +1,6 @@
 <script>
 	import ScrollView from '../../components/ScrollView.svelte';
+	import Proxy from '../../components/Proxy.svelte';
 </script>
 
 <svelte:head>
@@ -7,7 +8,7 @@
 </svelte:head>
 
 <ScrollView>
-	<img src="content/proxy/my_profile.jpg" style="width: 100%; padding-bottom: 40px" alt="search" />
+	<Proxy image="my_profile" />
 </ScrollView>
 
 <style>

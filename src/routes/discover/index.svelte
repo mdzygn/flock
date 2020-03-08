@@ -1,5 +1,6 @@
 <script>
 	import ScrollView from '../../components/ScrollView.svelte';
+	import Proxy from '../../components/Proxy.svelte';
 
 	import Hotspots from '../../components/Hotspots.svelte';
 
@@ -25,7 +26,7 @@
 				height: 46px;">&nbsp;</a>
 		</Hotspots>
 
-		<img class="contentItem" src="content/proxy/discover_search.jpg" style="width: 100%" alt="search" />
+		<Proxy image="discover_search" />
 	</div>
 
 	<Feed type="discover" linkToProjects="{true}" count="{5}"/>

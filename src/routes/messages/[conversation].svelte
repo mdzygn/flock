@@ -1,5 +1,6 @@
 <script>
 	import ScrollView from '../../components/ScrollView.svelte';
+	import Proxy from '../../components/Proxy.svelte';
 </script>
 
 <svelte:head>
@@ -8,12 +9,12 @@
 
 <div class="messagesView">
 	<ScrollView anchorToBottom="{true}">
-		<img src="content/proxy/message_view.jpg" style="width: 100%" alt="search" />
+		<Proxy image="message_view" />
 	</ScrollView>
 </div>
 
 <div class="messageInput">
-	<img src="content/proxy/message_input.jpg" style="width: 100%" alt="search" />
+	<Proxy image="message_input" />
 </div>
 
 <style>

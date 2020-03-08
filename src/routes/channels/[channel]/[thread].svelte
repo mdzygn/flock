@@ -1,6 +1,6 @@
 <script>
-	import ScrollView from '../../components/ScrollView.svelte';
-	import Proxy from '../../components/Proxy.svelte';
+	import ScrollView from '../../../components/ScrollView.svelte';
+	import Proxy from '../../../components/Proxy.svelte';
 </script>
 
 <svelte:head>

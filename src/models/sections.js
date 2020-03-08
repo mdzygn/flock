@@ -70,17 +70,17 @@ export const sections = [
 	},
 
 	{
-		path: '/channels/.*',
-		id: 'channel',
+		path: '/channels/.*/.*',
+		id: 'thread',
 		label: '#Questions',
-		parentSection: 'projects/a',
+		parentSection: 'channels/7m2ldksm',
 		darkBg: true,
 	},
 	{
-		path: '/threads/.*',
-		id: 'threads',
+		path: '/channels/.*',
+		id: 'channel',
 		label: '#Questions',
-		parentSection: 'channels/a',
+		parentSection: 'projects/m62lsp2o',
 		darkBg: true,
 	},
 
@@ -88,7 +88,7 @@ export const sections = [
 		path: '/messages/group',
 		id: 'message_group_view',
 		label: 'World Creator',
-		parentSection: 'projects/a',
+		parentSection: 'projects/m62lsp2o',
 	},
 	{
 		path: '/messages/.*',

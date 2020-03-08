@@ -1,7 +1,7 @@
 <script>
-	import ScrollView from '../../../components/ScrollView.svelte';
-	import Proxy from '../../../components/Proxy.svelte';
-	import NewPostButton from '../../../components/NewPostButton.svelte';
+	import ScrollView from '../../components/ScrollView.svelte';
+	import Proxy from '../../components/Proxy.svelte';
+	import NewPostButton from '../../components/NewPostButton.svelte';
 </script>
 
 <svelte:head>
@@ -11,7 +11,7 @@
 <ScrollView>
 	<div class="content">
 		<Proxy image="channel_actions" className="channelActions" />
-		<Proxy image="channel_posts" className="channelPosts" href="channels/7m2ldksm/sm2ld9p2" />
+		<Proxy image="channel_posts" className="channelPosts" href="threads/sm2ld9p2" />
 		<NewPostButton />
 	</div>
 </ScrollView>

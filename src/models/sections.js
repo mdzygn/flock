@@ -70,17 +70,17 @@ export const sections = [
 	},
 
 	{
-		path: '/channels/.*/.*',
-		id: 'thread',
-		label: '#Questions',
-		parentSection: 'channels/7m2ldksm',
-		darkBg: true,
-	},
-	{
 		path: '/channels/.*',
 		id: 'channel',
 		label: '#Questions',
 		parentSection: 'projects/m62lsp2o',
+		darkBg: true,
+	},
+	{
+		path: '/threads/.*',
+		id: 'thread',
+		label: '#Questions',
+		parentSection: 'channels/7m2ldksm',
 		darkBg: true,
 	},
 

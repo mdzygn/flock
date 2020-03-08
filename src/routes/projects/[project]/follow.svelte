@@ -4,6 +4,8 @@
 
 	import Feed from './../../_components/Feed.svelte';
 
+	import ProjectTeamView from './../../_components/ProjectTeamView.svelte';
+
 	let projectId = 'm62lsp2o';
 </script>
 
@@ -51,7 +53,7 @@
 					height: 46px;">&nbsp;</a>
 			</Proxy>
 		</div>
-		<Proxy image="project_team" className="contentItem"/>
+		<ProjectTeamView />
 		<Proxy image="project_skills" className="contentItem" />
 		<Proxy image="project_links" className="contentItem" />
 		<Proxy image="project_channels_following" className="contentItem" href="channels/7m2ldksm" />

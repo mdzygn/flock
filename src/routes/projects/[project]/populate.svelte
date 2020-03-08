@@ -6,6 +6,8 @@
 
 	import NewPostButton from '../../../components/NewPostButton.svelte';
 
+	import ProjectTeamView from './../../_components/ProjectTeamView.svelte';
+
 	let projectId = 'm62lsp2o';
 </script>
 
@@ -35,7 +37,7 @@
 					height: 41px;">&nbsp;</a>
 			</Proxy>
 		</div>
-		<Proxy image="project_team_populate" className="contentItem"/>
+		<ProjectTeamView isNew="{true}" isOwner="{true}" />
 		<Proxy image="project_links_populate" className="contentItem" />
 		<Proxy image="project_skills_populate" className="contentItem" />
 		<Proxy image="project_channels_populate" className="contentItem" href="channels/7m2ldksm" />
@@ -48,9 +50,6 @@
 		width: 100%;
 
     	line-height: 0;
-	}
-	.content :global(.header) {
-		margin-bottom: 3px;
 	}
 	.content :global(.contentItem) {
 		width: 100%;

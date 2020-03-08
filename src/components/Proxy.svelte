@@ -3,9 +3,10 @@
 
     export let image;
     export let href;
+    export let className;
 </script>
 
-<div>
+<div class="{className}">
     <Hotspots>
         <slot></slot>
     </Hotspots>

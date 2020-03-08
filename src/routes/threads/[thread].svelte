@@ -1,5 +1,6 @@
 <script>
 	import ScrollView from '../../components/ScrollView.svelte';
+	import Proxy from '../../components/Proxy.svelte';
 </script>
 
 <svelte:head>
@@ -8,7 +9,7 @@
 
 <ScrollView>
 	<div class="content">
-		<img src="content/proxy/thread.jpg" style="width: 100%" alt="search" />
+    	<Proxy image="channel_thread" className="newPostButton" />
 	</div>
 </ScrollView>
 

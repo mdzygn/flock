@@ -51,7 +51,7 @@
 			position: relative;
 
 			max-width: 375px;
-			max-height: 667px;
+			max-height: 720px;
 
 			border: 1px solid #e0e0e0;
         	box-shadow: rgba(8, 8, 8, 0.2) 0px 5px 30px -5px;

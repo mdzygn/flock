@@ -54,9 +54,11 @@
 			</Proxy>
 		</div>
 		<ProjectTeamList />
+		<a href="projects/{projectId}#post">Test</a>
 		<Proxy image="project_skills" className="contentItem" />
 		<Proxy image="project_links" className="contentItem" />
 		<Proxy image="project_channels" className="contentItem" href="channels/7m2ldksm" />
+		<div id="post" />
 		<Proxy image="project_post_1" className="contentItem" />
 		<Proxy image="project_post_2" className="contentItem" />
 		<Proxy image="project_post_3" className="contentItem" />

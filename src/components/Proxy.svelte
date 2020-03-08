@@ -8,7 +8,7 @@
     let hasSlots = $$props.$$slots;
 </script>
 
-<div class="{className}">
+<div class="proxy {className}">
     {#if hasSlots}
         <Hotspots>
             <slot></slot>

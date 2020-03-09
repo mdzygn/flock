@@ -33,8 +33,9 @@ export const viewMode = appState.viewMode;
 export const locationMode = appState.locationMode;
 export const exploreZoomed = appState.exploreZoomed;
 
-const scrollRegionProperties = writable({});
-export const scrollRegionReset = writable(null);
+export const scrollRegionProperties = writable({});
+// const scrollRegionProperties = writable({});
+// export const scrollRegionReset = writable(null);
 // const scrollRegionProperties = appState.scrollRegionProperties;
 
 export function getScrollRegionProperties(id) {
@@ -59,8 +60,8 @@ export function resetScrollRegionPosition(id) {
     let curScrollRegionProperties = get(scrollRegionProperties);
     if (curScrollRegionProperties[id]) {
         curScrollRegionProperties[id].inited = false;
-        scrollRegionReset.set({id});
-        // scrollRegionProperties.set(curScrollRegionProperties);
+        // scrollRegionReset.set({id});
+        scrollRegionProperties.set(curScrollRegionProperties);
     }
 }
 

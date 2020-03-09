@@ -110,8 +110,11 @@ export function loadConversation(targetConversationId, options) {
     if (options && options.group) {
         isGroupConversation = options.group;
     }
-    viewingGroupConversation.set(isGroupConversation);
+
+    if (get(viewingGroupConversation) != isGroupConversation) {
+        viewingGroupConversation.set(isGroupConversation);
+        resetScrollRegionPosition('conversation');
+    }
 
     goto('messages/' + targetConversationId );
-    resetScrollRegionPosition('messages');
 }

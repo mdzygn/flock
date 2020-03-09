@@ -1,7 +1,5 @@
 <script>
-    import { scrollRegionReset, getScrollRegionProperties } from '../models/appState';
-	// import { stores } from '@sapper/app';
-	// const { page } = stores();
+    import { scrollRegionProperties, getScrollRegionProperties } from '../models/appState';
 
     import { onMount, onDestroy, tick } from 'svelte'; // afterUpdate
 
@@ -18,9 +16,6 @@
     function updateScroll() {
         regionProps.scrollTop = scrollRegion.scrollTop;
         // console.log('update scroll ' + regionProps.scrollTop);
-
-        // updateScrollRegionProperties(id);
-        // updateScrollRegionPosition(id, regionProps.scrollTop);
     }
 
     let scrollUpdateInited = false;
@@ -29,15 +24,6 @@
         if (!regionProps) {
             return;
         }
-
-        // if ($page.query.rs !== undefined) {
-        //     regionProps.inited = false;
-        //     console.log('reset scroll');
-        // } else {
-        //     scrollRegion.scrollTo(0, regionProps.scrollTop);
-        // }
-
-        // scrollRegion.scrollTo(0, regionProps.scrollTop);
 
         await tick();
 
@@ -51,11 +37,12 @@
             if (anchorToBottom) {
                 // TODO: check scroll if region height changes (e.g. image load)
                 regionProps.scrollTop = scrollRegion.scrollHeight;
-                // console.log('init scrollTop: ' + regionProps.scrollTop);
+                // console.log(id + ' init scrollTop: ' + regionProps.scrollTop);
             } else {
                 regionProps.scrollTop = 0;
             }
         }
+        // console.log(id + ' regionProps.scrollTop: ' + regionProps.scrollTop + ' ' + anchorToBottom);
 
         const curScrollRegion = scrollRegion;
 
@@ -81,18 +68,22 @@
         scrollRegion.addEventListener('scroll', updateScroll);
     }
 
-    scrollRegionReset.subscribe(event => {
-        if (event && event.id === id) {
-            console.log('event.id: ' + event.id);
-            if (scrollUpdateInited) {
-                updateScrollPosition();
-            } else {
-                scrollUpdateInited = true;
-            }
+    onMount(updateScrollPosition);
+
+    const scrollRegionResetUnsubscribe = scrollRegionProperties.subscribe(event => {
+        if (scrollUpdateInited) {
+            updateScrollPosition();
+        } else {
+            scrollUpdateInited = true;
         }
     });
 
-    onMount(updateScrollPosition);
+	onDestroy(() => {
+        scrollRegionResetUnsubscribe();
+        if (scrollRegion) {
+            scrollRegion.removeEventListener('scroll', updateScroll);
+        }
+    });
 
     // causes export 500 on index error
 	// onDestroy(() => {

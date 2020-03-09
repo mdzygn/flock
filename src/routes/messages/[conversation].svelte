@@ -12,7 +12,7 @@
 </svelte:head>
 
 <div class="messagesView">
-	<ScrollView anchorToBottom="{true}" id="messages">
+	<ScrollView anchorToBottom="{true}" id="conversation">
 		<Proxy image="{proxyMessageViewImage}" />
 	</ScrollView>
 </div>

@@ -198,7 +198,7 @@ export const getSectionByPath = (path, appState) => {
 	if (appState && /\/messages\/.*/.test(path) && appState.viewingGroupConversation) {
 		path = '/messages/group';
 	}
-	if (appState && /\/profile\/.*/.test(path) && appState.viewingOwnProfile) {
+	if (appState && /\/profile\/.*/.test(path) && !/\/profile\/.*\/.*/.test(path) && appState.viewingOwnProfile) {
 		path = '/profile';
 	}
 

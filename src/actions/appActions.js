@@ -1,9 +1,17 @@
 import { goto } from '@sapper/app';
-// import { get } from 'svelte/store';
+import { get } from 'svelte/store';
 
 import { projectId } from '../models/appState';
 
-import { following, owner, isNew, hasCreated } from '../models/projectViewState.js';
+import {
+    returnView,
+    following,
+    owner,
+    isNew,
+    hasCreated,
+    showingInfo,
+    liked,
+} from '../models/projectViewState.js';
 
 export function loadProject(targetProjectId, options) {
     projectId.set(targetProjectId);
@@ -29,6 +37,9 @@ export function loadProject(targetProjectId, options) {
         owner.set(false);
         following.set(false);
     }
+
+    showingInfo.set(false);
+    returnView.set(get(following) || get(owner) || get(liked));
 
     goto('projects/' + targetProjectId);
 }

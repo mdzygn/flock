@@ -22,10 +22,10 @@
 
 	import NewPostButton from '../../../components/NewPostButton.svelte';
 
-    onMount(() => {
-		$showingInfo = false;
-		$returnView = $following || $owner || $liked;
-	});
+    // onMount(() => {
+	// 	$showingInfo = false;
+	// 	$returnView = $following || $owner || $liked;
+	// });
 
 	let proxyHeaderImage;
 	let proxyActionsImage;

@@ -2,9 +2,35 @@
 	import ScrollView from '../../../components/ScrollView.svelte';
 	import Proxy from '../../../components/Proxy.svelte';
 
+	import {
+		collapsed,
+		following,
+		owner,
+		isNew,
+		showingInfo,
+		liked,
+	} from '../../../models/projectViewState.js';
+
+	let proxyActionsImage;
+	let proxyOverviewImage;
+
+	$: {
+		if ($following) {
+			proxyActionsImage = 'project_actions_following';
+			proxyOverviewImage = 'project_overview_following_changed';
+		} else {
+			proxyActionsImage = 'project_actions';
+			proxyOverviewImage = 'project_overview';
+		}
+	}
+
 	import Feed from './../../_components/Feed.svelte';
 
 	import ProjectTeamList from './../../_components/ProjectTeamList.svelte';
+
+	function toggleFollowing() {
+		$following = !$following;
+	}
 
 	let projectId = 'm62lsp2o';
 </script>
@@ -16,16 +42,16 @@
 <ScrollView id="project/{projectId}">
 	<div class="content">
 		<div class="contentItem">
-			<Proxy image="project_actions">
+			<Proxy image="{proxyActionsImage}">
 				<!-- Action Follow -->
-				<a href="projects/{projectId}/follow" style="
+				<div on:click="{toggleFollowing}" style="
 					left: 120px;
 					top: 0px;
 					width: 106px;
-					height: 47px;">&nbsp;</a>
+					height: 47px;">&nbsp;</div>
 			</Proxy>
 			<Proxy image="project_header_image" />
-			<Proxy image="project_overview">
+			<Proxy image="{proxyOverviewImage}">
 				<!-- Read More -->
 				<a href="projects/{projectId}/info" style="
 					left: 0;
@@ -46,11 +72,11 @@
 					height: 46px;">&nbsp;</a>
 
 				<!-- Follow -->
-				<a href="projects/{projectId}/follow" style="
+				<div on:click="{toggleFollowing}" style="
 					right: 35px;
 					top: 155px;
 					width: 110px;
-					height: 46px;">&nbsp;</a>
+					height: 46px;">&nbsp;</div>
 			</Proxy>
 		</div>
 		<ProjectTeamList />

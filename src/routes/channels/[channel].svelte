@@ -12,7 +12,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView id="channel/{$channelId}">
+<ScrollView id="channel">
 	<div class="content">
 		<Proxy image="channel_actions" className="channelActions" />
 		<Proxy image="channel_posts" className="channelPosts" onClick="{e => loadThread('sm2ld9p2')}" />

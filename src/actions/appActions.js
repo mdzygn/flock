@@ -79,3 +79,10 @@ export function loadThread(targetThreadId) {
     goto('threads/' + targetThreadId );
     resetScrollRegionPosition('thread');
 }
+
+export function loadChannel(targetChannelId) {
+    channelId.set(targetChannelId);
+
+    goto('channels/' + targetChannelId );
+    resetScrollRegionPosition('channel');
+}

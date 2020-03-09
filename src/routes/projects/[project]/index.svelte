@@ -16,7 +16,7 @@
 		liked,
 	} from '../../../models/projectViewState.js';
 
-	import { makePublic } from '../../../actions/appActions.js';
+	import { makePublic, loadChannel } from '../../../actions/appActions.js';
 
 	import Feed from './../../_components/Feed.svelte';
 
@@ -222,12 +222,12 @@
 			<ProjectTeamList isOwner="{$owner}" isNew="{$isNew}" />
 			<Proxy image="{proxyLinksImage}" className="contentItem" />
 			<Proxy image="{proxySkillsImage}" className="contentItem" />
-			<Proxy image="{proxyChannelsImage}" className="contentItem" href="channels/7m2ldksm" />
+			<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
 			{#if $owner}
 				<NewPostButton type="project_post_update" />
 			{/if}
 		{:else if $returnView}
-			<Proxy image="{proxyChannelsImage}" className="contentItem" href="channels/7m2ldksm" />
+			<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
 			{#if $owner}
 				<NewPostButton type="project_post_update" />
 			{/if}
@@ -246,7 +246,7 @@
 			<ProjectTeamList isOwner="{$owner}" isNew="{$isNew}" />
 			<Proxy image="{proxySkillsImage}" className="contentItem" />
 			<Proxy image="{proxyLinksImage}" className="contentItem" />
-			<Proxy image="{proxyChannelsImage}" className="contentItem" href="channels/7m2ldksm" />
+			<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
 			<div id="post" />
 			<div>
 				<Proxy image="project_post_1" className="contentItem" />

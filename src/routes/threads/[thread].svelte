@@ -4,7 +4,7 @@
 
 	import NewPostButton from '../../components/NewPostButton.svelte';
 
-	let threadId = 'sm2ld9p2';
+	import { threadId } from '../../models/appState';
 </script>
 
 <svelte:head>

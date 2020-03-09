@@ -2,14 +2,15 @@
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
+	export let locationMode = 'global';
+
+	$: proxyContentImage = (locationMode === 'global') ? 'explore_content' : 'explore_content_local';
+	$: proxyFilterImage = (locationMode === 'global') ? 'explore_filter' : 'explore_filter_local';
+
 	import Hotspots from '../../../components/Hotspots.svelte';
 	import Proxy from '../../../components/Proxy.svelte';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
-
-	function setDiscoverMode() {
-		dispatch('setViewMode', {viewMode: 'discover'});
-	}
 </script>
 
 <svelte:head>
@@ -28,24 +29,24 @@
 				border-radius: 999px;">&nbsp;</a>
 		</Hotspots>
 
-		<Proxy image="explore_content" />
+		<Proxy image="{proxyContentImage}" />
 	</div>
 
 	<div class="filterBar">
 		<Hotspots>
-			<div on:click="{setDiscoverMode}" style="
+			<div on:click="{() => {dispatch('setViewMode', {viewMode: 'discover'})}}" style="
 				left: 7px;
 				top: 5px;
 				width: 44px;
 				height: 46px;">&nbsp;</div>
-			<a href="explore/local" style="
+			<div on:click="{() => {dispatch('toggleLocationMode')}}" style="
 				right: 10px;
 				top: 5px;
 				width: 232px;
-				height: 46px;">&nbsp;</a>
+				height: 46px;">&nbsp;</div>
 		</Hotspots>
 
-		<Proxy image="explore_filter" />
+		<Proxy image="{proxyFilterImage}" />
 	</div>
 </div>
 

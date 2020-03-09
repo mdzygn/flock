@@ -3,10 +3,16 @@
 	import Explore from './_components/Explore.svelte';
 
 	let viewMode = 'discover';
+	let locationMode = 'global';
 
-	function onSetViewMode(event) {
+	function setViewMode(event) {
 		viewMode = event.detail.viewMode;
 		console.log('set view mode: ' + viewMode);
+	}
+
+	function toggleLocationMode() {
+		locationMode = (locationMode === 'global') ? 'local' : 'global';
+		console.log('set location mode: ' + locationMode);
 	}
 </script>
 
@@ -15,7 +21,7 @@
 </svelte:head>
 
 {#if viewMode === 'discover'}
-	<Discover on:setViewMode="{onSetViewMode}" />
+	<Discover {locationMode} on:setViewMode="{setViewMode}" on:toggleLocationMode="{toggleLocationMode}" />
 {:else}
-	<Explore on:setViewMode="{onSetViewMode}" />
+	<Explore {locationMode} on:setViewMode="{setViewMode}" on:toggleLocationMode="{toggleLocationMode}" />
 {/if}

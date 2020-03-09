@@ -1,20 +1,5 @@
-<script context="module">
-    const _regionProps = [];
-
-    function getRegionProperty(id) {
-        if (!id) {
-            return null;
-        }
-        if (!_regionProps[id]) {
-            _regionProps[id] = {
-                scrollTop: 0,
-            };
-        }
-        return _regionProps[id];
-    }
-</script>
-
 <script>
+    import { getScrollRegionProperties } from '../models/appState';
 	// import { stores } from '@sapper/app';
 	// const { page } = stores();
 
@@ -23,13 +8,15 @@
     export let anchorToBottom = false;
 
     export let id = null;
-    $: regionProps = getRegionProperty(id);
+    $: regionProps = getScrollRegionProperties(id);
 
     let scrollRegion;
 
     function updateScroll() {
         regionProps.scrollTop = scrollRegion.scrollTop;
         // console.log('update scroll ' + regionProps.scrollTop);
+
+        // updateScrollRegionProperties(id);
     }
 
     onMount(async () => {

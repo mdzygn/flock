@@ -11,10 +11,12 @@
         width: 100%;
     }
 
-    .hotspotContainer :global(a) {
+    .hotspotContainer :global(a), .hotspotContainer :global(div) {
         position: absolute;
 
         text-decoration: none;
         line-height: 0;
+
+        cursor: pointer;
     }
 </style>

@@ -67,9 +67,10 @@ export const sections = [
 		path: '/projects/create',
 		id: 'create',
 		label: 'New Project',
+		showBack: true,
 	},
 	{
-		path: '/projects/.*/.*',
+		path: '/projects/.*/populate',
 		id: 'project',
 		label: 'World Creator',
 		darkBg: true,
@@ -77,12 +78,20 @@ export const sections = [
 		parentSection: 'projects',
 	},
 	{
+		path: '/projects/.*/.*',
+		id: 'project',
+		label: 'World Creator',
+		darkBg: true,
+		showBack: true,
+		// parentSection: 'projects',
+	},
+	{
 		path: '/projects/.*',
 		id: 'project',
 		label: 'World Creator',
 		darkBg: true,
-		// showBack: true,
-		parentSection: 'discover',
+		showBack: true,
+		// parentSection: 'discover',
 	},
 
 	{
@@ -159,10 +168,6 @@ export const isDarkBgForPath = (segment) => {
 	const section = getSectionByPath(segment);
 	return section ? section.darkBg : false;
 }
-// export const isDarkBgForSegment = (segment) => {
-// 	const section = getSectionBySegment(segment);
-// 	return section ? section.darkBg : false;
-// }
 
 export const getSectionByPath = (path, appState) => {
 	if (appState && appState.viewMode === 'explore' && path === '/discover') {

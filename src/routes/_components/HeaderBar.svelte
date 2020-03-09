@@ -1,6 +1,6 @@
 <script>
     import { goto } from '@sapper/app';
-    import { viewMode } from '../../models/appModel.js';
+    import { viewMode } from '../../models/appState.js';
 
     import BackIcon from "../../assets/icons/back.png";
     import AvatarIcon from './AvatarIcon.svelte';

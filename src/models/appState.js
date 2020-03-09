@@ -28,9 +28,10 @@ function saveState() {
         return;
     }
 
-    console.log('save appState', appState);
+    const appStateString = JSON.stringify(appState);
+    console.log('save appState', appStateString);
 
-    localStorage.setItem('appState', JSON.stringify(appState));
+    localStorage.setItem('appState', appStateString);
 }
 
 function loadState() {

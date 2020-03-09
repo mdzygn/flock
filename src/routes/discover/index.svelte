@@ -1,5 +1,5 @@
 <script>
-	import { viewMode, locationMode, exploreZoomed } from '../../models/appModel.js';
+	import { viewMode, locationMode, exploreZoomed } from '../../models/appState.js';
 
 	import Discover from './_components/Discover.svelte';
 	import Explore from './_components/Explore.svelte';

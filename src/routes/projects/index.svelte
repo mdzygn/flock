@@ -1,23 +1,8 @@
 <script>
-	import { goto } from '@sapper/app';
-
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 
-	import { following, owner } from '../../models/projectViewState.js';
-
-	let projectId = 'm62lsp2o';
-
-	function loadOwnedProject() {
-		$owner = true;
-		$following = false;
-		goto('projects/' + projectId);
-	}
-	function loadFollowedProject() {
-		$owner = false;
-		$following = true;
-		goto('projects/' + projectId);
-	}
+	import { loadProject } from '../../models/appState.js';
 </script>
 
 <svelte:head>
@@ -26,12 +11,12 @@
 
 <ScrollView id="projects">
 	<Proxy image="projects">
-		<div on:click="{loadOwnedProject}" style="
+		<div on:click="{e => loadProject('m62lsp2o', {owner: true})}" style="
 			left: 0;
 			width: 100%;
 			top: 81px;
 			height: 196px;">&nbsp;</div>
-		<div on:click="{loadFollowedProject}" style="
+		<div on:click="{e => loadProject('m62lsp2o', {following: true})}" style="
 			left: 0px;
 			width: 100%;
 			top: 359px;

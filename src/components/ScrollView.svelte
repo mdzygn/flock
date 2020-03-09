@@ -8,7 +8,10 @@
     export let anchorToBottom = false;
 
     export let id = null;
-    $: regionProps = getScrollRegionProperties(id);
+    let regionProps = null;
+    $: {
+        regionProps = getScrollRegionProperties(id);
+    }
 
     let scrollRegion;
 

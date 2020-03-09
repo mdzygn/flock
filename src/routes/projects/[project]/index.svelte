@@ -27,6 +27,7 @@
 
 	import {
 		projectToggleFollowing,
+		projectToggleLiked,
 	} from '../../../actions/dataActions.js';
 
 	import Feed from './../../_components/Feed.svelte';
@@ -37,6 +38,9 @@
 
 	function toggleFollowing() {
 		projectToggleFollowing($projectId);
+	}
+	function toggleLiked() {
+		projectToggleLiked($projectId);
 	}
 
 	let proxyHeaderImage;
@@ -119,9 +123,23 @@
 						<Hotspot onClick="{toggleFollowing}" style="
 							left: 120px;
 							top: 0px;
-							width: 106px;
+							width: 142px;
 							height: 47px;" />
 					{/if}
+
+					<!-- Like Icon -->
+					{#if $liked}
+						<Proxy image="project_actions_like_selected" absolutePlacement="true" style="
+							left: 45px;
+							top: 12px;" />
+					{/if}
+
+					<!-- Like -->
+					<Hotspot onClick="{toggleLiked}" style="
+						left: 0;
+						top: 0px;
+						width: 112px;
+						height: 47px;" />
 				</Proxy>
 			{/if}
 			<Proxy image="{proxyHeaderImage}" />
@@ -176,8 +194,24 @@
 							height: 46px;" />
 					{/if}
 
+					{#if !$owner && !$returnView}
+						<!-- Like Icon -->
+						{#if $liked}
+							<Proxy image="project_like_selected" absolutePlacement="true" style="
+								left: 175px;
+								top: 164px;" />
+						{/if}
+
+						<!-- Like -->
+						<Hotspot onClick="{toggleLiked}" style="
+							left: 170px;
+							top: 159px;
+							width: 59px;
+							height: 40px;" />
+					{/if}
+
+					<!-- Follow -->
 					{#if !$owner}
-						<!-- Follow -->
 						<Hotspot onClick="{toggleFollowing}" style="
 							right: 35px;
 							top: 155px;
@@ -197,19 +231,33 @@
 				</div>
 				<Proxy image="{proxyShowingInfoActionsImage}">
 					{#if $owner}
-						<!-- Message -->
+						<!-- Send Message -->
 						<Hotspot onClick="{e => loadConversation('l40smlp3', {group: true})}" style="
 							right: 6px;
 							top: 2px;
 							width: 156px;
 							height: 46px;" />
 					{:else}
-						<!-- Message -->
+						<!-- Send Message -->
 						<Hotspot onClick="{e => loadConversation('l40smlp3', {group: true})}" style="
 							left: 7px;
 							top: 8px;
 							width: 121px;
 							height: 46px;" />
+
+						<!-- Like Icon -->
+						{#if $liked}
+							<Proxy image="project_like_selected" absolutePlacement="true" style="
+								left: 175px;
+								top: 16px;" />
+						{/if}
+
+						<!-- Like -->
+						<Hotspot onClick="{toggleLiked}" style="
+							left: 170px;
+							top: 11px;
+							width: 59px;
+							height: 40px;" />
 
 						<!-- Follow -->
 						<Hotspot onClick="{toggleFollowing}" style="

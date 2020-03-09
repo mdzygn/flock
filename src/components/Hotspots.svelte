@@ -10,7 +10,6 @@
         } else {
             hotspotContainerScale = 1;
         }
-        // console.log('hotspotContainerScale: ' + hotspotContainerScale);
     }
 
     $: cssTransform = 'transform: scale(' + hotspotContainerScale + ', ' + hotspotContainerScale + '); transform-origin: 0 0;';

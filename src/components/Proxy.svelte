@@ -4,12 +4,14 @@
     export let image;
     export let href = null;
     export let className = '';
+    export let style = null;
+    export let absolutePlacement = false;
     export let onClick = null;
 
     let hasSlots = $$props.$$slots;
 </script>
 
-<div class="proxy {className}">
+<div class="proxy {className}" {style} class:absolutePlacement>
     {#if hasSlots}
         <Hotspots>
             <slot></slot>
@@ -28,6 +30,14 @@
 <style>
     img {
         width: 100%;
+    }
+
+    .absolutePlacement img {
+        width: 46%;
+    }
+
+    .absolutePlacement {
+        position: absolute;
     }
 
     .button {

@@ -30,21 +30,25 @@ export function loadProject(targetProjectId, options) {
         hasCreated.set(true);
         owner.set(true);
         following.set(false);
+        liked.set(false);
     } else if (options && options.owner) {
         isNew.set(false);
         hasCreated.set(false);
         owner.set(true);
         following.set(false);
+        liked.set(false);
     } else if (options && options.following) {
         isNew.set(false);
         hasCreated.set(false);
         owner.set(false);
         following.set(true);
+        liked.set(false);
     } else {
         isNew.set(false);
         hasCreated.set(false);
         owner.set(false);
         following.set(false);
+        liked.set(false);
     }
 
     showingInfo.set(false);

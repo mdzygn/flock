@@ -3,10 +3,15 @@ import { DEBUG } from '../config';
 
 import {
     following,
+    liked,
 } from '../models/projectViewState.js';
 
 export function projectToggleFollowing(projectId) {
-    // if (DEBUG) console.log('toggle following on project "' + projectId + '"');
     const newState = !get(following);
     following.set(newState);
+}
+
+export function projectToggleLiked(projectId) {
+    const newState = !get(liked);
+    liked.set(newState);
 }

@@ -11,7 +11,7 @@
 
 <ScrollView>
 	<div class="content">
-		<Proxy image="create_project_2" href="projects/{projectId}/populate" />
+		<Proxy image="create_project_2" href="projects/{projectId}" />
 	</div>
 </ScrollView>
 

@@ -69,28 +69,29 @@ export const sections = [
 		label: 'New Project',
 		showBack: true,
 	},
-	{
-		path: '/projects/.*/populate',
-		id: 'project',
-		label: 'World Creator',
-		darkBg: true,
-		// showBack: true,
-		parentSection: 'projects',
-	},
-	{
-		path: '/projects/.*/.*',
-		id: 'project',
-		label: 'World Creator',
-		darkBg: true,
-		showBack: true,
-		// parentSection: 'projects',
-	},
+	// {
+	// 	path: '/projects/.*/populate',
+	// 	id: 'project',
+	// 	label: 'World Creator',
+	// 	darkBg: true,
+	// 	// showBack: true,
+	// 	parentSection: 'projects',
+	// },
+	// {
+	// 	path: '/projects/.*/.*',
+	// 	id: 'project',
+	// 	label: 'World Creator',
+	// 	darkBg: true,
+	// 	showBack: true,
+	// 	// parentSection: 'projects',
+	// },
 	{
 		path: '/projects/.*',
 		id: 'project',
 		label: 'World Creator',
 		darkBg: true,
 		showBack: true,
+		isProjectView: true,
 		// parentSection: 'discover',
 	},
 
@@ -164,8 +165,8 @@ export const getMainSectionForSegment = (segment) => {
 	return section ? (section.mainSection || section.segment) : undefined;
 }
 
-export const isDarkBgForPath = (segment) => {
-	const section = getSectionByPath(segment);
+export const isDarkBgForPath = (path) => {
+	const section = getSectionByPath(path);
 	return section ? section.darkBg : false;
 }
 

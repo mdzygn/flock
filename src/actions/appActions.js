@@ -3,25 +3,29 @@ import { goto } from '@sapper/app';
 
 import { projectId } from '../models/appState';
 
-import { following, owner, isNew } from '../models/projectViewState.js';
+import { following, owner, isNew, hasCreated } from '../models/projectViewState.js';
 
 export function loadProject(targetProjectId, options) {
     projectId.set(targetProjectId);
 
     if (options && options.isNew) {
         isNew.set(true);
+        hasCreated.set(true);
         owner.set(true);
         following.set(false);
     } else if (options && options.owner) {
         isNew.set(false);
+        hasCreated.set(false);
         owner.set(true);
         following.set(false);
     } else if (options && options.following) {
         isNew.set(false);
+        hasCreated.set(false);
         owner.set(false);
         following.set(true);
     } else {
         isNew.set(false);
+        hasCreated.set(false);
         owner.set(false);
         following.set(false);
     }

@@ -5,18 +5,22 @@
     import BackIcon from "../../assets/icons/back.png";
     import AvatarIcon from './AvatarIcon.svelte';
 
-	import sections, {getSectionByPath} from "../../models/sections.js";
+	import sections, { getSectionByPath, getIdForSection } from "../../models/sections.js";
+    import { hasCreated } from '../../models/projectViewState.js';
 
     export let segment;
     export let path;
 
     $: curSection = getSectionByPath(path, {viewMode: $viewMode});
+    $: isProjectView = curSection ? curSection.isProjectView : false;
     $: sectionLabel = curSection ? curSection.label : '';
     $: parentSection = curSection ? curSection.parentSection : null;
     $: showBack = curSection ? curSection.showBack : false;
 
     function goBack () {
-        if (showBack) {
+        if (isProjectView && $hasCreated) {
+            goto('projects');
+        } else if (showBack) {
             history.back();
         } else if (parentSection) {
             goto(parentSection);

@@ -19,6 +19,11 @@
 
 	import NewPostButton from '../../../components/NewPostButton.svelte';
 
+    onMount(() => {
+		$showingInfo = false;
+		$returnView = $following || $owner || $liked;
+	});
+
 	let proxyHeaderImage;
 	let proxyActionsImage;
 	let proxyOverviewImage;
@@ -84,11 +89,6 @@
 	function showInfo() {
 		$showingInfo = true;
 	}
-
-    onMount(() => {
-		$showingInfo = false;
-		$returnView = $following || $owner || $liked;
-	});
 
 	let projectId = 'm62lsp2o';
 </script>

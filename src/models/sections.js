@@ -37,9 +37,10 @@ export const sections = [
 	},
 	{
 		segment: 'profile',
-		label: 'Sasha Holmer',
+		label: 'My Profile',
 		darkBg: true,
 		showBack: true,
+		// parentSection: 'messages',
 	},
 	{
 		segment: 'explore',
@@ -171,8 +172,14 @@ export const isDarkBgForPath = (path) => {
 }
 
 export const getSectionByPath = (path, appState) => {
-	if (appState && appState.viewMode === 'explore' && path === '/discover') {
+	if (appState && path === '/discover' && appState.viewMode === 'explore') {
 		path = '/explore';
+	}
+	if (appState && /\/messages\/.*/.test(path) && appState.viewingGroupConversation) {
+		path = '/messages/group';
+	}
+	if (appState && /\/profile\/.*/.test(path) && appState.viewingOwnProfile) {
+		path = '/profile';
 	}
 
 	return sections.find(item => {

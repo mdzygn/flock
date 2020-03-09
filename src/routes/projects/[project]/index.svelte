@@ -17,7 +17,7 @@
 		liked,
 	} from '../../../models/projectViewState.js';
 
-	import { makePublic, loadChannel } from '../../../actions/appActions.js';
+	import { makePublic, loadChannel, loadConversation } from '../../../actions/appActions.js';
 
 	import Feed from './../../_components/Feed.svelte';
 
@@ -155,19 +155,19 @@
 
 					<!-- Message -->
 					{#if $owner}
-						<Hotspot href="messages/group" style="
+						<Hotspot onClick="{e => loadConversation('l40smlp3', {group: true})}" style="
 							right: 11px;
 							top: 122px;
 							width: 147px;
 							height: 40px;" />
 					{:else if $returnView}
-						<Hotspot href="messages/group" style="
+						<Hotspot onClick="{e => loadConversation('l40smlp3', {group: true})}" style="
 							right: 11px;
 							top: 122px;
 							width: 116px;
 							height: 40px;" />
 					{:else}
-						<Hotspot href="messages/group" style="
+						<Hotspot onClick="{e => loadConversation('l40smlp3', {group: true})}" style="
 							left: 7px;
 							top: 155px;
 							width: 121px;
@@ -196,14 +196,14 @@
 				<Proxy image="{proxyShowingInfoActionsImage}">
 					{#if $owner}
 						<!-- Message -->
-						<Hotspot href="messages/group" style="
+						<Hotspot onClick="{e => loadConversation('l40smlp3', {group: true})}" style="
 							right: 6px;
 							top: 2px;
 							width: 156px;
 							height: 46px;" />
 					{:else}
 						<!-- Message -->
-						<Hotspot href="messages/group" style="
+						<Hotspot onClick="{e => loadConversation('l40smlp3', {group: true})}" style="
 							left: 7px;
 							top: 8px;
 							width: 121px;

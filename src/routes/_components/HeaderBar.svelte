@@ -1,6 +1,10 @@
 <script>
     import { goto } from '@sapper/app';
-    import { viewMode } from '../../models/appState.js';
+    import {
+        viewMode,
+        viewingGroupConversation,
+        viewingOwnProfile,
+    } from '../../models/appState.js';
 
     import BackIcon from "../../assets/icons/back.png";
     import AvatarIcon from './AvatarIcon.svelte';
@@ -14,11 +18,18 @@
     export let segment;
     export let path;
 
-    $: curSection = getSectionByPath(path, {viewMode: $viewMode});
+    $: appState = {
+        viewMode: $viewMode,
+        viewingGroupConversation: $viewingGroupConversation,
+        viewingOwnProfile: $viewingOwnProfile,
+    };
+
+    $: curSection = getSectionByPath(path, appState);
     $: isProjectView = curSection ? curSection.isProjectView : false;
     $: sectionLabel = curSection ? curSection.label : '';
     $: parentSection = curSection ? curSection.parentSection : null;
     $: showBack = curSection ? curSection.showBack : false;
+    $: isMyProfile = curSection ? (curSection.segment === 'profile') : false;
 
     function goBack () {
         if (isProjectView && $hasCreated) {
@@ -27,6 +38,12 @@
             history.back();
         } else if (parentSection) {
             goto(parentSection);
+        }
+    }
+
+    function loadMyProfile() {
+        if (!isMyProfile) {
+            loadProfile('sl3p5oms', {owner: true});
         }
     }
 </script>
@@ -42,7 +59,7 @@
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
         {/if}
     {/if}
-    <div class="avatarIcon" on:click="{e => loadProfile('sl3p5oms', {owner: true})}">
+    <div class="avatarIcon" class:button="{!isMyProfile}" on:click="{loadMyProfile}">
         <AvatarIcon />
     </div>
 </headerBar>
@@ -52,7 +69,9 @@
         position: absolute;
         right: 11px;
         top: 11px;
+    }
 
+    .button {
         cursor: pointer;
     }
 

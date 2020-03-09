@@ -1,5 +1,5 @@
 <script>
-    import { scrollRegionProperties, getScrollRegionProperties } from '../models/appState';
+    import { scrollRegionReset, getScrollRegionProperties } from '../models/appState';
 	// import { stores } from '@sapper/app';
 	// const { page } = stores();
 
@@ -20,6 +20,7 @@
         // console.log('update scroll ' + regionProps.scrollTop);
 
         // updateScrollRegionProperties(id);
+        // updateScrollRegionPosition(id, regionProps.scrollTop);
     }
 
     let scrollUpdateInited = false;
@@ -80,11 +81,14 @@
         scrollRegion.addEventListener('scroll', updateScroll);
     }
 
-    scrollRegionProperties.subscribe(() => {
-        if (scrollUpdateInited) {
-            updateScrollPosition();
-        } else {
-            scrollUpdateInited = true;
+    scrollRegionReset.subscribe(event => {
+        if (event && event.id === id) {
+            console.log('event.id: ' + event.id);
+            if (scrollUpdateInited) {
+                updateScrollPosition();
+            } else {
+                scrollUpdateInited = true;
+            }
         }
     });
 

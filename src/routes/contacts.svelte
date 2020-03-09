@@ -4,7 +4,7 @@
 	import Proxy from '../components/Proxy.svelte';
     import Hotspot from '../components/Hotspot.svelte';
 
-	import { loadProfile } from '../actions/appActions.js';
+	import { loadProfile, loadConversation } from '../actions/appActions.js';
 </script>
 
 <svelte:head>
@@ -21,7 +21,7 @@
 			height: 693px;" />
 
 		<!-- Send Message -->
-		<Hotspot href="messages/l40smlp3" style="
+		<Hotspot onClick="{e => loadConversation('l40smlp3')}" style="
 			right: 7px;
 			top: 51px;
 			width: 59px;

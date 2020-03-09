@@ -38,7 +38,7 @@
 						height: 47px;" />
 				{:else}
 					<!-- Action Send Message -->
-					<Hotspot href="messages/l40smlp3" style="
+					<Hotspot onClick="{e => loadConversation('l40smlp3')}" style="
 						left: 128px;
 						top: 0px;
 						width: 132px;
@@ -49,7 +49,7 @@
 			<Proxy image="{proxyOverviewActionsImage}">
 				{#if !$viewingOwnProfile}
 					<!-- Send Message -->
-					<Hotspot href="messages/l40smlp3" style="
+					<Hotspot onClick="{e => loadConversation('l40smlp3')}" style="
 						left: 11px;
 						top: 7px;
 						width: 116px;

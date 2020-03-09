@@ -5,8 +5,10 @@ import {
     projectId,
     channelId,
     threadId,
+    conversationId,
     profileId,
     viewingOwnProfile,
+    viewingGroupConversation,
     resetScrollRegionPosition,
 } from '../models/appState';
 
@@ -99,4 +101,17 @@ export function loadProfile(targetProfileId, options) {
 
     goto('profile/' + targetProfileId );
     resetScrollRegionPosition('profile');
+}
+
+export function loadConversation(targetConversationId, options) {
+    conversationId.set(targetConversationId);
+
+    let isGroupConversation = false;
+    if (options && options.group) {
+        isGroupConversation = options.group;
+    }
+    viewingGroupConversation.set(isGroupConversation);
+
+    goto('messages/' + targetConversationId );
+    resetScrollRegionPosition('messages');
 }

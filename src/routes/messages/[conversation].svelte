@@ -2,7 +2,9 @@
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 
-	let conversationId = 'a4kcmsd3';
+	import { conversationId, viewingGroupConversation } from '../../models/appState';
+
+	$: proxyMessageViewImage = $viewingGroupConversation ? 'messages_group_view': 'message_view';
 </script>
 
 <svelte:head>
@@ -10,8 +12,8 @@
 </svelte:head>
 
 <div class="messagesView">
-	<ScrollView anchorToBottom="{true}" id="messages/{conversationId}">
-		<Proxy image="message_view" />
+	<ScrollView anchorToBottom="{true}" id="messages">
+		<Proxy image="{proxyMessageViewImage}" />
 	</ScrollView>
 </div>
 

@@ -17,7 +17,17 @@
 		liked,
 	} from '../../../models/projectViewState.js';
 
-	import { makePublic, loadChannel, loadConversation, editProjectDetails } from '../../../actions/appActions.js';
+	import {
+		makePublic,
+		loadChannel,
+		loadConversation,
+		editProjectDetails,
+		showInfo,
+	} from '../../../actions/appActions.js';
+
+	import {
+		projectToggleFollowing,
+	} from '../../../actions/dataActions.js';
 
 	import Feed from './../../_components/Feed.svelte';
 
@@ -25,10 +35,9 @@
 
 	import NewPostButton from '../../../components/NewPostButton.svelte';
 
-    // onMount(() => {
-	// 	$showingInfo = false;
-	// 	$returnView = $following || $owner || $liked;
-	// });
+	function toggleFollowing() {
+		projectToggleFollowing($projectId);
+	}
 
 	let proxyHeaderImage;
 	let proxyActionsImage;
@@ -93,13 +102,6 @@
 		} else {
 			proxyShowingInfoActionsImage = 'project_info_actions';
 		}
-	}
-
-	function toggleFollowing() {
-		$following = !$following;
-	}
-	function showInfo() {
-		$showingInfo = true;
 	}
 </script>
 

@@ -121,3 +121,7 @@ export function loadConversation(targetConversationId, options) {
 
     goto('messages/' + targetConversationId );
 }
+
+export function showInfo() {
+    showingInfo.set(true);
+}

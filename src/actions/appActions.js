@@ -62,6 +62,9 @@ export function loadProjectPost(targetProjectId) {
 export function newProject() {
     goto('projects/new');
 }
+export function editProjectDetails() {
+    goto('projects/' + get(projectId) + '/details');
+}
 
 export function createProject(targetProjectId) {
     loadProject(targetProjectId, {isNew: true});

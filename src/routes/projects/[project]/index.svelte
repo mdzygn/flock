@@ -17,7 +17,7 @@
 		liked,
 	} from '../../../models/projectViewState.js';
 
-	import { makePublic, loadChannel, loadConversation } from '../../../actions/appActions.js';
+	import { makePublic, loadChannel, loadConversation, editProjectDetails } from '../../../actions/appActions.js';
 
 	import Feed from './../../_components/Feed.svelte';
 
@@ -126,7 +126,7 @@
 			{#if $isNew}
 				<Proxy image="{proxyOverviewImage}">
 					<!-- Add Details -->
-					<Hotspot href="projects/{$projectId}/details" style="
+					<Hotspot onClick="{editProjectDetails}" style="
 						left: 8px;
 						top: 123px;
 						width: 172px;

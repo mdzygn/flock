@@ -8,6 +8,7 @@
 	import ProjectList from './../../_components/ProjectList.svelte';
 
 	import { profileId, viewingOwnProfile } from '../../../models/appState';
+	import { loadConversation } from '../../../actions/appActions';
 
 	$: proxyActionsImage = $viewingOwnProfile ? 'profile_actions_owner' : 'profile_actions';
 	$: proxyOverviewActionsImage = $viewingOwnProfile ? 'profile_overview_owner_actions' : 'profile_overview_actions';

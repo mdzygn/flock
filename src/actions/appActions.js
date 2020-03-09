@@ -22,6 +22,10 @@ export function loadProject(targetProjectId, options) {
     goto('projects/' + targetProjectId);
 }
 
+export function loadProjectPost(targetProjectId) {
+    loadProject(targetProjectId + '#post');
+}
+
 export function createProject() {
     goto('projects/create');
 }

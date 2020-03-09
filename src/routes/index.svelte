@@ -3,6 +3,8 @@
 	import Proxy from '../components/Proxy.svelte';
 
 	import Feed from './_components/Feed.svelte';
+
+	import { loadProject, loadProjectPost } from '../actions/appActions.js';
 </script>
 
 <svelte:head>
@@ -10,15 +12,14 @@
 </svelte:head>
 
 <ScrollView id="newsfeed">
-	<!-- <Feed /> -->
-
 	<div class="feed">
-		<Proxy image="feed1" href="projects/m62lsp2o#post" />
-		<Proxy image="feed3" href="projects/m62lsp2o#post" />
-		<Proxy image="feed4" href="projects/m62lsp2o" />
-		<Proxy image="feed5" href="projects/m62lsp2o#post" />
-		<Proxy image="feed6" href="projects/m62lsp2o" />
+		<Proxy image="feed1" onClick="{e => loadProjectPost('m62lsp2o')}" />
+		<Proxy image="feed3" onClick="{e => loadProjectPost('m62lsp2o')}" />
+		<Proxy image="feed4" onClick="{e => loadProject('m62lsp2o')}" />
+		<Proxy image="feed5" onClick="{e => loadProjectPost('m62lsp2o')}" />
+		<Proxy image="feed6" onClick="{e => loadProject('m62lsp2o')}" />
 	</div>
+	<!-- <Feed /> -->
 </ScrollView>
 
 <style>

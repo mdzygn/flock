@@ -2,6 +2,8 @@
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
+	import { loadProject } from '../../../actions/appActions.js';
+
 	import Hotspots from '../../../components/Hotspots.svelte';
 	import Proxy from '../../../components/Proxy.svelte';
 
@@ -25,13 +27,13 @@
 				height: 100%;">&nbsp;</div>
 
 			<!-- Select Project -->
-			<a href="projects/{projectId}" style="
+			<div class="button" on:click="{e => loadProject('m62lsp2o')}" style="
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);
 				width: 250px;
 				height: 250px;
-				border-radius: 999px;">&nbsp;</a>
+				border-radius: 999px;">&nbsp;</div>
 		</Hotspots>
 
 		<Proxy image="explore_zoomed" className="exploreZoomed" />
@@ -66,5 +68,9 @@
 
 	.contentArea :global(.exploreZoomed) {
 		margin-top: 55px;
+	}
+
+	.button {
+		cursor: pointer;
 	}
 </style>

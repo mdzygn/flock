@@ -1,4 +1,6 @@
 <script>
+	import { loadProject } from '../../actions/appActions.js';
+
 	import Proxy from '../../components/Proxy.svelte';
 
 	export let type = 'feed';
@@ -14,9 +16,10 @@
 	{#each new Array(count) as item, index}
 		<div class="feedItem">
 			{#if linkToProjects}
-				<a href="projects/{projectId}">
+				<!-- <a href="projects/{projectId}"> -->
+				<div class="button" on:click="{e => loadProject('m62lsp2o')}">
 					<Proxy image="{type}{((index + offset) % count) + 1}" />
-				</a>
+				</div>
 			{:else}
 				<Proxy image="{type}{((index + offset) % count) + 1}" />
 			{/if}
@@ -35,5 +38,9 @@
 
 	.feedItem {
 		padding-bottom: 10px;
+	}
+
+	.button {
+		cursor: pointer;
 	}
 </style>

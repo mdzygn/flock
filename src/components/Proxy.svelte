@@ -21,7 +21,7 @@
             <img src="content/proxy/{image}.jpg" alt="proxy" />
         </a>
     {:else}
-        <img src="content/proxy/{image}.jpg" alt="proxy" on:click={onClick} class:isButton={onClick} />
+        <img src="content/proxy/{image}.jpg" alt="proxy" on:click={onClick} class:button={onClick} />
     {/if}
 </div>
 
@@ -30,7 +30,7 @@
         width: 100%;
     }
 
-    .isButton {
+    .button {
         cursor: pointer;
     }
 </style>

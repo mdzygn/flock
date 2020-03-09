@@ -5,6 +5,8 @@ import { createModel } from '../utils/createModel';
 
 const appState = createModel({
     projectId: 'm62lsp2o',
+    channelId: '7m2ldksm',
+    threadId: 'sm2ld9p2',
     profileId: 'bl20a8lm',
 
     viewMode: 'discover',
@@ -15,6 +17,8 @@ const appState = createModel({
 }, {persist: true});
 
 export const projectId = appState.projectId;
+export const channelId = appState.channelId;
+export const threadId = appState.threadId;
 export const profileId = appState.profileId;
 
 export const viewMode = appState.viewMode;

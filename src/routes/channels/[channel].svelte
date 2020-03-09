@@ -3,17 +3,17 @@
 	import Proxy from '../../components/Proxy.svelte';
 	import NewPostButton from '../../components/NewPostButton.svelte';
 
-	let channelId = '7m2ldksm';
+	import { channelId, threadId } from '../../models/appState';
 </script>
 
 <svelte:head>
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView id="channel/{channelId}">
+<ScrollView id="channel/{$channelId}">
 	<div class="content">
 		<Proxy image="channel_actions" className="channelActions" />
-		<Proxy image="channel_posts" className="channelPosts" href="threads/sm2ld9p2" />
+		<Proxy image="channel_posts" className="channelPosts" href="threads/{$threadId}" />
 		<NewPostButton />
 	</div>
 </ScrollView>

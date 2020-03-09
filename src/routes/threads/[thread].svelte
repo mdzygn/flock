@@ -11,7 +11,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView> <!--  id="thread/{threadId}" -->
+<ScrollView id="thread">
 	<div class="content">
 		<Proxy image="thread_post" className="threadPost" />
 		<Proxy image="thread_actions" className="threadActions" />

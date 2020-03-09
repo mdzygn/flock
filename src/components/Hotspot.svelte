@@ -13,12 +13,21 @@
 </script>
 
 {#if href}
-	<a {href} on:click={onClick} {style}>&nbsp;</a>
+	<a {href} on:click={onClick} class="hotspot" {style}>&nbsp;</a>
 {:else}
-	<div on:click={onClick} class:button={onClick} {style} />
+	<div on:click={onClick} class="hotspot" class:button={onClick} {style} />
 {/if}
 
 <style>
+	.hotspot {
+        position: absolute;
+
+        text-decoration: none;
+        line-height: 0;
+
+        /* background-color: rgba(255, 0, 0, 0.2); */
+	}
+
 	.button {
 		cursor: pointer;
 	}

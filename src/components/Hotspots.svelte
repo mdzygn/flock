@@ -1,14 +1,30 @@
+<svelte:window bind:innerWidth={viewWidth}/>
+
 <script>
+    let viewWidth = 0;
+
+    let hotspotContainerScale = 1;
+    $: {
+        if (viewWidth < 480) {
+            hotspotContainerScale = viewWidth / 375;
+        } else {
+            hotspotContainerScale = 1;
+        }
+        // console.log('hotspotContainerScale: ' + hotspotContainerScale);
+    }
+
+    $: cssTransform = 'transform: scale(' + hotspotContainerScale + ', ' + hotspotContainerScale + '); transform-origin: 0 0;';
 </script>
 
-<div class="hotspotContainer">
+<div class="hotspotContainer" style="{cssTransform}">
     <slot></slot>
 </div>
 
 <style>
     .hotspotContainer {
         position: absolute;
-        width: 100%;
+        width: 375px;
+        /* width: 100%; */
     }
 
     .hotspotContainer :global(a), .hotspotContainer :global(div) {

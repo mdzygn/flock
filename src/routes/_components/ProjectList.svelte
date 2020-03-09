@@ -3,8 +3,6 @@
     import Hotspot from '../../components/Hotspot.svelte';
 
 	import { loadProject } from '../../actions/appActions.js';
-
-	let projectId = 'm62lsp2o';
 </script>
 
 <div class="content">

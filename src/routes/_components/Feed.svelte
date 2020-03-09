@@ -7,8 +7,6 @@
 	export let count = 6;
 	export let offset = 0;
 
-	let projectId = 'm62lsp2o';
-
 	export let linkToProjects = false;
 </script>
 

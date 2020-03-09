@@ -8,8 +8,6 @@
 	import Proxy from '../../../components/Proxy.svelte';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
-
-	let projectId = 'm62lsp2o';
 </script>
 
 <svelte:head>

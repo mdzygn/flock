@@ -4,9 +4,6 @@
     import Hotspot from '../../../components/Hotspot.svelte';
 
 	import { loadProject } from '../../../actions/appActions.js';
-
-	let projectId = 'm62lsp2o';
-	let profileId = 'bl20a8lm';
 </script>
 
 <svelte:head>

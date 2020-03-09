@@ -5,6 +5,8 @@
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
 
+	import { projectId } from '../../../models/appState';
+
 	import {
 		returnView,
 		following,
@@ -98,8 +100,6 @@
 	function showInfo() {
 		$showingInfo = true;
 	}
-
-	let projectId = 'm62lsp2o';
 </script>
 
 <svelte:head>
@@ -111,19 +111,21 @@
 		<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo && !$isNew}">
 			{#if !$isNew}
 				<Proxy image="{proxyActionsImage}">
-					<!-- Action Follow -->
-					<div on:click="{toggleFollowing}" style="
-						left: 120px;
-						top: 0px;
-						width: 106px;
-						height: 47px;">&nbsp;</div>
+					{#if !$owner}
+						<!-- Action Follow -->
+						<div on:click="{toggleFollowing}" style="
+							left: 120px;
+							top: 0px;
+							width: 106px;
+							height: 47px;">&nbsp;</div>
+					{/if}
 				</Proxy>
 			{/if}
 			<Proxy image="{proxyHeaderImage}" />
 			{#if $isNew}
 				<Proxy image="{proxyOverviewImage}">
 					<!-- Add Details -->
-					<a href="projects/{projectId}/details" style="
+					<a href="projects/{$projectId}/details" style="
 						left: 8px;
 						top: 123px;
 						width: 172px;
@@ -151,18 +153,34 @@
 						height: 30px;">&nbsp;</div>
 
 					<!-- Message -->
-					<a href="messages/group" style="
-						left: 7px;
-						top: 155px;
-						width: 121px;
-						height: 46px;">&nbsp;</a>
+					{#if $owner}
+						<a href="messages/group" style="
+							right: 11px;
+							top: 122px;
+							width: 147px;
+							height: 40px;">&nbsp;</a>
+					{:else if $returnView}
+						<a href="messages/group" style="
+							right: 11px;
+							top: 122px;
+							width: 116px;
+							height: 40px;">&nbsp;</a>
+					{:else}
+						<a href="messages/group" style="
+							left: 7px;
+							top: 155px;
+							width: 121px;
+							height: 46px;">&nbsp;</a>
+					{/if}
 
-					<!-- Follow -->
-					<div on:click="{toggleFollowing}" style="
-						right: 35px;
-						top: 155px;
-						width: 110px;
-						height: 46px;">&nbsp;</div>
+					{#if !$owner}
+						<!-- Follow -->
+						<div on:click="{toggleFollowing}" style="
+							right: 35px;
+							top: 155px;
+							width: 110px;
+							height: 46px;">&nbsp;</div>
+					{/if}
 				</Proxy>
 			{:else}
 				<Proxy image="project_overview_info" />
@@ -175,19 +193,28 @@
 					<Proxy image="project_info_content_3" />
 				</div>
 				<Proxy image="{proxyShowingInfoActionsImage}">
-					<!-- Message -->
-					<a href="messages/group" style="
-						left: 7px;
-						top: 8px;
-						width: 121px;
-						height: 46px;">&nbsp;</a>
+					{#if $owner}
+						<!-- Message -->
+						<a href="messages/group" style="
+							right: 6px;
+							top: 2px;
+							width: 156px;
+							height: 46px;">&nbsp;</a>
+					{:else}
+						<!-- Message -->
+						<a href="messages/group" style="
+							left: 7px;
+							top: 8px;
+							width: 121px;
+							height: 46px;">&nbsp;</a>
 
-					<!-- Follow -->
-					<div on:click="{toggleFollowing}" style="
-						right: 35px;
-						top: 8px;
-						width: 110px;
-						height: 46px;">&nbsp;</div>
+						<!-- Follow -->
+						<div on:click="{toggleFollowing}" style="
+							right: 35px;
+							top: 8px;
+							width: 110px;
+							height: 46px;">&nbsp;</div>
+					{/if}
 				</Proxy>
 			{/if}
 		</div>

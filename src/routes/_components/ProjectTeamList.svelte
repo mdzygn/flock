@@ -16,8 +16,6 @@
             }
         }
     }
-
-	let projectId = 'm62lsp2o';
 </script>
 
 <div class="content">

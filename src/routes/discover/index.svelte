@@ -1,27 +1,23 @@
 <script>
+	import { viewMode, locationMode, exploreZoomed } from '../../models/appModel.js';
+
 	import Discover from './_components/Discover.svelte';
 	import Explore from './_components/Explore.svelte';
 	import ExploreZoomed from './_components/ExploreZoomed.svelte';
 
-	let viewMode = 'discover';
-	let locationMode = 'global';
-	let exploreZoomed = false;
-
 	function setViewMode(event) {
-		viewMode = event.detail.viewMode;
-		console.log('set view mode: ' + viewMode);
+		$viewMode = event.detail.viewMode;
 	}
 
 	function toggleLocationMode() {
-		locationMode = (locationMode === 'global') ? 'local' : 'global';
-		console.log('set location mode: ' + locationMode);
+		$locationMode = ($locationMode === 'global') ? 'local' : 'global';
 	}
 
 	function exploreZoomIn() {
-		exploreZoomed = true;
+		$exploreZoomed = true;
 	}
 	function exploreZoomOut() {
-		exploreZoomed = false;
+		$exploreZoomed = false;
 	}
 </script>
 
@@ -29,12 +25,12 @@
 	<title>Flock</title>
 </svelte:head>
 
-{#if viewMode === 'discover'}
-	<Discover {locationMode} on:setViewMode="{setViewMode}" on:toggleLocationMode="{toggleLocationMode}" />
+{#if $viewMode === 'discover'}
+	<Discover locationMode={$locationMode} on:setViewMode="{setViewMode}" on:toggleLocationMode="{toggleLocationMode}" />
 {:else}
-	{#if exploreZoomed}
+	{#if $exploreZoomed}
 		<ExploreZoomed on:exploreZoomOut="{exploreZoomOut}" />
 	{:else}
-		<Explore {locationMode} on:setViewMode="{setViewMode}" on:toggleLocationMode="{toggleLocationMode}" on:exploreZoomIn="{exploreZoomIn}" />
+		<Explore locationMode={$locationMode} on:setViewMode="{setViewMode}" on:toggleLocationMode="{toggleLocationMode}" on:exploreZoomIn="{exploreZoomIn}" />
 	{/if}
 {/if}

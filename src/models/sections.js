@@ -164,7 +164,11 @@ export const isDarkBgForPath = (segment) => {
 // 	return section ? section.darkBg : false;
 // }
 
-export const getSectionByPath = (path) => {
+export const getSectionByPath = (path, appState) => {
+	if (appState && appState.viewMode === 'explore' && path === '/discover') {
+		path = '/explore';
+	}
+
 	return sections.find(item => {
 		let sectionPath = getPathForSection(item);
 		return new RegExp('^' + sectionPath + '$').test(path)

@@ -1,5 +1,6 @@
 <script>
-    import { goto } from '@sapper/app'
+    import { goto } from '@sapper/app';
+    import { viewMode } from '../../models/appModel.js';
 
     import BackIcon from "../../assets/icons/back.png";
     import AvatarIcon from './AvatarIcon.svelte';
@@ -9,7 +10,7 @@
     export let segment;
     export let path;
 
-    $: curSection = getSectionByPath(path);
+    $: curSection = getSectionByPath(path, {viewMode: $viewMode});
     $: sectionLabel = curSection ? curSection.label : '';
     $: parentSection = curSection ? curSection.parentSection : null;
     $: showBack = curSection ? curSection.showBack : false;

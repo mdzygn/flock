@@ -1,5 +1,8 @@
 <script>
 	import Proxy from '../../components/Proxy.svelte';
+    import Hotspot from '../../components/Hotspot.svelte';
+
+	import { loadProfile } from '../../actions/appActions.js';
 
     export let isOwner = false;
     export let isNew = false;
@@ -21,11 +24,11 @@
 <div class="content">
 	<Proxy image="{proxyImage}" className="contentItem" >
         <!-- Contact Profile -->
-        <a href="profile/bl20a8lm" style="
+        <Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
             left: 0;
             top: 31px;
             width: 100%;
-            height: 56px;">&nbsp;</a>
+            height: 56px;" />
     </Proxy>
 </div>
 

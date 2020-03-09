@@ -1,6 +1,9 @@
 <script>
 	import ScrollView from '../components/ScrollView.svelte';
 	import Proxy from '../components/Proxy.svelte';
+    import Hotspot from '../components/Hotspot.svelte';
+
+	import { loadProfile } from '../actions/appActions.js';
 </script>
 
 <svelte:head>
@@ -10,11 +13,11 @@
 <ScrollView id="contacts">
 	<Proxy image="contacts">
 		<!-- Contact Profiles -->
-		<a href="profile/bl20a8lm" style="
+		<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
 			left: 9px;
 			top: 46px;
 			width: 256px;
-			height: 693px;">&nbsp;</a>
+			height: 693px;" />
 
 		<!-- Send Message -->
 		<a href="messages/l40smlp3" style="

@@ -5,8 +5,11 @@
     import BackIcon from "../../assets/icons/back.png";
     import AvatarIcon from './AvatarIcon.svelte';
 
-	import sections, { getSectionByPath, getIdForSection } from "../../models/sections.js";
+    import sections, { getSectionByPath, getIdForSection } from "../../models/sections.js";
+
     import { hasCreated } from '../../models/projectViewState.js';
+
+	import { loadProfile } from '../../actions/appActions.js';
 
     export let segment;
     export let path;
@@ -39,9 +42,9 @@
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
         {/if}
     {/if}
-    <a class="avatarIcon" href="profile">
+    <div class="avatarIcon" on:click="{e => loadProfile('sl3p5oms', {owner: true})}">
         <AvatarIcon />
-    </a>
+    </div>
 </headerBar>
 
 <style>
@@ -49,6 +52,8 @@
         position: absolute;
         right: 11px;
         top: 11px;
+
+        cursor: pointer;
     }
 
     headerBar {

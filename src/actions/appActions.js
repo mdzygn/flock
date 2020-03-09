@@ -6,6 +6,7 @@ import {
     channelId,
     threadId,
     profileId,
+    viewingOwnProfile,
     resetScrollRegionPosition,
 } from '../models/appState';
 
@@ -85,4 +86,17 @@ export function loadChannel(targetChannelId) {
 
     goto('channels/' + targetChannelId );
     resetScrollRegionPosition('channel');
+}
+
+export function loadProfile(targetProfileId, options) {
+    profileId.set(targetProfileId);
+
+    let isProfileOwner = false;
+    if (options && options.owner) {
+        isProfileOwner = options.owner;
+    }
+    viewingOwnProfile.set(isProfileOwner);
+
+    goto('profile/' + targetProfileId );
+    resetScrollRegionPosition('profile');
 }

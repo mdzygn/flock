@@ -1,5 +1,5 @@
 <script>
-    import { getScrollRegionProperties } from '../models/appState';
+    import { scrollRegionProperties, getScrollRegionProperties } from '../models/appState';
 	// import { stores } from '@sapper/app';
 	// const { page } = stores();
 
@@ -19,7 +19,9 @@
         // updateScrollRegionProperties(id);
     }
 
-    onMount(async () => {
+    let scrollUpdateInited = false;
+
+    const updateScrollPosition = async () => {
         if (!regionProps) {
             return;
         }
@@ -34,6 +36,10 @@
         // scrollRegion.scrollTo(0, regionProps.scrollTop);
 
         await tick();
+
+        if (!regionProps || !scrollRegion) {
+            return;
+        }
 
         if (!regionProps.inited) {
             regionProps.inited = true;
@@ -69,7 +75,17 @@
         scrollRegion.scrollTo(0, regionProps.scrollTop);
 
         scrollRegion.addEventListener('scroll', updateScroll);
+    }
+
+    scrollRegionProperties.subscribe(() => {
+        if (scrollUpdateInited) {
+            updateScrollPosition();
+        } else {
+            scrollUpdateInited = true;
+        }
     });
+
+    onMount(updateScrollPosition);
 
     // causes export 500 on index error
 	// onDestroy(() => {

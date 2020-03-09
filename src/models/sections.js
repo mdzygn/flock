@@ -127,7 +127,7 @@ export const sections = [
 		// parentSection: 'messages',
 	},
 	{
-		path: '/profile/likes',
+		path: '/profile/.*/likes',
 		id: 'profile_view',
 		label: 'Likes',
 		darkBg: true,

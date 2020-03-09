@@ -9,6 +9,8 @@ const appState = createModel({
     threadId: 'sm2ld9p2',
     profileId: 'bl20a8lm',
 
+    viewingOwnProfile: false,
+
     viewMode: 'discover',
     locationMode: 'global',
     exploreZoomed: false,
@@ -21,11 +23,13 @@ export const channelId = appState.channelId;
 export const threadId = appState.threadId;
 export const profileId = appState.profileId;
 
+export const viewingOwnProfile = appState.viewingOwnProfile;
+
 export const viewMode = appState.viewMode;
 export const locationMode = appState.locationMode;
 export const exploreZoomed = appState.exploreZoomed;
 
-const scrollRegionProperties = writable({});
+export const scrollRegionProperties = writable({});
 // const scrollRegionProperties = appState.scrollRegionProperties;
 
 export function getScrollRegionProperties(id) {

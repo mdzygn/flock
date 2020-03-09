@@ -36,4 +36,8 @@ export function loadProject(targetProjectId, options) {
     goto('projects/' + targetProjectId);
 }
 
+export function createProject() {
+    goto('projects/create');
+}
+
 export default appState;

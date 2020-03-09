@@ -2,7 +2,7 @@
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 
-	import { loadProject } from '../../models/appState.js';
+	import { createProject, loadProject } from '../../models/appState.js';
 </script>
 
 <svelte:head>
@@ -21,11 +21,11 @@
 			width: 100%;
 			top: 359px;
 			height: 527px;">&nbsp;</div>
-		<a href="projects/create" style="
+		<div on:click="{createProject}" style="
 			right: 10px;
 			top: 277px;
 			width: 142px;
-			height: 46px;">&nbsp;</a>
+			height: 46px;">&nbsp;</div>
 	</Proxy>
 </ScrollView>
 

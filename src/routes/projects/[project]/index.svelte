@@ -106,7 +106,7 @@
 	<title>World Creator - Flock</title>
 </svelte:head>
 
-<ScrollView id="project/{projectId}">
+<ScrollView id="project">
 	<div class="content">
 		<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo && !$isNew}">
 			{#if !$isNew}

@@ -1,7 +1,11 @@
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 
-import { projectId } from '../models/appState';
+import {
+    projectId,
+    profileId,
+    resetScrollRegionPosition,
+} from '../models/appState';
 
 import {
     returnView,
@@ -41,6 +45,8 @@ export function loadProject(targetProjectId, options) {
     showingInfo.set(false);
     returnView.set(get(following) || get(owner) || get(liked));
 
+    resetScrollRegionPosition('project');
+
     goto('projects/' + targetProjectId);
 }
 
@@ -58,4 +64,11 @@ export function createProject(targetProjectId) {
 
 export function makePublic() {
     isNew.set(false);
+}
+
+export function showLikes() {
+    const test = get(profileId);
+    const test2 = get(projectId);
+    goto('profile/' + get(profileId) + '/likes');
+    resetScrollRegionPosition('likes');
 }

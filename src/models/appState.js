@@ -5,6 +5,7 @@ import { createModel } from '../utils/createModel';
 
 const appState = createModel({
     projectId: 'm62lsp2o',
+    profileId: 'bl20a8lm',
 
     viewMode: 'discover',
     locationMode: 'global',
@@ -14,6 +15,8 @@ const appState = createModel({
 }, {persist: true});
 
 export const projectId = appState.projectId;
+export const profileId = appState.profileId;
+
 export const viewMode = appState.viewMode;
 export const locationMode = appState.locationMode;
 export const exploreZoomed = appState.exploreZoomed;
@@ -34,6 +37,17 @@ export function getScrollRegionProperties(id) {
     }
     curScrollRegionProperties = get(scrollRegionProperties);
     return curScrollRegionProperties[id];
+}
+
+export function resetScrollRegionPosition(id) {
+    if (!id) {
+        return null;
+    }
+    let curScrollRegionProperties = get(scrollRegionProperties);
+    if (curScrollRegionProperties[id]) {
+        curScrollRegionProperties[id].inited = false;
+        scrollRegionProperties.set(curScrollRegionProperties);
+    }
 }
 
 // if storing scroll position in local storage

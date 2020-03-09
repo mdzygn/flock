@@ -1,5 +1,8 @@
 <script>
     import Proxy from '../../components/Proxy.svelte';
+    import Hotspot from '../../components/Hotspot.svelte';
+
+	import { loadProject } from '../../actions/appActions.js';
 
 	let projectId = 'm62lsp2o';
 </script>
@@ -7,11 +10,11 @@
 <div class="content">
 	<Proxy image="profile_projects" className="contentItem" >
         <!-- Project Links -->
-        <a href="projects/{projectId}" style="
+        <Hotspot onClick="{e => loadProject('m62lsp2o')}" style="
             left: 0px;
             top: 40px;
             width: 100%;
-            height: 154px;">&nbsp;</a>
+            height: 154px;" />
     </Proxy>
 </div>
 

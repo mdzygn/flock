@@ -1,9 +1,9 @@
 <script>
-	import ScrollView from '../../components/ScrollView.svelte';
-	import Proxy from '../../components/Proxy.svelte';
+	import ScrollView from '../../../components/ScrollView.svelte';
+	import Proxy from '../../../components/Proxy.svelte';
 
-	import ProfileOverview from './../_components/ProfileOverview.svelte';
-	import ProjectList from './../_components/ProjectList.svelte';
+	import ProfileOverview from './../../_components/ProfileOverview.svelte';
+	import ProjectList from './../../_components/ProjectList.svelte';
 
 	let profileId = 'bl20a8lm';
 </script>

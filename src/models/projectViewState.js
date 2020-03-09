@@ -1,7 +1,7 @@
 import { createModel } from '../utils/createModel';
 
 const projectViewState = createModel({
-    collapsed: false,
+    returnView: false,
     following: false,
     owner: false,
     isNew: false,
@@ -9,7 +9,7 @@ const projectViewState = createModel({
     liked: false,
 }, {persist: true});
 
-export const collapsed = projectViewState.collapsed;
+export const returnView = projectViewState.returnView;
 export const following = projectViewState.following;
 export const owner = projectViewState.owner;
 export const isNew = projectViewState.isNew;

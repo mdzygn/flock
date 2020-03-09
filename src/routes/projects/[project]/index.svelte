@@ -1,9 +1,11 @@
 <script>
+	import { onMount } from 'svelte';
+
 	import ScrollView from '../../../components/ScrollView.svelte';
 	import Proxy from '../../../components/Proxy.svelte';
 
 	import {
-		collapsed,
+		returnView,
 		following,
 		owner,
 		isNew,
@@ -11,16 +13,34 @@
 		liked,
 	} from '../../../models/projectViewState.js';
 
+	let proxyHeaderImage;
 	let proxyActionsImage;
 	let proxyOverviewImage;
+	let proxyChannelsImage;
 
 	$: {
+		if ($returnView) {
+			proxyHeaderImage = 'project_header_image_compact';
+		} else {
+			proxyHeaderImage = 'project_header_image';
+		}
+
 		if ($following) {
 			proxyActionsImage = 'project_actions_following';
-			proxyOverviewImage = 'project_overview_following_changed';
+			if ($returnView) {
+				proxyOverviewImage = 'project_overview_following';
+			} else {
+				proxyOverviewImage = 'project_overview_following_changed';
+			}
+			proxyChannelsImage = 'project_channels_following';
 		} else {
 			proxyActionsImage = 'project_actions';
-			proxyOverviewImage = 'project_overview';
+			if ($returnView) {
+				proxyOverviewImage = 'project_overview_following';
+			} else {
+				proxyOverviewImage = 'project_overview';
+			}
+			proxyChannelsImage = 'project_channels';
 		}
 	}
 
@@ -32,6 +52,10 @@
 		$following = !$following;
 	}
 
+    onMount(() => {
+		$returnView = $following || $owner || $liked;
+	});
+
 	let projectId = 'm62lsp2o';
 </script>
 
@@ -41,7 +65,7 @@
 
 <ScrollView id="project/{projectId}">
 	<div class="content">
-		<div class="contentItem">
+		<div class="contentItem" class:collapsedHeader="{$returnView}">
 			<Proxy image="{proxyActionsImage}">
 				<!-- Action Follow -->
 				<div on:click="{toggleFollowing}" style="
@@ -50,7 +74,7 @@
 					width: 106px;
 					height: 47px;">&nbsp;</div>
 			</Proxy>
-			<Proxy image="project_header_image" />
+			<Proxy image="{proxyHeaderImage}" />
 			<Proxy image="{proxyOverviewImage}">
 				<!-- Read More -->
 				<a href="projects/{projectId}/info" style="
@@ -79,14 +103,24 @@
 					height: 46px;">&nbsp;</div>
 			</Proxy>
 		</div>
-		<ProjectTeamList />
-		<Proxy image="project_skills" className="contentItem" />
-		<Proxy image="project_links" className="contentItem" />
-		<Proxy image="project_channels" className="contentItem" href="channels/7m2ldksm" />
-		<div id="post" />
-		<Proxy image="project_post_1" className="contentItem" />
-		<Proxy image="project_post_2" className="contentItem" />
-		<Proxy image="project_post_3" className="contentItem" />
+		{#if $returnView}
+			<Proxy image="{proxyChannelsImage}" className="contentItem" href="channels/7m2ldksm" />
+			<Proxy image="project_links" className="contentItem" />
+			<Proxy image="project_skills" className="contentItem" />
+			<ProjectTeamList />
+			<Proxy image="project_post_1" className="contentItem" />
+			<Proxy image="project_post_2" className="contentItem" />
+			<Proxy image="project_post_3" className="contentItem" />
+		{:else}
+			<ProjectTeamList />
+			<Proxy image="project_skills" className="contentItem" />
+			<Proxy image="project_links" className="contentItem" />
+			<Proxy image="{proxyChannelsImage}" className="contentItem" href="channels/7m2ldksm" />
+			<div id="post" />
+			<Proxy image="project_post_1" className="contentItem" />
+			<Proxy image="project_post_2" className="contentItem" />
+			<Proxy image="project_post_3" className="contentItem" />
+		{/if}
 	</div>
 </ScrollView>
 
@@ -96,9 +130,14 @@
 
     	line-height: 0;
 	}
+
 	.content :global(.contentItem) {
 		width: 100%;
 
 		margin-bottom: 10px;
+	}
+
+	.content .collapsedHeader {
+		margin-bottom: 3px;
 	}
 </style>

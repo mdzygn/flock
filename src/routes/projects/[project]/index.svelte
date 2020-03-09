@@ -22,7 +22,7 @@
 		loadChannel,
 		loadConversation,
 		editProjectDetails,
-		showInfo,
+		showProjectInfo,
 	} from '../../../actions/appActions.js';
 
 	import {
@@ -144,12 +144,12 @@
 			{:else if !$showingInfo}
 				<Proxy image="{proxyOverviewImage}">
 					<!-- Read More -->
-					<Hotspot onClick="{showInfo}" style="
+					<Hotspot onClick="{showProjectInfo}" style="
 						left: 0;
 						top: 55px;
 						width: 100%;
 						height: 70px;" />
-					<Hotspot onClick="{showInfo}" style="
+					<Hotspot onClick="{showProjectInfo}" style="
 						left: 8px;
 						top: 125px;
 						width: 110px;

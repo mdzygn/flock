@@ -122,6 +122,6 @@ export function loadConversation(targetConversationId, options) {
     goto('messages/' + targetConversationId );
 }
 
-export function showInfo() {
+export function showProjectInfo() {
     showingInfo.set(true);
 }

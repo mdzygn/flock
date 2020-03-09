@@ -4,8 +4,9 @@
 
 	import { loadProject } from '../../../actions/appActions.js';
 
-	import Hotspots from '../../../components/Hotspots.svelte';
 	import Proxy from '../../../components/Proxy.svelte';
+	import Hotspots from '../../../components/Hotspots.svelte';
+    import Hotspot from '../../../components/Hotspot.svelte';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
 </script>
@@ -18,20 +19,20 @@
 	<div class="contentArea">
 		<Hotspots>
 			<!-- Zoom Out -->
-			<div on:click="{e => dispatch('exploreZoomOut')}" style="
+			<Hotspot onClick="{e => dispatch('exploreZoomOut')}" style="
 				top: 0;
 				left: 0;
 				width: 100%;
-				height: 100%;">&nbsp;</div>
+				height: 100%;" />
 
 			<!-- Select Project -->
-			<div class="button" on:click="{e => loadProject('m62lsp2o')}" style="
+			<Hotspot onClick="{e => loadProject('m62lsp2o')}" style="
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);
 				width: 250px;
 				height: 250px;
-				border-radius: 999px;">&nbsp;</div>
+				border-radius: 999px;" />
 		</Hotspots>
 
 		<Proxy image="explore_zoomed" className="exploreZoomed" />
@@ -66,9 +67,5 @@
 
 	.contentArea :global(.exploreZoomed) {
 		margin-top: 55px;
-	}
-
-	.button {
-		cursor: pointer;
 	}
 </style>

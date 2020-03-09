@@ -7,8 +7,9 @@
 	$: proxyContentImage = (locationMode === 'global') ? 'explore_content' : 'explore_content_local';
 	$: proxyFilterImage = (locationMode === 'global') ? 'explore_filter' : 'explore_filter_local';
 
-	import Hotspots from '../../../components/Hotspots.svelte';
 	import Proxy from '../../../components/Proxy.svelte';
+	import Hotspots from '../../../components/Hotspots.svelte';
+    import Hotspot from '../../../components/Hotspot.svelte';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
 </script>
@@ -21,13 +22,13 @@
 	<div class="contentArea">
 		<Hotspots>
 			<!-- Zoom In -->
-			<div on:click="{e => dispatch('exploreZoomIn')}" style="
+			<Hotspot onClick="{e => dispatch('exploreZoomIn')}" style="
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);
 				width: 350px;
 				height: 350px;
-				border-radius: 999px;">&nbsp;</div>
+				border-radius: 999px;" />
 		</Hotspots>
 
 		<Proxy image="{proxyContentImage}" />
@@ -36,18 +37,18 @@
 	<div class="filterBar">
 		<Hotspots>
 			<!-- Toggle View Mode -->
-			<div on:click="{e => dispatch('setViewMode', {viewMode: 'discover'})}" style="
+			<Hotspot onClick="{e => dispatch('setViewMode', {viewMode: 'discover'})}" style="
 				left: 7px;
 				top: 5px;
 				width: 44px;
-				height: 46px;">&nbsp;</div>
+				height: 46px;" />
 
 			<!-- Toggle Location Mode -->
-			<div on:click="{e => dispatch('toggleLocationMode')}" style="
+			<Hotspot onClick="{e => dispatch('toggleLocationMode')}" style="
 				right: 10px;
 				top: 5px;
 				width: 232px;
-				height: 46px;">&nbsp;</div>
+				height: 46px;" />
 		</Hotspots>
 
 		<Proxy image="{proxyFilterImage}" />

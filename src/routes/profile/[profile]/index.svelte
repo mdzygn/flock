@@ -1,6 +1,8 @@
 <script>
 	import ScrollView from '../../../components/ScrollView.svelte';
+
 	import Proxy from '../../../components/Proxy.svelte';
+    import Hotspot from '../../../components/Hotspot.svelte';
 
 	import ProfileOverview from './../../_components/ProfileOverview.svelte';
 	import ProjectList from './../../_components/ProjectList.svelte';
@@ -22,36 +24,36 @@
 			<Proxy image="{proxyActionsImage}">
 				{#if $viewingOwnProfile}
 					<!-- Connections -->
-					<a href="contacts" style="
+					<Hotspot href="contacts" style="
 						left: 0px;
 						top: 0px;
 						width: 122px;
-						height: 47px;">&nbsp;</a>
+						height: 47px;" />
 
 					<!-- Messages -->
-					<a href="messages" style="
+					<Hotspot href="messages" style="
 						left: 152px;
 						top: 0px;
 						width: 129px;
-						height: 47px;">&nbsp;</a>
+						height: 47px;" />
 				{:else}
 					<!-- Action Send Message -->
-					<a href="messages/l40smlp3" style="
+					<Hotspot href="messages/l40smlp3" style="
 						left: 128px;
 						top: 0px;
 						width: 132px;
-						height: 47px;">&nbsp;</a>
+						height: 47px;" />
 				{/if}
 			</Proxy>
 			<ProfileOverview  isOwner="{$viewingOwnProfile}" />
 			<Proxy image="{proxyOverviewActionsImage}">
 				{#if !$viewingOwnProfile}
 					<!-- Send Message -->
-					<a href="messages/l40smlp3" style="
+					<Hotspot href="messages/l40smlp3" style="
 						left: 11px;
 						top: 7px;
 						width: 116px;
-						height: 40px;">&nbsp;</a>
+						height: 40px;" />
 				{/if}
 			</Proxy>
 		</div>

@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
+
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
 
@@ -113,11 +114,11 @@
 				<Proxy image="{proxyActionsImage}">
 					{#if !$owner}
 						<!-- Action Follow -->
-						<div on:click="{toggleFollowing}" style="
+						<Hotspot onClick="{toggleFollowing}" style="
 							left: 120px;
 							top: 0px;
 							width: 106px;
-							height: 47px;">&nbsp;</div>
+							height: 47px;" />
 					{/if}
 				</Proxy>
 			{/if}
@@ -125,11 +126,11 @@
 			{#if $isNew}
 				<Proxy image="{proxyOverviewImage}">
 					<!-- Add Details -->
-					<a href="projects/{$projectId}/details" style="
+					<Hotspot href="projects/{$projectId}/details" style="
 						left: 8px;
 						top: 123px;
 						width: 172px;
-						height: 38px;">&nbsp;</a>
+						height: 38px;" />
 
 					<!-- Make Public -->
 					<Hotspot onClick="{makePublic}" style="
@@ -141,45 +142,45 @@
 			{:else if !$showingInfo}
 				<Proxy image="{proxyOverviewImage}">
 					<!-- Read More -->
-					<div on:click="{showInfo}" style="
+					<Hotspot onClick="{showInfo}" style="
 						left: 0;
 						top: 55px;
 						width: 100%;
-						height: 70px;">&nbsp;</div>
-					<div on:click="{showInfo}" style="
+						height: 70px;" />
+					<Hotspot onClick="{showInfo}" style="
 						left: 8px;
 						top: 125px;
 						width: 110px;
-						height: 30px;">&nbsp;</div>
+						height: 30px;" />
 
 					<!-- Message -->
 					{#if $owner}
-						<a href="messages/group" style="
+						<Hotspot href="messages/group" style="
 							right: 11px;
 							top: 122px;
 							width: 147px;
-							height: 40px;">&nbsp;</a>
+							height: 40px;" />
 					{:else if $returnView}
-						<a href="messages/group" style="
+						<Hotspot href="messages/group" style="
 							right: 11px;
 							top: 122px;
 							width: 116px;
-							height: 40px;">&nbsp;</a>
+							height: 40px;" />
 					{:else}
-						<a href="messages/group" style="
+						<Hotspot href="messages/group" style="
 							left: 7px;
 							top: 155px;
 							width: 121px;
-							height: 46px;">&nbsp;</a>
+							height: 46px;" />
 					{/if}
 
 					{#if !$owner}
 						<!-- Follow -->
-						<div on:click="{toggleFollowing}" style="
+						<Hotspot onClick="{toggleFollowing}" style="
 							right: 35px;
 							top: 155px;
 							width: 110px;
-							height: 46px;">&nbsp;</div>
+							height: 46px;" />
 					{/if}
 				</Proxy>
 			{:else}
@@ -195,25 +196,25 @@
 				<Proxy image="{proxyShowingInfoActionsImage}">
 					{#if $owner}
 						<!-- Message -->
-						<a href="messages/group" style="
+						<Hotspot href="messages/group" style="
 							right: 6px;
 							top: 2px;
 							width: 156px;
-							height: 46px;">&nbsp;</a>
+							height: 46px;" />
 					{:else}
 						<!-- Message -->
-						<a href="messages/group" style="
+						<Hotspot href="messages/group" style="
 							left: 7px;
 							top: 8px;
 							width: 121px;
-							height: 46px;">&nbsp;</a>
+							height: 46px;" />
 
 						<!-- Follow -->
-						<div on:click="{toggleFollowing}" style="
+						<Hotspot onClick="{toggleFollowing}" style="
 							right: 35px;
 							top: 8px;
 							width: 110px;
-							height: 46px;">&nbsp;</div>
+							height: 46px;" />
 					{/if}
 				</Proxy>
 			{/if}

@@ -8,9 +8,10 @@
 	$: proxyFilterImage = (locationMode === 'global') ? 'discover_search' : 'discover_search_local';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
-	import Proxy from '../../../components/Proxy.svelte';
 
+	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspots from '../../../components/Hotspots.svelte';
+    import Hotspot from '../../../components/Hotspot.svelte';
 
 	import Feed from './../../_components/Feed.svelte';
 </script>
@@ -23,18 +24,18 @@
 	<div>
 		<Hotspots>
 			<!-- Toggle View Mode -->
-			<div on:click="{() => {dispatch('setViewMode', {viewMode: 'explore'})}}" style="
+			<Hotspot onClick="{() => {dispatch('setViewMode', {viewMode: 'explore'})}}" style="
 				left: 7px;
 				top: 5px;
 				width: 38px;
-				height: 39px;">&nbsp;</div>
+				height: 39px;" />
 
 			<!-- Toggle Location Mode -->
-			<div on:click="{() => {dispatch('toggleLocationMode')}}" style="
+			<Hotspot onClick="{() => {dispatch('toggleLocationMode')}}" style="
 				right: 10px;
 				top: 5px;
 				width: 232px;
-				height: 46px;">&nbsp;</div>
+				height: 46px;" />
 		</Hotspots>
 
 		<Proxy image="{proxyFilterImage}" />

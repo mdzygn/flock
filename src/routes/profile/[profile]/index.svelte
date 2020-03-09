@@ -22,7 +22,7 @@
 <ScrollView id="profile">
 	<div class="content">
 		<div class="contentItem">
-			{#if !$viewingOwnProfile}
+			<!--{#if !$viewingOwnProfile}
 				<Proxy image="{proxyActionsImage}">
 					<!-- Connections -->
 					<!--<Hotspot href="contacts" style="
@@ -39,13 +39,13 @@
 						height: 47px;" />
 				{:else}-->
 					<!-- Action Send Message -->
-					<Hotspot onClick="{e => loadConversation('l40smlp3')}" style="
+					<!--<Hotspot onClick="{e => loadConversation('l40smlp3')}" style="
 						left: 128px;
 						top: 0px;
 						width: 132px;
 						height: 47px;" />
-				</Proxy>
-			{/if}
+				<!--</Proxy>
+			{/if}-->
 			<ProfileOverview  isOwner="{$viewingOwnProfile}" />
 			<Proxy image="{proxyOverviewActionsImage}">
 				{#if !$viewingOwnProfile}

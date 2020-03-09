@@ -3,6 +3,8 @@ import { get } from 'svelte/store';
 
 import {
     projectId,
+    channelId,
+    threadId,
     profileId,
     resetScrollRegionPosition,
 } from '../models/appState';
@@ -67,8 +69,13 @@ export function makePublic() {
 }
 
 export function showLikes() {
-    const test = get(profileId);
-    const test2 = get(projectId);
     goto('profile/' + get(profileId) + '/likes');
     resetScrollRegionPosition('likes');
+}
+
+export function loadThread(targetThreadId) {
+    threadId.set(targetThreadId);
+
+    goto('threads/' + targetThreadId );
+    resetScrollRegionPosition('thread');
 }

@@ -3,7 +3,9 @@
 	import Proxy from '../../components/Proxy.svelte';
 	import NewPostButton from '../../components/NewPostButton.svelte';
 
-	import { channelId, threadId } from '../../models/appState';
+	import { channelId } from '../../models/appState';
+
+	import { loadThread } from '../../actions/appActions.js';
 </script>
 
 <svelte:head>
@@ -13,7 +15,7 @@
 <ScrollView id="channel/{$channelId}">
 	<div class="content">
 		<Proxy image="channel_actions" className="channelActions" />
-		<Proxy image="channel_posts" className="channelPosts" href="threads/{$threadId}" />
+		<Proxy image="channel_posts" className="channelPosts" onClick="{e => loadThread('sm2ld9p2')}" />
 		<NewPostButton />
 	</div>
 </ScrollView>

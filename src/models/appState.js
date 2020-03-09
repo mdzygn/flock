@@ -1,56 +1,83 @@
 import { writable } from 'svelte/store';
 import { DEBUG } from '../config';
 
-const localStorage = typeof window !== 'undefined' ? window.localStorage : undefined;
+const appState = createModel({
+    viewMode: 'discover',
+    locationMode: 'global',
+    exploreZoomed: 'false',
+}, {persist: true});
 
-const appState = loadState();
+export const viewMode = appState.viewMode;
+export const locationMode = appState.locationMode;
+export const exploreZoomed = appState.exploreZoomed;
 
-setDefaultState(appState, 'viewMode', 'discover');
-setDefaultState(appState, 'locationMode', 'global');
-setDefaultState(appState, 'exploreZoomed', false);
+export default appState;
 
-export const viewMode = writable(appState.viewMode);
-export const locationMode = writable(appState.locationMode);
-export const exploreZoomed = writable(appState.exploreZoomed);
 
-viewMode.subscribe(val => {appState.viewMode = val; saveState()});
-locationMode.subscribe(val => {appState.locationMode = val; saveState()});
-exploreZoomed.subscribe(val => {appState.exploreZoomed = val; saveState()});
+function createModel(props, options) {
+    const persist = options && options.persist;
 
-function setDefaultState(model, key, defaultValue) {
-    if (model[key] === undefined) {
-        model[key] = defaultValue;
-    }
-}
+    let localStorage = null;
 
-function saveState() {
-    if (!localStorage) {
-        return;
+    if (persist) {
+        localStorage = typeof window !== 'undefined' ? window.localStorage : null;
     }
 
-    const appStateString = JSON.stringify(appState);
-    console.log('save appState', appStateString);
+    const model = {};
 
-    localStorage.setItem('appState', appStateString);
-}
+    const _modelValues = loadState();
 
-function loadState() {
-    let appState = {};
-    if (!localStorage) {
-        return appState;
-    }
-    const appStateString = localStorage.getItem('appState');
+    let value;
+    for (let key in props) {
+        if (props.hasOwnProperty(key)) {
+            value = props[key];
 
-    console.log('load appState', appStateString);
-
-    if (appStateString) {
-        try {
-            appState = JSON.parse(appStateString);
-        } catch (e) {
-            if (DEBUG) {
-                console.warn('error loading app state from ' + appStateString);
+            // if (DEBUG) console.log('get ', key, _modelValues[key]);
+            if (_modelValues[key] === undefined) {
+                _modelValues[key] = value;
             }
+
+            model[key] = writable(_modelValues[key]);
+        }
+    };
+    if (persist) {
+        for (let key in props) {
+            if (props.hasOwnProperty(key)) {
+                model[key].subscribe(val => {
+                    _modelValues[key] = val;
+                    // if (DEBUG) console.log('set ', key, _modelValues[key]);
+                    saveModelState();
+                });
+            }
+        };
+    }
+
+    function saveModelState() {
+        if (localStorage) {
+            const appStateString = JSON.stringify(_modelValues);
+            if (DEBUG) console.log('save appState', appStateString);
+
+            localStorage.setItem('appState', appStateString);
         }
     }
-    return appState;
+
+    function loadState() {
+        let appState = {};
+        if (persist && localStorage) {
+            try {
+                const appStateString = localStorage.getItem('appState');
+
+                if (DEBUG) console.log('load appState', appStateString);
+
+                if (appStateString) {
+                    appState = JSON.parse(appStateString);
+                }
+            } catch (e) {
+                if (DEBUG) console.warn('error loading app state', e);
+            }
+        }
+        return appState;
+    }
+
+    return model;
 }

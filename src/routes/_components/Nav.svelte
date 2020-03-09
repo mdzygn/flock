@@ -1,10 +1,34 @@
 <script>
 	import NavIcon from "../../components/NavIcon.svelte";
-	import sections, {getIconForSection, getMainSectionForSegment} from "../../models/sections.js";
+	import sections, { getIconForSection, getMainSectionForSegment, getMainSectionForRoute } from "../../models/sections.js";
 
 	export let segment;
+	export let path;
 
-	$: mainSection = getMainSectionForSegment(segment);
+    import {
+        following,
+        owner,
+	} from '../../models/projectViewState.js';
+
+	$: isFollowing = $following || $owner;
+
+	let mainSection;
+
+	$: {
+		mainSection = getMainSectionForRoute(segment, path);
+		if (/\/projects\/.*/.test(path) && !isFollowing) {
+			mainSection = null;
+		} else if (/\/channels\/.*/.test(path) && isFollowing) {
+			mainSection = 'projects';
+		} else if (/\/threads\/.*/.test(path) && isFollowing) {
+			mainSection = 'projects';
+		}
+		// if (mainSection === 'projects' && !isFollowing) {
+		// 	mainSection = null;
+		// }
+		// console.log('mainSection',mainSection);
+	}
+	// $: mainSection = getMainSectionForSegment(segment);
 	// export let path;
 </script>
 

@@ -24,7 +24,7 @@
 			</main>
 		</div>
 		<HeaderBar {segment} {path} />
-		<Nav {segment} />
+		<Nav {segment} {path} />
 	</appContent>
 </appContainer>
 

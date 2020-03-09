@@ -1,19 +1,20 @@
 <script>
     import { goto } from '@sapper/app';
+
+    import sections, { getSectionByPath, getIdForSection } from "../../models/sections.js";
+
     import {
         viewMode,
         viewingGroupConversation,
         viewingOwnProfile,
     } from '../../models/appState.js';
 
-    import BackIcon from "../../assets/icons/back.png";
-    import AvatarIcon from './AvatarIcon.svelte';
-
-    import sections, { getSectionByPath, getIdForSection } from "../../models/sections.js";
-
     import { hasCreated } from '../../models/projectViewState.js';
 
 	import { loadProfile } from '../../actions/appActions.js';
+
+    import BackIcon from "../../assets/icons/back.png";
+    import AvatarIcon from './AvatarIcon.svelte';
 
     export let segment;
     export let path;

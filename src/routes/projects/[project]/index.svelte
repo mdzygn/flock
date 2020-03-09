@@ -41,8 +41,14 @@
 
 		if ($owner) {
 			proxyActionsImage = 'project_actions_owner';
-			proxyOverviewImage = 'project_overview_owner';
-			proxyChannelsImage = 'project_channels_owner';
+
+			if ($isNew) {
+				proxyOverviewImage = 'project_overview_populate';
+				proxyChannelsImage = 'project_channels_populate';
+			} else {
+				proxyOverviewImage = 'project_overview_owner';
+				proxyChannelsImage = 'project_channels_owner';
+			}
 
 			if ($isNew) {
 				proxyLinksImage = 'project_links_populate';
@@ -99,17 +105,35 @@
 
 <ScrollView id="project/{projectId}">
 	<div class="content">
-		<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo}">
-			<Proxy image="{proxyActionsImage}">
-				<!-- Action Follow -->
-				<div on:click="{toggleFollowing}" style="
-					left: 120px;
-					top: 0px;
-					width: 106px;
-					height: 47px;">&nbsp;</div>
-			</Proxy>
+		<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo && !$isNew}">
+			{#if !$isNew}
+				<Proxy image="{proxyActionsImage}">
+					<!-- Action Follow -->
+					<div on:click="{toggleFollowing}" style="
+						left: 120px;
+						top: 0px;
+						width: 106px;
+						height: 47px;">&nbsp;</div>
+				</Proxy>
+			{/if}
 			<Proxy image="{proxyHeaderImage}" />
-			{#if !$showingInfo}
+			{#if $isNew}
+				<Proxy image="{proxyOverviewImage}">
+					<!-- Add Details -->
+					<a href="projects/{projectId}/details" style="
+						left: 8px;
+						top: 123px;
+						width: 172px;
+						height: 38px;">&nbsp;</a>
+
+					<!-- Make Public -->
+					<a href="projects/{projectId}/my" style="
+						right: 11px;
+						top: 120px;
+						width: 125px;
+						height: 41px;">&nbsp;</a>
+				</Proxy>
+			{:else if !$showingInfo}
 				<Proxy image="{proxyOverviewImage}">
 					<!-- Read More -->
 					<div on:click="{showInfo}" style="
@@ -164,7 +188,15 @@
 				</Proxy>
 			{/if}
 		</div>
-		{#if $returnView}
+		{#if $isNew}
+			<ProjectTeamList isOwner="{$owner}" isNew="{$isNew}" />
+			<Proxy image="{proxyLinksImage}" className="contentItem" />
+			<Proxy image="{proxySkillsImage}" className="contentItem" />
+			<Proxy image="{proxyChannelsImage}" className="contentItem" href="channels/7m2ldksm" />
+			{#if $owner}
+				<NewPostButton type="project_post_update" />
+			{/if}
+		{:else if $returnView}
 			<Proxy image="{proxyChannelsImage}" className="contentItem" href="channels/7m2ldksm" />
 			{#if $owner}
 				<NewPostButton type="project_post_update" />

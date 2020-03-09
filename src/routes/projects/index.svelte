@@ -2,7 +2,7 @@
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 
-	import { createProject, loadProject } from '../../actions/appActions.js';
+	import { newProject, loadProject } from '../../actions/appActions.js';
 </script>
 
 <svelte:head>
@@ -21,7 +21,7 @@
 			width: 100%;
 			top: 359px;
 			height: 527px;">&nbsp;</div>
-		<div on:click="{createProject}" style="
+		<div on:click="{newProject}" style="
 			right: 10px;
 			top: 277px;
 			width: 142px;

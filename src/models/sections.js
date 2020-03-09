@@ -64,8 +64,8 @@ export const sections = [
 		// parentSection: 'projects/m62lsp2o/populate',
 	},
 	{
-		path: '/projects/create',
-		id: 'create',
+		path: '/projects/new',
+		id: 'newProject',
 		label: 'New Project',
 		showBack: true,
 	},

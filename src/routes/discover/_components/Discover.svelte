@@ -22,11 +22,14 @@
 <ScrollView id="discover">
 	<div>
 		<Hotspots>
+			<!-- Toggle View Mode -->
 			<div on:click="{() => {dispatch('setViewMode', {viewMode: 'explore'})}}" style="
 				left: 7px;
 				top: 5px;
 				width: 38px;
 				height: 39px;">&nbsp;</div>
+
+			<!-- Toggle Location Mode -->
 			<div on:click="{() => {dispatch('toggleLocationMode')}}" style="
 				right: 10px;
 				top: 5px;

@@ -20,13 +20,14 @@
 <div class="content">
 	<div class="contentArea">
 		<Hotspots>
-			<a href="explore/zoom" style="
+			<!-- Zoom In -->
+			<div on:click="{e => dispatch('exploreZoomIn')}" style="
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);
 				width: 350px;
 				height: 350px;
-				border-radius: 999px;">&nbsp;</a>
+				border-radius: 999px;">&nbsp;</div>
 		</Hotspots>
 
 		<Proxy image="{proxyContentImage}" />
@@ -34,12 +35,15 @@
 
 	<div class="filterBar">
 		<Hotspots>
-			<div on:click="{() => {dispatch('setViewMode', {viewMode: 'discover'})}}" style="
+			<!-- Toggle View Mode -->
+			<div on:click="{e => dispatch('setViewMode', {viewMode: 'discover'})}" style="
 				left: 7px;
 				top: 5px;
 				width: 44px;
 				height: 46px;">&nbsp;</div>
-			<div on:click="{() => {dispatch('toggleLocationMode')}}" style="
+
+			<!-- Toggle Location Mode -->
+			<div on:click="{e => dispatch('toggleLocationMode')}" style="
 				right: 10px;
 				top: 5px;
 				width: 232px;

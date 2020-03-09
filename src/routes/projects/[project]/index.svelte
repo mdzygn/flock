@@ -3,6 +3,7 @@
 
 	import ScrollView from '../../../components/ScrollView.svelte';
 	import Proxy from '../../../components/Proxy.svelte';
+	import Hotspot from '../../../components/Hotspot.svelte';
 
 	import {
 		returnView,
@@ -12,6 +13,8 @@
 		showingInfo,
 		liked,
 	} from '../../../models/projectViewState.js';
+
+	import { makePublic } from '../../../actions/appActions.js';
 
 	import Feed from './../../_components/Feed.svelte';
 
@@ -127,11 +130,11 @@
 						height: 38px;">&nbsp;</a>
 
 					<!-- Make Public -->
-					<a href="projects/{projectId}/my" style="
+					<Hotspot onClick="{makePublic}" style="
 						right: 11px;
 						top: 120px;
 						width: 125px;
-						height: 41px;">&nbsp;</a>
+						height: 41px;" />
 				</Proxy>
 			{:else if !$showingInfo}
 				<Proxy image="{proxyOverviewImage}">

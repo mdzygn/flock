@@ -17,7 +17,7 @@
     {/if}
 
     {#if href}
-        <a href="{href}" on:click={onClick}>
+        <a {href} on:click={onClick}>
             <img src="content/proxy/{image}.jpg" alt="proxy" />
         </a>
     {:else}

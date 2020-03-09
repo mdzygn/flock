@@ -40,3 +40,7 @@ export function newProject() {
 export function createProject(targetProjectId) {
     loadProject(targetProjectId, {isNew: true});
 }
+
+export function makePublic() {
+    isNew.set(false);
+}

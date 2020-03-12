@@ -1,8 +1,8 @@
 <script>
 	import { stores } from '@sapper/app';
-	import { isDarkBgForPath } from "../models/sections.js";
-
 	const { page } = stores();
+
+	import { isDarkBgForPath } from "../models/sections.js";
 
 	import ScrollView from '../components/ScrollView.svelte';
 	import HeaderBar from './_components/HeaderBar.svelte';
@@ -10,6 +10,17 @@
 
 	export let segment;
 	$: path = $page ? $page.path : '';
+
+	import {
+		conversationId
+	} from '../models/appState';
+	$: {
+		const params = $page.params;
+		if (params.conversation) {
+			$conversationId = params.conversation;
+			console.log('set conversation: ' + $conversationId);
+		}
+	}
 
 	$: showFeedBg = isDarkBgForPath(path);
 

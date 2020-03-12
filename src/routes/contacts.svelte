@@ -21,7 +21,7 @@
 			height: 693px;" />
 
 		<!-- Send Message -->
-		<Hotspot onClick="{e => loadConversation('l40smlp3', {isNew: true})}" style="
+		<Hotspot onClick="{e => loadConversation('r70dp2bf', {isNew: true})}" style="
 			right: 7px;
 			top: 51px;
 			width: 59px;

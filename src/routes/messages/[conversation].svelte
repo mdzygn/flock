@@ -3,10 +3,16 @@
 	import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
 
-	import { conversationId, viewingGroupConversation, isNewConversation } from '../../models/appState';
+	import { conversationId } from '../../models/appState';
 	import { loadProfile } from '../../actions/appActions';
 
-	$: proxyMessageViewImage = $viewingGroupConversation ? 'messages_group_view': 'message_view';
+	$: viewingGroupConversation = ($conversationId === 's0g1la34');
+	$: isNewConversation = ($conversationId === 'r70dp2bf');
+	$: {
+		console.log('conversation changed: ' + $conversationId);
+	}
+
+	$: proxyMessageViewImage = viewingGroupConversation ? 'messages_group_view': 'message_view';
 </script>
 
 <svelte:head>
@@ -15,13 +21,13 @@
 
 <div class="messagesView">
 	<ScrollView anchorToBottom="{true}" id="conversation">
-		{#if $isNewConversation}
+		{#if isNewConversation}
 			<div class="content">
 				<Proxy image="message_new_message_profile" className="profileInfo" />
 			</div>
 		{:else}
 			<Proxy image="{proxyMessageViewImage}">
-				{#if $viewingGroupConversation}
+				{#if viewingGroupConversation}
 					<!-- Profiles -->
 					<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
 						left: 6px;

@@ -5,6 +5,7 @@
 
     import {
         viewMode,
+        project,
         conversation,
         viewedUser,
     } from '../../models/appState.js';
@@ -33,13 +34,20 @@
 
     let sectionLabel = '';
     $: {
-        if (/\/profile\/.*/.test(path) && $viewedUser && !$viewedUser.isCurrentUser) {
+        if (/\/projects\/.*/.test(path) && $project) {
+            sectionLabel = $project.title;
+        } else if (/\/profile\/.*/.test(path) && $viewedUser && !$viewedUser.isCurrentUser) {
             sectionLabel = $viewedUser.fullName;
         } else if (/\/messages\/.*/.test(path) && $conversation && ($conversation.user || $conversation.project)) {
-            sectionLabel = $conversation.user ? $conversation.user.firstName : $conversation.project.name;
+            if ($conversation.project && $project) { // // temporary
+                sectionLabel = $project.title;
+            } else {
+                sectionLabel = $conversation.user ? $conversation.user.firstName : $conversation.project.name;
+            }
         } else {
             sectionLabel = curSection ? curSection.label : '';
         }
+        console.log('sectionLabel: ' + sectionLabel);
     }
 
     function goBack () {

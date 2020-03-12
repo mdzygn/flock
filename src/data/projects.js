@@ -35,6 +35,18 @@ const projects = [
 	},
 	{
 		title: 'Leonardo\'s World',
+		id: '36bsf5gs',
+		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+		image: '',
+		createdAt: 0,
+		likesCount: 63,
+		followingCount: 54,
+		unreadCount: 6,
+		following: true,
+		location: '',
+	},
+	{
+		title: 'New Earth',
 		id: '9dm4l7ps',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',

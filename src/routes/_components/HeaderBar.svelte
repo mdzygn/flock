@@ -47,7 +47,6 @@
         } else {
             sectionLabel = curSection ? curSection.label : '';
         }
-        console.log('sectionLabel: ' + sectionLabel);
     }
 
     function goBack () {

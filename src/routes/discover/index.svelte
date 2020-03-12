@@ -29,7 +29,7 @@
 	<Discover locationMode={$locationMode} on:setViewMode="{setViewMode}" on:toggleLocationMode="{toggleLocationMode}" />
 {:else}
 	{#if $exploreZoomed}
-		<ExploreZoomed on:exploreZoomOut="{exploreZoomOut}" />
+		<ExploreZoomed locationMode={$locationMode} on:setViewMode="{setViewMode}" on:toggleLocationMode="{toggleLocationMode}" on:exploreZoomOut="{exploreZoomOut}" />
 	{:else}
 		<Explore locationMode={$locationMode} on:setViewMode="{setViewMode}" on:toggleLocationMode="{toggleLocationMode}" on:exploreZoomIn="{exploreZoomIn}" />
 	{/if}

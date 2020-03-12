@@ -1,8 +1,10 @@
 <script>
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
+    import Hotspot from '../../components/Hotspot.svelte';
 
 	import { conversationId, viewingGroupConversation } from '../../models/appState';
+	import { loadProfile } from '../../actions/appActions';
 
 	$: proxyMessageViewImage = $viewingGroupConversation ? 'messages_group_view': 'message_view';
 </script>
@@ -13,7 +15,14 @@
 
 <div class="messagesView">
 	<ScrollView anchorToBottom="{true}" id="conversation">
-		<Proxy image="{proxyMessageViewImage}" />
+		<Proxy image="{proxyMessageViewImage}">
+			<!-- Profiles -->
+			<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
+				left: 6px;
+				top: 25px;
+				width: 50px;
+				height: 691px;" />
+		</Proxy>
 	</ScrollView>
 </div>
 

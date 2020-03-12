@@ -8,6 +8,8 @@
     export let absolutePlacement = false;
     export let onClick = null;
 
+    $: imageSrc = (image.indexOf('.png') !== -1) ? image : image + '.jpg';
+
     let hasSlots = $$props.$$slots;
 </script>
 
@@ -20,10 +22,10 @@
 
     {#if href}
         <a {href} on:click={onClick}>
-            <img src="content/proxy/{image}.jpg" alt="proxy" />
+            <img src="content/proxy/{imageSrc}" alt="proxy" />
         </a>
     {:else}
-        <img src="content/proxy/{image}.jpg" alt="proxy" on:click={onClick} class:button={onClick} />
+        <img src="content/proxy/{imageSrc}" alt="proxy" on:click={onClick} class:button={onClick} />
     {/if}
 </div>
 

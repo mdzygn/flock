@@ -4,14 +4,14 @@
 
 	export let locationMode = 'global';
 
-	$: proxyContentImage = (locationMode === 'global') ? 'explore_content' : 'explore_content_local';
-	$: proxyFilterImage = (locationMode === 'global') ? 'explore_filter' : 'explore_filter_local';
-
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspots from '../../../components/Hotspots.svelte';
     import Hotspot from '../../../components/Hotspot.svelte';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
+
+	$: proxyContentImage = (locationMode === 'global') ? 'explore_content' : 'explore_content_local';
+	$: proxyFilterImage = (locationMode === 'global') ? 'explore_filter.png' : 'explore_filter_local.png';
 </script>
 
 <svelte:head>

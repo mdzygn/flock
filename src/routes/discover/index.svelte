@@ -1,24 +1,9 @@
 <script>
-	import { viewMode, locationMode, exploreZoomed } from '../../models/appState.js';
+	import { viewMode, exploreZoomed } from '../../models/appState.js';
 
 	import Discover from './_components/Discover.svelte';
 	import Explore from './_components/Explore.svelte';
 	import ExploreZoomed from './_components/ExploreZoomed.svelte';
-
-	function setViewMode(event) {
-		$viewMode = event.detail.viewMode;
-	}
-
-	function toggleLocationMode() {
-		$locationMode = ($locationMode === 'global') ? 'local' : 'global';
-	}
-
-	function exploreZoomIn() {
-		$exploreZoomed = true;
-	}
-	function exploreZoomOut() {
-		$exploreZoomed = false;
-	}
 </script>
 
 <svelte:head>
@@ -26,11 +11,11 @@
 </svelte:head>
 
 {#if $viewMode === 'discover'}
-	<Discover locationMode={$locationMode} on:setViewMode="{setViewMode}" on:toggleLocationMode="{toggleLocationMode}" />
+	<Discover />
 {:else}
 	{#if $exploreZoomed}
-		<ExploreZoomed locationMode={$locationMode} on:setViewMode="{setViewMode}" on:toggleLocationMode="{toggleLocationMode}" on:exploreZoomOut="{exploreZoomOut}" />
+		<ExploreZoomed />
 	{:else}
-		<Explore locationMode={$locationMode} on:setViewMode="{setViewMode}" on:toggleLocationMode="{toggleLocationMode}" on:exploreZoomIn="{exploreZoomIn}" />
+		<Explore />
 	{/if}
 {/if}

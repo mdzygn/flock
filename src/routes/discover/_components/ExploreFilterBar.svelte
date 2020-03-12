@@ -1,19 +1,16 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
-
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspots from '../../../components/Hotspots.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
 
 	import { viewMode, locationMode } from '../../../models/appState.js';
 
-	function toggleLocationMode() {
-		$locationMode = ($locationMode === 'global') ? 'local' : 'global';
-	}
-
 	function toggleViewMode() {
 		$viewMode = ($viewMode === 'explore') ? 'discover' : 'explore';
+	}
+
+	function toggleLocationMode() {
+		$locationMode = ($locationMode === 'global') ? 'local' : 'global';
 	}
 
 	$: proxyFilterImage = ($locationMode === 'global') ? 'explore_filter.png' : 'explore_filter_local.png';

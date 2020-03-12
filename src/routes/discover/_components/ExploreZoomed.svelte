@@ -1,8 +1,5 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
-
-	export let locationMode = 'global';
+	import { exploreZoomed } from '../../../models/appState.js';
 
 	import { loadProject } from '../../../actions/appActions.js';
 
@@ -13,13 +10,17 @@
 	import ScrollView from '../../../components/ScrollView.svelte';
 
 	import ExploreFilterBar from './ExploreFilterBar.svelte';
+
+	function exploreZoomOut() {
+		$exploreZoomed = false;
+	}
 </script>
 
 <div class="content">
 	<div class="contentArea">
 		<Hotspots>
 			<!-- Zoom Out -->
-			<Hotspot onClick="{e => dispatch('exploreZoomOut')}" style="
+			<Hotspot onClick="{exploreZoomOut}" style="
 				top: 0;
 				left: 0;
 				width: 100%;
@@ -38,7 +39,7 @@
 		<Proxy image="explore_zoomed" className="exploreZoomed" />
 	</div>
 
-	<ExploreFilterBar {locationMode} />
+	<ExploreFilterBar />
 </div>
 
 <style>

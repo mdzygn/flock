@@ -5,11 +5,11 @@
 	export let onClick = null;
 	export let style = null;
 
-	$: {
-		if (DEBUG && onClick && typeof onClick !== 'function') {
-			console.error('onClick property not a function: "' + onClick + '"');
-		}
-	}
+	// $: { // can be a string and will still work?
+	// 	if (DEBUG && onClick && typeof onClick !== 'function') {
+	// 		console.error('onClick property not a function: "' + onClick + '" type: ' + typeof onClick);
+	// 	}
+	// }
 </script>
 
 {#if href}

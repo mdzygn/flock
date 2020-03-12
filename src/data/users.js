@@ -32,6 +32,7 @@ const users = [
 		avatarImage: null,
 		coverImage: null,
 		connected: false,
+		requestedConnection: false,
 		postsCount: 12,
 		likesCount: 25,
 		followsCount: 27,

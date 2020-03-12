@@ -7,8 +7,9 @@
 	import ProfileOverview from './../../_components/ProfileOverview.svelte';
 	import ProjectList from './../../_components/ProjectList.svelte';
 
-	import { viewedUser, requestConnectionSent } from '../../../models/appState';
+	import { viewedUser } from '../../../models/appState';
 
+	$: requestedConnection = $viewedUser ? $viewedUser.requestedConnection : false;
 	$: viewingOwnProfile = $viewedUser ? $viewedUser.isCurrentUser : false;
 
 	import { loadConversation } from '../../../actions/appActions';
@@ -60,22 +61,22 @@
 						width: 116px;
 						height: 40px;" />
 
-					<!-- Request Sent Notification -->
-					{#if $requestConnectionSent}
+					{#if requestedConnection}
+						<!-- Request Sent Notification -->
 						<Proxy image="profile_invitation_sent" absolutePlacement="true" style="
 							width: 336px;
 							height: 104px;
 
 							left: 209.5px;
 							top: 2.5px;" />
+					{:else}
+						<!-- Connect -->
+						<Hotspot onClick="{e => requestConnection('l40smlp3')}" style="
+							right: 5px;
+							top: 7px;
+							width: 137px;
+							height: 40px;" />
 					{/if}
-
-					<!-- Connect -->
-					<Hotspot onClick="{e => requestConnection('l40smlp3')}" style="
-						right: 5px;
-						top: 7px;
-						width: 137px;
-						height: 40px;" />
 				{/if}
 			</Proxy>
 		</div>

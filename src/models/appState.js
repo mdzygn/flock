@@ -13,8 +13,6 @@ const appState = createModel({
     conversation: null,
     viewedUser: null,
 
-    requestConnectionSent: false,
-
     viewMode: 'discover',
     locationMode: 'global',
     exploreZoomed: false,
@@ -34,7 +32,6 @@ export const conversation = appState.conversation;
 export const viewedUser = appState.viewedUser;
 
 export const newMessage = appState.newMessage;
-export const requestConnectionSent = appState.requestConnectionSent;
 
 export const viewMode = appState.viewMode;
 export const locationMode = appState.locationMode;

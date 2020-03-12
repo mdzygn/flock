@@ -18,8 +18,6 @@ import {
     conversation,
     viewedUser,
 
-    requestConnectionSent,
-
     resetScrollRegionPosition,
 } from '../models/appState';
 
@@ -109,14 +107,12 @@ export function loadChannel(targetChannelId) {
 }
 
 export function loadProfile(targetProfileId, options) {
-    console.log('targetProfileId: ' + targetProfileId);
+    // console.log('targetProfileId: ' + targetProfileId);
 
     profileId.set(targetProfileId);
 
     const curUser = users.find(item => item.id === targetProfileId);
     viewedUser.set(curUser);
-
-    requestConnectionSent.set(false);
 
     gotoRoute('profile/' + targetProfileId);
     resetScrollRegionPosition('profile');

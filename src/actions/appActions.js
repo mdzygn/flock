@@ -1,6 +1,8 @@
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 
+import conversations from '../data/conversations';
+
 // const { page } = stores();
 
 import {
@@ -11,6 +13,8 @@ import {
     threadId,
     conversationId,
     profileId,
+
+    conversation,
 
     viewingOwnProfile,
     requestConnectionSent,
@@ -122,6 +126,9 @@ export function loadConversation(targetConversationId) {
     // console.log('loadConversation: ' + targetConversationId);
 
     conversationId.set(targetConversationId);
+
+    const curConversation = conversations.find(item => item.id === targetConversationId);
+    conversation.set(curConversation);
 
     gotoRoute('messages/' + targetConversationId);
     resetScrollRegionPosition('conversation');

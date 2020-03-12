@@ -6,6 +6,7 @@
     import {
         viewMode,
         viewingOwnProfile,
+        conversation,
     } from '../../models/appState.js';
 
     import { hasCreated } from '../../models/projectViewState.js';
@@ -25,10 +26,19 @@
 
     $: curSection = getSectionByPath(path, appState);
     $: isProjectView = curSection ? curSection.isProjectView : false;
-    $: sectionLabel = curSection ? curSection.label : '';
     $: parentSection = curSection ? curSection.parentSection : null;
     $: showBack = curSection ? curSection.showBack : false;
     $: isMyProfile = curSection ? (curSection.segment === 'profile') : false;
+    // $: sectionLabel = curSection ? curSection.label : '';
+
+    let sectionLabel = '';
+    $: {
+        if (/\/messages\/.*/.test(path) && $conversation) {
+            sectionLabel = $conversation.user ? $conversation.user.firstName : $conversation.name;
+        } else {
+            sectionLabel = curSection ? curSection.label : '';
+        }
+    }
 
     function goBack () {
         if (isProjectView && $hasCreated) {

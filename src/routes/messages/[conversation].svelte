@@ -3,11 +3,11 @@
 	import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
 
-	import { conversationId } from '../../models/appState';
+	import { conversation } from '../../models/appState';
 	import { loadProfile } from '../../actions/appActions';
 
-	$: viewingGroupConversation = ($conversationId === 's0g1la34');
-	$: isNewConversation = ($conversationId === 'r70dp2bf');
+	$: viewingGroupConversation = $conversation ? $conversation.isGroup : false;
+	$: isNewConversation = $conversation ? $conversation.isNew : false;
 
 	$: proxyMessageViewImage = viewingGroupConversation ? 'messages_group_view': 'message_view';
 </script>

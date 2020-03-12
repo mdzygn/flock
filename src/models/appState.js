@@ -10,6 +10,8 @@ const appState = createModel({
     conversationId: 'a4kcmsd3',
     profileId: 'bl20a8lm',
 
+    conversation: null,
+
     viewingOwnProfile: false,
     requestConnectionSent: false,
 
@@ -27,6 +29,8 @@ export const channelId = appState.channelId;
 export const threadId = appState.threadId;
 export const conversationId = appState.conversationId;
 export const profileId = appState.profileId;
+
+export const conversation = appState.conversation;
 
 export const viewingOwnProfile = appState.viewingOwnProfile;
 export const newMessage = appState.newMessage;

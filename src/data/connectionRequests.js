@@ -5,6 +5,7 @@ const connectionRequests = [
         recipientId: 'bl20a8lm',
         createdAt: 0,
         accepted: false,
+        dismissed: false,
         seen: false,
     },
     {
@@ -13,6 +14,7 @@ const connectionRequests = [
         recipientId: 'bl20a8lm',
         createdAt: 0,
         accepted: false,
+        dismissed: false,
         seen: true,
     },
 ];

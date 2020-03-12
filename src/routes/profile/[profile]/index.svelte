@@ -52,7 +52,7 @@
 			<Proxy image="{proxyOverviewActionsImage}">
 				{#if !$viewingOwnProfile}
 					<!-- Send Message -->
-					<Hotspot onClick="{e => loadConversation('l40smlp3')}" style="
+					<Hotspot onClick="{e => loadConversation('l40smlp3', {isNew: true})}" style="
 						left: 11px;
 						top: 7px;
 						width: 116px;

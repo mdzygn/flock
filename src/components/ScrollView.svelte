@@ -1,5 +1,6 @@
 <script>
     import { scrollRegionProperties, getScrollRegionProperties } from '../models/appState';
+	import { viewingGroupConversation } from '../models/appState';
 
     import { onMount, onDestroy, tick } from 'svelte'; // afterUpdate
 
@@ -37,7 +38,6 @@
             if (anchorToBottom) {
                 // TODO: check scroll if region height changes (e.g. image load)
                 regionProps.scrollTop = scrollRegion.scrollHeight;
-                // console.log(id + ' init scrollTop: ' + regionProps.scrollTop);
             } else {
                 regionProps.scrollTop = 0;
             }

@@ -3,7 +3,7 @@
 	import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
 
-	import { conversationId, viewingGroupConversation } from '../../models/appState';
+	import { conversationId, viewingGroupConversation, isNewConversation } from '../../models/appState';
 	import { loadProfile } from '../../actions/appActions';
 
 	$: proxyMessageViewImage = $viewingGroupConversation ? 'messages_group_view': 'message_view';
@@ -15,14 +15,29 @@
 
 <div class="messagesView">
 	<ScrollView anchorToBottom="{true}" id="conversation">
-		<Proxy image="{proxyMessageViewImage}">
-			<!-- Profiles -->
-			<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
-				left: 6px;
-				top: 25px;
-				width: 50px;
-				height: 691px;" />
-		</Proxy>
+		{#if $isNewConversation}
+			<div class="content">
+				<Proxy image="message_new_message_profile" className="profileInfo" />
+			</div>
+		{:else}
+			<Proxy image="{proxyMessageViewImage}">
+				{#if $viewingGroupConversation}
+					<!-- Profiles -->
+					<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
+						left: 6px;
+						top: 25px;
+						width: 50px;
+						height: 307px;" />
+				{:else}
+					<!-- Profiles -->
+					<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
+						left: 6px;
+						top: 25px;
+						width: 50px;
+						height: 691px;" />
+				{/if}
+			</Proxy>
+		{/if}
 	</ScrollView>
 </div>
 
@@ -41,5 +56,16 @@
 	.messageInput {
 		position: absolute;
     	bottom: 0;
+	}
+
+	.content {
+		display: flex;
+		justify-content: center;
+	}
+
+	.content :global(.profileInfo) {
+		position: absolute;
+		top: 60px;
+		width: 217px;
 	}
 </style>

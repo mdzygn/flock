@@ -10,6 +10,7 @@ import {
 
     viewingOwnProfile,
     viewingGroupConversation,
+    isNewConversation,
     requestConnectionSent,
 
     resetScrollRegionPosition,
@@ -118,17 +119,26 @@ export function loadProfile(targetProfileId, options) {
 export function loadConversation(targetConversationId, options) {
     conversationId.set(targetConversationId);
 
-    let isGroupConversation = false;
+    let curIsGroupConversation = false;
     if (options && options.group) {
-        isGroupConversation = options.group;
+        curIsGroupConversation = options.group;
     }
 
-    if (get(viewingGroupConversation) != isGroupConversation) {
-        viewingGroupConversation.set(isGroupConversation);
-        resetScrollRegionPosition('conversation');
+    let curIsNewConversation = false;
+    if (options && options.isNew) {
+        curIsNewConversation = options.isNew;
+    }
+
+    if (get(viewingGroupConversation) != curIsGroupConversation) {
+        viewingGroupConversation.set(curIsGroupConversation);
+    }
+
+    if (get(isNewConversation) != curIsNewConversation) {
+        isNewConversation.set(curIsNewConversation);
     }
 
     goto('messages/' + targetConversationId );
+    resetScrollRegionPosition('conversation');
 }
 
 export function showProjectInfo() {

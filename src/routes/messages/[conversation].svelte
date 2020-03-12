@@ -8,9 +8,6 @@
 
 	$: viewingGroupConversation = ($conversationId === 's0g1la34');
 	$: isNewConversation = ($conversationId === 'r70dp2bf');
-	$: {
-		console.log('conversation changed: ' + $conversationId);
-	}
 
 	$: proxyMessageViewImage = viewingGroupConversation ? 'messages_group_view': 'message_view';
 </script>

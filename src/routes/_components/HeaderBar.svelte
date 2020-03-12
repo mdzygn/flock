@@ -5,7 +5,6 @@
 
     import {
         viewMode,
-        viewingGroupConversation,
         viewingOwnProfile,
     } from '../../models/appState.js';
 
@@ -21,7 +20,6 @@
 
     $: appState = {
         viewMode: $viewMode,
-        viewingGroupConversation: $viewingGroupConversation,
         viewingOwnProfile: $viewingOwnProfile,
     };
 

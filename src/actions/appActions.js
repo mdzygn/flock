@@ -9,8 +9,6 @@ import {
     profileId,
 
     viewingOwnProfile,
-    viewingGroupConversation,
-    isNewConversation,
     requestConnectionSent,
 
     resetScrollRegionPosition,
@@ -116,26 +114,8 @@ export function loadProfile(targetProfileId, options) {
     resetScrollRegionPosition('profile');
 }
 
-export function loadConversation(targetConversationId, options) {
+export function loadConversation(targetConversationId) {
     conversationId.set(targetConversationId);
-
-    let curIsGroupConversation = false;
-    if (options && options.group) {
-        curIsGroupConversation = options.group;
-    }
-
-    let curIsNewConversation = false;
-    if (options && options.isNew) {
-        curIsNewConversation = options.isNew;
-    }
-
-    if (get(viewingGroupConversation) != curIsGroupConversation) {
-        viewingGroupConversation.set(curIsGroupConversation);
-    }
-
-    if (get(isNewConversation) != curIsNewConversation) {
-        isNewConversation.set(curIsNewConversation);
-    }
 
     goto('messages/' + targetConversationId );
     resetScrollRegionPosition('conversation');

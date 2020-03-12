@@ -18,7 +18,6 @@
 		const params = $page.params;
 		if (params.conversation) {
 			$conversationId = params.conversation;
-			console.log('set conversation: ' + $conversationId);
 		}
 	}
 

@@ -1,6 +1,5 @@
 <script>
     import { scrollRegionProperties, getScrollRegionProperties } from '../models/appState';
-	import { viewingGroupConversation } from '../models/appState';
 
     import { onMount, onDestroy, tick } from 'svelte'; // afterUpdate
 

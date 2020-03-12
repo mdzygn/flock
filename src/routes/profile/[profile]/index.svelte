@@ -52,7 +52,7 @@
 			<Proxy image="{proxyOverviewActionsImage}">
 				{#if !$viewingOwnProfile}
 					<!-- Send Message -->
-					<Hotspot onClick="{e => loadConversation('r70dp2bf', {isNew: true})}" style="
+					<Hotspot onClick="{e => loadConversation('r70dp2bf')}" style="
 						left: 11px;
 						top: 7px;
 						width: 116px;

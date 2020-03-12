@@ -175,19 +175,19 @@
 
 					<!-- Message -->
 					{#if $owner}
-						<Hotspot onClick="{e => loadConversation('s0g1la34', {group: true})}" style="
+						<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
 							right: 11px;
 							top: 122px;
 							width: 147px;
 							height: 40px;" />
 					{:else if $returnView}
-						<Hotspot onClick="{e => loadConversation('s0g1la34', {group: true})}" style="
+						<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
 							right: 11px;
 							top: 122px;
 							width: 116px;
 							height: 40px;" />
 					{:else}
-						<Hotspot onClick="{e => loadConversation('s0g1la34', {group: true})}" style="
+						<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
 							left: 7px;
 							top: 155px;
 							width: 121px;
@@ -232,14 +232,14 @@
 				<Proxy image="{proxyShowingInfoActionsImage}">
 					{#if $owner}
 						<!-- Send Message -->
-						<Hotspot onClick="{e => loadConversation('s0g1la34', {group: true})}" style="
+						<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
 							right: 6px;
 							top: 2px;
 							width: 156px;
 							height: 46px;" />
 					{:else}
 						<!-- Send Message -->
-						<Hotspot onClick="{e => loadConversation('s0g1la34', {group: true})}" style="
+						<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
 							left: 7px;
 							top: 8px;
 							width: 121px;

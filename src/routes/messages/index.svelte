@@ -22,7 +22,7 @@
 			height: 40px;" />
 
 		<!-- New Message -->
-		<!-- <Hotspot onClick="{e => loadConversation('a4kcmsd3', {isNew: true})}" style=" -->
+		<!-- <Hotspot onClick="{e => loadConversation('a4kcmsd3')}" style=" -->
 		<Hotspot href="contacts" style="
 			right: 5px;
 			top: 4px;

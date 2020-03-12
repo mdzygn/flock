@@ -6,7 +6,7 @@
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
 
-	import { projectId } from '../../../models/appState';
+	import { projectId, project } from '../../../models/appState';
 
 	import {
 		returnView,

@@ -10,6 +10,7 @@ const appState = createModel({
     conversationId: 'a4kcmsd3',
     profileId: 'bl20a8lm',
 
+    project: null,
     conversation: null,
     viewedUser: null,
 
@@ -28,6 +29,7 @@ export const threadId = appState.threadId;
 export const conversationId = appState.conversationId;
 export const profileId = appState.profileId;
 
+export const project = appState.project;
 export const conversation = appState.conversation;
 export const viewedUser = appState.viewedUser;
 

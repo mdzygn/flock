@@ -13,14 +13,9 @@ const users = [
 		followsCount: 32,
 		skills: [],
 		projects: [
-			{
-				name: '',
-				id: '',
-				createdAt: '',
-				thumb: '',
-				unread: '',
-				following: true,
-			}
+			's7djj2s2',
+			's7djj2s2',
+			's7djj2s2',
 		],
 	},
 	{

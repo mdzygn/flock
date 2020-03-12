@@ -15,6 +15,7 @@
 
 	import {
 		curPath,
+		projectId,
 		conversationId,
 		profileId,
 	} from '../models/appState';
@@ -30,6 +31,11 @@
 		if (params.profile) {
 			if ($profileId !== params.profile) {
 				loadProfile(params.profile);
+			}
+		}
+		if (params.project) {
+			if ($projectId !== params.project) {
+				loadProfile(params.project);
 			}
 		}
 	}

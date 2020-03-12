@@ -35,8 +35,8 @@
     $: {
         if (/\/profile\/.*/.test(path) && $viewedUser && !$viewedUser.isCurrentUser) {
             sectionLabel = $viewedUser.fullName;
-        } else if (/\/messages\/.*/.test(path) && $conversation) {
-            sectionLabel = $conversation.user ? $conversation.user.firstName : $conversation.name;
+        } else if (/\/messages\/.*/.test(path) && $conversation && ($conversation.user || $conversation.project)) {
+            sectionLabel = $conversation.user ? $conversation.user.firstName : $conversation.project.name;
         } else {
             sectionLabel = curSection ? curSection.label : '';
         }

@@ -1,6 +1,7 @@
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 
+import projects from '../data/projects';
 import conversations from '../data/conversations';
 import users from '../data/users';
 
@@ -15,6 +16,7 @@ import {
     conversationId,
     profileId,
 
+    project,
     conversation,
     viewedUser,
 
@@ -32,6 +34,8 @@ import {
 } from '../models/projectViewState.js';
 
 export function loadProject(targetProjectId, options) {
+    // console.log('loadProject', targetProjectId);
+
     projectId.set(targetProjectId);
 
     if (options && options.isNew) {
@@ -63,9 +67,11 @@ export function loadProject(targetProjectId, options) {
     showingInfo.set(false);
     returnView.set(get(following) || get(owner) || get(liked));
 
-    resetScrollRegionPosition('project');
+    const curProject = projects.find(item => item.id === targetProjectId);
+    project.set(curProject);
 
-    goto('projects/' + targetProjectId);
+    gotoRoute('projects/' + targetProjectId);
+    resetScrollRegionPosition('project');
 }
 
 export function loadProjectPost(targetProjectId) {

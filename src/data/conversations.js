@@ -1,6 +1,8 @@
 const conversations = [
 	{
 		id: 'a4kcmsd3',
+        createdAt: 0,
+        userId: 'sl3p5oms',
 		user: {
 			firstName: 'Mia',
 		},
@@ -8,6 +10,8 @@ const conversations = [
 	{
 		id: 'r70dp2bf',
 		isNew: true,
+        createdAt: 0,
+        userId: 'sl3p5oms',
 		user: {
 			firstName: 'Mia',
 		},
@@ -15,7 +19,12 @@ const conversations = [
 	{
 		id: 's0g1la34',
 		isGroup: true,
-		name: 'World Creator',
+        createdAt: 0,
+        userId: 'sl3p5oms',
+        projectId: 's7djj2s2',
+		project: {
+			name: 'World Creator',
+		}
 	},
 ];
 

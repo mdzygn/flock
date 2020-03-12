@@ -12,6 +12,7 @@ const appState = createModel({
 
     viewingOwnProfile: false,
     viewingGroupConversation: false,
+    requestConnectionSent: false,
 
     viewMode: 'discover',
     locationMode: 'global',
@@ -28,6 +29,7 @@ export const profileId = appState.profileId;
 
 export const viewingOwnProfile = appState.viewingOwnProfile;
 export const viewingGroupConversation = appState.viewingGroupConversation;
+export const requestConnectionSent = appState.requestConnectionSent;
 
 export const viewMode = appState.viewMode;
 export const locationMode = appState.locationMode;

@@ -7,8 +7,11 @@ import {
     threadId,
     conversationId,
     profileId,
+
     viewingOwnProfile,
     viewingGroupConversation,
+    requestConnectionSent,
+
     resetScrollRegionPosition,
 } from '../models/appState';
 
@@ -105,6 +108,8 @@ export function loadProfile(targetProfileId, options) {
         isProfileOwner = options.owner;
     }
     viewingOwnProfile.set(isProfileOwner);
+
+    requestConnectionSent.set(false);
 
     goto('profile/' + targetProfileId );
     resetScrollRegionPosition('profile');

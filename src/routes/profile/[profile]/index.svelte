@@ -7,8 +7,10 @@
 	import ProfileOverview from './../../_components/ProfileOverview.svelte';
 	import ProjectList from './../../_components/ProjectList.svelte';
 
-	import { profileId, viewingOwnProfile } from '../../../models/appState';
+	import { profileId, viewingOwnProfile, requestConnectionSent } from '../../../models/appState';
+
 	import { loadConversation } from '../../../actions/appActions';
+	import { requestConnection } from '../../../actions/userActions';
 
 	$: proxyActionsImage = $viewingOwnProfile ? 'profile_actions_owner' : 'profile_actions';
 	$: proxyOverviewActionsImage = $viewingOwnProfile ? 'profile_overview_owner_actions' : 'profile_overview_actions';
@@ -54,6 +56,23 @@
 						left: 11px;
 						top: 7px;
 						width: 116px;
+						height: 40px;" />
+
+					<!-- Request Sent Notification -->
+					{#if $requestConnectionSent}
+						<Proxy image="profile_invitation_sent" absolutePlacement="true" style="
+							width: 336px;
+							height: 104px;
+
+							left: 209.5px;
+							top: 2.5px;" />
+					{/if}
+
+					<!-- Connect -->
+					<Hotspot onClick="{e => requestConnection('l40smlp3')}" style="
+						right: 5px;
+						top: 7px;
+						width: 137px;
 						height: 40px;" />
 				{/if}
 			</Proxy>

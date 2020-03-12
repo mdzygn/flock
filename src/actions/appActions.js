@@ -118,7 +118,7 @@ export function loadProfile(targetProfileId, options) {
 
     requestConnectionSent.set(false);
 
-    goto('profile/' + targetProfileId );
+    gotoRoute('profile/' + targetProfileId);
     resetScrollRegionPosition('profile');
 }
 

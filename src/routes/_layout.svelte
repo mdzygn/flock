@@ -27,19 +27,21 @@
 		$curPath = $page.path;
 
 		const params = $page.params;
-		if (params.conversation) {
-			if ($conversationId !== params.conversation) {
-				loadConversation(params.conversation);
+		if (params) {
+			if (params.conversation) {
+				if ($conversationId !== params.conversation) {
+					loadConversation(params.conversation);
+				}
 			}
-		}
-		if (params.profile) {
-			if ($profileId !== params.profile) {
-				loadProfile(params.profile);
+			if (params.profile) {
+				if ($profileId !== params.profile) {
+					loadProfile(params.profile);
+				}
 			}
-		}
-		if (params.project) {
-			if ($projectId !== params.project) {
-				loadProject(params.project);
+			if (params.project) {
+				if ($projectId !== params.project) {
+					loadProject(params.project);
+				}
 			}
 		}
 	}

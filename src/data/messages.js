@@ -1,4 +1,4 @@
-const channelPosts = [
+const messages = [
 	{
         id: '',
         userId: 'sl3p5oms',
@@ -51,4 +51,4 @@ const channelPosts = [
 	},
 ];
 
-export default channelPosts;
+export default messages;

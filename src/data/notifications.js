@@ -1,4 +1,4 @@
-const channelPosts = [
+const notifications = [
 	{
         id: '',
         userId: 'sl3p5oms',
@@ -41,4 +41,4 @@ const channelPosts = [
 	},
 ];
 
-export default channelPosts;
+export default notifications;

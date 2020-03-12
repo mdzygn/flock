@@ -3,7 +3,7 @@
 	import Hotspots from '../../../components/Hotspots.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
 
-	import { viewMode, locationMode } from '../../../models/appState.js';
+	import { viewMode, locationMode, exploreZoomed } from '../../../models/appState.js';
 
 	function toggleViewMode() {
 		$viewMode = ($viewMode === 'explore') ? 'discover' : 'explore';
@@ -11,6 +11,11 @@
 
 	function toggleLocationMode() {
 		$locationMode = ($locationMode === 'global') ? 'local' : 'global';
+
+		// reset zoom if zoomed in and toggling location state
+		if ($exploreZoomed) {
+			$exploreZoomed = false;
+		}
 	}
 
 	$: proxyFilterImage = ($locationMode === 'global') ? 'explore_filter.png' : 'explore_filter_local.png';

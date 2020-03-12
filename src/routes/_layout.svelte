@@ -11,7 +11,11 @@
 	export let segment;
 	$: path = $page ? $page.path : '';
 
-	import { loadConversation, loadProfile } from '../actions/appActions';
+	import {
+		loadProject,
+		loadConversation,
+		loadProfile,
+	} from '../actions/appActions';
 
 	import {
 		curPath,
@@ -35,7 +39,7 @@
 		}
 		if (params.project) {
 			if ($projectId !== params.project) {
-				loadProfile(params.project);
+				loadProject(params.project);
 			}
 		}
 	}

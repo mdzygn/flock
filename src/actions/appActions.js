@@ -1,7 +1,11 @@
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 
+// const { page } = stores();
+
 import {
+    curPath,
+
     projectId,
     channelId,
     threadId,
@@ -115,12 +119,25 @@ export function loadProfile(targetProfileId, options) {
 }
 
 export function loadConversation(targetConversationId) {
+    console.log('loadConversation: ' + targetConversationId);
+
     conversationId.set(targetConversationId);
 
-    goto('messages/' + targetConversationId );
+    gotoRoute('messages/' + targetConversationId);
     resetScrollRegionPosition('conversation');
+}
+
+function gotoRoute(newPath) {
+    // console.log(getPagePath()+ ' !== /' + newPath + ' : ' + (getPagePath() !== '/' + newPath));
+    if (getPagePath() !== '/' + newPath) {
+        goto(newPath);
+    }
 }
 
 export function showProjectInfo() {
     showingInfo.set(true);
+}
+
+function getPagePath() {
+    return get(curPath);
 }

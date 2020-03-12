@@ -20,6 +20,8 @@ const appState = createModel({
     // scrollRegionProperties: {},
 }, {persist: true});
 
+export const curPath = writable({});
+
 export const projectId = appState.projectId;
 export const channelId = appState.channelId;
 export const threadId = appState.threadId;

@@ -11,13 +11,22 @@
 	export let segment;
 	$: path = $page ? $page.path : '';
 
+	import { loadConversation } from '../actions/appActions';
+
 	import {
+		curPath,
 		conversationId
 	} from '../models/appState';
 	$: {
+		$curPath = $page.path;
+
 		const params = $page.params;
 		if (params.conversation) {
-			$conversationId = params.conversation;
+			console.log('params.conversation: ' + params.conversation);
+			if ($conversationId !== params.conversation) {
+				loadConversation(params.conversation);
+				// $conversationId = params.conversation;
+			}
 		}
 	}
 
@@ -84,7 +93,7 @@
 		height: 100%;
 		width: 100%;
 
-    	line-height: 0;
+    	/* line-height: 0; */
 	}
 
 </style>

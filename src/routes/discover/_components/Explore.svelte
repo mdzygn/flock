@@ -14,10 +14,6 @@
 	$: proxyFilterImage = (locationMode === 'global') ? 'explore_filter.png' : 'explore_filter_local.png';
 </script>
 
-<svelte:head>
-	<title>Flock</title>
-</svelte:head>
-
 <div class="content">
 	<div class="contentArea">
 		<Hotspots>

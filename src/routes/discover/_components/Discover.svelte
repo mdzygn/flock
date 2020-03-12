@@ -16,10 +16,6 @@
 	import Feed from './../../_components/Feed.svelte';
 </script>
 
-<svelte:head>
-	<title>Flock</title>
-</svelte:head>
-
 <ScrollView id="discover">
 	<div>
 		<Hotspots>

@@ -7,14 +7,16 @@
 	import ProfileOverview from './../../_components/ProfileOverview.svelte';
 	import ProjectList from './../../_components/ProjectList.svelte';
 
-	import { profileId, viewingOwnProfile, requestConnectionSent } from '../../../models/appState';
+	import { viewedUser, requestConnectionSent } from '../../../models/appState';
+
+	$: viewingOwnProfile = $viewedUser ? $viewedUser.isCurrentUser : false;
 
 	import { loadConversation } from '../../../actions/appActions';
 	import { requestConnection } from '../../../actions/userActions';
 
-	$: proxyActionsImage = $viewingOwnProfile ? 'profile_actions_owner' : 'profile_actions';
-	$: proxyOverviewActionsImage = $viewingOwnProfile ? 'profile_overview_owner_actions' : 'profile_overview_actions';
-	$: proxySkillsImage = $viewingOwnProfile ? 'profile_skills_owner' : 'profile_skills';
+	$: proxyActionsImage = viewingOwnProfile ? 'profile_actions_owner' : 'profile_actions';
+	$: proxyOverviewActionsImage = viewingOwnProfile ? 'profile_overview_owner_actions' : 'profile_overview_actions';
+	$: proxySkillsImage = viewingOwnProfile ? 'profile_skills_owner' : 'profile_skills';
 </script>
 
 <svelte:head>
@@ -24,7 +26,7 @@
 <ScrollView id="profile">
 	<div class="content">
 		<div class="contentItem">
-			<!--{#if !$viewingOwnProfile}
+			<!--{#if !viewingOwnProfile}
 				<Proxy image="{proxyActionsImage}">
 					<!-- Connections -->
 					<!--<Hotspot href="contacts" style="
@@ -48,9 +50,9 @@
 						height: 47px;" />
 				<!--</Proxy>
 			{/if}-->
-			<ProfileOverview isOwner="{$viewingOwnProfile}" />
+			<ProfileOverview isOwner="{viewingOwnProfile}" />
 			<Proxy image="{proxyOverviewActionsImage}">
-				{#if !$viewingOwnProfile}
+				{#if !viewingOwnProfile}
 					<!-- Send Message -->
 					<Hotspot onClick="{e => loadConversation('r70dp2bf')}" style="
 						left: 11px;

@@ -5,8 +5,8 @@
 
     import {
         viewMode,
-        viewingOwnProfile,
         conversation,
+        viewedUser,
     } from '../../models/appState.js';
 
     import { hasCreated } from '../../models/projectViewState.js';
@@ -21,7 +21,7 @@
 
     $: appState = {
         viewMode: $viewMode,
-        viewingOwnProfile: $viewingOwnProfile,
+        viewingOwnProfile: $viewedUser ? $viewedUser.isCurrentUser : false,
     };
 
     $: curSection = getSectionByPath(path, appState);
@@ -33,7 +33,9 @@
 
     let sectionLabel = '';
     $: {
-        if (/\/messages\/.*/.test(path) && $conversation) {
+        if (/\/profile\/.*/.test(path) && $viewedUser && !$viewedUser.isCurrentUser) {
+            sectionLabel = $viewedUser.fullName;
+        } else if (/\/messages\/.*/.test(path) && $conversation) {
             sectionLabel = $conversation.user ? $conversation.user.firstName : $conversation.name;
         } else {
             sectionLabel = curSection ? curSection.label : '';
@@ -52,7 +54,7 @@
 
     function loadMyProfile() {
         if (!isMyProfile) {
-            loadProfile('sl3p5oms', {owner: true});
+            loadProfile('sl3p5oms'); // , {owner: true});
         }
     }
 </script>

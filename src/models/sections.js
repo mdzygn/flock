@@ -123,7 +123,7 @@ export const sections = [
 	{
 		path: '/messages/.*',
 		id: 'message_view',
-		label: 'Mia',
+		label: 'Conversation', // 'Mia',
 		showBack: true,
 		// parentSection: 'messages',
 	},
@@ -138,7 +138,7 @@ export const sections = [
 	{
 		path: '/profile/.*',
 		id: 'profile_view',
-		label: 'Sasha Holmer',
+		label: 'User Profile', // 'Sasha Holmer',
 		darkBg: true,
 		showBack: true,
 		// parentSection: 'messages',

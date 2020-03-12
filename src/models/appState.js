@@ -11,8 +11,8 @@ const appState = createModel({
     profileId: 'bl20a8lm',
 
     conversation: null,
+    viewedUser: null,
 
-    viewingOwnProfile: false,
     requestConnectionSent: false,
 
     viewMode: 'discover',
@@ -31,8 +31,8 @@ export const conversationId = appState.conversationId;
 export const profileId = appState.profileId;
 
 export const conversation = appState.conversation;
+export const viewedUser = appState.viewedUser;
 
-export const viewingOwnProfile = appState.viewingOwnProfile;
 export const newMessage = appState.newMessage;
 export const requestConnectionSent = appState.requestConnectionSent;
 

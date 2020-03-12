@@ -2,6 +2,7 @@ import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 
 import conversations from '../data/conversations';
+import users from '../data/users';
 
 // const { page } = stores();
 
@@ -15,8 +16,8 @@ import {
     profileId,
 
     conversation,
+    viewedUser,
 
-    viewingOwnProfile,
     requestConnectionSent,
 
     resetScrollRegionPosition,
@@ -108,13 +109,12 @@ export function loadChannel(targetChannelId) {
 }
 
 export function loadProfile(targetProfileId, options) {
+    console.log('targetProfileId: ' + targetProfileId);
+
     profileId.set(targetProfileId);
 
-    let isProfileOwner = false;
-    if (options && options.owner) {
-        isProfileOwner = options.owner;
-    }
-    viewingOwnProfile.set(isProfileOwner);
+    const curUser = users.find(item => item.id === targetProfileId);
+    viewedUser.set(curUser);
 
     requestConnectionSent.set(false);
 

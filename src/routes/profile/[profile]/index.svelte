@@ -48,7 +48,7 @@
 						height: 47px;" />
 				<!--</Proxy>
 			{/if}-->
-			<ProfileOverview  isOwner="{$viewingOwnProfile}" />
+			<ProfileOverview isOwner="{$viewingOwnProfile}" />
 			<Proxy image="{proxyOverviewActionsImage}">
 				{#if !$viewingOwnProfile}
 					<!-- Send Message -->

@@ -119,7 +119,7 @@ export function loadProfile(targetProfileId, options) {
 }
 
 export function loadConversation(targetConversationId) {
-    console.log('loadConversation: ' + targetConversationId);
+    // console.log('loadConversation: ' + targetConversationId);
 
     conversationId.set(targetConversationId);
 

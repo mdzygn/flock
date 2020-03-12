@@ -30,6 +30,10 @@
 </div>
 
 <style>
+    .proxy {
+        line-height: 0;
+    }
+
     img {
         width: 100%;
     }

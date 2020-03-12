@@ -22,7 +22,7 @@
 
 		const params = $page.params;
 		if (params.conversation) {
-			console.log('params.conversation: ' + params.conversation);
+			// console.log('params.conversation: ' + params.conversation);
 			if ($conversationId !== params.conversation) {
 				loadConversation(params.conversation);
 				// $conversationId = params.conversation;

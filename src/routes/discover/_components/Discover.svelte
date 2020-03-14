@@ -7,7 +7,7 @@
 
 	import Feed from './../../_components/Feed.svelte';
 
-	import { viewMode, locationMode } from '../../../models/appState.js';
+	import { viewMode, locationMode, resetScrollRegionPosition } from '../../../models/appState.js';
 	import { loadProject } from '../../../actions/appActions.js';
 
 	function toggleViewMode() {
@@ -16,6 +16,7 @@
 
 	function toggleLocationMode() {
 		$locationMode = ($locationMode === 'global') ? 'local' : 'global';
+		resetScrollRegionPosition('discover');
 	}
 
 	$: proxyContentOffset = ($locationMode === 'global') ? 0 : 3;

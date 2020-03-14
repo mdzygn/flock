@@ -14,10 +14,27 @@
     let hasScrollHeader = $$props.$$slots.scrollHeader;
 
     let scrollRegion;
+    let curScrollHeaderPosition = 0;
+    let scrollHeaderOffset = 0;
+    let scrollHeader;
+    let scrollHeaderHeight = 0;
 
     function updateScroll() {
+        if (!regionProps || !scrollRegion) {
+            return;
+        }
+
         regionProps.scrollTop = scrollRegion.scrollTop;
-        // console.log('update scroll ' + regionProps.scrollTop);
+
+        if (hasScrollHeader) {
+            // if (!scrollHeaderHeight) {
+            //     scrollHeaderHeight = scrollHeader.offsetHeight;
+            // }
+            curScrollHeaderPosition = Math.min(regionProps.scrollTop, Math.max(regionProps.scrollTop - scrollHeader.offsetHeight, curScrollHeaderPosition));
+            scrollHeaderOffset = curScrollHeaderPosition - regionProps.scrollTop;
+
+            // console.log('curScrollHeaderPosition: ' + curScrollHeaderPosition + ', scrollHeaderOffset: ' + scrollHeaderOffset);
+        }
     }
 
     let scrollUpdateInited = false;
@@ -66,10 +83,16 @@
 
         scrollRegion.scrollTo(0, regionProps.scrollTop);
 
-        scrollRegion.addEventListener('scroll', updateScroll);
+        if (hasScrollHeader) {
+            curScrollHeaderPosition = regionProps.scrollTop;
+            scrollHeaderOffset = 0;
+        }
     }
 
-    onMount(updateScrollPosition);
+    onMount(() => {
+        scrollRegion.addEventListener('scroll', updateScroll);
+        updateScrollPosition();
+    });
 
     const scrollRegionResetUnsubscribe = scrollRegionProperties.subscribe(event => {
         if (scrollUpdateInited) {
@@ -92,17 +115,32 @@
 	// });
 </script>
 
-<div class="scrollView" bind:this="{scrollRegion}">
-    <slot></slot>
-</div>
 
 {#if hasScrollHeader}
-    <div class="scrollHeader">
-        <slot name="scrollHeader"></slot>
+    <div class="content">
+        <div class="scrollView" bind:this="{scrollRegion}">
+            <slot></slot>
+        </div>
+        <div class="scrollHeader" style="top: {scrollHeaderOffset}px" bind:this="{scrollHeader}">
+            <slot name="scrollHeader"></slot>
+        </div>
+    </div>
+{:else}
+    <div class="scrollView" bind:this="{scrollRegion}">
+        <slot></slot>
     </div>
 {/if}
 
 <style>
+    .content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
     .scrollView {
         position: absolute;
         top: 0;
@@ -118,6 +156,8 @@
 
     .scrollHeader {
         position: absolute;
+
+        box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
     }
 
     .scrollView::-webkit-scrollbar {

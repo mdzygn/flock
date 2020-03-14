@@ -1,6 +1,5 @@
 <script>
 	import ScrollView from '../../../components/ScrollView.svelte';
-	import ScrollHeader from '../../../components/ScrollHeader.svelte';
 
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspots from '../../../components/Hotspots.svelte';
@@ -57,17 +56,9 @@
 			<Proxy image="{proxyFilterImage}" />
 		</div>
 	</ScrollView>
-
-	<!-- <ScrollHeader>
-		<Proxy image="{proxyFilterImage}" />
-	</ScrollHeader> -->
 </div>
 
 <style>
-	/* .pageContent :global(.filterBar) {
-		position: absolute;
-	} */
-
 	.feed {
 		width: 100%;
 

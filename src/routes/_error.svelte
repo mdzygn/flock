@@ -27,4 +27,8 @@
 	.content {
 		padding: 20px;
 	}
+
+	.content pre {
+    	overflow-x: scroll;
+	}
 </style>

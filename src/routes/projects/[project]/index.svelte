@@ -39,7 +39,7 @@
 		projectToggleLiked($projectId);
 	}
 
-	let proxyHeaderImage;
+	// let proxyHeaderImage;
 	let proxyActionsImage;
 	let proxyOverviewImage;
 	let proxyShowingInfoActionsImage;
@@ -52,14 +52,18 @@
 	$: following = $project ? $project.following : false;
 	$: liked = $project ? $project.liked : false;
 
+	$: projectSlug = $project ? $project.slug : '';
+
 	// $: console.log('isNew: ' + isNew, $project);
 
+	$: headerImage = 'content/projects/' + projectSlug + '/header.jpg';
+
 	$: {
-		if ($returnView) {
-			proxyHeaderImage = 'project_header_image_compact';
-		} else {
-			proxyHeaderImage = 'project_header_image';
-		}
+		// if ($returnView) {
+		// 	proxyHeaderImage = 'project_header_image_compact';
+		// } else {
+		// 	proxyHeaderImage = 'project_header_image';
+		// }
 
 		if (isOwner) {
 			proxyActionsImage = 'project_actions_owner';
@@ -145,7 +149,7 @@
 						height: 47px;" />
 				</Proxy>
 			{/if}
-			<Proxy image="{proxyHeaderImage}" />
+			<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
 			{#if isNew}
 				<Proxy image="{proxyOverviewImage}">
 					<!-- Add Details -->
@@ -322,6 +326,15 @@
 		width: 100%;
 
 		margin-bottom: 10px;
+	}
+
+	.headerImage {
+		width: 100%;
+	}
+
+	.headerImageCollapsed {
+		height: 150px;
+    	object-fit: cover;
 	}
 
 	.content .collapsedHeader {

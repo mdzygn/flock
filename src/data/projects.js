@@ -2,6 +2,7 @@ const projects = [
 	{
 		title: 'World Creator',
 		id: 's7djj2s2',
+		slug: 'world-creator',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,
@@ -19,6 +20,7 @@ const projects = [
 	{
 		title: 'Tesseract',
 		id: 'ma9l2h4h',
+		slug: 'tesseract',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,
@@ -31,6 +33,7 @@ const projects = [
 	{
 		title: 'Green Guardians',
 		id: 'm2lmad9a',
+		slug: 'green-guardians',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,
@@ -42,6 +45,7 @@ const projects = [
 	{
 		title: 'Leonardo\'s World',
 		id: '36bsf5gs',
+		slug: 'leonardos-world',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,
@@ -53,6 +57,7 @@ const projects = [
 	{
 		title: 'New Earth',
 		id: '9dm4l7ps',
+		slug: 'new-earth',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,
@@ -84,6 +89,7 @@ const projects = [
 	{
 		title: 'Green Guardians',
 		id: 'n4vh55hg',
+		slug: 'green-guardians',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,
@@ -98,6 +104,7 @@ const projects = [
 	{
 		title: 'Leonardo\'s World',
 		id: 'msl30nhg',
+		slug: 'leonardos-world',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,

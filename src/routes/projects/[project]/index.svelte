@@ -120,7 +120,7 @@
 	<title>World Creator - Flock</title>
 </svelte:head>
 
-<ScrollView id="project">
+<ScrollView id="project" headerStartHidden="{$returnView}">
 	<div class="content">
 		<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo && !isNew}">
 			<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />

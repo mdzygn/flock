@@ -6,6 +6,7 @@
     import { onMount, onDestroy, tick } from 'svelte'; // afterUpdate
 
     export let anchorToBottom = false;
+    export let headerStartHidden = false;
 
     export let id = null;
     let regionProps = null;
@@ -78,6 +79,7 @@
         setTimeout(() => {
             if (regionProps) {
                 curScrollRegion.scrollTo(0, regionProps.scrollTop);
+                updateHeaderScrollPosition();
             }
         }, 2);
         setTimeout(() => {
@@ -86,11 +88,13 @@
                 if (hasScrollHeader && scrollHeader) {
                     scrollHeaderHeight = scrollHeader.offsetHeight;
                 }
+                updateHeaderScrollPosition();
             }
         }, 10);
         setTimeout(() => {
             if (regionProps) {
                 curScrollRegion.scrollTo(0, regionProps.scrollTop);
+                updateHeaderScrollPosition();
             }
         }, 50);
         setTimeout(() => {
@@ -99,17 +103,33 @@
                 if (hasScrollHeader && scrollHeader) {
                     scrollHeaderHeight = scrollHeader.offsetHeight;
                 }
+                updateHeaderScrollPosition();
             }
         }, 100);
 
         // console.log('load scroll "' + id + '": ' + regionProps.scrollTop);
 
-        scrollRegion.scrollTo(0, regionProps.scrollTop);
+        updateHeaderScrollPosition();
 
+        scrollRegion.scrollTo(0, regionProps.scrollTop);
+    }
+
+    function updateHeaderScrollPosition() {
         if (hasScrollHeader && scrollHeader) {
             scrollHeaderHeight = scrollHeader.offsetHeight;
-            curScrollHeaderPosition = regionProps.scrollTop;
-            scrollHeaderOffset = 0;
+
+            if (headerStartHidden && !anchorToBottom) {
+                if (regionProps.scrollTop < 30) {
+                    regionProps.scrollTop = scrollHeaderHeight;
+                }
+                curScrollHeaderPosition = curScrollHeaderPosition - regionProps.scrollTop - scrollHeaderHeight;
+                // console.log('regionProps.scrollTop: ' + regionProps.scrollTop + ' curScrollHeaderPosition: ' + curScrollHeaderPosition);
+                scrollRegion.scrollTo(0, regionProps.scrollTop);
+            } else {
+                curScrollHeaderPosition = regionProps.scrollTop;
+            }
+
+            scrollHeaderOffset = curScrollHeaderPosition - regionProps.scrollTop;
         }
     }
 

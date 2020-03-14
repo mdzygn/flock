@@ -58,9 +58,15 @@ export const sections = [
 	},
 
 	{
+		path: '/projects/.*/messages',
+		id: 'groupMessages',
+		label: 'Messages',
+		showBack: true,
+	},
+	{
 		path: '/projects/.*/details',
 		id: 'create',
-		label: 'World Creator',
+		label: 'Details',
 		showBack: true,
 		// parentSection: 'projects/m62lsp2o/populate',
 	},

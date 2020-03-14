@@ -178,7 +178,7 @@
 
 					<!-- Message -->
 					{#if isOwner}
-						<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
+						<Hotspot href="projects/{$projectId}/messages" style="
 							right: 11px;
 							top: 122px;
 							width: 147px;

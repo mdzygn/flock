@@ -24,33 +24,9 @@
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView id="profile">
+<ScrollView id="profile" headerStartHidden="{true}">
 	<div class="content">
 		<div class="contentItem">
-			<!--{#if !viewingOwnProfile}
-				<Proxy image="{proxyActionsImage}">
-					<!-- Connections -->
-					<!--<Hotspot href="contacts" style="
-						left: 0px;
-						top: 0px;
-						width: 122px;
-						height: 47px;" />
-
-					<!-- Messages -->
-					<!--<Hotspot href="messages" style="
-						left: 152px;
-						top: 0px;
-						width: 129px;
-						height: 47px;" />
-				{:else}-->
-					<!-- Action Send Message -->
-					<!--<Hotspot onClick="{e => loadConversation('l40smlp3')}" style="
-						left: 128px;
-						top: 0px;
-						width: 132px;
-						height: 47px;" />
-				<!--</Proxy>
-			{/if}-->
 			<ProfileOverview isOwner="{viewingOwnProfile}" />
 			<Proxy image="{proxyOverviewActionsImage}">
 				{#if !viewingOwnProfile}
@@ -82,6 +58,40 @@
 		</div>
 		<Proxy image="{proxySkillsImage}" className="contentItem" />
 		<ProjectList />
+	</div>
+
+	<div slot="scrollHeader">
+		<Proxy image="{proxyActionsImage}">
+			{#if viewingOwnProfile}
+				<!-- Connections -->
+				<Hotspot href="contacts" style="
+					left: 0px;
+					top: 0px;
+					width: 122px;
+					height: 47px;" />
+
+				<!-- Messages -->
+				<Hotspot href="messages" style="
+					left: 152px;
+					top: 0px;
+					width: 129px;
+					height: 47px;" />
+			{:else}
+				<!-- Request Connect -->
+				<Hotspot onClick="{e => requestConnection('l40smlp3')}" style="
+					left: 0px;
+					top: 0px;
+					width: 122px;
+					height: 47px;" />
+
+				<!-- Action Send Message -->
+				<Hotspot onClick="{e => loadConversation('r70dp2bf')}" style="
+					left: 128px;
+					top: 0px;
+					width: 132px;
+					height: 47px;" />
+			{/if}
+		</Proxy>
 	</div>
 </ScrollView>
 

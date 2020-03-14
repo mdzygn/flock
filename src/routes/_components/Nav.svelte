@@ -8,11 +8,6 @@
 	export let segment;
 	export let path;
 
-    // import {
-    //     following,
-    //     owner,
-	// } from '../../models/projectViewState.js';
-
 	$: isFollowing = $project && ($project.following || $project.isOwner);
 
 	let mainSection;

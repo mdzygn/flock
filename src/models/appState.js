@@ -4,11 +4,11 @@ import { get } from 'svelte/store';
 import { createModel } from '../utils/createModel';
 
 const appState = createModel({
-    projectId: 'm62lsp2o',
-    channelId: '7m2ldksm',
-    threadId: 'sm2ld9p2',
-    conversationId: 'a4kcmsd3',
-    profileId: 'bl20a8lm',
+    projectId: null,
+    channelId: null,
+    threadId: null,
+    conversationId: null,
+    profileId: null,
 
     project: null,
     conversation: null,

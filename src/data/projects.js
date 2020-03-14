@@ -9,9 +9,6 @@ const projects = [
 		followingCount: 62,
 		unreadCount: 5,
 
-		// returnView: false,
-		// showingInfo: false,
-		// hasCreated: false,
 		following: false,
 		isOwner: false,
 		isNew: false,

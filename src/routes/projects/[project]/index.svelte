@@ -11,10 +11,6 @@
 	import {
 		returnView,
 		showingInfo,
-		// following,
-		// owner,
-		// isNew,
-		// liked,
 	} from '../../../models/projectViewState.js';
 
 	import {

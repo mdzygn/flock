@@ -27,7 +27,7 @@
 				height: 100%;" />
 
 			<!-- Select Project -->
-			<Hotspot onClick="{e => loadProject('m62lsp2o')}" style="
+			<Hotspot onClick="{e => loadProject('s7djj2s2')}" style="
 				top: 50%;
 				left: 50%;
 				transform: translate(-50%, -50%);

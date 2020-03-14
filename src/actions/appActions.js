@@ -25,12 +25,12 @@ import {
 
 import {
     returnView,
-    following,
-    owner,
-    isNew,
     hasCreated,
     showingInfo,
-    liked,
+    // following,
+    // owner,
+    // isNew,
+    // liked,
 } from '../models/projectViewState.js';
 
 export function loadProject(targetProjectId, options) {
@@ -38,37 +38,76 @@ export function loadProject(targetProjectId, options) {
 
     projectId.set(targetProjectId);
 
-    if (options && options.isNew) {
-        isNew.set(true);
-        hasCreated.set(true);
-        owner.set(true);
-        following.set(false);
-        liked.set(false);
-    } else if (options && options.owner) {
-        isNew.set(false);
-        hasCreated.set(false);
-        owner.set(true);
-        following.set(false);
-        liked.set(false);
-    } else if (options && options.following) {
-        isNew.set(false);
-        hasCreated.set(false);
-        owner.set(false);
-        following.set(true);
-        liked.set(false);
-    } else {
-        isNew.set(false);
-        hasCreated.set(false);
-        owner.set(false);
-        following.set(false);
-        liked.set(false);
-    }
+    // const projectViewStates = {
+    //     hasCreated: false,
+    // };
+    // const projectStates = {
+    //     isNew: false,
+    //     isOwner: false,
+    //     following: false,
+    //     liked: false,
+    // };
 
-    showingInfo.set(false);
-    returnView.set(get(following) || get(owner) || get(liked));
+    // if (options && options.isNew) {
+    //     projectStates.isNew = true;
+    //     projectStates.isOwner = true;
+    //     projectViewStates.hasCreated = true;
+
+    //     // isNew.set(true);
+    //     // hasCreated.set(true);
+    //     // owner.set(true);
+    //     // following.set(false);
+    //     // liked.set(false);
+    // } else if (options && options.owner) {
+    //     projectStates.isOwner = true;
+
+    //     // isNew.set(false);
+    //     // hasCreated.set(false);
+    //     // owner.set(true);
+    //     // following.set(false);
+    //     // liked.set(false);
+    // } else if (options && options.following) {
+    //     projectStates.following = true;
+
+    //     // isNew.set(false);
+    //     // hasCreated.set(false);
+    //     // owner.set(false);
+    //     // following.set(true);
+    //     // liked.set(false);
+    // } else {
+    //     // isNew.set(false);
+    //     // hasCreated.set(false);
+    //     // owner.set(false);
+    //     // following.set(false);
+    //     // liked.set(false);
+    // }
+
+
+    // project.isNew = projectStates.isNew;
+    // project.isOwner = projectStates.isOwner;
+    // project.following = projectStates.following;
+    // project.liked = projectStates.liked;
+    // project.set(get(project));
+    // hasCreated.set(projectViewStates.hasCreated);
 
     const curProject = projects.find(item => item.id === targetProjectId);
     project.set(curProject);
+
+    let isNew = false;
+    if (options && options.isNew) {
+        isNew = true;
+    }
+    if (curProject) {
+        curProject.isNew = isNew;
+        if (isNew) {
+            curProject.isOwner = true;
+        }
+    }
+    hasCreated.set(isNew);
+
+    showingInfo.set(false);
+    returnView.set(curProject && (curProject.following || curProject.isOwner)); //  || curProject.liked
+    // returnView.set(get(following) || get(owner) || get(liked));
 
     gotoRoute('projects/' + targetProjectId);
     resetScrollRegionPosition('project');
@@ -90,7 +129,12 @@ export function createProject(targetProjectId) {
 }
 
 export function makePublic() {
-    isNew.set(false);
+    const curProject = get(project);
+    if (curProject) {
+        curProject.isNew = false;
+        project.set(curProject);
+    }
+    // isNew.set(false);
 }
 
 export function showLikes() {

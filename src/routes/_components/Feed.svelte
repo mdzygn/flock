@@ -14,7 +14,7 @@
 	{#each new Array(count) as item, index}
 		<div class="feedItem">
 			{#if linkToProjects}
-				<div class="button" on:click="{e => loadProject('m62lsp2o')}">
+				<div class="button" on:click="{e => loadProject('s7djj2s2')}">
 					<Proxy image="{type}{((index + offset) % count) + 1}" />
 				</div>
 			{:else}

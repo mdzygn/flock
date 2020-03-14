@@ -8,6 +8,15 @@ const projects = [
 		likesCount: 53,
 		followingCount: 62,
 		unreadCount: 5,
+
+		// returnView: false,
+		// showingInfo: false,
+		// hasCreated: false,
+		following: false,
+		isOwner: false,
+		isNew: false,
+		liked: false,
+
 		location: '',
 	},
 	{
@@ -19,6 +28,7 @@ const projects = [
 		likesCount: 62,
 		followingCount: 23,
 		unreadCount: 3,
+		liked: true,
 		location: '',
 	},
 	{
@@ -30,7 +40,6 @@ const projects = [
 		likesCount: 63,
 		followingCount: 54,
 		unreadCount: 6,
-		following: true,
 		location: '',
 	},
 	{
@@ -42,7 +51,6 @@ const projects = [
 		likesCount: 63,
 		followingCount: 54,
 		unreadCount: 6,
-		following: true,
 		location: '',
 	},
 	{
@@ -54,7 +62,6 @@ const projects = [
 		likesCount: 23,
 		followingCount: 45,
 		unreadCount: 2,
-		following: true,
 		liked: true,
 		location: '',
 		team: [
@@ -75,10 +82,42 @@ const projects = [
 			'm023ndls',
 		]
 	},
+
+	// owner example
+	{
+		title: 'Green Guardians',
+		id: 'n4vh55hg',
+		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+		image: '',
+		createdAt: 0,
+		likesCount: 63,
+		followingCount: 54,
+		unreadCount: 6,
+		isOwner: true,
+		location: '',
+	},
+
+	// following example
+	{
+		title: 'Leonardo\'s World',
+		id: 'msl30nhg',
+		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+		image: '',
+		createdAt: 0,
+		likesCount: 63,
+		followingCount: 54,
+		following: true,
+		unreadCount: 6,
+		location: '',
+	},
 ];
 
 // projects.forEach(project => {
 // 	project.html = project.html.replace(/^\t{3}/gm, '');
 // });
+
+export function getProject(projectId) {
+	return projects.find(item => item.id === projectId);
+}
 
 export default projects;

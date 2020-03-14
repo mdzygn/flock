@@ -10,11 +10,11 @@
 
 	import {
 		returnView,
-		following,
-		owner,
-		isNew,
 		showingInfo,
-		liked,
+		// following,
+		// owner,
+		// isNew,
+		// liked,
 	} from '../../../models/projectViewState.js';
 
 	import {
@@ -51,6 +51,11 @@
 	let proxyLinksImage;
 	let proxySkillsImage;
 
+	$: isOwner = $project ? $project.isOwner : false;
+	$: isNew = $project ? $project.isNew : false;
+	$: following = $project ? $project.following : false;
+	$: liked = $project ? $project.liked : false;
+
 	$: {
 		if ($returnView) {
 			proxyHeaderImage = 'project_header_image_compact';
@@ -58,10 +63,10 @@
 			proxyHeaderImage = 'project_header_image';
 		}
 
-		if ($owner) {
+		if (isOwner) {
 			proxyActionsImage = 'project_actions_owner';
 
-			if ($isNew) {
+			if (isNew) {
 				proxyOverviewImage = 'project_overview_populate';
 				proxyChannelsImage = 'project_channels_populate';
 			} else {
@@ -69,7 +74,7 @@
 				proxyChannelsImage = 'project_channels_owner';
 			}
 
-			if ($isNew) {
+			if (isNew) {
 				proxyLinksImage = 'project_links_populate';
 				proxySkillsImage = 'project_skills_populate';
 			} else {
@@ -77,7 +82,7 @@
 				proxySkillsImage = 'project_skills_owner';
 			}
 		} else {
-			if ($following) {
+			if (following) {
 				proxyActionsImage = 'project_actions_following';
 				if ($returnView) {
 					proxyOverviewImage = 'project_overview_following';
@@ -99,9 +104,9 @@
 			proxySkillsImage = 'project_skills';
 		}
 
-		if ($owner) {
+		if (isOwner) {
 			proxyShowingInfoActionsImage = 'project_info_actions_owner';
-		} else if ($following) {
+		} else if (following) {
 			proxyShowingInfoActionsImage = 'project_info_actions_following';
 		} else {
 			proxyShowingInfoActionsImage = 'project_info_actions';
@@ -115,10 +120,10 @@
 
 <ScrollView id="project">
 	<div class="content">
-		<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo && !$isNew}">
-			{#if !$isNew}
+		<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo && !isNew}">
+			{#if !isNew}
 				<Proxy image="{proxyActionsImage}">
-					{#if !$owner}
+					{#if !isOwner}
 						<!-- Action Follow -->
 						<Hotspot onClick="{toggleFollowing}" style="
 							left: 120px;
@@ -128,7 +133,7 @@
 					{/if}
 
 					<!-- Like Icon -->
-					{#if $liked}
+					{#if liked}
 						<Proxy image="project_actions_like_selected" absolutePlacement="true" style="
 							left: 45px;
 							top: 12px;" />
@@ -143,7 +148,7 @@
 				</Proxy>
 			{/if}
 			<Proxy image="{proxyHeaderImage}" />
-			{#if $isNew}
+			{#if isNew}
 				<Proxy image="{proxyOverviewImage}">
 					<!-- Add Details -->
 					<Hotspot onClick="{editProjectDetails}" style="
@@ -174,7 +179,7 @@
 						height: 30px;" />
 
 					<!-- Message -->
-					{#if $owner}
+					{#if isOwner}
 						<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
 							right: 11px;
 							top: 122px;
@@ -194,9 +199,9 @@
 							height: 46px;" />
 					{/if}
 
-					{#if !$owner && !$returnView}
+					{#if !isOwner && !$returnView}
 						<!-- Like Icon -->
-						{#if $liked}
+						{#if liked}
 							<Proxy image="project_like_selected" absolutePlacement="true" style="
 								left: 175px;
 								top: 164px;" />
@@ -211,7 +216,7 @@
 					{/if}
 
 					<!-- Follow -->
-					{#if !$owner}
+					{#if !isOwner}
 						<Hotspot onClick="{toggleFollowing}" style="
 							right: 35px;
 							top: 155px;
@@ -230,7 +235,7 @@
 					<Proxy image="project_info_content_3" />
 				</div>
 				<Proxy image="{proxyShowingInfoActionsImage}">
-					{#if $owner}
+					{#if isOwner}
 						<!-- Send Message -->
 						<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
 							right: 6px;
@@ -246,7 +251,7 @@
 							height: 46px;" />
 
 						<!-- Like Icon -->
-						{#if $liked}
+						{#if liked}
 							<Proxy image="project_like_selected" absolutePlacement="true" style="
 								left: 175px;
 								top: 16px;" />
@@ -269,32 +274,32 @@
 				</Proxy>
 			{/if}
 		</div>
-		{#if $isNew}
-			<ProjectTeamList isOwner="{$owner}" isNew="{$isNew}" />
+		{#if isNew}
+			<ProjectTeamList isOwner="{isOwner}" isNew="{isNew}" />
 			<Proxy image="{proxyLinksImage}" className="contentItem" />
 			<Proxy image="{proxySkillsImage}" className="contentItem" />
 			<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
-			{#if $owner}
+			{#if isOwner}
 				<NewPostButton type="project_post_update" />
 			{/if}
 		{:else if $returnView}
 			<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
-			{#if $owner}
+			{#if isOwner}
 				<NewPostButton type="project_post_update" />
 			{/if}
 			<Proxy image="{proxyLinksImage}" className="contentItem" />
 			<Proxy image="{proxySkillsImage}" className="contentItem" />
-			<ProjectTeamList isOwner="{$owner}" isNew="{$isNew}" />
+			<ProjectTeamList isOwner="{isOwner}" isNew="{isNew}" />
 			<div>
 				<Proxy image="project_post_1" className="contentItem" />
 				<Proxy image="project_post_2" className="contentItem" />
 				<Proxy image="project_post_3" className="contentItem" />
 			</div>
-			{#if $owner}
+			{#if isOwner}
 				<NewPostButton type="project_post_update" />
 			{/if}
 		{:else}
-			<ProjectTeamList isOwner="{$owner}" isNew="{$isNew}" />
+			<ProjectTeamList isOwner="{isOwner}" isNew="{isNew}" />
 			<Proxy image="{proxySkillsImage}" className="contentItem" />
 			<Proxy image="{proxyLinksImage}" className="contentItem" />
 			<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />

@@ -1,23 +1,26 @@
 <script>
 	import NavIcon from "../../components/NavIcon.svelte";
+
 	import sections, { getIconForSection, getMainSectionForSegment, getMainSectionForRoute } from "../../models/sections.js";
+
+	import { project } from '../../models/appState';
 
 	export let segment;
 	export let path;
 
-    import {
-        following,
-        owner,
-	} from '../../models/projectViewState.js';
+    // import {
+    //     following,
+    //     owner,
+	// } from '../../models/projectViewState.js';
 
-	$: isFollowing = $following || $owner;
+	$: isFollowing = $project && ($project.following || $project.isOwner);
 
 	let mainSection;
 
 	$: {
 		mainSection = getMainSectionForRoute(segment, path);
 		if (/\/projects\/.*/.test(path) && !isFollowing) {
-			mainSection = null;
+			mainSection = null; // don't select 'following' nav icon if not following or not owner of project
 		} else if (/\/channels\/.*/.test(path) && isFollowing) {
 			mainSection = 'projects';
 		} else if (/\/threads\/.*/.test(path) && isFollowing) {

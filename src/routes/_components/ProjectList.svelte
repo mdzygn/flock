@@ -8,7 +8,7 @@
 <div class="content">
 	<Proxy image="profile_projects" className="contentItem" >
         <!-- Project Links -->
-        <Hotspot onClick="{e => loadProject('m62lsp2o')}" style="
+        <Hotspot onClick="{e => loadProject('s7djj2s2')}" style="
             left: 0px;
             top: 40px;
             width: 100%;

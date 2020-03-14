@@ -13,12 +13,12 @@
 
 <ScrollView id="projects">
 	<Proxy image="projects">
-		<Hotspot onClick="{e => loadProject('m62lsp2o', {owner: true})}" style="
+		<Hotspot onClick="{e => loadProject('n4vh55hg')}" style="
 			left: 0;
 			width: 100%;
 			top: 81px;
 			height: 196px;" />
-		<Hotspot onClick="{e => loadProject('m62lsp2o', {following: true})}" style="
+		<Hotspot onClick="{e => loadProject('msl30nhg')}" style="
 			left: 0px;
 			width: 100%;
 			top: 359px;

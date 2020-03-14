@@ -13,7 +13,7 @@
 <ScrollView id="likes">
 	<Proxy image="likes">
         <!-- Project Links -->
-        <Hotspot onClick="{e => loadProject('m62lsp2o')}" style="
+        <Hotspot onClick="{e => loadProject('s7djj2s2')}" style="
 			left: 0px;
 			top: 47px;
 			width: 100%;

@@ -14,7 +14,7 @@
         regionProps = getScrollRegionProperties(id);
     }
 
-    let hasScrollHeader = $$props.$$slots.scrollHeader;
+    let hasScrollHeader = $$props.$$slots ? $$props.$$slots.scrollHeader : false;
 
     let windowWidth;
 
@@ -122,7 +122,8 @@
                 if (regionProps.scrollTop < 30) {
                     regionProps.scrollTop = scrollHeaderHeight;
                 }
-                curScrollHeaderPosition = curScrollHeaderPosition - regionProps.scrollTop - scrollHeaderHeight;
+                curScrollHeaderPosition = (curScrollHeaderPosition - regionProps.scrollTop) - scrollHeaderHeight;
+                curScrollHeaderPosition = Math.min(regionProps.scrollTop, Math.max(regionProps.scrollTop - scrollHeaderHeight, curScrollHeaderPosition));
                 // console.log('regionProps.scrollTop: ' + regionProps.scrollTop + ' curScrollHeaderPosition: ' + curScrollHeaderPosition);
                 scrollRegion.scrollTo(0, regionProps.scrollTop);
             } else {

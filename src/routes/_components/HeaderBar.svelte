@@ -36,7 +36,7 @@
 
     let sectionLabel = '';
     $: {
-        if (/\/projects\/.*/.test(path) && $project) {
+        if (/\/projects\/.*/.test(path) && !/\/projects\/new/.test(path) && $project) {
             sectionLabel = $project.title;
         } else if (/\/profile\/.*/.test(path) && $viewedUser && !$viewedUser.isCurrentUser) {
             sectionLabel = $viewedUser.fullName;
@@ -68,7 +68,7 @@
     }
 </script>
 
-<headerBar>
+<div class="headerBar">
     {#if segment === undefined}
         <div class="logo">
             <img src='assets/logo.png' alt="Flock">
@@ -82,39 +82,19 @@
     <div class="avatarIcon" class:button="{!isMyProfile}" on:click="{loadMyProfile}">
         <AvatarIcon />
     </div>
-</headerBar>
+</div>
 
 <style>
-    .avatarIcon {
-        position: absolute;
-        right: 11px;
-        top: 11px;
-    }
-
-    .button {
-        cursor: pointer;
-    }
-
-    headerBar {
+    .headerBar {
         position: absolute;
         top: 0;
         left: 0;
 
         width: 100%;
-        height: 60px;
+        height: 50px;
 
         background: #ffffff;
         box-shadow: 0 2px 3px 0 rgba(0,0,0,0.12);
-    }
-
-    .logo {
-        position: absolute;
-        top: 12px;
-        left: 15px;
-    }
-
-    .logo img {
-        width: 50%;
     }
 
     .header {
@@ -122,14 +102,33 @@
         font-weight: 400;
 
         position: absolute;
-        top: 14px;
+        top: 8px;
         left: 20px;
+    }
+
+    .logo {
+        position: absolute;
+        top: 9px;
+        left: 15px;
+    }
+    .logo img {
+        width: 44%;
+    }
+
+    .avatarIcon {
+        position: absolute;
+        right: 11px;
+        top: 7px;
+    }
+
+    .button {
+        cursor: pointer;
     }
 
     .backButton {
         position: absolute;
-        top: 8px;
-        left: 5px;
+        top: 1px;
+        left: 0px;
         padding: 10px;
 
         width: 26px;
@@ -138,7 +137,7 @@
         cursor: pointer;
     }
 
-    .hasBack {
-        padding-left: 30px;
+    .header.hasBack {
+        padding-left: 26px;
     }
 </style>

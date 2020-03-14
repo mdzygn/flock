@@ -27,7 +27,7 @@
 	.feed {
 		width: 100%;
 
-		padding-top: 10px;
+		padding-top: 5px;
 
     	line-height: 0;
 	}

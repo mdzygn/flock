@@ -25,7 +25,6 @@ import {
 
 import {
     returnView,
-    hasCreated,
     showingInfo,
 } from '../models/projectViewState.js';
 
@@ -42,12 +41,13 @@ export function loadProject(targetProjectId, options) {
         isNew = true;
     }
     if (curProject) {
-        curProject.isNew = isNew;
         if (isNew) {
+            curProject.isNew = true;
             curProject.isOwner = true;
+            curProject.hasCreated = true;
         }
     }
-    hasCreated.set(isNew);
+    // hasCreated.set(isNew);
 
     showingInfo.set(false);
     returnView.set(curProject && (curProject.following || curProject.isOwner));

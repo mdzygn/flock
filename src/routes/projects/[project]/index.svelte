@@ -52,6 +52,8 @@
 	$: following = $project ? $project.following : false;
 	$: liked = $project ? $project.liked : false;
 
+	// $: console.log('isNew: ' + isNew, $project);
+
 	$: {
 		if ($returnView) {
 			proxyHeaderImage = 'project_header_image_compact';

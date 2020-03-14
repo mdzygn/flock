@@ -10,10 +10,6 @@ const appState = createModel({
     conversationId: null,
     profileId: null,
 
-    project: null,
-    conversation: null,
-    viewedUser: null,
-
     viewMode: 'discover',
     locationMode: 'global',
     exploreZoomed: false,
@@ -21,7 +17,7 @@ const appState = createModel({
     // scrollRegionProperties: {},
 }, {persist: true});
 
-export const curPath = writable({});
+export const curPath = writable(null);
 
 export const projectId = appState.projectId;
 export const channelId = appState.channelId;
@@ -29,9 +25,9 @@ export const threadId = appState.threadId;
 export const conversationId = appState.conversationId;
 export const profileId = appState.profileId;
 
-export const project = appState.project;
-export const conversation = appState.conversation;
-export const viewedUser = appState.viewedUser;
+export const project = writable(null);
+export const conversation = writable(null);
+export const viewedUser = writable(null);
 
 export const newMessage = appState.newMessage;
 

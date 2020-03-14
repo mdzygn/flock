@@ -22,6 +22,10 @@
 		projectId,
 		conversationId,
 		profileId,
+
+		conversation,
+		viewedUser,
+		project,
 	} from '../models/appState';
 	$: {
 		$curPath = $page.path;
@@ -29,17 +33,17 @@
 		const params = $page.params;
 		if (params) {
 			if (params.conversation) {
-				if ($conversationId !== params.conversation) {
+				if ($conversationId !== params.conversation || !$conversation) {
 					loadConversation(params.conversation);
 				}
 			}
 			if (params.profile) {
-				if ($profileId !== params.profile) {
+				if ($profileId !== params.profile || !$viewedUser) {
 					loadProfile(params.profile);
 				}
 			}
 			if (params.project) {
-				if ($projectId !== params.project) {
+				if ($projectId !== params.project || !$project) {
 					loadProject(params.project);
 				}
 			}

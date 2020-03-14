@@ -10,7 +10,7 @@
         viewedUser,
     } from '../../models/appState.js';
 
-    import { hasCreated } from '../../models/projectViewState.js';
+    // import { hasCreated } from '../../models/projectViewState.js';
 
 	import { loadProfile } from '../../actions/appActions.js';
 
@@ -32,6 +32,8 @@
     $: isMyProfile = curSection ? (curSection.segment === 'profile') : false;
     // $: sectionLabel = curSection ? curSection.label : '';
 
+    $: hasCreated = $project && $project.hasCreated;
+
     let sectionLabel = '';
     $: {
         if (/\/projects\/.*/.test(path) && $project) {
@@ -50,7 +52,7 @@
     }
 
     function goBack () {
-        if (isProjectView && $hasCreated) {
+        if (isProjectView && hasCreated) {
             goto('projects');
         } else if (showBack) {
             history.back();

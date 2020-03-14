@@ -11,6 +11,8 @@
         regionProps = getScrollRegionProperties(id);
     }
 
+    let hasScrollHeader = $$props.$$slots.scrollHeader;
+
     let scrollRegion;
 
     function updateScroll() {
@@ -94,6 +96,12 @@
     <slot></slot>
 </div>
 
+{#if hasScrollHeader}
+    <div class="scrollHeader">
+        <slot name="scrollHeader"></slot>
+    </div>
+{/if}
+
 <style>
     .scrollView {
         position: absolute;
@@ -106,6 +114,10 @@
         overflow-y: scroll;
 
         -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    }
+
+    .scrollHeader {
+        position: absolute;
     }
 
     .scrollView::-webkit-scrollbar {

@@ -66,8 +66,8 @@
 	.feed {
 		width: 100%;
 
-		padding-top: 94px;
-		/* padding-top: 10px; */
+		/* padding-top: 104px; */
+		padding-top: 10px;
 
     	line-height: 0;
 	}

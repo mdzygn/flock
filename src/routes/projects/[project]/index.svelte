@@ -123,32 +123,6 @@
 <ScrollView id="project">
 	<div class="content">
 		<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo && !isNew}">
-			{#if !isNew}
-				<Proxy image="{proxyActionsImage}">
-					{#if !isOwner}
-						<!-- Action Follow -->
-						<Hotspot onClick="{toggleFollowing}" style="
-							left: 120px;
-							top: 0px;
-							width: 142px;
-							height: 47px;" />
-					{/if}
-
-					<!-- Like Icon -->
-					{#if liked}
-						<Proxy image="project_actions_like_selected" absolutePlacement="true" style="
-							left: 45px;
-							top: 12px;" />
-					{/if}
-
-					<!-- Like -->
-					<Hotspot onClick="{toggleLiked}" style="
-						left: 0;
-						top: 0px;
-						width: 112px;
-						height: 47px;" />
-				</Proxy>
-			{/if}
 			<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
 			{#if isNew}
 				<Proxy image="{proxyOverviewImage}">
@@ -312,6 +286,33 @@
 				<Proxy image="project_post_3" className="contentItem" />
 			</div>
 		{/if}
+	</div>
+
+	<div slot="scrollHeader">
+		<Proxy image="{proxyActionsImage}">
+			{#if !isOwner}
+				<!-- Action Follow -->
+				<Hotspot onClick="{toggleFollowing}" style="
+					left: 120px;
+					top: 0px;
+					width: 142px;
+					height: 47px;" />
+			{/if}
+
+			<!-- Like Icon -->
+			{#if liked}
+				<Proxy image="project_actions_like_selected" absolutePlacement="true" style="
+					left: 45px;
+					top: 12px;" />
+			{/if}
+
+			<!-- Like -->
+			<Hotspot onClick="{toggleLiked}" style="
+				left: 0;
+				top: 0px;
+				width: 112px;
+				height: 47px;" />
+		</Proxy>
 	</div>
 </ScrollView>
 

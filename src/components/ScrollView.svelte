@@ -1,3 +1,5 @@
+<svelte:window bind:innerWidth="{windowWidth}" />
+
 <script>
     import { scrollRegionProperties, getScrollRegionProperties } from '../models/appState';
 
@@ -13,6 +15,15 @@
 
     let hasScrollHeader = $$props.$$slots.scrollHeader;
 
+    let windowWidth;
+
+    $: {
+        //listen to window resize
+        if (hasScrollHeader && scrollHeader && windowWidth) {
+            scrollHeaderHeight = scrollHeader.offsetHeight;
+        }
+    }
+
     let scrollRegion;
     let curScrollHeaderPosition = 0;
     let scrollHeaderOffset = 0;
@@ -26,11 +37,9 @@
 
         regionProps.scrollTop = scrollRegion.scrollTop;
 
-        if (hasScrollHeader) {
-            // if (!scrollHeaderHeight) {
-            //     scrollHeaderHeight = scrollHeader.offsetHeight;
-            // }
-            curScrollHeaderPosition = Math.min(regionProps.scrollTop, Math.max(regionProps.scrollTop - scrollHeader.offsetHeight, curScrollHeaderPosition));
+        if (hasScrollHeader && scrollHeader) {
+            scrollHeaderHeight = scrollHeader.offsetHeight;
+            curScrollHeaderPosition = Math.min(regionProps.scrollTop, Math.max(regionProps.scrollTop - scrollHeaderHeight, curScrollHeaderPosition));
             scrollHeaderOffset = curScrollHeaderPosition - regionProps.scrollTop;
 
             // console.log('curScrollHeaderPosition: ' + curScrollHeaderPosition + ', scrollHeaderOffset: ' + scrollHeaderOffset);
@@ -67,23 +76,38 @@
         // delay incase full height not yet loaded
         // TODO: check scroll if region height changes (e.g. image load)
         setTimeout(() => {
-            curScrollRegion.scrollTo(0, regionProps.scrollTop);
+            if (regionProps) {
+                curScrollRegion.scrollTo(0, regionProps.scrollTop);
+            }
         }, 2);
         setTimeout(() => {
-            curScrollRegion.scrollTo(0, regionProps.scrollTop);
+            if (regionProps) {
+                curScrollRegion.scrollTo(0, regionProps.scrollTop);
+                if (hasScrollHeader && scrollHeader) {
+                    scrollHeaderHeight = scrollHeader.offsetHeight;
+                }
+            }
         }, 10);
         setTimeout(() => {
-            curScrollRegion.scrollTo(0, regionProps.scrollTop);
+            if (regionProps) {
+                curScrollRegion.scrollTo(0, regionProps.scrollTop);
+            }
         }, 50);
         setTimeout(() => {
-            curScrollRegion.scrollTo(0, regionProps.scrollTop);
+            if (regionProps) {
+                curScrollRegion.scrollTo(0, regionProps.scrollTop);
+                if (hasScrollHeader && scrollHeader) {
+                    scrollHeaderHeight = scrollHeader.offsetHeight;
+                }
+            }
         }, 100);
 
         // console.log('load scroll "' + id + '": ' + regionProps.scrollTop);
 
         scrollRegion.scrollTo(0, regionProps.scrollTop);
 
-        if (hasScrollHeader) {
+        if (hasScrollHeader && scrollHeader) {
+            scrollHeaderHeight = scrollHeader.offsetHeight;
             curScrollHeaderPosition = regionProps.scrollTop;
             scrollHeaderOffset = 0;
         }
@@ -118,7 +142,7 @@
 
 {#if hasScrollHeader}
     <div class="content">
-        <div class="scrollView" bind:this="{scrollRegion}">
+        <div class="scrollView" bind:this="{scrollRegion}" style="padding-top: {scrollHeaderHeight}px">
             <slot></slot>
         </div>
         <div class="scrollHeader" style="top: {scrollHeaderOffset}px" bind:this="{scrollHeader}">

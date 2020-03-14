@@ -24,8 +24,26 @@
 
 <div class="pageContent">
 	<ScrollView id="discover">
-		<div>
-			<Hotspots>
+		<!-- <Feed type="discover" linkToProjects="{true}" count="{5}" offset="{proxyContentOffset}"/> -->
+
+		<div class="feed">
+			{#if $locationMode === 'global'}
+				<Proxy image="discover1" onClick="{e => loadProject('s7djj2s2')}" />
+				<Proxy image="discover2" onClick="{e => loadProject('ma9l2h4h')}" />
+				<Proxy image="discover3" onClick="{e => loadProject('m2lmad9a')}" />
+				<Proxy image="discover4" onClick="{e => loadProject('36bsf5gs')}" />
+				<Proxy image="discover5" onClick="{e => loadProject('9dm4l7ps')}" />
+			{:else}
+				<Proxy image="discover4" onClick="{e => loadProject('36bsf5gs')}" />
+				<Proxy image="discover5" onClick="{e => loadProject('9dm4l7ps')}" />
+				<Proxy image="discover1" onClick="{e => loadProject('s7djj2s2')}" />
+				<Proxy image="discover2" onClick="{e => loadProject('ma9l2h4h')}" />
+				<Proxy image="discover3" onClick="{e => loadProject('m2lmad9a')}" />
+			{/if}
+		</div>
+
+		<div slot="scrollHeader">
+			<Proxy image="{proxyFilterImage}">
 				<!-- Toggle View Mode -->
 				<Hotspot onClick="{toggleViewMode}" style="
 					left: 7px;
@@ -34,26 +52,12 @@
 					height: 39px;" />
 
 				<!-- Toggle Location Mode -->
-				<Hotspot onClick="{toggleLocationMode}}" style="
+				<Hotspot onClick="{toggleLocationMode}" style="
 					right: 10px;
 					top: 5px;
 					width: 232px;
 					height: 46px;" />
-			</Hotspots>
-		</div>
-
-		<!-- <Feed type="discover" linkToProjects="{true}" count="{5}" offset="{proxyContentOffset}"/> -->
-
-		<div class="feed">
-			<Proxy image="discover1" onClick="{e => loadProject('s7djj2s2')}" />
-			<Proxy image="discover2" onClick="{e => loadProject('ma9l2h4h')}" />
-			<Proxy image="discover3" onClick="{e => loadProject('m2lmad9a')}" />
-			<Proxy image="discover4" onClick="{e => loadProject('36bsf5gs')}" />
-			<Proxy image="discover5" onClick="{e => loadProject('9dm4l7ps')}" />
-		</div>
-
-		<div slot="scrollHeader">
-			<Proxy image="{proxyFilterImage}" />
+			</Proxy>
 		</div>
 	</ScrollView>
 </div>

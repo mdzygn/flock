@@ -10,19 +10,26 @@
 	$: requestedConnection = $viewedUser ? $viewedUser.requestedConnection : false;
     $: viewingOwnProfile = $viewedUser ? $viewedUser.isCurrentUser : false;
 
+	$: username = $viewedUser ? $viewedUser.username : '';
+
+	$: coverImage = 'content/users/' + username + '/cover.jpg';
+
     $: proxyImage = viewingOwnProfile ? 'profile_overview_owner' : 'profile_overview';
 	$: proxyOverviewActionsImage = viewingOwnProfile ? 'profile_overview_owner_actions' : 'profile_overview_actions';
 </script>
 
 <div class="content">
-	<Proxy image="{proxyImage}" className="proxyOverview">
-        <!-- Likes -->
-        <Hotspot onClick="{showLikes}" style="
-            left: 199px;
-            top: 144px;
-            width: 77px;
-            height: 39px;" />
-    </Proxy>
+    <div class="profileOverview">
+        <Proxy image="{proxyImage}" className="proxyOverview">
+            <!-- Likes -->
+            <Hotspot onClick="{showLikes}" style="
+                left: 199px;
+                top: 144px;
+                width: 77px;
+                height: 39px;" />
+        </Proxy>
+        <img src="{coverImage}" class="coverImage" alt="cover image" />
+    </div>
     <Proxy image="{proxyOverviewActionsImage}">
         {#if !viewingOwnProfile}
             <!-- Send Message -->
@@ -53,7 +60,16 @@
 </div>
 
 <style>
+    .profileOverview {
+        height: 377px;
+    }
+
 	.content :global(.proxyOverview) {
-		/* position: absolute; */
+		position: absolute;
+        opacity: 0.5;
+	}
+
+	.coverImage {
+		width: 100%;
 	}
 </style>

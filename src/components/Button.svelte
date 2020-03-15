@@ -3,6 +3,7 @@
     export let onClick = null;
 
     export let className = '';
+
     export let style = null;
     export let iconStyle = null;
 

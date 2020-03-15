@@ -59,8 +59,14 @@ export const sections = [
 
 	{
 		path: '/projects/.*/messages',
-		id: 'groupMessages',
+		id: 'projectMessages',
 		label: 'Messages',
+		showBack: true,
+	},
+	{
+		path: '/projects/.*/followers',
+		id: 'projectFollowers',
+		label: 'Followers',
 		showBack: true,
 	},
 	{

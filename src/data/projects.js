@@ -1,3 +1,5 @@
+import { writable } from 'svelte/store';
+
 const projects = [
 	{
 		title: 'World Creator',
@@ -6,8 +8,8 @@ const projects = [
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,
-		likesCount: 53,
-		followingCount: 62,
+		likeCount: 53,
+		followCount: 62,
 		unreadCount: 5,
 
 		following: false,
@@ -24,8 +26,8 @@ const projects = [
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,
-		likesCount: 62,
-		followingCount: 23,
+		likeCount: 62,
+		followCount: 23,
 		unreadCount: 3,
 		liked: true,
 		location: '',
@@ -37,8 +39,8 @@ const projects = [
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,
-		likesCount: 63,
-		followingCount: 54,
+		likeCount: 63,
+		followCount: 54,
 		unreadCount: 6,
 		location: '',
 	},
@@ -49,8 +51,8 @@ const projects = [
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,
-		likesCount: 63,
-		followingCount: 54,
+		likeCount: 63,
+		followCount: 54,
 		unreadCount: 6,
 		location: '',
 	},
@@ -61,8 +63,8 @@ const projects = [
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,
-		likesCount: 23,
-		followingCount: 45,
+		likeCount: 23,
+		followCount: 45,
 		unreadCount: 2,
 		liked: true,
 		location: '',
@@ -93,8 +95,8 @@ const projects = [
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,
-		likesCount: 63,
-		followingCount: 54,
+		likeCount: 63,
+		followCount: 54,
 		unreadCount: 6,
 		isOwner: true,
 		location: '',
@@ -108,8 +110,8 @@ const projects = [
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 		image: '',
 		createdAt: 0,
-		likesCount: 63,
-		followingCount: 54,
+		likeCount: 63,
+		followCount: 54,
 		following: true,
 		unreadCount: 6,
 		location: '',
@@ -120,8 +122,16 @@ const projects = [
 // 	project.html = project.html.replace(/^\t{3}/gm, '');
 // });
 
-export function getProject(projectId) {
-	return projects.find(item => item.id === projectId);
+const projectModels = {};
+
+export function getProjectModel(projectId) {
+	let projectModel = projectModels[projectId];
+	if (!projectModel) {
+		const sourceProjectModel = projects.find(item => item.id === projectId);
+		projectModel = writable(sourceProjectModel);
+		projectModels[projectId] = projectModel;
+	}
+	return projectModel;
 }
 
 export default projects;

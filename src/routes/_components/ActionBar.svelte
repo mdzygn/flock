@@ -22,7 +22,7 @@
 			icon: LikeIcon,
 			selectedIcon: LikeSelectedIcon,
 			targetItemProperty: 'liked',
-			count: 62,
+			countProperty: 'likeCount',
 		},
 		{
 			label: 'follow',
@@ -30,7 +30,7 @@
 			icon: FollowIcon,
 			selectedIcon: FollowSelectedIcon,
 			targetItemProperty: 'following',
-			count: 35,
+			countProperty: 'followCount',
 		},
 		{
 			label: 'share',
@@ -45,7 +45,7 @@
 		<Button
 			icon="{targetItem && button.targetItemProperty && targetItem[button.targetItemProperty] ? button.selectedIcon : button.icon}"
 			onClick="{button.action ? (e => button.action(targetItemId)) : null}"
-		>{button.label}{#if button.count}<div class="countContainer"><div class="count">{button.count}</div></div>{/if}</Button>
+		>{button.label}{#if button.countProperty && targetItem}<div class="countContainer"><div class="count">{targetItem[button.countProperty]}</div></div>{/if}</Button>
 	{/each}
 </div>
 

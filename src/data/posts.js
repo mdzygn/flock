@@ -10,7 +10,7 @@ const posts = [
 			message: '',
 			image: '',
 			createdAt: 0,
-			likesCount: 23,
+			likeCount: 23,
 		},
 		{
 			id: '',
@@ -20,7 +20,7 @@ const posts = [
 			message: '',
 			image: '',
 			createdAt: 0,
-			likesCount: 65,
+			likeCount: 65,
 		},
 		{
 			id: '',
@@ -30,7 +30,7 @@ const posts = [
 			message: '',
 			image: '',
 			createdAt: 0,
-			likesCount: 65,
+			likeCount: 65,
 		},
 		{
 			id: '',
@@ -40,7 +40,7 @@ const posts = [
 			message: '',
 			image: '',
 			createdAt: 0,
-			likesCount: 76,
+			likeCount: 76,
 		},
 		{
 			id: '',
@@ -50,7 +50,7 @@ const posts = [
 			message: '',
 			image: '',
 			createdAt: 0,
-			likesCount: 23,
+			likeCount: 23,
 		},
 
 	// Channel Threads
@@ -64,7 +64,7 @@ const posts = [
 			message: '',
 			image: '',
 			createdAt: 0,
-			likesCount: 23,
+			likeCount: 23,
 		},
 		{
 			id: '',
@@ -76,7 +76,7 @@ const posts = [
 			message: '',
 			image: '',
 			createdAt: 0,
-			likesCount: 45,
+			likeCount: 45,
 		},
 		{
 			id: '',
@@ -88,7 +88,7 @@ const posts = [
 			message: '',
 			image: '',
 			createdAt: 0,
-			likesCount: 36,
+			likeCount: 36,
 		},
 		{
 			id: '',
@@ -100,7 +100,7 @@ const posts = [
 			message: '',
 			image: '',
 			createdAt: 0,
-			likesCount: 25,
+			likeCount: 25,
 		},
 		{
 			id: '',
@@ -112,7 +112,7 @@ const posts = [
 			message: '',
 			image: '',
 			createdAt: 0,
-			likesCount: 34,
+			likeCount: 34,
 		},
 
 	// Thread Posts
@@ -124,7 +124,7 @@ const posts = [
 			type: 'threadPost',
 			message: '',
 			createdAt: 0,
-			likesCount: 23,
+			likeCount: 23,
 		},
 		{
 			id: '',
@@ -134,7 +134,7 @@ const posts = [
 			type: 'threadPost',
 			message: '',
 			createdAt: 0,
-			likesCount: 34,
+			likeCount: 34,
 		},
 		{
 			id: '',
@@ -144,7 +144,7 @@ const posts = [
 			type: 'threadPost',
 			message: '',
 			createdAt: 0,
-			likesCount: 56,
+			likeCount: 56,
 		},
 		{
 			id: '',
@@ -154,7 +154,7 @@ const posts = [
 			type: 'threadPost',
 			message: '',
 			createdAt: 0,
-			likesCount: 62,
+			likeCount: 62,
 		},
 		{
 			id: '',
@@ -164,7 +164,7 @@ const posts = [
 			type: 'threadPost',
 			message: '',
 			createdAt: 0,
-			likesCount: 54,
+			likeCount: 54,
 		},
 
 	// Update Comment
@@ -176,7 +176,7 @@ const posts = [
 			type: 'comment',
 			message: '',
 			createdAt: 0,
-			likesCount: 23,
+			likeCount: 23,
 		},
 		{
 			id: '',
@@ -186,7 +186,7 @@ const posts = [
 			type: 'comment',
 			message: '',
 			createdAt: 0,
-			likesCount: 34,
+			likeCount: 34,
 		},
 		{
 			id: '',
@@ -196,7 +196,7 @@ const posts = [
 			type: 'comment',
 			message: '',
 			createdAt: 0,
-			likesCount: 56,
+			likeCount: 56,
 		},
 		{
 			id: '',
@@ -206,7 +206,7 @@ const posts = [
 			type: 'comment',
 			message: '',
 			createdAt: 0,
-			likesCount: 62,
+			likeCount: 62,
 		},
 		{
 			id: '',
@@ -216,7 +216,7 @@ const posts = [
 			type: 'comment',
 			message: '',
 			createdAt: 0,
-			likesCount: 54,
+			likeCount: 54,
 		},
 ];
 

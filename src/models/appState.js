@@ -1,4 +1,4 @@
-import { writable, readable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import { get } from 'svelte/store';
 
 import { createModel } from '../utils/createModel';

@@ -3,27 +3,27 @@
     import ActionBar from './ActionBar.svelte';
 
 	import Proxy from '../../components/Proxy.svelte';
-    import { getProject } from '../../data/projects.js';
+    import { getProjectModel } from '../../data/projects.js';
     import { loadProject } from '../../actions/appActions.js';
 
     import MoreArrowIcon from "../../assets/icons/more_arrow.png";
 
     export let projectId = null;
 
-    $: project = getProject(projectId);
+    $: project = getProjectModel(projectId);
 
     // $: console.log('project', project);
 
-    $: projectSlug = project ? project.slug : null;
+    $: projectSlug = $project ? $project.slug : null;
 
-    $: projectTitle = project ? project.title : '';
-    $: projectDescription = project ? project.description : '';
+    $: projectTitle = $project ? $project.title : '';
+    $: projectDescription = $project ? $project.description : '';
 
 	$: headerImage = projectSlug ? 'content/projects/' + projectSlug + '/header.jpg' : '';
 </script>
 
 <div class="projectItem">
-    <Proxy image="discover1" className="proxyImage" />
+    <!-- <Proxy image="discover1" className="proxyImage" /> -->
     <img class="headerImage" src="{headerImage}" alt="project image" on:click="{e => loadProject(projectId)}" />
     <div class="contentContainer" on:click="{e => loadProject(projectId)}">
         <Button className="learnMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button>
@@ -32,7 +32,7 @@
             <div class="description">{projectDescription}</div>
         </div>
     </div>
-    <ActionBar targetItemId="{projectId}" targetItem="{project}" />
+    <ActionBar targetItemId="{projectId}" targetItem="{$project}" />
 </div>
 
 <style>

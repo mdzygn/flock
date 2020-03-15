@@ -274,7 +274,7 @@
 
 				<div class="overviewContent" class:returnView="{$returnView}">
 					<div class="contentContainer">
-						<Button className="projectOptionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
+						<Button className="optionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
 						<Button className="editButton" onClick="{editProjectDetails}" icon="{EditIcon}"></Button>
 						<Button className="audienceButton" onClick="{togglePublic}" icon="{isPublic ? PublicIcon : PrivateIcon}">{isPublic ? 'public' : 'private'}</Button>
 						<div class="itemContent">
@@ -434,7 +434,7 @@
 		background-color: #ffffff;
 	}
 
-    .contentContainer :global(.projectOptionsButton) {
+    .contentContainer :global(.optionsButton) {
 		position: absolute;
 
 		top: 13px;

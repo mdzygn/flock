@@ -1,6 +1,11 @@
 <script>
+    import Button from '../../components/Button.svelte';
+
     import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
+
+	import OptionsMenuIcon from "../../assets/icons/options_menu.png";
+	import EditIcon from "../../assets/icons/edit.png";
 
     import { viewedUser } from '../../models/appState';
 
@@ -38,6 +43,8 @@
             <div class="profileImage">
                 <img src="{profileImage}" alt="{userFirstName}" />
             </div>
+            <Button className="optionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
+            <Button className="editButton" icon="{EditIcon}" disabled="{true}">edit</Button>
             <div class="itemContent">
                 <div class="header">{userFullName}</div>
                 <div class="username">@{username}</div>
@@ -88,9 +95,9 @@
 		width: 100%;
 	}
 
-    /* .profileOverviewHeader {
-
-    } */
+    .profileOverviewHeader {
+        position: relative;
+    }
     .profileImage {
         position: absolute;
         left: 14px;
@@ -140,5 +147,35 @@
 		margin-left: -10px;
 
 		color: #555555;
+	}
+
+    .content :global(.optionsButton) {
+		position: absolute;
+
+        top: 66px;
+		right: 14px;
+
+		width: 28px;
+		height: 26px;
+		padding: 8px;
+	}
+
+    .content :global(.editButton) {
+		position: absolute;
+
+		top: 69px;
+        right: 58px;
+
+		width: 28px;
+		height: 26px;
+		padding: 8px;
+
+		font-size: 1.5rem;
+		font-weight: 700;
+
+        padding-right: 33px;
+	}
+    .content :global(.editButton .icon) {
+        padding-left: 12px;
 	}
 </style>

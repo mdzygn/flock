@@ -19,7 +19,7 @@
 </script>
 
 <div class="actionBar">
-	<div class="actionContainerButton">
+	<div class="actionContainerButton actionButtonLeft">
 		<slot name="buttonLeft">
 			<ActionButton
 				label = "like"
@@ -34,7 +34,7 @@
 			/>
 		</slot>
 	</div>
-	<div class="actionContainerButton">
+	<div class="actionContainerButton actionButtonMiddle">
 		<slot name="buttonMiddle">
 				<ActionButton
 					label = "follow"
@@ -54,14 +54,15 @@
 				/>
 			</slot>
 		</div>
-	<div class="actionContainerButton">
+	<div class="actionContainerButton actionButtonRight">
 		<slot name="buttonRight">
 			<ActionButton
 				label = "share"
 
 				icon = "{ShareIcon}"
 
-				action= "{null}"
+				action = "{null}"
+				disabled = "{true}"
 			/>
 		</slot>
 	</div>

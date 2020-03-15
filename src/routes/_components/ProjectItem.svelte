@@ -12,6 +12,8 @@
 
     $: project = getProject(projectId);
 
+    // $: console.log('project', project);
+
     $: projectSlug = project ? project.slug : null;
 
     $: projectTitle = project ? project.title : '';
@@ -30,7 +32,7 @@
             <div class="description">{projectDescription}</div>
         </div>
     </div>
-    <ActionBar targetItemId="{projectId}" />
+    <ActionBar targetItemId="{projectId}" targetItem="{project}" />
 </div>
 
 <style>

@@ -69,6 +69,7 @@
             } else {
                 regionProps.scrollTop = 0;
             }
+                updateHeaderScrollPosition();
         }
         // console.log(id + ' regionProps.scrollTop: ' + regionProps.scrollTop + ' ' + anchorToBottom);
 
@@ -79,7 +80,7 @@
         setTimeout(() => {
             if (regionProps) {
                 curScrollRegion.scrollTo(0, regionProps.scrollTop);
-                updateHeaderScrollPosition();
+                // updateHeaderScrollPosition();
             }
         }, 2);
         setTimeout(() => {
@@ -88,13 +89,13 @@
                 if (hasScrollHeader && scrollHeader) {
                     scrollHeaderHeight = scrollHeader.offsetHeight;
                 }
-                updateHeaderScrollPosition();
+                // updateHeaderScrollPosition();
             }
         }, 10);
         setTimeout(() => {
             if (regionProps) {
                 curScrollRegion.scrollTo(0, regionProps.scrollTop);
-                updateHeaderScrollPosition();
+                // updateHeaderScrollPosition();
             }
         }, 50);
         setTimeout(() => {
@@ -103,13 +104,13 @@
                 if (hasScrollHeader && scrollHeader) {
                     scrollHeaderHeight = scrollHeader.offsetHeight;
                 }
-                updateHeaderScrollPosition();
+                // updateHeaderScrollPosition();
             }
         }, 100);
 
         // console.log('load scroll "' + id + '": ' + regionProps.scrollTop);
 
-        updateHeaderScrollPosition();
+        // updateHeaderScrollPosition();
 
         scrollRegion.scrollTo(0, regionProps.scrollTop);
     }

@@ -413,8 +413,6 @@
     .contentContainer {
         position: relative;
 
-        height: 171px;
-
 		padding-left: 23px;
 	}
 
@@ -448,11 +446,14 @@
 
     .contentContainer :global(.infoCollapseButton) {
 		/* display: table; */
-		position: absolute;
-		right: 0;
-    	margin-top: -14px;
+		/* position: absolute;
+		right: 0; */
+
+    	float: right;
+    	margin-top: -25px;
 
 		padding: 10px;
+    	padding-left: 20px;
     	padding-right: 40px;
 		margin-left: -12px;
 	}
@@ -463,8 +464,6 @@
 		width: 100%;
 
     	padding-bottom: 6px;
-
-    	/* margin-top: 171px; */
 	}
 
 	.projectActionButtons {
@@ -528,7 +527,10 @@
 
     .header {
 		font-size: 2.5rem;
-		padding-top: 21px;
+		padding-top: 23px;
+		padding-right: 60px;
+		padding-bottom: 5px;
+    	line-height: 3rem;
     }
 
     .description {
@@ -586,10 +588,11 @@
 	.count {
 		position: absolute;
 		left: 35px;
-		bottom: 3px;
+		bottom: 1px;
 
+		font-size: 1.2rem;
 		font-weight: 700;
-    	font-size: 1.1rem;
+
 		color: #777777;
 	}
 

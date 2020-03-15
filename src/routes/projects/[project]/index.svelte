@@ -295,30 +295,6 @@
 		</div>
 
 		<div slot="scrollHeader">
-			<!-- <Proxy image="{proxyActionsImage}" style="position: absolute">
-				{#if !isOwner}
-					<!-- Action Follow -->
-					<!-- <Hotspot onClick="{toggleFollowing}" style="
-						left: 120px;
-						top: 0px;
-						width: 142px;
-						height: 47px;" />
-				{/if}
-
-				<!-- Like Icon -->
-				<!-- {#if liked}
-					<Proxy image="project_actions_like_selected" absolutePlacement="true" style="
-						left: 45px;
-						top: 12px;" />
-				{/if}
-
-				<!-- Like -->
-				<!-- <Hotspot onClick="{toggleLiked}" style="
-					left: 0;
-					top: 0px;
-					width: 112px;
-					height: 47px;" />
-			</Proxy> -->
 			{#if isOwner}
 				<ActionBar targetItemId="{$projectId}" targetItem="{$project}">
 					<div class="actionButton" slot="buttonMiddle">

@@ -429,7 +429,9 @@
 		position: absolute;
 		top: 8px;
 		right: 48px;
-    	padding: 5px 39px 5px 22px;
+    	padding: 5px 39px 5px 17px;
+		font-weight: 700;
+    	margin-right: -4px;
     }
     .projectActions :global(.followButton.isButton) {
 		border: 2px solid #0B0B0B;

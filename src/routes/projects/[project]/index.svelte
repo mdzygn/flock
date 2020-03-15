@@ -407,6 +407,7 @@
     .projectActions :global(.sendMessageButton) {
 		display: table;
 		padding: 10px;
+    	padding-right: 40px;
 
 		margin-left: 13px;
 
@@ -416,13 +417,16 @@
     	margin-top: 4px;
     }
     .projectActions :global(.sendMessageButton .icon) {
-    	padding-left: 6px;
+    	padding-left: 12px;
 	}
 
     .projectActions :global(.likeButton ) {
 		position: absolute;
-		top: 13px;
-		right: 216px;
+		top: 4px;
+		right: 180px;
+		width: 28px;
+		height: 26px;
+		padding: 8px;
     }
 
     .projectActions :global(.followButton) {
@@ -482,7 +486,7 @@
 		display: table;
 
 		padding: 5px;
-		margin-left: -5px;
+    	margin-left: 16px;
 		margin-top: 3px;
 
 		font-size: 1.2rem;

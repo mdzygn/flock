@@ -283,7 +283,7 @@
 				<div class="overviewContent" class:returnView="{$returnView}">
 					<div class="contentContainer">
 						<Button className="projectOptionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
-						<Button className="editButton" icon="{EditIcon}" disabled="{true}"></Button>
+						<Button className="editButton" onClick="{editProjectDetails}" icon="{EditIcon}"></Button>
 						<Button className="audienceButton" onClick="{togglePublic}" icon="{isPublic ? PublicIcon : PrivateIcon}">{isPublic ? 'public' : 'private'}</Button>
 						<div class="itemContent">
 							<div class="header" class:headerOwner="{isOwner}">{projectTitle}</div>

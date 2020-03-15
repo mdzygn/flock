@@ -6,6 +6,7 @@
     import Hotspot from '../../../components/Hotspot.svelte';
 
 	import Feed from './../../_components/Feed.svelte';
+	import ProjectItem from './../../_components/ProjectItem.svelte';
 
 	import { viewMode, locationMode, resetScrollRegionPosition } from '../../../models/appState.js';
 	import { loadProject } from '../../../actions/appActions.js';
@@ -29,7 +30,7 @@
 
 		<div class="feed">
 			{#if $locationMode === 'global'}
-				<Proxy image="discover1" onClick="{e => loadProject('s7djj2s2')}" />
+				<ProjectItem projectId="s7djj2s2" />
 				<Proxy image="discover2" onClick="{e => loadProject('ma9l2h4h')}" />
 				<Proxy image="discover3" onClick="{e => loadProject('m2lmad9a')}" />
 				<Proxy image="discover4" onClick="{e => loadProject('36bsf5gs')}" />
@@ -70,7 +71,7 @@
 		/* padding-top: 104px; */
 		padding-top: 10px;
 
-    	line-height: 0;
+    	/* line-height: 0; */
 	}
 
 	.feed :global(.proxy) {

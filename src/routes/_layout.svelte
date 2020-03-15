@@ -89,7 +89,7 @@
 		appContent {
 			position: relative;
 
-			max-width: 375px;
+			max-width: 411px;
 			max-height: 720px;
 
 			border: 1px solid #e0e0e0;

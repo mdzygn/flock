@@ -5,6 +5,7 @@
     export let className = '';
 
     export let style = null;
+    export let buttonContentStyle = null;
     export let iconStyle = null;
 
     export let icon = null;
@@ -14,7 +15,7 @@
 
 {#if href}
     <a {href} class="button {className}" on:click={onClick} {style}>
-        <div class="buttonContent">
+        <div class="buttonContent" style="{buttonContentStyle}">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
                 <img class="icon" src="{icon}" alt="read more" {iconStyle} />
             </div></div>{/if}
@@ -22,7 +23,7 @@
     </a>
 {:else}
     <div class="button {className}" on:click={onClick} class:isButton={onClick} {style}>
-        <div class="buttonContent">
+        <div class="buttonContent" style="{buttonContentStyle}">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
                 <img class="icon" src="{icon}" alt="read more" style="{iconStyle}" />
             </div></div>{/if}

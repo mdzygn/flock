@@ -13,7 +13,9 @@
 	export let targetItemProperty = null;
 
 	export let countProperty = null;
+
 	export let style = null;
+	export let buttonContentStyle = null;
 	export let iconStyle = null;
 
 	$: isSelected = targetItem && targetItem[targetItemProperty];
@@ -24,6 +26,7 @@
 		icon="{targetItem && targetItemProperty && targetItem[targetItemProperty] ? selectedIcon : icon}"
 		onClick="{action ? (e => action(targetItemId)) : null}"
 		className="{countProperty ? 'buttonContentWithCount' : (icon ? 'buttonContentWithIcon' : null)}"
+		{buttonContentStyle}
 		style="{style}" iconStyle="{iconStyle}"
 	>
 		{#if selectedLabel}

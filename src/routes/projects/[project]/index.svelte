@@ -308,6 +308,7 @@
 
 							countProperty= "followCount"
 
+							buttonContentStyle = "padding-right: 48px;"
 							iconStyle = "padding-bottom: 4px"
 						/>
 					</div>
@@ -332,9 +333,9 @@
 		margin-bottom: 10px;
 	}
 
-	.pageContent :global(.actionBar .actionButtonMiddle .buttonContent) {
+	/* .pageContent :global(.actionBar .actionButtonMiddle .buttonContent) {
 		padding-right: 44px;
-	}
+	} */
 
 	.headerImage {
 		width: 100%;

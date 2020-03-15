@@ -49,6 +49,7 @@
 				targetItemProperty = "following"
 				countProperty= "followCount"
 
+				buttonContentStyle = "padding-right: 48px;"
 				iconStyle = "padding-bottom: 4px"
 			/>
 		</div>

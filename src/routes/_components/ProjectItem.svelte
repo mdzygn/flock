@@ -1,5 +1,6 @@
 <script>
     import Button from '../../components/Button.svelte';
+    import { get } from 'svelte/store';
 
     import ActionBar from './ActionBar.svelte';
 
@@ -11,14 +12,24 @@
 
     export let projectId = null;
 
-    $: project = getProjectModel(projectId);
+    $: projectModel = getProjectModel(projectId);
+
+    $: project = get(projectModel);
+    $: {
+        if (projectModel) {
+            projectModel.subscribe(val => {
+                project = val;
+                console.log('updated: ' + val);
+            })
+        }
+    };
 
     // $: console.log('project', project);
 
-    $: projectSlug = $project ? $project.slug : null;
+    $: projectSlug = project ? project.slug : null;
 
-    $: projectTitle = $project ? $project.title : '';
-    $: projectDescription = $project ? $project.description : '';
+    $: projectTitle = project ? project.title : '';
+    $: projectDescription = project ? project.description : '';
 
 	$: headerImage = projectSlug ? 'content/projects/' + projectSlug + '/header.jpg' : '';
 </script>
@@ -33,7 +44,7 @@
             <div class="description">{projectDescription}</div>
         </div>
     </div>
-    <ActionBar targetItemId="{projectId}" targetItem="{$project}" />
+    <ActionBar targetItemId="{projectId}" targetItem="{project}" />
 </div>
 
 <style>

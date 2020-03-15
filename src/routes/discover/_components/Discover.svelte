@@ -41,11 +41,6 @@
 				<ProjectItem projectId="s7djj2s2" />
 				<ProjectItem projectId="ma9l2h4h" />
 				<ProjectItem projectId="m2lmad9a" />
-				<!-- <Proxy image="discover4" onClick="{e => loadProject('36bsf5gs')}" />
-				<Proxy image="discover5" onClick="{e => loadProject('9dm4l7ps')}" />
-				<Proxy image="discover1" onClick="{e => loadProject('s7djj2s2')}" />
-				<Proxy image="discover2" onClick="{e => loadProject('ma9l2h4h')}" />
-				<Proxy image="discover3" onClick="{e => loadProject('m2lmad9a')}" /> -->
 			{/if}
 		</div>
 

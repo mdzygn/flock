@@ -127,7 +127,7 @@ const projectModels = {};
 export function getProjectModel(projectId) {
 	let projectModel = projectModels[projectId];
 	if (!projectModel) {
-		const sourceProjectModel = projects.find(item => item.id === projectId);
+		let sourceProjectModel = projects.find(item => item.id === projectId);
 		projectModel = writable(sourceProjectModel);
 		projectModels[projectId] = projectModel;
 	}

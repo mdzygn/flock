@@ -19,8 +19,8 @@
 </script>
 
 <div class="actionBar">
-	<slot name="buttonLeft">
-		<div class="actionButton actionButtonLeft">
+	<div class="actionContainerButton">
+		<slot name="buttonLeft">
 			<ActionButton
 				label = "like"
 				icon = "{LikeIcon}"
@@ -32,30 +32,30 @@
 				targetItemProperty = "liked"
 				countProperty = "likeCount"
 			/>
+		</slot>
+	</div>
+	<div class="actionContainerButton">
+		<slot name="buttonMiddle">
+				<ActionButton
+					label = "follow"
+					selectedLabel = "following"
+
+					icon = "{FollowIcon}"
+					selectedIcon = "{FollowSelectedIcon}"
+
+					targetItem = "{targetItem}"
+					targetItemId = "{targetItemId}"
+					action = "{projectToggleFollowing}"
+					targetItemProperty = "following"
+					countProperty= "followCount"
+
+					buttonContentStyle = "padding-right: 48px;"
+					iconStyle = "padding-bottom: 4px"
+				/>
+			</slot>
 		</div>
-	</slot>
-	<slot name="buttonMiddle">
-		<div class="actionButton actionButtonMiddle">
-			<ActionButton
-				label = "follow"
-				selectedLabel = "following"
-
-				icon = "{FollowIcon}"
-				selectedIcon = "{FollowSelectedIcon}"
-
-				targetItem = "{targetItem}"
-				targetItemId = "{targetItemId}"
-				action = "{projectToggleFollowing}"
-				targetItemProperty = "following"
-				countProperty= "followCount"
-
-				buttonContentStyle = "padding-right: 48px;"
-				iconStyle = "padding-bottom: 4px"
-			/>
-		</div>
-	</slot>
-	<slot name="buttonRight">
-		<div class="actionButton actionButtonRight">
+	<div class="actionContainerButton">
+		<slot name="buttonRight">
 			<ActionButton
 				label = "share"
 
@@ -63,8 +63,8 @@
 
 				action= "{null}"
 			/>
-		</div>
-	</slot>
+		</slot>
+	</div>
 </div>
 
 <style>
@@ -78,7 +78,7 @@
 		background-color: #ffffff;
 	}
 
-	.actionBar :global(.actionButton) {
+	.actionBar :global(.actionContainerButton) {
 		width: 33%;
 		display: flex;
 		justify-content: center;

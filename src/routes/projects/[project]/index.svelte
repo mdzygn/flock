@@ -297,7 +297,7 @@
 		<div slot="scrollHeader">
 			{#if isOwner}
 				<ActionBar targetItemId="{$projectId}" targetItem="{$project}">
-					<div class="actionButton" slot="buttonMiddle">
+					<div slot="buttonMiddle">
 						<ActionButton
 							label = "followers"
 
@@ -308,7 +308,7 @@
 
 							countProperty= "followCount"
 
-							buttonContentStyle = "padding-right: 48px;"
+							buttonContentStyle = "padding-right: 56px;"
 							iconStyle = "padding-bottom: 4px"
 						/>
 					</div>

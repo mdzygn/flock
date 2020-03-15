@@ -16,7 +16,6 @@
 	import { requestConnection } from '../../../actions/userActions';
 
 	$: proxyActionsImage = viewingOwnProfile ? 'profile_actions_owner' : 'profile_actions';
-	$: proxyOverviewActionsImage = viewingOwnProfile ? 'profile_overview_owner_actions' : 'profile_overview_actions';
 	$: proxySkillsImage = viewingOwnProfile ? 'profile_skills_owner' : 'profile_skills';
 </script>
 
@@ -27,34 +26,7 @@
 <ScrollView id="profile" headerStartHidden="{true}">
 	<div class="content">
 		<div class="contentItem">
-			<ProfileOverview isOwner="{viewingOwnProfile}" />
-			<Proxy image="{proxyOverviewActionsImage}">
-				{#if !viewingOwnProfile}
-					<!-- Send Message -->
-					<Hotspot onClick="{e => loadConversation('r70dp2bf')}" style="
-						left: 11px;
-						top: 7px;
-						width: 116px;
-						height: 40px;" />
-
-					{#if requestedConnection}
-						<!-- Request Sent Notification -->
-						<Proxy image="profile_invitation_sent" absolutePlacement="true" style="
-							width: 336px;
-							height: 104px;
-
-							left: 209.5px;
-							top: 2.5px;" />
-					{:else}
-						<!-- Connect -->
-						<Hotspot onClick="{e => requestConnection('l40smlp3')}" style="
-							right: 5px;
-							top: 7px;
-							width: 137px;
-							height: 40px;" />
-					{/if}
-				{/if}
-			</Proxy>
+			<ProfileOverview />
 		</div>
 		<Proxy image="{proxySkillsImage}" className="contentItem" />
 		<ProjectList />

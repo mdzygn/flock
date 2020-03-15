@@ -158,16 +158,14 @@
 		<div class="content">
 			<div class="contentItem" class:collapsedOptions="{$returnView && !$showingInfo}" class:collapsedHeader="{$returnView && !$showingInfo && !isNew}">
 				<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
-				{#if isNew}
+				<!-- {#if isNew}
 					<Proxy image="{proxyOverviewImage}" className="proxyOverview">
-						<!-- Add Details -->
 						<Hotspot onClick="{editProjectDetails}" style="
 							left: 8px;
 							top: 123px;
 							width: 172px;
 							height: 38px;" />
 
-						<!-- Make Public -->
 						<Hotspot onClick="{makePublic}" style="
 							right: 11px;
 							top: 120px;
@@ -176,7 +174,6 @@
 					</Proxy>
 				{:else if !$showingInfo}
 					<Proxy image="{proxyOverviewImage}" className="proxyOverview" style="pointer-events: none">
-						<!-- Read More -->
 						<Hotspot onClick="{showProjectInfo}" style="
 							left: 0;
 							top: 55px;
@@ -188,7 +185,6 @@
 							width: 110px;
 							height: 30px;" />
 
-						<!-- Message -->
 						{#if isOwner}
 							<Hotspot href="projects/{$projectId}/messages" style="
 								right: 11px;
@@ -210,21 +206,18 @@
 						{/if}
 
 						{#if !$returnView}
-							<!-- Like Icon -->
 							{#if liked}
 								<Proxy image="project_like_selected" absolutePlacement="true" style="
 									left: 175px;
 									top: 164px;" />
 							{/if}
 
-							<!-- Like -->
 							<Hotspot onClick="{toggleLiked}" style="
 								left: 170px;
 								top: 159px;
 								width: 59px;
 								height: 40px;" />
 
-							<!-- Follow -->
 							<Hotspot onClick="{toggleFollowing}" style="
 								right: 35px;
 								top: 155px;
@@ -245,35 +238,30 @@
 						</div>
 						<Proxy image="{proxyShowingInfoActionsImage}">
 							{#if isOwner}
-								<!-- Send Message -->
 								<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
 									right: 6px;
 									top: 2px;
 									width: 156px;
 									height: 46px;" />
 							{:else}
-								<!-- Send Message -->
 								<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
 									left: 7px;
 									top: 8px;
 									width: 121px;
 									height: 46px;" />
 
-								<!-- Like Icon -->
 								{#if liked}
 									<Proxy image="project_like_selected" absolutePlacement="true" style="
 										left: 175px;
 										top: 16px;" />
 								{/if}
 
-								<!-- Like -->
 								<Hotspot onClick="{toggleLiked}" style="
 									left: 170px;
 									top: 11px;
 									width: 59px;
 									height: 40px;" />
 
-								<!-- Follow -->
 								<Hotspot onClick="{toggleFollowing}" style="
 									right: 35px;
 									top: 8px;
@@ -282,7 +270,7 @@
 							{/if}
 						</Proxy>
 					</div>
-				{/if}
+				{/if} -->
 
 				<div class="overviewContent" class:returnView="{$returnView}">
 					<div class="contentContainer">

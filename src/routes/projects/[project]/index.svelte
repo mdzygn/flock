@@ -146,35 +146,6 @@
 		<div class="content">
 			<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo && !isNew}">
 				<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
-				<div class="overviewContent">
-					<div class="contentContainer">
-						<Button className="projectOptions" icon="{OptionsMenuIcon}"></Button>
-						<div class="itemContent">
-							<div class="header">{projectTitle}</div>
-							<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? showProjectInfo : null}">{projectDescription}</div>
-						</div>
-						{#if !$showingInfo && projectHasDetails}
-							<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
-						{/if}
-					</div>
-					<div class="projectActions">
-						{#if !isOwner}
-							<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">messages</Button>
-						{/if}
-						{#if projectLocation}
-							<div class="location"><div class="locationIcon" style="background-image: url({LocationIcon})" />{projectLocation}</div>
-						{/if}
-
-						{#if !$returnView && !isOwner}
-							<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
-								<div class="count">{likeCount}</div>
-							</div></Button>
-							<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<div class="countContainer">
-								<div class="count">{followCount}</div>
-							</div></Button>
-						{/if}
-					</div>
-				</div>
 				{#if isNew}
 					<Proxy image="{proxyOverviewImage}" className="proxyOverview">
 						<!-- Add Details -->
@@ -298,6 +269,37 @@
 						{/if}
 					</Proxy>
 				{/if}
+
+				<div class="overviewContent">
+					<div class="contentContainer">
+						<Button className="projectOptions" icon="{OptionsMenuIcon}"></Button>
+						<div class="itemContent">
+							<div class="header">{projectTitle}</div>
+							<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? showProjectInfo : null}">{projectDescription}</div>
+						</div>
+						{#if !$showingInfo && projectHasDetails}
+							<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+						{/if}
+					</div>
+					<div class="projectActions">
+						<div class="projectActionButtons">
+							{#if !isOwner}
+								<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">messages</Button>
+							{/if}
+							{#if !$returnView && !isOwner}
+								<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
+									<div class="count">{likeCount}</div>
+								</div></Button>
+								<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<div class="countContainer">
+									<div class="count">{followCount}</div>
+								</div></Button>
+							{/if}
+						</div>
+						{#if projectLocation}
+							<div class="location"><div class="locationIcon" style="background-image: url({LocationIcon})" />{projectLocation}</div>
+						{/if}
+					</div>
+				</div>
 			</div>
 			{#if isNew}
 				<ProjectTeamList isOwner="{isOwner}" isNew="{isNew}" />
@@ -391,7 +393,7 @@
 	}
 
     .contentContainer {
-        position: absolute;
+        position: relative;
 
         height: 171px;
 
@@ -424,14 +426,21 @@
 	}
 
 	.projectActions {
-		position: absolute;
-    	width: 100%;
+		position: relative;
 
-    	margin-top: 171px;
+		width: 100%;
+
+    	padding-bottom: 6px;
+
+    	/* margin-top: 171px; */
+	}
+
+	.projectActionButtons {
+		height: 50px;
 	}
 
     .projectActions :global(.sendMessageButton) {
-		display: table;
+    	position: absolute;
 		padding: 10px;
     	padding-right: 40px;
 
@@ -481,6 +490,7 @@
 	}
 
 	.pageContent :global(.proxyOverview) {
+		position: absolute;
 		opacity: 0;
 	}
 
@@ -516,7 +526,7 @@
 
 		padding: 5px;
     	margin-left: 16px;
-		margin-top: 3px;
+		margin-top: -2px;
 
 		font-size: 1.2rem;
 		color: #999999;

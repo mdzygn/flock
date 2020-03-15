@@ -67,6 +67,9 @@
 	$: following = $project ? $project.following : false;
 	$: liked = $project ? $project.liked : false;
 
+	$: likeCount = $project ? $project.likeCount : 0;
+	$: followCount = $project ? $project.followCount : 0;
+
 	$: projectSlug = $project ? $project.slug : '';
 
 	$: headerImage = 'content/projects/' + projectSlug + '/header.jpg';
@@ -162,8 +165,12 @@
 					{/if}
 
 					{#if !$returnView && !isOwner}
-						<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"></Button>
-						<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}</Button>
+						<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
+							<div class="count">{likeCount}</div>
+						</div></Button>
+						<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<div class="countContainer">
+							<div class="count">{followCount}</div>
+						</div></Button>
 					{/if}
 				</div>
 				{#if isNew}
@@ -465,7 +472,7 @@
 	}
 
 	.pageContent :global(.proxyOverview) {
-		opacity: 0.25;
+		opacity: 0;
 	}
 
     .header {
@@ -514,4 +521,27 @@
 		vertical-align: middle;
     	margin-right: 3px;
 	}
+
+	.countContainer {
+		vertical-align: bottom;
+		display: inline-block;
+		position: relative;
+	}
+
+	.count {
+		position: absolute;
+		left: 35px;
+		bottom: 3px;
+
+		font-weight: 700;
+    	font-size: 1.1rem;
+		color: #777777;
+	}
+
+    .projectActions :global(.followButton.isButton .count) {
+    	left: 49px;
+    }
+    .projectActions :global(.followButton .count) {
+    	left: 45px;
+    }
 </style>

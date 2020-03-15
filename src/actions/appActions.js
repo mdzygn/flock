@@ -45,6 +45,7 @@ export function loadProject(targetProjectId, options) {
             curProject.isNew = true;
             curProject.isOwner = true;
             curProject.hasCreated = true;
+            curProject.projectHasDetails = false;
         }
     }
     // hasCreated.set(isNew);

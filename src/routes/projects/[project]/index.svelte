@@ -12,6 +12,7 @@
 	import LocationIcon from "../../../assets/icons/location.png";
 	import OptionsMenuIcon from "../../../assets/icons/options_menu.png";
 	import HideInfoIcon from "../../../assets/icons/collapse.png";
+	import AddDetailsIcon from "../../../assets/icons/add_highlight.png";
 
     import LikeIcon from "../../../assets/icons/like.png";
     import LikeSelectedIcon from "../../../assets/icons/like_selected.png";
@@ -305,11 +306,15 @@
 						<div class="projectActionButtons">
 							{#if projectHasDetails && !$showingInfo && $returnView}
 								<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+							{:else if !projectHasDetails && isOwner}
+								<Button className="addProjectDetailsButton" onClick="{editProjectDetails}" icon="{AddDetailsIcon}">add project details</Button>
 							{/if}
 							{#if !isOwner}
 								<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
+							{:else if isNew}
+								<Button className="makePublicButton isButton" onClick="{makePublic}">make public</Button>
 							{:else}
-								<Button className="messagesButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">messages</Button>
+								<Button className="messagesButton" href="projects/{$projectId}/messages" icon="{SendMessageIcon}">messages</Button>
 							{/if}
 							{#if (!$returnView || $showingInfo) && !isOwner}
 								<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
@@ -452,6 +457,23 @@
 		font-weight: 700;
 	}
 
+    .overviewContent :global(.addProjectDetailsButton) {
+		display: table;
+
+		padding: 10px;
+		padding-right: 30px;
+
+    	padding-left: 23px;
+
+		font-size: 1.5rem;
+		font-weight: 700;
+
+		color: #DF3C3C;
+	}
+    .overviewContent :global(.addProjectDetailsButton .icon) {
+    	padding-left: 16px;
+	}
+
     .contentContainer :global(.infoCollapseButton) {
 		/* display: table; */
 		/* position: absolute;
@@ -511,6 +533,17 @@
     	padding-left: 12px;
 	}
 
+    .projectActions :global(.makePublicButton) {
+		position: absolute;
+		padding: 3px 11px;
+
+		top: 7px;
+		right: 22px;
+
+		font-size: 1.5rem;
+		font-weight: 700;
+    }
+
     .projectActions :global(.likeButton ) {
 		position: absolute;
 		top: 4px;
@@ -531,7 +564,7 @@
 
     	margin-right: -6px;
     }
-    .projectActions :global(.followButton.isButton) {
+    .projectActions :global(.isButton) {
 		border: 2px solid #0B0B0B;
 		margin-right: -2px; margin-top: -2px; /* factor in border */
 		border-radius: 999px;
@@ -641,7 +674,7 @@
 		height: 44px;
     	margin-top: -6px;
 	}
-	.collapsedOptions :global(.sendMessageButton) {
+	.collapsedOptions :global(.sendMessageButton), .collapsedOptions :global(.messagesButton) {
     	top: 0;
     	right: 18px;
     	margin-top: 0;

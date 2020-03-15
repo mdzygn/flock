@@ -7,6 +7,7 @@
 
     export let anchorToBottom = false;
     export let headerStartHidden = false;
+    export let headerResetOnShow = false;
 
     export let id = null;
     let regionProps = null;
@@ -69,7 +70,7 @@
             } else {
                 regionProps.scrollTop = 0;
             }
-                updateHeaderScrollPosition();
+            updateHeaderScrollPosition(true);
         }
         // console.log(id + ' regionProps.scrollTop: ' + regionProps.scrollTop + ' ' + anchorToBottom);
 
@@ -80,7 +81,7 @@
         setTimeout(() => {
             if (regionProps) {
                 curScrollRegion.scrollTo(0, regionProps.scrollTop);
-                // updateHeaderScrollPosition();
+                updateHeaderScrollPosition();
             }
         }, 2);
         setTimeout(() => {
@@ -89,13 +90,13 @@
                 if (hasScrollHeader && scrollHeader) {
                     scrollHeaderHeight = scrollHeader.offsetHeight;
                 }
-                // updateHeaderScrollPosition();
+                updateHeaderScrollPosition();
             }
         }, 10);
         setTimeout(() => {
             if (regionProps) {
                 curScrollRegion.scrollTo(0, regionProps.scrollTop);
-                // updateHeaderScrollPosition();
+                updateHeaderScrollPosition();
             }
         }, 50);
         setTimeout(() => {
@@ -104,34 +105,41 @@
                 if (hasScrollHeader && scrollHeader) {
                     scrollHeaderHeight = scrollHeader.offsetHeight;
                 }
-                // updateHeaderScrollPosition();
+                updateHeaderScrollPosition();
             }
         }, 100);
 
         // console.log('load scroll "' + id + '": ' + regionProps.scrollTop);
 
-        // updateHeaderScrollPosition();
+        updateHeaderScrollPosition();
 
         scrollRegion.scrollTo(0, regionProps.scrollTop);
     }
 
-    function updateHeaderScrollPosition() {
+    function updateHeaderScrollPosition(allowHeaderPositionReset) {
         if (hasScrollHeader && scrollHeader) {
             scrollHeaderHeight = scrollHeader.offsetHeight;
 
-            if (headerStartHidden && !anchorToBottom) {
-                if (regionProps.scrollTop < 30) {
-                    regionProps.scrollTop = scrollHeaderHeight;
-                }
-                curScrollHeaderPosition = (curScrollHeaderPosition - regionProps.scrollTop) - scrollHeaderHeight;
-                curScrollHeaderPosition = Math.min(regionProps.scrollTop, Math.max(regionProps.scrollTop - scrollHeaderHeight, curScrollHeaderPosition));
-                // console.log('regionProps.scrollTop: ' + regionProps.scrollTop + ' curScrollHeaderPosition: ' + curScrollHeaderPosition);
-                scrollRegion.scrollTo(0, regionProps.scrollTop);
-            } else {
+            if (headerResetOnShow) {
                 curScrollHeaderPosition = regionProps.scrollTop;
+            } else {
+                if (allowHeaderPositionReset) {
+                    if (headerStartHidden && !anchorToBottom) {
+                        if (regionProps.scrollTop < 30) {
+                            regionProps.scrollTop = scrollHeaderHeight;
+                        }
+                        curScrollHeaderPosition = (curScrollHeaderPosition - regionProps.scrollTop) - scrollHeaderHeight;
+                        curScrollHeaderPosition = Math.min(regionProps.scrollTop, Math.max(regionProps.scrollTop - scrollHeaderHeight, curScrollHeaderPosition));
+                        // console.log('regionProps.scrollTop: ' + regionProps.scrollTop + ' curScrollHeaderPosition: ' + curScrollHeaderPosition);
+                        scrollRegion.scrollTo(0, regionProps.scrollTop);
+                    } else {
+                        curScrollHeaderPosition = regionProps.scrollTop;
+                    }
+                }
             }
 
             scrollHeaderOffset = curScrollHeaderPosition - regionProps.scrollTop;
+            // console.log('scrollHeaderOffset: ' + scrollHeaderOffset);
         }
     }
 

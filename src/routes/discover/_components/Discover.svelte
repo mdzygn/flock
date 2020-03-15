@@ -25,7 +25,7 @@
 </script>
 
 <div class="pageContent">
-	<ScrollView id="discover">
+	<ScrollView id="discover" headerResetOnShow="{true}">
 		<!-- <Feed type="discover" linkToProjects="{true}" count="{5}" offset="{proxyContentOffset}"/> -->
 
 		<div class="feed">

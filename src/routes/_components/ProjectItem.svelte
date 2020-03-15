@@ -1,5 +1,5 @@
 <script>
-    import { onDestroy } from 'svelte'; // afterUpdate
+    // import { onDestroy } from 'svelte'; // afterUpdate
 
     import Button from '../../components/Button.svelte';
     import { get } from 'svelte/store';
@@ -7,16 +7,19 @@
     import ActionBar from './ActionBar.svelte';
 
 	import Proxy from '../../components/Proxy.svelte';
-    import { getProjectModel } from '../../data/projects.js';
+    import { linkProject } from '../../data/projects.js';
     import { loadProject } from '../../actions/appActions.js';
 
     import MoreArrowIcon from "../../assets/icons/more_arrow.png";
 
     export let projectId = null;
 
-    const projectModel = getProjectModel(projectId);
-    let project, unbindProjectModel = projectModel && projectModel.subscribe(val => project = val); // {console.log(v);
-    onDestroy(e => unbindProjectModel && unbindProjectModel())
+    let project = null;
+    linkProject(projectId, val => project = val); // {console.log(val);
+
+    // const projectModel = getProjectModel(projectId);
+    // let project, unbindProjectModel = projectModel && projectModel.subscribe(val => project = val); // {console.log(v);
+    // onDestroy(e => unbindProjectModel && unbindProjectModel())
 
     $: projectSlug = project ? project.slug : null;
 

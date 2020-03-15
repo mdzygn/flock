@@ -1,4 +1,5 @@
 import { writable } from 'svelte/store';
+import { onDestroy } from 'svelte'; // afterUpdate
 
 const projects = [
 	{
@@ -132,6 +133,14 @@ export function getProjectModel(projectId) {
 		projectModels[projectId] = projectModel;
 	}
 	return projectModel;
+}
+
+// $project $ operator doesn't work in SSR for dynamically set model
+export function linkProject(projectId, updateCallback) {
+    const projectModel = getProjectModel(projectId);
+    let project, unbindProjectModel = projectModel && projectModel.subscribe(updateCallback);
+	onDestroy(e => unbindProjectModel && unbindProjectModel());
+	return project;
 }
 
 export default projects;

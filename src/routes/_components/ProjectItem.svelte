@@ -1,4 +1,6 @@
 <script>
+    import { onDestroy } from 'svelte'; // afterUpdate
+
     import Button from '../../components/Button.svelte';
     import { get } from 'svelte/store';
 
@@ -12,19 +14,9 @@
 
     export let projectId = null;
 
-    $: projectModel = getProjectModel(projectId);
-
-    $: project = get(projectModel);
-    $: {
-        if (projectModel) {
-            projectModel.subscribe(val => {
-                project = val;
-                console.log('updated: ' + val);
-            })
-        }
-    };
-
-    // $: console.log('project', project);
+    const projectModel = getProjectModel(projectId);
+    let project, unbindProjectModel = projectModel && projectModel.subscribe(val => project = val); // {console.log(v);
+    onDestroy(e => unbindProjectModel && unbindProjectModel())
 
     $: projectSlug = project ? project.slug : null;
 

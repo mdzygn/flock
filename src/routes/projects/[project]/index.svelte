@@ -146,6 +146,8 @@
 					{#if !$showingInfo && projectHasDetails}
 						<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 					{/if}
+				</div>
+				<div class="projectActions">
 					{#if !isOwner}
 						<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">messages</Button>
 					{/if}
@@ -373,21 +375,30 @@
     .contentContainer {
         position: absolute;
 
-        height: 102px;
+        height: 171px;
 
 		padding-left: 23px;
     }
 
     .contentContainer :global(.readMoreButton) {
 		display: table;
+
 		padding: 10px;
 		margin-left: -10px;
 
 		font-size: 1.4rem;
 		font-weight: 700;
-    }
+	}
 
-    .contentContainer :global(.sendMessageButton) {
+	.projectActions {
+        position: absolute;
+
+    	margin-top: 171px;
+
+		padding-left: 23px;
+	}
+
+    .projectActions :global(.sendMessageButton) {
 		display: table;
 		padding: 10px;
 		margin-left: -10px;
@@ -397,9 +408,10 @@
 
     	margin-top: 4px;
     }
-    .contentContainer :global(.sendMessageButton .icon) {
+    .projectActions :global(.sendMessageButton .icon) {
     	padding-left: 6px;
-    }
+	}
+
 
 	.content .collapsedHeader {
 		margin-bottom: 3px;

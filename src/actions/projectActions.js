@@ -1,8 +1,17 @@
 import { get } from 'svelte/store';
 import { DEBUG } from '../config';
 
+import { goto } from '@sapper/app';
+
 import { getProjectModel } from '../data/projects';
-import { project } from '../models/appState';
+import {
+    project,
+    resetScrollRegionPosition
+} from '../models/appState';
+
+import {
+    showProjectInfo,
+} from '../actions/appActions.js';
 
 export function projectToggleFollowing(projectId) {
     const targetProjectModel = getProjectModel(projectId);
@@ -40,6 +49,18 @@ export function togglePublic() {
     if (curProject) {
         curProject.public = !curProject.public;
         project.set(curProject);
+    }
+}
+
+export function saveProjectDetails(details) {
+    const curProject = get(project);
+    if (curProject) {
+        curProject.projectHasDetails = true;
+        project.set(curProject);
+
+        goto('projects/' + curProject.id);
+        showProjectInfo();
+        resetScrollRegionPosition('project');
     }
 }
 

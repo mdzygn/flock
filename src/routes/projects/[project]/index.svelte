@@ -283,7 +283,9 @@
 						</div>
 						{#if projectHasDetails}
 							{#if !$showingInfo}
-								<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+								{#if !$returnView}
+									<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+								{/if}
 							{:else}
 								<Button className="infoCollapseButton" onClick="{hideProjectInfo}" icon="{HideInfoIcon}" />
 							{/if}
@@ -301,6 +303,9 @@
 					{/if}
 					<div class="projectActions">
 						<div class="projectActionButtons">
+							{#if projectHasDetails && !$showingInfo && $returnView}
+								<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+							{/if}
 							{#if !isOwner}
 								<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
 							{/if}
@@ -432,7 +437,7 @@
 		padding: 8px;
 	}
 
-    .contentContainer :global(.readMoreButton) {
+    .overviewContent :global(.readMoreButton) {
 		display: table;
 
 		padding: 10px;
@@ -608,24 +613,25 @@
     	left: 49px;
 	}
 
-	.returnView .itemContent {
+	/* .returnView .itemContent {
     	margin-bottom: 8px;
 	}
 	.returnView .contentContainer {
     	padding-bottom: 40px;
-	}
-	.returnView :global(.readMoreButton) {
-		position: absolute;
-	}
-	.returnView .projectActions {
-		position: absolute;
-		top: 131px;
-	}
-	/* .returnView .projectActionButtons {
-    	height: 0;
 	} */
+	.returnView :global(.readMoreButton) {
+    	padding-left: 23px;
+		margin-top: 0;
+		margin-left: 0;
+	}
+	.returnView .projectActionButtons {
+		height: 44px;
+    	margin-top: -6px;
+	}
 	.returnView :global(.sendMessageButton) {
     	/* margin-top: -46px; */
+    	top: 0;
     	right: 18px;
+    	margin-top: 0;
 	}
 </style>

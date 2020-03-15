@@ -8,7 +8,7 @@
         if (viewWidth < 480) {
             hotspotContainerScale = viewWidth / 375;
         } else {
-            hotspotContainerScale = 1;
+            hotspotContainerScale = 411 / 375;
         }
     }
 

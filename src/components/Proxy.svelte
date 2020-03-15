@@ -2,11 +2,13 @@
     import Hotspots from './Hotspots.svelte';
 
     export let image;
+
     export let href = null;
+    export let onClick = null;
+
     export let className = '';
     export let style = null;
     export let absolutePlacement = false;
-    export let onClick = null;
 
     $: imageSrc = (image.indexOf('.png') !== -1) ? image : image + '.jpg';
 

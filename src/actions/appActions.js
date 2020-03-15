@@ -49,7 +49,8 @@ export function loadProject(targetProjectId, options) {
     }
     // hasCreated.set(isNew);
 
-    showingInfo.set(false);
+    showingInfo.set(options && options.showInfo);
+
     returnView.set(curProject && (curProject.following || curProject.isOwner));
 
     gotoRoute('projects/' + targetProjectId);

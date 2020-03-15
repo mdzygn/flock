@@ -274,7 +274,7 @@
 					</div>
 				{/if}
 
-				<div class="overviewContent">
+				<div class="overviewContent" class:returnView="{$returnView}">
 					<div class="contentContainer">
 						<Button className="projectOptions" icon="{OptionsMenuIcon}"></Button>
 						<div class="itemContent">
@@ -313,7 +313,7 @@
 								</div></Button>
 							{/if}
 						</div>
-						{#if projectLocation}
+						{#if !$returnView && projectLocation}
 							<div class="location"><div class="locationIcon" style="background-image: url({LocationIcon})" />{projectLocation}</div>
 						{/if}
 					</div>
@@ -417,6 +417,7 @@
 	}
 
 	.overviewContent {
+		position: relative;
 		background-color: #ffffff;
 	}
 
@@ -603,7 +604,28 @@
     	left: 43px;
 	}
 
-	.projectInfo {
+    .projectActions :global(.followButton.isButton .count) {
+    	left: 49px;
+	}
 
+	.returnView .itemContent {
+    	margin-bottom: 8px;
+	}
+	.returnView .contentContainer {
+    	padding-bottom: 40px;
+	}
+	.returnView :global(.readMoreButton) {
+		position: absolute;
+	}
+	.returnView .projectActions {
+		position: absolute;
+		top: 131px;
+	}
+	/* .returnView .projectActionButtons {
+    	height: 0;
+	} */
+	.returnView :global(.sendMessageButton) {
+    	/* margin-top: -46px; */
+    	right: 18px;
 	}
 </style>

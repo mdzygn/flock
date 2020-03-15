@@ -2,7 +2,6 @@
     // import { onDestroy } from 'svelte'; // afterUpdate
 
     import Button from '../../components/Button.svelte';
-    import { get } from 'svelte/store';
 
     import ActionBar from './ActionBar.svelte';
 
@@ -15,18 +14,14 @@
     export let projectId = null;
 
     let project = null;
-    linkProject(projectId, val => project = val); // {console.log(val);
-
-    // const projectModel = getProjectModel(projectId);
-    // let project, unbindProjectModel = projectModel && projectModel.subscribe(val => project = val); // {console.log(v);
-    // onDestroy(e => unbindProjectModel && unbindProjectModel())
+    linkProject(projectId, val => project = val);
 
     $: projectSlug = project ? project.slug : null;
 
+	$: headerImage = projectSlug ? 'content/projects/' + projectSlug + '/header.jpg' : '';
+
     $: projectTitle = project ? project.title : '';
     $: projectDescription = project ? project.description : '';
-
-	$: headerImage = projectSlug ? 'content/projects/' + projectSlug + '/header.jpg' : '';
 </script>
 
 <div class="projectItem">
@@ -50,7 +45,16 @@
         background-color: #ffffff;
     }
 
-    .projectItem :global(.learnMoreButton) {
+    .contentContainer {
+        position: relative;
+
+        height: 102px;
+        cursor: pointer;
+
+        padding-left: 18px;
+    }
+
+    .contentContainer :global(.learnMoreButton) {
         position: absolute;
         top: 1px;
         right: 11px;
@@ -62,15 +66,8 @@
         font-weight: 700;
     }
 
-    .projectItem :global(.learnMoreButton .icon) {
+    .contentContainer :global(.learnMoreButton .icon) {
         padding-left: 15px;
-    }
-
-    .contentContainer {
-        position: relative;
-
-        height: 102px;
-        cursor: pointer;
     }
 
     .projectItem :global(.proxyImage) {
@@ -78,6 +75,20 @@
         width: 411px;
         height: 314px;
         opacity: 0.5;
+    }
+
+    .projectItem :global(.actionBar .actionButtonLeft .buttonContent) {
+        /* position: absolute;
+        left: 26px; */
+        margin-right: 6px;
+    }
+
+    .projectItem :global(.actionBar .actionButtonMiddle .buttonContent) {
+        margin-right: -12px;
+    }
+
+    .projectItem :global(.actionBar .actionButtonRight .buttonContent) {
+        margin-right: -20px;
     }
 
     .headerImage {
@@ -90,12 +101,10 @@
 
     .header {
         font-size: 2.2rem;
-        padding-left: 18px;
         padding-top: 3px;
     }
 
     .description {
-        padding-left: 18px;
         padding-top: 3px;
         padding-right: 50px;
 

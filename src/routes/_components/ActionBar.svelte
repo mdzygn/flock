@@ -90,4 +90,8 @@
 		width: 100%;
 		height: 100%;
 	}
+
+    /* .actionBar :global(.actionButtonMiddle .buttonContent) {
+        margin-right: 48px;
+    } */
 </style>

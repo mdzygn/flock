@@ -1,6 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
 
+    import Button from '../../../components/Button.svelte';
+
 	import ScrollView from '../../../components/ScrollView.svelte';
 
 	import ActionBar from '../../_components/ActionBar.svelte';
@@ -46,7 +48,7 @@
 	}
 
 	// let proxyHeaderImage;
-	let proxyActionsImage;
+	// let proxyActionsImage;
 	let proxyOverviewImage;
 	let proxyShowingInfoActionsImage;
 	let proxyChannelsImage;
@@ -60,9 +62,10 @@
 
 	$: projectSlug = $project ? $project.slug : '';
 
-	// $: console.log('isNew: ' + isNew, $project);
-
 	$: headerImage = 'content/projects/' + projectSlug + '/header.jpg';
+
+    $: projectTitle = $project ? $project.title : '';
+	$: projectDescription = $project ? $project.description : '';
 
 	$: {
 		// if ($returnView) {
@@ -72,7 +75,7 @@
 		// }
 
 		if (isOwner) {
-			proxyActionsImage = 'project_actions_owner';
+			// proxyActionsImage = 'project_actions_owner';
 
 			if (isNew) {
 				proxyOverviewImage = 'project_overview_populate';
@@ -91,7 +94,7 @@
 			}
 		} else {
 			if (following) {
-				proxyActionsImage = 'project_actions_following';
+				// proxyActionsImage = 'project_actions_following';
 				if ($returnView) {
 					proxyOverviewImage = 'project_overview_following';
 				} else {
@@ -99,7 +102,7 @@
 				}
 				proxyChannelsImage = 'project_channels_following';
 			} else {
-				proxyActionsImage = 'project_actions';
+				// proxyActionsImage = 'project_actions';
 				if ($returnView) {
 					proxyOverviewImage = 'project_overview_following';
 				} else {
@@ -131,8 +134,15 @@
 		<div class="content">
 			<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo && !isNew}">
 				<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
+				<div class="contentContainer">
+					<Button className="learnMoreButton" onClick="{showProjectInfo}">read more</Button>
+					<div class="itemContent">
+						<div class="header">{projectTitle}</div>
+						<div class="description">{projectDescription}</div>
+					</div>
+				</div>
 				{#if isNew}
-					<Proxy image="{proxyOverviewImage}">
+					<Proxy image="{proxyOverviewImage}" className="proxyOverview">
 						<!-- Add Details -->
 						<Hotspot onClick="{editProjectDetails}" style="
 							left: 8px;
@@ -148,7 +158,7 @@
 							height: 41px;" />
 					</Proxy>
 				{:else if !$showingInfo}
-					<Proxy image="{proxyOverviewImage}">
+					<Proxy image="{proxyOverviewImage}" className="proxyOverview">
 						<!-- Read More -->
 						<Hotspot onClick="{showProjectInfo}" style="
 							left: 0;
@@ -208,7 +218,7 @@
 						{/if}
 					</Proxy>
 				{:else}
-					<Proxy image="project_overview_info" />
+					<Proxy image="project_overview_info" className="proxyOverview" />
 					<div>
 						<Proxy image="project_info_image_1" />
 						<Proxy image="project_info_content_1" />
@@ -326,7 +336,7 @@
 	.content {
 		width: 100%;
 
-    	line-height: 0;
+    	/* line-height: 0; */
 	}
 
 	.content :global(.contentItem) {
@@ -348,7 +358,51 @@
     	object-fit: cover;
 	}
 
+    .contentContainer {
+        position: absolute;
+
+        height: 102px;
+		cursor: pointer;
+
+		padding-left: 23px;
+    }
+
+    .contentContainer :global(.learnMoreButton) {
+        position: absolute;
+        top: 1px;
+        right: 11px;
+
+        padding: 10px;
+        padding-right: 30px;
+
+        font-size: 1.1rem;
+        font-weight: 700;
+    }
+
+    .contentContainer :global(.learnMoreButton .icon) {
+        padding-left: 15px;
+    }
+
 	.content .collapsedHeader {
 		margin-bottom: 3px;
 	}
+
+	.pageContent :global(.proxyOverview) {
+		opacity: 0.25;
+	}
+
+    .header {
+		font-size: 2.5rem;
+		padding-top: 21px;
+    }
+
+    .description {
+		padding-top: 12px;
+        padding-right: 50px;
+
+        font-size: 1.5rem;
+        line-height: 2rem;
+
+        color: #555555;
+    }
 </style>

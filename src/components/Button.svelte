@@ -12,15 +12,19 @@
 
 {#if href}
     <a {href} class="button {className}" on:click={onClick}>
-        <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
-            <img class="icon" src="{icon}" alt="read more" />
-        </div></div>{/if}
+        <div class="buttonContent">
+            <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
+                <img class="icon" src="{icon}" alt="read more" />
+            </div></div>{/if}
+        </div>
     </a>
 {:else}
     <div class="button {className}" on:click={onClick} class:isButton={onClick}>
-        <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
-            <img class="icon" src="{icon}" alt="read more" />
-        </div></div>{/if}
+        <div class="buttonContent">
+            <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
+                <img class="icon" src="{icon}" alt="read more" />
+            </div></div>{/if}
+        </div>
     </div>
 {/if}
 
@@ -43,6 +47,7 @@
     .icon {
         position: absolute;
         transform: scale(0.5, 0.5);
+        transform-origin: left;
         /* vertical-align: middle;
         width: 50%; */
     }

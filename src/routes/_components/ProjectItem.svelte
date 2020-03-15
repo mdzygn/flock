@@ -1,5 +1,6 @@
 <script>
     import Button from '../../components/Button.svelte';
+    import ActionBar from './ActionBar.svelte';
 
 	import Proxy from '../../components/Proxy.svelte';
     import { getProject } from '../../data/projects.js';
@@ -20,7 +21,7 @@
 </script>
 
 <div class="projectItem">
-    <!-- <Proxy image="discover1" className="proxyImage" /> -->
+    <Proxy image="discover1" className="proxyImage" />
     <img class="headerImage" src="{headerImage}" alt="project image" on:click="{e => loadProject(projectId)}" />
     <div class="contentContainer" on:click="{e => loadProject(projectId)}">
         <Button className="learnMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button>
@@ -28,8 +29,8 @@
             <div class="header">{projectTitle}</div>
             <div class="description">{projectDescription}</div>
         </div>
-        <div class="actionsBar"></div>
     </div>
+    <ActionBar targetItemId="{projectId}" />
 </div>
 
 <style>
@@ -52,9 +53,14 @@
         font-weight: 700;
     }
 
-    .contentContainer {
-        position: absolute;
+    .projectItem :global(.learnMoreButton .icon) {
+        padding-left: 15px;
+    }
 
+    .contentContainer {
+        position: relative;
+
+        height: 102px;
         cursor: pointer;
     }
 

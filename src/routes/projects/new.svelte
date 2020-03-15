@@ -11,7 +11,7 @@
 
 <ScrollView>
 	<div class="content">
-		<Proxy image="create_project" onClick="{e => createProject('n4vh55hg')}" />
+		<Proxy image="create_project" onClick="{e => createProject('msl30nhg')}" />
 	</div>
 </ScrollView>
 

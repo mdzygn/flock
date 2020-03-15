@@ -7,6 +7,7 @@
 
 	import ActionBar from '../../_components/ActionBar.svelte';
 	import ActionButton from '../../_components/ActionButton.svelte';
+	import Counter from '../../_components/Counter.svelte';
 
     import SendMessageIcon from "../../../assets/icons/send.png";
 	import LocationIcon from "../../../assets/icons/location.png";
@@ -16,6 +17,7 @@
 	import EditIcon from "../../../assets/icons/edit.png";
 	import PublicIcon from "../../../assets/icons/public.png";
 	import PrivateIcon from "../../../assets/icons/private.png";
+	import MessagesIcon from "../../../assets/icons/nav_messages.png";
 
     import LikeIcon from "../../../assets/icons/like.png";
     import LikeSelectedIcon from "../../../assets/icons/like_selected.png";
@@ -74,6 +76,8 @@
 	$: following = $project ? $project.following : false;
 	$: liked = $project ? $project.liked : false;
 	$: isPublic = $project ? $project.public : false;
+	$: unreadMessageCount = $project ? $project.unreadMessageCount : false;
+	$: messageCount = $project ? $project.messageCount : false;
 
 	$: likeCount = $project ? $project.likeCount : 0;
 	$: followCount = $project ? $project.followCount : 0;
@@ -321,7 +325,9 @@
 							{:else if isNew && !isPublic}
 								<Button className="makePublicButton isButton" onClick="{makePublic}">make public</Button>
 							{:else}
-								<Button className="messagesButton" href="projects/{$projectId}/messages" icon="{SendMessageIcon}">messages</Button>
+								<Button className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
+									<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
+								</Button>
 							{/if}
 							{#if (!$returnView || $showingInfo) && !isOwner}
 								<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
@@ -554,10 +560,10 @@
     .projectActions :global(.messagesButton) {
     	position: absolute;
 		padding: 10px;
-    	padding-right: 40px;
+    	padding-right: 79px;
 
     	top: 0;
-    	right: 18px;
+    	right: 2px;
 
 		font-size: 1.5rem;
 		font-weight: 700;
@@ -565,8 +571,15 @@
     	margin-top: 4px;
     }
     .projectActions :global(.messagesButton .icon) {
-    	padding-left: 12px;
+    	margin-left: -3px;
+		margin-top: -2px;
 	}
+    .projectActions :global(.messagesButton .counterContainer) {
+    	position: absolute;
+    }
+    .projectActions :global(.messagesButton .counter) {
+    	margin-left: 42px;
+    }
 
     .projectActions :global(.makePublicButton) {
 		position: absolute;
@@ -713,9 +726,13 @@
 		height: 44px;
     	margin-top: -6px;
 	}
-	.collapsedOptions :global(.sendMessageButton), .collapsedOptions :global(.messagesButton) {
+	.collapsedOptions :global(.sendMessageButton) {
     	top: 0;
     	right: 18px;
+    	margin-top: 0;
+	}
+	.collapsedOptions :global(.messagesButton) {
+    	top: 0;
     	margin-top: 0;
 	}
 

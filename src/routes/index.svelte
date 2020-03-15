@@ -16,7 +16,7 @@
 		<Proxy image="feed1" onClick="{e => loadProjectPost('s7djj2s2')}" />
 		<Proxy image="feed2" onClick="{e => loadThread('sm2ld9p2')}" />
 		<Proxy image="feed3" onClick="{e => loadProjectPost('s7djj2s2')}" />
-		<Proxy image="feed4" onClick="{e => loadProject('s7djj2s2')}" />
+		<Proxy image="feed4" onClick="{e => loadProject('msl30nhg')}" />
 		<Proxy image="feed5" onClick="{e => loadProjectPost('s7djj2s2')}" />
 		<Proxy image="feed6" onClick="{e => loadProject('s7djj2s2')}" />
 	</div>

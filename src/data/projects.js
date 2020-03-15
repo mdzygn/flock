@@ -14,6 +14,8 @@ const projects = [
 		likeCount: 53,
 		followCount: 62,
 		unreadCount: 5,
+		unreadMessageCount: 4,
+		messageCount: 3,
 
 		following: false,
 		isOwner: false,
@@ -34,6 +36,9 @@ const projects = [
 		likeCount: 62,
 		followCount: 23,
 		unreadCount: 3,
+		unreadMessageCount: 0,
+		messageCount: 5,
+
 		liked: true,
 		location: 'Wellington, New Zealand',
 	},
@@ -49,6 +54,9 @@ const projects = [
 		likeCount: 63,
 		followCount: 54,
 		unreadCount: 6,
+		unreadMessageCount: 3,
+		messageCount: 6,
+
 		location: 'Wellington, New Zealand',
 	},
 	{
@@ -63,6 +71,9 @@ const projects = [
 		likeCount: 63,
 		followCount: 54,
 		unreadCount: 6,
+		unreadMessageCount: 5,
+		messageCount: 3,
+
 		location: 'Wellington, New Zealand',
 	},
 	{
@@ -76,6 +87,9 @@ const projects = [
 		likeCount: 23,
 		followCount: 45,
 		unreadCount: 2,
+		unreadMessageCount: 5,
+		messageCount: 5,
+
 		liked: true,
 		location: 'Wellington, New Zealand',
 		team: [
@@ -110,6 +124,9 @@ const projects = [
 		likeCount: 63,
 		followCount: 54,
 		unreadCount: 6,
+		unreadMessageCount: 3,
+		messageCount: 6,
+
 		isOwner: true,
 		location: 'Wellington, New Zealand',
 	},
@@ -126,6 +143,9 @@ const projects = [
 		createdAt: 0,
 		likeCount: 63,
 		followCount: 54,
+		unreadMessageCount: 0,
+		messageCount: 23,
+
 		following: true,
 		unreadCount: 6,
 		location: 'Wellington, New Zealand',

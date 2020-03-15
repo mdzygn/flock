@@ -36,9 +36,10 @@ a {
 	color: inherit;
 }
 
-/* img {
-	line-height: 0;
-} */
+img {
+	display: block;
+	/* line-height: 0; */
+}
 
 /* hide blue highlight */
 input,

@@ -48,9 +48,10 @@
     .contentContainer {
         position: relative;
 
-        height: 102px;
+        /* height: 102px; */
         cursor: pointer;
 
+        margin-top: 7px;
         padding-left: 18px;
     }
 

@@ -23,8 +23,9 @@
 	$: isSelected = targetItem && targetItem[targetItemProperty];
 </script>
 
-<div class="actionButton" class:disabled="{disabled}">
+<div class="actionButton">
 	<Button
+		{disabled}
 		icon="{targetItem && targetItemProperty && targetItem[targetItemProperty] ? selectedIcon : icon}"
 		onClick="{action ? (e => action(targetItemId)) : null}"
 		className="{countProperty ? 'buttonContentWithCount' : (icon ? 'buttonContentWithIcon' : null)}"
@@ -102,9 +103,5 @@
 		font-weight: 700;
     	font-size: 1.1rem;
 		color: #777777;
-	}
-
-	.disabled {
-    	opacity: 0.33;
 	}
 </style>

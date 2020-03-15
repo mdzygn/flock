@@ -3,6 +3,7 @@
     export let onClick = null;
 
     export let className = '';
+    export let disabled = false;
 
     export let style = null;
     export let buttonContentStyle = null;
@@ -14,7 +15,7 @@
 </script>
 
 {#if href}
-    <a {href} class="button {className}" on:click={onClick} {style}>
+    <a {href} class="button {className}" class:disabled="{disabled}" on:click={onClick} {style}>
         <div class="buttonContent" style="{buttonContentStyle}">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
                 <img class="icon" src="{icon}" alt="read more" {iconStyle} />
@@ -22,7 +23,7 @@
         </div>
     </a>
 {:else}
-    <div class="button {className}" on:click={onClick} class:activeButton={onClick} {style}>
+    <div class="button {className}" class:disabled="{disabled}" on:click={onClick} class:activeButton={onClick} {style}>
         <div class="buttonContent" style="{buttonContentStyle}">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
                 <img class="icon" src="{icon}" alt="read more" style="{iconStyle}" />
@@ -59,4 +60,8 @@
     .activeButton {
         cursor: pointer;
     }
+
+	.disabled {
+    	opacity: 0.33;
+	}
 </style>

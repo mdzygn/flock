@@ -146,7 +146,7 @@
 <div class="pageContent">
 	<ScrollView id="project" headerStartHidden="{true}">
 		<div class="content">
-			<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo && !isNew}">
+			<div class="contentItem" class:collapsedOptions="{$returnView && !$showingInfo}" class:collapsedHeader="{$returnView && !$showingInfo && !isNew}">
 				<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
 				{#if isNew}
 					<Proxy image="{proxyOverviewImage}" className="proxyOverview">
@@ -276,7 +276,7 @@
 
 				<div class="overviewContent" class:returnView="{$returnView}">
 					<div class="contentContainer">
-						<Button className="projectOptions" icon="{OptionsMenuIcon}"></Button>
+						<Button className="projectOptions" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
 						<div class="itemContent">
 							<div class="header">{projectTitle}</div>
 							<div class="description" class:button="{projectHasDetails && !$showingInfo}" on:click="{projectHasDetails && !$showingInfo ? showProjectInfo : null}">{projectDescription}</div>
@@ -308,8 +308,10 @@
 							{/if}
 							{#if !isOwner}
 								<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
+							{:else}
+								<Button className="messagesButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">messages</Button>
 							{/if}
-							{#if !$returnView && !isOwner}
+							{#if (!$returnView || $showingInfo) && !isOwner}
 								<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
 									<div class="count">{likeCount}</div>
 								</div></Button>
@@ -318,8 +320,8 @@
 								</div></Button>
 							{/if}
 						</div>
-						{#if !$returnView && projectLocation}
-							<div class="location"><div class="locationIcon" style="background-image: url({LocationIcon})" />{projectLocation}</div>
+						{#if (!$returnView || $showingInfo) && projectLocation}
+							<div class="location" class:ownerLocation="{isOwner && $showingInfo}"><div class="locationIcon" style="background-image: url({LocationIcon})" />{projectLocation}</div>
 						{/if}
 					</div>
 				</div>
@@ -492,6 +494,23 @@
     	padding-left: 12px;
 	}
 
+    .projectActions :global(.messagesButton) {
+    	position: absolute;
+		padding: 10px;
+    	padding-right: 40px;
+
+    	top: 0;
+    	right: 18px;
+
+		font-size: 1.5rem;
+		font-weight: 700;
+
+    	margin-top: 4px;
+    }
+    .projectActions :global(.messagesButton .icon) {
+    	padding-left: 12px;
+	}
+
     .projectActions :global(.likeButton ) {
 		position: absolute;
 		top: 4px;
@@ -613,25 +632,23 @@
     	left: 49px;
 	}
 
-	/* .returnView .itemContent {
-    	margin-bottom: 8px;
-	}
-	.returnView .contentContainer {
-    	padding-bottom: 40px;
-	} */
-	.returnView :global(.readMoreButton) {
+	.collapsedOptions :global(.readMoreButton) {
     	padding-left: 23px;
 		margin-top: 0;
 		margin-left: 0;
 	}
-	.returnView .projectActionButtons {
+	.collapsedOptions .projectActionButtons {
 		height: 44px;
     	margin-top: -6px;
 	}
-	.returnView :global(.sendMessageButton) {
-    	/* margin-top: -46px; */
+	.collapsedOptions :global(.sendMessageButton) {
     	top: 0;
     	right: 18px;
     	margin-top: 0;
+	}
+
+	.ownerLocation {
+		padding-bottom: 14px;
+		margin-top: -37px;
 	}
 </style>

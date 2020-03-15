@@ -5,6 +5,8 @@
     import { getProject } from '../../data/projects.js';
     import { loadProject } from '../../actions/appActions.js';
 
+    import MoreArrowIcon from "../../assets/icons/more_arrow.png";
+
     export let projectId = null;
 
     $: project = getProject(projectId);
@@ -18,10 +20,10 @@
 </script>
 
 <div class="projectItem">
-    <Proxy image="discover1" className="proxyImage" />
+    <!-- <Proxy image="discover1" className="proxyImage" /> -->
     <img class="headerImage" src="{headerImage}" alt="project image" on:click="{e => loadProject(projectId)}" />
     <div class="contentContainer" on:click="{e => loadProject(projectId)}">
-        <Button className="learnMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}">learn more</Button>
+        <Button className="learnMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button>
         <div class="itemContent">
             <div class="header">{projectTitle}</div>
             <div class="description">{projectDescription}</div>
@@ -41,8 +43,10 @@
     .projectItem :global(.learnMoreButton) {
         position: absolute;
         top: 1px;
-        right: 31px;
+        right: 11px;
+
         padding: 10px;
+        padding-right: 30px;
 
         font-size: 1.1rem;
         font-weight: 700;

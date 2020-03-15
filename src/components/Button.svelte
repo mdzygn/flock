@@ -32,8 +32,9 @@
 {/if}
 
 <style>
-    /* .button {
-    } */
+    .button {
+        text-decoration: none;
+    }
 
     .iconContainer {
         display: inline-block;

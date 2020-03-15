@@ -7,6 +7,7 @@ const projects = [
 		id: 's7djj2s2',
 		slug: 'world-creator',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+		projectHasDetails: true,
 		image: '',
 		createdAt: 0,
 		likeCount: 53,
@@ -18,7 +19,7 @@ const projects = [
 		isNew: false,
 		liked: false,
 
-		location: '',
+		location: 'Wellington, New Zealand',
 	},
 	{
 		title: 'Tesseract',
@@ -31,7 +32,7 @@ const projects = [
 		followCount: 23,
 		unreadCount: 3,
 		liked: true,
-		location: '',
+		location: 'Wellington, New Zealand',
 	},
 	{
 		title: 'Green Guardians',
@@ -43,7 +44,7 @@ const projects = [
 		likeCount: 63,
 		followCount: 54,
 		unreadCount: 6,
-		location: '',
+		location: 'Wellington, New Zealand',
 	},
 	{
 		title: 'Leonardo\'s World',
@@ -55,7 +56,7 @@ const projects = [
 		likeCount: 63,
 		followCount: 54,
 		unreadCount: 6,
-		location: '',
+		location: 'Wellington, New Zealand',
 	},
 	{
 		title: 'New Earth',
@@ -68,7 +69,7 @@ const projects = [
 		followCount: 45,
 		unreadCount: 2,
 		liked: true,
-		location: '',
+		location: 'Wellington, New Zealand',
 		team: [
 			'oiv23g46',
 			'oiv23g46',
@@ -100,7 +101,7 @@ const projects = [
 		followCount: 54,
 		unreadCount: 6,
 		isOwner: true,
-		location: '',
+		location: 'Wellington, New Zealand',
 	},
 
 	// following example
@@ -115,7 +116,7 @@ const projects = [
 		followCount: 54,
 		following: true,
 		unreadCount: 6,
-		location: '',
+		location: 'Wellington, New Zealand',
 	},
 ];
 

@@ -9,6 +9,8 @@
 	import ActionButton from '../../_components/ActionButton.svelte';
 
     import FollowSelectedIcon from "../../../assets/icons/follow_selected.png";
+    import SendMessageIcon from "../../../assets/icons/send.png";
+    import LocationIcon from "../../../assets/icons/location.png";
 
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
@@ -66,6 +68,8 @@
 
     $: projectTitle = $project ? $project.title : '';
 	$: projectDescription = $project ? $project.description : '';
+	$: projectLocation = $project ? $project.location : '';
+	$: projectHasDetails = $project ? $project.projectHasDetails : false;
 
 	$: {
 		// if ($returnView) {
@@ -135,11 +139,19 @@
 			<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo && !isNew}">
 				<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
 				<div class="contentContainer">
-					<Button className="learnMoreButton" onClick="{showProjectInfo}">read more</Button>
 					<div class="itemContent">
 						<div class="header">{projectTitle}</div>
-						<div class="description">{projectDescription}</div>
+						<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? showProjectInfo : null}">{projectDescription}</div>
 					</div>
+					{#if !$showingInfo && projectHasDetails}
+						<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+					{/if}
+					{#if !isOwner}
+						<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">messages</Button>
+					{/if}
+					{#if projectLocation}
+						<div class="location"><div class="locationIcon" style="background-image: url({LocationIcon})" />{projectLocation}</div>
+					{/if}
 				</div>
 				{#if isNew}
 					<Proxy image="{proxyOverviewImage}" className="proxyOverview">
@@ -158,7 +170,7 @@
 							height: 41px;" />
 					</Proxy>
 				{:else if !$showingInfo}
-					<Proxy image="{proxyOverviewImage}" className="proxyOverview">
+					<Proxy image="{proxyOverviewImage}" className="proxyOverview" style="pointer-events: none">
 						<!-- Read More -->
 						<Hotspot onClick="{showProjectInfo}" style="
 							left: 0;
@@ -362,25 +374,31 @@
         position: absolute;
 
         height: 102px;
-		cursor: pointer;
 
 		padding-left: 23px;
     }
 
-    .contentContainer :global(.learnMoreButton) {
-        position: absolute;
-        top: 1px;
-        right: 11px;
+    .contentContainer :global(.readMoreButton) {
+		display: table;
+		padding: 10px;
+		margin-left: -10px;
 
-        padding: 10px;
-        padding-right: 30px;
-
-        font-size: 1.1rem;
-        font-weight: 700;
+		font-size: 1.4rem;
+		font-weight: 700;
     }
 
-    .contentContainer :global(.learnMoreButton .icon) {
-        padding-left: 15px;
+    .contentContainer :global(.sendMessageButton) {
+		display: table;
+		padding: 10px;
+		margin-left: -10px;
+
+		font-size: 1.4rem;
+		font-weight: 700;
+
+    	margin-top: 4px;
+    }
+    .contentContainer :global(.sendMessageButton .icon) {
+    	padding-left: 6px;
     }
 
 	.content .collapsedHeader {
@@ -403,6 +421,38 @@
         font-size: 1.5rem;
         line-height: 2rem;
 
-        color: #555555;
+		color: #555555;
+	}
+
+	.button {
+		cursor: pointer;
+	}
+
+    .pageContent :global(.actionBar .actionButtonMiddle .buttonContent) {
+        margin-right: -11px;
     }
+
+    .pageContent :global(.actionBar .actionButtonRight .buttonContent) {
+        margin-right: -20px;
+	}
+
+	.location {
+		display: table;
+
+		padding: 5px;
+		margin-left: -5px;
+		margin-top: 3px;
+
+		font-size: 1.2rem;
+		color: #999999;
+	}
+
+	.locationIcon {
+		display: inline-block;
+		background-size: cover;
+		width: 11px;
+		height: 13px;
+		vertical-align: middle;
+    	margin-right: 3px;
+	}
 </style>

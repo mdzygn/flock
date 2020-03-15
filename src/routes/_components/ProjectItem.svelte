@@ -28,7 +28,7 @@
     <!-- <Proxy image="discover1" className="proxyImage" /> -->
     <img class="headerImage" src="{headerImage}" alt="project image" on:click="{e => loadProject(projectId)}" />
     <div class="contentContainer" on:click="{e => loadProject(projectId)}">
-        <Button className="learnMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button>
+        <Button className="readMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button>
         <div class="itemContent">
             <div class="header">{projectTitle}</div>
             <div class="description">{projectDescription}</div>
@@ -54,7 +54,7 @@
         padding-left: 18px;
     }
 
-    .contentContainer :global(.learnMoreButton) {
+    .contentContainer :global(.readMoreButton) {
         position: absolute;
         top: 1px;
         right: 11px;
@@ -66,7 +66,7 @@
         font-weight: 700;
     }
 
-    .contentContainer :global(.learnMoreButton .icon) {
+    .contentContainer :global(.readMoreButton .icon) {
         padding-left: 15px;
     }
 

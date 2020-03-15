@@ -10,6 +10,7 @@
 
     import SendMessageIcon from "../../../assets/icons/send.png";
 	import LocationIcon from "../../../assets/icons/location.png";
+	import OptionsMenuIcon from "../../../assets/icons/options_menu.png";
 
     import LikeIcon from "../../../assets/icons/like.png";
     import LikeSelectedIcon from "../../../assets/icons/like_selected.png";
@@ -143,6 +144,7 @@
 			<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo && !isNew}">
 				<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
 				<div class="contentContainer">
+					<Button className="projectOptions" icon="{OptionsMenuIcon}"></Button>
 					<div class="itemContent">
 						<div class="header">{projectTitle}</div>
 						<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? showProjectInfo : null}">{projectDescription}</div>
@@ -386,6 +388,17 @@
 
 		padding-left: 23px;
     }
+
+    .contentContainer :global(.projectOptions) {
+		position: absolute;
+
+		top: 13px;
+		right: 14px;
+
+		width: 28px;
+		height: 26px;
+		padding: 8px;
+	}
 
     .contentContainer :global(.readMoreButton) {
 		display: table;

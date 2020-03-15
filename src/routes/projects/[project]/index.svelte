@@ -43,6 +43,7 @@
 
 	import {
 		makePublic,
+		togglePublic,
 		projectToggleFollowing,
 		projectToggleLiked,
 	} from '../../../actions/projectActions.js';
@@ -283,7 +284,7 @@
 					<div class="contentContainer">
 						<Button className="projectOptionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
 						<Button className="editButton" icon="{EditIcon}" disabled="{true}"></Button>
-						<Button className="audienceButton" icon="{isPublic ? PublicIcon : PrivateIcon}">{isPublic ? 'public' : 'private'}</Button>
+						<Button className="audienceButton" onClick="{togglePublic}" icon="{isPublic ? PublicIcon : PrivateIcon}">{isPublic ? 'public' : 'private'}</Button>
 						<div class="itemContent">
 							<div class="header" class:headerOwner="{isOwner}">{projectTitle}</div>
 							<div class="description" class:button="{projectHasDetails && !$showingInfo}" on:click="{projectHasDetails && !$showingInfo ? showProjectInfo : null}">{projectDescription}</div>

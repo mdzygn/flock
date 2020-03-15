@@ -35,6 +35,14 @@ export function makePublic() {
     }
 }
 
+export function togglePublic() {
+    const curProject = get(project);
+    if (curProject) {
+        curProject.public = !curProject.public;
+        project.set(curProject);
+    }
+}
+
 function checkUpdateProject(targetProject) {
     const curProject = get(project);
     if (curProject && targetProject === curProject) {

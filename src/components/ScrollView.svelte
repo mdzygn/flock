@@ -201,6 +201,7 @@
 
     .scrollHeader {
         position: absolute;
+        width: 100%;
 
         box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
     }

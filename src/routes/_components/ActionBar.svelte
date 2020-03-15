@@ -57,7 +57,9 @@
 		justify-content: space-between;
 
     	/* margin-top: 3px; */
-    	height: 52px;
+		height: 52px;
+
+		background-color: #ffffff;
 	}
 
 	.actionBar :global(.button) {
@@ -70,7 +72,7 @@
 	}
 
 	.actionBar :global(.buttonContent) {
-    	padding-bottom: 3px;
+    	padding-bottom: 1px;
 		padding-right: 42px;
 	}
 

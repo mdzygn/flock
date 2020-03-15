@@ -3,6 +3,8 @@
 
 	import ScrollView from '../../../components/ScrollView.svelte';
 
+    import ActionBar from '../../_components/ActionBar.svelte';
+
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
 
@@ -289,10 +291,10 @@
 	</div>
 
 	<div slot="scrollHeader">
-		<Proxy image="{proxyActionsImage}">
+		<!-- <Proxy image="{proxyActionsImage}" style="position: absolute">
 			{#if !isOwner}
 				<!-- Action Follow -->
-				<Hotspot onClick="{toggleFollowing}" style="
+				<!-- <Hotspot onClick="{toggleFollowing}" style="
 					left: 120px;
 					top: 0px;
 					width: 142px;
@@ -300,19 +302,20 @@
 			{/if}
 
 			<!-- Like Icon -->
-			{#if liked}
+			<!-- {#if liked}
 				<Proxy image="project_actions_like_selected" absolutePlacement="true" style="
 					left: 45px;
 					top: 12px;" />
 			{/if}
 
 			<!-- Like -->
-			<Hotspot onClick="{toggleLiked}" style="
+			<!-- <Hotspot onClick="{toggleLiked}" style="
 				left: 0;
 				top: 0px;
 				width: 112px;
 				height: 47px;" />
-		</Proxy>
+		</Proxy> -->
+    	<ActionBar targetItemId="{$projectId}" targetItem="{$project}" />
 	</div>
 </ScrollView>
 

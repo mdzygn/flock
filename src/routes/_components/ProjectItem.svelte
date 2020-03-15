@@ -1,5 +1,6 @@
 <script>
     import Button from '../../components/Button.svelte';
+
     import ActionBar from './ActionBar.svelte';
 
 	import Proxy from '../../components/Proxy.svelte';

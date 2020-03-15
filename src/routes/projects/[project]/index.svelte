@@ -8,9 +8,13 @@
 	import ActionBar from '../../_components/ActionBar.svelte';
 	import ActionButton from '../../_components/ActionButton.svelte';
 
-    import FollowSelectedIcon from "../../../assets/icons/follow_selected.png";
     import SendMessageIcon from "../../../assets/icons/send.png";
-    import LocationIcon from "../../../assets/icons/location.png";
+	import LocationIcon from "../../../assets/icons/location.png";
+
+    import LikeIcon from "../../../assets/icons/like.png";
+    import LikeSelectedIcon from "../../../assets/icons/like_selected.png";
+    import FollowIcon from "../../../assets/icons/follow.png";
+    import FollowSelectedIcon from "../../../assets/icons/follow_selected.png";
 
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
@@ -154,6 +158,11 @@
 					{#if projectLocation}
 						<div class="location"><div class="locationIcon" style="background-image: url({LocationIcon})" />{projectLocation}</div>
 					{/if}
+
+					{#if !$returnView && !isOwner}
+						<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"></Button>
+						<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}</Button>
+					{/if}
 				</div>
 				{#if isNew}
 					<Proxy image="{proxyOverviewImage}" className="proxyOverview">
@@ -206,7 +215,7 @@
 								height: 46px;" />
 						{/if}
 
-						{#if !isOwner && !$returnView}
+						{#if !$returnView}
 							<!-- Like Icon -->
 							{#if liked}
 								<Proxy image="project_like_selected" absolutePlacement="true" style="
@@ -220,10 +229,8 @@
 								top: 159px;
 								width: 59px;
 								height: 40px;" />
-						{/if}
 
-						<!-- Follow -->
-						{#if !isOwner}
+							<!-- Follow -->
 							<Hotspot onClick="{toggleFollowing}" style="
 								right: 35px;
 								top: 155px;
@@ -391,17 +398,17 @@
 	}
 
 	.projectActions {
-        position: absolute;
+		position: absolute;
+    	width: 100%;
 
     	margin-top: 171px;
-
-		padding-left: 23px;
 	}
 
     .projectActions :global(.sendMessageButton) {
 		display: table;
 		padding: 10px;
-		margin-left: -10px;
+
+		margin-left: 13px;
 
 		font-size: 1.4rem;
 		font-weight: 700;
@@ -412,6 +419,27 @@
     	padding-left: 6px;
 	}
 
+    .projectActions :global(.likeButton ) {
+		position: absolute;
+		top: 13px;
+		right: 216px;
+    }
+
+    .projectActions :global(.followButton) {
+		position: absolute;
+		top: 8px;
+		right: 48px;
+    	padding: 5px 39px 5px 22px;
+    }
+    .projectActions :global(.followButton.isButton) {
+		border: 2px solid #0B0B0B;
+		margin-right: -2px; margin-top: -2px; /* factor in border */
+		border-radius: 999px;
+    }
+    .projectActions :global(.followButton .icon) {
+		margin-left: 5px;
+		margin-top: -2px;
+    }
 
 	.content .collapsedHeader {
 		margin-bottom: 3px;

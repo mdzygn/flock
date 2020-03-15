@@ -22,7 +22,7 @@
         </div>
     </a>
 {:else}
-    <div class="button {className}" on:click={onClick} class:isButton={onClick} {style}>
+    <div class="button {className}" on:click={onClick} class:activeButton={onClick} {style}>
         <div class="buttonContent" style="{buttonContentStyle}">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
                 <img class="icon" src="{icon}" alt="read more" style="{iconStyle}" />
@@ -56,7 +56,7 @@
         width: 50%; */
     }
 
-    .isButton {
+    .activeButton {
         cursor: pointer;
     }
 </style>

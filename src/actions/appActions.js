@@ -134,6 +134,9 @@ function gotoRoute(newPath) {
 export function showProjectInfo() {
     showingInfo.set(true);
 }
+export function hideProjectInfo() {
+    showingInfo.set(false);
+}
 
 function getPagePath() {
     return get(curPath);

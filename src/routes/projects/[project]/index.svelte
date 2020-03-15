@@ -11,6 +11,7 @@
     import SendMessageIcon from "../../../assets/icons/send.png";
 	import LocationIcon from "../../../assets/icons/location.png";
 	import OptionsMenuIcon from "../../../assets/icons/options_menu.png";
+	import HideInfoIcon from "../../../assets/icons/collapse.png";
 
     import LikeIcon from "../../../assets/icons/like.png";
     import LikeSelectedIcon from "../../../assets/icons/like_selected.png";
@@ -33,6 +34,7 @@
 		loadConversation,
 		editProjectDetails,
 		showProjectInfo,
+		hideProjectInfo,
 		showProjectFollowers,
 	} from '../../../actions/appActions.js';
 
@@ -221,53 +223,55 @@
 						{/if}
 					</Proxy>
 				{:else}
-					<Proxy image="project_overview_info" className="proxyOverview" />
-					<div>
-						<Proxy image="project_info_image_1" />
-						<Proxy image="project_info_content_1" />
-						<Proxy image="project_info_image_2" />
-						<Proxy image="project_info_content_2" />
-						<Proxy image="project_info_image_3" />
-						<Proxy image="project_info_content_3" />
-					</div>
-					<Proxy image="{proxyShowingInfoActionsImage}">
-						{#if isOwner}
-							<!-- Send Message -->
-							<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
-								right: 6px;
-								top: 2px;
-								width: 156px;
-								height: 46px;" />
-						{:else}
-							<!-- Send Message -->
-							<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
-								left: 7px;
-								top: 8px;
-								width: 121px;
-								height: 46px;" />
+					<div class="proxyOverview">
+						<Proxy image="project_overview_info" />
+						<div>
+							<Proxy image="project_info_image_1" />
+							<Proxy image="project_info_content_1" />
+							<Proxy image="project_info_image_2" />
+							<Proxy image="project_info_content_2" />
+							<Proxy image="project_info_image_3" />
+							<Proxy image="project_info_content_3" />
+						</div>
+						<Proxy image="{proxyShowingInfoActionsImage}">
+							{#if isOwner}
+								<!-- Send Message -->
+								<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
+									right: 6px;
+									top: 2px;
+									width: 156px;
+									height: 46px;" />
+							{:else}
+								<!-- Send Message -->
+								<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
+									left: 7px;
+									top: 8px;
+									width: 121px;
+									height: 46px;" />
 
-							<!-- Like Icon -->
-							{#if liked}
-								<Proxy image="project_like_selected" absolutePlacement="true" style="
-									left: 175px;
-									top: 16px;" />
+								<!-- Like Icon -->
+								{#if liked}
+									<Proxy image="project_like_selected" absolutePlacement="true" style="
+										left: 175px;
+										top: 16px;" />
+								{/if}
+
+								<!-- Like -->
+								<Hotspot onClick="{toggleLiked}" style="
+									left: 170px;
+									top: 11px;
+									width: 59px;
+									height: 40px;" />
+
+								<!-- Follow -->
+								<Hotspot onClick="{toggleFollowing}" style="
+									right: 35px;
+									top: 8px;
+									width: 110px;
+									height: 46px;" />
 							{/if}
-
-							<!-- Like -->
-							<Hotspot onClick="{toggleLiked}" style="
-								left: 170px;
-								top: 11px;
-								width: 59px;
-								height: 40px;" />
-
-							<!-- Follow -->
-							<Hotspot onClick="{toggleFollowing}" style="
-								right: 35px;
-								top: 8px;
-								width: 110px;
-								height: 46px;" />
-						{/if}
-					</Proxy>
+						</Proxy>
+					</div>
 				{/if}
 
 				<div class="overviewContent">
@@ -275,16 +279,30 @@
 						<Button className="projectOptions" icon="{OptionsMenuIcon}"></Button>
 						<div class="itemContent">
 							<div class="header">{projectTitle}</div>
-							<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? showProjectInfo : null}">{projectDescription}</div>
+							<div class="description" class:button="{projectHasDetails && !$showingInfo}" on:click="{projectHasDetails && !$showingInfo ? showProjectInfo : null}">{projectDescription}</div>
 						</div>
-						{#if !$showingInfo && projectHasDetails}
-							<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+						{#if projectHasDetails}
+							{#if !$showingInfo}
+								<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+							{:else}
+								<Button className="infoCollapseButton" onClick="{hideProjectInfo}" icon="{HideInfoIcon}" />
+							{/if}
 						{/if}
 					</div>
+					{#if $showingInfo}
+						<div class="projectInfo">
+							<Proxy image="project_info_image_1" />
+							<Proxy image="project_info_content_1" />
+							<Proxy image="project_info_image_2" />
+							<Proxy image="project_info_content_2" />
+							<Proxy image="project_info_image_3" />
+							<Proxy image="project_info_content_3" />
+						</div>
+					{/if}
 					<div class="projectActions">
 						<div class="projectActionButtons">
 							{#if !isOwner}
-								<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">messages</Button>
+								<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
 							{/if}
 							{#if !$returnView && !isOwner}
 								<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
@@ -419,10 +437,24 @@
 		display: table;
 
 		padding: 10px;
+		padding-right: 30px;
+
+    	margin-top: -11px;
 		margin-left: -10px;
 
 		font-size: 1.5rem;
 		font-weight: 700;
+	}
+
+    .contentContainer :global(.infoCollapseButton) {
+		/* display: table; */
+		position: absolute;
+		right: 0;
+    	margin-top: -14px;
+
+		padding: 10px;
+    	padding-right: 40px;
+		margin-left: -12px;
 	}
 
 	.projectActions {
@@ -500,11 +532,14 @@
     }
 
     .description {
+		padding: 10px;
 		padding-top: 12px;
         padding-right: 50px;
 
         font-size: 1.5rem;
-        line-height: 2rem;
+		line-height: 2rem;
+
+		margin-left: -10px;
 
 		color: #555555;
 	}
@@ -539,6 +574,7 @@
 		height: 13px;
 		vertical-align: middle;
     	margin-right: 3px;
+    	margin-bottom: 2px;
 	}
 
 	.countContainer {
@@ -562,5 +598,9 @@
     }
     .projectActions :global(.followButton .count) {
     	left: 43px;
-    }
+	}
+
+	.projectInfo {
+
+	}
 </style>

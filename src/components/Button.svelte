@@ -3,7 +3,8 @@
     export let onClick = null;
 
     export let className = '';
-    // export let style = null;
+    export let style = null;
+    export let iconStyle = null;
 
     export let icon = null;
 
@@ -11,18 +12,18 @@
 </script>
 
 {#if href}
-    <a {href} class="button {className}" on:click={onClick}>
+    <a {href} class="button {className}" on:click={onClick} {style}>
         <div class="buttonContent">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
-                <img class="icon" src="{icon}" alt="read more" />
+                <img class="icon" src="{icon}" alt="read more" {iconStyle} />
             </div></div>{/if}
         </div>
     </a>
 {:else}
-    <div class="button {className}" on:click={onClick} class:isButton={onClick}>
+    <div class="button {className}" on:click={onClick} class:isButton={onClick} {style}>
         <div class="buttonContent">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
-                <img class="icon" src="{icon}" alt="read more" />
+                <img class="icon" src="{icon}" alt="read more" style="{iconStyle}" />
             </div></div>{/if}
         </div>
     </div>

@@ -31,6 +31,7 @@
 			selectedIcon: FollowSelectedIcon,
 			targetItemProperty: 'following',
 			countProperty: 'followCount',
+			iconStyle: 'padding-bottom: 4px',
 		},
 		{
 			label: 'share',
@@ -45,6 +46,7 @@
 		<Button
 			icon="{targetItem && button.targetItemProperty && targetItem[button.targetItemProperty] ? button.selectedIcon : button.icon}"
 			onClick="{button.action ? (e => button.action(targetItemId)) : null}"
+			style="{button.style}" iconStyle="{button.iconStyle}"
 		>{button.label}{#if button.countProperty && targetItem}<div class="countContainer"><div class="count">{targetItem[button.countProperty]}</div></div>{/if}</Button>
 	{/each}
 </div>
@@ -85,10 +87,10 @@
 	.count {
 		position: absolute;
 		left: 44px;
-		bottom: 0;
+		bottom: 1px;
 
 		font-weight: 700;
-		font-size: 1.2rem;
+    	font-size: 1.1rem;
 		color: #777777;
 	}
 </style>

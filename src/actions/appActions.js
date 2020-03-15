@@ -138,3 +138,8 @@ export function showProjectInfo() {
 function getPagePath() {
     return get(curPath);
 }
+
+export function showProjectFollowers(targetProjectId) {
+    gotoRoute('projects/' + targetProjectId + '/followers');
+    resetScrollRegionPosition('followers');
+}

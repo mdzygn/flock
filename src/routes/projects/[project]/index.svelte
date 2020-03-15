@@ -24,6 +24,7 @@
 		loadConversation,
 		editProjectDetails,
 		showProjectInfo,
+		showProjectFollowers,
 	} from '../../../actions/appActions.js';
 
 	import {
@@ -305,6 +306,7 @@
 
 							targetItem = "{$project}"
 							targetItemId = "{$projectId}"
+							action = "{showProjectFollowers}"
 
 							countProperty= "followCount"
 

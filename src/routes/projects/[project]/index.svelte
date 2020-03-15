@@ -13,6 +13,9 @@
 	import OptionsMenuIcon from "../../../assets/icons/options_menu.png";
 	import HideInfoIcon from "../../../assets/icons/collapse.png";
 	import AddDetailsIcon from "../../../assets/icons/add_highlight.png";
+	import EditIcon from "../../../assets/icons/edit.png";
+	import PublicIcon from "../../../assets/icons/public.png";
+	import PrivateIcon from "../../../assets/icons/private.png";
 
     import LikeIcon from "../../../assets/icons/like.png";
     import LikeSelectedIcon from "../../../assets/icons/like_selected.png";
@@ -30,7 +33,6 @@
 	} from '../../../models/projectViewState.js';
 
 	import {
-		makePublic,
 		loadChannel,
 		loadConversation,
 		editProjectDetails,
@@ -40,6 +42,7 @@
 	} from '../../../actions/appActions.js';
 
 	import {
+		makePublic,
 		projectToggleFollowing,
 		projectToggleLiked,
 	} from '../../../actions/projectActions.js';
@@ -69,6 +72,7 @@
 	$: isNew = $project ? $project.isNew : false;
 	$: following = $project ? $project.following : false;
 	$: liked = $project ? $project.liked : false;
+	$: isPublic = $project ? $project.public : false;
 
 	$: likeCount = $project ? $project.likeCount : 0;
 	$: followCount = $project ? $project.followCount : 0;
@@ -277,9 +281,11 @@
 
 				<div class="overviewContent" class:returnView="{$returnView}">
 					<div class="contentContainer">
-						<Button className="projectOptions" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
+						<Button className="projectOptionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
+						<Button className="editButton" icon="{EditIcon}" disabled="{true}"></Button>
+						<Button className="audienceButton" icon="{isPublic ? PublicIcon : PrivateIcon}">{isPublic ? 'public' : 'private'}</Button>
 						<div class="itemContent">
-							<div class="header">{projectTitle}</div>
+							<div class="header" class:headerOwner="{isOwner}">{projectTitle}</div>
 							<div class="description" class:button="{projectHasDetails && !$showingInfo}" on:click="{projectHasDetails && !$showingInfo ? showProjectInfo : null}">{projectDescription}</div>
 						</div>
 						{#if projectHasDetails}
@@ -311,7 +317,7 @@
 							{/if}
 							{#if !isOwner}
 								<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
-							{:else if isNew}
+							{:else if isNew && !isPublic}
 								<Button className="makePublicButton isButton" onClick="{makePublic}">make public</Button>
 							{:else}
 								<Button className="messagesButton" href="projects/{$projectId}/messages" icon="{SendMessageIcon}">messages</Button>
@@ -433,7 +439,7 @@
 		background-color: #ffffff;
 	}
 
-    .contentContainer :global(.projectOptions) {
+    .contentContainer :global(.projectOptionsButton) {
 		position: absolute;
 
 		top: 13px;
@@ -442,6 +448,34 @@
 		width: 28px;
 		height: 26px;
 		padding: 8px;
+	}
+
+    .contentContainer :global(.editButton) {
+		position: absolute;
+
+		top: 16px;
+		right: 52px;
+
+		width: 28px;
+		height: 26px;
+		padding: 8px;
+	}
+
+    .contentContainer :global(.audienceButton) {
+		position: absolute;
+
+		top: 21px;
+		right: 92px;
+
+		padding: 8px;
+		padding-right: 29px;
+
+		font-size: 1.1rem;
+
+		color: #333333;
+	}
+    .contentContainer :global(.audienceButton .icon) {
+    	padding-left: 6px;
 	}
 
     .overviewContent :global(.readMoreButton) {
@@ -589,7 +623,11 @@
 		padding-right: 60px;
 		padding-bottom: 5px;
     	line-height: 3rem;
-    }
+	}
+
+    .headerOwner {
+    	padding-right: 160px;
+	}
 
     .description {
 		padding: 10px;

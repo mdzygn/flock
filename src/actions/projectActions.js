@@ -26,6 +26,15 @@ export function projectToggleLiked(projectId) {
     }
 }
 
+export function makePublic() {
+    const curProject = get(project);
+    if (curProject) {
+        curProject.public = true;
+        curProject.isNew = false;
+        project.set(curProject);
+    }
+}
+
 function checkUpdateProject(targetProject) {
     const curProject = get(project);
     if (curProject && targetProject === curProject) {

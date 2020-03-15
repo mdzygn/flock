@@ -73,15 +73,6 @@ export function createProject(targetProjectId) {
     loadProject(targetProjectId, {isNew: true});
 }
 
-export function makePublic() {
-    const curProject = get(project);
-    if (curProject) {
-        curProject.isNew = false;
-        project.set(curProject);
-    }
-    // isNew.set(false);
-}
-
 export function showLikes() {
     goto('profile/' + get(profileId) + '/likes');
     resetScrollRegionPosition('likes');

@@ -146,32 +146,34 @@
 		<div class="content">
 			<div class="contentItem" class:collapsedHeader="{$returnView && !$showingInfo && !isNew}">
 				<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
-				<div class="contentContainer">
-					<Button className="projectOptions" icon="{OptionsMenuIcon}"></Button>
-					<div class="itemContent">
-						<div class="header">{projectTitle}</div>
-						<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? showProjectInfo : null}">{projectDescription}</div>
+				<div class="overviewContent">
+					<div class="contentContainer">
+						<Button className="projectOptions" icon="{OptionsMenuIcon}"></Button>
+						<div class="itemContent">
+							<div class="header">{projectTitle}</div>
+							<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? showProjectInfo : null}">{projectDescription}</div>
+						</div>
+						{#if !$showingInfo && projectHasDetails}
+							<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+						{/if}
 					</div>
-					{#if !$showingInfo && projectHasDetails}
-						<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
-					{/if}
-				</div>
-				<div class="projectActions">
-					{#if !isOwner}
-						<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">messages</Button>
-					{/if}
-					{#if projectLocation}
-						<div class="location"><div class="locationIcon" style="background-image: url({LocationIcon})" />{projectLocation}</div>
-					{/if}
+					<div class="projectActions">
+						{#if !isOwner}
+							<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">messages</Button>
+						{/if}
+						{#if projectLocation}
+							<div class="location"><div class="locationIcon" style="background-image: url({LocationIcon})" />{projectLocation}</div>
+						{/if}
 
-					{#if !$returnView && !isOwner}
-						<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
-							<div class="count">{likeCount}</div>
-						</div></Button>
-						<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<div class="countContainer">
-							<div class="count">{followCount}</div>
-						</div></Button>
-					{/if}
+						{#if !$returnView && !isOwner}
+							<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
+								<div class="count">{likeCount}</div>
+							</div></Button>
+							<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<div class="countContainer">
+								<div class="count">{followCount}</div>
+							</div></Button>
+						{/if}
+					</div>
 				</div>
 				{#if isNew}
 					<Proxy image="{proxyOverviewImage}" className="proxyOverview">
@@ -394,7 +396,11 @@
         height: 171px;
 
 		padding-left: 23px;
-    }
+	}
+
+	.overviewContent {
+		background-color: #ffffff;
+	}
 
     .contentContainer :global(.projectOptions) {
 		position: absolute;
@@ -413,7 +419,7 @@
 		padding: 10px;
 		margin-left: -10px;
 
-		font-size: 1.4rem;
+		font-size: 1.5rem;
 		font-weight: 700;
 	}
 
@@ -431,7 +437,7 @@
 
 		margin-left: 13px;
 
-		font-size: 1.4rem;
+		font-size: 1.5rem;
 		font-weight: 700;
 
     	margin-top: 4px;
@@ -453,9 +459,12 @@
 		position: absolute;
 		top: 8px;
 		right: 48px;
-    	padding: 5px 39px 5px 17px;
+		padding: 6px 41px 6px 18px;
+
+		font-size: 1.5rem;
 		font-weight: 700;
-    	margin-right: -4px;
+
+    	margin-right: -6px;
     }
     .projectActions :global(.followButton.isButton) {
 		border: 2px solid #0B0B0B;
@@ -542,6 +551,6 @@
     	left: 49px;
     }
     .projectActions :global(.followButton .count) {
-    	left: 45px;
+    	left: 43px;
     }
 </style>

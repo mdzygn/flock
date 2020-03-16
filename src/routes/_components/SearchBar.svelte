@@ -38,11 +38,15 @@
     .searchButton {
         position: absolute;
         right: -3px;
-        top: -7px;
+        top: 0;
+        bottom: 0;
 
         padding: 10px;
 
         cursor: pointer;
+
+		display: flex;
+		align-items: center;
     }
 
     .searchIcon {

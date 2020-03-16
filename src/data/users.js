@@ -35,7 +35,12 @@ const users = [
 		likesCount: 25,
 		followsCount: 27,
 		location: 'Wellington, New Zealand',
-		projects: [],
+		projects: [
+			'n4vh55hg',
+			'msl30nhg',
+			'ma9l2h4h',
+			'm2lmad9a',
+		],
 	},
 ];
 

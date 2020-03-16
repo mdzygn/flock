@@ -14,7 +14,7 @@ const projects = [
 		createdInfo: 'created 18 Janurary 2020',
 		likeCount: 53,
 		followCount: 62,
-		unreadCount: 5,
+		unreadCount: 0,
 		unreadMessageCount: 4,
 		messageCount: 3,
 
@@ -126,7 +126,7 @@ const projects = [
 		createdAt: 0,
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 3,
 		unreadMessageCount: 3,
 		messageCount: 6,
 
@@ -144,13 +144,14 @@ const projects = [
 		public: false,
 		image: '',
 		createdAt: 0,
+		createdInfo: 'created 35 August 2019',
 		likeCount: 63,
 		followCount: 54,
+		unreadCount: 0,
 		unreadMessageCount: 0,
 		messageCount: 23,
 
 		following: true,
-		unreadCount: 6,
 		location: 'Wellington, New Zealand',
 	},
 ];

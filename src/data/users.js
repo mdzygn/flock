@@ -14,10 +14,10 @@ const users = [
 		followsCount: 32,
 		location: 'Wellington, New Zealand',
 		projects: [
-			's7djj2s2',
+			'n4vh55hg',
+			'msl30nhg',
 			'ma9l2h4h',
 			'm2lmad9a',
-			's7djj2s2',
 		],
 	},
 	{

@@ -1,11 +1,14 @@
 <script>
     export let count = 0;
     export let hasNew = false;
+    export let visible = true;
 </script>
 
-<div class="counterContainer">
-    <div class="counter" class:hasNew="{hasNew}">{count}</div>
-</div>
+{#if visible}
+    <div class="counterContainer">
+        <div class="counter" class:hasNew="{hasNew}">{count}</div>
+    </div>
+{/if}
 
 <style>
     .counterContainer {

@@ -1,5 +1,9 @@
 <script>
-	import { loadProject } from '../../actions/appActions.js';
+    import Counter from './Counter.svelte';
+
+    import { loadProject } from '../../actions/appActions.js';
+
+	import FollowingSmallIcon from "../../assets/icons/following_small.png";
 
     export let project;
 
@@ -16,10 +20,12 @@
         <div class="title">{project.title}</div>
         <div class="detail">{project.createdInfo || ''}</div>
     </div>
-    <div class="info">
-        <div class="count"></div>
-        <div class="following"></div>
-    </div>
+    {#if project.following || project.isOwner}
+        <div class="info">
+            <Counter visible="{project.unreadCount}" count="{project.unreadCount}" hasNew="{true}" />
+            <div class="followingIcon" style="background-image: url({FollowingSmallIcon})"></div>
+        </div>
+    {/if}
 </div>
 
 <style>
@@ -55,14 +61,22 @@
     }
 
     .info {
-
+        position: absolute;
+        right: 0;
+        top: 6px;
     }
 
-    .count {
-
+    .info :global(.counter) {
+        margin-right: 32px;
     }
 
-    .following {
+    .followingIcon {
+        position: absolute;
+        right: 3px;
+        top: 2px;
 
+        background-size: cover;
+        width: 21px;
+        height: 20px;
     }
 </style>

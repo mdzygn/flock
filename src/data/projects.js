@@ -24,6 +24,7 @@ const projects = [
 		liked: false,
 
 		location: 'Wellington, New Zealand',
+		skills: ['react', 'project management', '3d modelling', 'ui design', 'marketing', 'graphics programming'],
 	},
 	{
 		title: 'Tesseract',
@@ -42,7 +43,8 @@ const projects = [
 		messageCount: 5,
 
 		liked: true,
-		// location: 'Wellington, New Zealand',
+		location: 'Wellington, New Zealand',
+		skills: ['react', 'project management', '3d modelling', 'ui design', 'marketing', 'graphics programming'],
 	},
 	{
 		title: 'Green Guardians',
@@ -78,6 +80,7 @@ const projects = [
 		messageCount: 3,
 
 		location: 'Wellington, New Zealand',
+		skills: ['react', 'project management', '3d modelling', 'ui design', 'marketing', 'graphics programming'],
 	},
 	{
 		title: 'New Earth',
@@ -95,12 +98,12 @@ const projects = [
 
 		liked: true,
 		location: 'Wellington, New Zealand',
+		skills: ['react', 'project management', '3d modelling', 'ui design', 'marketing', 'graphics programming'],
 		team: [
 			'oiv23g46',
 			'oiv23g46',
 			'oiv23g46',
 		],
-		skills: [],
 		links: [
 			{ type: 'website', url: '' },
 			{ type: 'patreon', url: '' },
@@ -133,6 +136,7 @@ const projects = [
 
 		isOwner: true,
 		location: 'Wellington, New Zealand',
+		skills: ['react', 'project management', '3d modelling', 'ui design', 'marketing', 'graphics programming'],
 	},
 
 	// following example
@@ -154,6 +158,7 @@ const projects = [
 
 		following: true,
 		location: 'Wellington, New Zealand',
+		skills: ['react', 'project management', '3d modelling', 'ui design', 'marketing', 'graphics programming'],
 	},
 ];
 

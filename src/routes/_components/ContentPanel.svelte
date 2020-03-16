@@ -12,7 +12,7 @@
 
 <div class="contentPanel">
     {#if title}
-        <div class="title">{title}</div>
+        <div class="panelTitle">{title}</div>
     {/if}
     {#if showEdit}
         <Button className="editButton" icon="{EditIcon}" disabled="{true}" />
@@ -38,7 +38,7 @@
 
     }
 
-	.title {
+	.panelTitle {
         font-size: 1.5rem;
         font-weight: 700;
         color: #444444;

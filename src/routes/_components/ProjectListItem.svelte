@@ -17,8 +17,12 @@
 <div class="projectListItem" on:click="{loadCurrentProject}">
     <img class="thumb" src="{thumbImage}" alt="{project.title}" />
     <div class="detailContent">
-        <div class="title">{project.title}</div>
-        <div class="detail">{project.createdInfo || ''}</div>
+        <div class="detailInnerContent">
+            <div class="title">{project.title}</div>
+            {#if project.createdInfo}
+                <div class="detail">{project.createdInfo || ''}</div>
+            {/if}
+        </div>
     </div>
     {#if project.following || project.isOwner}
         <div class="info">
@@ -49,18 +53,29 @@
     .detailContent {
         position: absolute;
         left: 54px;
-        top: 9px;
+        top: 2px;
+        bottom: 0;
+        right: 60px;
+
+		display: flex;
+		align-items: center;
+    }
+
+    .detailInnerContent {
+
     }
 
     .title {
         font-size: 1.4rem;
         font-weight: 700;
+        line-height: 1.3rem;
     }
 
     .detail {
         font-size: 1.2rem;
-        margin-top: -2px;
+        margin-top: 4px;
         color: #888888;
+        line-height: 1.3rem;
     }
 
     .info {

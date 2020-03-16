@@ -11,6 +11,7 @@ const users = [
 		postsCount: 24,
 		likesCount: 35,
 		followsCount: 32,
+		location: 'Wellington, New Zealand',
 		skills: [],
 		projects: [
 			's7djj2s2',
@@ -31,6 +32,7 @@ const users = [
 		postsCount: 12,
 		likesCount: 25,
 		followsCount: 27,
+		location: '',
 		skills: [],
 		projects: [],
 	},

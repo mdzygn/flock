@@ -4,6 +4,8 @@
     import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
 
+	import Location from '../_components/Location.svelte';
+
 	import OptionsMenuIcon from "../../assets/icons/options_menu.png";
 	import EditIcon from "../../assets/icons/edit.png";
 
@@ -13,13 +15,14 @@
 	import { requestConnection } from '../../actions/userActions';
 
 	$: requestedConnection = $viewedUser ? $viewedUser.requestedConnection : false;
-    $: viewingOwnProfile = $viewedUser ? $viewedUser.isCurrentUser : false;
+    $: isCurrentUser = $viewedUser ? $viewedUser.isCurrentUser : false;
 
     $: username = $viewedUser ? $viewedUser.username : '';
 
     $: userFullName = $viewedUser ? $viewedUser.fullName : '';
     $: userFirstName = $viewedUser ? $viewedUser.firstName : '';
     $: userBio = $viewedUser ? $viewedUser.bio : '';
+    $: userLocation = ($viewedUser && $viewedUser.location) || '';
 
     $: postsCount = $viewedUser ? $viewedUser.postsCount : 0;
     $: likesCount = $viewedUser ? $viewedUser.likesCount : 0;
@@ -28,8 +31,8 @@
 	$: coverImage = 'content/users/' + username + '/cover.jpg';
 	$: profileImage = 'content/users/' + username + '/profile.jpg';
 
-    $: proxyImage = viewingOwnProfile ? 'profile_overview_owner' : 'profile_overview';
-	$: proxyOverviewActionsImage = viewingOwnProfile ? 'profile_overview_owner_actions' : 'profile_overview_actions';
+    $: proxyImage = isCurrentUser ? 'profile_overview_owner' : 'profile_overview';
+	$: proxyOverviewActionsImage = isCurrentUser ? 'profile_overview_owner_actions' : 'profile_overview_actions';
 </script>
 
 <div class="content">
@@ -58,35 +61,45 @@
                 <div class="username">@{username}</div>
                 <div class="description">{@html userBio}</div>
             </div>
+
+            <Proxy image="{proxyOverviewActionsImage}" className="proxyOverview">
+                {#if !isCurrentUser}
+                    <!-- Send Message -->
+                    <Hotspot onClick="{e => loadConversation('r70dp2bf')}" style="
+                        left: 11px;
+                        top: 7px;
+                        width: 116px;
+                        height: 40px;" />
+
+                    {#if requestedConnection}
+                        <!-- Request Sent Notification -->
+                        <Proxy image="profile_invitation_sent" absolutePlacement="true" style="
+                            width: 336px;
+                            height: 104px;
+
+                            left: 209.5px;
+                            top: 2.5px;" />
+                    {:else}
+                        <!-- Connect -->
+                        <Hotspot onClick="{e => requestConnection('l40smlp3')}" style="
+                            right: 5px;
+                            top: 7px;
+                            width: 137px;
+                            height: 40px;" />
+                    {/if}
+                {/if}
+            </Proxy>
+
+            {#if userLocation || isCurrentUser}
+                <div class="footerActions">
+                    <Location location="{userLocation}" />
+                    <!-- {#if isCurrentUser}
+
+                    {/if} -->
+                </div>
+            {/if}
         </div>
     </div>
-    <Proxy image="{proxyOverviewActionsImage}">
-        {#if !viewingOwnProfile}
-            <!-- Send Message -->
-            <Hotspot onClick="{e => loadConversation('r70dp2bf')}" style="
-                left: 11px;
-                top: 7px;
-                width: 116px;
-                height: 40px;" />
-
-            {#if requestedConnection}
-                <!-- Request Sent Notification -->
-                <Proxy image="profile_invitation_sent" absolutePlacement="true" style="
-                    width: 336px;
-                    height: 104px;
-
-                    left: 209.5px;
-                    top: 2.5px;" />
-            {:else}
-                <!-- Connect -->
-                <Hotspot onClick="{e => requestConnection('l40smlp3')}" style="
-                    right: 5px;
-                    top: 7px;
-                    width: 137px;
-                    height: 40px;" />
-            {/if}
-        {/if}
-    </Proxy>
 </div>
 
 <style>
@@ -230,5 +243,10 @@
     .userStats :global(.label) {
         border-bottom: 2px solid #CCCCCC;
         padding-bottom: 2px;
+    }
+
+    .footerActions {
+        padding-top: 6px;
+        padding-bottom: 8px;
     }
 </style>

@@ -8,9 +8,9 @@
 	import ActionBar from '../../_components/ActionBar.svelte';
 	import ActionButton from '../../_components/ActionButton.svelte';
 	import Counter from '../../_components/Counter.svelte';
+	import Location from '../../_components/Location.svelte';
 
     import SendMessageIcon from "../../../assets/icons/send.png";
-	import LocationIcon from "../../../assets/icons/location.png";
 	import OptionsMenuIcon from "../../../assets/icons/options_menu.png";
 	import HideInfoIcon from "../../../assets/icons/collapse.png";
 	import AddDetailsIcon from "../../../assets/icons/add_highlight.png";
@@ -327,7 +327,7 @@
 							{/if}
 						</div>
 						{#if (!$returnView || $showingInfo) && projectLocation}
-							<div class="location" class:ownerLocation="{isOwner && $showingInfo}"><div class="locationIcon" style="background-image: url({LocationIcon})" />{projectLocation}</div>
+							<Location className="{(isOwner && $showingInfo) ? 'ownerLocation' : ''}" location="{projectLocation}" />
 						{/if}
 					</div>
 				</div>
@@ -656,27 +656,6 @@
         margin-right: -20px;
 	}
 
-	.location {
-		display: table;
-
-		padding: 5px;
-    	margin-left: 16px;
-		margin-top: -2px;
-
-		font-size: 1.2rem;
-		color: #999999;
-	}
-
-	.locationIcon {
-		display: inline-block;
-		background-size: cover;
-		width: 11px;
-		height: 13px;
-		vertical-align: middle;
-    	margin-right: 3px;
-    	margin-bottom: 2px;
-	}
-
 	.countContainer {
 		vertical-align: bottom;
 		display: inline-block;
@@ -724,7 +703,7 @@
     	margin-top: 0;
 	}
 
-	.ownerLocation {
+	.projectActions :global(.ownerLocation) {
 		padding-bottom: 14px;
 		margin-top: -37px;
 	}

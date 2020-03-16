@@ -40,7 +40,7 @@ const projects = [
 		messageCount: 5,
 
 		liked: true,
-		location: 'Wellington, New Zealand',
+		// location: 'Wellington, New Zealand',
 	},
 	{
 		title: 'Green Guardians',

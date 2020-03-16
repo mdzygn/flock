@@ -9,14 +9,13 @@
 	import ActionButton from '../../_components/ActionButton.svelte';
 	import Counter from '../../_components/Counter.svelte';
 	import Location from '../../_components/Location.svelte';
+	import Audience from '../../_components/Audience.svelte';
 
     import SendMessageIcon from "../../../assets/icons/send.png";
 	import OptionsMenuIcon from "../../../assets/icons/options_menu.png";
 	import HideInfoIcon from "../../../assets/icons/collapse.png";
 	import AddDetailsIcon from "../../../assets/icons/add_highlight.png";
 	import EditIcon from "../../../assets/icons/edit.png";
-	import PublicIcon from "../../../assets/icons/public.png";
-	import PrivateIcon from "../../../assets/icons/private.png";
 	import MessagesIcon from "../../../assets/icons/nav_messages.png";
 
     import LikeIcon from "../../../assets/icons/like.png";
@@ -276,7 +275,7 @@
 					<div class="contentContainer">
 						<Button className="optionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
 						<Button className="editButton" onClick="{editProjectDetails}" icon="{EditIcon}"></Button>
-						<Button className="audienceButton" onClick="{togglePublic}" icon="{isPublic ? PublicIcon : PrivateIcon}">{isPublic ? 'public' : 'private'}</Button>
+						<Audience {isPublic} onClick="{togglePublic}" />
 						<div class="itemContent">
 							<div class="header" class:headerOwner="{isOwner}">{projectTitle}</div>
 							<div class="description" class:button="{projectHasDetails && !$showingInfo}" on:click="{projectHasDetails && !$showingInfo ? showProjectInfo : null}">{projectDescription}</div>
@@ -458,19 +457,8 @@
 
     .contentContainer :global(.audienceButton) {
 		position: absolute;
-
 		top: 21px;
 		right: 92px;
-
-		padding: 8px;
-		padding-right: 29px;
-
-		font-size: 1.1rem;
-
-		color: #333333;
-	}
-    .contentContainer :global(.audienceButton .icon) {
-    	padding-left: 6px;
 	}
 
     .overviewContent :global(.readMoreButton) {

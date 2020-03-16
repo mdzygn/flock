@@ -4,9 +4,12 @@
 	import Proxy from '../../components/Proxy.svelte';
 	import Hotspot from '../../components/Hotspot.svelte';
 
+    import Button from '../../components/Button.svelte';
 	import SearchBar from './../_components/SearchBar.svelte';
 
 	import ProjectList from './../_components/ProjectList.svelte';
+
+    import AddProjectIcon from "../../assets/icons/add_project.png";
 
 	import { newProject, loadProject } from '../../actions/appActions.js';
 
@@ -54,8 +57,11 @@
 		</Proxy>
 
 		<SearchBar />
-		<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" />
-		<ProjectList title="Following" className="followingProjects" projects="{followedProjects}" showLastActive="{true}" displayLimit="{12}" />
+		<div class="projectsContent">
+			<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" />
+			<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">New Project</Button>
+			<ProjectList title="Following" className="followingProjects" projects="{followedProjects}" showLastActive="{true}" displayLimit="{12}" />
+		</div>
 	</ScrollView>
 </div>
 
@@ -65,9 +71,28 @@
 		opacity: 0.5;
 	}
 
+	.projectsContent {
+		position: relative;
+	}
+
 	.content :global(.projectList .contentPanel) {
     	padding-top: 7px;
 		margin-bottom: 0;
+	}
+
+	.content :global(.newProjectButton) {
+		position: absolute;
+		top: 243px;
+		right: -1px;
+
+		padding: 15px;
+    	padding-right: 63px;
+
+		font-size: 1.5rem;
+		font-weight: 700;
+	}
+	.content :global(.newProjectButton .icon) {
+    	padding-left: 16px;
 	}
 
 	.content :global(.followingProjects) {

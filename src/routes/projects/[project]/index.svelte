@@ -489,7 +489,7 @@
 		display: table;
 
 		padding: 10px;
-		padding-right: 30px;
+		padding-right: 45px;
 
     	padding-left: 23px;
 

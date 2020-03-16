@@ -10,11 +10,21 @@
 
 	import { newProject, loadProject } from '../../actions/appActions.js';
 
-	const followedProjects = [
+	const myProjects = [
 		'n4vh55hg',
 		'msl30nhg',
 		'ma9l2h4h',
 		'm2lmad9a',
+	];
+
+	const followedProjects = [
+		's7djj2s2',
+		'ma9l2h4h',
+		'm2lmad9a',
+		'36bsf5gs',
+		'9dm4l7ps',
+		'n4vh55hg',
+		'msl30nhg',
 	];
 
 </script>
@@ -44,7 +54,8 @@
 		</Proxy>
 
 		<SearchBar />
-		<ProjectList title="My Projects" projects="{followedProjects}" showLastActive="{true}" />
+		<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" />
+		<ProjectList title="Following" className="followingProjects" projects="{followedProjects}" showLastActive="{true}" displayLimit="{12}" />
 	</ScrollView>
 </div>
 
@@ -57,6 +68,10 @@
 	.content :global(.projectList .contentPanel) {
     	padding-top: 7px;
 		margin-bottom: 0;
+	}
+
+	.content :global(.followingProjects) {
+    	margin-top: 13px;
 	}
 
 	.content :global(.projectList .panelTitle) {

@@ -9,20 +9,23 @@
 
 	import { loadProject } from '../../actions/appActions.js';
 
+
     export let projects = null;
 
+    export let displayLimit = 3;
+
     export let title = 'Projects';
+    export let className = '';
 
     export let showLastActive = false;
 
-    const MAX_PROJECT_PREVIEW_COUNT = 3;
 
-    $: projectItems = getProjectsByIds(projects, MAX_PROJECT_PREVIEW_COUNT);
-    $: areMoreItems = projects && projects.length > MAX_PROJECT_PREVIEW_COUNT;
+    $: projectItems = getProjectsByIds(projects, displayLimit);
+    $: areMoreItems = projects && projects.length > displayLimit;
 </script>
 
 {#if projects && projects.length}
-    <div class="projectList">
+    <div class="projectList {className}">
         <!-- <Proxy image="profile_projects" className="proxyOverlay" >
             <Hotspot onClick="{e => loadProject('s7djj2s2')}" style="
                 left: 0px;

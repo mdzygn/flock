@@ -10,7 +10,7 @@
 
     $: thumbImage = project.slug ? 'content/projects/' + project.slug + '/header.jpg' : '';
 
-    $: detail = (showLastActive ? project.lastActiveInfo : project.createdInfo) || ''
+    $: detail = (showLastActive ? project.lastActiveInfo : project.createdInfo) || '';
 
     function loadCurrentProject() {
         loadProject(project.id);
@@ -22,7 +22,7 @@
     <div class="detailContent">
         <div class="detailInnerContent">
             <div class="title">{project.title}</div>
-            {#if project.createdInfo}
+            {#if detail}
                 <div class="detail">{detail}</div>
             {/if}
         </div>

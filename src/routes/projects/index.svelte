@@ -38,7 +38,7 @@
 
 <div class="content">
 	<ScrollView id="projects">
-		<Proxy image="projects" className="proxyOverlay">
+		<!-- <Proxy image="projects" className="proxyOverlay">
 			<Hotspot onClick="{e => loadProject('n4vh55hg')}" style="
 				left: 0;
 				width: 100%;
@@ -54,7 +54,7 @@
 				top: 277px;
 				width: 142px;
 				height: 46px;" />
-		</Proxy>
+		</Proxy> -->
 
 		<SearchBar />
 		<div class="projectsContent">
@@ -66,10 +66,10 @@
 </div>
 
 <style>
-	.content :global(.proxyOverlay) {
+	/* .content :global(.proxyOverlay) {
 		position: absolute;
 		opacity: 0.5;
-	}
+	} */
 
 	.projectsContent {
 		position: relative;

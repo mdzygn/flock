@@ -97,6 +97,8 @@ const projects = [
 		public: true,
 		image: '',
 		createdAt: 0,
+		lastActiveAt: 0,
+		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
 		unreadCount: 6,

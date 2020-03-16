@@ -15,8 +15,8 @@ const users = [
 		location: 'Wellington, New Zealand',
 		projects: [
 			's7djj2s2',
-			's7djj2s2',
-			's7djj2s2',
+			'ma9l2h4h',
+			'm2lmad9a',
 			's7djj2s2',
 		],
 	},

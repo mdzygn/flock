@@ -3,6 +3,7 @@
     import Hotspot from '../../components/Hotspot.svelte';
 
 	import ContentPanel from './../_components/ContentPanel.svelte';
+	import ProjectListItem from './ProjectListItem.svelte';
 
 	import { getProjectsByIds } from '../../data/projects.js';
 
@@ -29,27 +30,13 @@
 
         <ContentPanel title="Projects" showMoreAction="{areMoreItems}">
             {#each projectItems as project, index}
-                <div class="project">
-                    <div class="thumb"></div>
-                    <div class="title">{project.title}</div>
-                    <div class="detail"></div>
-                    <div class="info">
-                        <div class="count"></div>
-                        <div class="following"></div>
-                    </div>
-                </div>
+                <ProjectListItem {project} />
             {/each}
         </ContentPanel>
     </div>
 {/if}
 
 <style>
-	/* .content :global(.contentItem) {
-		width: 100%;
-
-		margin-bottom: 10px;
-	} */
-
     .content :global(.contentPanel) {
         background-color: rgba(255, 255, 255, 0.25);
     }
@@ -59,27 +46,7 @@
         opacity: 0.5;
     }
 
-    .thumb {
-
-    }
-
-    .title {
-
-    }
-
-    .detail {
-
-    }
-
-    .info {
-
-    }
-
-    .count {
-
-    }
-
-    .following {
-
+    .content :global(.panelContent) {
+        margin-bottom: -14px;
     }
 </style>

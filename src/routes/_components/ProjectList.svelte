@@ -4,11 +4,16 @@
 
 	import ContentPanel from './../_components/ContentPanel.svelte';
 
+	import { getProjectsByIds } from '../../data/projects.js';
+
+	import { loadProject } from '../../actions/appActions.js';
+
     export let projects = null;
 
     const MAX_PROJECT_PREVIEW_COUNT = 3;
 
-	import { loadProject } from '../../actions/appActions.js';
+    $: projectItems = getProjectsByIds(projects, MAX_PROJECT_PREVIEW_COUNT);
+    $: areMoreItems = projects && projects.length > MAX_PROJECT_PREVIEW_COUNT;
 </script>
 
 {#if projects && projects.length}
@@ -22,19 +27,17 @@
                 height: 154px;" />
         </Proxy>
 
-        <ContentPanel title="Projects" showMoreAction="{projects && projects.length > MAX_PROJECT_PREVIEW_COUNT}">
-            {#each projects as project, index}
-                {#if index < MAX_PROJECT_PREVIEW_COUNT}
-                    <div class="project">
-                        <div class="thumb"></div>
-                        <div class="title">{project}</div>
-                        <div class="detail"></div>
-                        <div class="info">
-                            <div class="count"></div>
-                            <div class="following"></div>
-                        </div>
+        <ContentPanel title="Projects" showMoreAction="{areMoreItems}">
+            {#each projectItems as project, index}
+                <div class="project">
+                    <div class="thumb"></div>
+                    <div class="title">{project.title}</div>
+                    <div class="detail"></div>
+                    <div class="info">
+                        <div class="count"></div>
+                        <div class="following"></div>
                     </div>
-                {/if}
+                </div>
             {/each}
         </ContentPanel>
     </div>
@@ -46,6 +49,10 @@
 
 		margin-bottom: 10px;
 	} */
+
+    .content :global(.contentPanel) {
+        background-color: rgba(255, 255, 255, 0.25);
+    }
 
     .content :global(.proxyOverlay) {
         position: absolute;

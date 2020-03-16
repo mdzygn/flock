@@ -158,6 +158,10 @@ const projects = [
 
 const projectModels = {};
 
+export function getProject(projectId) {
+	return projects.find(item => item.id === projectId);
+}
+
 export function getProjectModel(projectId) {
 	let projectModel = projectModels[projectId];
 	if (!projectModel) {
@@ -174,6 +178,24 @@ export function linkProject(projectId, updateCallback) {
     let project, unbindProjectModel = projectModel && projectModel.subscribe(updateCallback);
 	onDestroy(e => unbindProjectModel && unbindProjectModel());
 	return project;
+}
+
+export function getProjectsByIds(projectIds, limit) {
+	let projectItems = null;
+	if (projectIds) {
+		projectItems = [];
+		let curProject, projectId;
+		for (let index = 0; index < projectIds.length; index++) {
+			if (!limit || index < limit) {
+				projectId = projectIds[index];
+				curProject = getProject(projectId);
+				if (curProject) {
+					projectItems.push(curProject);
+				}
+			}
+		}
+	}
+	return projectItems;
 }
 
 export default projects;

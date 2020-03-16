@@ -25,6 +25,12 @@ const projects = [
 
 		location: 'Wellington, New Zealand',
 		skills: ['react', 'project management', '3d modelling', 'ui design', 'marketing', 'graphics programming'],
+
+		links: [
+			{ type: 'website', url: 'http://www.maginite.com' },
+			{ type: 'patreon', url: 'www.patreon.com' },
+			{ type: 'github', url: 'www.github.com' },
+		],
 	},
 	{
 		title: 'Tesseract',
@@ -105,9 +111,9 @@ const projects = [
 			'oiv23g46',
 		],
 		links: [
-			{ type: 'website', url: '' },
-			{ type: 'patreon', url: '' },
-			{ type: 'github', url: '' },
+			{ type: 'website', url: 'www.maginite.com' },
+			{ type: 'patreon', url: 'www.patreon.com' },
+			{ type: 'github', url: 'www.github.com' },
 		],
 		tags: [],
 		posts: [

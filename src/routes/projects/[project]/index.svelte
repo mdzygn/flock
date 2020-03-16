@@ -11,6 +11,7 @@
 	import Location from '../../_components/Location.svelte';
 	import Audience from '../../_components/Audience.svelte';
 	import ProjectSkillsList from '../../_components/ProjectSkillsList.svelte';
+	import ProjectLinks from '../../_components/ProjectLinks.svelte';
 
     import SendMessageIcon from "../../../assets/icons/send.png";
 	import OptionsMenuIcon from "../../../assets/icons/options_menu.png";
@@ -159,7 +160,7 @@
 			<div class="contentItem" class:collapsedOptions="{$returnView && !$showingInfo}" class:collapsedHeader="{$returnView && !$showingInfo && !isNew}">
 				<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
 				<!-- {#if isNew}
-					<Proxy image="{proxyOverviewImage}" className="proxyOverview">
+					<Proxy image="{proxyOverviewImage}" className="proxyOverlay">
 						<Hotspot onClick="{editProjectDetails}" style="
 							left: 8px;
 							top: 123px;
@@ -173,7 +174,7 @@
 							height: 41px;" />
 					</Proxy>
 				{:else if !$showingInfo}
-					<Proxy image="{proxyOverviewImage}" className="proxyOverview" style="pointer-events: none">
+					<Proxy image="{proxyOverviewImage}" className="proxyOverlay" style="pointer-events: none">
 						<Hotspot onClick="{showProjectInfo}" style="
 							left: 0;
 							top: 55px;
@@ -226,7 +227,7 @@
 						{/if}
 					</Proxy>
 				{:else}
-					<div class="proxyOverview">
+					<div class="proxyOverlay">
 						<Proxy image="project_overview_info" />
 						<div>
 							<Proxy image="project_info_image_1" />
@@ -337,7 +338,8 @@
 
 			{#if isNew}
 				<ProjectTeamList isOwner="{isOwner}" isNew="{isNew}" />
-				<Proxy image="{proxyLinksImage}" className="contentItem" />
+				<Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" />
+				<ProjectLinks project="{$project}" />
 				<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
 				<ProjectSkillsList project="{$project}" />
 				<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
@@ -349,7 +351,8 @@
 				{#if isOwner}
 					<NewPostButton type="project_post_update" />
 				{/if}
-				<Proxy image="{proxyLinksImage}" className="contentItem" />
+				<Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" />
+				<ProjectLinks project="{$project}" />
 				<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
 				<ProjectSkillsList project="{$project}" />
 				<ProjectTeamList isOwner="{isOwner}" isNew="{isNew}" />
@@ -365,7 +368,8 @@
 				<ProjectTeamList isOwner="{isOwner}" isNew="{isNew}" />
 				<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
 				<ProjectSkillsList project="{$project}" />
-				<Proxy image="{proxyLinksImage}" className="contentItem" />
+				<Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" />
+				<ProjectLinks project="{$project}" />
 				<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
 				<div id="post" />
 				<div>
@@ -609,9 +613,9 @@
 		margin-bottom: 3px;
 	}
 
-	.pageContent :global(.proxyOverview) {
+	.pageContent :global(.proxyOverlay) {
 		position: absolute;
-		opacity: 0;
+		opacity: 0.5;
 	}
 
     .header {

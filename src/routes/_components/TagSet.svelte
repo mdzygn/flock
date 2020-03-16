@@ -4,13 +4,13 @@
     export let tags = null;
 </script>
 
-<div class="tagSet">
-    {#if tags}
+{#if tags}
+    <div class="tagSet">
         {#each tags as tag}
             <Button className="tag">{tag}</Button>
         {/each}
-    {/if}
-</div>
+    </div>
+{/if}
 
 <style>
     .tagSet {

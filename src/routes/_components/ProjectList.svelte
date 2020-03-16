@@ -40,10 +40,10 @@
         background-color: rgba(255, 255, 255, 0.25);
     } */
 
-    .content :global(.proxyOverlay) {
+    /* .content :global(.proxyOverlay) {
         position: absolute;
         opacity: 0.5;
-    }
+    } */
 
     .content :global(.panelContent) {
         margin-top: -6px;

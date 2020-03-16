@@ -1,14 +1,6 @@
 <script>
-    import Proxy from '../../components/Proxy.svelte';
-    import Hotspot from '../../components/Hotspot.svelte';
-
 	import ContentPanel from './ContentPanel.svelte';
-	import ProjectListItem from './ProjectListItem.svelte';
 	import TagSet from './TagSet.svelte';
-
-	import { getProjectsByIds } from '../../data/projects.js';
-
-	import { loadProject } from '../../actions/appActions.js';
 
     export let project = null;
 

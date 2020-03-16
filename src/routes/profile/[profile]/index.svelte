@@ -17,6 +17,7 @@
 	$: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
 
 	$: skills = ($viewedUser && $viewedUser.skills) || null;
+	$: projects = ($viewedUser && $viewedUser.projects) || null;
 
 	import { loadConversation } from '../../../actions/appActions';
 	import { requestConnection } from '../../../actions/userActions';
@@ -40,7 +41,9 @@
 				<TagSet tags="{skills}" />
 			</ContentPanel>
 		{/if}
-		<ProjectList />
+		{#if projects && projects.length}
+			<ProjectList projects="{projects}" />
+		{/if}
 	</div>
 
 	<div slot="scrollHeader">

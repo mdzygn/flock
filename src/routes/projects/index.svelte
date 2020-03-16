@@ -6,7 +6,17 @@
 
 	import SearchBar from './../_components/SearchBar.svelte';
 
+	import ProjectList from './../_components/ProjectList.svelte';
+
 	import { newProject, loadProject } from '../../actions/appActions.js';
+
+	const followedProjects = [
+		'n4vh55hg',
+		'msl30nhg',
+		'ma9l2h4h',
+		'm2lmad9a',
+	];
+
 </script>
 
 <svelte:head>
@@ -34,6 +44,7 @@
 		</Proxy>
 
 		<SearchBar />
+		<ProjectList title="My Projects" projects="{followedProjects}" showLastActive="{true}" />
 	</ScrollView>
 </div>
 
@@ -41,5 +52,44 @@
 	.content :global(.proxyOverlay) {
 		position: absolute;
 		opacity: 0.5;
+	}
+
+	.content :global(.projectList .contentPanel) {
+    	padding-top: 7px;
+		margin-bottom: 0;
+	}
+
+	.content :global(.projectList .panelTitle) {
+    	padding-bottom: 8px;
+	}
+
+	.content :global(.projectListItem) {
+    	margin-bottom: -3px;
+	}
+
+	.content :global(.projectListItem .thumb) {
+		width: 60px;
+		height: 60px;
+	}
+
+	.content :global(.projectListItem .detailContent) {
+    	left: 74px;
+	}
+
+	.content :global(.projectListItem .detail) {
+		font-size: 1.1rem;
+		margin-top: 5px;
+	}
+
+	.content :global(.projectListItem .info ) {
+    	top: 22px;
+	}
+
+	.content :global(.projectListItem .counter ) {
+    	margin-right: 0;
+	}
+
+	.content :global(.projectListItem .followingIcon ) {
+    	display: none;
 	}
 </style>

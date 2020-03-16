@@ -6,8 +6,11 @@
 	import FollowingSmallIcon from "../../assets/icons/following_small.png";
 
     export let project;
+    export let showLastActive = false;
 
     $: thumbImage = project.slug ? 'content/projects/' + project.slug + '/header.jpg' : '';
+
+    $: detail = (showLastActive ? project.lastActiveInfo : project.createdInfo) || ''
 
     function loadCurrentProject() {
         loadProject(project.id);
@@ -20,7 +23,7 @@
         <div class="detailInnerContent">
             <div class="title">{project.title}</div>
             {#if project.createdInfo}
-                <div class="detail">{project.createdInfo || ''}</div>
+                <div class="detail">{detail}</div>
             {/if}
         </div>
     </div>

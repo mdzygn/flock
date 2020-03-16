@@ -11,6 +11,10 @@
 
     export let projects = null;
 
+    export let title = 'Projects';
+
+    export let showLastActive = false;
+
     const MAX_PROJECT_PREVIEW_COUNT = 3;
 
     $: projectItems = getProjectsByIds(projects, MAX_PROJECT_PREVIEW_COUNT);
@@ -18,7 +22,7 @@
 </script>
 
 {#if projects && projects.length}
-    <div class="content">
+    <div class="projectList">
         <!-- <Proxy image="profile_projects" className="proxyOverlay" >
             <Hotspot onClick="{e => loadProject('s7djj2s2')}" style="
                 left: 0px;
@@ -27,25 +31,25 @@
                 height: 154px;" />
         </Proxy> -->
 
-        <ContentPanel title="Projects" showMoreAction="{areMoreItems}">
+        <ContentPanel title="{title}" showMoreAction="{areMoreItems}">
             {#each projectItems as project, index}
-                <ProjectListItem {project} />
+                <ProjectListItem {project} {showLastActive} />
             {/each}
         </ContentPanel>
     </div>
 {/if}
 
 <style>
-    /* .content :global(.contentPanel) {
+    /* .projectList :global(.contentPanel) {
         background-color: rgba(255, 255, 255, 0.25);
     } */
 
-    /* .content :global(.proxyOverlay) {
+    /* .projectList :global(.proxyOverlay) {
         position: absolute;
         opacity: 0.5;
     } */
 
-    .content :global(.panelContent) {
+    .projectList :global(.panelContent) {
         margin-top: -6px;
         margin-bottom: -6px;
     }

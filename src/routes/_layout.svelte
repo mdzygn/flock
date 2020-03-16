@@ -9,7 +9,7 @@
 	import Nav from './_components/Nav.svelte';
 
 	export let segment;
-	$: path = $page ? $page.path : '';
+	$: path = ($page && $page.path) || '';
 
 	import {
 		loadProject,

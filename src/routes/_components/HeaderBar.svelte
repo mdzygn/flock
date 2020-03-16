@@ -22,15 +22,15 @@
 
     $: appState = {
         viewMode: $viewMode,
-        viewingOwnProfile: $viewedUser ? $viewedUser.isCurrentUser : false,
+        viewingOwnProfile: ($viewedUser && $viewedUser.isCurrentUser) || false,
     };
 
     $: curSection = getSectionByPath(path, appState);
-    $: isProjectView = curSection ? curSection.isProjectView : false;
-    $: parentSection = curSection ? curSection.parentSection : null;
-    $: showBack = curSection ? curSection.showBack : false;
-    $: isMyProfile = curSection ? (curSection.segment === 'profile') : false;
-    // $: sectionLabel = curSection ? curSection.label : '';
+    $: isProjectView = (curSection && curSection.isProjectView) || false;
+    $: parentSection = (curSection && curSection.parentSection) || null;
+    $: showBack = (curSection && curSection.showBack) || false;
+    $: isMyProfile = (curSection && (curSection.segment === 'profile')) || false;
+    // $: sectionLabel = (curSection && curSection.label) || '';
 
     $: hasCreated = $project && $project.hasCreated;
 
@@ -44,10 +44,10 @@
             if ($conversation.project && $project) { // // temporary
                 sectionLabel = $project.title;
             } else {
-                sectionLabel = $conversation.user ? $conversation.user.firstName : $conversation.project.name;
+                sectionLabel = ($conversation.user && $conversation.user.firstName) || ($conversation.project && $conversation.project.name) || (curSection && curSection.label) || '';
             }
         } else {
-            sectionLabel = curSection ? curSection.label : '';
+            sectionLabel = (curSection && curSection.label) || '';
         }
     }
 

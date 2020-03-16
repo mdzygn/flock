@@ -9,8 +9,8 @@
 
 	import { viewedUser } from '../../../models/appState';
 
-	$: requestedConnection = $viewedUser ? $viewedUser.requestedConnection : false;
-	$: viewingOwnProfile = $viewedUser ? $viewedUser.isCurrentUser : false;
+	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
+	$: viewingOwnProfile = ($viewedUser && $viewedUser.isCurrentUser) || false;
 
 	import { loadConversation } from '../../../actions/appActions';
 	import { requestConnection } from '../../../actions/userActions';

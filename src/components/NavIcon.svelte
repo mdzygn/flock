@@ -22,8 +22,8 @@
     }
 
     $: iconItem = icons[iconId];
-    $: iconSrc = iconItem ? iconItem.icon : '';
-    $: iconActiveSrc = iconItem ? iconItem.activeIcon : '';
+    $: iconSrc = (iconItem && iconItem.icon) || '';
+    $: iconActiveSrc = (iconItem && iconItem.activeIcon) || '';
 
     export let active = false;
     export let label = false;

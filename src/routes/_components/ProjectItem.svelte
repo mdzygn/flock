@@ -16,12 +16,12 @@
     let project = null;
     linkProject(projectId, val => project = val);
 
-    $: projectSlug = project ? project.slug : null;
+    $: projectSlug = (project && project.slug) || null;
 
 	$: headerImage = projectSlug ? 'content/projects/' + projectSlug + '/header.jpg' : '';
 
-    $: projectTitle = project ? project.title : '';
-    $: projectDescription = project ? project.description : '';
+    $: projectTitle = (project && project.title) || '';
+    $: projectDescription = (project && project.description) || '';
 </script>
 
 <div class="projectItem">

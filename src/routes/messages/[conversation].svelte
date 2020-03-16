@@ -6,8 +6,8 @@
 	import { conversation } from '../../models/appState';
 	import { loadProfile } from '../../actions/appActions';
 
-	$: viewingGroupConversation = $conversation ? $conversation.isGroup : false;
-	$: isNewConversation = $conversation ? $conversation.isNew : false;
+	$: viewingGroupConversation = ($conversation && $conversation.isGroup) || false;
+	$: isNewConversation = ($conversation && $conversation.isNew) || false;
 
 	$: proxyMessageViewImage = viewingGroupConversation ? 'messages_group_view': 'message_view';
 </script>

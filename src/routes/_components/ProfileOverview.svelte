@@ -18,23 +18,23 @@
     import { showLikes, loadConversation } from '../../actions/appActions.js';
 	import { requestConnection } from '../../actions/userActions';
 
-	$: requestedConnection = $viewedUser ? $viewedUser.requestedConnection : false;
-	$: connected = $viewedUser ? $viewedUser.connected : false;
-    $: isCurrentUser = $viewedUser ? $viewedUser.isCurrentUser : false;
+	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
+	$: connected = ($viewedUser && $viewedUser.connected) || false;
+    $: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
 
     $: showConnect = !requestedConnection && !connected;
 
-    $: userId = $viewedUser ? $viewedUser.id : '';
-    $: username = $viewedUser ? $viewedUser.username : '';
+    $: userId = ($viewedUser && $viewedUser.id) || '';
+    $: username = ($viewedUser && $viewedUser.username) || '';
 
-    $: userFullName = $viewedUser ? $viewedUser.fullName : '';
-    $: userFirstName = $viewedUser ? $viewedUser.firstName : '';
-    $: userBio = $viewedUser ? $viewedUser.bio : '';
+    $: userFullName = ($viewedUser && $viewedUser.fullName) || '';
+    $: userFirstName = ($viewedUser && $viewedUser.firstName) || '';
+    $: userBio = ($viewedUser && $viewedUser.bio) || '';
     $: userLocation = ($viewedUser && $viewedUser.location) || '';
 
-    $: postsCount = $viewedUser ? $viewedUser.postsCount : 0;
-    $: likesCount = $viewedUser ? $viewedUser.likesCount : 0;
-    $: followsCount = $viewedUser ? $viewedUser.followsCount : 0;
+    $: postsCount = ($viewedUser && $viewedUser.postsCount) || 0;
+    $: likesCount = ($viewedUser && $viewedUser.likesCount) || 0;
+    $: followsCount = ($viewedUser && $viewedUser.followsCount) || 0;
 
 	$: coverImage = 'content/users/' + username + '/cover.jpg';
 	$: profileImage = 'content/users/' + username + '/profile.jpg';

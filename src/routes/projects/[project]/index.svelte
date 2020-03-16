@@ -70,25 +70,25 @@
 	let proxyLinksImage;
 	let proxySkillsImage;
 
-	$: isOwner = $project ? $project.isOwner : false;
-	$: isNew = $project ? $project.isNew : false;
-	$: following = $project ? $project.following : false;
-	$: liked = $project ? $project.liked : false;
-	$: isPublic = $project ? $project.public : false;
-	$: unreadMessageCount = $project ? $project.unreadMessageCount : false;
-	$: messageCount = $project ? $project.messageCount : false;
+	$: isOwner = ($project && $project.isOwner) || false;
+	$: isNew = ($project && $project.isNew) || false;
+	$: following = ($project && $project.following) || false;
+	$: liked = ($project && $project.liked) || false;
+	$: isPublic = ($project && $project.public) || false;
+	$: unreadMessageCount = ($project && $project.unreadMessageCount) || false;
+	$: messageCount = ($project && $project.messageCount) || false;
 
-	$: likeCount = $project ? $project.likeCount : 0;
-	$: followCount = $project ? $project.followCount : 0;
+	$: likeCount = ($project && $project.likeCount) || 0;
+	$: followCount = ($project && $project.followCount) || 0;
 
-	$: projectSlug = $project ? $project.slug : '';
+	$: projectSlug = ($project && $project.slug) || '';
 
 	$: headerImage = 'content/projects/' + projectSlug + '/header.jpg';
 
-    $: projectTitle = $project ? $project.title : '';
-	$: projectDescription = $project ? $project.description : '';
-	$: projectLocation = $project ? $project.location : '';
-	$: projectHasDetails = $project ? $project.projectHasDetails : false;
+    $: projectTitle = ($project && $project.title) || '';
+	$: projectDescription = ($project && $project.description) || '';
+	$: projectLocation = ($project && $project.location) || '';
+	$: projectHasDetails = ($project && $project.projectHasDetails) || false;
 
 	$: {
 		// if ($returnView) {

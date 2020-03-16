@@ -176,7 +176,6 @@ export const getPathForSection = (section) => {
 export const getMainSectionForSegment = (segment) => {
 	const section = getSectionBySegment(segment);
 	return getMainSectionForSection(section);
-	// return section ? (section.mainSection || section.segment) : undefined;
 }
 export const getMainSectionForRoute = (segment, path) => {
 	let section = getSectionByPath(path);
@@ -184,7 +183,6 @@ export const getMainSectionForRoute = (segment, path) => {
 		section = getSectionBySegment(segment);
 	}
 	return getMainSectionForSection(section);
-	// return section ? (section.mainSection || section.segment) : undefined;
 }
 export const getMainSectionForSection = (section) => {
 	if (section) {
@@ -200,7 +198,7 @@ export const getMainSectionForSection = (section) => {
 
 export const isDarkBgForPath = (path) => {
 	const section = getSectionByPath(path);
-	return section ? section.darkBg : false;
+	return (section && section.darkBg) || false;
 }
 
 export const getSectionByPath = (path, appState) => {

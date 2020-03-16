@@ -15,7 +15,7 @@
         regionProps = getScrollRegionProperties(id);
     }
 
-    let hasScrollHeader = $$props.$$slots ? $$props.$$slots.scrollHeader : false;
+    let hasScrollHeader = ($$props.$$slots && $$props.$$slots.scrollHeader) || false;
 
     let windowWidth;
 

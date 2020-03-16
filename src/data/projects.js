@@ -77,7 +77,7 @@ const projects = [
 
 		links: [
 			{ type: 'website', url: 'http://www.maginite.com' },
-			{ type: 'website', url: 'http://www.maginite.com', label: 'Second Website' },
+			{ type: 'website', url: 'http://www.google.com', label: 'Second Website' },
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
 		],

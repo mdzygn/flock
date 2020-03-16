@@ -103,7 +103,13 @@
 
         position: absolute;
         top: 14px;
+
         left: 20px;
+        right: 55px;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .logo {
@@ -138,6 +144,6 @@
     }
 
     .header.hasBack {
-        padding-left: 30px;
+        left: 50px;
     }
 </style>

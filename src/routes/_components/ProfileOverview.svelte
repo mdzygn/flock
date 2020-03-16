@@ -21,6 +21,10 @@
     $: userFirstName = $viewedUser ? $viewedUser.firstName : '';
     $: userBio = $viewedUser ? $viewedUser.bio : '';
 
+    $: postsCount = $viewedUser ? $viewedUser.postsCount : 0;
+    $: likesCount = $viewedUser ? $viewedUser.likesCount : 0;
+    $: followsCount = $viewedUser ? $viewedUser.followsCount : 0;
+
 	$: coverImage = 'content/users/' + username + '/cover.jpg';
 	$: profileImage = 'content/users/' + username + '/profile.jpg';
 
@@ -30,14 +34,13 @@
 
 <div class="content">
     <div class="profileOverview">
-        <Proxy image="{proxyImage}" className="proxyOverview">
-            <!-- Likes -->
+        <!-- <Proxy image="{proxyImage}" className="proxyOverview">
             <Hotspot onClick="{showLikes}" style="
                 left: 199px;
                 top: 144px;
                 width: 77px;
                 height: 39px;" />
-        </Proxy>
+        </Proxy> -->
         <img src="{coverImage}" class="coverImage" alt="cover image" />
         <div class="profileOverviewHeader">
             <div class="profileImage">
@@ -45,6 +48,11 @@
             </div>
             <Button className="optionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
             <Button className="editButton" icon="{EditIcon}" disabled="{true}">edit</Button>
+            <div class="userStats">
+                <Button><span class="label">posts</span><div class="count">{postsCount}</div></Button>
+                <Button onClick="{showLikes}"><span class="label">likes</span><div class="count">{likesCount}</div></Button>
+                <Button><span class="label">follows</span><div class="count">{followsCount}</div></Button>
+            </div>
             <div class="itemContent">
                 <div class="header">{userFullName}</div>
                 <div class="username">@{username}</div>
@@ -83,7 +91,8 @@
 
 <style>
     .profileOverview {
-        height: 377px;
+        background-color: #ffffff;
+        /* height: 377px; */
     }
 
 	.content :global(.proxyOverview) {
@@ -178,4 +187,48 @@
     .content :global(.editButton .icon) {
         padding-left: 12px;
 	}
+
+    .userStats {
+        position: absolute;
+        top: 12px;
+        left: 135px;
+        right: 16px;
+
+		display: flex;
+		justify-content: space-between;
+    }
+
+    .userStats :global(.button) {
+		width: 33%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+        padding: 8px 0;
+
+        font-size: 1.3rem;
+		font-weight: 700;
+        color: #0D0D0D;
+
+        white-space: nowrap;
+        min-width: 65px;
+    }
+
+    .userStats :global(.count) {
+		display: inline-block;
+		vertical-align: bottom;
+		position: relative;
+
+        padding-bottom: 1px;
+        padding-left: 6px;
+
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #666666;
+    }
+
+    .userStats :global(.label) {
+        border-bottom: 2px solid #CCCCCC;
+        padding-bottom: 2px;
+    }
 </style>

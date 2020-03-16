@@ -99,7 +99,7 @@
 
 	.pageContent {
 		position: absolute;
-		top: 50px; /* header height */
+		top: 60px; /* header height */
 		bottom: 76px; /* nav height */
 		width: 100%;
 	}

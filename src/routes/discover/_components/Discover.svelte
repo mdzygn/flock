@@ -68,10 +68,7 @@
 	.feed {
 		width: 100%;
 
-		/* padding-top: 104px; */
-		padding-top: 10px;
-
-    	/* line-height: 0; */
+		padding-top: 5px;
 	}
 
 	/* .feed :global(.proxy) {

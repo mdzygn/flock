@@ -12,7 +12,7 @@
 
 {#if skills && skills.length}
     <div class="content">
-        <ContentPanel title="seeking skills:" showEdit="{isOwner}" showMoreAction="{areMoreItems}">
+        <ContentPanel title="Seeking Skills:" showEdit="{isOwner}" showMoreAction="{areMoreItems}">
             <TagSet tags="{skills}" />
         </ContentPanel>
     </div>

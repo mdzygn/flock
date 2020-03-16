@@ -2,6 +2,9 @@
 	import ContentPanel from './ContentPanel.svelte';
 	import TagSet from './TagSet.svelte';
 
+	import PatreonButton from "../../assets/icons/patreon_button.png";
+	import GitHubButton from "../../assets/icons/github_button.png";
+
     export let project = null;
 
     $: links = (project && project.links) || null;
@@ -34,9 +37,9 @@
                 <div class="linkItem">
                     <div class="linkButtonContainer">
                         {#if link.type === 'patreon'}
-                            <a href="{getUrlHref(link.url)}" target="_blank">{getUrlLabel(link.url)}</a>
+                            <a class="linkImageButton patreonButton" href="{getUrlHref(link.url)}" target="_blank"><img src="{PatreonButton}" alt="Become a Patron"></a>
                         {:else if link.type === 'github'}
-                            <a href="{getUrlHref(link.url)}" target="_blank">{getUrlLabel(link.url)}</a>
+                            <a class="linkImageButton gitHubButton" href="{getUrlHref(link.url)}" target="_blank"><img src="{GitHubButton}" alt="View on GitHub"></a>
                         {:else}
                             <a href="{getUrlHref(link.url)}" target="_blank">{getUrlLabel(link.url)}</a>
                         {/if}
@@ -47,7 +50,7 @@
                         {:else if link.type === 'github'}
                             Contribute on Github
                         {:else}
-                            View Website
+                            Visit Website
                         {/if}
                     </div>
                 </div>
@@ -67,12 +70,14 @@
         padding-bottom: 4px;
         margin-bottom: 16px;
     }
+
     .linkLabel {
         font-size: 1.4rem;
     }
+
     .linkButtonContainer {
         position: absolute;
-        right: 25px;
+        right: 6px;
         font-size: 1.4rem;
     }
 
@@ -80,5 +85,27 @@
         padding: 10px;
         margin-top: -10px;
         margin-right: -10px;
+    }
+
+    .linkImageButton {
+        position: absolute;
+        right: 0;
+    }
+
+    .linkImageButton img {
+        width: 100%;
+    }
+
+    .patreonButton {
+        width: 154.5px;
+        height: 36px;
+
+        top: -8px;
+    }
+    .gitHubButton {
+        width: 134px;
+        height: 26px;
+
+        top: -4px;
     }
 </style>

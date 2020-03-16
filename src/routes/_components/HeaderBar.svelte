@@ -22,15 +22,15 @@
 
     $: appState = {
         viewMode: $viewMode,
-        viewingOwnProfile: ($viewedUser && $viewedUser.isCurrentUser) || false,
+        viewingOwnProfile: $viewedUser ? $viewedUser.isCurrentUser : false,
     };
 
     $: curSection = getSectionByPath(path, appState);
-    $: isProjectView = (curSection && curSection.isProjectView) || false;
-    $: parentSection = (curSection && curSection.parentSection) || null;
-    $: showBack = (curSection && curSection.showBack) || false;
-    $: isMyProfile = (curSection && (curSection.segment === 'profile')) || false;
-    // $: sectionLabel = (curSection && curSection.label) || '';
+    $: isProjectView = curSection ? curSection.isProjectView : false;
+    $: parentSection = curSection ? curSection.parentSection : null;
+    $: showBack = curSection ? curSection.showBack : false;
+    $: isMyProfile = curSection ? (curSection.segment === 'profile') : false;
+    // $: sectionLabel = curSection ? curSection.label : '';
 
     $: hasCreated = $project && $project.hasCreated;
 
@@ -44,10 +44,10 @@
             if ($conversation.project && $project) { // // temporary
                 sectionLabel = $project.title;
             } else {
-                sectionLabel = ($conversation.user && $conversation.user.firstName) || ($conversation.project && $conversation.project.name) || (curSection && curSection.label) || '';
+                sectionLabel = $conversation.user ? $conversation.user.firstName : $conversation.project.name;
             }
         } else {
-            sectionLabel = (curSection && curSection.label) || '';
+            sectionLabel = curSection ? curSection.label : '';
         }
     }
 
@@ -91,7 +91,7 @@
         left: 0;
 
         width: 100%;
-        height: 50px;
+        height: 60px;
 
         background: #ffffff;
         box-shadow: 0 2px 3px 0 rgba(0,0,0,0.12);
@@ -102,23 +102,23 @@
         font-weight: 400;
 
         position: absolute;
-        top: 8px;
+        top: 14px;
         left: 20px;
     }
 
     .logo {
         position: absolute;
-        top: 9px;
+        top: 12px;
         left: 15px;
     }
     .logo img {
-        width: 44%;
+        width: 50%;
     }
 
     .avatarIcon {
         position: absolute;
         right: 11px;
-        top: 7px;
+        top: 11px;
     }
 
     .button {
@@ -127,8 +127,8 @@
 
     .backButton {
         position: absolute;
-        top: 1px;
-        left: 0px;
+        top: 8px;
+        left: 5px;
         padding: 10px;
 
         width: 26px;
@@ -138,6 +138,6 @@
     }
 
     .header.hasBack {
-        padding-left: 26px;
+        padding-left: 30px;
     }
 </style>

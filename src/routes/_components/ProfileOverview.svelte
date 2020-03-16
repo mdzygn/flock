@@ -39,8 +39,8 @@
 	$: coverImage = 'content/users/' + username + '/cover.jpg';
 	$: profileImage = 'content/users/' + username + '/profile.jpg';
 
-    $: proxyImage = isCurrentUser ? 'profile_overview_owner' : 'profile_overview';
-    $: proxyOverviewActionsImage = isCurrentUser ? 'profile_overview_owner_actions' : 'profile_overview_actions';
+    // $: proxyImage = isCurrentUser ? 'profile_overview_owner' : 'profile_overview';
+    // $: proxyOverviewActionsImage = isCurrentUser ? 'profile_overview_owner_actions' : 'profile_overview_actions';
 
     function userRequestConnection() {
         requestConnection(userId);
@@ -124,10 +124,10 @@
         /* height: 377px; */
     }
 
-	.content :global(.proxyOverview) {
+	/* .content :global(.proxyOverview) {
 		position: absolute;
         opacity: 0.5;
-	}
+	} */
 
 	.coverImage {
 		width: 100%;

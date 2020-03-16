@@ -131,6 +131,8 @@
 
 	.coverImage {
 		width: 100%;
+        height: 149px;
+        object-fit: cover;
 	}
 
     .profileOverviewHeader {
@@ -150,6 +152,8 @@
     }
     .profileImage img {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .itemContent {

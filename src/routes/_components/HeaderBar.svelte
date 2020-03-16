@@ -36,11 +36,11 @@
 
     let sectionLabel = '';
     $: {
-        if (/\/projects\/.*/.test(path) && !/\/projects\/new/.test(path) && $project) {
+        if (/\/projects\/.+/.test(path) && !/\/projects\/new/.test(path) && $project) {
             sectionLabel = $project.title;
-        } else if (/\/profile\/.*/.test(path) && $viewedUser && !$viewedUser.isCurrentUser) {
+        } else if (/\/profile\/.+/.test(path) && $viewedUser && !$viewedUser.isCurrentUser) {
             sectionLabel = $viewedUser.fullName;
-        } else if (/\/messages\/.*/.test(path) && $conversation && ($conversation.user || $conversation.project)) {
+        } else if (/\/messages\/.+/.test(path) && $conversation && ($conversation.user || $conversation.project)) {
             if ($conversation.project && $project) { // // temporary
                 sectionLabel = $project.title;
             } else {

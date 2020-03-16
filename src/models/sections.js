@@ -58,19 +58,19 @@ export const sections = [
 	},
 
 	{
-		path: '/projects/.*/messages',
+		path: '/projects/.+/messages',
 		id: 'projectMessages',
 		label: 'Messages',
 		showBack: true,
 	},
 	{
-		path: '/projects/.*/followers',
+		path: '/projects/.+/followers',
 		id: 'projectFollowers',
 		label: 'Followers',
 		showBack: true,
 	},
 	{
-		path: '/projects/.*/details',
+		path: '/projects/.+/details',
 		id: 'create',
 		label: 'Details',
 		showBack: true,
@@ -83,7 +83,7 @@ export const sections = [
 		showBack: true,
 	},
 	// {
-	// 	path: '/projects/.*/populate',
+	// 	path: '/projects/.+/populate',
 	// 	id: 'project',
 	// 	label: 'World Creator',
 	// 	darkBg: true,
@@ -91,7 +91,7 @@ export const sections = [
 	// 	parentSection: 'projects',
 	// },
 	// {
-	// 	path: '/projects/.*/.*',
+	// 	path: '/projects/.+/.+',
 	// 	id: 'project',
 	// 	label: 'World Creator',
 	// 	darkBg: true,
@@ -99,7 +99,7 @@ export const sections = [
 	// 	// parentSection: 'projects',
 	// },
 	{
-		path: '/projects/.*',
+		path: '/projects/.+',
 		id: 'project',
 		label: 'World Creator',
 		darkBg: true,
@@ -109,7 +109,7 @@ export const sections = [
 	},
 
 	{
-		path: '/channels/.*',
+		path: '/channels/.+',
 		id: 'channel',
 		label: '#Questions',
 		showBack: true,
@@ -117,7 +117,7 @@ export const sections = [
 		darkBg: true,
 	},
 	{
-		path: '/threads/.*',
+		path: '/threads/.+',
 		id: 'thread',
 		label: '#Questions',
 		showBack: true,
@@ -133,14 +133,14 @@ export const sections = [
 		// parentSection: 'projects/m62lsp2o',
 	},
 	{
-		path: '/messages/.*',
+		path: '/messages/.+',
 		id: 'message_view',
 		label: 'Conversation', // 'Mia',
 		showBack: true,
 		// parentSection: 'messages',
 	},
 	{
-		path: '/profile/.*/likes',
+		path: '/profile/.+/likes',
 		id: 'profile_view',
 		label: 'Likes',
 		darkBg: true,
@@ -148,7 +148,7 @@ export const sections = [
 		// parentSection: 'messages',
 	},
 	{
-		path: '/profile/.*',
+		path: '/profile/.+',
 		id: 'profile_view',
 		label: 'User Profile', // 'Sasha Holmer',
 		darkBg: true,
@@ -205,16 +205,16 @@ export const getSectionByPath = (path, appState) => {
 	if (appState && path === '/discover' && appState.viewMode === 'explore') {
 		path = '/explore';
 	}
-	if (appState && /\/messages\/.*/.test(path) && appState.viewingGroupConversation) {
+	if (appState && /\/messages\/.+/.test(path) && appState.viewingGroupConversation) {
 		path = '/messages/group';
 	}
-	if (appState && /\/profile\/.*/.test(path) && !/\/profile\/.*\/.*/.test(path) && appState.viewingOwnProfile) {
+	if (appState && /\/profile\/.+/.test(path) && !/\/profile\/.+\/.+/.test(path) && appState.viewingOwnProfile) {
 		path = '/profile';
 	}
 
 	return sections.find(item => {
 		let sectionPath = getPathForSection(item);
-		return new RegExp('^' + sectionPath + '$').test(path)
+		return new RegExp('^' + sectionPath + '\/?$').test(path)
 	});
 }
 

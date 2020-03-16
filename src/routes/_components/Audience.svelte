@@ -4,7 +4,7 @@
 	import PublicIcon from "../../assets/icons/public.png";
 	import PrivateIcon from "../../assets/icons/private.png";
 
-    export let isPublic = false;
+    export let isPublic = true;
     export let onClick = null;
 </script>
 

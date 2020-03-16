@@ -5,6 +5,7 @@
     import Hotspot from '../../components/Hotspot.svelte';
 
 	import Location from '../_components/Location.svelte';
+	import Audience from '../_components/Audience.svelte';
 
 	import OptionsMenuIcon from "../../assets/icons/options_menu.png";
 	import EditIcon from "../../assets/icons/edit.png";
@@ -93,9 +94,9 @@
             {#if userLocation || isCurrentUser}
                 <div class="footerActions">
                     <Location location="{userLocation}" />
-                    <!-- {#if isCurrentUser}
-
-                    {/if} -->
+                    {#if isCurrentUser}
+						<Audience />
+                    {/if}
                 </div>
             {/if}
         </div>
@@ -246,7 +247,14 @@
     }
 
     .footerActions {
-        padding-top: 6px;
-        padding-bottom: 8px;
+        position: relative;
+        padding-top: 8px;
+        padding-bottom: 10px;
     }
+
+    .footerActions :global(.audienceButton) {
+		position: absolute;
+		top: 0;
+        right: 8px;
+	}
 </style>

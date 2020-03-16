@@ -5,18 +5,21 @@
     import Hotspot from '../../../components/Hotspot.svelte';
 
 	import ProfileOverview from './../../_components/ProfileOverview.svelte';
+	import ContentPanel from './../../_components/ContentPanel.svelte';
 	import ProjectList from './../../_components/ProjectList.svelte';
 
 	import { viewedUser } from '../../../models/appState';
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
-	$: viewingOwnProfile = ($viewedUser && $viewedUser.isCurrentUser) || false;
+	$: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
+
+	$: skills = ($viewedUser && $viewedUser.skills) || false;
 
 	import { loadConversation } from '../../../actions/appActions';
 	import { requestConnection } from '../../../actions/userActions';
 
-	$: proxyActionsImage = viewingOwnProfile ? 'profile_actions_owner' : 'profile_actions';
-	$: proxySkillsImage = viewingOwnProfile ? 'profile_skills_owner' : 'profile_skills';
+	$: proxyActionsImage = isCurrentUser ? 'profile_actions_owner' : 'profile_actions';
+	$: proxySkillsImage = isCurrentUser ? 'profile_skills_owner' : 'profile_skills';
 </script>
 
 <svelte:head>
@@ -28,13 +31,16 @@
 		<div class="contentItem">
 			<ProfileOverview />
 		</div>
-		<Proxy image="{proxySkillsImage}" className="contentItem" />
+		<!-- <Proxy image="{proxySkillsImage}" className="proxyOverlay" /> -->
+		<ContentPanel title="Skills" showEdit="{isCurrentUser}" showMoreAction="{true}">
+			<!-- <TagSet tags="{$skills}" /> -->
+		</ContentPanel>
 		<ProjectList />
 	</div>
 
 	<div slot="scrollHeader">
 		<Proxy image="{proxyActionsImage}">
-			{#if viewingOwnProfile}
+			{#if isCurrentUser}
 				<!-- Connections -->
 				<Hotspot href="contacts" style="
 					left: 0px;
@@ -72,5 +78,10 @@
 		width: 100%;
 
 		margin-bottom: 10px;
+	}
+
+	.content :global(.proxyOverlay) {
+		position: absolute;
+		opacity: 0.5;
 	}
 </style>

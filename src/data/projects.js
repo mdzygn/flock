@@ -51,6 +51,11 @@ const projects = [
 		liked: true,
 		location: 'Wellington, New Zealand',
 		skills: ['react', 'project management', '3d modelling', 'ui design', 'marketing', 'graphics programming'],
+
+		links: [
+			{ type: 'website', url: 'http://www.maginite.com' },
+			{ type: 'patreon', url: 'www.patreon.com' },
+		],
 	},
 	{
 		title: 'Green Guardians',
@@ -69,6 +74,13 @@ const projects = [
 		messageCount: 6,
 
 		location: 'Wellington, New Zealand',
+
+		links: [
+			{ type: 'website', url: 'http://www.maginite.com' },
+			{ type: 'website', url: 'http://www.maginite.com', label: 'Second Website' },
+			{ type: 'patreon', url: 'www.patreon.com' },
+			{ type: 'github', url: 'www.github.com' },
+		],
 	},
 	{
 		title: 'Leonardo\'s World',
@@ -87,6 +99,10 @@ const projects = [
 
 		location: 'Wellington, New Zealand',
 		skills: ['react', 'project management', '3d modelling', 'ui design', 'marketing', 'graphics programming'],
+
+		links: [
+			{ type: 'website', url: 'http://www.maginite.com' },
+		],
 	},
 	{
 		title: 'New Earth',
@@ -110,17 +126,13 @@ const projects = [
 			'oiv23g46',
 			'oiv23g46',
 		],
-		links: [
-			{ type: 'website', url: 'www.maginite.com' },
-			{ type: 'patreon', url: 'www.patreon.com' },
-			{ type: 'github', url: 'www.github.com' },
-		],
 		tags: [],
 		posts: [
 			'm023ndls',
 			'm023ndls',
 			'm023ndls',
-		]
+		],
+
 	},
 
 	// owner example
@@ -143,6 +155,11 @@ const projects = [
 		isOwner: true,
 		location: 'Wellington, New Zealand',
 		skills: ['react', 'project management', '3d modelling', 'ui design', 'marketing', 'graphics programming'],
+
+		links: [
+			{ type: 'website', url: 'http://www.maginite.com' },
+			{ type: 'github', url: 'www.github.com' },
+		],
 	},
 
 	// following example
@@ -165,6 +182,11 @@ const projects = [
 		following: true,
 		location: 'Wellington, New Zealand',
 		skills: ['react', 'project management', '3d modelling', 'ui design', 'marketing', 'graphics programming'],
+
+		links: [
+			{ type: 'website', url: 'http://www.maginite.com' },
+			{ type: 'patreon', url: 'www.patreon.com' },
+		],
 	},
 ];
 

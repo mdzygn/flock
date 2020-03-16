@@ -338,7 +338,7 @@
 
 			{#if isNew}
 				<ProjectTeamList isOwner="{isOwner}" isNew="{isNew}" />
-				<Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" />
+				<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
 				<ProjectLinks project="{$project}" />
 				<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
 				<ProjectSkillsList project="{$project}" />
@@ -351,7 +351,7 @@
 				{#if isOwner}
 					<NewPostButton type="project_post_update" />
 				{/if}
-				<Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" />
+				<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
 				<ProjectLinks project="{$project}" />
 				<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
 				<ProjectSkillsList project="{$project}" />
@@ -368,7 +368,7 @@
 				<ProjectTeamList isOwner="{isOwner}" isNew="{isNew}" />
 				<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
 				<ProjectSkillsList project="{$project}" />
-				<Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" />
+				<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
 				<ProjectLinks project="{$project}" />
 				<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
 				<div id="post" />

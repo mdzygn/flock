@@ -7,10 +7,12 @@
 
     export let project = null;
 
+    const MAX_DISPLAYED_LINK_COUNT = 3;
+
     $: links = (project && project.links) || null;
     $: isOwner = (project && project.isOwner) || false;
 
-    $: areMoreItems = false; // links && links.length > 0; // > MAX_PROJECT_PREVIEW_COUNT;
+    $: areMoreItems = links && links.length > MAX_DISPLAYED_LINK_COUNT;
 
     function getUrlLabel(url) {
         const protocolIndex = url.indexOf('://');
@@ -31,29 +33,31 @@
 </script>
 
 {#if links && links.length}
-    <div class="content">
+    <div class="content" class:isEditable="{isOwner}">
         <ContentPanel showEdit="{isOwner}" showMoreAction="{areMoreItems}">
-            {#each links as link}
-                <div class="linkItem">
-                    <div class="linkButtonContainer">
-                        {#if link.type === 'patreon'}
-                            <a class="linkImageButton patreonButton" href="{getUrlHref(link.url)}" target="_blank"><img src="{PatreonButton}" alt="Become a Patron"></a>
-                        {:else if link.type === 'github'}
-                            <a class="linkImageButton gitHubButton" href="{getUrlHref(link.url)}" target="_blank"><img src="{GitHubButton}" alt="View on GitHub"></a>
-                        {:else}
-                            <a href="{getUrlHref(link.url)}" target="_blank">{getUrlLabel(link.url)}</a>
-                        {/if}
+            {#each links as link, index}
+                {#if index < MAX_DISPLAYED_LINK_COUNT}
+                    <div class="linkItem">
+                        <div class="linkButtonContainer">
+                            {#if link.type === 'patreon'}
+                                <a class="linkImageButton patreonButton" href="{getUrlHref(link.url)}" target="_blank"><img src="{PatreonButton}" alt="Become a Patron"></a>
+                            {:else if link.type === 'github'}
+                                <a class="linkImageButton gitHubButton" href="{getUrlHref(link.url)}" target="_blank"><img src="{GitHubButton}" alt="View on GitHub"></a>
+                            {:else}
+                                <a href="{getUrlHref(link.url)}" target="_blank">{getUrlLabel(link.url)}</a>
+                            {/if}
+                        </div>
+                        <div class="linkLabel">
+                            {#if link.type === 'patreon'}
+                                Support on Patreon
+                            {:else if link.type === 'github'}
+                                Contribute on Github
+                            {:else}
+                                {link.label || 'Visit Website'}
+                            {/if}
+                        </div>
                     </div>
-                    <div class="linkLabel">
-                        {#if link.type === 'patreon'}
-                            Support on Patreon
-                        {:else if link.type === 'github'}
-                            Contribute on Github
-                        {:else}
-                            Visit Website
-                        {/if}
-                    </div>
-                </div>
+                {/if}
             {/each}
         </ContentPanel>
     </div>
@@ -61,7 +65,20 @@
 
 <style>
     .content :global(.panelContent) {
-        margin-bottom: -10px;
+        margin-bottom: -16px;
+    }
+
+    .content :global(.showMoreButton) {
+        padding-top: 16px;
+    }
+
+    .content.isEditable :global(.panelContent) {
+        margin-bottom: 27px;
+    }
+
+    .content :global(.editButton) {
+        top: initial;
+        bottom: 5px;
     }
 
     .linkItem {
@@ -77,7 +94,7 @@
 
     .linkButtonContainer {
         position: absolute;
-        right: 6px;
+        right: 0;
         font-size: 1.4rem;
     }
 

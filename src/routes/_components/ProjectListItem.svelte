@@ -58,9 +58,9 @@
     }
 
     .detail {
-        font-size: 1.3rem;
-        margin-top: -3px;
-        color: #777777;
+        font-size: 1.2rem;
+        margin-top: -2px;
+        color: #888888;
     }
 
     .info {

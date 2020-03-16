@@ -5,7 +5,10 @@
     import Hotspot from '../../../components/Hotspot.svelte';
 
 	import ProfileOverview from './../../_components/ProfileOverview.svelte';
+
 	import ContentPanel from './../../_components/ContentPanel.svelte';
+	import TagSet from './../../_components/TagSet.svelte';
+
 	import ProjectList from './../../_components/ProjectList.svelte';
 
 	import { viewedUser } from '../../../models/appState';
@@ -13,7 +16,7 @@
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
 	$: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
 
-	$: skills = ($viewedUser && $viewedUser.skills) || false;
+	$: skills = ($viewedUser && $viewedUser.skills) || null;
 
 	import { loadConversation } from '../../../actions/appActions';
 	import { requestConnection } from '../../../actions/userActions';
@@ -32,9 +35,11 @@
 			<ProfileOverview />
 		</div>
 		<!-- <Proxy image="{proxySkillsImage}" className="proxyOverlay" /> -->
-		<ContentPanel title="Skills" showEdit="{isCurrentUser}" showMoreAction="{true}">
-			<!-- <TagSet tags="{$skills}" /> -->
-		</ContentPanel>
+		{#if skills && skills.length}
+			<ContentPanel title="Skills" showEdit="{isCurrentUser}" showMoreAction="{true}">
+				<TagSet tags="{skills}" />
+			</ContentPanel>
+		{/if}
 		<ProjectList />
 	</div>
 

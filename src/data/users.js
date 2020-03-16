@@ -12,7 +12,7 @@ const users = [
 		likesCount: 35,
 		followsCount: 32,
 		location: 'Wellington, New Zealand',
-		skills: [],
+		skills: ['design', 'interior design', 'programming', 'front-end programming', 'architectural design', '3d modelling', 'logo design', 'writing'],
 		projects: [
 			's7djj2s2',
 			's7djj2s2',

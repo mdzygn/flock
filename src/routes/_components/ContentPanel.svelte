@@ -29,11 +29,7 @@
 	.contentPanel {
         position: relative;
 		margin-bottom: 10px;
-        padding-left: 20px;
-
-        /* padding-top: 18px; */
-        padding-top: 20px;
-        padding-bottom: 20px;
+        padding: 20px;
 
         background-color: #ffffff;
 	}
@@ -48,7 +44,7 @@
         color: #444444;
 
         margin-top: -2px;
-        padding-bottom: 6px;
+        padding-bottom: 15px;
 	}
 
     .contentPanel :global(.editButton) {

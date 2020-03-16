@@ -8,7 +8,10 @@
 	import Audience from '../_components/Audience.svelte';
 
 	import OptionsMenuIcon from "../../assets/icons/options_menu.png";
-	import EditIcon from "../../assets/icons/edit.png";
+    import EditIcon from "../../assets/icons/edit.png";
+
+    import SendMessageIcon from "../../assets/icons/send.png";
+    import ConnectIcon from "../../assets/icons/connect.png";
 
     import { viewedUser } from '../../models/appState';
 
@@ -16,8 +19,12 @@
 	import { requestConnection } from '../../actions/userActions';
 
 	$: requestedConnection = $viewedUser ? $viewedUser.requestedConnection : false;
+	$: connected = $viewedUser ? $viewedUser.connected : false;
     $: isCurrentUser = $viewedUser ? $viewedUser.isCurrentUser : false;
 
+    $: showConnect = !requestedConnection && !connected;
+
+    $: userId = $viewedUser ? $viewedUser.id : '';
     $: username = $viewedUser ? $viewedUser.username : '';
 
     $: userFullName = $viewedUser ? $viewedUser.fullName : '';
@@ -33,7 +40,11 @@
 	$: profileImage = 'content/users/' + username + '/profile.jpg';
 
     $: proxyImage = isCurrentUser ? 'profile_overview_owner' : 'profile_overview';
-	$: proxyOverviewActionsImage = isCurrentUser ? 'profile_overview_owner_actions' : 'profile_overview_actions';
+    $: proxyOverviewActionsImage = isCurrentUser ? 'profile_overview_owner_actions' : 'profile_overview_actions';
+
+    function userRequestConnection() {
+        requestConnection(userId);
+    }
 </script>
 
 <div class="content">
@@ -63,9 +74,8 @@
                 <div class="description">{@html userBio}</div>
             </div>
 
-            <Proxy image="{proxyOverviewActionsImage}" className="proxyOverview">
+            <!-- <Proxy image="{proxyOverviewActionsImage}" className="proxyOverview">
                 {#if !isCurrentUser}
-                    <!-- Send Message -->
                     <Hotspot onClick="{e => loadConversation('r70dp2bf')}" style="
                         left: 11px;
                         top: 7px;
@@ -73,7 +83,6 @@
                         height: 40px;" />
 
                     {#if requestedConnection}
-                        <!-- Request Sent Notification -->
                         <Proxy image="profile_invitation_sent" absolutePlacement="true" style="
                             width: 336px;
                             height: 104px;
@@ -81,15 +90,21 @@
                             left: 209.5px;
                             top: 2.5px;" />
                     {:else}
-                        <!-- Connect -->
-                        <Hotspot onClick="{e => requestConnection('l40smlp3')}" style="
+                        <Hotspot onClick="{userRequestConnection}" style="
                             right: 5px;
                             top: 7px;
                             width: 137px;
                             height: 40px;" />
                     {/if}
                 {/if}
-            </Proxy>
+            </Proxy> -->
+
+            {#if !isCurrentUser}
+                <div class="overviewActions">
+                    <Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
+                    <Button className="connectButton {showConnect ? 'isButton' : ''}" onClick="{showConnect ? userRequestConnection : null}" icon="{ConnectIcon}">{showConnect ? 'connect' : (requestedConnection ? 'request sent' : 'connected')}</Button>
+                </div>
+            {/if}
 
             {#if userLocation || isCurrentUser}
                 <div class="footerActions">
@@ -140,6 +155,7 @@
     .itemContent {
         padding-top: 70px;
         padding-left: 23px;
+        padding-bottom: 18px;
     }
 
     .header {
@@ -246,10 +262,55 @@
         padding-bottom: 2px;
     }
 
+    .overviewActions  {
+        position: relative;
+        width: 100%;
+        height: 54px;
+        /* margin-top: 4px; */
+    }
+
+    .overviewActions :global(.sendMessageButton) {
+    	position: absolute;
+		padding: 10px;
+    	padding-right: 40px;
+
+		margin-left: 13px;
+
+		font-size: 1.5rem;
+		font-weight: 700;
+
+    	margin-top: 4px;
+    }
+    .overviewActions :global(.sendMessageButton .icon) {
+    	padding-left: 12px;
+	}
+
+    .overviewActions :global(.connectButton) {
+		position: absolute;
+		top: 8px;
+        right: 18px;
+
+		padding: 6px 41px 6px 18px;
+
+		font-size: 1.5rem;
+		font-weight: 700;
+
+    	margin-right: -6px;
+    }
+    .overviewActions :global(.connectButton .icon) {
+		margin-left: 5px;
+		margin-top: -2px;
+    }
+    .overviewActions :global(.isButton) {
+		border: 2px solid #0B0B0B;
+		margin-right: -2px; margin-top: -2px; /* factor in border */
+		border-radius: 999px;
+    }
+
     .footerActions {
         position: relative;
-        padding-top: 8px;
         padding-bottom: 10px;
+        margin-top: -4px;
     }
 
     .footerActions :global(.audienceButton) {

@@ -588,14 +588,14 @@
 
     	margin-right: -6px;
     }
+    .projectActions :global(.followButton .icon) {
+		margin-left: 5px;
+		margin-top: -2px;
+    }
     .projectActions :global(.isButton) {
 		border: 2px solid #0B0B0B;
 		margin-right: -2px; margin-top: -2px; /* factor in border */
 		border-radius: 999px;
-    }
-    .projectActions :global(.followButton .icon) {
-		margin-left: 5px;
-		margin-top: -2px;
     }
 
 	.content .collapsedHeader {

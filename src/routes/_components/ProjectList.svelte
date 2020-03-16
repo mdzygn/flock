@@ -19,14 +19,13 @@
 
 {#if projects && projects.length}
     <div class="content">
-        <Proxy image="profile_projects" className="proxyOverlay" >
-            <!-- Project Links -->
+        <!-- <Proxy image="profile_projects" className="proxyOverlay" >
             <Hotspot onClick="{e => loadProject('s7djj2s2')}" style="
                 left: 0px;
                 top: 40px;
                 width: 100%;
                 height: 154px;" />
-        </Proxy>
+        </Proxy> -->
 
         <ContentPanel title="Projects" showMoreAction="{areMoreItems}">
             {#each projectItems as project, index}
@@ -37,9 +36,9 @@
 {/if}
 
 <style>
-    .content :global(.contentPanel) {
+    /* .content :global(.contentPanel) {
         background-color: rgba(255, 255, 255, 0.25);
-    }
+    } */
 
     .content :global(.proxyOverlay) {
         position: absolute;
@@ -47,6 +46,7 @@
     }
 
     .content :global(.panelContent) {
-        margin-bottom: -14px;
+        margin-top: -6px;
+        margin-bottom: -6px;
     }
 </style>

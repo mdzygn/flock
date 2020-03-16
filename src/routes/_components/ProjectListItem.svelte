@@ -16,7 +16,7 @@
 
 <div class="projectListItem" on:click="{loadCurrentProject}">
     <img class="thumb" src="{thumbImage}" alt="{project.title}" />
-    <div class="content">
+    <div class="detailContent">
         <div class="title">{project.title}</div>
         <div class="detail">{project.createdInfo || ''}</div>
     </div>
@@ -31,7 +31,9 @@
 <style>
     .projectListItem {
         position: relative;
-        padding-bottom: 14px;
+
+        padding: 6px 0;
+        margin-bottom: 2px;
 
         cursor: pointer;
     }
@@ -44,10 +46,10 @@
         border: 1px solid #D9D9D9;
     }
 
-    .content {
+    .detailContent {
         position: absolute;
         left: 54px;
-        top: 2px;
+        top: 9px;
     }
 
     .title {
@@ -58,12 +60,13 @@
     .detail {
         font-size: 1.3rem;
         margin-top: -3px;
+        color: #777777;
     }
 
     .info {
         position: absolute;
         right: 0;
-        top: 6px;
+        top: 13px;
     }
 
     .info :global(.counter) {

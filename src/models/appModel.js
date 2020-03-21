@@ -15,7 +15,7 @@ const appModel = createModel({
     exploreZoomed: false,
 
     // scrollRegionProperties: {},
-}, {persist: true});
+}, {persist: true}, 'appModel');
 
 export const curPath = writable(null);
 

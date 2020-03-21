@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import { DEBUG } from '../config';
 
-export function createModel(props, options) {
+export function createModel(props, options, modelId) {
     const persist = options && options.persist;
 
     let localStorage = null;
@@ -42,7 +42,7 @@ export function createModel(props, options) {
             const appStateString = JSON.stringify(_modelValues);
             // if (DEBUG) console.log('save appState', appStateString);
 
-            localStorage.setItem('appState', appStateString);
+            localStorage.setItem(modelId, appStateString);
         }
     }
 
@@ -50,7 +50,7 @@ export function createModel(props, options) {
         let appState = {};
         if (persist && localStorage) {
             try {
-                const appStateString = localStorage.getItem('appState');
+                const appStateString = localStorage.getItem(modelId);
 
                 // if (DEBUG) console.log('load appState', appStateString);
 

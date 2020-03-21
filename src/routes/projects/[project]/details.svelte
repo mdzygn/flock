@@ -4,7 +4,7 @@
 	import Hotspot from '../../../components/Hotspot.svelte';
 
 	import { projectId } from '../../../models/appModel';
-	import { saveProjectDetails } from '../../../actions/projectActions.js';
+	import { saveProjectDetails } from '../../../actions/projectActions';
 </script>
 
 <svelte:head>

@@ -2,7 +2,7 @@
 	import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
 
-	import { loadProfile } from '../../actions/appActions.js';
+	import { loadProfile } from '../../actions/appActions';
 
     export let isOwner = false;
     export let isNew = false;

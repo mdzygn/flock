@@ -5,7 +5,7 @@
 
 	import { channelId } from '../../models/appModel';
 
-	import { loadThread } from '../../actions/appActions.js';
+	import { loadThread } from '../../actions/appActions';
 </script>
 
 <svelte:head>

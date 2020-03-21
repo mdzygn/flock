@@ -12,7 +12,7 @@
 	import {
 		projectToggleFollowing,
 		projectToggleLiked,
-	} from '../../actions/projectActions.js';
+	} from '../../actions/projectActions';
 
 	export let targetItemId = null;
 	export let targetItem = null;

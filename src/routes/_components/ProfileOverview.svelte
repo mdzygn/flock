@@ -15,7 +15,7 @@
 
     import { viewedUser } from '../../models/appModel';
 
-    import { showLikes, loadConversation } from '../../actions/appActions.js';
+    import { showLikes, loadConversation } from '../../actions/appActions';
 	import { requestConnection } from '../../actions/userActions';
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;

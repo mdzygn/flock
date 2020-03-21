@@ -2,7 +2,7 @@
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 
-	import { createProject } from '../../a\ctions/appActions.js';
+	import { createProject } from '../../a\ctions/appActions';
 </script>
 
 <svelte:head>

@@ -7,7 +7,7 @@
 
 	import { getProjectsByIds } from '../../models/projectsModel';
 
-	import { loadProject } from '../../actions/appActions.js';
+	import { loadProject } from '../../actions/appActions';
 
 
     export let projects = null;

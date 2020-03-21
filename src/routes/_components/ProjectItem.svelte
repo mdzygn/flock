@@ -7,7 +7,7 @@
 
 	import Proxy from '../../components/Proxy.svelte';
     import { linkProject } from '../../models/projectsModel';
-    import { loadProject } from '../../actions/appActions.js';
+    import { loadProject } from '../../actions/appActions';
 
     import MoreArrowIcon from "../../assets/icons/more_arrow.png";
 

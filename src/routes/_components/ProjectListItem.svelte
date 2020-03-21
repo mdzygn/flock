@@ -1,7 +1,7 @@
 <script>
     import Counter from './Counter.svelte';
 
-    import { loadProject } from '../../actions/appActions.js';
+    import { loadProject } from '../../actions/appActions';
 
 	import FollowingSmallIcon from "../../assets/icons/following_small.png";
 

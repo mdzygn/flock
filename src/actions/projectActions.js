@@ -11,7 +11,7 @@ import {
 
 import {
     showProjectInfo,
-} from '../actions/appActions.js';
+} from '../actions/appActions';
 
 export function projectToggleFollowing(projectId) {
     const targetProjectModel = getProjectModel(projectId);

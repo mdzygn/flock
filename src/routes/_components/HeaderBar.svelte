@@ -1,7 +1,7 @@
 <script>
     import { goto } from '@sapper/app';
 
-    import sections, { getSectionByPath, getIdForSection } from "../../models/sectionsModel.js";
+    import sections, { getSectionByPath, getIdForSection } from "../../models/sectionsModel";
 
     import {
         viewMode,
@@ -10,7 +10,7 @@
         viewedUser,
     } from '../../models/appModel';
 
-	import { loadProfile } from '../../actions/appActions.js';
+	import { loadProfile } from '../../actions/appActions';
 
     import BackIcon from "../../assets/icons/back.png";
     import AvatarIcon from './AvatarIcon.svelte';

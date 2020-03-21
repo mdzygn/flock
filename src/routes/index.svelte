@@ -4,7 +4,7 @@
 
 	import Feed from './_components/Feed.svelte';
 
-	import { loadProject, loadProjectPost, loadThread } from '../actions/appActions.js';
+	import { loadProject, loadProjectPost, loadThread } from '../actions/appActions';
 </script>
 
 <svelte:head>

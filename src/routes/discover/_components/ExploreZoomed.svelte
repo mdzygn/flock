@@ -1,7 +1,7 @@
 <script>
 	import { exploreZoomed } from '../../../models/appModel';
 
-	import { loadProject } from '../../../actions/appActions.js';
+	import { loadProject } from '../../../actions/appActions';
 
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspots from '../../../components/Hotspots.svelte';

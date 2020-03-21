@@ -4,7 +4,7 @@
 	import Proxy from '../components/Proxy.svelte';
     import Hotspot from '../components/Hotspot.svelte';
 
-	import { loadProfile, loadConversation } from '../actions/appActions.js';
+	import { loadProfile, loadConversation } from '../actions/appActions';
 </script>
 
 <svelte:head>

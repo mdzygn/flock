@@ -11,7 +11,7 @@
 
     import AddProjectIcon from "../../assets/icons/add_project.png";
 
-	import { newProject, loadProject } from '../../actions/appActions.js';
+	import { newProject, loadProject } from '../../actions/appActions';
 
 	const myProjects = [
 		'n4vh55hg',

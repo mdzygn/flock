@@ -9,7 +9,7 @@
 	import ProjectItem from './../../_components/ProjectItem.svelte';
 
 	import { viewMode, locationMode, resetScrollRegionPosition } from '../../../models/appModel';
-	import { loadProject } from '../../../actions/appActions.js';
+	import { loadProject } from '../../../actions/appActions';
 
 	function toggleViewMode() {
 		$viewMode = ($viewMode === 'explore') ? 'discover' : 'explore';

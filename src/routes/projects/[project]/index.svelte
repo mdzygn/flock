@@ -42,14 +42,14 @@
 		showProjectInfo,
 		hideProjectInfo,
 		showProjectFollowers,
-	} from '../../../actions/appActions.js';
+	} from '../../../actions/appActions';
 
 	import {
 		makePublic,
 		togglePublic,
 		projectToggleFollowing,
 		projectToggleLiked,
-	} from '../../../actions/projectActions.js';
+	} from '../../../actions/projectActions';
 
 	import Feed from './../../_components/Feed.svelte';
 

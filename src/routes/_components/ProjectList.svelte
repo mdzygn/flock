@@ -21,6 +21,8 @@
 
     export let showMoreAction = true;
 
+    export let hideShowMoreWithVisibility = false;
+
     $: projectItems = getProjectsByIds(projects, displayLimit);
     $: areMoreItems = displayLimit && projects && projects.length > displayLimit;
 </script>
@@ -35,7 +37,7 @@
                 height: 154px;" />
         </Proxy> -->
 
-        <ContentPanel title="{title}" showMoreAction="{areMoreItems ? showMoreAction : false}">
+        <ContentPanel title="{title}" showMoreAction="{areMoreItems ? showMoreAction : false}" {hideShowMoreWithVisibility}>
             {#each projectItems as project, index}
                 <ProjectListItem {project} {showLastActive} />
             {/each}

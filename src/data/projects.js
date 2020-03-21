@@ -158,7 +158,7 @@ const projects = [
 		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 0,
 		unreadMessageCount: 5,
 		messageCount: 3,
 
@@ -188,7 +188,7 @@ const projects = [
 		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 2,
 		unreadMessageCount: 5,
 		messageCount: 3,
 
@@ -218,7 +218,7 @@ const projects = [
 		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 0,
 		unreadMessageCount: 5,
 		messageCount: 3,
 
@@ -250,7 +250,7 @@ const projects = [
 		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 0,
 		unreadMessageCount: 5,
 		messageCount: 3,
 
@@ -279,7 +279,7 @@ const projects = [
 		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 3,
 		unreadMessageCount: 5,
 		messageCount: 3,
 
@@ -308,7 +308,7 @@ const projects = [
 		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 5,
 		unreadMessageCount: 5,
 		messageCount: 3,
 
@@ -337,7 +337,7 @@ const projects = [
 		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 0,
 		unreadMessageCount: 5,
 		messageCount: 3,
 
@@ -366,7 +366,7 @@ const projects = [
 		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 12,
 		unreadMessageCount: 5,
 		messageCount: 3,
 
@@ -395,7 +395,7 @@ const projects = [
 		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 2,
 		unreadMessageCount: 5,
 		messageCount: 3,
 
@@ -424,7 +424,7 @@ const projects = [
 		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 2,
 		unreadMessageCount: 5,
 		messageCount: 3,
 
@@ -453,7 +453,7 @@ const projects = [
 		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 0,
 		unreadMessageCount: 5,
 		messageCount: 3,
 
@@ -482,7 +482,7 @@ const projects = [
 		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 0,
 		unreadMessageCount: 5,
 		messageCount: 3,
 
@@ -511,7 +511,7 @@ const projects = [
 		lastActiveInfo: 'last activity yesterday 3:40pm',
 		likeCount: 63,
 		followCount: 54,
-		unreadCount: 6,
+		unreadCount: 2,
 		unreadMessageCount: 5,
 		messageCount: 3,
 

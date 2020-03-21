@@ -16,7 +16,7 @@
 	import { newProject, loadProject } from '../../actions/appActions';
 
 	const MY_PROJECTS_DISPLAY_LIMIT = 3;
-	const FOLLOWED_PROJECTS_DISPLAY_LIMIT = 5;
+	const FOLLOWED_PROJECTS_DISPLAY_LIMIT = 16;
 
 	let displayingAllMyProjects = false;
 	let displayingAllFollowingProjects = false;
@@ -60,7 +60,7 @@
 
 		<SearchBar />
 		<div class="projectsContent">
-			<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" displayLimit="{displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllMyProjects}" />
+			<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" displayLimit="{displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllMyProjects}" hideShowMoreWithVisibility="{true}" />
 			<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">New Project</Button>
 			<ProjectList title="Following" className="followingProjects" projects="{followedProjects}" showLastActive="{true}" displayLimit="{displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" />
 		</div>
@@ -83,9 +83,13 @@
 	}
 
 	.content :global(.newProjectButton) {
-		position: absolute;
+		/* position: absolute;
 		top: 243px;
-		right: -1px;
+		right: -1px; */
+
+		position: relative;
+		margin-top: -52px;
+		float: right;
 
 		padding: 15px;
     	padding-right: 63px;
@@ -99,6 +103,7 @@
 
 	.content :global(.followingProjects) {
     	margin-top: 13px;
+    	clear: both;
 	}
 
 	.content :global(.projectList .panelTitle) {

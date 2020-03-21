@@ -24,12 +24,13 @@
     export let showMoreAction = true;
 
     export let hideShowMoreWithVisibility = false;
+    export let showIfNoProjects = false;
 
     $: projectItems = getProjectsByIds(projects, {limit: displayLimit, searchString: searchString});
     $: areMoreItems = displayLimit && projects && projects.length > displayLimit;
 </script>
 
-{#if projects && projects.length}
+{#if (projects && projects.length) || showIfNoProjects}
     <div class="projectList {className}">
         <!-- <Proxy image="profile_projects" className="proxyOverlay" >
             <Hotspot onClick="{e => loadProject('s7djj2s2')}" style="
@@ -42,6 +43,14 @@
         <ContentPanel title="{title}" showMoreAction="{areMoreItems ? showMoreAction : false}" {hideShowMoreWithVisibility}>
             {#each projectItems as project, index}
                 <ProjectListItem {project} {showLastActive} />
+            {:else}
+                <div class="noProjects">
+                    {#if searchString}
+                        <slot>No projects found matching "{searchString}"</slot>
+                    {:else}
+                        <slot>No projects found</slot>
+                    {/if}
+                </div>
             {/each}
         </ContentPanel>
     </div>
@@ -60,5 +69,12 @@
     .projectList :global(.panelContent) {
         margin-top: -6px;
         margin-bottom: -6px;
+    }
+
+    .noProjects {
+        font-size: 1.2rem;
+        padding-top: 10px;
+        padding-bottom: 30px;
+        line-height: 2.5rem;
     }
 </style>

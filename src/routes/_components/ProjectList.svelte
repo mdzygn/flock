@@ -19,7 +19,7 @@
 
     export let showLastActive = false;
 
-    export let showMoreAction = null;
+    export let showMoreAction = true;
 
     $: projectItems = getProjectsByIds(projects, displayLimit);
     $: areMoreItems = displayLimit && projects && projects.length > displayLimit;

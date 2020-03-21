@@ -32,7 +32,10 @@ export function getProjectModel(projectId) {
 	return projectModel;
 }
 
-export function getProjectsByIds(projectIds, limit) {
+export function getProjectsByIds(projectIds, options) {
+	let searchString = (options && options.searchString) || null;
+	let limit = (options && options.limit) || 0;
+
 	let projectItems = null;
 	if (projectIds) {
 		projectItems = [];
@@ -42,12 +45,23 @@ export function getProjectsByIds(projectIds, limit) {
 				projectId = projectIds[index];
 				curProject = getProject(projectId);
 				if (curProject) {
-					projectItems.push(curProject);
+					if (!searchString || projectSearchMatch(curProject, searchString)) {
+						projectItems.push(curProject);
+					}
 				}
 			}
 		}
 	}
 	return projectItems;
+}
+
+function projectSearchMatch(project, searchString) {
+	searchString = searchString.toLowerCase();
+
+	if (project.title.toLowerCase().includes(searchString)) return true;
+	if (project.description.toLowerCase().includes(searchString)) return true;
+	if (project.location.toLowerCase().includes(searchString)) return true;
+	return false;
 }
 
 export function getMyProjects() {

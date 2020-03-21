@@ -18,7 +18,7 @@
         <div class="searchButton" on:click="{selectInput}">
             <div class="searchIcon" style="background-image: url({SearchIcon})" />
         </div>
-        <input bind:this="{input}" class="searchFieldInput" type="text" value="{searchString}" placeholder="{placeholder}" />
+        <input bind:this="{input}" class="searchFieldInput" type="text" bind:value="{searchString}" placeholder="{placeholder}" />
     </div>
 </div>
 

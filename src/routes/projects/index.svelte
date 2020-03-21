@@ -18,6 +18,8 @@
 	const MY_PROJECTS_DISPLAY_LIMIT = 3;
 	const FOLLOWED_PROJECTS_DISPLAY_LIMIT = 16;
 
+	let searchString = '';
+
 	let displayingAllMyProjects = false;
 	let displayingAllFollowingProjects = false;
 
@@ -58,11 +60,11 @@
 				height: 46px;" />
 		</Proxy> -->
 
-		<SearchBar />
+		<SearchBar bind:searchString={searchString} />
 		<div class="projectsContent">
-			<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" displayLimit="{displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllMyProjects}" hideShowMoreWithVisibility="{true}" />
+			<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" displayLimit="{displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllMyProjects}" {searchString} hideShowMoreWithVisibility="{true}" />
 			<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">New Project</Button>
-			<ProjectList title="Following" className="followingProjects" projects="{followedProjects}" showLastActive="{true}" displayLimit="{displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" />
+			<ProjectList title="Following" className="followingProjects" projects="{followedProjects}" showLastActive="{true}" displayLimit="{displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} />
 		</div>
 	</ScrollView>
 </div>

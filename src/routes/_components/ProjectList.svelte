@@ -17,13 +17,15 @@
     export let title = 'Projects';
     export let className = '';
 
+    export let searchString = null;
+
     export let showLastActive = false;
 
     export let showMoreAction = true;
 
     export let hideShowMoreWithVisibility = false;
 
-    $: projectItems = getProjectsByIds(projects, displayLimit);
+    $: projectItems = getProjectsByIds(projects, {limit: displayLimit, searchString: searchString});
     $: areMoreItems = displayLimit && projects && projects.length > displayLimit;
 </script>
 

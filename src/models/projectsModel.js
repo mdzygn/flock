@@ -32,17 +32,6 @@ export function getProjectModel(projectId) {
 	return projectModel;
 }
 
-// $project $ operator doesn't work in SSR for dynamically set model
-export function linkProject(projectId, updateCallback, existingUnbindProjectModel) {
-	if (existingUnbindProjectModel) {
-		existingUnbindProjectModel();
-	}
-	const projectModel = getProjectModel(projectId);
-	const unbindProjectModel = projectModel && projectModel.subscribe(updateCallback);
-	onDestroy(e => unbindProjectModel && unbindProjectModel());
-	return unbindProjectModel;
-}
-
 export function getProjectsByIds(projectIds, limit) {
 	let projectItems = null;
 	if (projectIds) {

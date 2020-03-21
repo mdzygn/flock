@@ -9,21 +9,15 @@
     import ActionBar from './ActionBar.svelte';
 
 	import Proxy from '../../components/Proxy.svelte';
-    import { linkProject, getProjectModel } from '../../models/projectsModel';
+    import { getProjectModel } from '../../models/projectsModel';
     import { loadProject } from '../../actions/appActions';
 
     import MoreArrowIcon from "../../assets/icons/more_arrow.png";
 
     export let projectId = null;
 
-    // let project, unbindProjectModel;
-    // $: { unbindProjectModel = linkProject(projectId, val => project = val, unbindProjectModel); }
-
     let project = writable({}); // declare store here to prevent SSR error
     $: { project = getProjectModel(projectId) } ;
-
-    // $: project = getProjectModel(projectId);
-    // $: project = get(projectModel);
 
     $: projectSlug = ($project && $project.slug) || null;
 

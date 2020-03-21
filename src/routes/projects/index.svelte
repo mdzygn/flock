@@ -18,23 +18,6 @@
 	const myProjects = getMyProjectIds();
 	const followedProjects = getFollowingProjectIds();
 
-	// const myProjects = [
-	// 	'n4vh55hg',
-	// 	'msl30nhg',
-	// 	'ma9l2h4h',
-	// 	'm2lmad9a',
-	// ];
-
-	// const followedProjects = [
-	// 	's7djj2s2',
-	// 	'ma9l2h4h',
-	// 	'm2lmad9a',
-	// 	'36bsf5gs',
-	// 	'9dm4l7ps',
-	// 	'n4vh55hg',
-	// 	'msl30nhg',
-	// ];
-
 </script>
 
 <svelte:head>

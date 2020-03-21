@@ -1,6 +1,3 @@
-import { writable } from 'svelte/store';
-import { onDestroy } from 'svelte'; // afterUpdate
-
 const projects = [
 	{
 		title: 'World Creator',

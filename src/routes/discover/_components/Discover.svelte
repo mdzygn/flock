@@ -9,7 +9,12 @@
 	import ProjectItem from './../../_components/ProjectItem.svelte';
 
 	import { viewMode, locationMode, resetScrollRegionPosition } from '../../../models/appModel';
+
+	import { getDiscoveryProjectIds } from '../../../models/projectsModel';
+
 	import { loadProject } from '../../../actions/appActions';
+
+	$: projects = getDiscoveryProjectIds({location: $locationMode});
 
 	function toggleViewMode() {
 		$viewMode = ($viewMode === 'explore') ? 'discover' : 'explore';
@@ -29,7 +34,10 @@
 		<!-- <Feed type="discover" linkToProjects="{true}" count="{5}" offset="{proxyContentOffset}"/> -->
 
 		<div class="feed">
-			{#if $locationMode === 'global'}
+			{#each projects as projectId}
+				<ProjectItem projectId="{projectId}" />
+			{/each}
+			<!-- {#if $locationMode === 'global'}
 				<ProjectItem projectId="s7djj2s2" />
 				<ProjectItem projectId="ma9l2h4h" />
 				<ProjectItem projectId="m2lmad9a" />
@@ -41,7 +49,7 @@
 				<ProjectItem projectId="s7djj2s2" />
 				<ProjectItem projectId="ma9l2h4h" />
 				<ProjectItem projectId="m2lmad9a" />
-			{/if}
+			{/if} -->
 		</div>
 
 		<div slot="scrollHeader">

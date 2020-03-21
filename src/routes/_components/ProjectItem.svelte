@@ -1,27 +1,36 @@
 <script>
     // import { onDestroy } from 'svelte'; // afterUpdate
 
+    import { get } from 'svelte/store';
+    import { writable } from 'svelte/store';
+
     import Button from '../../components/Button.svelte';
 
     import ActionBar from './ActionBar.svelte';
 
 	import Proxy from '../../components/Proxy.svelte';
-    import { linkProject } from '../../models/projectsModel';
+    import { linkProject, getProjectModel } from '../../models/projectsModel';
     import { loadProject } from '../../actions/appActions';
 
     import MoreArrowIcon from "../../assets/icons/more_arrow.png";
 
     export let projectId = null;
 
-    let project = null;
-    linkProject(projectId, val => project = val);
+    // let project, unbindProjectModel;
+    // $: { unbindProjectModel = linkProject(projectId, val => project = val, unbindProjectModel); }
 
-    $: projectSlug = (project && project.slug) || null;
+    let project = writable({}); // declare store here to prevent SSR error
+    $: { project = getProjectModel(projectId) } ;
+
+    // $: project = getProjectModel(projectId);
+    // $: project = get(projectModel);
+
+    $: projectSlug = ($project && $project.slug) || null;
 
 	$: headerImage = projectSlug ? 'content/projects/' + projectSlug + '/header.jpg' : '';
 
-    $: projectTitle = (project && project.title) || '';
-    $: projectDescription = (project && project.description) || '';
+    $: projectTitle = ($project && $project.title) || '';
+    $: projectDescription = ($project && $project.description) || '';
 </script>
 
 <div class="projectItem">
@@ -34,7 +43,7 @@
             <div class="description">{projectDescription}</div>
         </div>
     </div>
-    <ActionBar targetItemId="{projectId}" targetItem="{project}" />
+    <ActionBar targetItemId="{projectId}" targetItem="{$project}" />
 </div>
 
 <style>

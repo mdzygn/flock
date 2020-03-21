@@ -10,8 +10,6 @@
         viewedUser,
     } from '../../models/appModel';
 
-    // import { hasCreated } from '../../models/projectViewState.js';
-
 	import { loadProfile } from '../../actions/appActions.js';
 
     import BackIcon from "../../assets/icons/back.png";

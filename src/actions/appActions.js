@@ -26,7 +26,7 @@ import {
 import {
     returnView,
     showingInfo,
-} from '../models/projectViewState.js';
+} from '../models/projectViewModel';
 
 export function loadProject(targetProjectId, options) {
     // console.log('loadProject', targetProjectId);

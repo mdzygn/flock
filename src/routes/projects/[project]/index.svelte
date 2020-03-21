@@ -33,7 +33,7 @@
 	import {
 		returnView,
 		showingInfo,
-	} from '../../../models/projectViewState.js';
+	} from '../../../models/projectViewModel';
 
 	import {
 		loadChannel,

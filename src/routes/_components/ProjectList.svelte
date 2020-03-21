@@ -26,8 +26,8 @@
     export let hideShowMoreWithVisibility = false;
     export let showIfNoProjects = false;
 
-    $: projectItems = getProjectsByIds(projects, {limit: displayLimit, searchString: searchString});
-    $: areMoreItems = displayLimit && projects && projects.length > displayLimit;
+    $: projectItems = getProjectsByIds(projects, {limit: displayLimit ? displayLimit + 1 : 0, searchString: searchString});
+    $: areMoreItems = displayLimit && projectItems.length > displayLimit;
 </script>
 
 {#if (projects && projects.length) || showIfNoProjects}
@@ -42,7 +42,9 @@
 
         <ContentPanel title="{title}" showMoreAction="{areMoreItems ? showMoreAction : false}" {hideShowMoreWithVisibility}>
             {#each projectItems as project, index}
-                <ProjectListItem {project} {showLastActive} />
+                {#if !displayLimit || index < displayLimit}
+                    <ProjectListItem {project} {showLastActive} />
+                {/if}
             {:else}
                 <div class="noProjects">
                     {#if searchString}

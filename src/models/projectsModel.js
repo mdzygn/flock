@@ -5,6 +5,19 @@ import projects from '../data/projects';
 
 const projectModels = {};
 
+testDuplicates();
+
+function testDuplicates() {
+	const usedIds = {};
+	projects.forEach(item => {
+		if (usedIds[item.id]) {
+			console.warn('Project "' + item.title + '" has same id "' + item.id + '" as "' + usedIds[item.id].title + '"');
+		} else {
+			usedIds[item.id] = item;
+		}
+	});
+}
+
 export function getProject(projectId) {
 	return projects.find(item => item.id === projectId);
 }
@@ -50,7 +63,7 @@ export function getMyProjects() {
 }
 
 export function getFollowingProjects() {
-	return projects.filter(section => section.following);
+	return projects.filter(section => section.following && !section.isOwner);
 }
 
 export function getMyProjectIds() {

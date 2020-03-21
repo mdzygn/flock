@@ -1,7 +1,7 @@
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 
-import projects from '../data/projects';
+import { getProject } from '../data/projects';
 import conversations from '../data/conversations';
 import users from '../data/users';
 
@@ -33,7 +33,7 @@ export function loadProject(targetProjectId, options) {
 
     projectId.set(targetProjectId);
 
-    const curProject = projects.find(item => item.id === targetProjectId);
+    const curProject = getProject(targetProjectId);
     project.set(curProject);
 
     let isNew = false;

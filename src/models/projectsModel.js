@@ -44,3 +44,19 @@ export function getProjectsByIds(projectIds, limit) {
 	}
 	return projectItems;
 }
+
+export function getMyProjects() {
+	return projects.filter(section => section.isOwner);
+}
+
+export function getFollowingProjects() {
+	return projects.filter(section => section.following);
+}
+
+export function getMyProjectIds() {
+	return getMyProjects().map(project => project.id);
+}
+
+export function getFollowingProjectIds() {
+	return getFollowingProjects().map(project => project.id);
+}

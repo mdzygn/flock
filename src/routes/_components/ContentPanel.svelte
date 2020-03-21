@@ -21,7 +21,7 @@
         <slot></slot>
     </div>
     {#if showMoreAction}
-        <Button className="showMoreButton" onClick="{showMoreAction && showMoreAction !== true}" disabled="{!showMoreAction || showMoreAction === true}">show more</Button>
+        <Button className="showMoreButton" onClick="{showMoreAction && showMoreAction !== true ? showMoreAction : null}" disabled="{!showMoreAction || showMoreAction === true}">show more</Button>
     {/if}
 </div>
 

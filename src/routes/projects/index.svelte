@@ -15,6 +15,15 @@
 
 	import { newProject, loadProject } from '../../actions/appActions';
 
+	const MY_PROJECTS_DISPLAY_LIMIT = 3;
+	const FOLLOWED_PROJECTS_DISPLAY_LIMIT = 12;
+
+	let displayingAllMyProjects = false;
+
+	function displayAllMyProjects() {
+		displayingAllMyProjects = true;
+	}
+
 	const myProjects = getMyProjectIds();
 	const followedProjects = getFollowingProjectIds();
 
@@ -46,9 +55,9 @@
 
 		<SearchBar />
 		<div class="projectsContent">
-			<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" />
+			<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" displayLimit="{displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllMyProjects}" />
 			<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">New Project</Button>
-			<ProjectList title="Following" className="followingProjects" projects="{followedProjects}" showLastActive="{true}" displayLimit="{12}" />
+			<ProjectList title="Following" className="followingProjects" projects="{followedProjects}" showLastActive="{true}" displayLimit="{FOLLOWED_PROJECTS_DISPLAY_LIMIT}" />
 		</div>
 	</ScrollView>
 </div>

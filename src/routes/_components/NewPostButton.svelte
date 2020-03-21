@@ -1,5 +1,5 @@
 <script>
-    import Proxy from './Proxy.svelte';
+    import Proxy from '../../components/Proxy.svelte';
 
     export let type = 'new_post';
 </script>

@@ -55,7 +55,7 @@
 
 	import ProjectTeamList from './../../_components/ProjectTeamList.svelte';
 
-	import NewPostButton from '../../../components/NewPostButton.svelte';
+	import NewPostButton from '../../_components/NewPostButton.svelte';
 
 	function toggleFollowing() {
 		projectToggleFollowing($projectId);

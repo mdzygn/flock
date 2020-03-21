@@ -1,5 +1,5 @@
 <script>
-	import NavIcon from "../../components/NavIcon.svelte";
+	import NavIcon from "../_components/NavIcon.svelte";
 
 	import { getMainSections, getIconForSection, getMainSectionForSegment, getMainSectionForRoute } from "../../models/sectionsModel.js";
 

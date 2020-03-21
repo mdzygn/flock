@@ -3,7 +3,7 @@
 	import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
 
-	import NewPostButton from '../../components/NewPostButton.svelte';
+	import NewPostButton from '../_components/NewPostButton.svelte';
 
 	import { threadId } from '../../models/appModel';
 	import { loadProfile } from '../../actions/appActions';

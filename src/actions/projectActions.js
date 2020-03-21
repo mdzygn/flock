@@ -7,7 +7,7 @@ import { getProjectModel } from '../models/projectsModel';
 import {
     project,
     resetScrollRegionPosition
-} from '../models/appState';
+} from '../models/appModel';
 
 import {
     showProjectInfo,

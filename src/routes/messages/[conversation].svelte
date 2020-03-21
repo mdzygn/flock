@@ -3,7 +3,7 @@
 	import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
 
-	import { conversation } from '../../models/appState';
+	import { conversation } from '../../models/appModel';
 	import { loadProfile } from '../../actions/appActions';
 
 	$: viewingGroupConversation = ($conversation && $conversation.isGroup) || false;

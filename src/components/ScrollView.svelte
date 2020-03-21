@@ -1,7 +1,7 @@
 <svelte:window bind:innerWidth="{windowWidth}" />
 
 <script>
-    import { scrollRegionProperties, getScrollRegionProperties } from '../models/appState';
+    import { scrollRegionProperties, getScrollRegionProperties } from '../models/appModel';
 
     import { onMount, onDestroy, tick } from 'svelte'; // afterUpdate
 

@@ -3,7 +3,7 @@
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
 
-	import { projectId } from '../../../models/appState';
+	import { projectId } from '../../../models/appModel';
 	import { saveProjectDetails } from '../../../actions/projectActions.js';
 </script>
 

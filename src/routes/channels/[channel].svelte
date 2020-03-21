@@ -3,7 +3,7 @@
 	import Proxy from '../../components/Proxy.svelte';
 	import NewPostButton from '../../components/NewPostButton.svelte';
 
-	import { channelId } from '../../models/appState';
+	import { channelId } from '../../models/appModel';
 
 	import { loadThread } from '../../actions/appActions.js';
 </script>

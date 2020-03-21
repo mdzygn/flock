@@ -21,7 +21,7 @@ import {
     viewedUser,
 
     resetScrollRegionPosition,
-} from '../models/appState';
+} from '../models/appModel';
 
 import {
     returnView,

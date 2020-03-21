@@ -3,7 +3,7 @@
 
 	import { getMainSections, getIconForSection, getMainSectionForSegment, getMainSectionForRoute } from "../../models/sectionsModel.js";
 
-	import { project } from '../../models/appState';
+	import { project } from '../../models/appModel';
 
 	export let segment;
 	export let path;

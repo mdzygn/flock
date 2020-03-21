@@ -13,7 +13,7 @@
     import SendMessageIcon from "../../assets/icons/send.png";
     import ConnectIcon from "../../assets/icons/connect.png";
 
-    import { viewedUser } from '../../models/appState';
+    import { viewedUser } from '../../models/appModel';
 
     import { showLikes, loadConversation } from '../../actions/appActions.js';
 	import { requestConnection } from '../../actions/userActions';

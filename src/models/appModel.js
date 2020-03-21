@@ -3,7 +3,7 @@ import { get } from 'svelte/store';
 
 import { createModel } from '../utils/createModel';
 
-const appState = createModel({
+const appModel = createModel({
     projectId: null,
     channelId: null,
     threadId: null,
@@ -19,26 +19,26 @@ const appState = createModel({
 
 export const curPath = writable(null);
 
-export const projectId = appState.projectId;
-export const channelId = appState.channelId;
-export const threadId = appState.threadId;
-export const conversationId = appState.conversationId;
-export const profileId = appState.profileId;
+export const projectId = appModel.projectId;
+export const channelId = appModel.channelId;
+export const threadId = appModel.threadId;
+export const conversationId = appModel.conversationId;
+export const profileId = appModel.profileId;
 
 export const project = writable(null);
 export const conversation = writable(null);
 export const viewedUser = writable(null);
 
-export const newMessage = appState.newMessage;
+export const newMessage = appModel.newMessage;
 
-export const viewMode = appState.viewMode;
-export const locationMode = appState.locationMode;
-export const exploreZoomed = appState.exploreZoomed;
+export const viewMode = appModel.viewMode;
+export const locationMode = appModel.locationMode;
+export const exploreZoomed = appModel.exploreZoomed;
 
 export const scrollRegionProperties = writable({});
 // const scrollRegionProperties = writable({});
 // export const scrollRegionReset = writable(null);
-// const scrollRegionProperties = appState.scrollRegionProperties;
+// const scrollRegionProperties = appModel.scrollRegionProperties;
 
 export function getScrollRegionProperties(id) {
     if (!id) {
@@ -82,4 +82,4 @@ export function resetScrollRegionPosition(id) {
 //     }
 // }
 
-export default appState;
+export default appModel;

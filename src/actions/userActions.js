@@ -3,7 +3,7 @@ import { DEBUG } from '../config';
 
 import {
     viewedUser,
-} from '../models/appState.js';
+} from '../models/appModel';
 
 export function requestConnection(userId) {
     const curViewedUser = get(viewedUser);

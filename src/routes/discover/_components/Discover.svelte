@@ -8,7 +8,7 @@
 	import Feed from './../../_components/Feed.svelte';
 	import ProjectItem from './../../_components/ProjectItem.svelte';
 
-	import { viewMode, locationMode, resetScrollRegionPosition } from '../../../models/appState.js';
+	import { viewMode, locationMode, resetScrollRegionPosition } from '../../../models/appModel';
 	import { loadProject } from '../../../actions/appActions.js';
 
 	function toggleViewMode() {

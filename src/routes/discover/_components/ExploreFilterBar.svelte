@@ -3,7 +3,7 @@
 	import Hotspots from '../../../components/Hotspots.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
 
-	import { viewMode, locationMode, exploreZoomed } from '../../../models/appState.js';
+	import { viewMode, locationMode, exploreZoomed } from '../../../models/appModel';
 
 	function toggleViewMode() {
 		$viewMode = ($viewMode === 'explore') ? 'discover' : 'explore';

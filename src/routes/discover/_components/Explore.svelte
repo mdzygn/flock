@@ -1,5 +1,5 @@
 <script>
-	import { locationMode, exploreZoomed } from '../../../models/appState.js';
+	import { locationMode, exploreZoomed } from '../../../models/appModel';
 
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspots from '../../../components/Hotspots.svelte';

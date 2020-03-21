@@ -5,7 +5,7 @@
 
 	import NewPostButton from '../../components/NewPostButton.svelte';
 
-	import { threadId } from '../../models/appState';
+	import { threadId } from '../../models/appModel';
 	import { loadProfile } from '../../actions/appActions';
 </script>
 

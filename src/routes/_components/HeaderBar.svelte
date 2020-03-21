@@ -8,7 +8,7 @@
         project,
         conversation,
         viewedUser,
-    } from '../../models/appState.js';
+    } from '../../models/appModel';
 
     // import { hasCreated } from '../../models/projectViewState.js';
 

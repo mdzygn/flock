@@ -26,7 +26,7 @@
 		conversation,
 		viewedUser,
 		project,
-	} from '../models/appState';
+	} from '../models/appModel';
 	$: {
 		$curPath = $page.path;
 

@@ -1,5 +1,5 @@
 <script>
-	import { exploreZoomed } from '../../../models/appState.js';
+	import { exploreZoomed } from '../../../models/appModel';
 
 	import { loadProject } from '../../../actions/appActions.js';
 

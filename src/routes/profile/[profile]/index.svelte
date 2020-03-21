@@ -11,7 +11,7 @@
 
 	import ProjectList from './../../_components/ProjectList.svelte';
 
-	import { viewedUser } from '../../../models/appState';
+	import { viewedUser } from '../../../models/appModel';
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
 	$: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;

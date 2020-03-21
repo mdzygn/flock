@@ -1,7 +1,7 @@
 <script>
 	import NavIcon from "../../components/NavIcon.svelte";
 
-	import sections, { getIconForSection, getMainSectionForSegment, getMainSectionForRoute } from "../../models/sections.js";
+	import { getMainSections, getIconForSection, getMainSectionForSegment, getMainSectionForRoute } from "../../models/sectionsModel.js";
 
 	import { project } from '../../models/appState';
 
@@ -9,6 +9,8 @@
 	export let path;
 
 	$: isFollowing = $project && ($project.following || $project.isOwner);
+
+	let mainSections = getMainSections();
 
 	let mainSection;
 
@@ -32,11 +34,11 @@
 
 <nav>
 	<ul>
-		{#each sections as section}{#if section.main}
+		{#each mainSections as section}
 			<li><a aria-current='{mainSection === section.segment ? "page" : undefined}' href='{section.segment ? section.segment : "."}' title='{section.label}'>
 				<NavIcon iconId='{getIconForSection(section)}' active='{mainSection === section.segment}' label='{section.label}' />
 			</a></li>
-		{/if}{/each}
+		{/each}
 	</ul>
 </nav>
 

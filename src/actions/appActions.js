@@ -1,7 +1,7 @@
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 
-import { getProject } from '../data/projects';
+import { getProject } from '../models/projectsModel';
 import conversations from '../data/conversations';
 import users from '../data/users';
 

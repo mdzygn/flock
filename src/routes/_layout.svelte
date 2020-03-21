@@ -2,7 +2,7 @@
 	import { stores } from '@sapper/app';
 	const { page } = stores();
 
-	import { isDarkBgForPath } from "../models/sections.js";
+	import { isDarkBgForPath } from "../models/sectionsModel.js";
 
 	import ScrollView from '../components/ScrollView.svelte';
 	import HeaderBar from './_components/HeaderBar.svelte';

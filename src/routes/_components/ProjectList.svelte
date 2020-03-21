@@ -5,7 +5,7 @@
 	import ContentPanel from './../_components/ContentPanel.svelte';
 	import ProjectListItem from './ProjectListItem.svelte';
 
-	import { getProjectsByIds } from '../../data/projects.js';
+	import { getProjectsByIds } from '../../models/projectsModel';
 
 	import { loadProject } from '../../actions/appActions.js';
 

@@ -157,6 +157,12 @@ export const sections = [
 	},
 ];
 
+export default sections;
+
+export const getMainSections = () => {
+	return sections.filter(section => section.main);
+}
+
 export const getIdForSection = (section) => {
 	return section.id || section.segment;
 }
@@ -221,5 +227,3 @@ export const getSectionByPath = (path, appState) => {
 export const getSectionBySegment = (segment) => {
 	return sections.find(item => item.segment === segment);
 }
-
-export default sections;

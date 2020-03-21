@@ -3,7 +3,7 @@ import { DEBUG } from '../config';
 
 import { goto } from '@sapper/app';
 
-import { getProjectModel } from '../data/projects';
+import { getProjectModel } from '../models/projectsModel';
 import {
     project,
     resetScrollRegionPosition

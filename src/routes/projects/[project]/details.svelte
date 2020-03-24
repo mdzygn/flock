@@ -22,7 +22,7 @@
 	import { saveProjectDetails } from '../../../actions/projectActions';
 
 	let title = ($project && $project.title) || '';
-	let description = getFormattedText(($project && $project.description) || '');
+	let description = ($project && $project.description) || '';
 	let headerImage = ($project && $project.headerImage) || '';
 
 	$: saveEnabled = !editingProject || (title && description);
@@ -108,7 +108,7 @@
 		if (editingProject) {
 			Object.assign(projectDetails, {
 				title,
-				description: getUnformattedText(description),
+				description,
 				headerImage,
 			});
 		}

@@ -1,8 +1,6 @@
 <script>
 	import locale from '../../locale';
 
-	import { getUnformattedText } from '../../utils/utils';
-
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 
@@ -21,7 +19,7 @@
 	function createNewProject() {
 		const projectDetails = {
 			title,
-			description: getUnformattedText(description),
+			description,
 			headerImage,
 		};
 		createProject(projectDetails);

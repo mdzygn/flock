@@ -9,7 +9,7 @@ const ProjectModel = {
 
     public: false,
 
-    image: null,
+    headerImage: null,
 
     createdAt: 0,
     createdInfo: null,

@@ -2,6 +2,8 @@ import { writable } from 'svelte/store';
 
 import { generateId } from '../utils/utils';
 
+import config from '../config';
+
 import projectsData from '../data/projects';
 
 import ProjectModel from '../models/projectModel';
@@ -117,8 +119,10 @@ export function addProject(projectDetails) {
 	const newProjectModel = Object.assign({}, ProjectModel);
 
 	newProjectModel.id = projectId;
-	newProjectModel.title = projectDetails.title;
-	newProjectModel.description = projectDetails.description;
+
+	newProjectModel.headerImage = projectDetails.headerImage || null;
+	newProjectModel.title = projectDetails.title || '';
+	newProjectModel.description = projectDetails.description || '';
 
     newProjectModel.isOwner = true;
     newProjectModel.following = true;
@@ -126,4 +130,16 @@ export function addProject(projectDetails) {
 	projects.push(newProjectModel);
 
 	return newProjectModel;
+}
+
+export function getProjectHeaderImage(project) {
+	if (project) {
+		if (project.headerImage) {
+			return config.contentFolder + project.headerImage;
+		} else {
+			const headerImageId = project.slug || '_default';
+			return config.projectContentFolder + headerImageId + '/' + config.projectHeaderImage;
+		}
+	}
+	return null;
 }

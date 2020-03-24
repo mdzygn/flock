@@ -1,6 +1,8 @@
 <script>
     import Counter from './Counter.svelte';
 
+    import { getProjectHeaderImage } from '../../models/projectsModel';
+
     import { loadProject } from '../../actions/appActions';
 
 	import FollowingSmallIcon from "../../assets/icons/following_small.png";
@@ -8,8 +10,10 @@
     export let project;
     export let showLastActive = false;
 
-    $: headerImageId = project.slug || '_default';
-    $: thumbImage = 'content/projects/' + headerImageId + '/header.jpg';
+    // $: headerImageId = project.slug || '_default';
+    // $: thumbImage = 'content/projects/' + headerImageId + '/header.jpg';
+
+    $: thumbImage = getProjectHeaderImage(project);
 
     $: detail = (showLastActive ? project.lastActiveInfo : project.createdInfo) || '';
 

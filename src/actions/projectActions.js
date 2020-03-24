@@ -74,9 +74,13 @@ function checkUpdateProject(targetProject) {
 }
 
 export function createProject() {
+    const headerImageId = 'header1';
+    const headerImage = 'resource/headers/' + headerImageId + '.jpg';
+
     const projectDetails = {
         title: 'Test Project',
         description: 'Testing testing',
+        headerImage,
     };
 
     const newProject = addProject(projectDetails);

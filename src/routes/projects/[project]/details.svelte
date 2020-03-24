@@ -1,4 +1,5 @@
 <script>
+    import { tick } from 'svelte';
 	import { goto } from '@sapper/app';
 
 	import locale from '../../../locale';
@@ -21,7 +22,16 @@
 	let detail3 = '';
 	let detail4 = '';
 
+	let detailInput1;
+	let detailInput2;
+	let detailInput3;
+	let detailInput4;
+
 	let detailInitialized = false;
+
+	let MIN_DETAIL_INPUT_HEIGHT = 140;
+	let MAX_DETAIL_INPUT_HEIGHT = 385;
+	let DETAIL_INPUT_PADDING = 4;
 
 	$: {
 		if (!detailInitialized) {
@@ -30,7 +40,22 @@
 			detail2 = getFormattedDetail($project, 1);
 			detail3 = getFormattedDetail($project, 2);
 			detail4 = getFormattedDetail($project, 3);
+
+			updateRegionSizes();
 		}
+	}
+
+	async function updateRegionSizes() {
+        await tick();
+
+		if (detailInput1) { detailInput1.style = 'height: ' + getRegionHeight(detailInput1.scrollHeight) + 'px'; }
+		if (detailInput2) { detailInput2.style = 'height: ' + getRegionHeight(detailInput2.scrollHeight) + 'px'; }
+		if (detailInput3) { detailInput3.style = 'height: ' + getRegionHeight(detailInput3.scrollHeight) + 'px'; }
+		if (detailInput4) { detailInput4.style = 'height: ' + getRegionHeight(detailInput4.scrollHeight) + 'px'; }
+	}
+
+	function getRegionHeight(height) {
+		return Math.min(Math.max(height + DETAIL_INPUT_PADDING, MIN_DETAIL_INPUT_HEIGHT), MAX_DETAIL_INPUT_HEIGHT);
 	}
 
 	function getFormattedDetail(project, index) {
@@ -105,7 +130,7 @@
 			</div>
 			<div class="field">
 				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_1_TIP}</span></div>
-        		<textarea bind:value="{detail1}" />
+        		<textarea bind:this="{detailInput1}" bind:value="{detail1}" />
 			</div>
 
 			<div class="imageField">
@@ -113,7 +138,7 @@
 			</div>
 			<div class="field">
 				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_2_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_2_TIP}</span></div>
-        		<textarea bind:value="{detail2}" />
+        		<textarea bind:this="{detailInput2}" bind:value="{detail2}" />
 			</div>
 
 			<div class="imageField">
@@ -121,7 +146,7 @@
 			</div>
 			<div class="field">
 				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_3_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_3_TIP}</span></div>
-        		<textarea bind:value="{detail3}" />
+        		<textarea bind:this="{detailInput3}" bind:value="{detail3}" />
 			</div>
 
 			<div class="imageField">
@@ -129,7 +154,7 @@
 			</div>
 			<div class="field">
 				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_4_TIP}</span></div>
-        		<textarea bind:value="{detail4}" />
+        		<textarea bind:this="{detailInput4}" bind:value="{detail4}" />
 			</div>
 
 			<div class="actions">
@@ -181,7 +206,8 @@
         background: none;
 
         width: 100%;
-    	height: 236px;
+    	height: 140px;
+    	/* height: 236px; */
 
         box-sizing: border-box;
 

@@ -13,14 +13,14 @@
 
 	import { getMyProjectIds, getFollowingProjectIds } from '../../models/projectsModel';
 
-	import { displayingAllMyProjects, displayingAllFollowingProjects } from '../../models/projectViewModel';
+	import { projectsSearchString, displayingAllMyProjects, displayingAllFollowingProjects } from '../../models/projectViewModel';
 
 	import { newProject, loadProject } from '../../actions/appActions';
 
 	const MY_PROJECTS_DISPLAY_LIMIT = 3;
 	const FOLLOWED_PROJECTS_DISPLAY_LIMIT = 16;
 
-	let searchString = '';
+	$: searchString = $projectsSearchString;
 
 	function displayAllMyProjects() {
 		$displayingAllMyProjects = true;
@@ -59,7 +59,7 @@
 				height: 46px;" />
 		</Proxy> -->
 
-		<SearchBar bind:searchString={searchString} />
+		<SearchBar bind:searchString={$projectsSearchString} />
 		<div class="projectsContent">
 			<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" displayLimit="{$displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllMyProjects}" {searchString} showIfNoProjects="{true}" hideShowMoreWithVisibility="{true}">
 				{#if searchString}

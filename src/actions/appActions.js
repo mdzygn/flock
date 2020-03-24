@@ -52,10 +52,10 @@ export function setNavSection(section) {
     // switch (sectionId) {
 
     switch (section.segment) {
-        case 'discover':
+        case 'projects':
             displayingAllMyProjects.set(false);
             displayingAllFollowingProjects.set(false);
-            goto('discover');
+            goto('projects');
             break;
         case undefined:
             goto('.');

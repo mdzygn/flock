@@ -73,7 +73,7 @@
 
 <ScrollView>
 	<div class="content">
-		<Proxy image="create_project_2" className="proxyOverlay">
+		<!-- <Proxy image="create_project_2" className="proxyOverlay">
 			<Hotspot onClick="{save}" style="
 				right: 10px;
 				top: 827px;
@@ -84,14 +84,14 @@
 				top: 827px;
 				width: 108px;
 				height: 48px;" />
-		</Proxy>
+		</Proxy> -->
 
 		<div class="panelContent">
 			<div class="imageField">
 				<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
 			</div>
 			<div class="field">
-				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}</div>
+				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_1_TIP}</span></div>
         		<textarea bind:value="{detail1}" />
 			</div>
 
@@ -99,7 +99,7 @@
 				<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
 			</div>
 			<div class="field">
-				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_2_LABEL}</div>
+				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_2_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_2_TIP}</span></div>
         		<textarea bind:value="{detail2}" />
 			</div>
 
@@ -107,7 +107,7 @@
 				<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
 			</div>
 			<div class="field">
-				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_3_LABEL}</div>
+				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_3_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_3_TIP}</span></div>
         		<textarea bind:value="{detail3}" />
 			</div>
 
@@ -115,7 +115,7 @@
 				<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
 			</div>
 			<div class="field">
-				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}</div>
+				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_4_TIP}</span></div>
         		<textarea bind:value="{detail4}" />
 			</div>
 
@@ -128,11 +128,11 @@
 </ScrollView>
 
 <style>
-    .content :global(.proxyOverlay) {
+    /* .content :global(.proxyOverlay) {
         position: absolute;
 		pointer-events: none;
         opacity: 0.5;
-    }
+    } */
 
 	.panelContent {
     	padding-top: 4px;
@@ -153,6 +153,12 @@
     	padding-left: 4px;
     	padding-bottom: 4px;
 		color: #555555;
+	}
+
+	.tip {
+    	padding-left: 13px;
+
+		color: #999999;
 	}
 
 	textarea {

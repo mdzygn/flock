@@ -9,8 +9,9 @@
 
 	import Button from '../../../components/Button.svelte';
 
-    import NextArrowIcon from "../../../assets/icons/next_arrow.png";
 	import AddImageIcon from "../../../assets/icons/add_small.png";
+    import CancelIcon from "../../../assets/icons/cancel.png";
+	import SaveIcon from "../../../assets/icons/save.png";
 
 	import { project, projectId } from '../../../models/appModel';
 	import { saveProjectDetails } from '../../../actions/projectActions';
@@ -119,7 +120,8 @@
 			</div>
 
 			<div class="actions">
-				<Button className="nextButton" onClick="{save}" icon="{NextArrowIcon}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
+				<Button className="cancelButton" onClick="{cancel}" icon="{CancelIcon}">{locale.EDIT_PROJECT_DETAILS.CANCEL}</Button>
+				<Button className="saveButton" onClick="{save}" icon="{SaveIcon}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
 			</div>
 		</div>
 	</div>
@@ -174,28 +176,6 @@
 		resize: none;
 	}
 
-	.actions {
-		position: relative;
-		height: 50px;
-		margin-top: 10px;
-	}
-
-	.content :global(.nextButton) {
-        position: absolute;
-		top: 3px;
-		right: 12px;
-
-		padding: 10px;
-		padding-right: 39px;
-
-        font-size: 1.5rem;
-        font-weight: 700;
-    }
-    .content :global(.nextButton .icon) {
-    	padding-left: 20px;
-    	margin-top: -1px;
-    }
-
 	.content :global(.addImage) {
 		position: absolute;
     	top: 6px;
@@ -211,5 +191,46 @@
     .content :global(.addImage .icon) {
     	padding-left: 14px;
 		margin-top: -1px;
+    }
+
+
+	.actions {
+		position: relative;
+		height: 60px;
+		margin-top: 10px;
+	}
+
+
+	.content :global(.saveButton) {
+        position: absolute;
+		top: 3px;
+		right: 17px;
+
+		padding: 10px;
+		padding-right: 46px;
+
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    .content :global(.saveButton .icon) {
+    	padding-left: 20px;
+    	margin-top: -1px;
+    }
+
+
+	.content :global(.cancelButton) {
+        position: absolute;
+		top: 3px;
+    	left: 19px;
+
+		padding: 10px;
+		padding-right: 39px;
+
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    .content :global(.cancelButton .icon) {
+    	padding-left: 12px;
+    	margin-top: -1px;
     }
 </style>

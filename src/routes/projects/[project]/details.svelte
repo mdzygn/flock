@@ -105,7 +105,7 @@
 			details,
 		};
 
-		if (editingProject) {
+		if ($editingProject) {
 			Object.assign(projectDetails, {
 				title,
 				description,
@@ -113,7 +113,7 @@
 			});
 		}
 
-		saveProjectDetails(projectDetails);
+		saveProjectDetails(projectDetails, {showProjectInfo: !$editingProject});
 	}
 
 	function cancel() {

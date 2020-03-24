@@ -54,7 +54,7 @@ export function togglePublic() {
     }
 }
 
-export function saveProjectDetails(projectDetails) {
+export function saveProjectDetails(projectDetails, options) {
     const curProject = get(project);
     if (curProject) {
         if (projectDetails.details) {
@@ -72,7 +72,9 @@ export function saveProjectDetails(projectDetails) {
         project.set(curProject);
 
         goto('projects/' + curProject.id);
-        showProjectInfo();
+        if (options && options.showProjectInfo) {
+            showProjectInfo();
+        }
         resetScrollRegionPosition('project');
     }
 }

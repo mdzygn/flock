@@ -643,6 +643,8 @@
 
 		margin-left: -10px;
 
+    	min-height: 30px;
+
 		color: #555555;
 	}
 

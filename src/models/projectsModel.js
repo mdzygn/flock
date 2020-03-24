@@ -127,6 +127,10 @@ export function addProject(projectDetails) {
     newProjectModel.isOwner = true;
 	newProjectModel.following = true;
 
+	newProjectModel.isNew = true;
+	newProjectModel.hasCreated = true;
+	newProjectModel.projectHasDetails = false;
+
 	newProjectModel.followCount++;
 
 	projects.push(newProjectModel);

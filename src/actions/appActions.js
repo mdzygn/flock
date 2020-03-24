@@ -36,20 +36,6 @@ export function loadProject(targetProjectId, options) {
     const curProject = getProject(targetProjectId);
     project.set(curProject);
 
-    let isNew = false;
-    if (options && options.isNew) {
-        isNew = true;
-    }
-    if (curProject) {
-        if (isNew) {
-            curProject.isNew = true;
-            curProject.isOwner = true;
-            curProject.hasCreated = true;
-            curProject.projectHasDetails = false;
-        }
-    }
-    // hasCreated.set(isNew);
-
     showingInfo.set(options && options.showInfo);
 
     returnView.set(curProject && (curProject.following || curProject.isOwner));

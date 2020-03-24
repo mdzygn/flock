@@ -81,6 +81,6 @@ export function createProject(projectDetails) {
     const newProject = addProject(projectDetails);
 
     if (newProject) {
-        loadProject(newProject.id, {isNew: true});
+        loadProject(newProject.id);
     }
 }

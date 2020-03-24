@@ -42,7 +42,6 @@
 
 <style>
     .projectItem {
-        height: 314px;
         margin-bottom: 10px;
 
         background-color: #ffffff;
@@ -114,6 +113,8 @@
 
         font-size: 1.5rem;
         line-height: 2rem;
+
+        min-height: 26px;
 
         color: #555555;
     }

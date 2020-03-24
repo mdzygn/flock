@@ -14,7 +14,7 @@
     // let hasSlots = $$props.$$slots;
 </script>
 
-{#if href}
+{#if href && !disabled}
     <a {href} class="button {className}" class:disabled="{disabled}" on:click={onClick} {style}>
         <div class="buttonContent" style="{buttonContentStyle}">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
@@ -23,7 +23,7 @@
         </div>
     </a>
 {:else}
-    <div class="button {className}" class:disabled="{disabled}" on:click={onClick} class:activeButton={onClick} {style}>
+    <div class="button {className}" class:disabled="{disabled}" on:click={!disabled ? onClick : null} class:activeButton={!disabled &&  onClick} {style}>
         <div class="buttonContent" style="{buttonContentStyle}">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
                 <img class="icon" src="{icon}" alt="read more" style="{iconStyle}" />
@@ -62,6 +62,7 @@
     }
 
 	.disabled {
-    	opacity: 0.33;
+        cursor: initial;
+    	opacity: 0.25;
 	}
 </style>

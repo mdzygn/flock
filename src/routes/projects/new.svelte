@@ -14,6 +14,8 @@
 	let description = '';
 	let headerImage = 'header2';
 
+	$: nextEnabled = title && description;
+
 	function createNewProject() {
 		const projectDetails = {
 			title,
@@ -46,7 +48,7 @@
         		<div class="headerImageContainer"></div>
 			</div>
 			<div class="actions">
-				<Button className="nextButton" onClick="{createNewProject}" icon="{NextArrowIcon}">next</Button>
+				<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewProject}" icon="{NextArrowIcon}">next</Button>
 			</div>
 		</div>
 	</div>
@@ -56,7 +58,7 @@
     .content :global(.proxyOverlay) {
         position: absolute;
 		pointer-events: none;
-        opacity: 0.5;
+        opacity: 0;
     }
 
 	.panelContent {
@@ -76,6 +78,7 @@
 		font-size: 1.3rem;
     	padding-left: 4px;
     	padding-bottom: 4px;
+		color: #555555;
 	}
 
 	input {
@@ -149,7 +152,11 @@
         font-size: 1.5rem;
         font-weight: 700;
     }
+    /* .content :global(.nextButton.disabled) {
+		opacity: 0.15;
+    } */
     .content :global(.nextButton .icon) {
     	padding-left: 20px;
+    	margin-top: -1px;
     }
 </style>

@@ -2,6 +2,10 @@
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 
+	import Button from '../../components/Button.svelte';
+
+    import NextArrowIcon from "../../assets/icons/next_arrow.png";
+
 	import locale from '../../locale';
 
 	import { createProject } from '../../actions/projectActions';
@@ -33,9 +37,16 @@
 				<div class="label">{locale.NEW_PROJECT.TITLE}</div>
         		<input type="text" bind:value="{title}" />
 			</div>
-			<div class="field">
+			<div class="field descriptionField">
 				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
         		<textarea bind:value="{description}" />
+			</div>
+			<div class="field headerImageField">
+				<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
+        		<div class="headerImageContainer"></div>
+			</div>
+			<div class="actions">
+				<Button className="nextButton" onClick="{createNewProject}" icon="{NextArrowIcon}">next</Button>
 			</div>
 		</div>
 	</div>
@@ -49,11 +60,16 @@
     }
 
 	.panelContent {
-    	padding: 28px 21px;
+    	padding: 28px 0;
 	}
 
 	.field {
+    	padding: 0 21px;
 		padding-bottom: 30px;
+	}
+
+	.descriptionField {
+    	padding-bottom: 18px;
 	}
 
 	.label {
@@ -98,4 +114,42 @@
 
 		resize: none;
 	}
+
+	.headerImageField {
+    	padding: 0;
+	}
+
+	.headerImageLabel {
+    	padding-left: 25px;
+    	padding-right: 21px;
+	}
+
+	.headerImageContainer {
+		width: 100%;
+		height: 220px;
+
+    	background-color: #E3E3E3;
+    	margin-top: 10px;
+	}
+
+	.actions {
+		position: relative;
+		height: 30px;
+		margin-top: 10px;
+	}
+
+	.content :global(.nextButton) {
+        position: absolute;
+		top: 3px;
+		right: 12px;
+
+		padding: 10px;
+		padding-right: 39px;
+
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    .content :global(.nextButton .icon) {
+    	padding-left: 20px;
+    }
 </style>

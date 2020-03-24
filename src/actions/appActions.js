@@ -111,6 +111,9 @@ export function showProjectInfo() {
 export function hideProjectInfo() {
     showingInfo.set(false);
 }
+export function toggleProjectInfo() {
+    showingInfo.set(!get(showingInfo));
+}
 
 function getPagePath() {
     return get(curPath);

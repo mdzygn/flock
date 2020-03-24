@@ -5,6 +5,7 @@ const projects = [
 		slug: 'world-creator',
 
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
 		details: [
 			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
 			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
@@ -46,6 +47,7 @@ const projects = [
 		id: 'ma9l2h4h',
 		slug: 'tesseract',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
 		public: true,
 		createdAt: 0,
 		createdInfo: 'created 35 August 2019',
@@ -73,6 +75,20 @@ const projects = [
 		id: 'm2lmad9a',
 		slug: 'green-guardians',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		createdInfo: 'created 12 July 2019',
@@ -98,6 +114,20 @@ const projects = [
 		id: '36bsf5gs',
 		slug: 'leonardos-world',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -122,6 +152,7 @@ const projects = [
 		id: '9dm4l7ps',
 		slug: 'new-earth',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -155,6 +186,20 @@ const projects = [
 		id: '92kd73kj',
 		slug: 'project2',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -183,6 +228,20 @@ const projects = [
 		id: '4v8dtr2k',
 		slug: 'project1',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -211,6 +270,20 @@ const projects = [
 		id: 'h9osk2ml',
 		slug: 'project6',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -241,6 +314,20 @@ const projects = [
 		id: 'l4hs7chs',
 		slug: 'project3',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -268,6 +355,20 @@ const projects = [
 		id: '52kms03l',
 		slug: 'project4',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -295,6 +396,20 @@ const projects = [
 		id: 'l0soekbs',
 		slug: 'project5',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -322,6 +437,20 @@ const projects = [
 		id: '0dr6yhsa',
 		slug: 'project7',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -349,6 +478,20 @@ const projects = [
 		id: 'g3sr9bma',
 		slug: 'project8',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -376,6 +519,20 @@ const projects = [
 		id: '6ksb2dla',
 		slug: 'project9',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -403,6 +560,20 @@ const projects = [
 		id: 'opsncl12',
 		slug: 'project10',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -430,6 +601,20 @@ const projects = [
 		id: '72mld013',
 		slug: 'project11',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -457,6 +642,20 @@ const projects = [
 		id: '1h49osdp',
 		slug: 'project12',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,
@@ -484,6 +683,20 @@ const projects = [
 		id: '9p2md0p3',
 		slug: 'project13',
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
+
+		details: [
+			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
+			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
+			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
+			{detail: ''},
+			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
+			+'Arcu odio ut sem nulla pharetra.'},
+		],
+
 		public: true,
 		createdAt: 0,
 		lastActiveAt: 0,

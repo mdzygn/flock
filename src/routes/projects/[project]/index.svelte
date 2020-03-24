@@ -43,6 +43,7 @@
 		editProjectDetails,
 		showProjectInfo,
 		hideProjectInfo,
+		toggleProjectInfo,
 		showProjectFollowers,
 	} from '../../../actions/appActions';
 
@@ -290,7 +291,7 @@
 						{/if}
 						<div class="itemContent">
 							<div class="header" class:headerOwner="{isOwner}">{projectTitle}</div>
-							<div class="description" class:button="{projectHasDetails && !showInfo}" on:click="{projectHasDetails && !showInfo ? showProjectInfo : null}">{projectDescription}</div>
+							<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? toggleProjectInfo : null}">{projectDescription}</div>
 						</div>
 						{#if projectHasDetails}
 							{#if !showInfo}
@@ -517,6 +518,11 @@
     	padding-left: 16px;
 	}
 
+
+	.projectInfo {
+    	padding-top: 20px;
+	}
+
 	.projectInfoDetail {
 		padding: 22px 23px;
 		padding-right: 35px;
@@ -532,7 +538,7 @@
 		right: 0; */
 
     	float: right;
-    	margin-top: -25px;
+    	margin-top: -14px; /* -25px; */
 
 		padding: 10px;
     	padding-left: 20px;

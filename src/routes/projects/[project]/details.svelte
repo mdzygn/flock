@@ -6,6 +6,8 @@
 
 	import locale from '../../../locale';
 
+	import { getFormattedText, getUnformattedText } from '../../../utils/utils';
+
 	import ScrollView from '../../../components/ScrollView.svelte';
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
@@ -20,7 +22,7 @@
 	import { saveProjectDetails } from '../../../actions/projectActions';
 
 	let title = ($project && $project.title) || '';
-	let description = ($project && $project.description) || '';
+	let description = getFormattedText(($project && $project.description) || '');
 	let headerImage = ($project && $project.headerImage) || '';
 
 	$: saveEnabled = !editingProject || (title && description);
@@ -71,14 +73,10 @@
 	function getFormattedDetail(project, index) {
 		const text = (project && project.details && project.details[index] && project.details[index].detail) || '';
 		if (text) {
-			return text.replace(/<br\/>/g, '\r\n');
+			return getFormattedText(text); // text.replace(/<br\/>/g, '\r\n');
 		} else {
 			return text;
 		}
-	}
-
-	function getUnformattedText(text) {
-		return text.replace(/\r?\n/g, '<br/>');
 	}
 
 	function save() {
@@ -110,7 +108,7 @@
 		if (editingProject) {
 			Object.assign(projectDetails, {
 				title,
-				description,
+				description: getUnformattedText(description),
 				headerImage,
 			});
 		}

@@ -4,3 +4,11 @@ export function generateId() {
         return chars[Math.floor(Math.random() * chars.length)];
     });
 }
+
+export function getFormattedText(text) {
+    return text.replace(/<br\/>/g, '\r\n');
+}
+
+export function getUnformattedText(text) {
+    return text.replace(/\r?\n/g, '<br/>');
+}

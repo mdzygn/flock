@@ -30,7 +30,7 @@
 
 	import { projectId, project } from '../../../models/appModel';
 
-	import { getProjectHeaderImage } from '../../../models/projectsModel';
+	import { getProjectHeaderImage, getProjectHasDetails } from '../../../models/projectsModel';
 
 	import {
 		returnView,
@@ -97,7 +97,7 @@
 
 	$: projectDetails = ($project && $project.details) || null;
 
-	$: projectHasDetails = (projectDetails && (projectDetails[0] || projectDetails[1] || projectDetails[2] || projectDetails[3])) || false;
+	$: projectHasDetails = getProjectHasDetails($project);
 	$: showInfo = $showingInfo && projectHasDetails;
 
 	$: {

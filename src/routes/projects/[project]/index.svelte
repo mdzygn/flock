@@ -307,7 +307,8 @@
 							{#each projectDetails as projectDetailItem, index}
 								{#if projectDetailItem.detail}
 									<Proxy image="project_info_image_{index + 1}" />
-									<Proxy image="project_info_content_1" />
+									<!-- <Proxy image="project_info_content_3" className="proxyOverlay" /> -->
+									<div class="projectInfoDetail">{@html projectDetailItem.detail}</div>
 								{/if}
 							{/each}
 							<!-- <Proxy image="project_info_image_1" />
@@ -514,6 +515,15 @@
 	}
     .overviewContent :global(.addProjectDetailsButton .icon) {
     	padding-left: 16px;
+	}
+
+	.projectInfoDetail {
+		padding: 22px 23px;
+		padding-right: 35px;
+    	padding-bottom: 32px;
+
+		font-size: 1.5rem;
+		line-height: 2rem;
 	}
 
     .contentContainer :global(.infoCollapseButton) {

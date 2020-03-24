@@ -26,11 +26,24 @@
 	$: {
 		if (!detailInitialized) {
 			detailInitialized= true;
-			detail1 = ($project.details && $project.details[0] && $project.details[0].detail) || '';
-			detail2 = ($project.details && $project.details[1] && $project.details[1].detail) || '';
-			detail3 = ($project.details && $project.details[2] && $project.details[2].detail) || '';
-			detail4 = ($project.details && $project.details[3] && $project.details[3].detail) || '';
+			detail1 = getFormattedDetail($project, 0);
+			detail2 = getFormattedDetail($project, 1);
+			detail3 = getFormattedDetail($project, 2);
+			detail4 = getFormattedDetail($project, 3);
 		}
+	}
+
+	function getFormattedDetail(project, index) {
+		const text = ($project.details && $project.details[index] && $project.details[index].detail) || '';
+		if (text) {
+			return text.replace(/<br\/>/g, '\r\n');
+		} else {
+			return text;
+		}
+	}
+
+	function getUnformattedText(text) {
+		return text.replace(/\r?\n/g, '<br/>');
 	}
 
 	function save() {
@@ -52,7 +65,7 @@
 
 		for (let detailI = 0; detailI < 4; detailI++) {
 			details[detailI] = details[detailI] || {};
-			details[detailI].detail = sourceDetails[detailI];
+			details[detailI].detail = getUnformattedText(sourceDetails[detailI]);
 		}
 
 		const projectDetails = {
@@ -168,11 +181,12 @@
         background: none;
 
         width: 100%;
-    	height: 140px;
+    	height: 236px;
 
         box-sizing: border-box;
 
-        font-size: 1.5rem;
+        /* font-size: 1.5rem; */
+    	font-size: 1.4rem;
     	color: #555555;
 
         padding: 6px 4px;

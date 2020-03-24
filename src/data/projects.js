@@ -13,8 +13,8 @@ const projects = [
 			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
 			{detail: ''},
 			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
-			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.'
-			+'Tempor orci eu.'
+			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
+			+'Tempor orci eu.<br/><br/>'
 			+'Arcu odio ut sem nulla pharetra.'},
 		],
 

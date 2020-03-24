@@ -137,7 +137,7 @@
 
 	.actions {
 		position: relative;
-		height: 30px;
+		height: 50px;
 		margin-top: 10px;
 	}
 

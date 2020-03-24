@@ -10,6 +10,7 @@
 	import Button from '../../../components/Button.svelte';
 
     import NextArrowIcon from "../../../assets/icons/next_arrow.png";
+	import AddImageIcon from "../../../assets/icons/add_small.png";
 
 	import { project, projectId } from '../../../models/appModel';
 	import { saveProjectDetails } from '../../../actions/projectActions';
@@ -53,13 +54,6 @@
 			details[detailI].detail = sourceDetails[detailI];
 		}
 
-		// for (let detailI = 0; detailI < sourceDetails.length; detailI++) {
-		// 	if (sourceDetails[detailI] || details[detailI]) {
-		// 		details[detailI] = details[detailI] || {};
-		// 		details[detailI].detail = sourceDetails[detailI];
-		// 	}
-		// }
-
 		const projectDetails = {
 			details,
 		};
@@ -92,28 +86,40 @@
 		</Proxy>
 
 		<div class="panelContent">
-			<div class="field descriptionField">
-				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
+			<div class="imageField">
+				<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+			</div>
+			<div class="field">
+				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}</div>
         		<textarea bind:value="{detail1}" />
 			</div>
-			<div class="field descriptionField">
-				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
+
+			<div class="imageField">
+				<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+			</div>
+			<div class="field">
+				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_2_LABEL}</div>
         		<textarea bind:value="{detail2}" />
 			</div>
-			<div class="field descriptionField">
-				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
+
+			<div class="imageField">
+				<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+			</div>
+			<div class="field">
+				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_3_LABEL}</div>
         		<textarea bind:value="{detail3}" />
 			</div>
-			<div class="field descriptionField">
-				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
+
+			<div class="imageField">
+				<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+			</div>
+			<div class="field">
+				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}</div>
         		<textarea bind:value="{detail4}" />
 			</div>
-			<div class="field headerImageField">
-				<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
-        		<div class="headerImageContainer"></div>
-			</div>
+
 			<div class="actions">
-				<Button className="nextButton" onClick="{save}" icon="{NextArrowIcon}">{locale.NEW_PROJECT.EDIT_PROJECT_DETAILS}</Button>
+				<Button className="nextButton" onClick="{save}" icon="{NextArrowIcon}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
 			</div>
 		</div>
 	</div>
@@ -123,16 +129,21 @@
     .content :global(.proxyOverlay) {
         position: absolute;
 		pointer-events: none;
-        opacity: 0;
+        opacity: 0.5;
     }
 
 	.panelContent {
-    	padding: 28px 0;
+    	padding-top: 4px;
 	}
 
 	.field {
     	padding: 0 21px;
-		padding-bottom: 30px;
+    	padding-top: 18px;
+	}
+
+	.imageField {
+		position: relative;
+		height: 29px;
 	}
 
 	.label {
@@ -149,7 +160,7 @@
         background: none;
 
         width: 100%;
-		height: 70px;
+    	height: 140px;
 
         box-sizing: border-box;
 
@@ -165,7 +176,7 @@
 
 	.actions {
 		position: relative;
-		height: 30px;
+		height: 50px;
 		margin-top: 10px;
 	}
 
@@ -183,5 +194,22 @@
     .content :global(.nextButton .icon) {
     	padding-left: 20px;
     	margin-top: -1px;
+    }
+
+	.content :global(.addImage) {
+		position: absolute;
+    	top: 6px;
+		right: 5px;
+
+		padding: 10px;
+		padding-right: 45px;
+		padding-left: 13px;
+
+		font-size: 1.2rem;
+		font-weight: 700;
+    }
+    .content :global(.addImage .icon) {
+    	padding-left: 14px;
+		margin-top: -1px;
     }
 </style>

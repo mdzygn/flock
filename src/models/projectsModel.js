@@ -1,7 +1,12 @@
 import { writable } from 'svelte/store';
-import { onDestroy } from 'svelte'; // afterUpdate
 
-import projects from '../data/projects';
+import { generateId } from '../utils/utils';
+
+import projectsData from '../data/projects';
+
+import ProjectModel from '../models/projectModel';
+
+const projects = JSON.parse(JSON.stringify(projectsData));
 
 const projectModels = {};
 
@@ -102,4 +107,23 @@ export function getFollowingProjectIds() {
 
 export function getDiscoveryProjectIds(options) {
 	return getDiscoveryProjects(options).map(project => project.id);
+}
+
+export function addProject(projectDetails) {
+    let projectId, trialIndex;
+	do { projectId = generateId(); } while (getProject(projectId) && trialIndex < 99);
+	if (trialIndex === 99) { return null; }
+
+	const newProjectModel = Object.assign({}, ProjectModel);
+
+	newProjectModel.id = projectId;
+	newProjectModel.title = projectDetails.title;
+	newProjectModel.description = projectDetails.description;
+
+    newProjectModel.isOwner = true;
+    newProjectModel.following = true;
+
+	projects.push(newProjectModel);
+
+	return newProjectModel;
 }

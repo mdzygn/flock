@@ -3,13 +3,15 @@ import { DEBUG } from '../config';
 
 import { goto } from '@sapper/app';
 
-import { getProjectModel } from '../models/projectsModel';
+import { addProject, getProjectModel } from '../models/projectsModel';
+
 import {
     project,
     resetScrollRegionPosition
 } from '../models/appModel';
 
 import {
+    loadProject,
     showProjectInfo,
 } from '../actions/appActions';
 
@@ -68,5 +70,18 @@ function checkUpdateProject(targetProject) {
     const curProject = get(project);
     if (curProject && targetProject === curProject) {
         project.set(curProject);
+    }
+}
+
+export function createProject() {
+    const projectDetails = {
+        title: 'Test Project',
+        description: 'Testing testing',
+    };
+
+    const newProject = addProject(projectDetails);
+
+    if (newProject) {
+        loadProject(newProject.id, {isNew: true});
     }
 }

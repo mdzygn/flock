@@ -2,7 +2,7 @@
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 
-	import { createProject } from '../../a\ctions/appActions';
+	import { createProject } from '../../actions/projectActions';
 </script>
 
 <svelte:head>
@@ -11,7 +11,7 @@
 
 <ScrollView>
 	<div class="content">
-		<Proxy image="create_project" onClick="{e => createProject('msl30nhg')}" />
+		<Proxy image="create_project" onClick="{e => createProject('92kd73kj')}" />
 	</div>
 </ScrollView>
 

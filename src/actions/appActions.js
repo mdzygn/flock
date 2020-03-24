@@ -69,10 +69,6 @@ export function editProjectDetails() {
     goto('projects/' + get(projectId) + '/details');
 }
 
-export function createProject(targetProjectId) {
-    loadProject(targetProjectId, {isNew: true});
-}
-
 export function showLikes() {
     goto('profile/' + get(profileId) + '/likes');
     resetScrollRegionPosition('likes');

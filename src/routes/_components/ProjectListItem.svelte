@@ -8,7 +8,8 @@
     export let project;
     export let showLastActive = false;
 
-    $: thumbImage = project.slug ? 'content/projects/' + project.slug + '/header.jpg' : '';
+    $: headerImageId = project.slug || '_default';
+    $: thumbImage = 'content/projects/' + headerImageId + '/header.jpg';
 
     $: detail = (showLastActive ? project.lastActiveInfo : project.createdInfo) || '';
 

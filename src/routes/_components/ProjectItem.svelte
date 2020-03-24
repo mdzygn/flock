@@ -21,7 +21,8 @@
 
     $: projectSlug = ($project && $project.slug) || null;
 
-	$: headerImage = projectSlug ? 'content/projects/' + projectSlug + '/header.jpg' : '';
+    $: headerImageId = projectSlug || '_default';
+	$: headerImage = 'content/projects/' + headerImageId + '/header.jpg';
 
     $: projectTitle = ($project && $project.title) || '';
     $: projectDescription = ($project && $project.description) || '';

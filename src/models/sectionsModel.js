@@ -101,7 +101,7 @@ export const sections = [
 	{
 		path: '/projects/.+',
 		id: 'project',
-		label: 'World Creator',
+		label: 'Projects',
 		darkBg: true,
 		showBack: true,
 		isProjectView: true,
@@ -128,7 +128,7 @@ export const sections = [
 	{
 		path: '/messages/group',
 		id: 'message_group_view',
-		label: 'World Creator',
+		label: 'Messages',
 		showBack: true,
 		// parentSection: 'projects/m62lsp2o',
 	},

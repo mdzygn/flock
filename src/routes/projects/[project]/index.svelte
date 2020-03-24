@@ -77,15 +77,17 @@
 	$: following = ($project && $project.following) || false;
 	$: liked = ($project && $project.liked) || false;
 	$: isPublic = ($project && $project.public) || false;
-	$: unreadMessageCount = ($project && $project.unreadMessageCount) || false;
-	$: messageCount = ($project && $project.messageCount) || false;
+
+	$: unreadMessageCount = ($project && $project.unreadMessageCount) || 0;
+	$: messageCount = ($project && $project.messageCount) || 0;
 
 	$: likeCount = ($project && $project.likeCount) || 0;
 	$: followCount = ($project && $project.followCount) || 0;
 
-	$: projectSlug = ($project && $project.slug) || '';
+	$: projectSlug = ($project && $project.slug) || null;
 
-	$: headerImage = 'content/projects/' + projectSlug + '/header.jpg';
+	$: headerImageId = projectSlug || '_default';
+	$: headerImage = 'content/projects/' + headerImageId + '/header.jpg';
 
     $: projectTitle = ($project && $project.title) || '';
 	$: projectDescription = ($project && $project.description) || '';

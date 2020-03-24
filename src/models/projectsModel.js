@@ -124,6 +124,9 @@ export function addProject(projectDetails) {
 	newProjectModel.title = projectDetails.title || '';
 	newProjectModel.description = projectDetails.description || '';
 
+	newProjectModel.createdAt = (new Date()).getTime();
+	newProjectModel.lastActiveAt = newProjectModel.createdAt;
+
     newProjectModel.isOwner = true;
 	newProjectModel.following = true;
 
@@ -133,7 +136,7 @@ export function addProject(projectDetails) {
 
 	newProjectModel.followCount++;
 
-	projects.push(newProjectModel);
+	projects.unshift(newProjectModel);
 
 	return newProjectModel;
 }

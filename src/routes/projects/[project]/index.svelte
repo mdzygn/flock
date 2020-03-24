@@ -30,6 +30,8 @@
 
 	import { projectId, project } from '../../../models/appModel';
 
+	import { getProjectHeaderImage } from '../../../models/projectsModel';
+
 	import {
 		returnView,
 		showingInfo,
@@ -86,8 +88,7 @@
 
 	$: projectSlug = ($project && $project.slug) || null;
 
-	$: headerImageId = projectSlug || '_default';
-	$: headerImage = 'content/projects/' + headerImageId + '/header.jpg';
+    $: headerImage = getProjectHeaderImage($project);
 
     $: projectTitle = ($project && $project.title) || '';
 	$: projectDescription = ($project && $project.description) || '';

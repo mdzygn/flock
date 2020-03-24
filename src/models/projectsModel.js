@@ -125,7 +125,9 @@ export function addProject(projectDetails) {
 	newProjectModel.description = projectDetails.description || '';
 
     newProjectModel.isOwner = true;
-    newProjectModel.following = true;
+	newProjectModel.following = true;
+
+	newProjectModel.followCount++;
 
 	projects.push(newProjectModel);
 

@@ -9,7 +9,7 @@
     import ActionBar from './ActionBar.svelte';
 
 	import Proxy from '../../components/Proxy.svelte';
-    import { getProjectModel } from '../../models/projectsModel';
+    import { getProjectModel, getProjectHeaderImage } from '../../models/projectsModel';
     import { loadProject } from '../../actions/appActions';
 
     import MoreArrowIcon from "../../assets/icons/more_arrow.png";
@@ -21,8 +21,7 @@
 
     $: projectSlug = ($project && $project.slug) || null;
 
-    $: headerImageId = projectSlug || '_default';
-	$: headerImage = 'content/projects/' + headerImageId + '/header.jpg';
+    $: headerImage = getProjectHeaderImage($project);
 
     $: projectTitle = ($project && $project.title) || '';
     $: projectDescription = ($project && $project.description) || '';

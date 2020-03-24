@@ -10,9 +10,6 @@
     export let project;
     export let showLastActive = false;
 
-    // $: headerImageId = project.slug || '_default';
-    // $: thumbImage = 'content/projects/' + headerImageId + '/header.jpg';
-
     $: thumbImage = getProjectHeaderImage(project);
 
     $: detail = (showLastActive ? project.lastActiveInfo : project.createdInfo) || '';

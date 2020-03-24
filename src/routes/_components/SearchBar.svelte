@@ -1,4 +1,6 @@
 <script>
+    import { testInputDefocus } from '../../utils/utils';
+
     import SearchIcon from "../../assets/icons/search.png";
     import ClearIcon from "../../assets/icons/clear.png";
 
@@ -27,7 +29,7 @@
         <div class="searchButton" on:click="{selectSearchIcon}">
             <div class="searchIcon" style="background-image: url({searchString ? ClearIcon : SearchIcon})" />
         </div>
-        <input bind:this="{input}" class="searchFieldInput" type="text" bind:value="{searchString}" placeholder="{placeholder}" />
+        <input bind:this="{input}" class="searchFieldInput" type="text" bind:value="{searchString}" placeholder="{placeholder}" on:keypress="{testInputDefocus}" />
     </div>
 </div>
 

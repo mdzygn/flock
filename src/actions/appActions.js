@@ -27,6 +27,8 @@ import {
     returnView,
     showingInfo,
     editingProject,
+    displayingAllMyProjects,
+    displayingAllFollowingProjects,
 } from '../models/projectViewModel';
 
 export function loadProject(targetProjectId, options) {
@@ -43,6 +45,24 @@ export function loadProject(targetProjectId, options) {
 
     gotoRoute('projects/' + targetProjectId);
     resetScrollRegionPosition('project');
+}
+
+export function setNavSection(section) {
+    // const sectionId = getIdForSection(section);
+    // switch (sectionId) {
+
+    switch (section.segment) {
+        case 'discover':
+            displayingAllMyProjects.set(false);
+            displayingAllFollowingProjects.set(false);
+            goto('discover');
+            break;
+        case undefined:
+            goto('.');
+            break;
+        default:
+            goto(section.segment);
+    }
 }
 
 export function loadProjectPost(targetProjectId) {

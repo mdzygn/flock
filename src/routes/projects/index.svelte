@@ -13,6 +13,8 @@
 
 	import { getMyProjectIds, getFollowingProjectIds } from '../../models/projectsModel';
 
+	import { displayingAllMyProjects, displayingAllFollowingProjects } from '../../models/projectViewModel';
+
 	import { newProject, loadProject } from '../../actions/appActions';
 
 	const MY_PROJECTS_DISPLAY_LIMIT = 3;
@@ -20,15 +22,12 @@
 
 	let searchString = '';
 
-	let displayingAllMyProjects = false;
-	let displayingAllFollowingProjects = false;
-
 	function displayAllMyProjects() {
-		displayingAllMyProjects = true;
+		$displayingAllMyProjects = true;
 	}
 
 	function displayAllFollowingProjects() {
-		displayingAllFollowingProjects = true;
+		$displayingAllFollowingProjects = true;
 	}
 
 	const myProjects = getMyProjectIds();
@@ -62,7 +61,7 @@
 
 		<SearchBar bind:searchString={searchString} />
 		<div class="projectsContent">
-			<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" displayLimit="{displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllMyProjects}" {searchString} showIfNoProjects="{true}" hideShowMoreWithVisibility="{true}">
+			<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" displayLimit="{$displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllMyProjects}" {searchString} showIfNoProjects="{true}" hideShowMoreWithVisibility="{true}">
 				{#if searchString}
 					<slot>No projects found matching "{searchString}"</slot>
 				{:else}
@@ -70,7 +69,7 @@
 				{/if}
 			</ProjectList>
 			<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">New Project</Button>
-			<ProjectList title="Following" className="followingProjects" projects="{followedProjects}" showLastActive="{true}" displayLimit="{displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} showIfNoProjects="{true}">
+			<ProjectList title="Following" className="followingProjects" projects="{followedProjects}" showLastActive="{true}" displayLimit="{$displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} showIfNoProjects="{true}">
 				{#if searchString}
 					<slot>No followed projects matching "{searchString}"</slot>
 				{:else}

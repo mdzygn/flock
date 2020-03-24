@@ -5,6 +5,8 @@
 
 	import { project } from '../../models/appModel';
 
+	import { setNavSection } from '../../actions/appActions';
+
 	export let segment;
 	export let path;
 
@@ -30,14 +32,18 @@
 	}
 	// $: mainSection = getMainSectionForSegment(segment);
 	// export let path;
+
+	function selectSection() {
+
+	}
 </script>
 
 <nav>
 	<ul>
 		{#each mainSections as section}
-			<li><a aria-current='{mainSection === section.segment ? "page" : undefined}' href='{section.segment ? section.segment : "."}' title='{section.label}'>
-				<NavIcon iconId='{getIconForSection(section)}' active='{mainSection === section.segment}' label='{section.label}' />
-			</a></li>
+			<li><div class="button" aria-current="{mainSection === section.segment ? 'page' : undefined}" on:click="{() => setNavSection(section)}" title="{section.label}">
+				<NavIcon iconId="{getIconForSection(section)}" active="{mainSection === section.segment}" label="{section.label}" />
+			</div></li>
 		{/each}
 	</ul>
 </nav>
@@ -60,7 +66,9 @@
 		box-shadow: 0 -2px 5px 0 rgba(0,0,0,0.15);
 	}
 
-	a {
+	.button {
+		cursor: pointer;
+
 		text-decoration: none;
     	padding: 10px 0;
 		display: block;

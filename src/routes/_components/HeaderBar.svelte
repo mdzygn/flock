@@ -1,7 +1,7 @@
 <script>
     import { goto } from '@sapper/app';
 
-    import sections, { getSectionByPath, getIdForSection } from "../../models/sectionsModel";
+    import { getSectionByPath, getIdForSection } from "../../models/sectionsModel";
 
     import {
         viewMode,

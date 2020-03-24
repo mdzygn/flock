@@ -64,8 +64,6 @@
 			details,
 		};
 
-		console.log(projectDetails);
-
 		saveProjectDetails(projectDetails);
 	}
 

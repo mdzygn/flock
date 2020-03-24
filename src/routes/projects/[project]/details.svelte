@@ -2,9 +2,11 @@
     import { tick } from 'svelte';
 	import { goto } from '@sapper/app';
 
-	import { editingProject } from '../../../models/projectViewModel';
-
 	import locale from '../../../locale';
+
+	import { testInputDefocus } from '../../../utils/utils';
+
+	import { editingProject } from '../../../models/projectViewModel';
 
 	import { getFormattedText, getUnformattedText } from '../../../utils/utils';
 
@@ -148,11 +150,11 @@
 				</div>
 				<div class="field">
 					<div class="label">{locale.NEW_PROJECT.TITLE}</div>
-					<input type="text" bind:value="{title}" />
+					<input type="text" bind:value="{title}" on:keypress="{(e) => testInputDefocus(e, {target: descriptionInput})}" />
 				</div>
 				<div class="field descriptionField">
 					<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
-					<textarea bind:this="{descriptionInput}" bind:value="{description}" />
+					<textarea bind:this="{descriptionInput}" bind:value="{description}" on:keypress="{testInputDefocus}" />
 				</div>
 				<div class="field headerImageField">
 					<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>

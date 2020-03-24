@@ -1,5 +1,6 @@
 <script>
 	import locale from '../../locale';
+	import { testInputDefocus } from '../../utils/utils';
 
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
@@ -13,6 +14,8 @@
 	let title = '';
 	let description = '';
 	let headerImage = 'header2';
+
+	let descriptionField;
 
 	$: nextEnabled = title && description && headerImage;
 
@@ -37,11 +40,11 @@
 		<div class="panelContent">
 			<div class="field">
 				<div class="label">{locale.NEW_PROJECT.TITLE}</div>
-        		<input type="text" bind:value="{title}" />
+        		<input type="text" bind:value="{title}" on:keypress="{(e) => testInputDefocus(e, {target: descriptionField})}" />
 			</div>
 			<div class="field descriptionField">
 				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
-        		<textarea bind:value="{description}" />
+        		<textarea bind:this="{descriptionField}" bind:value="{description}" on:keypress="{testInputDefocus}" />
 			</div>
 			<div class="field headerImageField">
 				<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>

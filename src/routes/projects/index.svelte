@@ -68,7 +68,7 @@
 					<slot>You have not shared any projects<br/>Create a <a href="projects/new">New Project</a></slot>
 				{/if}
 			</ProjectList>
-			<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">New Project</Button>
+			<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">new project</Button>
 			<ProjectList title="Following" className="followingProjects" projects="{followedProjects}" showLastActive="{true}" displayLimit="{$displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} showIfNoProjects="{true}">
 				{#if searchString}
 					<slot>No followed projects matching "{searchString}"</slot>

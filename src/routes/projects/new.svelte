@@ -1,12 +1,12 @@
 <script>
+	import locale from '../../locale';
+
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 
 	import Button from '../../components/Button.svelte';
 
     import NextArrowIcon from "../../assets/icons/next_arrow.png";
-
-	import locale from '../../locale';
 
 	import { createProject } from '../../actions/projectActions';
 
@@ -33,7 +33,7 @@
 
 <ScrollView>
 	<div class="content">
-		<Proxy image="create_project" className="proxyOverlay" /> <!-- onClick="{createNewProject}" -->
+		<!-- <Proxy image="create_project" className="proxyOverlay" /> -->
 		<div class="panelContent">
 			<div class="field">
 				<div class="label">{locale.NEW_PROJECT.TITLE}</div>
@@ -48,18 +48,18 @@
         		<div class="headerImageContainer"></div>
 			</div>
 			<div class="actions">
-				<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewProject}" icon="{NextArrowIcon}">next</Button>
+				<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewProject}" icon="{NextArrowIcon}">{locale.NEW_PROJECT.CONFIRM}</Button>
 			</div>
 		</div>
 	</div>
 </ScrollView>
 
 <style>
-    .content :global(.proxyOverlay) {
+    /* .content :global(.proxyOverlay) {
         position: absolute;
 		pointer-events: none;
         opacity: 0;
-    }
+    } */
 
 	.panelContent {
     	padding: 28px 0;

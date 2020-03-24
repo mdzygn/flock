@@ -54,10 +54,13 @@ export function togglePublic() {
     }
 }
 
-export function saveProjectDetails(details) {
+export function saveProjectDetails(projectDetails) {
     const curProject = get(project);
     if (curProject) {
-        curProject.projectHasDetails = true;
+        if (projectDetails.details) {
+            curProject.details = projectDetails.details;
+            curProject.projectHasDetails = true;
+        }
         project.set(curProject);
 
         goto('projects/' + curProject.id);

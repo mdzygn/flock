@@ -93,7 +93,12 @@
     $: projectTitle = ($project && $project.title) || '';
 	$: projectDescription = ($project && $project.description) || '';
 	$: projectLocation = ($project && $project.location) || '';
-	$: projectHasDetails = ($project && $project.projectHasDetails) || false;
+	// $: projectHasDetails = ($project && $project.projectHasDetails) || false;
+
+	$: projectDetails = ($project && $project.details) || null;
+
+	$: projectHasDetails = (projectDetails && (projectDetails[0] || projectDetails[1] || projectDetails[2] || projectDetails[3])) || false;
+	$: showInfo = $showingInfo && projectHasDetails;
 
 	$: {
 		// if ($returnView) {
@@ -160,7 +165,7 @@
 <div class="pageContent">
 	<ScrollView id="project" headerStartHidden="{true}">
 		<div class="content">
-			<div class="contentItem" class:collapsedOptions="{$returnView && !$showingInfo}" class:collapsedHeader="{$returnView && !$showingInfo && !isNew}">
+			<div class="contentItem" class:collapsedOptions="{$returnView && !showInfo}" class:collapsedHeader="{$returnView && !showInfo && !isNew}">
 				<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
 				<!-- {#if isNew}
 					<Proxy image="{proxyOverviewImage}" className="proxyOverlay">
@@ -176,7 +181,7 @@
 							width: 125px;
 							height: 41px;" />
 					</Proxy>
-				{:else if !$showingInfo}
+				{:else if !showInfo}
 					<Proxy image="{proxyOverviewImage}" className="proxyOverlay" style="pointer-events: none">
 						<Hotspot onClick="{showProjectInfo}" style="
 							left: 0;
@@ -240,7 +245,7 @@
 							<Proxy image="project_info_image_3" />
 							<Proxy image="project_info_content_3" />
 						</div>
-						<Proxy image="{proxyShowingInfoActionsImage}">
+						<Proxy image="{proxyshowInfoActionsImage}">
 							{#if isOwner}
 								<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
 									right: 6px;
@@ -285,10 +290,10 @@
 						{/if}
 						<div class="itemContent">
 							<div class="header" class:headerOwner="{isOwner}">{projectTitle}</div>
-							<div class="description" class:button="{projectHasDetails && !$showingInfo}" on:click="{projectHasDetails && !$showingInfo ? showProjectInfo : null}">{projectDescription}</div>
+							<div class="description" class:button="{projectHasDetails && !showInfo}" on:click="{projectHasDetails && !showInfo ? showProjectInfo : null}">{projectDescription}</div>
 						</div>
 						{#if projectHasDetails}
-							{#if !$showingInfo}
+							{#if !showInfo}
 								{#if !$returnView}
 									<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 								{/if}
@@ -297,19 +302,25 @@
 							{/if}
 						{/if}
 					</div>
-					{#if $showingInfo}
+					{#if showInfo}
 						<div class="projectInfo">
-							<Proxy image="project_info_image_1" />
+							{#each projectDetails as projectDetailItem, index}
+								{#if projectDetailItem.detail}
+									<Proxy image="project_info_image_{index + 1}" />
+									<Proxy image="project_info_content_1" />
+								{/if}
+							{/each}
+							<!-- <Proxy image="project_info_image_1" />
 							<Proxy image="project_info_content_1" />
 							<Proxy image="project_info_image_2" />
 							<Proxy image="project_info_content_2" />
 							<Proxy image="project_info_image_3" />
-							<Proxy image="project_info_content_3" />
+							<Proxy image="project_info_content_3" /> -->
 						</div>
 					{/if}
 					<div class="projectActions">
 						<div class="projectActionButtons">
-							{#if projectHasDetails && !$showingInfo && $returnView}
+							{#if projectHasDetails && !showInfo && $returnView}
 								<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 							{:else if !projectHasDetails && isOwner}
 								<Button className="addProjectDetailsButton" onClick="{editProjectDetails}" icon="{AddDetailsIcon}">add project details</Button>
@@ -323,7 +334,7 @@
 									<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
 								</Button>
 							{/if}
-							{#if (!$returnView || $showingInfo) && !isOwner}
+							{#if (!$returnView || showInfo) && !isOwner}
 								<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
 									<div class="count">{likeCount}</div>
 								</div></Button>
@@ -332,8 +343,8 @@
 								</div></Button>
 							{/if}
 						</div>
-						{#if (!$returnView || $showingInfo) && projectLocation}
-							<Location className="{(isOwner && $showingInfo) ? 'ownerLocation' : ''}" location="{projectLocation}" />
+						{#if (!$returnView || showInfo) && projectLocation}
+							<Location className="{(isOwner && showInfo) ? 'ownerLocation' : ''}" location="{projectLocation}" />
 						{/if}
 					</div>
 				</div>

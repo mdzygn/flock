@@ -5,7 +5,7 @@ const ProjectModel = {
     title: '',
     description: '',
 
-    projectHasDetails: false,
+    details: null,
 
     public: false,
 

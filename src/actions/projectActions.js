@@ -59,7 +59,7 @@ export function saveProjectDetails(projectDetails) {
     if (curProject) {
         if (projectDetails.details) {
             curProject.details = projectDetails.details;
-            curProject.projectHasDetails = true;
+            // curProject.projectHasDetails = true;
         }
         project.set(curProject);
 

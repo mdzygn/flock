@@ -132,7 +132,7 @@ export function addProject(projectDetails) {
 
 	newProjectModel.isNew = true;
 	newProjectModel.hasCreated = true;
-	newProjectModel.projectHasDetails = false;
+	// newProjectModel.projectHasDetails = false;
 
 	newProjectModel.followCount++;
 

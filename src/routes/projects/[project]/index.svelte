@@ -94,7 +94,6 @@
     $: projectTitle = ($project && $project.title) || '';
 	$: projectDescription = ($project && $project.description) || '';
 	$: projectLocation = ($project && $project.location) || '';
-	// $: projectHasDetails = ($project && $project.projectHasDetails) || false;
 
 	$: projectDetails = ($project && $project.details) || null;
 
@@ -286,7 +285,7 @@
 					<div class="contentContainer">
 						<Button className="optionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
 						{#if isOwner}
-							<Button className="editButton" onClick="{editProjectDetails}" icon="{EditIcon}"></Button>
+							<Button className="editButton" onClick="{() => editProjectDetails({editingProject: true})}" icon="{EditIcon}"></Button>
 							<Audience {isPublic} onClick="{togglePublic}" />
 						{/if}
 						<div class="itemContent">

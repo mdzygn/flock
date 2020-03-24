@@ -14,7 +14,7 @@
 	let description = '';
 	let headerImage = 'header2';
 
-	$: nextEnabled = title && description;
+	$: nextEnabled = title && description && headerImage;
 
 	function createNewProject() {
 		const projectDetails = {
@@ -104,7 +104,7 @@
         background: none;
 
         width: 100%;
-		height: 70px;
+		height: 88px;
 
         box-sizing: border-box;
 

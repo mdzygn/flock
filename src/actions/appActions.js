@@ -26,6 +26,7 @@ import {
 import {
     returnView,
     showingInfo,
+    editingProject,
 } from '../models/projectViewModel';
 
 export function loadProject(targetProjectId, options) {
@@ -51,7 +52,9 @@ export function loadProjectPost(targetProjectId) {
 export function newProject() {
     goto('projects/new');
 }
-export function editProjectDetails() {
+export function editProjectDetails(options) {
+    editingProject.set(options && options.editingProject);
+
     goto('projects/' + get(projectId) + '/details');
 }
 

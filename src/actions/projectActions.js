@@ -59,7 +59,15 @@ export function saveProjectDetails(projectDetails) {
     if (curProject) {
         if (projectDetails.details) {
             curProject.details = projectDetails.details;
-            // curProject.projectHasDetails = true;
+        }
+        if (projectDetails.title !== undefined) {
+            curProject.title = projectDetails.title;
+        }
+        if (projectDetails.description !== undefined) {
+            curProject.description = projectDetails.description;
+        }
+        if (projectDetails.headerImage !== undefined) {
+            curProject.headerImage = projectDetails.headerImage;
         }
         project.set(curProject);
 

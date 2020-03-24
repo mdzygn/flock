@@ -2,6 +2,8 @@
     import { tick } from 'svelte';
 	import { goto } from '@sapper/app';
 
+	import { editingProject } from '../../../models/projectViewModel';
+
 	import locale from '../../../locale';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
@@ -17,11 +19,18 @@
 	import { project, projectId } from '../../../models/appModel';
 	import { saveProjectDetails } from '../../../actions/projectActions';
 
+	let title = ($project && $project.title) || '';
+	let description = ($project && $project.description) || '';
+	let headerImage = ($project && $project.headerImage) || '';
+
+	$: saveEnabled = !editingProject || (title && description);
+
 	let detail1 = '';
 	let detail2 = '';
 	let detail3 = '';
 	let detail4 = '';
 
+	let descriptionInput;
 	let detailInput1;
 	let detailInput2;
 	let detailInput3;
@@ -48,6 +57,7 @@
 	async function updateRegionSizes() {
         await tick();
 
+		// if (descriptionInput) { descriptionInput.style = 'height: ' + getRegionHeight(descriptionInput.scrollHeight) + 'px'; }
 		if (detailInput1) { detailInput1.style = 'height: ' + getRegionHeight(detailInput1.scrollHeight) + 'px'; }
 		if (detailInput2) { detailInput2.style = 'height: ' + getRegionHeight(detailInput2.scrollHeight) + 'px'; }
 		if (detailInput3) { detailInput3.style = 'height: ' + getRegionHeight(detailInput3.scrollHeight) + 'px'; }
@@ -59,7 +69,7 @@
 	}
 
 	function getFormattedDetail(project, index) {
-		const text = ($project.details && $project.details[index] && $project.details[index].detail) || '';
+		const text = (project && project.details && project.details[index] && project.details[index].detail) || '';
 		if (text) {
 			return text.replace(/<br\/>/g, '\r\n');
 		} else {
@@ -97,6 +107,14 @@
 			details,
 		};
 
+		if (editingProject) {
+			Object.assign(projectDetails, {
+				title,
+				description,
+				headerImage,
+			});
+		}
+
 		saveProjectDetails(projectDetails);
 	}
 
@@ -125,12 +143,31 @@
 		</Proxy> -->
 
 		<div class="panelContent">
+			{#if $editingProject}
+			<div class="mainProjectDetails">
+				<div class="actions topActions">
+					<Button className="saveButton" onClick="{save}" icon="{SaveIcon}" disabled="{!saveEnabled}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
+				</div>
+				<div class="field">
+					<div class="label">{locale.NEW_PROJECT.TITLE}</div>
+					<input type="text" bind:value="{title}" />
+				</div>
+				<div class="field descriptionField">
+					<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
+					<textarea bind:this="{descriptionInput}" bind:value="{description}" />
+				</div>
+				<div class="field headerImageField">
+					<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
+					<div class="headerImageContainer"></div>
+				</div>
+			</div>
+			{/if}
 			<div class="imageField">
 				<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
 			</div>
 			<div class="field">
 				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_1_TIP}</span></div>
-        		<textarea bind:this="{detailInput1}" bind:value="{detail1}" />
+        		<textarea bind:this="{detailInput1}" bind:value="{detail1}" class="detailTextarea" />
 			</div>
 
 			<div class="imageField">
@@ -138,7 +175,7 @@
 			</div>
 			<div class="field">
 				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_2_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_2_TIP}</span></div>
-        		<textarea bind:this="{detailInput2}" bind:value="{detail2}" />
+        		<textarea bind:this="{detailInput2}" bind:value="{detail2}" class="detailTextarea" />
 			</div>
 
 			<div class="imageField">
@@ -146,7 +183,7 @@
 			</div>
 			<div class="field">
 				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_3_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_3_TIP}</span></div>
-        		<textarea bind:this="{detailInput3}" bind:value="{detail3}" />
+        		<textarea bind:this="{detailInput3}" bind:value="{detail3}" class="detailTextarea" />
 			</div>
 
 			<div class="imageField">
@@ -154,12 +191,12 @@
 			</div>
 			<div class="field">
 				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_4_TIP}</span></div>
-        		<textarea bind:this="{detailInput4}" bind:value="{detail4}" />
+        		<textarea bind:this="{detailInput4}" bind:value="{detail4}" class="detailTextarea" />
 			</div>
 
 			<div class="actions">
 				<Button className="cancelButton" onClick="{cancel}" icon="{CancelIcon}">{locale.EDIT_PROJECT_DETAILS.CANCEL}</Button>
-				<Button className="saveButton" onClick="{save}" icon="{SaveIcon}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
+				<Button className="saveButton" onClick="{save}" icon="{SaveIcon}" disabled="{!saveEnabled}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
 			</div>
 		</div>
 	</div>
@@ -199,7 +236,68 @@
 		color: #999999;
 	}
 
+
+	input {
+        border: none;
+        outline: none;
+        background: none;
+
+		border-bottom: 1px solid #999999;
+
+        width: 100%;
+        box-sizing: border-box;
+
+        font-size: 1.5rem;
+		color: #555555;
+
+        padding: 6px 4px;
+	}
+
 	textarea {
+        border: 1px solid #999999;
+
+        outline: none;
+        background: none;
+
+        width: 100%;
+		height: 88px;
+
+        box-sizing: border-box;
+
+        font-size: 1.5rem;
+    	color: #555555;
+
+        padding: 6px 4px;
+
+    	margin-top: 4px;
+
+		resize: none;
+	}
+
+	.headerImageField {
+    	padding: 0;
+	}
+
+	.headerImageLabel {
+    	padding-left: 25px;
+    	padding-right: 21px;
+	}
+
+	.headerImageContainer {
+		width: 100%;
+		height: 220px;
+
+    	background-color: #E3E3E3;
+    	margin-top: 10px;
+	}
+
+
+	.mainProjectDetails {
+		padding-bottom: 20px;
+	}
+
+
+	.detailTextarea {
         border: 1px solid #999999;
 
         outline: none;
@@ -244,6 +342,10 @@
 		position: relative;
 		height: 60px;
 		margin-top: 10px;
+	}
+	.topActions {
+		height: 0;
+		margin-top: 0;
 	}
 
 

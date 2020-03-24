@@ -1,12 +1,21 @@
 <script>
     import SearchIcon from "../../assets/icons/search.png";
+    import ClearIcon from "../../assets/icons/clear.png";
 
     export let searchString = '';
     export let placeholder = 'Search';
 
     let input;
 
-    function selectInput() {
+    function selectSearchIcon() {
+        if (searchString) {
+            searchString = '';
+        } else {
+            focusInput();
+        }
+    }
+
+    function focusInput() {
         if (input) {
             input.focus();
         }
@@ -15,8 +24,8 @@
 
 <div class="searchBar">
     <div class="searchBarField">
-        <div class="searchButton" on:click="{selectInput}">
-            <div class="searchIcon" style="background-image: url({SearchIcon})" />
+        <div class="searchButton" on:click="{selectSearchIcon}">
+            <div class="searchIcon" style="background-image: url({searchString ? ClearIcon : SearchIcon})" />
         </div>
         <input bind:this="{input}" class="searchFieldInput" type="text" bind:value="{searchString}" placeholder="{placeholder}" />
     </div>
@@ -53,6 +62,7 @@
         width: 20px;
         height: 20px;
         background-size: cover;
+        margin-top: -2px;
     }
 
     .searchFieldInput {

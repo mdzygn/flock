@@ -65,9 +65,9 @@ export function getProjectsByIds(projectIds, options) {
 function projectSearchMatch(project, searchString) {
 	searchString = searchString.toLowerCase();
 
-	if (project.title.toLowerCase().includes(searchString)) return true;
-	if (project.description.toLowerCase().includes(searchString)) return true;
-	if (project.location.toLowerCase().includes(searchString)) return true;
+	if (project.title && project.title.toLowerCase().includes(searchString)) return true;
+	if (project.description && project.description.toLowerCase().includes(searchString)) return true;
+	if (project.location && project.location.toLowerCase().includes(searchString)) return true;
 	return false;
 }
 

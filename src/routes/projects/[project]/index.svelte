@@ -307,7 +307,9 @@
 						<div class="projectInfo">
 							{#each projectDetails as projectDetailItem, index}
 								{#if projectDetailItem.detail}
-									<Proxy image="project_info_image_{index + 1}" />
+									{#if projectDetailItem.image}
+										<Proxy image="project_info_image_{index + 1}" />
+									{/if}
 									<!-- <Proxy image="project_info_content_3" className="proxyOverlay" /> -->
 									<div class="projectInfoDetail">{@html projectDetailItem.detail}</div>
 								{/if}
@@ -520,7 +522,7 @@
 
 
 	.projectInfo {
-    	padding-top: 20px;
+    	padding-top: 30px;
 	}
 
 	.projectInfoDetail {
@@ -537,13 +539,21 @@
 		/* position: absolute;
 		right: 0; */
 
-    	float: right;
-    	margin-top: -14px; /* -25px; */
+		float: left;
+		margin-top: -7px;
+
+		padding: 10px;
+		padding-left: 20px;
+    	padding-right: 105px;
+		margin-left: -22px;
+
+    	/* float: right;
+    	margin-top: -14px;
 
 		padding: 10px;
     	padding-left: 20px;
     	padding-right: 40px;
-		margin-left: -12px;
+		margin-left: -12px; */
 	}
 
 	.projectActions {

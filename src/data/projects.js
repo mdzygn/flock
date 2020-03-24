@@ -7,13 +7,13 @@ const projects = [
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 
 		details: [
-			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			{image: true, detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
 			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
 			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
-			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			{image: true, detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
 			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
 			{detail: ''},
-			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			{image: true, detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
 			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
 			+'Tempor orci eu.<br/><br/>'
 			+'Arcu odio ut sem nulla pharetra.'},
@@ -77,13 +77,13 @@ const projects = [
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 
 		details: [
-			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			{image: true, detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
 			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
 			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
-			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			{image: true, detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
 			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
 			{detail: ''},
-			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			{image: true, detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
 			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
 			+'Tempor orci eu.<br/><br/>'
 			+'Arcu odio ut sem nulla pharetra.'},
@@ -116,13 +116,13 @@ const projects = [
 		description: 'Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.',
 
 		details: [
-			{detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
+			{image: true, detail: 'Ipsum dolor sit amet consectetur adipiscing elit. Lacus laoreet non curabitur gravida.<br/><br/>'
 			+'Est ultricies integer quis auctor elit. Enim facilisis gravida neque convallis a. Hendrerit gravida rutrum quisque non tellus orci ac auctor augue.<br/><br/>'
 			+'Ac felis donec et odio pellentesque diam volutpat. Vel eros donec ac odio tempor orci dapibus. Enim nunc faucibus a pellentesque sit amet porttitor.'},
-			{detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
+			{image: true, detail: 'Facilisis magna etiam tempor. Rhoncus dolor purus non enim. In massa tempor nec feugiat nisl pretium fusce ec et odio pellentesque.<br/><br/>'
 			+'Tellus elementum sagittis vitae et. Adipiscing bibendum est ultricies integer quis auctor elit. Aenean vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi. Leo integer malesuada nunc vel risus commodo viverra.'},
 			{detail: ''},
-			{detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
+			{image: true, detail: 'Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>'
 			+'Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href="http://www.aliquamut.le">http://www.aliquamut.le</a>.<br/><br/>'
 			+'Tempor orci eu.<br/><br/>'
 			+'Arcu odio ut sem nulla pharetra.'},

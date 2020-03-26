@@ -37,14 +37,13 @@
 
 {#if teamMembers && teamMembers.length}
     <div class="content">
-        <Proxy image="{proxyImage}" className="contentItem proxyOverlay" >
-            <!-- Contact Profile -->
+        <!-- <Proxy image="{proxyImage}" className="contentItem proxyOverlay" >
             <Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
                 left: 0;
                 top: 31px;
                 width: 100%;
                 height: 56px;" />
-        </Proxy>
+        </Proxy> -->
 
         <ContentPanel title="Team" showEdit="{isOwner}" showMoreAction="{areMoreItems}">
             {#each teamMembers as teamMember, index}
@@ -63,10 +62,10 @@
 		margin-bottom: 10px;
 	}
 
-	.content :global(.proxyOverlay) {
+	/* .content :global(.proxyOverlay) {
         position: absolute;
         opacity: 0.5;
-	}
+	} */
 
 	.content :global(.contentPanel) {
         /* background-color: initial; */

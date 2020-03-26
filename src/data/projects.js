@@ -47,12 +47,12 @@ const projects = [
 			'm3ld9bna',
 			'59sndsf3',
 			'69snksd2',
-			'3n67s32h',
-			'j6o7sd21',
-			'5d4jh4vs',
-			'bfd63zdv',
-			'64sn24bs',
-			'n36dvd1f',
+			// '3n67s32h',
+			// 'j6o7sd21',
+			// '5d4jh4vs',
+			// 'bfd63zdv',
+			// '64sn24bs',
+			// 'n36dvd1f',
 		],
 	},
 	{
@@ -83,9 +83,9 @@ const projects = [
 			{ type: 'patreon', url: 'www.patreon.com' },
 		],
 		team: [
-			'sl3p5oms',
-			'bl20a8lm',
-			'bl20a8lm',
+			'69snksd2',
+			'3n67s32h',
+			'j6o7sd21',
 		],
 	},
 	{
@@ -127,11 +127,17 @@ const projects = [
 			{ type: 'github', url: 'www.github.com' },
 		],
 		team: [
+			'3n67s32h',
+			'j6o7sd21',
+			'5d4jh4vs',
+			'59sndsf3',
+			'69snksd2',
+			'bfd63zdv',
+			'64sn24bs',
+			'n36dvd1f',
 			'sl3p5oms',
 			'bl20a8lm',
-			'sl3p5oms',
-			'sl3p5oms',
-			'sl3p5oms',
+			'm3ld9bna',
 		],
 	},
 	{
@@ -172,9 +178,11 @@ const projects = [
 			{ type: 'website', url: 'http://www.maginite.com' },
 		],
 		team: [
-			'sl3p5oms',
-			'bl20a8lm',
-			'sl3p5oms',
+			'5d4jh4vs',
+			'bfd63zdv',
+			'64sn24bs',
+			'59sndsf3',
+			'69snksd2',
 		],
 	},
 	{
@@ -201,10 +209,13 @@ const projects = [
 			'sl3p5oms',
 		],
 		tags: [],
-		posts: [
-			'm023ndls',
-			'm023ndls',
-			'm023ndls',
+		team: [
+			'j6o7sd21',
+			'5d4jh4vs',
+			'bfd63zdv',
+			'59sndsf3',
+			'69snksd2',
+			'3n67s32h',
 		],
 
 	},
@@ -252,8 +263,11 @@ const projects = [
 			{ type: 'github', url: 'www.github.com' },
 		],
 		team: [
-			'sl3p5oms',
 			'bl20a8lm',
+			'm3ld9bna',
+			'69snksd2',
+			'3n67s32h',
+			'j6o7sd21',
 		],
 	},
 
@@ -298,7 +312,8 @@ const projects = [
 			{ type: 'github', url: 'www.github.com' },
 		],
 		team: [
-			'sl3p5oms',
+			'3n67s32h',
+			'j6o7sd21',
 		],
 	},
 
@@ -341,6 +356,9 @@ const projects = [
 			{ type: 'website', url: 'http://www.maginite.com' },
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
+		],
+		team: [
+			'bfd63zdv',
 		],
 	},
 
@@ -385,6 +403,9 @@ const projects = [
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
 		],
+		team: [
+			'j6o7sd21',
+		],
 	},
 
 	{
@@ -425,6 +446,9 @@ const projects = [
 			{ type: 'website', url: 'http://www.maginite.com' },
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
+		],
+		team: [
+			'bfd63zdv',
 		],
 	},
 
@@ -467,6 +491,13 @@ const projects = [
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
 		],
+		team: [
+			'bfd63zdv',
+			'59sndsf3',
+			'69snksd2',
+			'3n67s32h',
+			'j6o7sd21',
+		],
 	},
 
 	{
@@ -507,6 +538,9 @@ const projects = [
 			{ type: 'website', url: 'http://www.maginite.com' },
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
+		],
+		team: [
+			'59sndsf3',
 		],
 	},
 
@@ -549,6 +583,9 @@ const projects = [
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
 		],
+		team: [
+			'3n67s32h',
+		],
 	},
 
 	{
@@ -589,6 +626,11 @@ const projects = [
 			{ type: 'website', url: 'http://www.maginite.com' },
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
+		],
+		team: [
+			'j6o7sd21',
+			'64sn24bs',
+			'5d4jh4vs',
 		],
 	},
 
@@ -631,6 +673,14 @@ const projects = [
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
 		],
+		team: [
+			'j6o7sd21',
+			'69snksd2',
+			'3n67s32h',
+			'bl20a8lm',
+			'm3ld9bna',
+			'59sndsf3',
+		],
 	},
 
 	{
@@ -671,6 +721,11 @@ const projects = [
 			{ type: 'website', url: 'http://www.maginite.com' },
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
+		],
+		team: [
+			'5d4jh4vs',
+			'bfd63zdv',
+			'sl3p5oms',
 		],
 	},
 
@@ -713,6 +768,10 @@ const projects = [
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
 		],
+		team: [
+			'j6o7sd21',
+			'3n67s32h',
+		],
 	},
 
 	{
@@ -753,6 +812,9 @@ const projects = [
 			{ type: 'website', url: 'http://www.maginite.com' },
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
+		],
+		team: [
+			'59sndsf3',
 		],
 	},
 ];

@@ -44,9 +44,15 @@ const projects = [
 		team: [
 			'sl3p5oms',
 			'bl20a8lm',
-			'sl3p5oms',
-			'sl3p5oms',
-			'sl3p5oms',
+			'm3ld9bna',
+			'59sndsf3',
+			'69snksd2',
+			'3n67s32h',
+			'j6o7sd21',
+			'5d4jh4vs',
+			'bfd63zdv',
+			'64sn24bs',
+			'n36dvd1f',
 		],
 	},
 	{

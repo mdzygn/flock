@@ -67,6 +67,8 @@
         max-width: 180px;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
+        padding-bottom: 5px; margin-bottom: -5px; /* fix clipping decenders */
     }
 
     .username {

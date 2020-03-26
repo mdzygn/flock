@@ -1,0 +1,79 @@
+<script>
+    import AvatarIcon from './AvatarIcon.svelte';
+
+    import { loadProfile } from '../../actions/appActions';
+
+    export let user;
+
+    function loadCurrentUser() {
+        loadProfile(user.id);
+    }
+</script>
+
+<div class="teamMemberItem" on:click="{(loadCurrentUser)}">
+    <AvatarIcon {user} />
+    <div class="detailContent">
+        <div class="detailInnerContent">
+            <div class="title">{user.fullName}</div>
+            <div class="username">@{user.username}</div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .teamMemberItem {
+        display: inline-block;
+        position: relative;
+
+        padding: 6px 0;
+        margin-bottom: 2px;
+
+        height: 50px;
+        /* width: 177px; */
+
+        cursor: pointer;
+    }
+
+    .teamMemberItem :global(.avatarIcon) {
+        position: absolute;
+        height: 42px;
+        width: 42px;
+    }
+
+    .detailContent {
+        /* position: absolute;
+        left: 54px;
+        right: 60px;
+        top: 2px;
+        bottom: 0; */
+
+		/* display: flex;
+		align-items: center; */
+
+        padding-top: 9px;
+        height: 100%;
+        padding-left: 53px;
+        padding-right: 25px;
+    }
+
+    .detailInnerContent {
+
+    }
+
+    .title {
+        font-size: 1.6rem;
+        font-weight: 700;
+        line-height: 1.3rem;
+
+        max-width: 180px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .username {
+        font-size: 1.1rem;
+        margin-top: 4px;
+        color: #666666;
+        line-height: 1.3rem;
+    }
+</style>

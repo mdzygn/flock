@@ -41,6 +41,13 @@ const projects = [
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
 		],
+		team: [
+			'sl3p5oms',
+			'bl20a8lm',
+			'sl3p5oms',
+			'sl3p5oms',
+			'sl3p5oms',
+		],
 	},
 	{
 		title: 'Tesseract',
@@ -108,6 +115,13 @@ const projects = [
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
 		],
+		team: [
+			'sl3p5oms',
+			'bl20a8lm',
+			'sl3p5oms',
+			'sl3p5oms',
+			'sl3p5oms',
+		],
 	},
 	{
 		title: 'Leonardo\'s World',
@@ -146,6 +160,11 @@ const projects = [
 		links: [
 			{ type: 'website', url: 'http://www.maginite.com' },
 		],
+		team: [
+			'sl3p5oms',
+			'bl20a8lm',
+			'sl3p5oms',
+		],
 	},
 	{
 		title: 'New Earth',
@@ -166,9 +185,9 @@ const projects = [
 		location: 'Wellington, New Zealand',
 		skills: ['react', 'project management', '3d modelling', 'ui design', 'marketing', 'graphics programming'],
 		team: [
-			'oiv23g46',
-			'oiv23g46',
-			'oiv23g46',
+			'sl3p5oms',
+			'bl20a8lm',
+			'sl3p5oms',
 		],
 		tags: [],
 		posts: [
@@ -221,6 +240,10 @@ const projects = [
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
 		],
+		team: [
+			'sl3p5oms',
+			'bl20a8lm',
+		],
 	},
 
 	{
@@ -262,6 +285,9 @@ const projects = [
 			{ type: 'website', url: 'http://www.maginite.com' },
 			{ type: 'patreon', url: 'www.patreon.com' },
 			{ type: 'github', url: 'www.github.com' },
+		],
+		team: [
+			'sl3p5oms',
 		],
 	},
 

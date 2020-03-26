@@ -207,6 +207,9 @@
 
         -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
     }
+    .scrollView::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */
+        display: none;
+    }
 
     .scrollHeader {
         position: absolute;
@@ -215,8 +218,4 @@
         box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
     }
 
-    .scrollView::-webkit-scrollbar {
-        /* Hide scrollbar for Chrome, Safari and Opera */
-        display: none;
-    }
 </style>

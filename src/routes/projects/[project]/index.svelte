@@ -354,7 +354,7 @@
 			</div>
 
 			{#if isNew}
-				<ProjectTeamList isOwner="{isOwner}" isNew="{isNew}" />
+				<ProjectTeamList project="{$project}" />
 				<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
 				<ProjectLinks project="{$project}" />
 				<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
@@ -372,7 +372,7 @@
 				<ProjectLinks project="{$project}" />
 				<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
 				<ProjectSkillsList project="{$project}" />
-				<ProjectTeamList isOwner="{isOwner}" isNew="{isNew}" />
+				<ProjectTeamList project="{$project}" />
 				<div>
 					<Proxy image="project_post_1" className="contentItem" />
 					<Proxy image="project_post_2" className="contentItem" />
@@ -382,7 +382,7 @@
 					<NewPostButton type="project_post_update" />
 				{/if}
 			{:else}
-				<ProjectTeamList isOwner="{isOwner}" isNew="{isNew}" />
+				<ProjectTeamList project="{$project}" />
 				<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
 				<ProjectSkillsList project="{$project}" />
 				<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->

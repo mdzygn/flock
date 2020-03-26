@@ -76,6 +76,11 @@ const projects = [
 			{ type: 'website', url: 'http://www.maginite.com' },
 			{ type: 'patreon', url: 'www.patreon.com' },
 		],
+		team: [
+			'sl3p5oms',
+			'bl20a8lm',
+			'bl20a8lm',
+		],
 	},
 	{
 		title: 'Green Guardians',

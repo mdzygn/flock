@@ -12,12 +12,14 @@
 
     export let project = null;
 
+    const MAX_TEAM_MEMBERS = 10;
+
 	$: isOwner = (project && project.isOwner) || false;
     $: isNew = (project && project.isNew) || false;
 
 	$: teamMembers = (project && project.team) || null;
 
-    $: areMoreItems = teamMembers && teamMembers.length > 0; // > MAX_PROJECT_PREVIEW_COUNT;
+    $: areMoreItems = teamMembers && teamMembers.length > MAX_TEAM_MEMBERS;
 
     let proxyImage = 'project_team';
     $: {
@@ -45,8 +47,10 @@
         </Proxy>
 
         <ContentPanel title="Team" showEdit="{isOwner}" showMoreAction="{areMoreItems}">
-            {#each teamMembers as teamMember}
-                <TeamMemberItem user="{getUser(teamMember)}" />
+            {#each teamMembers as teamMember, index}
+                {#if index < MAX_TEAM_MEMBERS}
+                    <TeamMemberItem user="{getUser(teamMember)}" />
+                {/if}
             {/each}
         </ContentPanel>
     </div>
@@ -75,7 +79,7 @@
 	}
 	.content :global(.contentPanel .showMoreButton ) {
         padding-left: 30px;
-        margin-top: -10px;
+        margin-top: -6px;
 	}
 
 	.content :global(.panelContent) {

@@ -25,8 +25,7 @@
         display: inline-block;
         position: relative;
 
-        padding: 6px 0;
-        margin-bottom: 2px;
+        padding-top: 6px;
 
         height: 50px;
         /* width: 177px; */

@@ -1,7 +1,9 @@
 <script>
     export let user;
 
-    let profileImageSrc = (user && user.username && 'content/profile-images/thumbs/' + user.username + '.jpg') || 'content/profile-images/thumbs/_default.jpg';
+    $: thumbImageId = (user && user.username) || '_default';
+
+    $: profileImageSrc = 'content/users/' + thumbImageId + '/thumb.jpg';
 </script>
 
 <div class="avatarIcon" style='background-image: url({profileImageSrc})'>

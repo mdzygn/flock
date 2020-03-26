@@ -36,7 +36,9 @@
     $: likesCount = ($viewedUser && $viewedUser.likesCount) || 0;
     $: followsCount = ($viewedUser && $viewedUser.followsCount) || 0;
 
-	$: coverImage = 'content/users/' + username + '/cover.jpg';
+    $: coverImageId = ($viewedUser && $viewedUser.coverImage !== false) ? username : '_default';
+
+	$: coverImage = 'content/users/' + coverImageId + '/cover.jpg';
 	$: profileImage = 'content/users/' + username + '/profile.jpg';
 
     // $: proxyImage = isCurrentUser ? 'profile_overview_owner' : 'profile_overview';
@@ -149,6 +151,8 @@
         border-radius: 999px;
         overflow: hidden;
         border: 4px solid #ffffff;
+
+        background-color: #C8C8C8;
     }
     .profileImage img {
         width: 100%;

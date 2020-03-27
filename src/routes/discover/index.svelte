@@ -1,9 +1,8 @@
 <script context="module">
 	export function preload({ params, query }) {
-		console.log('preload');
 		return this.fetch('/api/projects.json').then(r => r.json()).then(projects => {
 			return { projects };
-		}).catch(e => { console.error(e); });
+		}); // .catch(e => { console.error(e); });
 	}
 </script>
 

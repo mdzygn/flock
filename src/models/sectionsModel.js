@@ -1,4 +1,4 @@
-import sections from '../data/sections';
+import sections from './sections';
 
 export const getMainSections = () => {
 	return sections.filter(section => section.main);

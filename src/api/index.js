@@ -15,8 +15,6 @@ function send({ method, path, data, token }) {
 		opts.headers['Authorization'] = `Token ${token}`;
 	}
 
-	console.log('fetch', `${base}/${folder}/${path}`);
-
 	return fetch(`${base}/${folder}/${path}`, opts)
 		.then(r => r.text())
 		.then(json => {

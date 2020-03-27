@@ -1,4 +1,4 @@
-<script context="module">
+<!-- <script context="module">
 	import { get } from '../../api';
 
 	export function preload({ params, query }) {
@@ -7,7 +7,7 @@
 			return { projects };
 		}).catch(e => { console.error(e); });
 	}
-</script>
+</script> -->
 
 <script>
 	import { viewMode, exploreZoomed } from '../../models/appModel';
@@ -16,9 +16,9 @@
 	import Explore from './_components/Explore.svelte';
 	import ExploreZoomed from './_components/ExploreZoomed.svelte';
 
-	export let projects;
+	// export let projects;
 
-	$: console.log('projects:', projects);
+	// $: console.log('projects:', projects);
 </script>
 
 <svelte:head>

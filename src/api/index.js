@@ -28,18 +28,27 @@ function send({ method, path, data, token }) {
 		});
 }
 
-export function get(path, token) {
+function get(path, token) {
 	return send({ method: 'GET', path, token });
 }
 
-export function del(path, token) {
+function del(path, token) {
 	return send({ method: 'DELETE', path, token });
 }
 
-export function post(path, data, token) {
+function post(path, data, token) {
 	return send({ method: 'POST', path, data, token });
 }
 
-export function put(path, data, token) {
+function put(path, data, token) {
 	return send({ method: 'PUT', path, data, token });
 }
+
+const api = {
+	get,
+	del,
+	post,
+	put,
+}
+
+export default api;

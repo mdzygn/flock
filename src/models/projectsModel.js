@@ -1,16 +1,28 @@
+import api from '../api';
+
 import { writable } from 'svelte/store';
 
 import { generateId } from '../utils/utils';
 
 import config from '../config';
 
-import projectsData from '../data/projects';
-
 import ProjectModel from '../models/projectModel';
 
-const projects = JSON.parse(JSON.stringify(projectsData));
+// import projectsData from '../data/projects';
+// const projects = JSON.parse(JSON.stringify(projectsData));
+
+let projects = [];
 
 const projectModels = {};
+
+loadProjects();
+
+function loadProjects() {
+	api.get('projects').then(result => {
+		console.log('projects loaded: ', result);
+		projects = result;
+	}).catch(e => { console.error(e); });
+}
 
 testDuplicates();
 

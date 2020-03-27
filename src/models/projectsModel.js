@@ -8,14 +8,14 @@ import config from '../config';
 
 import ProjectModel from '../models/projectModel';
 
-// import projectsData from '../data/projects';
-// const projects = JSON.parse(JSON.stringify(projectsData));
+import projectsData from '../data/projects.json';
+const projects = JSON.parse(JSON.stringify(projectsData));
 
-let projects = [];
+// let projects = [];
 
 const projectModels = {};
 
-loadProjects();
+// loadProjects();
 
 function loadProjects() {
 	api.get('projects').then(result => {

@@ -1,8 +1,11 @@
 <script context="module">
+	import { get } from '../../api';
+
 	export function preload({ params, query }) {
-		return this.fetch('/api/projects.json').then(r => r.json()).then(projects => {
+		// return this.fetch('/api/projects').then(r => r.json()).then(projects => {
+		return get('projects').then(projects => {
 			return { projects };
-		}); // .catch(e => { console.error(e); });
+		}).catch(e => { console.error(e); });
 	}
 </script>
 

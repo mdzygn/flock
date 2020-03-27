@@ -149,9 +149,9 @@ export function addProject(projectDetails) {
 
 	projects.unshift(newProjectModel);
 
-	// api.post('projects', newProjectModel).then(result => {
-	// 	console.log('projects added: ', result);
-	// }).catch(e => { console.error(e); });
+	api.post('projects', newProjectModel).then(result => {
+		console.log('project added: ', result);
+	}).catch(e => { console.error(e); });
 
 	return newProjectModel;
 }

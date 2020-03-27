@@ -10,10 +10,12 @@ export async function get(req, res, next) {
 
 export async function post(req, res, next) {
 	const { db } = await init();
-	const projects = await db.collection('projects').find({}).toArray();
+
+	const project = req.body;
+	const result = await db.collection('projects').insert(project);
 
 	res.writeHead(200, {'Content-Type': 'application/json'});
-	res.end(JSON.stringify(projects));
+	res.end(JSON.stringify(result));
 }
 
 export async function put(req, res, next) {

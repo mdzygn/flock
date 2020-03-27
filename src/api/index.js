@@ -1,8 +1,5 @@
-let base = '/api';
-
-if (process.env.NODE_ENV === 'development') {
-	base = 'http://localhost:3000' + base;
-}
+let base = (process.env.NODE_ENV === 'development') ? 'http://localhost:3000' : '';//'https://flock-hub.herokuapp.com';
+let folder = 'api';
 
 function send({ method, path, data, token }) {
 	const fetch = process.browser ? window.fetch : require('node-fetch').default;
@@ -18,9 +15,9 @@ function send({ method, path, data, token }) {
 		opts.headers['Authorization'] = `Token ${token}`;
 	}
 
-	console.log('fetch', `${base}/${path}`);
+	console.log('fetch', `${base}/${folder}/${path}`);
 
-	return fetch(`${base}/${path}`, opts)
+	return fetch(`${base}/${folder}/${path}`, opts)
 		.then(r => r.text())
 		.then(json => {
 			try {
@@ -32,7 +29,6 @@ function send({ method, path, data, token }) {
 }
 
 export function get(path, token) {
-	console.log('get', path);
 	return send({ method: 'GET', path, token });
 }
 

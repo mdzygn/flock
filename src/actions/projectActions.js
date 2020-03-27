@@ -3,7 +3,11 @@ import { DEBUG } from '../config';
 
 import { goto } from '@sapper/app';
 
-import { addProject, getProjectModel } from '../models/projectsModel';
+import {
+    addProject,
+    updateProject,
+    getProjectModel,
+} from '../models/projectsModel';
 
 import {
     project,
@@ -57,18 +61,19 @@ export function togglePublic() {
 export function saveProjectDetails(projectDetails, options) {
     const curProject = get(project);
     if (curProject) {
-        if (projectDetails.details) {
-            curProject.details = projectDetails.details;
-        }
-        if (projectDetails.title !== undefined) {
-            curProject.title = projectDetails.title;
-        }
-        if (projectDetails.description !== undefined) {
-            curProject.description = projectDetails.description;
-        }
-        if (projectDetails.headerImage !== undefined) {
-            curProject.headerImage = projectDetails.headerImage;
-        }
+        // if (projectDetails.details) {
+        //     curProject.details = projectDetails.details;
+        // }
+        // if (projectDetails.title !== undefined) {
+        //     curProject.title = projectDetails.title;
+        // }
+        // if (projectDetails.description !== undefined) {
+        //     curProject.description = projectDetails.description;
+        // }
+        // if (projectDetails.headerImage !== undefined) {
+        //     curProject.headerImage = projectDetails.headerImage;
+        // }
+        updateProject(curProject, projectDetails);
         project.set(curProject);
 
         goto('projects/' + curProject.id);

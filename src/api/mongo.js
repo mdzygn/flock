@@ -2,6 +2,8 @@ import config from './config';
 
 const mongo = require('mongodb');
 
+export const ObjectID = mongo.ObjectID;
+
 let client = null;
 let db = null;
 

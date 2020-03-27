@@ -150,10 +150,21 @@ export function addProject(projectDetails) {
 	projects.unshift(newProjectModel);
 
 	api.post('projects', newProjectModel).then(result => {
-		console.log('project added: ', result);
+		// console.log('project added: ', result);
+		newProjectModel._id = result.insertedId;
 	}).catch(e => { console.error(e); });
 
 	return newProjectModel;
+}
+
+export function updateProject(project, projectDetails) {
+	projectDetails._id = project._id;
+
+	Object.assign(project, projectDetails);
+
+	api.put('projects', projectDetails).then(result => {
+		// console.log('project updated: ', result);
+	}).catch(e => { console.error(e); });
 }
 
 export function getProjectHeaderImage(project) {

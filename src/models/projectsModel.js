@@ -19,7 +19,7 @@ loadProjects();
 
 function loadProjects() {
 	api.get('projects').then(result => {
-		console.log('projects loaded: ', result);
+		// console.log('projects loaded: ', result);
 		projects = result;
 	}).catch(e => { console.error(e); });
 }
@@ -148,6 +148,10 @@ export function addProject(projectDetails) {
 	newProjectModel.followCount++;
 
 	projects.unshift(newProjectModel);
+
+	// api.post('projects', newProjectModel).then(result => {
+	// 	console.log('projects added: ', result);
+	// }).catch(e => { console.error(e); });
 
 	return newProjectModel;
 }

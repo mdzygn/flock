@@ -1,4 +1,6 @@
 <script>
+    import locale from '../../../locale';
+
 	import ScrollView from '../../../components/ScrollView.svelte';
 
 	import Proxy from '../../../components/Proxy.svelte';
@@ -7,6 +9,7 @@
 
 	import Feed from './../../_components/Feed.svelte';
 	import ProjectItem from './../../_components/ProjectItem.svelte';
+	import ContentLoader from './../../_components/ContentLoader.svelte';
 
 	import { viewMode, locationMode, resetScrollRegionPosition } from '../../../models/appModel';
 
@@ -36,20 +39,9 @@
 		<div class="feed">
 			{#each projects as projectId}
 				<ProjectItem projectId="{projectId}" />
-			{/each}
-			<!-- {#if $locationMode === 'global'}
-				<ProjectItem projectId="s7djj2s2" />
-				<ProjectItem projectId="ma9l2h4h" />
-				<ProjectItem projectId="m2lmad9a" />
-				<ProjectItem projectId="36bsf5gs" />
-				<ProjectItem projectId="9dm4l7ps" />
 			{:else}
-				<ProjectItem projectId="36bsf5gs" />
-				<ProjectItem projectId="9dm4l7ps" />
-				<ProjectItem projectId="s7djj2s2" />
-				<ProjectItem projectId="ma9l2h4h" />
-				<ProjectItem projectId="m2lmad9a" />
-			{/if} -->
+				<ContentLoader label="{locale.LOADING.DISCOVER}" />
+			{/each}
 		</div>
 
 		<div slot="scrollHeader">

@@ -18,6 +18,10 @@ const locale = {
 		CONFIRM: 'save',
 		CANCEL: 'cancel',
 	},
+	LOADING: {
+		DEFAULT: 'loading...',
+		DISCOVER: 'loading projects...',
+	},
 }
 
 export default locale;

@@ -18,7 +18,8 @@ const projectModels = {};
 loadProjects();
 
 function loadProjects() {
-	api.get('projects').then(result => {
+	// api.get('projects').then(result => {
+	api.getProjects().then(result => {
 		// console.log('projects loaded: ', result);
 		projects = result;
 	}).catch(e => { console.error(e); });
@@ -149,7 +150,8 @@ export function addProject(projectDetails) {
 
 	projects.unshift(newProjectModel);
 
-	api.post('projects', newProjectModel).then(result => {
+	// api.post('projects', newProjectModel).then(result => {
+	api.addProject({project: newProjectModel}).then(result => {
 		// console.log('project added: ', result);
 		newProjectModel._id = result.insertedId;
 	}).catch(e => { console.error(e); });
@@ -162,7 +164,8 @@ export function updateProject(project, projectDetails) {
 
 	Object.assign(project, projectDetails);
 
-	api.put('projects', projectDetails).then(result => {
+	// api.put('projects', projectDetails).then(result => {
+	api.updateProject({details: projectDetails}).then(result => {
 		// console.log('project updated: ', result);
 	}).catch(e => { console.error(e); });
 }

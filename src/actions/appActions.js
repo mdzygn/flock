@@ -2,8 +2,8 @@ import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 
 import { getProject } from '../models/projectsModel';
-import conversations from '../data/conversations';
-import users from '../data/users';
+import conversations from '../data/conversations.json';
+import users from '../data/users.json';
 
 // const { page } = stores();
 

@@ -1,4 +1,4 @@
-import usersData from '../data/users';
+import usersData from '../data/users.json';
 
 const users = JSON.parse(JSON.stringify(usersData));
 

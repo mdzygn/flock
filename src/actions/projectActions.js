@@ -23,8 +23,10 @@ export function projectToggleFollowing(projectId) {
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
     if (targetProject) {
-        targetProject.following = !targetProject.following;
-        targetProject.followCount += targetProject.following ? 1 : -1;
+        updateProject(targetProject, {
+            following: !targetProject.following,
+            followCount: targetProject.followCount + (!targetProject.following ? 1 : -1),
+        });
         targetProjectModel.set(targetProject);
         checkUpdateProject(targetProject);
     }
@@ -34,8 +36,10 @@ export function projectToggleLiked(projectId) {
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
     if (targetProject) {
-        targetProject.liked = !targetProject.liked;
-        targetProject.likeCount += targetProject.liked ? 1 : -1;
+        updateProject(targetProject, {
+            liked: !targetProject.liked,
+            likeCount: targetProject.likeCount + (!targetProject.liked ? 1 : -1),
+        });
         targetProjectModel.set(targetProject);
         checkUpdateProject(targetProject);
     }
@@ -61,18 +65,6 @@ export function togglePublic() {
 export function saveProjectDetails(projectDetails, options) {
     const curProject = get(project);
     if (curProject) {
-        // if (projectDetails.details) {
-        //     curProject.details = projectDetails.details;
-        // }
-        // if (projectDetails.title !== undefined) {
-        //     curProject.title = projectDetails.title;
-        // }
-        // if (projectDetails.description !== undefined) {
-        //     curProject.description = projectDetails.description;
-        // }
-        // if (projectDetails.headerImage !== undefined) {
-        //     curProject.headerImage = projectDetails.headerImage;
-        // }
         updateProject(curProject, projectDetails);
         project.set(curProject);
 

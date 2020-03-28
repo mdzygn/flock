@@ -1,5 +1,7 @@
 <script>
-    import locale from '../../../locale';
+	import locale from '../../../locale';
+
+	import { writable } from 'svelte/store';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
 
@@ -13,13 +15,12 @@
 
 	import { viewMode, locationMode, resetScrollRegionPosition } from '../../../models/appModel';
 
-	import { getDiscoveryProjects, loadingProjects } from '../../../models/projectsModel'; // getDiscoveryProjectIds
+	import { getDiscoveryProjects, loadingProjects } from '../../../models/projectsModel';
 
 	import { loadProject } from '../../../actions/appActions';
 
-	// $: projects = getDiscoveryProjectIds({location: $locationMode});
-
-	$: projects = getDiscoveryProjects();
+	let projects = writable({});
+	$: { projects = getDiscoveryProjects(); }
 
 	function toggleViewMode() {
 		$viewMode = ($viewMode === 'explore') ? 'discover' : 'explore';

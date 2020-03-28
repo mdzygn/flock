@@ -166,7 +166,7 @@
 </svelte:head>
 
 <div class="pageContent">
-	{#if $loadingProjects && !$project }
+	{#if $loadingProjects && (!$project || $project.id !== $projectId ) }
 		<ContentLoader label="{locale.LOADING.PROJECT}" />
 	{:else}
 		<ScrollView id="project" headerStartHidden="{true}">

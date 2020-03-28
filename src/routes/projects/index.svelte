@@ -1,6 +1,8 @@
 <script>
 	import locale from '../../locale';
 
+	import { writable } from 'svelte/store';
+
 	import ScrollView from '../../components/ScrollView.svelte';
 
 	import Proxy from '../../components/Proxy.svelte';
@@ -14,8 +16,7 @@
 
     import AddProjectIcon from "../../assets/icons/add_project.png";
 
-	import { getMyProjects, getFollowingProjects, loadingProjects } from '../../models/projectsModel';
-	// import { getMyProjectIds, getFollowingProjectIds } from '../../models/projectsModel';
+	import { getMyProjects, getFollowingProjects, getFilteredProjects, loadingProjects } from '../../models/projectsModel';
 
 	import { projectsSearchString, displayingAllMyProjects, displayingAllFollowingProjects } from '../../models/projectViewModel';
 
@@ -34,8 +35,18 @@
 		$displayingAllFollowingProjects = true;
 	}
 
-	const myProjects = getMyProjects();
-	const followingProjects = getFollowingProjects();
+	let myProjects = writable([]);
+	let followingProjects = writable([]);
+
+	let filteredMyProjects = writable([]);
+	let filteredFollowingProjects = writable([]);
+
+	$: { myProjects = getMyProjects() }
+	$: { followingProjects = getFollowingProjects() }
+
+	// add one to limit to ensure show more button appears
+	$: { getFilteredProjects(filteredMyProjects, $myProjects, { searchString, limit: $displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT + 1 }) }
+	$: { getFilteredProjects(filteredFollowingProjects, $followingProjects, { searchString, limit: $displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT + 1 }) }
 
 </script>
 
@@ -68,7 +79,7 @@
 			<ContentLoader label="{locale.LOADING.FOLLOWING}" />
 		{:else}
 			<div class="projectsContent">
-				<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" displayLimit="{$displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllMyProjects}" {searchString} showIfNoProjects="{true}" hideShowMoreWithVisibility="{true}">
+				<ProjectList title="My Projects" projects="{filteredMyProjects}" showLastActive="{true}" displayLimit="{$displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllMyProjects}" {searchString} showIfNoProjects="{true}" hideShowMoreWithVisibility="{true}">
 					{#if searchString}
 						<slot>No projects found matching "{searchString}"</slot>
 					{:else}
@@ -76,7 +87,7 @@
 					{/if}
 				</ProjectList>
 				<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">new project</Button>
-				<ProjectList title="Following" className="followingProjects" projects="{followingProjects}" showLastActive="{true}" displayLimit="{$displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} showIfNoProjects="{true}">
+				<ProjectList title="Following" className="followingProjects" projects="{filteredFollowingProjects}" showLastActive="{true}" displayLimit="{$displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} showIfNoProjects="{true}">
 					{#if searchString}
 						<slot>No followed projects matching "{searchString}"</slot>
 					{:else}

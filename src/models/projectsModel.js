@@ -95,27 +95,51 @@ export function getProjectModel(projectId) {
 	return projectModel;
 }
 
-export function getProjectsByIds(projectIds, options) {
+// export function getProjectsByIds(projectIds, options) {
+// 	let searchString = (options && options.searchString) || null;
+// 	let limit = (options && options.limit) || 0;
+
+// 	let projectItems = null;
+// 	if (projectIds) {
+// 		projectItems = [];
+// 		let curProject, projectId;
+// 		for (let index = 0; index < projectIds.length; index++) {
+// 			if (!limit || index < limit) {
+// 				projectId = projectIds[index];
+// 				curProject = getProject(projectId);
+// 				if (curProject) {
+// 					if (!searchString || projectSearchMatch(curProject, searchString)) {
+// 						projectItems.push(curProject);
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
+// 	return projectItems;
+// }
+
+export function getFilteredProjects(filteredProjects, projects, options) {
 	let searchString = (options && options.searchString) || null;
 	let limit = (options && options.limit) || 0;
 
-	let projectItems = null;
-	if (projectIds) {
-		projectItems = [];
-		let curProject, projectId;
-		for (let index = 0; index < projectIds.length; index++) {
-			if (!limit || index < limit) {
-				projectId = projectIds[index];
-				curProject = getProject(projectId);
-				if (curProject) {
-					if (!searchString || projectSearchMatch(curProject, searchString)) {
-						projectItems.push(curProject);
-					}
-				}
+	const newFilteredProjects = [];
+
+	let filteredCount = 0;
+	let project, curProject;
+	for (let index = 0; index < projects.length; index++) {
+		project = projects[index];
+		curProject = get(project);
+		if (curProject && (!searchString || projectSearchMatch(curProject, searchString))) {
+			newFilteredProjects.push(project);
+
+			filteredCount++;
+			if (limit && filteredCount >= limit) {
+				break;
 			}
 		}
 	}
-	return projectItems;
+
+	filteredProjects.set(newFilteredProjects);
 }
 
 function projectSearchMatch(project, searchString) {
@@ -224,18 +248,6 @@ function projectsUpdated() {
 	updateOtherProjects();
 	updateDiscoveryProjects();
 }
-
-// export function getMyProjectIds() {
-// 	return getMyProjects().map(project => project.id);
-// }
-
-// export function getFollowingProjectIds() {
-// 	return getFollowingProjects().map(project => project.id);
-// }
-
-// export function getDiscoveryProjectIds(options) {
-// 	return getDiscoveryProjects(options).map(project => project.id);
-// }
 
 export function addProject(projectDetails) {
     let projectId, trialIndex;

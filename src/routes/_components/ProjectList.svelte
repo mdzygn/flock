@@ -12,6 +12,8 @@
 
     export let projects;
 
+    $: console.log('projects', $projects);
+
     export let displayLimit = 3;
 
     export let title = 'Projects';

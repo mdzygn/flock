@@ -18,6 +18,7 @@ const projectModels = {};
 export let loadingProjects = writable(false);
 
 let projectsUpdatedHandlers = [];
+let tempProjectsUpdatedHandlers = [];
 
 let projects = writable([]);
 let myProjects = writable([]);
@@ -46,10 +47,21 @@ export function onProjectsUpdated(handler) {
 	}
 }
 
+export function onTempProjectsUpdated(handler) {
+	if (!tempProjectsUpdatedHandlers.includes(handler)) {
+		tempProjectsUpdatedHandlers.push(handler);
+	}
+}
+
 projects.subscribe(() => {
 	projectsUpdatedHandlers.forEach(handler => {
 		handler();
 	});
+
+	tempProjectsUpdatedHandlers.forEach(handler => {
+		handler();
+	});
+	tempProjectsUpdatedHandlers.length = 0;
 });
 
 function mergeProjects(newProjects) {
@@ -117,6 +129,36 @@ export function getProjectModel(projectId) {
 // 	}
 // 	return projectItems;
 // }
+
+
+export function getUserProjectsFromId(filteredProjects, projectIds, dontLoad) {
+	loadProjects();
+
+	let projectItems = [];
+
+	const curProjects = get(projects);
+	if (curProjects && curProjects.length) {
+		if (projectIds) {
+			projectItems = [];
+
+			let project, projectId;
+			for (let index = 0; index < projectIds.length; index++) {
+				projectId = projectIds[index];
+				project = getProject(projectId);
+				if (project) {
+					projectItems.push(project);
+				}
+			}
+		}
+	} else if (!dontLoad) {
+		onTempProjectsUpdated(() => {
+			const curProjects = get(projects);
+			getUserProjectsFromId(filteredProjects, projectIds, true);
+		});
+	}
+
+	filteredProjects.set(projectItems);
+}
 
 export function getFilteredProjects(filteredProjects, projects, options) {
 	let searchString = (options && options.searchString) || null;

@@ -1,4 +1,6 @@
 <script>
+	import { writable } from 'svelte/store';
+
 	import ScrollView from '../../../components/ScrollView.svelte';
 
 	import Proxy from '../../../components/Proxy.svelte';
@@ -11,13 +13,20 @@
 
 	import ProjectList from './../../_components/ProjectList.svelte';
 
+	import { getUserProjectsFromId } from '../../../models/projectsModel';
+
 	import { viewedUser } from '../../../models/appModel';
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
 	$: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
 
 	$: skills = ($viewedUser && $viewedUser.skills) || null;
-	$: projects = ($viewedUser && $viewedUser.projects) || null;
+	$: projectIds = ($viewedUser && $viewedUser.projects) || null;
+
+	let userProjects = writable({});
+	$: { getUserProjectsFromId(userProjects, projectIds) }
+
+	$: console.log('userProjects', $userProjects);
 
 	import { loadConversation } from '../../../actions/appActions';
 	import { requestConnection } from '../../../actions/userActions';
@@ -41,8 +50,8 @@
 				<TagSet tags="{skills}" />
 			</ContentPanel>
 		{/if}
-		{#if projects && projects.length}
-			<ProjectList projects="{projects}" />
+		{#if projectIds && projectIds.length}
+			<ProjectList projects="{userProjects}" />
 		{/if}
 	</div>
 

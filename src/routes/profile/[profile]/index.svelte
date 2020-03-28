@@ -15,13 +15,15 @@
 
 	import { getUserProjectsFromId } from '../../../models/projectsModel';
 
-	import { viewedUser } from '../../../models/appModel';
+	import { viewedUser, profileDisplayingAllProjects } from '../../../models/appModel';
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
 	$: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
 
 	$: skills = ($viewedUser && $viewedUser.skills) || null;
 	$: projectIds = ($viewedUser && $viewedUser.projects) || null;
+
+	const PROJECTS_DISPLAY_LIMIT = 3;
 
 	let userProjects = writable({});
 	$: { getUserProjectsFromId(userProjects, projectIds) }
@@ -31,6 +33,10 @@
 
 	$: proxyActionsImage = isCurrentUser ? 'profile_actions_owner' : 'profile_actions';
 	$: proxySkillsImage = isCurrentUser ? 'profile_skills_owner' : 'profile_skills';
+
+	function displayAllProjects() {
+		$profileDisplayingAllProjects = true;
+	}
 </script>
 
 <svelte:head>
@@ -44,12 +50,12 @@
 		</div>
 		<!-- <Proxy image="{proxySkillsImage}" className="proxyOverlay" /> -->
 		{#if skills && skills.length}
-			<ContentPanel title="Skills" showEdit="{isCurrentUser}" showMoreAction="{true}">
+			<ContentPanel title="Skills" showEdit="{isCurrentUser}">
 				<TagSet tags="{skills}" />
 			</ContentPanel>
 		{/if}
 		{#if projectIds && projectIds.length}
-			<ProjectList projects="{userProjects}" showIfNoProjects="{true}" />
+			<ProjectList projects="{userProjects}" showIfNoProjects="{true}" displayLimit="{$profileDisplayingAllProjects ? 0 : PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllProjects}" />
 		{/if}
 	</div>
 

@@ -26,6 +26,8 @@ import {
     viewedUser,
 
     resetScrollRegionPosition,
+
+    profileDisplayingAllProjects,
 } from '../models/appModel';
 
 import {
@@ -125,7 +127,9 @@ export function loadProfile(targetProfileId, options) {
     const curUser = users.find(item => item.id === targetProfileId);
     viewedUser.set(curUser);
 
-    gotoRoute('profile/' + targetProfileId);
+    if (gotoRoute('profile/' + targetProfileId)) {
+        profileDisplayingAllProjects.set(false);
+    }
     resetScrollRegionPosition('profile');
 }
 
@@ -145,7 +149,9 @@ function gotoRoute(newPath) {
     // console.log(getPagePath()+ ' !== /' + newPath + ' : ' + (getPagePath() !== '/' + newPath));
     if (getPagePath() !== '/' + newPath) {
         goto(newPath);
+        return true;
     }
+    return false;
 }
 
 export function showProjectInfo() {

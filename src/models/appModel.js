@@ -15,6 +15,8 @@ const appModel = createModel({
     locationMode: 'global',
     exploreZoomed: false,
 
+    profileDisplayingAllProjects: false,
+
     // scrollRegionProperties: {},
 }, {persist: true}, 'appState');
 
@@ -42,6 +44,8 @@ export const scrollRegionProperties = writable({});
 // const scrollRegionProperties = writable({});
 // export const scrollRegionReset = writable(null);
 // const scrollRegionProperties = appModel.scrollRegionProperties;
+
+export const profileDisplayingAllProjects = appModel.profileDisplayingAllProjects;
 
 initApp();
 

@@ -44,11 +44,11 @@ export function loadProject(targetProjectId, options) {
 
     projectId.set(targetProjectId);
 
-    projectShowingInfo.set(options && options.showInfo);
-
     setProject(targetProjectId);
 
-    gotoRoute('projects/' + targetProjectId);
+    if (gotoRoute('projects/' + targetProjectId)) {
+        projectShowingInfo.set(options && options.showInfo);
+    }
     resetScrollRegionPosition('project');
 }
 

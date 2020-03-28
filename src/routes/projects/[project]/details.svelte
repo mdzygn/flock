@@ -6,8 +6,6 @@
 
 	import { testInputDefocus } from '../../../utils/utils';
 
-	import { editingProject } from '../../../models/projectViewModel';
-
 	import { getFormattedText, getUnformattedText } from '../../../utils/utils';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
@@ -20,7 +18,7 @@
     import CancelIcon from "../../../assets/icons/cancel.png";
 	import SaveIcon from "../../../assets/icons/save.png";
 
-	import { project, projectId } from '../../../models/appModel';
+	import { project, projectId, editingProject } from '../../../models/appModel';
 	import { saveProjectDetails } from '../../../actions/projectActions';
 
 	let title = ($project && $project.title) || '';

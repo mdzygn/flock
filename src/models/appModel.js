@@ -17,7 +17,13 @@ const appModel = createModel({
 
     profileDisplayingAllProjects: false,
 
-    // scrollRegionProperties: {},
+    returnView: false,
+    showingInfo: false,
+    editingProject: false,
+
+    displayingAllMyProjects: false,
+    displayingAllFollowingProjects: false,
+    projectsSearchString: '',
 }, {persist: true}, 'appState');
 
 export const curPath = writable(null);
@@ -46,6 +52,14 @@ export const scrollRegionProperties = writable({});
 // const scrollRegionProperties = appModel.scrollRegionProperties;
 
 export const profileDisplayingAllProjects = appModel.profileDisplayingAllProjects;
+
+export const returnView = appModel.returnView;
+export const showingInfo = appModel.showingInfo;
+export const editingProject = appModel.editingProject;
+
+export const projectsSearchString = appModel.projectsSearchString;
+export const displayingAllMyProjects = appModel.displayingAllMyProjects;
+export const displayingAllFollowingProjects = appModel.displayingAllFollowingProjects;
 
 initApp();
 

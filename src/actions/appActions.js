@@ -28,15 +28,14 @@ import {
     resetScrollRegionPosition,
 
     profileDisplayingAllProjects,
-} from '../models/appModel';
 
-import {
     returnView,
     showingInfo,
     editingProject,
+
     displayingAllMyProjects,
     displayingAllFollowingProjects,
-} from '../models/projectViewModel';
+} from '../models/appModel';
 
 export function loadProject(targetProjectId, options) {
     // console.log('loadProject', targetProjectId);

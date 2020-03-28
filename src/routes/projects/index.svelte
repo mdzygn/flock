@@ -18,7 +18,11 @@
 
 	import { getMyProjects, getFollowingProjects, getFilteredProjects, loadingProjects } from '../../models/projectsModel';
 
-	import { projectsSearchString, displayingAllMyProjects, displayingAllFollowingProjects } from '../../models/projectViewModel';
+	import {
+		projectsSearchString,
+		displayingAllMyProjects,
+		displayingAllFollowingProjects
+	} from '../../models/appModel';
 
 	import { newProject, loadProject } from '../../actions/appActions';
 

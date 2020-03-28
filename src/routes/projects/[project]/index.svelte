@@ -31,14 +31,14 @@
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
 
-	import { projectId, project } from '../../../models/appModel';
-
-	import { getProjectHeaderImage, getProjectHasDetails, loadingProjects } from '../../../models/projectsModel';
-
 	import {
+		projectId,
+		project,
 		returnView,
 		showingInfo,
-	} from '../../../models/projectViewModel';
+	} from '../../../models/appModel';
+
+	import { getProjectHeaderImage, getProjectHasDetails, loadingProjects } from '../../../models/projectsModel';
 
 	import {
 		loadChannel,

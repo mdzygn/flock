@@ -29,8 +29,8 @@ import {
 
     profileDisplayingAllProjects,
 
-    returnView,
-    showingInfo,
+    projectReturnView,
+    projectShowingInfo,
     editingProject,
 
     displayingAllMyProjects,
@@ -44,7 +44,7 @@ export function loadProject(targetProjectId, options) {
 
     projectId.set(targetProjectId);
 
-    showingInfo.set(options && options.showInfo);
+    projectShowingInfo.set(options && options.showInfo);
 
     setProject(targetProjectId);
 
@@ -57,7 +57,7 @@ function setProject(targetProjectId) {
     const curProject = get(curProjectModel);
 
     project.set(curProject);
-    returnView.set(curProject && (curProject.following || curProject.isOwner));
+    projectReturnView.set(curProject && (curProject.following || curProject.isOwner));
 }
 
 onProjectsUpdated(() => {
@@ -154,13 +154,13 @@ function gotoRoute(newPath) {
 }
 
 export function showProjectInfo() {
-    showingInfo.set(true);
+    projectShowingInfo.set(true);
 }
 export function hideProjectInfo() {
-    showingInfo.set(false);
+    projectShowingInfo.set(false);
 }
 export function toggleProjectInfo() {
-    showingInfo.set(!get(showingInfo));
+    projectShowingInfo.set(!get(projectShowingInfo));
 }
 
 function getPagePath() {

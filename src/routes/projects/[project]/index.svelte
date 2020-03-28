@@ -34,8 +34,8 @@
 	import {
 		projectId,
 		project,
-		returnView,
-		showingInfo,
+		projectReturnView,
+		projectShowingInfo,
 	} from '../../../models/appModel';
 
 	import { getProjectHeaderImage, getProjectHasDetails, loadingProjects } from '../../../models/projectsModel';
@@ -101,10 +101,10 @@
 	$: projectDetails = ($project && $project.details) || null;
 
 	$: projectHasDetails = getProjectHasDetails($project);
-	$: showInfo = $showingInfo && projectHasDetails;
+	$: showInfo = $projectShowingInfo && projectHasDetails;
 
 	$: {
-		// if ($returnView) {
+		// if ($projectReturnView) {
 		// 	proxyHeaderImage = 'project_header_image_compact';
 		// } else {
 		// 	proxyHeaderImage = 'project_header_image';
@@ -131,7 +131,7 @@
 		} else {
 			if (following) {
 				// proxyActionsImage = 'project_actions_following';
-				if ($returnView) {
+				if ($projectReturnView) {
 					proxyOverviewImage = 'project_overview_following';
 				} else {
 					proxyOverviewImage = 'project_overview_following_changed';
@@ -139,7 +139,7 @@
 				proxyChannelsImage = 'project_channels_following';
 			} else {
 				// proxyActionsImage = 'project_actions';
-				if ($returnView) {
+				if ($projectReturnView) {
 					proxyOverviewImage = 'project_overview_following';
 				} else {
 					proxyOverviewImage = 'project_overview';
@@ -171,8 +171,8 @@
 	{:else}
 		<ScrollView id="project" headerStartHidden="{true}">
 			<div class="content">
-				<div class="contentItem" class:collapsedOptions="{$returnView && !showInfo}" class:collapsedHeader="{$returnView && !showInfo && !isNew}">
-					<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
+				<div class="contentItem" class:collapsedOptions="{$projectReturnView && !showInfo}" class:collapsedHeader="{$projectReturnView && !showInfo && !isNew}">
+					<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$projectReturnView}" alt="project header image" />
 					<!-- {#if isNew}
 						<Proxy image="{proxyOverviewImage}" className="proxyOverlay">
 							<Hotspot onClick="{editProjectDetails}" style="
@@ -206,7 +206,7 @@
 									top: 122px;
 									width: 147px;
 									height: 40px;" />
-							{:else if $returnView}
+							{:else if $projectReturnView}
 								<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
 									right: 11px;
 									top: 122px;
@@ -220,7 +220,7 @@
 									height: 46px;" />
 							{/if}
 
-							{#if !$returnView}
+							{#if !$projectReturnView}
 								{#if liked}
 									<Proxy image="project_like_selected" absolutePlacement="true" style="
 										left: 175px;
@@ -287,7 +287,7 @@
 						</div>
 					{/if} -->
 
-					<div class="overviewContent" class:returnView="{$returnView}">
+					<div class="overviewContent" class:returnView="{$projectReturnView}">
 						<div class="contentContainer">
 							<Button className="optionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
 							{#if isOwner}
@@ -300,7 +300,7 @@
 							</div>
 							{#if projectHasDetails}
 								{#if !showInfo}
-									{#if !$returnView}
+									{#if !$projectReturnView}
 										<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 									{/if}
 								{:else}
@@ -329,7 +329,7 @@
 						{/if}
 						<div class="projectActions">
 							<div class="projectActionButtons">
-								{#if projectHasDetails && !showInfo && $returnView}
+								{#if projectHasDetails && !showInfo && $projectReturnView}
 									<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 								{:else if !projectHasDetails && isOwner}
 									<Button className="addProjectDetailsButton" onClick="{editProjectDetails}" icon="{AddDetailsIcon}">add project details</Button>
@@ -343,7 +343,7 @@
 										<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
 									</Button>
 								{/if}
-								{#if (!$returnView || showInfo) && !isOwner}
+								{#if (!$projectReturnView || showInfo) && !isOwner}
 									<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
 										<div class="count">{likeCount}</div>
 									</div></Button>
@@ -352,7 +352,7 @@
 									</div></Button>
 								{/if}
 							</div>
-							{#if (!$returnView || showInfo) && projectLocation}
+							{#if (!$projectReturnView || showInfo) && projectLocation}
 								<Location className="{(isOwner && showInfo) ? 'ownerLocation' : ''}" location="{projectLocation}" />
 							{/if}
 						</div>
@@ -369,7 +369,7 @@
 					{#if isOwner}
 						<NewPostButton type="project_post_update" />
 					{/if}
-				{:else if $returnView}
+				{:else if $projectReturnView}
 					<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
 					{#if isOwner}
 						<NewPostButton type="project_post_update" />

@@ -17,8 +17,8 @@ const appModel = createModel({
 
     profileDisplayingAllProjects: false,
 
-    returnView: false,
-    showingInfo: false,
+    projectReturnView: false,
+    projectShowingInfo: false,
     editingProject: false,
 
     displayingAllMyProjects: false,
@@ -53,8 +53,8 @@ export const scrollRegionProperties = writable({});
 
 export const profileDisplayingAllProjects = appModel.profileDisplayingAllProjects;
 
-export const returnView = appModel.returnView;
-export const showingInfo = appModel.showingInfo;
+export const projectReturnView = appModel.projectReturnView;
+export const projectShowingInfo = appModel.projectShowingInfo;
 export const editingProject = appModel.editingProject;
 
 export const projectsSearchString = appModel.projectsSearchString;

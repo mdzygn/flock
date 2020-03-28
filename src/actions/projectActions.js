@@ -48,8 +48,10 @@ export function projectToggleLiked(projectId) {
 export function makePublic() {
     const curProject = get(project);
     if (curProject) {
-        curProject.public = true;
-        curProject.isNew = false;
+        updateProject(curProject, {
+            public: true,
+            isNew: false,
+        });
         project.set(curProject);
     }
 }
@@ -57,7 +59,13 @@ export function makePublic() {
 export function togglePublic() {
     const curProject = get(project);
     if (curProject) {
-        curProject.public = !curProject.public;
+        const details = {
+            public: !curProject.public,
+        }
+        if (details.public) {
+            details.isNew = false;
+        }
+        updateProject(curProject, details);
         project.set(curProject);
     }
 }

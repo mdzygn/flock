@@ -26,8 +26,6 @@
 	let userProjects = writable({});
 	$: { getUserProjectsFromId(userProjects, projectIds) }
 
-	$: console.log('userProjects', $userProjects);
-
 	import { loadConversation } from '../../../actions/appActions';
 	import { requestConnection } from '../../../actions/userActions';
 
@@ -51,7 +49,7 @@
 			</ContentPanel>
 		{/if}
 		{#if projectIds && projectIds.length}
-			<ProjectList projects="{userProjects}" />
+			<ProjectList projects="{userProjects}" showIfNoProjects="{true}" />
 		{/if}
 	</div>
 

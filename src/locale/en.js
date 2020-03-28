@@ -26,6 +26,7 @@ const locale = {
 		DISCOVER: 'loading projects...',
 		FOLLOWING: 'loading projects...',
 		PROJECT: 'loading project...',
+		PROFILE_PROJECTS: 'loading projects...',
 	},
 }
 

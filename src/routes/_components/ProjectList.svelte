@@ -1,18 +1,19 @@
 <script>
+    import locale from '../../locale';
+
     import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
 
 	import ContentPanel from './../_components/ContentPanel.svelte';
-	import ProjectListItem from './ProjectListItem.svelte';
+    import ProjectListItem from './ProjectListItem.svelte';
+	import ContentLoader from './../_components/ContentLoader.svelte';
 
-	// import { getProjectsByIds } from '../../models/projectsModel';
+	import { loadingProjects } from '../../models/projectsModel';
 
 	import { loadProject } from '../../actions/appActions';
 
 
     export let projects;
-
-    $: console.log('projects', $projects);
 
     export let displayLimit = 3;
 
@@ -45,19 +46,23 @@
         </Proxy> -->
 
         <ContentPanel title="{title}" showMoreAction="{areMoreItems ? showMoreAction : false}" {hideShowMoreWithVisibility}>
-            {#each $projects as project, index}
-                {#if !displayLimit || index < displayLimit}
-                    <ProjectListItem {project} {showLastActive} />
-                {/if}
+			{#if $loadingProjects && (!$projects || !$projects.length)}
+			    <ContentLoader label="{locale.LOADING.PROFILE_PROJECTS}" />
             {:else}
-                <div class="noProjects">
-                    {#if searchString}
-                        <slot>No projects found matching "{searchString}"</slot>
-                    {:else}
-                        <slot>No projects found</slot>
+                {#each $projects as project, index}
+                    {#if !displayLimit || index < displayLimit}
+                        <ProjectListItem {project} {showLastActive} />
                     {/if}
-                </div>
-            {/each}
+                {:else}
+                    <div class="noProjects">
+                        {#if searchString}
+                            <slot>No projects found matching "{searchString}"</slot>
+                        {:else}
+                            <slot>No projects found</slot>
+                        {/if}
+                    </div>
+                {/each}
+            {/if}
         </ContentPanel>
     </div>
 {/if}
@@ -78,6 +83,14 @@
     }
 
     .noProjects {
+        font-size: 1.2rem;
+        padding-top: 10px;
+        padding-bottom: 30px;
+        line-height: 2.5rem;
+    }
+
+    .projectList :global(.contentLoader) {
+        padding: 0;
         font-size: 1.2rem;
         padding-top: 10px;
         padding-bottom: 30px;

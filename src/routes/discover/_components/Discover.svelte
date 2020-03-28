@@ -13,7 +13,7 @@
 
 	import { viewMode, locationMode, resetScrollRegionPosition } from '../../../models/appModel';
 
-	import { getDiscoveryProjects } from '../../../models/projectsModel'; // getDiscoveryProjectIds
+	import { getDiscoveryProjects, loadingProjects } from '../../../models/projectsModel'; // getDiscoveryProjectIds
 
 	import { loadProject } from '../../../actions/appActions';
 
@@ -39,11 +39,15 @@
 		<!-- <Feed type="discover" linkToProjects="{true}" count="{5}" offset="{proxyContentOffset}"/> -->
 
 		<div class="feed">
-			{#each $projects as project}
-				<ProjectItem {project} />
-			{:else}
+			{#if $loadingProjects && (!$projects || !$projects.length) }
 				<ContentLoader label="{locale.LOADING.DISCOVER}" />
-			{/each}
+			{:else}
+				{#each $projects as project}
+					<ProjectItem {project} />
+				{:else}
+					<ContentLoader label="{locale.DISCOVER.NO_PROJECTS}" />
+				{/each}
+			{/if}
 		</div>
 
 		<div slot="scrollHeader">

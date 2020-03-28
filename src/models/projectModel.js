@@ -27,8 +27,8 @@ const ProjectModel = (projectData) => {
         unreadMessageCount: 0,
         messageCount: 0,
 
-        following: true,
-        isOwner: true,
+        following: false,
+        isOwner: false,
 
         location: null,
 

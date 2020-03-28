@@ -6,6 +6,8 @@ import { generateId } from '../utils/utils';
 
 import config from '../config';
 
+import { locationMode } from '../models/appModel';
+
 import ProjectModel from '../models/projectModel';
 
 const projectModels = {};
@@ -13,20 +15,44 @@ const projectModels = {};
 // import projectsData from '../data/projects.json';
 // const projects = JSON.parse(JSON.stringify(projectsData));
 
+export let loadingProjects = writable(false);
+
+let projectsUpdatedHandlers = [];
 
 let projects = writable([]);
-// let ownedProjects = writable([]);
-// let followingProjects = writable([]);
-// let discoveryProjects = writable([]);
+let myProjects = writable([]);
+let followingProjects = writable([]);
+let otherProjects = writable([]);
+let discoveryProjects = writable([]);
+
+onProjectsUpdated(projectsUpdated);
 
 // let projects = [];
 // loadProjects();
 
-function loadProjects() {
-	api.getProjects().then(result => {
-		mergeProjects(result);
-	});
+export function loadProjects(options) {
+	if (!get(loadingProjects)) {
+		console.log('loadingProjects');
+		loadingProjects.set(true);
+		api.getProjects(options).then(result => {
+			console.log('projects loaded');
+			mergeProjects(result);
+			loadingProjects.set(false);
+		});
+	}
 }
+
+export function onProjectsUpdated(handler) {
+	if (!projectsUpdatedHandlers.includes(handler)) {
+		projectsUpdatedHandlers.push(handler);
+	}
+}
+
+projects.subscribe(() => {
+	projectsUpdatedHandlers.forEach(handler => {
+		handler();
+	});
+});
 
 function mergeProjects(newProjects) {
 	// projects.set(projects);
@@ -57,27 +83,14 @@ function mergeProjects(newProjects) {
 	}
 }
 
-// testDuplicates();
-
-// function testDuplicates() {
-// 	const usedIds = {};
-// 	projects.forEach(item => {
-// 		if (usedIds[item.id]) {
-// 			console.warn('Project "' + item.title + '" has same id "' + item.id + '" as "' + usedIds[item.id].title + '"');
-// 		} else {
-// 			usedIds[item.id] = item;
-// 		}
-// 	});
-// }
-
 export function getProject(projectId) {
-	return get(projects).find(item => item.id === projectId);
+	return get(projects).find(item => get(item).id === projectId);
 }
 
 export function getProjectModel(projectId) {
 	let projectModel = projectModels[projectId];
 	if (!projectModel) {
-		let sourceProjectModel = get(projects).find(item => item.id === projectId);
+		let sourceProjectModel = get(projects).find(item => get(item).id === projectId);
 		projectModel = writable(sourceProjectModel);
 		projectModels[projectId] = projectModel;
 	}
@@ -117,19 +130,30 @@ function projectSearchMatch(project, searchString) {
 }
 
 export function getMyProjects() {
-	return get(projects).filter(section => section.isOwner);
+	updateMyProjects();
+	loadProjects();
+	return myProjects;
+	// return get(projects).filter(project => project.isOwner);
 }
 
 export function getFollowingProjects() {
-	return get(projects).filter(section => section.following && !section.isOwner);
-}
-
-export function getOtherProjects() {
-	return get(projects).filter(section => !section.following && !section.isOwner);
-}
-
-export function getDiscoveryProjects(options) {
+	updateFollowingProjects();
 	loadProjects();
+	return followingProjects;
+	// return get(projects).filter(project => project.following && !project.isOwner);
+}
+
+// export function getOtherProjects() {
+// 	loadProjects();
+// 	return otherProjects;
+// 	// return get(projects).filter(project => !project.following && !project.isOwner);
+// }
+
+export function getDiscoveryProjects() { // options) {
+	updateDiscoveryProjects();
+	loadProjects();
+	return discoveryProjects;
+	// return projects;
 
 	// const otherProjects = getOtherProjects();
 	// const ownedProjects = getMyProjects();
@@ -142,21 +166,78 @@ export function getDiscoveryProjects(options) {
 	// 	projects = projects.slice(testArrayCycleOffset, projects.length).concat(projects.slice(0, testArrayCycleOffset));
 	// }
 
-	return projects;
+	// return projects;
 }
 
+export function updateMyProjects() {
+	let newProjects = get(projects);
+	if (newProjects) {
+		newProjects = newProjects.filter(projectModel => {
+			const project = get(projectModel);
+			return project.isOwner;
+		});
+		console.log('updateMyProjects: ', newProjects);
+		myProjects.set(newProjects);
+	}
+}
+export function updateFollowingProjects() {
+	let newProjects = get(projects);
+	if (newProjects) {
+		newProjects = newProjects.filter(projectModel => {
+			const project = get(projectModel);
+			return project.following && !project.isOwner;
+		});
+		console.log('updateFollowingProjects: ', newProjects);
+		followingProjects.set(newProjects);
+	}
+}
+export function updateOtherProjects() {
+	let newProjects = get(projects);
+	if (newProjects) {
+		newProjects = newProjects.filter(projectModel => {
+			const project = get(projectModel);
+			return !project.following && !project.isOwner;
+		});
+		console.log('updateOtherProjects: ', newProjects);
+		otherProjects.set(newProjects);
+	}
+}
+export function updateDiscoveryProjects() {
+	const sourceMyProjects = get(myProjects);
+	if (sourceMyProjects) {
+		const sourceFollowingProjects = get(followingProjects);
+		const sourceOtherProjects = get(otherProjects);
+		if (sourceFollowingProjects && sourceOtherProjects) {
+			let newProjects = [...sourceOtherProjects, ...sourceMyProjects, ...sourceFollowingProjects];
 
-export function getMyProjectIds() {
-	return getMyProjects().map(project => project.id);
+			if (get(locationMode) === 'local') {
+				const testArrayCycleOffset = Math.min(4, newProjects.length - 1);
+				newProjects = newProjects.slice(testArrayCycleOffset, newProjects.length).concat(newProjects.slice(0, testArrayCycleOffset));
+			}
+			console.log('updateDiscoveryProjects: ', newProjects);
+			discoveryProjects.set(newProjects);
+		}
+	}
 }
 
-export function getFollowingProjectIds() {
-	return getFollowingProjects().map(project => project.id);
+function projectsUpdated() {
+	updateMyProjects();
+	updateFollowingProjects();
+	updateOtherProjects();
+	updateDiscoveryProjects();
 }
 
-export function getDiscoveryProjectIds(options) {
-	return getDiscoveryProjects(options).map(project => project.id);
-}
+// export function getMyProjectIds() {
+// 	return getMyProjects().map(project => project.id);
+// }
+
+// export function getFollowingProjectIds() {
+// 	return getFollowingProjects().map(project => project.id);
+// }
+
+// export function getDiscoveryProjectIds(options) {
+// 	return getDiscoveryProjects(options).map(project => project.id);
+// }
 
 export function addProject(projectDetails) {
     let projectId, trialIndex;

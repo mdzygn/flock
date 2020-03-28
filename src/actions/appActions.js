@@ -1,11 +1,16 @@
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 
-import { getProject } from '../models/projectsModel';
 import conversations from '../data/conversations.json';
 import users from '../data/users.json';
 
 // const { page } = stores();
+
+import {
+    getProject,
+    loadProjects,
+    onProjectsUpdated,
+} from '../models/projectsModel';
 
 import {
     curPath,
@@ -34,18 +39,37 @@ import {
 export function loadProject(targetProjectId, options) {
     // console.log('loadProject', targetProjectId);
 
-    projectId.set(targetProjectId);
+    loadProjects({ id: targetProjectId });
 
-    const curProject = getProject(targetProjectId);
-    project.set(curProject);
+    projectId.set(targetProjectId);
 
     showingInfo.set(options && options.showInfo);
 
-    returnView.set(curProject && (curProject.following || curProject.isOwner));
+    setProject(targetProjectId);
 
     gotoRoute('projects/' + targetProjectId);
     resetScrollRegionPosition('project');
 }
+
+function setProject(targetProjectId) {
+    const curProjectModel = getProject(targetProjectId);
+    const curProject = get(curProjectModel);
+
+    console.log('setProject ', curProject, targetProjectId);
+
+    project.set(curProject);
+    returnView.set(curProject && (curProject.following || curProject.isOwner));
+}
+
+onProjectsUpdated(() => {
+    console.log('onProjectsUpdated');
+
+    // if project object not found but project id set then update project model
+    if (!get(project)) {
+        const targetProjectId = get(projectId);
+        setProject(targetProjectId);
+    }
+});
 
 export function setNavSection(section) {
     // const sectionId = getIdForSection(section);

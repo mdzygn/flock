@@ -5,12 +5,12 @@
 	import ContentPanel from './../_components/ContentPanel.svelte';
 	import ProjectListItem from './ProjectListItem.svelte';
 
-	import { getProjectsByIds } from '../../models/projectsModel';
+	// import { getProjectsByIds } from '../../models/projectsModel';
 
 	import { loadProject } from '../../actions/appActions';
 
 
-    export let projects = null;
+    export let projects;
 
     export let displayLimit = 3;
 
@@ -26,11 +26,13 @@
     export let hideShowMoreWithVisibility = false;
     export let showIfNoProjects = false;
 
-    $: projectItems = getProjectsByIds(projects, {limit: displayLimit ? displayLimit + 1 : 0, searchString: searchString});
-    $: areMoreItems = displayLimit && projectItems.length > displayLimit;
+    $: areMoreItems = displayLimit && $projects.length > displayLimit;
+
+    // $: projectItems = getProjectsByIds(projects, {limit: displayLimit ? displayLimit + 1 : 0, searchString: searchString});
+    // $: areMoreItems = displayLimit && projectItems.length > displayLimit;
 </script>
 
-{#if (projects && projects.length) || showIfNoProjects}
+{#if ($projects && $projects.length) || showIfNoProjects}
     <div class="projectList {className}">
         <!-- <Proxy image="profile_projects" className="proxyOverlay" >
             <Hotspot onClick="{e => loadProject('s7djj2s2')}" style="
@@ -41,7 +43,7 @@
         </Proxy> -->
 
         <ContentPanel title="{title}" showMoreAction="{areMoreItems ? showMoreAction : false}" {hideShowMoreWithVisibility}>
-            {#each projectItems as project, index}
+            {#each $projects as project, index}
                 {#if !displayLimit || index < displayLimit}
                     <ProjectListItem {project} {showLastActive} />
                 {/if}

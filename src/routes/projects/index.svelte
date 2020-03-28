@@ -1,4 +1,6 @@
 <script>
+	import locale from '../../locale';
+
 	import ScrollView from '../../components/ScrollView.svelte';
 
 	import Proxy from '../../components/Proxy.svelte';
@@ -6,12 +8,14 @@
 
     import Button from '../../components/Button.svelte';
 	import SearchBar from './../_components/SearchBar.svelte';
+	import ContentLoader from './../_components/ContentLoader.svelte';
 
 	import ProjectList from './../_components/ProjectList.svelte';
 
     import AddProjectIcon from "../../assets/icons/add_project.png";
 
-	import { getMyProjectIds, getFollowingProjectIds } from '../../models/projectsModel';
+	import { getMyProjects, getFollowingProjects, loadingProjects } from '../../models/projectsModel';
+	// import { getMyProjectIds, getFollowingProjectIds } from '../../models/projectsModel';
 
 	import { projectsSearchString, displayingAllMyProjects, displayingAllFollowingProjects } from '../../models/projectViewModel';
 
@@ -30,8 +34,8 @@
 		$displayingAllFollowingProjects = true;
 	}
 
-	const myProjects = getMyProjectIds();
-	const followedProjects = getFollowingProjectIds();
+	const myProjects = getMyProjects();
+	const followingProjects = getFollowingProjects();
 
 </script>
 
@@ -60,23 +64,27 @@
 		</Proxy> -->
 
 		<SearchBar bind:searchString={$projectsSearchString} />
-		<div class="projectsContent">
-			<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" displayLimit="{$displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllMyProjects}" {searchString} showIfNoProjects="{true}" hideShowMoreWithVisibility="{true}">
-				{#if searchString}
-					<slot>No projects found matching "{searchString}"</slot>
-				{:else}
-					<slot>You have not shared any projects<br/>Create a <a href="projects/new">New Project</a></slot>
-				{/if}
-			</ProjectList>
-			<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">new project</Button>
-			<ProjectList title="Following" className="followingProjects" projects="{followedProjects}" showLastActive="{true}" displayLimit="{$displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} showIfNoProjects="{true}">
-				{#if searchString}
-					<slot>No followed projects matching "{searchString}"</slot>
-				{:else}
-					<slot>You aren't following any projects<br/><a href="discover">Discover</a> inspiring projects to follow</slot>
-				{/if}
-			</ProjectList>
-		</div>
+		{#if $loadingProjects && (!$myProjects || !$myProjects.length) && (!$followingProjects || !$followingProjects.length) }
+			<ContentLoader label="{locale.LOADING.FOLLOWING}" />
+		{:else}
+			<div class="projectsContent">
+				<ProjectList title="My Projects" projects="{myProjects}" showLastActive="{true}" displayLimit="{$displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllMyProjects}" {searchString} showIfNoProjects="{true}" hideShowMoreWithVisibility="{true}">
+					{#if searchString}
+						<slot>No projects found matching "{searchString}"</slot>
+					{:else}
+						<slot>You have not shared any projects<br/>Create a <a href="projects/new">New Project</a></slot>
+					{/if}
+				</ProjectList>
+				<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">new project</Button>
+				<ProjectList title="Following" className="followingProjects" projects="{followingProjects}" showLastActive="{true}" displayLimit="{$displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} showIfNoProjects="{true}">
+					{#if searchString}
+						<slot>No followed projects matching "{searchString}"</slot>
+					{:else}
+						<slot>You aren't following any projects<br/><a href="discover">Discover</a> inspiring projects to follow</slot>
+					{/if}
+				</ProjectList>
+			</div>
+		{/if}
 	</ScrollView>
 </div>
 

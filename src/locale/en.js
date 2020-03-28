@@ -1,4 +1,7 @@
 const locale = {
+	DISCOVER: {
+		NO_PROJECTS: 'no projects found',
+	},
 	NEW_PROJECT: {
 		TITLE: 'project name',
 		DESCRIPTION: 'project summary',
@@ -21,6 +24,7 @@ const locale = {
 	LOADING: {
 		DEFAULT: 'loading...',
 		DISCOVER: 'loading projects...',
+		FOLLOWING: 'loading projects...',
 	},
 }
 

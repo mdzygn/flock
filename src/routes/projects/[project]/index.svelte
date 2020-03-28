@@ -443,6 +443,7 @@
 
 	.headerImage {
 		width: 100%;
+		height: 245px;
 	}
 
 	.headerImageCollapsed {

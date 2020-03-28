@@ -10,28 +10,28 @@
     export let project;
     export let showLastActive = false;
 
-    $: thumbImage = getProjectHeaderImage(project);
+    $: thumbImage = getProjectHeaderImage($project);
 
-    $: detail = (showLastActive ? project.lastActiveInfo : project.createdInfo) || '';
+    $: detail = (showLastActive ? $project.lastActiveInfo : $project.createdInfo) || '';
 
     function loadCurrentProject() {
-        loadProject(project.id);
+        loadProject($project.id);
     }
 </script>
 
 <div class="projectListItem" on:click="{loadCurrentProject}">
-    <img class="thumb" src="{thumbImage}" alt="{project.title}" />
+    <img class="thumb" src="{thumbImage}" alt="{$project.title}" />
     <div class="detailContent">
         <div class="detailInnerContent">
-            <div class="title">{project.title}</div>
+            <div class="title">{$project.title}</div>
             {#if detail}
                 <div class="detail">{detail}</div>
             {/if}
         </div>
     </div>
-    {#if project.following || project.isOwner}
+    {#if $project.following || $project.isOwner}
         <div class="info">
-            <Counter visible="{project.unreadCount}" count="{project.unreadCount}" hasNew="{true}" />
+            <Counter visible="{$project.unreadCount}" count="{$project.unreadCount}" hasNew="{true}" />
             <div class="followingIcon" style="background-image: url({FollowingSmallIcon})"></div>
         </div>
     {/if}

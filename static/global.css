@@ -38,6 +38,7 @@ a {
 
 img {
 	display: block;
+	text-indent: -9999px;
 	/* line-height: 0; */
 }
 

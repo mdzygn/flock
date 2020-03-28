@@ -1,39 +1,47 @@
-const ProjectModel = {
-    id: '',
-    slug: '',
+import { writable } from 'svelte/store';
 
-    title: '',
-    description: '',
+const ProjectModel = (projectData) => {
+    let initData = {
+        id: '',
+        slug: '',
 
-    details: null,
+        title: '',
+        description: '',
 
-    public: false,
+        details: null,
 
-    headerImage: null,
+        public: false,
 
-    createdAt: 0,
-    createdInfo: null,
+        headerImage: null,
 
-    lastActiveAt: 0,
-    lastActiveInfo: null,
+        createdAt: 0,
+        createdInfo: null,
 
-    likeCount: 0,
-    followCount: 0,
-    unreadCount: 0,
+        lastActiveAt: 0,
+        lastActiveInfo: null,
 
-    unreadMessageCount: 0,
-    messageCount: 0,
+        likeCount: 0,
+        followCount: 0,
+        unreadCount: 0,
 
-    following: true,
-    isOwner: true,
+        unreadMessageCount: 0,
+        messageCount: 0,
 
-    location: null,
+        following: true,
+        isOwner: true,
 
-    skills: [],
-    links: [],
-    team: [],
-    tags: [],
-    posts: [],
+        location: null,
+
+        skills: [],
+        links: [],
+        team: [],
+        tags: [],
+        posts: [],
+    };
+    if (projectData) {
+        initData = Object.assign(initData, projectData);
+    }
+    return writable(initData);
 };
 
 export default ProjectModel;

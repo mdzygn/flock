@@ -13,11 +13,13 @@
 
 	import { viewMode, locationMode, resetScrollRegionPosition } from '../../../models/appModel';
 
-	import { getDiscoveryProjectIds } from '../../../models/projectsModel';
+	import { getDiscoveryProjects } from '../../../models/projectsModel'; // getDiscoveryProjectIds
 
 	import { loadProject } from '../../../actions/appActions';
 
-	$: projects = getDiscoveryProjectIds({location: $locationMode});
+	// $: projects = getDiscoveryProjectIds({location: $locationMode});
+
+	$: projects = getDiscoveryProjects();
 
 	function toggleViewMode() {
 		$viewMode = ($viewMode === 'explore') ? 'discover' : 'explore';
@@ -37,8 +39,8 @@
 		<!-- <Feed type="discover" linkToProjects="{true}" count="{5}" offset="{proxyContentOffset}"/> -->
 
 		<div class="feed">
-			{#each projects as projectId}
-				<ProjectItem projectId="{projectId}" />
+			{#each $projects as project}
+				<ProjectItem {project} />
 			{:else}
 				<ContentLoader label="{locale.LOADING.DISCOVER}" />
 			{/each}

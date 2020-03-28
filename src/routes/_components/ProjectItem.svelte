@@ -14,10 +14,13 @@
 
     import MoreArrowIcon from "../../assets/icons/more_arrow.png";
 
-    export let projectId = null;
+    // export let projectId = null;
+    // let project = writable({}); // declare store here to prevent SSR error
+    // $: { project = getProjectModel(projectId) } ;
 
-    let project = writable({}); // declare store here to prevent SSR error
-    $: { project = getProjectModel(projectId) } ;
+    export let project;
+
+    $: projectId = ($project && $project.id) || null;
 
     $: projectSlug = ($project && $project.slug) || null;
 

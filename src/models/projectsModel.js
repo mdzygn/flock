@@ -1,6 +1,6 @@
 import api from '../api';
 
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
 
 import { generateId } from '../utils/utils';
 
@@ -13,36 +13,71 @@ const projectModels = {};
 // import projectsData from '../data/projects.json';
 // const projects = JSON.parse(JSON.stringify(projectsData));
 
-let projects = [];
-loadProjects();
+
+let projects = writable([]);
+// let ownedProjects = writable([]);
+// let followingProjects = writable([]);
+// let discoveryProjects = writable([]);
+
+// let projects = [];
+// loadProjects();
 
 function loadProjects() {
 	api.getProjects().then(result => {
-		projects = result;
+		mergeProjects(result);
 	});
 }
 
-testDuplicates();
+function mergeProjects(newProjects) {
+	// projects.set(projects);
 
-function testDuplicates() {
-	const usedIds = {};
-	projects.forEach(item => {
-		if (usedIds[item.id]) {
-			console.warn('Project "' + item.title + '" has same id "' + item.id + '" as "' + usedIds[item.id].title + '"');
-		} else {
-			usedIds[item.id] = item;
+	if (newProjects && newProjects.length) {
+		const curProjects = get(projects);
+
+		let curProject, newProjectData, projectId, newProject;
+		// newProjects.forEach(newProjectData => {
+		for (var projectI = 0; projectI < newProjects.length; projectI++) {
+			newProjectData = newProjects[projectI];
+			projectId = newProjectData.id;
+			curProject = curProjects.find(match => get(match).id === projectId);
+			if (!curProject) {
+				curProject = ProjectModel(newProjectData);
+				curProjects.unshift(curProject);
+				// console.log('add project: ', curProject, newProjectData);
+			} else {
+				// console.log('update existing project: ', curProject, newProjectData);
+				newProject = get(curProject);
+				newProject = Object.assign(newProject, newProjectData);
+				curProject.set(newProject);
+			}
 		}
-	});
+		// console.log('update projects: ', curProjects);
+
+		projects.set(curProjects);
+	}
 }
+
+// testDuplicates();
+
+// function testDuplicates() {
+// 	const usedIds = {};
+// 	projects.forEach(item => {
+// 		if (usedIds[item.id]) {
+// 			console.warn('Project "' + item.title + '" has same id "' + item.id + '" as "' + usedIds[item.id].title + '"');
+// 		} else {
+// 			usedIds[item.id] = item;
+// 		}
+// 	});
+// }
 
 export function getProject(projectId) {
-	return projects.find(item => item.id === projectId);
+	return get(projects).find(item => item.id === projectId);
 }
 
 export function getProjectModel(projectId) {
 	let projectModel = projectModels[projectId];
 	if (!projectModel) {
-		let sourceProjectModel = projects.find(item => item.id === projectId);
+		let sourceProjectModel = get(projects).find(item => item.id === projectId);
 		projectModel = writable(sourceProjectModel);
 		projectModels[projectId] = projectModel;
 	}
@@ -82,28 +117,30 @@ function projectSearchMatch(project, searchString) {
 }
 
 export function getMyProjects() {
-	return projects.filter(section => section.isOwner);
+	return get(projects).filter(section => section.isOwner);
 }
 
 export function getFollowingProjects() {
-	return projects.filter(section => section.following && !section.isOwner);
+	return get(projects).filter(section => section.following && !section.isOwner);
 }
 
 export function getOtherProjects() {
-	return projects.filter(section => !section.following && !section.isOwner);
+	return get(projects).filter(section => !section.following && !section.isOwner);
 }
 
 export function getDiscoveryProjects(options) {
-	const otherProjects = getOtherProjects();
-	const ownedProjects = getMyProjects();
-	const followingProjects = getFollowingProjects();
+	loadProjects();
 
-	let projects = [...otherProjects, ...ownedProjects, ...followingProjects];
+	// const otherProjects = getOtherProjects();
+	// const ownedProjects = getMyProjects();
+	// const followingProjects = getFollowingProjects();
 
-	if (options && options.location === 'local') {
-		const testArrayCycleOffset = Math.min(4, projects.length - 1);
-		projects = projects.slice(testArrayCycleOffset, projects.length).concat(projects.slice(0, testArrayCycleOffset));
-	}
+	// let projects = [...otherProjects, ...ownedProjects, ...followingProjects];
+
+	// if (options && options.location === 'local') {
+	// 	const testArrayCycleOffset = Math.min(4, projects.length - 1);
+	// 	projects = projects.slice(testArrayCycleOffset, projects.length).concat(projects.slice(0, testArrayCycleOffset));
+	// }
 
 	return projects;
 }
@@ -126,7 +163,12 @@ export function addProject(projectDetails) {
 	do { projectId = generateId(); } while (getProject(projectId) && trialIndex < 99);
 	if (trialIndex === 99) { return null; }
 
-	const newProjectModel = Object.assign({}, ProjectModel);
+	// const newProjectModel = Object.assign({}, ProjectModel);
+
+	const newProjectModel = ProjectModel();
+
+	const curProjects = get(projects);
+	curProjects.unshift(newProjectModel);
 
 	newProjectModel.id = projectId;
 
@@ -145,7 +187,9 @@ export function addProject(projectDetails) {
 
 	newProjectModel.followCount++;
 
-	projects.unshift(newProjectModel);
+	projects.set(curProjects);
+
+	// projects.unshift(newProjectModel);
 
 	api.addProject({project: newProjectModel}).then(result => {
 		newProjectModel._id = result.insertedId;

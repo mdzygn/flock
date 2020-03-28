@@ -14,26 +14,45 @@ function send(path, options) {
 	// opts.headers['Authorization'] = `Token ${token}`;
 
 	return fetch(`${API_PATH}/${path}`, opts)
+	  	.then(r => {
+			if (r.status >= 200 && r.status < 300) {
+				return r;
+			  } else {
+				var error = new Error(r.statusText || r.status);
+				error.response = r;
+				return Promise.reject(error);
+			  }
+		})
 		.then(r => r.text())
 		.then(json => {
 			try {
 				return JSON.parse(json);
-			} catch (err) {
-				return json;
+			} catch (error) {
+				error.response = json;
+				return Promise.reject(error);
 			}
 		});
 }
 
 function getProjects(options) {
-	return send('getProjects', options);
+	return send('getProjects', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
 }
 
 function addProject(options) {
-	return send('addProject', options);
+	return send('addProject', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
 }
 
 function updateProject(options) {
-	return send('updateProject', options);
+	return send('updateProject', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
 }
 
 const api = {

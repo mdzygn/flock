@@ -8,21 +8,18 @@ import config from '../config';
 
 import ProjectModel from '../models/projectModel';
 
+const projectModels = {};
+
 // import projectsData from '../data/projects.json';
 // const projects = JSON.parse(JSON.stringify(projectsData));
 
 let projects = [];
-
-const projectModels = {};
-
 loadProjects();
 
 function loadProjects() {
-	// api.get('projects').then(result => {
 	api.getProjects().then(result => {
-		// console.log('projects loaded: ', result);
 		projects = result;
-	}).catch(e => { console.error(e); });
+	});
 }
 
 testDuplicates();
@@ -150,11 +147,9 @@ export function addProject(projectDetails) {
 
 	projects.unshift(newProjectModel);
 
-	// api.post('projects', newProjectModel).then(result => {
 	api.addProject({project: newProjectModel}).then(result => {
-		// console.log('project added: ', result);
 		newProjectModel._id = result.insertedId;
-	}).catch(e => { console.error(e); });
+	});
 
 	return newProjectModel;
 }
@@ -164,10 +159,7 @@ export function updateProject(project, projectDetails) {
 
 	Object.assign(project, projectDetails);
 
-	// api.put('projects', projectDetails).then(result => {
-	api.updateProject({details: projectDetails}).then(result => {
-		// console.log('project updated: ', result);
-	}).catch(e => { console.error(e); });
+	api.updateProject({details: projectDetails});
 }
 
 export function getProjectHeaderImage(project) {

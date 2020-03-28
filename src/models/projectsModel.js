@@ -10,8 +10,6 @@ import { locationMode } from '../models/appModel';
 
 import ProjectModel from '../models/projectModel';
 
-const projectModels = {};
-
 // import projectsData from '../data/projects.json';
 // const projects = JSON.parse(JSON.stringify(projectsData));
 
@@ -97,40 +95,6 @@ export function getProject(projectId) {
 	return get(projects).find(item => get(item).id === projectId);
 }
 
-export function getProjectModel(projectId) {
-	let projectModel = projectModels[projectId];
-	if (!projectModel) {
-		let sourceProjectModel = get(projects).find(item => get(item).id === projectId);
-		projectModel = writable(sourceProjectModel);
-		projectModels[projectId] = projectModel;
-	}
-	return projectModel;
-}
-
-// export function getProjectsByIds(projectIds, options) {
-// 	let searchString = (options && options.searchString) || null;
-// 	let limit = (options && options.limit) || 0;
-
-// 	let projectItems = null;
-// 	if (projectIds) {
-// 		projectItems = [];
-// 		let curProject, projectId;
-// 		for (let index = 0; index < projectIds.length; index++) {
-// 			if (!limit || index < limit) {
-// 				projectId = projectIds[index];
-// 				curProject = getProject(projectId);
-// 				if (curProject) {
-// 					if (!searchString || projectSearchMatch(curProject, searchString)) {
-// 						projectItems.push(curProject);
-// 					}
-// 				}
-// 			}
-// 		}
-// 	}
-// 	return projectItems;
-// }
-
-
 export function getUserProjectsFromId(filteredProjects, projectIds, dontLoad) {
 	loadProjects();
 
@@ -197,40 +161,18 @@ export function getMyProjects() {
 	updateMyProjects();
 	loadProjects();
 	return myProjects;
-	// return get(projects).filter(project => project.isOwner);
 }
 
 export function getFollowingProjects() {
 	updateFollowingProjects();
 	loadProjects();
 	return followingProjects;
-	// return get(projects).filter(project => project.following && !project.isOwner);
 }
 
-// export function getOtherProjects() {
-// 	loadProjects();
-// 	return otherProjects;
-// 	// return get(projects).filter(project => !project.following && !project.isOwner);
-// }
-
 export function getDiscoveryProjects() { // options) {
-	updateDiscoveryProjects();
+	updateDiscoveryProjects(true);
 	loadProjects();
 	return discoveryProjects;
-	// return projects;
-
-	// const otherProjects = getOtherProjects();
-	// const ownedProjects = getMyProjects();
-	// const followingProjects = getFollowingProjects();
-
-	// let projects = [...otherProjects, ...ownedProjects, ...followingProjects];
-
-	// if (options && options.location === 'local') {
-	// 	const testArrayCycleOffset = Math.min(4, projects.length - 1);
-	// 	projects = projects.slice(testArrayCycleOffset, projects.length).concat(projects.slice(0, testArrayCycleOffset));
-	// }
-
-	// return projects;
 }
 
 export function updateMyProjects() {
@@ -266,7 +208,12 @@ export function updateOtherProjects() {
 		otherProjects.set(newProjects);
 	}
 }
-export function updateDiscoveryProjects() {
+export function updateDiscoveryProjects(updateDependencies) {
+	if (updateDependencies) {
+		updateMyProjects();
+		updateFollowingProjects();
+		updateOtherProjects();
+	}
 	const sourceMyProjects = get(myProjects);
 	if (sourceMyProjects) {
 		const sourceFollowingProjects = get(followingProjects);

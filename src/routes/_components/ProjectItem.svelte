@@ -9,7 +9,7 @@
     import ActionBar from './ActionBar.svelte';
 
 	import Proxy from '../../components/Proxy.svelte';
-    import { getProjectModel, getProjectHeaderImage } from '../../models/projectsModel';
+    import { getProjectHeaderImage } from '../../models/projectsModel'; // getProject
     import { loadProject } from '../../actions/appActions';
 
     import MoreArrowIcon from "../../assets/icons/more_arrow.png";

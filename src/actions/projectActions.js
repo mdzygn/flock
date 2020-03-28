@@ -6,7 +6,7 @@ import { goto } from '@sapper/app';
 import {
     addProject,
     updateProject,
-    getProjectModel,
+    getProject,
 } from '../models/projectsModel';
 
 import {
@@ -20,7 +20,7 @@ import {
 } from '../actions/appActions';
 
 export function projectToggleFollowing(projectId) {
-    const targetProjectModel = getProjectModel(projectId);
+    const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
     if (targetProject) {
         targetProject.following = !targetProject.following;
@@ -31,7 +31,7 @@ export function projectToggleFollowing(projectId) {
 }
 
 export function projectToggleLiked(projectId) {
-    const targetProjectModel = getProjectModel(projectId);
+    const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
     if (targetProject) {
         targetProject.liked = !targetProject.liked;

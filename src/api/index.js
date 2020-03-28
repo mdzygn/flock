@@ -34,6 +34,7 @@ function send(path, options) {
 		});
 }
 
+// options = { limit: number, cursor: string, sort: {} }
 function getProjects(options) {
 	return send('getProjects', options).catch(error => {
 		console.error('API Error: ' + error, { error });
@@ -41,6 +42,7 @@ function getProjects(options) {
 	});
 }
 
+// options = { details: {} }
 function addProject(options) {
 	return send('addProject', options).catch(error => {
 		console.error('API Error: ' + error, { error });
@@ -48,6 +50,7 @@ function addProject(options) {
 	});
 }
 
+// options = { id: string, details: {} }
 function updateProject(options) {
 	return send('updateProject', options).catch(error => {
 		console.error('API Error: ' + error, { error });
@@ -55,26 +58,30 @@ function updateProject(options) {
 	});
 }
 
+// options = { id: string }
 function likeProject(options) {
 	return send('likeProject', options).catch(error => {
 		console.error('API Error: ' + error, { error });
 		return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
+// options = { id: string }
 function unlikeProject(options) {
 	return send('unlikeProject', options).catch(error => {
 		console.error('API Error: ' + error, { error });
 		return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
+// options = { id: string }
 function followProject(options) {
-	return send('likeProject', options).catch(error => {
+	return send('followProject', options).catch(error => {
 		console.error('API Error: ' + error, { error });
 		return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
+// options = { id: string }
 function unfollowProject(options) {
-	return send('likeProject', options).catch(error => {
+	return send('unfollowProject', options).catch(error => {
 		console.error('API Error: ' + error, { error });
 		return Promise.reject(error); // TODO: prevent followups being called
 	});

@@ -271,7 +271,7 @@ export function addProject(projectDetails) {
 
 	// projects.unshift(newProjectModel);
 
-	api.addProject({project: newProjectModel}).then(result => {
+	api.addProject({details: newProjectModel}).then(result => {
 		newProjectModel._id = result.insertedId;
 	});
 
@@ -283,7 +283,7 @@ export function updateProject(project, projectDetails) {
 
 	Object.assign(project, projectDetails);
 
-	api.updateProject({_id: project._id, details: projectDetails});
+	api.updateProject({id: project.id, details: projectDetails});
 }
 
 export function getProjectHeaderImage(project) {

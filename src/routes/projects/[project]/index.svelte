@@ -1,4 +1,6 @@
 <script>
+	import locale from '../../../locale';
+
 	import { onMount } from 'svelte';
 
     import Button from '../../../components/Button.svelte';
@@ -12,6 +14,7 @@
 	import Audience from '../../_components/Audience.svelte';
 	import ProjectSkillsList from '../../_components/ProjectSkillsList.svelte';
 	import ProjectLinks from '../../_components/ProjectLinks.svelte';
+	import ContentLoader from '../../_components/ContentLoader.svelte';
 
     import SendMessageIcon from "../../../assets/icons/send.png";
 	import OptionsMenuIcon from "../../../assets/icons/options_menu.png";
@@ -30,7 +33,7 @@
 
 	import { projectId, project } from '../../../models/appModel';
 
-	import { getProjectHeaderImage, getProjectHasDetails } from '../../../models/projectsModel';
+	import { getProjectHeaderImage, getProjectHasDetails, loadingProjects } from '../../../models/projectsModel';
 
 	import {
 		returnView,
@@ -163,265 +166,269 @@
 </svelte:head>
 
 <div class="pageContent">
-	<ScrollView id="project" headerStartHidden="{true}">
-		<div class="content">
-			<div class="contentItem" class:collapsedOptions="{$returnView && !showInfo}" class:collapsedHeader="{$returnView && !showInfo && !isNew}">
-				<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
-				<!-- {#if isNew}
-					<Proxy image="{proxyOverviewImage}" className="proxyOverlay">
-						<Hotspot onClick="{editProjectDetails}" style="
-							left: 8px;
-							top: 123px;
-							width: 172px;
-							height: 38px;" />
+	{#if $loadingProjects && !$project }
+		<ContentLoader label="{locale.LOADING.PROJECT}" />
+	{:else}
+		<ScrollView id="project" headerStartHidden="{true}">
+			<div class="content">
+				<div class="contentItem" class:collapsedOptions="{$returnView && !showInfo}" class:collapsedHeader="{$returnView && !showInfo && !isNew}">
+					<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$returnView}" alt="project header image" />
+					<!-- {#if isNew}
+						<Proxy image="{proxyOverviewImage}" className="proxyOverlay">
+							<Hotspot onClick="{editProjectDetails}" style="
+								left: 8px;
+								top: 123px;
+								width: 172px;
+								height: 38px;" />
 
-						<Hotspot onClick="{makePublic}" style="
-							right: 11px;
-							top: 120px;
-							width: 125px;
-							height: 41px;" />
-					</Proxy>
-				{:else if !showInfo}
-					<Proxy image="{proxyOverviewImage}" className="proxyOverlay" style="pointer-events: none">
-						<Hotspot onClick="{showProjectInfo}" style="
-							left: 0;
-							top: 55px;
-							width: 100%;
-							height: 70px;" />
-						<Hotspot onClick="{showProjectInfo}" style="
-							left: 8px;
-							top: 125px;
-							width: 110px;
-							height: 30px;" />
-
-						{#if isOwner}
-							<Hotspot href="projects/{$projectId}/messages" style="
+							<Hotspot onClick="{makePublic}" style="
 								right: 11px;
-								top: 122px;
-								width: 147px;
-								height: 40px;" />
-						{:else if $returnView}
-							<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
-								right: 11px;
-								top: 122px;
-								width: 116px;
-								height: 40px;" />
-						{:else}
-							<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
-								left: 7px;
-								top: 155px;
-								width: 121px;
-								height: 46px;" />
-						{/if}
-
-						{#if !$returnView}
-							{#if liked}
-								<Proxy image="project_like_selected" absolutePlacement="true" style="
-									left: 175px;
-									top: 164px;" />
-							{/if}
-
-							<Hotspot onClick="{toggleLiked}" style="
-								left: 170px;
-								top: 159px;
-								width: 59px;
-								height: 40px;" />
-
-							<Hotspot onClick="{toggleFollowing}" style="
-								right: 35px;
-								top: 155px;
+								top: 120px;
+								width: 125px;
+								height: 41px;" />
+						</Proxy>
+					{:else if !showInfo}
+						<Proxy image="{proxyOverviewImage}" className="proxyOverlay" style="pointer-events: none">
+							<Hotspot onClick="{showProjectInfo}" style="
+								left: 0;
+								top: 55px;
+								width: 100%;
+								height: 70px;" />
+							<Hotspot onClick="{showProjectInfo}" style="
+								left: 8px;
+								top: 125px;
 								width: 110px;
-								height: 46px;" />
-						{/if}
-					</Proxy>
-				{:else}
-					<div class="proxyOverlay">
-						<Proxy image="project_overview_info" />
-						<div>
-							<Proxy image="project_info_image_1" />
-							<Proxy image="project_info_content_1" />
-							<Proxy image="project_info_image_2" />
-							<Proxy image="project_info_content_2" />
-							<Proxy image="project_info_image_3" />
-							<Proxy image="project_info_content_3" />
-						</div>
-						<Proxy image="{proxyshowInfoActionsImage}">
+								height: 30px;" />
+
 							{#if isOwner}
+								<Hotspot href="projects/{$projectId}/messages" style="
+									right: 11px;
+									top: 122px;
+									width: 147px;
+									height: 40px;" />
+							{:else if $returnView}
 								<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
-									right: 6px;
-									top: 2px;
-									width: 156px;
-									height: 46px;" />
+									right: 11px;
+									top: 122px;
+									width: 116px;
+									height: 40px;" />
 							{:else}
 								<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
 									left: 7px;
-									top: 8px;
+									top: 155px;
 									width: 121px;
 									height: 46px;" />
+							{/if}
 
+							{#if !$returnView}
 								{#if liked}
 									<Proxy image="project_like_selected" absolutePlacement="true" style="
 										left: 175px;
-										top: 16px;" />
+										top: 164px;" />
 								{/if}
 
 								<Hotspot onClick="{toggleLiked}" style="
 									left: 170px;
-									top: 11px;
+									top: 159px;
 									width: 59px;
 									height: 40px;" />
 
 								<Hotspot onClick="{toggleFollowing}" style="
 									right: 35px;
-									top: 8px;
+									top: 155px;
 									width: 110px;
 									height: 46px;" />
 							{/if}
 						</Proxy>
-					</div>
-				{/if} -->
+					{:else}
+						<div class="proxyOverlay">
+							<Proxy image="project_overview_info" />
+							<div>
+								<Proxy image="project_info_image_1" />
+								<Proxy image="project_info_content_1" />
+								<Proxy image="project_info_image_2" />
+								<Proxy image="project_info_content_2" />
+								<Proxy image="project_info_image_3" />
+								<Proxy image="project_info_content_3" />
+							</div>
+							<Proxy image="{proxyshowInfoActionsImage}">
+								{#if isOwner}
+									<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
+										right: 6px;
+										top: 2px;
+										width: 156px;
+										height: 46px;" />
+								{:else}
+									<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
+										left: 7px;
+										top: 8px;
+										width: 121px;
+										height: 46px;" />
 
-				<div class="overviewContent" class:returnView="{$returnView}">
-					<div class="contentContainer">
-						<Button className="optionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
-						{#if isOwner}
-							<Button className="editButton" onClick="{() => editProjectDetails({editingProject: true})}" icon="{EditIcon}"></Button>
-							<Audience {isPublic} onClick="{togglePublic}" />
-						{/if}
-						<div class="itemContent">
-							<div class="header" class:headerOwner="{isOwner}">{projectTitle}</div>
-							<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? toggleProjectInfo : null}">{projectDescription}</div>
-						</div>
-						{#if projectHasDetails}
-							{#if !showInfo}
-								{#if !$returnView}
-									<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
-								{/if}
-							{:else}
-								<Button className="infoCollapseButton" onClick="{hideProjectInfo}" icon="{HideInfoIcon}" />
-							{/if}
-						{/if}
-					</div>
-					{#if showInfo}
-						<div class="projectInfo">
-							{#each projectDetails as projectDetailItem, index}
-								{#if projectDetailItem.detail}
-									{#if projectDetailItem.image}
-										<Proxy image="project_info_image_{index + 1}" />
+									{#if liked}
+										<Proxy image="project_like_selected" absolutePlacement="true" style="
+											left: 175px;
+											top: 16px;" />
 									{/if}
-									<!-- <Proxy image="project_info_content_3" className="proxyOverlay" /> -->
-									<div class="projectInfoDetail">{@html projectDetailItem.detail}</div>
+
+									<Hotspot onClick="{toggleLiked}" style="
+										left: 170px;
+										top: 11px;
+										width: 59px;
+										height: 40px;" />
+
+									<Hotspot onClick="{toggleFollowing}" style="
+										right: 35px;
+										top: 8px;
+										width: 110px;
+										height: 46px;" />
 								{/if}
-							{/each}
-							<!-- <Proxy image="project_info_image_1" />
-							<Proxy image="project_info_content_1" />
-							<Proxy image="project_info_image_2" />
-							<Proxy image="project_info_content_2" />
-							<Proxy image="project_info_image_3" />
-							<Proxy image="project_info_content_3" /> -->
+							</Proxy>
 						</div>
-					{/if}
-					<div class="projectActions">
-						<div class="projectActionButtons">
-							{#if projectHasDetails && !showInfo && $returnView}
-								<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
-							{:else if !projectHasDetails && isOwner}
-								<Button className="addProjectDetailsButton" onClick="{editProjectDetails}" icon="{AddDetailsIcon}">add project details</Button>
+					{/if} -->
+
+					<div class="overviewContent" class:returnView="{$returnView}">
+						<div class="contentContainer">
+							<Button className="optionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
+							{#if isOwner}
+								<Button className="editButton" onClick="{() => editProjectDetails({editingProject: true})}" icon="{EditIcon}"></Button>
+								<Audience {isPublic} onClick="{togglePublic}" />
 							{/if}
-							{#if !isOwner}
-								<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
-							{:else if isNew && !isPublic}
-								<Button className="makePublicButton isButton" onClick="{makePublic}">make public</Button>
-							{:else}
-								<Button className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
-									<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
-								</Button>
-							{/if}
-							{#if (!$returnView || showInfo) && !isOwner}
-								<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
-									<div class="count">{likeCount}</div>
-								</div></Button>
-								<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<div class="countContainer">
-									<div class="count">{followCount}</div>
-								</div></Button>
+							<div class="itemContent">
+								<div class="header" class:headerOwner="{isOwner}">{projectTitle}</div>
+								<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? toggleProjectInfo : null}">{projectDescription}</div>
+							</div>
+							{#if projectHasDetails}
+								{#if !showInfo}
+									{#if !$returnView}
+										<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+									{/if}
+								{:else}
+									<Button className="infoCollapseButton" onClick="{hideProjectInfo}" icon="{HideInfoIcon}" />
+								{/if}
 							{/if}
 						</div>
-						{#if (!$returnView || showInfo) && projectLocation}
-							<Location className="{(isOwner && showInfo) ? 'ownerLocation' : ''}" location="{projectLocation}" />
+						{#if showInfo}
+							<div class="projectInfo">
+								{#each projectDetails as projectDetailItem, index}
+									{#if projectDetailItem.detail}
+										{#if projectDetailItem.image}
+											<Proxy image="project_info_image_{index + 1}" />
+										{/if}
+										<!-- <Proxy image="project_info_content_3" className="proxyOverlay" /> -->
+										<div class="projectInfoDetail">{@html projectDetailItem.detail}</div>
+									{/if}
+								{/each}
+								<!-- <Proxy image="project_info_image_1" />
+								<Proxy image="project_info_content_1" />
+								<Proxy image="project_info_image_2" />
+								<Proxy image="project_info_content_2" />
+								<Proxy image="project_info_image_3" />
+								<Proxy image="project_info_content_3" /> -->
+							</div>
 						{/if}
+						<div class="projectActions">
+							<div class="projectActionButtons">
+								{#if projectHasDetails && !showInfo && $returnView}
+									<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+								{:else if !projectHasDetails && isOwner}
+									<Button className="addProjectDetailsButton" onClick="{editProjectDetails}" icon="{AddDetailsIcon}">add project details</Button>
+								{/if}
+								{#if !isOwner}
+									<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
+								{:else if isNew && !isPublic}
+									<Button className="makePublicButton isButton" onClick="{makePublic}">make public</Button>
+								{:else}
+									<Button className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
+										<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
+									</Button>
+								{/if}
+								{#if (!$returnView || showInfo) && !isOwner}
+									<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
+										<div class="count">{likeCount}</div>
+									</div></Button>
+									<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<div class="countContainer">
+										<div class="count">{followCount}</div>
+									</div></Button>
+								{/if}
+							</div>
+							{#if (!$returnView || showInfo) && projectLocation}
+								<Location className="{(isOwner && showInfo) ? 'ownerLocation' : ''}" location="{projectLocation}" />
+							{/if}
+						</div>
 					</div>
 				</div>
+
+				{#if isNew}
+					<ProjectTeamList project="{$project}" />
+					<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
+					<ProjectLinks project="{$project}" />
+					<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
+					<ProjectSkillsList project="{$project}" />
+					<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
+					{#if isOwner}
+						<NewPostButton type="project_post_update" />
+					{/if}
+				{:else if $returnView}
+					<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
+					{#if isOwner}
+						<NewPostButton type="project_post_update" />
+					{/if}
+					<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
+					<ProjectLinks project="{$project}" />
+					<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
+					<ProjectSkillsList project="{$project}" />
+					<ProjectTeamList project="{$project}" />
+					<div>
+						<Proxy image="project_post_1" className="contentItem" />
+						<Proxy image="project_post_2" className="contentItem" />
+						<Proxy image="project_post_3" className="contentItem" />
+					</div>
+					{#if isOwner}
+						<NewPostButton type="project_post_update" />
+					{/if}
+				{:else}
+					<ProjectTeamList project="{$project}" />
+					<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
+					<ProjectSkillsList project="{$project}" />
+					<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
+					<ProjectLinks project="{$project}" />
+					<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
+					<div id="post" />
+					<div>
+						<Proxy image="project_post_1" className="contentItem" />
+						<Proxy image="project_post_2" className="contentItem" />
+						<Proxy image="project_post_3" className="contentItem" />
+					</div>
+				{/if}
 			</div>
 
-			{#if isNew}
-				<ProjectTeamList project="{$project}" />
-				<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
-				<ProjectLinks project="{$project}" />
-				<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
-				<ProjectSkillsList project="{$project}" />
-				<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
+			<div slot="scrollHeader">
 				{#if isOwner}
-					<NewPostButton type="project_post_update" />
+					<ActionBar targetItemId="{$projectId}" targetItem="{$project}">
+						<div slot="buttonMiddle">
+							<ActionButton
+								label = "followers"
+
+								icon = "{FollowSelectedIcon}"
+
+								targetItem = "{$project}"
+								targetItemId = "{$projectId}"
+								action = "{showProjectFollowers}"
+
+								countProperty= "followCount"
+
+								buttonContentStyle = "padding-right: 56px;"
+								iconStyle = "padding-bottom: 4px"
+							/>
+						</div>
+					</ActionBar>
+				{:else}
+					<ActionBar targetItemId="{$projectId}" targetItem="{$project}" />
 				{/if}
-			{:else if $returnView}
-				<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
-				{#if isOwner}
-					<NewPostButton type="project_post_update" />
-				{/if}
-				<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
-				<ProjectLinks project="{$project}" />
-				<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
-				<ProjectSkillsList project="{$project}" />
-				<ProjectTeamList project="{$project}" />
-				<div>
-					<Proxy image="project_post_1" className="contentItem" />
-					<Proxy image="project_post_2" className="contentItem" />
-					<Proxy image="project_post_3" className="contentItem" />
-				</div>
-				{#if isOwner}
-					<NewPostButton type="project_post_update" />
-				{/if}
-			{:else}
-				<ProjectTeamList project="{$project}" />
-				<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
-				<ProjectSkillsList project="{$project}" />
-				<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
-				<ProjectLinks project="{$project}" />
-				<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
-				<div id="post" />
-				<div>
-					<Proxy image="project_post_1" className="contentItem" />
-					<Proxy image="project_post_2" className="contentItem" />
-					<Proxy image="project_post_3" className="contentItem" />
-				</div>
-			{/if}
-		</div>
-
-		<div slot="scrollHeader">
-			{#if isOwner}
-				<ActionBar targetItemId="{$projectId}" targetItem="{$project}">
-					<div slot="buttonMiddle">
-						<ActionButton
-							label = "followers"
-
-							icon = "{FollowSelectedIcon}"
-
-							targetItem = "{$project}"
-							targetItemId = "{$projectId}"
-							action = "{showProjectFollowers}"
-
-							countProperty= "followCount"
-
-							buttonContentStyle = "padding-right: 56px;"
-							iconStyle = "padding-bottom: 4px"
-						/>
-					</div>
-				</ActionBar>
-			{:else}
-				<ActionBar targetItemId="{$projectId}" targetItem="{$project}" />
-			{/if}
-		</div>
-	</ScrollView>
+			</div>
+		</ScrollView>
+	{/if}
 </div>
 
 <style>

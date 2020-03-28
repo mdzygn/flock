@@ -55,15 +55,11 @@ function setProject(targetProjectId) {
     const curProjectModel = getProject(targetProjectId);
     const curProject = get(curProjectModel);
 
-    console.log('setProject ', curProject, targetProjectId);
-
     project.set(curProject);
     returnView.set(curProject && (curProject.following || curProject.isOwner));
 }
 
 onProjectsUpdated(() => {
-    console.log('onProjectsUpdated');
-
     // if project object not found but project id set then update project model
     if (!get(project)) {
         const targetProjectId = get(projectId);

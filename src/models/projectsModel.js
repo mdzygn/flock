@@ -32,10 +32,8 @@ onProjectsUpdated(projectsUpdated);
 
 export function loadProjects(options) {
 	if (!get(loadingProjects)) {
-		console.log('loadingProjects');
 		loadingProjects.set(true);
 		api.getProjects(options).then(result => {
-			console.log('projects loaded');
 			mergeProjects(result);
 			loadingProjects.set(false);
 		});
@@ -176,7 +174,7 @@ export function updateMyProjects() {
 			const project = get(projectModel);
 			return project.isOwner;
 		});
-		console.log('updateMyProjects: ', newProjects);
+		// console.log('updateMyProjects: ', newProjects);
 		myProjects.set(newProjects);
 	}
 }
@@ -187,7 +185,7 @@ export function updateFollowingProjects() {
 			const project = get(projectModel);
 			return project.following && !project.isOwner;
 		});
-		console.log('updateFollowingProjects: ', newProjects);
+		// console.log('updateFollowingProjects: ', newProjects);
 		followingProjects.set(newProjects);
 	}
 }
@@ -198,7 +196,7 @@ export function updateOtherProjects() {
 			const project = get(projectModel);
 			return !project.following && !project.isOwner;
 		});
-		console.log('updateOtherProjects: ', newProjects);
+		// console.log('updateOtherProjects: ', newProjects);
 		otherProjects.set(newProjects);
 	}
 }
@@ -214,7 +212,7 @@ export function updateDiscoveryProjects() {
 				const testArrayCycleOffset = Math.min(4, newProjects.length - 1);
 				newProjects = newProjects.slice(testArrayCycleOffset, newProjects.length).concat(newProjects.slice(0, testArrayCycleOffset));
 			}
-			console.log('updateDiscoveryProjects: ', newProjects);
+			// console.log('updateDiscoveryProjects: ', newProjects);
 			discoveryProjects.set(newProjects);
 		}
 	}

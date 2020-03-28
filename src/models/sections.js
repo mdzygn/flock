@@ -101,7 +101,7 @@ export const sections = [
 	{
 		path: '/projects/.+',
 		id: 'project',
-		label: 'Projects',
+		label: '',
 		darkBg: true,
 		showBack: true,
 		isProjectView: true,

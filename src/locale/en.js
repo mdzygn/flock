@@ -25,6 +25,7 @@ const locale = {
 		DEFAULT: 'loading...',
 		DISCOVER: 'loading projects...',
 		FOLLOWING: 'loading projects...',
+		PROJECT: 'loading project...',
 	},
 }
 

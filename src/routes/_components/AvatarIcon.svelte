@@ -1,5 +1,5 @@
 <script>
-    export let user;
+    export let user = null;
 
     $: thumbImageId = (user && user.username) || '_default';
 

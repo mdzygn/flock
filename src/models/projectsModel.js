@@ -279,11 +279,11 @@ export function addProject(projectDetails) {
 }
 
 export function updateProject(project, projectDetails) {
-	projectDetails._id = project._id;
+	// projectDetails._id = project._id;
 
 	Object.assign(project, projectDetails);
 
-	api.updateProject({details: projectDetails});
+	api.updateProject({_id: project._id, details: projectDetails});
 }
 
 export function getProjectHeaderImage(project) {

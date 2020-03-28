@@ -55,15 +55,40 @@ function updateProject(options) {
 	});
 }
 
+function likeProject(options) {
+	return send('likeProject', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+function unlikeProject(options) {
+	return send('unlikeProject', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+function followProject(options) {
+	return send('likeProject', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+function unfollowProject(options) {
+	return send('likeProject', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 const api = {
 	getProjects,
 	addProject,
 	updateProject,
 
-	// likeProject,
-	// unlikeProject,
-	// followProject,
-	// unfollowProject,
+	likeProject,
+	unlikeProject,
+	followProject,
+	unfollowProject,
 }
 
 export default api;

@@ -5,9 +5,7 @@ export async function post(req, res, next) {
 
 	const options = req.body;
 	const details = options.details;
-	const projectId = details._id;
-
-	delete details._id; // clear _id as don't want to update this property
+	const projectId = options._id;
 
 	//TODO: check allowed to modify project
 

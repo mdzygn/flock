@@ -14,6 +14,8 @@ import {
 import {
     makePrivate,
     makePublic,
+    reportProject,
+    projectToggleFollowing,
 } from '../actions/projectActions';
 
 import {
@@ -30,53 +32,50 @@ export const menus = {
             },
             {
                 label: 'Edit Project...',
-                // condition: '!isArchived',
+                condition: () => { const p = get(project); return p && !p.archived },
                 action: () => editProjectDetails({editingProject: true}),
             },
             {
                 label: 'Make Private',
                 condition: () => { const p = get(project); return p && p.public },
-                // condition: 'isPublic',
                 action: makePrivate,
             },
             {
                 label: 'Make Public',
-                condition: () => { const p = get(project); return p && !p.public },
-                // condition: '!isPublic && !isArchived',
+                condition: () => { const p = get(project); return p && !p.public && !p.archived },
                 action: makePublic,
             },
             {
                 label: 'Achive Project',
-                // condition: '!isArchived',
+                condition: () => { const p = get(project); return p && !p.archived },
                 disabled: true,
                 action: null,
             },
-            // {
-            //     label: 'Unarchive Project',
-            //     condition: 'isArchived',
-            //     disabled: true,
-            //     action: null,
-            // },
+            {
+                label: 'Unarchive Project',
+                condition: () => { const p = get(project); return p && p.archived },
+                disabled: true,
+                action: null,
+            },
         ],
     },
     PROJECT_MENU: {
         menuItems: [
             {
                 label: 'Follow Project',
-                // condition: '!isFollowing',
-                disabled: true,
-                action: null,
+                condition: () => { const p = get(project); return p && !p.following },
+                action: () => { const p = get(project); p && p.id && projectToggleFollowing(p.id) },
             },
-            // {
-            //     label: 'Unfollow Project',
-            //     action: 'followProject',
-            //     condition: 'isFollowing',
-            //     disabled: true,
-            // },
             {
-                label: 'Report Project',
-                disabled: true,
-                action: null,
+                label: 'Unfollow Project',
+                condition: () => { const p = get(project); return p && p.following },
+                action: () => { const p = get(project); p && p.id && projectToggleFollowing(p.id) },
+            },
+            {
+                // label: 'Report Project',
+                label: () => { const p = get(project); return (p && !p.reported) ? 'Report Project' : 'Project Reported' },
+                disabled: () => { const p = get(project); return p && p.reported },
+                action: () => { const p = get(project); reportProject(p) },
             },
         ],
     },

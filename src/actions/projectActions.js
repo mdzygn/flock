@@ -112,3 +112,13 @@ export function createProject(projectDetails) {
         loadProject(newProject.id);
     }
 }
+
+export function reportProject(targetProject) {
+    const curProject = get(project);
+    if (curProject && targetProject === curProject) {
+        curProject.reported = true;
+        project.set(curProject);
+
+        // TODO: report project
+    }
+}

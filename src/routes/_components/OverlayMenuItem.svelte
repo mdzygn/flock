@@ -7,8 +7,8 @@
 
     export let menuItem;
 
-    $: label = (menuItem && menuItem.label) || '';
-    $: disabled = (menuItem && menuItem.disabled) || false;
+    $: label = (menuItem && menuItem.label && (typeof menuItem.label === 'function' ? menuItem.label() : menuItem.label)) || '';
+    $: disabled = (menuItem && menuItem.disabled && (typeof menuItem.disabled === 'function' ? menuItem.disabled() : menuItem.disabled)) || false;
     $: action = (menuItem && menuItem.action) || null;
 
     function onClick() {

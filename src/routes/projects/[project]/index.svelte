@@ -17,7 +17,7 @@
 	import ContentLoader from '../../_components/ContentLoader.svelte';
 
     import SendMessageIcon from "../../../assets/icons/send.png";
-	import OptionsMenuIcon from "../../../assets/icons/options_menu.png";
+	import OptionsMenuIcon from "../../../assets/icons/menu.png";
 	import HideInfoIcon from "../../../assets/icons/collapse.png";
 	import AddDetailsIcon from "../../../assets/icons/add_highlight.png";
 	import EditIcon from "../../../assets/icons/edit.png";
@@ -48,6 +48,7 @@
 		hideProjectInfo,
 		toggleProjectInfo,
 		showProjectFollowers,
+		openOverlay,
 	} from '../../../actions/appActions';
 
 	import {
@@ -68,6 +69,10 @@
 	}
 	function toggleLiked() {
 		projectToggleLiked($projectId);
+	}
+
+	function showProjectOptions() {
+		openOverlay({});
 	}
 
 	// let proxyHeaderImage;
@@ -289,7 +294,7 @@
 
 					<div class="overviewContent" class:returnView="{$projectReturnView}">
 						<div class="contentContainer">
-							<Button className="optionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
+							<Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProjectOptions}"></Button>
 							{#if isOwner}
 								<Button className="editButton" onClick="{() => editProjectDetails({editingProject: true})}" icon="{EditIcon}"></Button>
 								<Audience {isPublic} onClick="{togglePublic}" />
@@ -472,12 +477,16 @@
     .contentContainer :global(.optionsButton) {
 		position: absolute;
 
-		top: 13px;
+    	top: 16px;
 		right: 14px;
 
 		width: 28px;
 		height: 26px;
 		padding: 8px;
+	}
+    .contentContainer :global(.optionsButton .icon) {
+		margin-top: 1px;
+		margin-left: 9px;
 	}
 
     .contentContainer :global(.editButton) {

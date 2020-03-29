@@ -46,6 +46,8 @@ export const viewMode = appModel.viewMode;
 export const locationMode = appModel.locationMode;
 export const exploreZoomed = appModel.exploreZoomed;
 
+export const curOverlay = writable(null);
+
 export const scrollRegionProperties = writable({});
 // const scrollRegionProperties = writable({});
 // export const scrollRegionReset = writable(null);

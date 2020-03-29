@@ -35,6 +35,8 @@ import {
 
     displayingAllMyProjects,
     displayingAllFollowingProjects,
+
+    curOverlay,
 } from '../models/appModel';
 
 export function loadProject(targetProjectId, options) {
@@ -170,4 +172,12 @@ function getPagePath() {
 export function showProjectFollowers(targetProjectId) {
     gotoRoute('projects/' + targetProjectId + '/followers');
     resetScrollRegionPosition('followers');
+}
+
+export function openOverlay(overlay) {
+	curOverlay.set(overlay);
+}
+
+export function closeOverlay() {
+	curOverlay.set(null);
 }

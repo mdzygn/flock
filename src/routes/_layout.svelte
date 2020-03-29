@@ -7,6 +7,7 @@
 	import ScrollView from '../components/ScrollView.svelte';
 	import HeaderBar from './_components/HeaderBar.svelte';
 	import Nav from './_components/Nav.svelte';
+	import Overlays from './_components/Overlays.svelte';
 
 	export let segment;
 	$: path = ($page && $page.path) || '';
@@ -56,6 +57,7 @@
 </script>
 
 <appContainer>
+	<Overlays />
 	<appContent class:showFeedBg="{showFeedBg}">
 		<div class="pageContent">
 			<main>

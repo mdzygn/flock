@@ -12,7 +12,6 @@ import promptIds from '../config/promptIds';
 
 import {
     editProjectDetails,
-    copyPageLink,
     messageUser,
     showPrompt,
 } from '../actions/appActions';
@@ -23,11 +22,13 @@ import {
     reportProject,
     projectToggleFollowing,
     unarchiveProject,
+    copyProjectLink,
 } from '../actions/projectActions';
 
 import {
     requestConnection,
     reportUser,
+    copyProfileLink,
 } from '../actions/userActions';
 
 import {
@@ -41,7 +42,7 @@ export const menus = {
         menuItems: [
             {
                 label: 'Copy Project Link',
-                action: copyPageLink,
+                action: () => { const p = get(project); p && p.id && copyProjectLink(p.id) },
             },
             {
                 label: 'Edit Project...',
@@ -74,7 +75,7 @@ export const menus = {
         menuItems: [
             {
                 label: 'Copy Project Link',
-                action: copyPageLink,
+                action: () => { const p = get(project); p && p.id && copyProjectLink(p.id) },
             },
             {
                 label: 'Follow Project',
@@ -98,7 +99,7 @@ export const menus = {
         menuItems: [
             {
                 label: 'Copy Profle Link',
-                action: copyPageLink,
+                action: () => { const u = get(viewedUser); u && u.id && copyProfileLink(u.id) },
             },
             {
                 label: 'Edit Profile...',
@@ -110,7 +111,7 @@ export const menus = {
         menuItems: [
             {
                 label: 'Copy Profle Link',
-                action: copyPageLink,
+                action: () => { const u = get(viewedUser); u && u.id && copyProfileLink(u.id) },
             },
             {
                 label: 'Send Message',

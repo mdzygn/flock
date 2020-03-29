@@ -218,9 +218,9 @@ function hidePrompt() {
     }
 }
 
-export function copyPageLink() {
-    copyToClipboard(location.href);
-}
+// export function copyPageLink() {
+//     copyToClipboard(location.href);
+// }
 
 export function showShareProjectDialog(projectId) {
     const projectModel = getProject(projectId);

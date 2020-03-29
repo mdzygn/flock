@@ -1,6 +1,6 @@
 <script>
 	import locale from '../../../locale';
-	import menus from '../../../config/menus';
+	import { menuIds } from '../../../config/menus';
 
 	import { onMount } from 'svelte';
 
@@ -74,9 +74,9 @@
 
 	function showProjectOptions() {
 		if (isOwner) {
-			showMenu(menus.PROFILE_OWNER_MENU);
+			showMenu(menuIds.PROJECT_OWNER_MENU);
 		} else {
-			showMenu(menus.PROFILE_MENU);
+			showMenu(menuIds.PROJECT_MENU);
 		}
 	}
 

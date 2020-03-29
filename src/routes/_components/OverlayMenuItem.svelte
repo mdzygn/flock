@@ -1,4 +1,8 @@
 <script>
+	import { createEventDispatcher } from 'svelte';
+
+    const dispatch = createEventDispatcher();
+
     import Button from '../../components/Button.svelte';
 
     export let menuItem;
@@ -8,9 +12,7 @@
     $: action = (menuItem && menuItem.action) || null;
 
     function onClick() {
-        if (action) {
-            console.log(action);
-        }
+        dispatch('select', { menuItem });
     }
 </script>
 

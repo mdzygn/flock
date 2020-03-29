@@ -29,6 +29,7 @@
 		viewedUser,
 		project,
 	} from '../models/appModel';
+
 	$: {
 		$curPath = $page.path;
 

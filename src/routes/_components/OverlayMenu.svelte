@@ -3,50 +3,32 @@
 
     export let menuId;
 
-    import menus from '../../config/menus';
+    import { menus } from '../../config/menus';
 
     const conditions = {
         isPublic: false,
         isArchived: false,
+        isFollowing: false,
     };
 
-    const menuItems = [
-        {
-            label: 'Copy Link',
-            action: 'projectCopyLink',
-            disabled: true,
-        },
-        {
-            label: 'Edit Project...',
-            action: 'editProject',
-            condition: '!isArchived',
-        },
-        {
-            label: 'Make Private',
-            action: 'makePrivate',
-            condition: 'isPublic',
-        },
-        // {
-        //     label: 'Make Public',
-        //     action: 'makePublic',
-        //     condition: '!isPublic && !isArchived',
-        // },
-        {
-            label: 'Achive Project',
-            action: 'archiveProject',
-            condition: '!isArchived',
-        },
-        // {
-        //     label: 'Unarchive Project',
-        //     action: 'unarchiveProject',
-        //     condition: 'isArchived',
-        // },
-    ]
+    $: menu = menus[menuId];
+    $: menuItems = (menu && menu.menuItems) || null;
+
+    $: console.log(menuId, menu);
+
+    function selectMenuItem(event) {
+        const menuItem = event.detail && event.detail.menuItem;
+        const action = menuItem && menuItem.action;
+
+        if (action) {
+            console.log(menuId, action)
+        }
+    }
 </script>
 
 <div class="overlayMenu">
     {#each menuItems as menuItem}
-        <OverlayMenuItem {menuItem} />
+        <OverlayMenuItem {menuItem} on:select="{selectMenuItem}" />
     {/each}
 </div>
 

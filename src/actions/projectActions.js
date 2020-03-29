@@ -21,6 +21,13 @@ import {
     showProjectInfo,
 } from '../actions/appActions';
 
+function checkUpdateProject(targetProject) {
+    const curProject = get(project);
+    if (curProject && curProject.id === targetProject.id) {
+        project.set(targetProject);
+    }
+}
+
 export function projectToggleFollowing(projectId) {
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
@@ -97,13 +104,6 @@ export function saveProjectDetails(projectDetails, options) {
     }
 }
 
-function checkUpdateProject(targetProject) {
-    const curProject = get(project);
-    if (curProject && targetProject === curProject) {
-        project.set(curProject);
-    }
-}
-
 export function createProject(projectDetails) {
     if (projectDetails.headerImage) {
         projectDetails.headerImage = 'resource/headers/' + projectDetails.headerImage + '.jpg';
@@ -121,13 +121,10 @@ export function reportProject(projectId) {
     const targetProject = get(targetProjectModel);
 
     targetProject.reported = true;
+    targetProjectModel.set(targetProject);
+    checkUpdateProject(targetProject);
 
-    const curProject = get(project);
-    if (curProject && curProject.id === targetProject.id) {
-        project.set(targetProject);
-
-        // TODO: report project
-    }
+    // TODO: report project
 }
 
 export function archiveProject(projectId) {
@@ -136,13 +133,10 @@ export function archiveProject(projectId) {
 
     if (targetProject.isOwner) {
         targetProject.archived = true;
+        targetProjectModel.set(targetProject);
+        checkUpdateProject(targetProject);
 
-        const curProject = get(project);
-        if (curProject && curProject.id === targetProject.id) {
-            project.set(targetProject);
-
-            // TODO: unarchive in db
-        }
+        // TODO: unarchive in db
     }
 }
 
@@ -152,13 +146,10 @@ export function unarchiveProject(projectId) {
 
     if (targetProject.isOwner) {
         targetProject.archived = false;
+        targetProjectModel.set(targetProject);
+        checkUpdateProject(targetProject);
 
-        const curProject = get(project);
-        if (curProject && curProject.id === targetProject.id) {
-            project.set(targetProject);
-
-            // TODO: unarchive in db
-        }
+        // TODO: unarchive in db
     }
 }
 

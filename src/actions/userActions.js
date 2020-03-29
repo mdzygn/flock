@@ -11,18 +11,20 @@ import {
     getUser,
 } from '../models/usersModel';
 
+function checkUpdateUser(targetUser) {
+    const curViewedUser = get(viewedUser);
+    if (curViewedUser && curViewedUser.id === targetUser.id) {
+        viewedUser.set(targetUser);
+    }
+}
 export function requestConnection(userId) {
     const userModel = getUser(userId);
     const user = userModel;
 
     user.requestedConnection = true;
+    checkUpdateUser(user);
 
-    const curViewedUser = get(viewedUser);
-    if (curViewedUser && curViewedUser.id === user.id) {
-        viewedUser.set(user);
-
-        // TODO: request connection
-    }
+    // TODO: request connection
 }
 
 export function reportUser(userId) {
@@ -30,13 +32,9 @@ export function reportUser(userId) {
     const user = userModel;
 
     user.reported = true;
+    checkUpdateUser(user);
 
-    const curViewedUser = get(viewedUser);
-    if (curViewedUser && curViewedUser.id === user.id) {
-        viewedUser.set(user);
-
-        // TODO: report user
-    }
+    // TODO: report user
 }
 
 export function copyProfileLink(userId) {

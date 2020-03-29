@@ -20,7 +20,12 @@ import {
 } from '../actions/projectActions';
 
 import {
-    project
+    reportUser,
+} from '../actions/userActions';
+
+import {
+    project,
+    viewedUser,
 } from '../models/appModel';
 
 export const menus = {
@@ -72,7 +77,6 @@ export const menus = {
                 action: () => { const p = get(project); p && p.id && projectToggleFollowing(p.id) },
             },
             {
-                // label: 'Report Project',
                 label: () => { const p = get(project); return (p && !p.reported) ? 'Report Project' : 'Project Reported' },
                 disabled: () => { const p = get(project); return p && p.reported },
                 action: () => { const p = get(project); reportProject(p) },
@@ -82,12 +86,28 @@ export const menus = {
     },
     PROFILE_OWNER_MENU: {
         menuItems: [
-
+            {
+                label: 'Copy Link',
+                action: copyPageLink,
+            },
+            {
+                label: 'Edit Profile...',
+                disabled: true,
+            },
         ],
     },
     PROFILE_MENU: {
         menuItems: [
-
+            {
+                label: 'Send Message',
+                disabled: true,
+            },
+            {
+                label: () => { const u = get(viewedUser); return (u && !u.reported) ? 'Report User' : 'User Reported' },
+                disabled: () => { const u = get(viewedUser); return u && u.reported },
+                action: () => { const u = get(viewedUser); reportUser(u) },
+                // disabled: true,
+            },
         ],
     },
 }

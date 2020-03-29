@@ -13,3 +13,13 @@ export function requestConnection(userId) {
         viewedUser.set(newUser);
     }
 }
+
+export function reportUser(targetUser) {
+    const curViewedUser = get(viewedUser);
+    if (curViewedUser && targetUser === curViewedUser) {
+        curViewedUser.reported = true;
+        viewedUser.set(curViewedUser);
+
+        // TODO: report user
+    }
+}

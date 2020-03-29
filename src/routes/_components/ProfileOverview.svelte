@@ -1,4 +1,6 @@
 <script>
+    import { menuIds } from '../../config/menus';
+
     import Button from '../../components/Button.svelte';
 
     import Proxy from '../../components/Proxy.svelte';
@@ -15,7 +17,12 @@
 
     import { viewedUser } from '../../models/appModel';
 
-    import { showLikes, loadConversation } from '../../actions/appActions';
+    import {
+        showLikes,
+        loadConversation,
+        showMenu,
+    } from '../../actions/appActions';
+
 	import { requestConnection } from '../../actions/userActions';
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
@@ -47,6 +54,14 @@
     function userRequestConnection() {
         requestConnection(userId);
     }
+
+    function showProfileOptions() {
+		if (isCurrentUser) {
+			showMenu(menuIds.PROFILE_OWNER_MENU);
+		} else {
+			showMenu(menuIds.PROFILE_MENU);
+		}
+    }
 </script>
 
 <div class="content">
@@ -63,7 +78,7 @@
             <div class="profileImage">
                 <img src="{profileImage}" alt="{userFirstName}" />
             </div>
-            <Button className="optionsButton" icon="{OptionsMenuIcon}" disabled="{true}"></Button>
+            <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProfileOptions}"></Button>
             <Button className="editButton" icon="{EditIcon}" disabled="{true}">edit</Button>
             <div class="userStats">
                 <Button><span class="label">posts</span><div class="count">{postsCount}</div></Button>

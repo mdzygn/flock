@@ -13,7 +13,6 @@ import {
 
 import {
     project,
-    targetProject,
     resetScrollRegionPosition
 } from '../models/appModel';
 
@@ -38,6 +37,7 @@ export function projectToggleFollowing(projectId) {
 export function projectToggleLiked(projectId) {
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
+
     if (targetProject) {
         updateProject(targetProject, {
             liked: !targetProject.liked,
@@ -117,38 +117,48 @@ export function createProject(projectDetails) {
 }
 
 export function reportProject(projectId) {
-    // TODO: select project by id
+    const targetProjectModel = getProject(projectId);
+    const targetProject = get(targetProjectModel);
+
+    targetProject.reported = true;
 
     const curProject = get(project);
-    if (curProject) {
-        curProject.reported = true;
-        project.set(curProject);
+    if (curProject && curProject.id === targetProject.id) {
+        project.set(targetProject);
 
         // TODO: report project
     }
 }
 
 export function archiveProject(projectId) {
-    // TODO: select project by id
+    const targetProjectModel = getProject(projectId);
+    const targetProject = get(targetProjectModel);
 
-    const curProject = get(project);
-    if (curProject) {
-        curProject.archived = true;
-        project.set(curProject);
+    if (targetProject.isOwner) {
+        targetProject.archived = true;
 
-        // TODO: report project
+        const curProject = get(project);
+        if (curProject && curProject.id === targetProject.id) {
+            project.set(targetProject);
+
+            // TODO: unarchive in db
+        }
     }
 }
 
 export function unarchiveProject(projectId) {
-    // TODO: select project by id
+    const targetProjectModel = getProject(projectId);
+    const targetProject = get(targetProjectModel);
 
-    const curProject = get(project);
-    if (curProject) {
-        curProject.archived = false;
-        project.set(curProject);
+    if (targetProject.isOwner) {
+        targetProject.archived = false;
 
-        // TODO: report project
+        const curProject = get(project);
+        if (curProject && curProject.id === targetProject.id) {
+            project.set(targetProject);
+
+            // TODO: unarchive in db
+        }
     }
 }
 

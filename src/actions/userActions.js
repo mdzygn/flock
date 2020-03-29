@@ -12,14 +12,13 @@ import {
 } from '../models/usersModel';
 
 export function requestConnection(userId) {
-    const curViewedUser = get(viewedUser);
-
     const userModel = getUser(userId);
     const user = userModel;
 
     user.requestedConnection = true;
 
-    if (curViewedUser && user.id === curViewedUser.id) {
+    const curViewedUser = get(viewedUser);
+    if (curViewedUser && curViewedUser.id === user.id) {
         viewedUser.set(user);
 
         // TODO: request connection
@@ -33,7 +32,7 @@ export function reportUser(userId) {
     user.reported = true;
 
     const curViewedUser = get(viewedUser);
-    if (curViewedUser && user.id === curViewedUser.id) {
+    if (curViewedUser && curViewedUser.id === user.id) {
         viewedUser.set(user);
 
         // TODO: report user

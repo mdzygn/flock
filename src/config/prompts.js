@@ -25,7 +25,7 @@ const prompts = {
     PROJECT_ARCHIVE: {
         title: 'Archive Project',
         message: 'Are you sure you want to archive this project?',
-        subMessage: 'It will no longer be editable to team members or visible to followers',
+        subMessage: 'It will no longer be visible to any followers',
         menuItems: [
             {
                 label: 'Archive Project',

@@ -93,6 +93,8 @@
         line-height: 1.5rem;
 
         padding: 0 38px;
+        padding-bottom: 12px;
+        color: #888888;
 	}
 
 	.overlayPrompt :global(.overlayMenuItem) {

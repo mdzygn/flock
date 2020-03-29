@@ -15,7 +15,7 @@
 </script>
 
 {#if href && !disabled}
-    <a {href} class="button {className}" class:disabled="{disabled}" on:click={onClick} {style}>
+    <a {href} class="button {className}" class:disabled="{disabled}" class:activeButton={!disabled &&  onClick} on:click={onClick} {style}>
         <div class="buttonContent" style="{buttonContentStyle}">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
                 <img class="icon" src="{icon}" alt="read more" {iconStyle} />
@@ -23,7 +23,7 @@
         </div>
     </a>
 {:else}
-    <div class="button {className}" class:disabled="{disabled}" on:click={!disabled ? onClick : null} class:activeButton={!disabled &&  onClick} {style}>
+    <div class="button {className}" class:disabled="{disabled}" class:activeButton={!disabled &&  onClick} on:click={!disabled ? onClick : null} {style}>
         <div class="buttonContent" style="{buttonContentStyle}">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
                 <img class="icon" src="{icon}" alt="read more" style="{iconStyle}" />

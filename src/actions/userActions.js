@@ -6,6 +6,7 @@ import {
 } from '../models/appModel';
 
 export function requestConnection(userId) {
+    // TODO: use provided userId
     const curViewedUser = get(viewedUser);
     if (curViewedUser) {
         curViewedUser.requestedConnection = true;
@@ -15,6 +16,7 @@ export function requestConnection(userId) {
 }
 
 export function reportUser(targetUser) {
+    // TODO: lookup provided user
     const curViewedUser = get(viewedUser);
     if (curViewedUser && targetUser === curViewedUser) {
         curViewedUser.reported = true;

@@ -149,6 +149,10 @@ export function loadConversation(targetConversationId) {
     resetScrollRegionPosition('conversation');
 }
 
+export function messageUser(user) {
+    loadConversation('r70dp2bf');
+}
+
 function gotoRoute(newPath) {
     // console.log(getPagePath()+ ' !== /' + newPath + ' : ' + (getPagePath() !== '/' + newPath));
     if (getPagePath() !== '/' + newPath) {

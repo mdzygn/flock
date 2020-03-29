@@ -24,9 +24,14 @@
 	.overlayMenuItem :global(.button) {
         font-size: 1.5rem;
         padding: 8px 13px;
+        padding-right: 30px;
 	}
 
-	.overlayMenuItem :global(.button:hover) {
+	.overlayMenuItem :global(.button.activeButton:hover) {
         background-color: #EEEEEE;
+	}
+
+	.overlayMenuItem :global(.button.disabled) {
+        opacity: 0.33;
 	}
 </style>

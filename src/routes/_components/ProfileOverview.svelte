@@ -19,7 +19,7 @@
 
     import {
         showLikes,
-        loadConversation,
+        messageUser,
         showMenu,
     } from '../../actions/appActions';
 
@@ -53,6 +53,10 @@
 
     function userRequestConnection() {
         requestConnection(userId);
+    }
+
+    function messageCurrentUser() {
+        messageUser($viewedUser);
     }
 
     function showProfileOptions() {
@@ -118,7 +122,7 @@
 
             {#if !isCurrentUser}
                 <div class="overviewActions">
-                    <Button className="sendMessageButton" onClick="{e => loadConversation('r70dp2bf')}" icon="{SendMessageIcon}">message</Button>
+                    <Button className="sendMessageButton" onClick="{messageCurrentUser}" icon="{SendMessageIcon}">message</Button>
                     <Button className="connectButton {showConnect ? 'isButton' : ''}" onClick="{showConnect ? userRequestConnection : null}" icon="{ConnectIcon}">{showConnect ? 'connect' : (requestedConnection ? 'request sent' : 'connected')}</Button>
                 </div>
             {/if}

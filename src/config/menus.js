@@ -10,6 +10,7 @@ import { get } from 'svelte/store';
 import {
     editProjectDetails,
     copyPageLink,
+    messageUser,
 } from '../actions/appActions';
 
 import {
@@ -20,6 +21,7 @@ import {
 } from '../actions/projectActions';
 
 import {
+    requestConnection,
     reportUser,
 } from '../actions/userActions';
 
@@ -100,13 +102,18 @@ export const menus = {
         menuItems: [
             {
                 label: 'Send Message',
-                disabled: true,
+                action: () => { const u = get(viewedUser); u && messageUser(u) },
+            },
+            {
+                label: () => { const u = get(viewedUser); return (u && !u.requestedConnection) ? 'Send Connection Request' : 'Connection Request Sent' },
+                disabled: () => { const u = get(viewedUser); return u && u.requestedConnection },
+                action: () => { const u = get(viewedUser); u && u.id && requestConnection(u.id) },
             },
             {
                 label: () => { const u = get(viewedUser); return (u && !u.reported) ? 'Report User' : 'User Reported' },
                 disabled: () => { const u = get(viewedUser); return u && u.reported },
-                action: () => { const u = get(viewedUser); reportUser(u) },
-                // disabled: true,
+                action: () => { const u = get(viewedUser); u && reportUser(u) },
+                disabled: true,
             },
         ],
     },

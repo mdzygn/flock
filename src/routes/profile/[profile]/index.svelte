@@ -17,6 +17,11 @@
 
 	import { viewedUser, profileDisplayingAllProjects } from '../../../models/appModel';
 
+	import { loadConversation, messageUser } from '../../../actions/appActions';
+
+	import { requestConnection } from '../../../actions/userActions';
+
+
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
 	$: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
 
@@ -28,15 +33,16 @@
 	let userProjects = writable({});
 	$: { getUserProjectsFromId(userProjects, projectIds) }
 
-	import { loadConversation } from '../../../actions/appActions';
-	import { requestConnection } from '../../../actions/userActions';
-
 	$: proxyActionsImage = isCurrentUser ? 'profile_actions_owner' : 'profile_actions';
 	$: proxySkillsImage = isCurrentUser ? 'profile_skills_owner' : 'profile_skills';
 
 	function displayAllProjects() {
 		$profileDisplayingAllProjects = true;
 	}
+
+    function messageCurrentUser() {
+        messageUser($viewedUser);
+    }
 </script>
 
 <svelte:head>
@@ -84,7 +90,7 @@
 					height: 47px;" />
 
 				<!-- Action Send Message -->
-				<Hotspot onClick="{e => loadConversation('r70dp2bf')}" style="
+				<Hotspot onClick="{messageCurrentUser}" style="
 					left: 128px;
 					top: 0px;
 					width: 132px;

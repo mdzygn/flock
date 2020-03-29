@@ -57,7 +57,7 @@
 	.overlayPrompt {
         display: inline-block;
 
-        width: 230px;
+        width: 240px;
 
         background-color: #ffffff;
         border-radius: 5px;
@@ -67,12 +67,12 @@
 	}
 
     .content {
-        padding-top: 19px;
-        padding-bottom: 25px;
+        padding-top: 25px;
+        padding-bottom: 30px;
     }
 
 	.title {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         line-height: 1.6rem;
         font-weight: 700;
 
@@ -81,18 +81,18 @@
 	}
 
 	.message {
-        font-size: 1.4rem;
-        line-height: 1.6rem;
+        font-size: 1.5rem;
+        line-height: 1.7rem;
 
-        padding: 0 25px;
-        padding-bottom: 16px;
+        padding: 0 20px;
+        padding-bottom: 18px;
 	}
 
 	.subMessage {
-        font-size: 1.3rem;
-        line-height: 1.5rem;
+        font-size: 1.4rem;
+        line-height: 1.6rem;
 
-        padding: 0 38px;
+        padding: 0 20px;
         padding-bottom: 12px;
         color: #888888;
 	}
@@ -101,8 +101,6 @@
         border-top: 1px solid #D4D4D4;
 	}
 	.overlayPrompt :global(.overlayMenuItem .button) {
-        height: 40px;
-        padding-left: 30px;
-        padding-right: 30px;
+        padding: 13px 30px;
 	}
 </style>

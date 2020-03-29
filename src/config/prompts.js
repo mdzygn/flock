@@ -26,8 +26,8 @@ import { showPrompt } from '../actions/appActions';
 const prompts = {
     PROJECT_ARCHIVE: {
         title: 'Archive Project',
-        message: 'Are you sure you want to archive this project?',
-        subMessage: 'It will no longer be editable by team members or visible to any followers',
+        message: 'Are you sure you want to<br/>archive this project?',
+        subMessage: 'It will no longer be<br/>editable by team members<br/>or visible to any followers',
         menuItems: [
             {
                 label: 'Archive Project',

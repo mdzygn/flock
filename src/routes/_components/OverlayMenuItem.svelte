@@ -24,8 +24,8 @@
 
 <style>
 	.overlayMenuItem :global(.button) {
-        font-size: 1.5rem;
-        padding: 8px 13px;
+        font-size: 1.6rem;
+        padding: 9px 13px;
         padding-right: 30px;
         box-sizing: border-box;
 	}

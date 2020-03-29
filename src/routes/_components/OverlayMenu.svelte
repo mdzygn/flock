@@ -35,7 +35,7 @@
         display: inline-block;
 
         padding: 6px 0;
-        min-width: 171px;
+        min-width: 230px;
 
         background-color: #ffffff;
         border-radius: 5px;

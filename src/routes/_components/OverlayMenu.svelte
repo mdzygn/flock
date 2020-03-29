@@ -15,9 +15,9 @@
         const menuItem = event.detail && event.detail.menuItem;
         const action = menuItem && menuItem.action;
 
+        closeOverlay(); // ensure doing first in case opening new menu
         if (action) {
             action(targetItem);
-            closeOverlay();
         }
     }
 </script>

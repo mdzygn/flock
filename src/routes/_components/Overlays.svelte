@@ -2,6 +2,7 @@
 	import { curMenu, curPrompt } from '../../models/appModel';
 
 	import OverlayMenu from './OverlayMenu.svelte';
+	import OverlayPrompt from './OverlayPrompt.svelte';
 
 	import { closeOverlay } from '../../actions/appActions';
 </script>
@@ -12,7 +13,7 @@
 		{#if $curMenu}
 			<OverlayMenu menuId="{$curMenu}" />
 		{:else}
-			<OverlayMenu menuId="{$curPrompt}" />
+			<OverlayPrompt promptId="{$curPrompt}" />
 		{/if}
 	</div>
 {/if}

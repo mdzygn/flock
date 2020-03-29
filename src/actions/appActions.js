@@ -183,12 +183,14 @@ export function showProjectFollowers(targetProjectId) {
 
 export function showMenu(menuId) {
     hidePrompt();
+    if (!menuId) { console.error('Menu undefined: ' + promptId); }
 	curMenu.set(menuId);
 }
 
-export function showPrompt(menuId) {
+export function showPrompt(promptId) {
     hideMenu();
-	curMenu.set(menuId);
+    if (!promptId) { console.error('Prompt undefined: ' + promptId); }
+	curPrompt.set(promptId);
 }
 
 export function closeOverlay() {

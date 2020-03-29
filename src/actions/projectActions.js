@@ -124,3 +124,27 @@ export function reportProject(projectId) {
         // TODO: report project
     }
 }
+
+export function archiveProject(projectId) {
+    // TODO: select project by id
+
+    const curProject = get(project);
+    if (curProject) {
+        curProject.archived = true;
+        project.set(curProject);
+
+        // TODO: report project
+    }
+}
+
+export function unarchiveProject(projectId) {
+    // TODO: select project by id
+
+    const curProject = get(project);
+    if (curProject) {
+        curProject.archived = false;
+        project.set(curProject);
+
+        // TODO: report project
+    }
+}

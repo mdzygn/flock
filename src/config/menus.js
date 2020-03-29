@@ -7,10 +7,14 @@ export const menuIds = {
 
 import { get } from 'svelte/store';
 
+import { promptIds } from '../config/prompts';
+
+
 import {
     editProjectDetails,
     copyPageLink,
     messageUser,
+    showPrompt,
 } from '../actions/appActions';
 
 import {
@@ -18,6 +22,7 @@ import {
     makePublic,
     reportProject,
     projectToggleFollowing,
+    unarchiveProject,
 } from '../actions/projectActions';
 
 import {
@@ -29,6 +34,7 @@ import {
     project,
     viewedUser,
 } from '../models/appModel';
+
 
 export const menus = {
     PROJECT_OWNER_MENU: {
@@ -55,14 +61,12 @@ export const menus = {
             {
                 label: 'Achive Project',
                 condition: () => { const p = get(project); return p && !p.archived },
-                disabled: true,
-                action: null,
+                action: () => { showPrompt(promptIds.PROJECT_ARCHIVE); },
             },
             {
                 label: 'Unarchive Project',
                 condition: () => { const p = get(project); return p && p.archived },
-                disabled: true,
-                action: null,
+                action: () => { const p = get(project); p && p.id && unarchiveProject(p.id) },
             },
         ],
     },

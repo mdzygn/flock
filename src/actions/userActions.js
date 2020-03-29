@@ -1,5 +1,7 @@
 import { get } from 'svelte/store';
-import { DEBUG } from '../config';
+// import { DEBUG } from '../config';
+
+import { copyToClipboard } from '../utils';
 
 import {
     viewedUser,
@@ -24,4 +26,9 @@ export function reportUser(userId) {
 
         // TODO: report user
     }
+}
+
+export function copyProfileLink(userId) {
+    const url = location.protocol + '//' + location.host + '/profile/' + userId;
+    copyToClipboard(url);
 }

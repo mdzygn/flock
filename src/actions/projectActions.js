@@ -13,6 +13,7 @@ import {
 
 import {
     project,
+    targetProject,
     resetScrollRegionPosition
 } from '../models/appModel';
 

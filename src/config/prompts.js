@@ -4,6 +4,7 @@ import { get } from 'svelte/store';
 import {
     project,
     targetProject,
+    targetUser,
 } from '../models/appModel';
 
 // import {
@@ -14,6 +15,10 @@ import {
     archiveProject,
     copyProjectLink,
 } from '../actions/projectActions';
+
+import {
+    copyProfileLink,
+} from '../actions/userActions';
 
 
 const prompts = {
@@ -39,6 +44,20 @@ const prompts = {
             {
                 label: 'Copy Link',
                 action: () => { const p = get(targetProject); p && p.id && copyProjectLink(p.id) },
+                default: true,
+            },
+            {
+                label: 'Close',
+            },
+        ],
+    },
+    SHARE_PROFILE: {
+        title: 'Share Profile',
+        message: 'Select copy link below to share this profile',
+        menuItems: [
+            {
+                label: 'Copy Link',
+                action: () => { const p = get(targetUser); p && p.id && copyProfileLink(p.id) },
                 default: true,
             },
             {

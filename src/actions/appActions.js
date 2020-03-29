@@ -17,6 +17,10 @@ import {
 } from '../models/projectsModel';
 
 import {
+    getUser,
+} from '../models/usersModel';
+
+import {
     curPath,
 
     projectId,
@@ -30,6 +34,7 @@ import {
     viewedUser,
 
     targetProject,
+    targetUser,
 
     resetScrollRegionPosition,
 
@@ -217,11 +222,20 @@ export function copyPageLink() {
     copyToClipboard(location.href);
 }
 
-export function shareProject(projectId) {
+export function showShareProjectDialog(projectId) {
     const projectModel = getProject(projectId);
     const project = get(projectModel);
 
     targetProject.set(project);
 
     showPrompt(promptIds.SHARE_PROJECT);
+}
+
+export function showShareProfileDialog(userId) {
+    const userModel = getUser(userId);
+    const user = userModel; // get(userModel);
+
+    targetUser.set(user);
+
+    showPrompt(promptIds.SHARE_PROFILE);
 }

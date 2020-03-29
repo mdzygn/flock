@@ -10,7 +10,7 @@
     import ShareIcon from "../../assets/icons/share.png";
 
 	import {
-		shareProject
+		showShareProjectDialog
 	} from '../../actions/appActions';
 
 	import {
@@ -25,7 +25,7 @@
 	function shareItem() {
 		switch (type) {
 			case 'project':
-				shareProject(targetItemId);
+				showShareProjectDialog(targetItemId);
 				break;
 		}
 	}

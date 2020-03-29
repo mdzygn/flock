@@ -99,7 +99,7 @@
         height: 40px;
         border-top: 1px solid #D4D4D4;
 	}
-	.overlayPrompt :global(.overlayMenuItem.button) {
+	.overlayPrompt :global(.overlayMenuItem .button) {
         padding-left: 30px;
         padding-right: 30px;
 	}

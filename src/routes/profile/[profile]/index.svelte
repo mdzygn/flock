@@ -17,7 +17,7 @@
 
 	import { viewedUser, profileDisplayingAllProjects } from '../../../models/appModel';
 
-	import { loadConversation, messageUser } from '../../../actions/appActions';
+	import { loadConversation, messageUser, showShareProfileDialog } from '../../../actions/appActions';
 
 	import { requestConnection } from '../../../actions/userActions';
 
@@ -43,7 +43,11 @@
 
     function messageCurrentUser() {
         messageUser(userId);
-    }
+	}
+
+	function shareCurrentProfile() {
+		showShareProfileDialog(userId);
+	}
 </script>
 
 <svelte:head>
@@ -82,6 +86,13 @@
 					top: 0px;
 					width: 129px;
 					height: 47px;" />
+
+				<!-- Share -->
+				<Hotspot onClick="{shareCurrentProfile}" style="
+    				right: 0;
+					top: 0px;
+    				width: 95px;
+					height: 47px;" />
 			{:else}
 				<!-- Request Connect -->
 				<Hotspot onClick="{e => requestConnection('l40smlp3')}" style="
@@ -95,6 +106,13 @@
 					left: 128px;
 					top: 0px;
 					width: 132px;
+					height: 47px;" />
+
+				<!-- Share -->
+				<Hotspot onClick="{shareCurrentProfile}" style="
+    				right: 0;
+					top: 0px;
+    				width: 111px;
 					height: 47px;" />
 			{/if}
 		</Proxy>

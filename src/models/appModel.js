@@ -41,6 +41,7 @@ export const conversation = writable(null);
 export const viewedUser = writable(null);
 
 export const targetProject = writable(null);
+export const targetUser = writable(null);
 
 export const newMessage = appModel.newMessage;
 

@@ -7,22 +7,34 @@ import {
     viewedUser,
 } from '../models/appModel';
 
+import {
+    getUser,
+} from '../models/usersModel';
+
 export function requestConnection(userId) {
-    // TODO: use provided userId
     const curViewedUser = get(viewedUser);
-    if (curViewedUser) {
-        curViewedUser.requestedConnection = true;
-        const newUser = get(viewedUser);
-        viewedUser.set(newUser);
+
+    const userModel = getUser(userId);
+    const user = userModel;
+
+    user.requestedConnection = true;
+
+    if (curViewedUser && user.id === curViewedUser.id) {
+        viewedUser.set(user);
+
+        // TODO: request connection
     }
 }
 
 export function reportUser(userId) {
-    // TODO: lookup provided user
+    const userModel = getUser(userId);
+    const user = userModel;
+
+    user.reported = true;
+
     const curViewedUser = get(viewedUser);
-    if (curViewedUser) {
-        curViewedUser.reported = true;
-        viewedUser.set(curViewedUser);
+    if (curViewedUser && user.id === curViewedUser.id) {
+        viewedUser.set(user);
 
         // TODO: report user
     }

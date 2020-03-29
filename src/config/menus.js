@@ -125,7 +125,7 @@ export const menus = {
                 label: () => { const u = get(viewedUser); return (u && !u.reported) ? 'Report User' : 'User Reported' },
                 disabled: () => { const u = get(viewedUser); return u && u.reported },
                 action: () => { const u = get(viewedUser); u && u.id && reportUser(u.id) },
-                disabled: true,
+                // disabled: true,
             },
         ],
     },

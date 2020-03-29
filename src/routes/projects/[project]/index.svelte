@@ -1,5 +1,6 @@
 <script>
 	import locale from '../../../locale';
+	import menus from '../../../config/menus';
 
 	import { onMount } from 'svelte';
 
@@ -48,7 +49,7 @@
 		hideProjectInfo,
 		toggleProjectInfo,
 		showProjectFollowers,
-		openOverlay,
+		showMenu,
 	} from '../../../actions/appActions';
 
 	import {
@@ -72,7 +73,11 @@
 	}
 
 	function showProjectOptions() {
-		openOverlay({});
+		if (isOwner) {
+			showMenu(menus.PROFILE_OWNER_MENU);
+		} else {
+			showMenu(menus.PROFILE_MENU);
+		}
 	}
 
 	// let proxyHeaderImage;

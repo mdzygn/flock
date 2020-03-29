@@ -36,7 +36,8 @@ import {
     displayingAllMyProjects,
     displayingAllFollowingProjects,
 
-    curOverlay,
+    curMenu,
+    curPrompt,
 } from '../models/appModel';
 
 export function loadProject(targetProjectId, options) {
@@ -174,10 +175,28 @@ export function showProjectFollowers(targetProjectId) {
     resetScrollRegionPosition('followers');
 }
 
-export function openOverlay(overlay) {
-	curOverlay.set(overlay);
+export function showMenu(menuId) {
+    hidePrompt();
+	curMenu.set(menuId);
+}
+
+export function showPrompt(menuId) {
+    hideMenu();
+	curMenu.set(menuId);
 }
 
 export function closeOverlay() {
-	curOverlay.set(null);
+    hideMenu();
+    hidePrompt();
+}
+
+function hideMenu() {
+    if (get(curMenu)) {
+        curMenu.set(null);
+    }
+}
+function hidePrompt() {
+    if (get(curPrompt)) {
+        curPrompt.set(null);
+    }
 }

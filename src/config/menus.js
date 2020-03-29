@@ -1,0 +1,8 @@
+const menus = {
+    PROJECT_OWNER_MENU: 'PROJECT_OWNER_MENU',
+    PROJECT_MENU: 'PROJECT_MENU',
+    PROFILE_OWNER_MENU: 'PROFILE_OWNER_MENU',
+    PROFILE_MENU: 'PROFILE_MENU',
+}
+
+export default menus;

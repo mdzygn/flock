@@ -1,5 +1,6 @@
-import { get } from 'svelte/store';
+import promptIds from './promptIds';
 
+import { get } from 'svelte/store';
 
 import {
     project,
@@ -19,6 +20,7 @@ import {
 import {
     copyProfileLink,
 } from '../actions/userActions';
+import { showPrompt } from '../actions/appActions';
 
 
 const prompts = {
@@ -43,7 +45,7 @@ const prompts = {
         menuItems: [
             {
                 label: 'Copy Link',
-                action: () => { const p = get(targetProject); p && p.id && copyProjectLink(p.id) },
+                action: () => { const p = get(targetProject); p && p.id && copyProjectLink(p.id); showPrompt(promptIds.SHARE_PROJECT_COMPLETE); },
                 default: true,
             },
             {
@@ -57,8 +59,34 @@ const prompts = {
         menuItems: [
             {
                 label: 'Copy Link',
-                action: () => { const p = get(targetUser); p && p.id && copyProfileLink(p.id) },
+                action: () => { const p = get(targetUser); p && p.id && copyProfileLink(p.id); showPrompt(promptIds.SHARE_PROFILE_COMPLETE); },
                 default: true,
+            },
+            {
+                label: 'Close',
+            },
+        ],
+    },
+    SHARE_PROJECT_COMPLETE: {
+        title: 'Share Project',
+        message: 'Select copy link below to share this project with others',
+        menuItems: [
+            {
+                label: 'Link Copied',
+                disabled: true,
+            },
+            {
+                label: 'Close',
+            },
+        ],
+    },
+    SHARE_PROFILE_COMPLETE: {
+        title: 'Share Profile',
+        message: 'Select copy link below to share this profile',
+        menuItems: [
+            {
+                label: 'Link Copied',
+                disabled: true,
             },
             {
                 label: 'Close',

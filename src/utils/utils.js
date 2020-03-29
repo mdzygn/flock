@@ -23,3 +23,20 @@ export function testInputDefocus(event, options) {
         }
     }
 }
+
+export function copyToClipboard(string) {
+    const textArea = document.createElement('textarea');
+    textArea.style.top = 0;
+    textArea.style.display = 'absolute';
+    textArea.style.visible = 'hidden';
+    textArea.value = string;
+
+    document.body.appendChild(textArea);
+
+    textArea.select();
+    try {
+        document.execCommand('copy');
+    } catch (err) {}
+
+    document.body.removeChild(textArea);
+}

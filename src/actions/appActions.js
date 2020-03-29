@@ -1,6 +1,8 @@
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 
+import { copyToClipboard } from '../utils/utils';
+
 import conversations from '../data/conversations.json';
 import users from '../data/users.json';
 
@@ -199,4 +201,8 @@ function hidePrompt() {
     if (get(curPrompt)) {
         curPrompt.set(null);
     }
+}
+
+export function copyPageLink() {
+    copyToClipboard(location.href);
 }

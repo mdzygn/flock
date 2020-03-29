@@ -9,6 +9,7 @@ import { get } from 'svelte/store';
 
 import {
     editProjectDetails,
+    copyPageLink,
 } from '../actions/appActions';
 
 import {
@@ -27,8 +28,8 @@ export const menus = {
         menuItems: [
             {
                 label: 'Copy Link',
-                disabled: true,
-                action: null,
+                // disabled: true,
+                action: copyPageLink,
             },
             {
                 label: 'Edit Project...',
@@ -76,6 +77,7 @@ export const menus = {
                 label: () => { const p = get(project); return (p && !p.reported) ? 'Report Project' : 'Project Reported' },
                 disabled: () => { const p = get(project); return p && p.reported },
                 action: () => { const p = get(project); reportProject(p) },
+                disabled: true,
             },
         ],
     },

@@ -16,6 +16,7 @@
 		loadProject,
 		loadConversation,
 		loadProfile,
+		closeOverlay,
 	} from '../actions/appActions';
 
 	import {
@@ -49,6 +50,8 @@
 				}
 			}
 		}
+
+		closeOverlay();
 	}
 
 	$: showFeedBg = isDarkBgForPath(path);

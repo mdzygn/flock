@@ -2,7 +2,7 @@ import api from '../api';
 
 import { writable, get } from 'svelte/store';
 
-import { generateId } from '../utils/utils';
+import { generateId } from '../utils';
 
 import config from '../config';
 

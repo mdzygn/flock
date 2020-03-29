@@ -1,5 +1,5 @@
 <script>
-    import { testInputDefocus } from '../../utils/utils';
+    import { testInputDefocus } from '../../utils';
 
     import SearchIcon from "../../assets/icons/search.png";
     import ClearIcon from "../../assets/icons/clear.png";

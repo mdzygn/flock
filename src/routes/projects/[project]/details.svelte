@@ -4,9 +4,7 @@
 
 	import locale from '../../../locale';
 
-	import { testInputDefocus } from '../../../utils/utils';
-
-	import { getFormattedText, getUnformattedText } from '../../../utils/utils';
+	import { testInputDefocus, getFormattedText, getUnformattedText } from '../../../utils';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
 	import Proxy from '../../../components/Proxy.svelte';

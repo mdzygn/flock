@@ -56,6 +56,16 @@ export function makePublic() {
     }
 }
 
+export function makePrivate() {
+    const curProject = get(project);
+    if (curProject) {
+        updateProject(curProject, {
+            public: false,
+        });
+        project.set(curProject);
+    }
+}
+
 export function togglePublic() {
     const curProject = get(project);
     if (curProject) {

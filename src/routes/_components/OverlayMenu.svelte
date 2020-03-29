@@ -5,18 +5,23 @@
 
     export let menuId;
 
-    import { menus } from '../../config/menus';
+    import { menus, menuIds } from '../../config/menus';
 
-    const conditions = {
-        isPublic: false,
-        isArchived: false,
-        isFollowing: false,
-    };
+    // let conditions = null;
+    // $: {
+    //     switch (menu)
+    //         case menuIds.PROJECT_OWNER_MENU:
+    //         case menuIds.PROJECT_MENU:
+    //             conditions = {
+    //                 projectIsPublic: false,
+    //                 projectIsArchived: false,
+    //                 projectIsFollowing: false,
+    //             };
+    //             break;
+    // }
 
     $: menu = menus[menuId];
     $: menuItems = (menu && menu.menuItems) || null;
-
-    $: console.log(menuId, menu);
 
     function selectMenuItem(event) {
         const menuItem = event.detail && event.detail.menuItem;
@@ -27,11 +32,49 @@
             closeOverlay();
         }
     }
+
+    // function conditionMet(condition) {
+    //     if (conditions) {
+    //         const conditionExpression = 'result = ('+conditionExpression+');';
+
+    //         var conditionFunction = function(variables) {
+    //             var result = false;
+
+    //             for (var prop in variables) {
+    //                 if (!prop.match(/[^\a-zA-Z\-\_]/g)) { // doesn't contain invalid chars
+    //                     var variableValue = variables[prop];
+    //                     if (typeof variableValue === 'object') {
+    //                         variableValue = JSON.stringify(variableValue);
+    //                     }
+
+    //                     if (typeof variableValue === 'string') {
+    //                         contextString += 'var ' + prop + ' = "' + variableValue + '"; ';
+    //                     } else {
+    //                         contextString += 'var ' + prop + ' = ' + variableValue + '; ';
+    //                     }
+    //                 }
+    //             }
+
+    //             const fullEvaluationExpression = contextString+comparsionExpression;
+    //             try {
+    //                 eval(fullEvaluationExpression);
+    //             } catch (error) {
+    //                 console.error('conditional expression failed: "'+ expression +'". ' , error , fullEvaluationExpression);
+    //             }
+    //             return result;
+    //         };
+    //         var comparisonResult = conditionFunction.apply(this, [conditions]);
+    //         return comparisonResult;
+    //     }
+    //     return true;
+    // }
 </script>
 
 <div class="overlayMenu">
     {#each menuItems as menuItem}
-        <OverlayMenuItem {menuItem} on:select="{selectMenuItem}" />
+        {#if !menuItem.condition || menuItem.condition()}
+            <OverlayMenuItem {menuItem} on:select="{selectMenuItem}" />
+        {/if}
     {/each}
 </div>
 

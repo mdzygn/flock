@@ -1,13 +1,24 @@
-import {
-    editProjectDetails,
-} from '../actions/appActions'
-
 export const menuIds = {
     PROJECT_OWNER_MENU: 'PROJECT_OWNER_MENU',
     PROJECT_MENU: 'PROJECT_MENU',
     PROFILE_OWNER_MENU: 'PROFILE_OWNER_MENU',
     PROFILE_MENU: 'PROFILE_MENU',
 }
+
+import { get } from 'svelte/store';
+
+import {
+    editProjectDetails,
+} from '../actions/appActions';
+
+import {
+    makePrivate,
+    makePublic,
+} from '../actions/projectActions';
+
+import {
+    project
+} from '../models/appModel';
 
 export const menus = {
     PROJECT_OWNER_MENU: {
@@ -19,22 +30,24 @@ export const menus = {
             },
             {
                 label: 'Edit Project...',
-                condition: '!isArchived',
+                // condition: '!isArchived',
                 action: () => editProjectDetails({editingProject: true}),
             },
             {
                 label: 'Make Private',
-                condition: 'isPublic',
-                action: null,
+                condition: () => { const p = get(project); return p && p.public },
+                // condition: 'isPublic',
+                action: makePrivate,
             },
-            // {
-            //     label: 'Make Public',
-            //     condition: '!isPublic && !isArchived',
-            //     action: null,
-            // },
+            {
+                label: 'Make Public',
+                condition: () => { const p = get(project); return p && !p.public },
+                // condition: '!isPublic && !isArchived',
+                action: makePublic,
+            },
             {
                 label: 'Achive Project',
-                condition: '!isArchived',
+                // condition: '!isArchived',
                 disabled: true,
                 action: null,
             },
@@ -50,7 +63,7 @@ export const menus = {
         menuItems: [
             {
                 label: 'Follow Project',
-                condition: '!isFollowing',
+                // condition: '!isFollowing',
                 disabled: true,
                 action: null,
             },

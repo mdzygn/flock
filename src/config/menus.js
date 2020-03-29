@@ -28,7 +28,6 @@ export const menus = {
         menuItems: [
             {
                 label: 'Copy Link',
-                // disabled: true,
                 action: copyPageLink,
             },
             {

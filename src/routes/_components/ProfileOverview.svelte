@@ -7,7 +7,7 @@
 	import Location from '../_components/Location.svelte';
 	import Audience from '../_components/Audience.svelte';
 
-	import OptionsMenuIcon from "../../assets/icons/options_menu.png";
+	import OptionsMenuIcon from "../../assets/icons/menu.png";
     import EditIcon from "../../assets/icons/edit.png";
 
     import SendMessageIcon from "../../assets/icons/send.png";
@@ -199,19 +199,23 @@
     .content :global(.optionsButton) {
 		position: absolute;
 
-        top: 66px;
-		right: 14px;
+        top: 67px;
+		right: 0;
 
 		width: 28px;
 		height: 26px;
 		padding: 8px;
+	}
+    .content :global(.optionsButton .icon) {
+		margin-top: 1px;
+    	margin-left: 4px;
 	}
 
     .content :global(.editButton) {
 		position: absolute;
 
 		top: 69px;
-        right: 58px;
+    	right: 45px;
 
 		width: 28px;
 		height: 26px;

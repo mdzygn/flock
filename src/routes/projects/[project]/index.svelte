@@ -483,7 +483,7 @@
 		position: absolute;
 
     	top: 16px;
-    	right: 0px;
+    	right: 0;
 
 		width: 28px;
 		height: 26px;

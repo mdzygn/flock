@@ -3,6 +3,8 @@ import { get } from 'svelte/store';
 
 import { copyToClipboard } from '../utils';
 
+import promptIds from '../config/promptIds';
+
 import conversations from '../data/conversations.json';
 import users from '../data/users.json';
 
@@ -26,6 +28,8 @@ import {
     project,
     conversation,
     viewedUser,
+
+    targetProject,
 
     resetScrollRegionPosition,
 
@@ -211,4 +215,13 @@ function hidePrompt() {
 
 export function copyPageLink() {
     copyToClipboard(location.href);
+}
+
+export function shareProject(projectId) {
+    const projectModel = getProject(projectId);
+    const project = get(projectModel);
+
+    targetProject.set(project);
+
+    showPrompt(promptIds.SHARE_PROJECT);
 }

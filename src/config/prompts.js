@@ -1,14 +1,9 @@
-export const promptIds = {
-    PROJECT_ARCHIVE: 'PROJECT_ARCHIVE',
-    SHARE_PROJECT: 'SHARE_PROJECT',
-    SHARE_PROFILE: 'SHARE_PROFILE',
-}
-
 import { get } from 'svelte/store';
 
 
 import {
     project,
+    targetProject,
 } from '../models/appModel';
 
 // import {
@@ -17,10 +12,11 @@ import {
 
 import {
     archiveProject,
+    copyProjectLink,
 } from '../actions/projectActions';
 
 
-export const prompts = {
+const prompts = {
     PROJECT_ARCHIVE: {
         title: 'Archive Project',
         message: 'Are you sure you want to archive this project?',
@@ -30,11 +26,26 @@ export const prompts = {
                 label: 'Archive Project',
                 action: () => { const p = get(project); p && p.id && archiveProject(p.id) },
                 default: true,
-                // disabled: true,
             },
             {
                 label: 'Cancel',
             },
         ],
     },
+    SHARE_PROJECT: {
+        title: 'Share Project',
+        message: 'Select copy link below to share this project with others',
+        menuItems: [
+            {
+                label: 'Copy Link',
+                action: () => { const p = get(targetProject); p && p.id && copyProjectLink(p.id) },
+                default: true,
+            },
+            {
+                label: 'Close',
+            },
+        ],
+    },
 }
+
+export default prompts;

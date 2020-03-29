@@ -7,7 +7,7 @@ export const menuIds = {
 
 import { get } from 'svelte/store';
 
-import { promptIds } from '../config/prompts';
+import promptIds from '../config/promptIds';
 
 
 import {

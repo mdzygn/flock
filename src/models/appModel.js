@@ -40,6 +40,8 @@ export const project = writable(null);
 export const conversation = writable(null);
 export const viewedUser = writable(null);
 
+export const targetProject = writable(null);
+
 export const newMessage = appModel.newMessage;
 
 export const viewMode = appModel.viewMode;

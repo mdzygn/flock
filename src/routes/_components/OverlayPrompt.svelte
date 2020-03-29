@@ -6,7 +6,8 @@
     export let promptId;
     export let targetItem = null;
 
-    import { prompts, promptIds } from '../../config/prompts';
+    import promptIds from '../../config/promptIds';
+    import prompts from '../../config/prompts';
 
     $: prompt = prompts[promptId];
     $: menuItems = (prompt && prompt.menuItems) || null;
@@ -75,7 +76,7 @@
         line-height: 1.6rem;
         font-weight: 700;
 
-        padding: 0 16px;
+        padding: 0 20px;
         padding-bottom: 15px;
 	}
 
@@ -83,7 +84,7 @@
         font-size: 1.4rem;
         line-height: 1.6rem;
 
-        padding: 0 16px;
+        padding: 0 25px;
         padding-bottom: 16px;
 	}
 

@@ -1,5 +1,7 @@
 import { get } from 'svelte/store';
-import { DEBUG } from '../config';
+// import { DEBUG } from '../config';
+
+import { copyToClipboard } from '../utils';
 
 import { goto } from '@sapper/app';
 
@@ -147,4 +149,9 @@ export function unarchiveProject(projectId) {
 
         // TODO: report project
     }
+}
+
+export function copyProjectLink(projectId) {
+    const url = location.protocol + '//' + location.host + '/projects/' + projectId;
+    copyToClipboard(url);
 }

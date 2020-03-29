@@ -10,12 +10,25 @@
     import ShareIcon from "../../assets/icons/share.png";
 
 	import {
+		shareProject
+	} from '../../actions/appActions';
+
+	import {
 		projectToggleFollowing,
 		projectToggleLiked,
 	} from '../../actions/projectActions';
 
 	export let targetItemId = null;
 	export let targetItem = null;
+	export let type = 'project';
+
+	function shareItem() {
+		switch (type) {
+			case 'project':
+				shareProject(targetItemId);
+				break;
+		}
+	}
 </script>
 
 <div class="actionBar">
@@ -36,24 +49,24 @@
 	</div>
 	<div class="actionContainerButton actionButtonMiddle">
 		<slot name="buttonMiddle">
-				<ActionButton
-					label = "follow"
-					selectedLabel = "following"
+			<ActionButton
+				label = "follow"
+				selectedLabel = "following"
 
-					icon = "{FollowIcon}"
-					selectedIcon = "{FollowSelectedIcon}"
+				icon = "{FollowIcon}"
+				selectedIcon = "{FollowSelectedIcon}"
 
-					targetItem = "{targetItem}"
-					targetItemId = "{targetItemId}"
-					action = "{projectToggleFollowing}"
-					targetItemProperty = "following"
-					countProperty= "followCount"
+				targetItem = "{targetItem}"
+				targetItemId = "{targetItemId}"
+				action = "{projectToggleFollowing}"
+				targetItemProperty = "following"
+				countProperty= "followCount"
 
-					buttonContentStyle = "padding-right: 48px;"
-					iconStyle = "padding-bottom: 4px"
-				/>
-			</slot>
-		</div>
+				buttonContentStyle = "padding-right: 48px;"
+				iconStyle = "padding-bottom: 4px"
+			/>
+		</slot>
+	</div>
 	<div class="actionContainerButton actionButtonRight">
 		<slot name="buttonRight">
 			<ActionButton
@@ -61,8 +74,7 @@
 
 				icon = "{ShareIcon}"
 
-				action = "{null}"
-				disabled = "{true}"
+				action = "{shareItem}"
 			/>
 		</slot>
 	</div>

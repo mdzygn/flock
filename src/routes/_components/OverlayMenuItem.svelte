@@ -27,6 +27,7 @@
         font-size: 1.5rem;
         padding: 8px 13px;
         padding-right: 30px;
+        box-sizing: border-box;
 	}
 
 	.overlayMenuItem :global(.button.activeButton:hover) {

@@ -98,10 +98,10 @@
 	}
 
 	.overlayPrompt :global(.overlayMenuItem) {
-        height: 40px;
         border-top: 1px solid #D4D4D4;
 	}
 	.overlayPrompt :global(.overlayMenuItem .button) {
+        height: 40px;
         padding-left: 30px;
         padding-right: 30px;
 	}

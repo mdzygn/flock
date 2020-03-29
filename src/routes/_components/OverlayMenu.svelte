@@ -1,6 +1,8 @@
 <script>
     import OverlayMenuItem from './OverlayMenuItem.svelte';
 
+	import { closeOverlay } from '../../actions/appActions';
+
     export let menuId;
 
     import { menus } from '../../config/menus';
@@ -21,7 +23,8 @@
         const action = menuItem && menuItem.action;
 
         if (action) {
-            console.log(menuId, action)
+            action();
+            closeOverlay();
         }
     }
 </script>

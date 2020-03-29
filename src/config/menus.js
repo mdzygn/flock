@@ -1,3 +1,7 @@
+import {
+    editProjectDetails,
+} from '../actions/appActions'
+
 export const menuIds = {
     PROJECT_OWNER_MENU: 'PROJECT_OWNER_MENU',
     PROJECT_MENU: 'PROJECT_MENU',
@@ -10,35 +14,35 @@ export const menus = {
         menuItems: [
             {
                 label: 'Copy Link',
-                action: 'projectCopyLink',
                 disabled: true,
+                action: null,
             },
             {
                 label: 'Edit Project...',
-                action: 'editProject',
                 condition: '!isArchived',
+                action: () => editProjectDetails({editingProject: true}),
             },
             {
                 label: 'Make Private',
-                action: 'makePrivate',
                 condition: 'isPublic',
+                action: null,
             },
             // {
             //     label: 'Make Public',
-            //     action: 'makePublic',
             //     condition: '!isPublic && !isArchived',
+            //     action: null,
             // },
             {
                 label: 'Achive Project',
-                action: 'archiveProject',
                 condition: '!isArchived',
                 disabled: true,
+                action: null,
             },
             // {
             //     label: 'Unarchive Project',
-            //     action: 'unarchiveProject',
             //     condition: 'isArchived',
             //     disabled: true,
+            //     action: null,
             // },
         ],
     },
@@ -46,9 +50,9 @@ export const menus = {
         menuItems: [
             {
                 label: 'Follow Project',
-                action: 'followProject',
                 condition: '!isFollowing',
                 disabled: true,
+                action: null,
             },
             // {
             //     label: 'Unfollow Project',
@@ -58,8 +62,8 @@ export const menus = {
             // },
             {
                 label: 'Report Project',
-                action: 'reportProject',
                 disabled: true,
+                action: null,
             },
         ],
     },

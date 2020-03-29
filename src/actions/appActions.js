@@ -149,7 +149,7 @@ export function loadConversation(targetConversationId) {
     resetScrollRegionPosition('conversation');
 }
 
-export function messageUser(user) {
+export function messageUser(userId) {
     loadConversation('r70dp2bf');
 }
 

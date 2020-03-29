@@ -113,9 +113,11 @@ export function createProject(projectDetails) {
     }
 }
 
-export function reportProject(targetProject) {
+export function reportProject(projectId) {
+    // TODO: select project by id
+
     const curProject = get(project);
-    if (curProject && targetProject === curProject) {
+    if (curProject) {
         curProject.reported = true;
         project.set(curProject);
 

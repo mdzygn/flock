@@ -21,6 +21,7 @@
 
 	import { requestConnection } from '../../../actions/userActions';
 
+	$: userId = ($viewedUser && $viewedUser.id) || null;
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
 	$: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
@@ -41,7 +42,7 @@
 	}
 
     function messageCurrentUser() {
-        messageUser($viewedUser);
+        messageUser(userId);
     }
 </script>
 

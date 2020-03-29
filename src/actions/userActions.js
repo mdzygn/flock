@@ -15,10 +15,10 @@ export function requestConnection(userId) {
     }
 }
 
-export function reportUser(targetUser) {
+export function reportUser(userId) {
     // TODO: lookup provided user
     const curViewedUser = get(viewedUser);
-    if (curViewedUser && targetUser === curViewedUser) {
+    if (curViewedUser) {
         curViewedUser.reported = true;
         viewedUser.set(curViewedUser);
 

@@ -56,7 +56,7 @@
     }
 
     function messageCurrentUser() {
-        messageUser($viewedUser);
+        messageUser(userId);
     }
 
     function showProfileOptions() {

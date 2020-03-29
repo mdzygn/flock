@@ -34,7 +34,7 @@ export const menus = {
     PROJECT_OWNER_MENU: {
         menuItems: [
             {
-                label: 'Copy Link',
+                label: 'Copy Project Link',
                 action: copyPageLink,
             },
             {
@@ -69,6 +69,10 @@ export const menus = {
     PROJECT_MENU: {
         menuItems: [
             {
+                label: 'Copy Project Link',
+                action: copyPageLink,
+            },
+            {
                 label: 'Follow Project',
                 condition: () => { const p = get(project); return p && !p.following },
                 action: () => { const p = get(project); p && p.id && projectToggleFollowing(p.id) },
@@ -81,7 +85,7 @@ export const menus = {
             {
                 label: () => { const p = get(project); return (p && !p.reported) ? 'Report Project' : 'Project Reported' },
                 disabled: () => { const p = get(project); return p && p.reported },
-                action: () => { const p = get(project); reportProject(p) },
+                action: () => { const p = get(project); p && p.id && reportProject(p.id) },
                 disabled: true,
             },
         ],
@@ -89,7 +93,7 @@ export const menus = {
     PROFILE_OWNER_MENU: {
         menuItems: [
             {
-                label: 'Copy Link',
+                label: 'Copy Profle Link',
                 action: copyPageLink,
             },
             {
@@ -101,8 +105,12 @@ export const menus = {
     PROFILE_MENU: {
         menuItems: [
             {
+                label: 'Copy Profle Link',
+                action: copyPageLink,
+            },
+            {
                 label: 'Send Message',
-                action: () => { const u = get(viewedUser); u && messageUser(u) },
+                action: () => { const u = get(viewedUser); u && u.id && messageUser(u.id) },
             },
             {
                 label: () => { const u = get(viewedUser); return (u && !u.requestedConnection) ? 'Send Connection Request' : 'Connection Request Sent' },
@@ -112,7 +120,7 @@ export const menus = {
             {
                 label: () => { const u = get(viewedUser); return (u && !u.reported) ? 'Report User' : 'User Reported' },
                 disabled: () => { const u = get(viewedUser); return u && u.reported },
-                action: () => { const u = get(viewedUser); u && reportUser(u) },
+                action: () => { const u = get(viewedUser); u && u.id && reportUser(u.id) },
                 disabled: true,
             },
         ],

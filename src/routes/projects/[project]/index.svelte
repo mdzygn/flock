@@ -478,7 +478,7 @@
 		position: absolute;
 
     	top: 16px;
-		right: 14px;
+    	right: 0px;
 
 		width: 28px;
 		height: 26px;
@@ -486,24 +486,24 @@
 	}
     .contentContainer :global(.optionsButton .icon) {
 		margin-top: 1px;
-		margin-left: 9px;
+    	margin-left: 4px;
 	}
 
     .contentContainer :global(.editButton) {
 		position: absolute;
 
 		top: 16px;
-		right: 52px;
+    	right: 41px;
 
 		width: 28px;
 		height: 26px;
-		padding: 8px;
+    	padding: 8px 6px;
 	}
 
     .contentContainer :global(.audienceButton) {
 		position: absolute;
 		top: 21px;
-		right: 92px;
+    	right: 84px;
 	}
 
     .overviewContent :global(.readMoreButton) {

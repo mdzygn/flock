@@ -34,7 +34,7 @@
 	.overlayMenu {
         display: inline-block;
 
-        padding: 6px 0;
+        padding: 8px 0;
         min-width: 230px;
 
         background-color: #ffffff;

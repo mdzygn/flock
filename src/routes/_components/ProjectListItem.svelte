@@ -9,6 +9,7 @@
 
     export let project;
     export let showLastActive = false;
+    export let showInfoIcons = true;
 
     $: thumbImage = getProjectHeaderImage($project);
 
@@ -29,7 +30,7 @@
             {/if}
         </div>
     </div>
-    {#if $project.following || $project.isOwner}
+    {#if ($project.following || $project.isOwner) && showInfoIcons}
         <div class="info">
             <Counter visible="{$project.unreadCount}" count="{$project.unreadCount}" hasNew="{true}" />
             <div class="followingIcon" style="background-image: url({FollowingSmallIcon})"></div>

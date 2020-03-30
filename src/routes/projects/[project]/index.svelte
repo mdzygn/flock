@@ -41,6 +41,7 @@
 		project,
 		projectReturnView,
 		projectShowingInfo,
+		getIsProjectOwner,
 	} from '../../../models/appModel';
 
 	import { getProjectHeaderImage, getProjectHasDetails, loadingProjects } from '../../../models/projectsModel';
@@ -96,14 +97,14 @@
 	let proxyLinksImage;
 	let proxySkillsImage;
 
-	$: isOwner = ($project && $project.isOwner) || false;
+	$: isOwner = getIsProjectOwner($project);
 	$: isNew = ($project && $project.isNew) || false;
 	$: following = ($project && $project.following) || false;
 	$: liked = ($project && $project.liked) || false;
 	$: isPublic = ($project && $project.public) || false;
 
-	$: canEdit = ($project && $project.isOwner && !$project.archived) || false;
-	$: isArchived = ($project && $project.archived) || false;
+	$: canEdit = (isOwner && !$project.archived) || false;
+	$: isArchived = (isOwner && $project && $project.archived) || false;
 
 	$: unreadMessageCount = ($project && $project.unreadMessageCount) || 0;
 	$: messageCount = ($project && $project.messageCount) || 0;

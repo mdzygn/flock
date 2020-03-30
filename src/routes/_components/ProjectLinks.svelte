@@ -3,16 +3,21 @@
 	import TagSet from './TagSet.svelte';
 
 	import PatreonButton from "../../assets/icons/patreon_button.png";
-	import GitHubButton from "../../assets/icons/github_button.png";
+    import GitHubButton from "../../assets/icons/github_button.png";
+
+    import {
+        getIsProjectOwner,
+    } from '../../models/appModel';
 
     export let project = null;
 
     const MAX_DISPLAYED_LINK_COUNT = 3;
 
     $: links = (project && project.links) || null;
-    $: isOwner = (project && project.isOwner) || false;
+    // $: isOwner = (project && project.isOwner) || false;
+    $: isOwner = getIsProjectOwner(project);
 
-	$: canEdit = (project && project.isOwner && !project.archived) || false;
+	$: canEdit = (isOwner && !project.archived) || false;
 
     $: areMoreItems = links && links.length > MAX_DISPLAYED_LINK_COUNT;
 

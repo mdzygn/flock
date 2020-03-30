@@ -5,6 +5,8 @@
 
     import { loadProject } from '../../actions/appActions';
 
+	import { getIsProjectOwner } from '../../models/appModel';
+
     import FollowingSmallIcon from "../../assets/icons/following_small.png";
 	import PrivateIcon from "../../assets/icons/private.png";
 
@@ -34,7 +36,7 @@
             {/if}
         </div>
     </div>
-    {#if ($project.following || $project.isOwner)}
+    {#if ($project.following || getIsProjectOwner($project))}
         <div class="info">
             {#if showPrivateIcon && isPrivate}
                 <div class="privateIcon" style="background-image: url({PrivateIcon})"></div>

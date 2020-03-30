@@ -8,16 +8,20 @@
 
     import { getUser } from '../../models/usersModel';
 
-	import { loadProfile } from '../../actions/appActions';
+    import { loadProfile } from '../../actions/appActions';
+
+    import {
+        getIsProjectOwner,
+    } from '../../models/appModel';
 
     export let project = null;
 
     const MAX_TEAM_MEMBERS = 10;
 
-	$: isOwner = (project && project.isOwner) || false;
+	$: isOwner = getIsProjectOwner(project);
     $: isNew = (project && project.isNew) || false;
 
-	$: canEdit = (project && project.isOwner && !project.archived) || false;
+	$: canEdit = (isOwner && !project.archived) || false;
 
 	$: teamMembers = (project && project.team) || null;
 

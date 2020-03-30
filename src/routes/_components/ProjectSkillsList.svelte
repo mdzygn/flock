@@ -2,12 +2,16 @@
 	import ContentPanel from './ContentPanel.svelte';
 	import TagSet from './TagSet.svelte';
 
+    import {
+        getIsProjectOwner,
+    } from '../../models/appModel';
+
     export let project = null;
 
     $: skills = (project && project.skills) || null;
-    $: isOwner = (project && project.isOwner) || false;
+    $: isOwner = getIsProjectOwner(project);
 
-	$: canEdit = (project && project.isOwner && !project.archived) || false;
+	$: canEdit = (isOwner && !project.archived) || false;
 
     $: areMoreItems = skills && skills.length > 0; // > MAX_PROJECT_PREVIEW_COUNT;
 </script>

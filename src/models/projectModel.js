@@ -28,7 +28,7 @@ const ProjectModel = (projectData) => {
         messageCount: 0,
 
         following: false,
-        isOwner: false,
+        // isOwner: false,
 
         location: null,
 

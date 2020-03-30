@@ -6,7 +6,7 @@ import { generateId } from '../utils';
 
 import config from '../config';
 
-import { locationMode } from '../models/appModel';
+import { locationMode, getIsProjectOwner } from '../models/appModel';
 
 import ProjectModel from '../models/projectModel';
 
@@ -189,7 +189,7 @@ export function updateMyProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return project.isOwner && !project.archived;
+			return getIsProjectOwner(project) && !project.archived;
 		});
 		// console.log('updateMyProjects: ', newProjects);
 		myProjects.set(newProjects);
@@ -200,7 +200,7 @@ export function updateMyPublicProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return project.isOwner && !project.archived && project.public;
+			return getIsProjectOwner(project) && !project.archived && project.public;
 		});
 		// console.log('updateMyPublicProjects: ', newProjects);
 		myPublicProjects.set(newProjects);
@@ -211,7 +211,7 @@ export function updateArchivedProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return project.isOwner && project.archived;
+			return getIsProjectOwner(project) && project.archived;
 		});
 		// console.log('updateArchivedProjects: ', newProjects);
 		archivedProjects.set(newProjects);
@@ -222,7 +222,7 @@ export function updateFollowingProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return project.following && !project.isOwner && !project.archived && project.public;
+			return project.following && !getIsProjectOwner(project) && !project.archived && project.public;
 		});
 		// console.log('updateFollowingProjects: ', newProjects);
 		followingProjects.set(newProjects);
@@ -233,7 +233,7 @@ export function updateOtherPublicProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return !project.following && !project.isOwner && !project.archived && project.public;
+			return !project.following && !getIsProjectOwner(project) && !project.archived && project.public;
 		});
 		// console.log('updateOtherPublicProjects: ', newProjects);
 		otherPublicProjects.set(newProjects);
@@ -292,7 +292,6 @@ export function addProject(projectDetails) {
 	newProjectModel.createdAt = (new Date()).getTime();
 	newProjectModel.lastActiveAt = newProjectModel.createdAt;
 
-    newProjectModel.isOwner = true;
 	newProjectModel.following = true;
 
 	newProjectModel.isNew = true;

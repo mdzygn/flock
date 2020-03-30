@@ -3,14 +3,14 @@
 
 	import { getMainSections, getIconForSection, getMainSectionForSegment, getMainSectionForRoute } from "../../models/sectionsModel.js";
 
-	import { project } from '../../models/appModel';
+	import { project, getIsProjectOwner } from '../../models/appModel';
 
 	import { setNavSection } from '../../actions/appActions';
 
 	export let segment;
 	export let path;
 
-	$: isFollowing = $project && ($project.following || $project.isOwner);
+	$: isFollowing = $project && ($project.following || getIsProjectOwner($project)); // $project.isOwner);
 
 	let mainSections = getMainSections();
 

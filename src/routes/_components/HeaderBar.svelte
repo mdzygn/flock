@@ -9,6 +9,7 @@
         conversation,
         viewedUser,
         user,
+        userId,
     } from '../../models/appModel';
 
 	import { loadProfile } from '../../actions/appActions';
@@ -62,7 +63,7 @@
 
     function loadMyProfile() {
         if (!isMyProfile) {
-            loadProfile('sl3p5oms'); // , {owner: true});
+            loadProfile($userId); // , {owner: true});
         }
     }
 </script>

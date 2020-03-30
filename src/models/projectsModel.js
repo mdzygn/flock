@@ -23,7 +23,7 @@ let myProjects = writable([]);
 let myPublicProjects = writable([]);
 let archivedProjects = writable([]);
 let followingProjects = writable([]);
-let otherProjects = writable([]);
+let otherPublicProjects = writable([]);
 let discoveryProjects = writable([]);
 
 onProjectsUpdated(projectsUpdated);
@@ -228,29 +228,29 @@ export function updateFollowingProjects() {
 		followingProjects.set(newProjects);
 	}
 }
-export function updateOtherProjects() {
+export function updateOtherPublicProjects() {
 	let newProjects = get(projects);
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
 			return !project.following && !project.isOwner && !project.archived && project.public;
 		});
-		// console.log('updateOtherProjects: ', newProjects);
-		otherProjects.set(newProjects);
+		// console.log('updateOtherPublicProjects: ', newProjects);
+		otherPublicProjects.set(newProjects);
 	}
 }
 export function updateDiscoveryProjects(updateDependencies) {
 	if (updateDependencies) {
 		updateMyPublicProjects();
 		updateFollowingProjects();
-		updateOtherProjects();
+		updateOtherPublicProjects();
 	}
 	const sourceMyPublicProjects = get(myPublicProjects);
 	if (sourceMyPublicProjects) {
 		const sourceFollowingProjects = get(followingProjects);
-		const sourceOtherProjects = get(otherProjects);
-		if (sourceFollowingProjects && sourceOtherProjects) {
-			let newProjects = [...sourceOtherProjects, ...sourceMyPublicProjects, ...sourceFollowingProjects];
+		const sourceOtherPublicProjects = get(otherPublicProjects);
+		if (sourceFollowingProjects && sourceOtherPublicProjects) {
+			let newProjects = [...sourceOtherPublicProjects, ...sourceMyPublicProjects, ...sourceFollowingProjects];
 
 			if (get(locationMode) === 'local') {
 				const testArrayCycleOffset = Math.min(4, newProjects.length - 1);
@@ -265,7 +265,7 @@ export function updateDiscoveryProjects(updateDependencies) {
 function projectsUpdated() {
 	updateMyProjects();
 	updateFollowingProjects();
-	updateOtherProjects();
+	updateOtherPublicProjects();
 	updateMyPublicProjects();
 	updateDiscoveryProjects();
 	updateArchivedProjects();

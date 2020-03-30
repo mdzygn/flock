@@ -21,7 +21,8 @@
 	import {
 		projectsSearchString,
 		displayingAllMyProjects,
-		displayingAllFollowingProjects
+		displayingAllFollowingProjects,
+		displayingArchivedProjects,
 	} from '../../models/appModel';
 
 	import { newProject, loadProject } from '../../actions/appActions';
@@ -37,6 +38,10 @@
 
 	function displayAllFollowingProjects() {
 		$displayingAllFollowingProjects = true;
+	}
+
+	function displayArchivedProjects() {
+		$displayingArchivedProjects = true;
 	}
 
 	let myProjects = writable([]);
@@ -83,7 +88,16 @@
 			<ContentLoader label="{locale.LOADING.FOLLOWING}" />
 		{:else}
 			<div class="projectsContent">
-				<ProjectList title="My Projects" projects="{filteredMyProjects}" showLastActive="{true}" displayLimit="{$displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllMyProjects}" {searchString} showIfNoProjects="{true}" hideShowMoreWithVisibility="{true}">
+				<ProjectList title="My Projects"
+					projects="{filteredMyProjects}"
+					{searchString}
+					showLastActive="{true}"
+					displayLimit="{$displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}"
+					showMoreAction="{$displayingAllMyProjects ? displayArchivedProjects : displayAllMyProjects}"
+					forceShowMoreShow="{$displayingAllMyProjects}"
+					showMoreLabel="{$displayingAllMyProjects ? locale.FOLLOWING_PROJECTS.BUTTON_ARCHIVED_PROJECTS : null}"
+					showIfNoProjects="{true}"
+					hideShowMoreWithVisibility="{true}">
 					{#if searchString}
 						<slot>No projects found matching "{searchString}"</slot>
 					{:else}

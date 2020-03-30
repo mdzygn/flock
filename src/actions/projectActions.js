@@ -132,11 +132,11 @@ export function archiveProject(projectId) {
     const targetProject = get(targetProjectModel);
 
     if (targetProject.isOwner) {
-        targetProject.archived = true;
+        const details = { archived: true };
+        targetProject.archived = details.archived;
         targetProjectModel.set(targetProject);
         checkUpdateProject(targetProject);
-
-        // TODO: unarchive in db
+        updateProject(targetProject, details);
     }
 }
 
@@ -145,11 +145,11 @@ export function unarchiveProject(projectId) {
     const targetProject = get(targetProjectModel);
 
     if (targetProject.isOwner) {
-        targetProject.archived = false;
+        const details = { archived: false };
+        targetProject.archived = details.archived;
         targetProjectModel.set(targetProject);
         checkUpdateProject(targetProject);
-
-        // TODO: unarchive in db
+        updateProject(targetProject, details);
     }
 }
 

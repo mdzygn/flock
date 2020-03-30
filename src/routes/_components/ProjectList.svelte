@@ -28,6 +28,8 @@
 
     export let hideShowMoreWithVisibility = false;
     export let showIfNoProjects = false;
+    export let forceShowMoreShow = false;
+    export let showMoreLabel = null;
 
     $: areMoreItems = displayLimit && $projects.length > displayLimit;
 
@@ -45,7 +47,7 @@
                 height: 154px;" />
         </Proxy> -->
 
-        <ContentPanel title="{title}" showMoreAction="{areMoreItems ? showMoreAction : false}" {hideShowMoreWithVisibility}>
+        <ContentPanel title="{title}" showMoreAction="{(areMoreItems || forceShowMoreShow) ? showMoreAction : false}" {hideShowMoreWithVisibility} {forceShowMoreShow} {showMoreLabel}>
 			{#if $loadingProjects && (!$projects || !$projects.length)}
 			    <ContentLoader label="{locale.LOADING.PROFILE_PROJECTS}" />
             {:else}

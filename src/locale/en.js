@@ -1,6 +1,12 @@
 const locale = {
+	GENERAL: {
+		SHOW_MORE: 'show more',
+	},
 	DISCOVER: {
 		NO_PROJECTS: 'no projects found',
+	},
+	FOLLOWING_PROJECTS: {
+		BUTTON_ARCHIVED_PROJECTS: 'archived projects',
 	},
 	NEW_PROJECT: {
 		TITLE: 'project name',

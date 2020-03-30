@@ -23,6 +23,8 @@ const appModel = createModel({
 
     displayingAllMyProjects: false,
     displayingAllFollowingProjects: false,
+    displayingArchivedProjects: false,
+
     projectsSearchString: '',
 }, {persist: true}, 'appState');
 
@@ -64,8 +66,10 @@ export const projectShowingInfo = appModel.projectShowingInfo;
 export const editingProject = appModel.editingProject;
 
 export const projectsSearchString = appModel.projectsSearchString;
+
 export const displayingAllMyProjects = appModel.displayingAllMyProjects;
 export const displayingAllFollowingProjects = appModel.displayingAllFollowingProjects;
+export const displayingArchivedProjects = appModel.displayingArchivedProjects;
 
 initApp();
 

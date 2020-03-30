@@ -1,4 +1,5 @@
 <script>
+    import locale from '../../locale';
     import Button from '../../components/Button.svelte';
 
     import EditIcon from "../../assets/icons/edit.png";
@@ -10,6 +11,10 @@
     export let showMoreAction = null;
 
     export let hideShowMoreWithVisibility = false;
+    export let forceShowMoreShow = false;
+    export let showMoreLabel = null;
+
+    $: curShowMoreLabel = showMoreLabel || locale.GENERAL.SHOW_MORE;//show more
 </script>
 
 <div class="contentPanel">
@@ -22,8 +27,8 @@
     <div class="panelContent">
         <slot></slot>
     </div>
-    {#if showMoreAction || hideShowMoreWithVisibility}
-        <Button className="showMoreButton {hideShowMoreWithVisibility && !showMoreAction ? 'hidden' : ''}" onClick="{showMoreAction && showMoreAction !== true ? showMoreAction : null}" disabled="{!showMoreAction || showMoreAction === true}">show more</Button>
+    {#if showMoreAction || hideShowMoreWithVisibility || forceShowMoreShow}
+        <Button className="showMoreButton {hideShowMoreWithVisibility && !showMoreAction && !forceShowMoreShow ? 'hidden' : ''}" onClick="{showMoreAction && showMoreAction !== true ? showMoreAction : null}" disabled="{!showMoreAction || showMoreAction === true}">{curShowMoreLabel}</Button>
     {/if}
 </div>
 

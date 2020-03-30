@@ -39,6 +39,28 @@ const prompts = {
             },
         ],
     },
+    PROJECT_ARCHIVED: {
+        title: 'Project Archived',
+        // title: 'Archive Project',
+        // message: 'Project Archived',
+        subMessage: 'No longer editable<br/>by team members<br/>or visible to any followers',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
+    PROJECT_UNARCHIVED: {
+        title: 'Project Unarchived',
+        // title: 'Unarchive Project',
+        // message: 'Project Unarchived',
+        subMessage: 'Now editable by team members<br/>and visible to any followers',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
     SHARE_PROJECT: {
         title: 'Share Project',
         message: 'Select copy link below to share this project with others',

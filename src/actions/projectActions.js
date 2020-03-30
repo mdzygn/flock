@@ -1,9 +1,13 @@
 import { get } from 'svelte/store';
+import { goto } from '@sapper/app';
+import { tick } from 'svelte';
+
 // import { DEBUG } from '../config';
 
 import { copyToClipboard } from '../utils';
 
-import { goto } from '@sapper/app';
+
+import promptIds from '../config/promptIds';
 
 import {
     addProject,
@@ -19,6 +23,7 @@ import {
 import {
     loadProject,
     showProjectInfo,
+    showPrompt,
 } from '../actions/appActions';
 
 function checkUpdateProject(targetProject) {
@@ -127,7 +132,7 @@ export function reportProject(projectId) {
     // TODO: report project
 }
 
-export function archiveProject(projectId) {
+export async function archiveProject(projectId) {
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
 
@@ -138,10 +143,13 @@ export function archiveProject(projectId) {
         checkUpdateProject(targetProject);
         updateProject(targetProject, details);
         resetScrollRegionPosition('project');
+
+        await tick();
+        showPrompt(promptIds.PROJECT_ARCHIVED);
     }
 }
 
-export function unarchiveProject(projectId) {
+export async function unarchiveProject(projectId) {
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
 
@@ -151,6 +159,9 @@ export function unarchiveProject(projectId) {
         targetProjectModel.set(targetProject);
         checkUpdateProject(targetProject);
         updateProject(targetProject, details);
+
+        await tick();
+        showPrompt(promptIds.PROJECT_UNARCHIVED);
     }
 }
 

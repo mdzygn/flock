@@ -1,6 +1,68 @@
 [
 	{
 	   "id":"bl20a8lm",
+	   "isAdmin":true,
+	   "fullName":"Sasha Holmer",
+	   "firstName":"Sasha",
+	   "username":"sashaholmer",
+	   "bio":"Design extrodinare with a passion for building wildlife sactuaries and apps in her spare time.<br/><br/><a href='#'>www.sashaholmer.com</a>",
+	   "skills":[
+		  "design",
+		  "interior design",
+		  "programming",
+		  "front-end programming",
+		  "architectural design",
+		  "3d modelling",
+		  "logo design",
+		  "writing"
+	   ],
+	   "avatarImage":null,
+	   "coverImage":null,
+	   "postsCount":24,
+	   "likesCount":35,
+	   "followsCount":32,
+	   "location":"Wellington, New Zealand",
+	   "projects":[
+		  "36bsf5gs",
+		  "s7djj2s2",
+		  "ma9l2h4h",
+		  "m2lmad9a"
+	   ]
+	},
+	{
+		"id":"sl3p5oms",
+	   "fullName":"Derrik Wells",
+	   "firstName":"Derrik",
+	   "username":"dwells",
+	   "bio":"Designer who loves connecting people.",
+	   "skills":[
+		  "architectural design",
+		  "3d modelling",
+		  "logo design",
+		  "game design",
+		  "lighting",
+		  "writing",
+		  "driving",
+		  "drafting",
+		  "matte painting"
+	   ],
+	   "avatarImage":null,
+	   "coverImage":false,
+	   "connected":false,
+	   "requestedConnection":false,
+	   "postsCount":12,
+	   "likesCount":25,
+	   "followsCount":27,
+	   "location":"Wellington, New Zealand",
+	   "projects":[
+		  "n4vh55hg",
+		  "msl30nhg",
+		  "ma9l2h4h",
+		  "m2lmad9a"
+	   ]
+	},
+	{
+		"id":"69snksd2",
 	   "fullName":"Aaron Nunez",
 	   "firstName":"Aaron",
 	   "username":"aaronnunez",
@@ -27,36 +89,6 @@
 	   "projects":[
 		  "n4vh55hg",
 		  "msl30nhg",
-		  "ma9l2h4h",
-		  "m2lmad9a"
-	   ]
-	},
-	{
-	   "id":"sl3p5oms",
-	   "isAdmin":true,
-	   "fullName":"Sasha Holmer",
-	   "firstName":"Sasha",
-	   "username":"sashaholmer",
-	   "bio":"Design extrodinare with a passion for building wildlife sactuaries and apps in her spare time.<br/><br/><a href='#'>www.sashaholmer.com</a>",
-	   "skills":[
-		  "design",
-		  "interior design",
-		  "programming",
-		  "front-end programming",
-		  "architectural design",
-		  "3d modelling",
-		  "logo design",
-		  "writing"
-	   ],
-	   "avatarImage":null,
-	   "coverImage":null,
-	   "postsCount":24,
-	   "likesCount":35,
-	   "followsCount":32,
-	   "location":"Wellington, New Zealand",
-	   "projects":[
-		  "36bsf5gs",
-		  "s7djj2s2",
 		  "ma9l2h4h",
 		  "m2lmad9a"
 	   ]
@@ -98,38 +130,6 @@
 	   "fullName":"Daisy Morgan",
 	   "firstName":"Daisy",
 	   "username":"daisymorgan",
-	   "bio":"Designer who loves connecting people.",
-	   "skills":[
-		  "architectural design",
-		  "3d modelling",
-		  "logo design",
-		  "game design",
-		  "lighting",
-		  "writing",
-		  "driving",
-		  "drafting",
-		  "matte painting"
-	   ],
-	   "avatarImage":null,
-	   "coverImage":false,
-	   "connected":false,
-	   "requestedConnection":false,
-	   "postsCount":12,
-	   "likesCount":25,
-	   "followsCount":27,
-	   "location":"Wellington, New Zealand",
-	   "projects":[
-		  "n4vh55hg",
-		  "msl30nhg",
-		  "ma9l2h4h",
-		  "m2lmad9a"
-	   ]
-	},
-	{
-	   "id":"69snksd2",
-	   "fullName":"Derrik Wells",
-	   "firstName":"Derrik",
-	   "username":"dwells",
 	   "bio":"Designer who loves connecting people.",
 	   "skills":[
 		  "architectural design",

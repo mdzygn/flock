@@ -124,7 +124,7 @@ export function getUserProjectsFromId(filteredProjects, projectIds, dontLoad) {
 	filteredProjects.set(projectItems);
 }
 
-export function getFilteredProjects(filteredProjects, projects, options) {
+export function getFilteredProjects(projects, options) { // filteredProjects
 	let searchString = (options && options.searchString) || null;
 	let limit = (options && options.limit) || 0;
 

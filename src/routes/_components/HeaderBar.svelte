@@ -34,7 +34,7 @@
 
     let sectionLabel = '';
     $: {
-        if (/\/projects\/.+/.test(path) && !/\/projects\/new/.test(path) && $project) {
+        if (/\/projects\/.+/.test(path) && !/\/projects\/new/.test(path) && !/\/projects\/archive/.test(path) && $project) {
             sectionLabel = $project.title;
         } else if (/\/profile\/.+/.test(path) && $viewedUser && !$viewedUser.isCurrentUser) {
             sectionLabel = $viewedUser.fullName;

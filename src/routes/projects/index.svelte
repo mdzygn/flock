@@ -1,6 +1,7 @@
 <script>
 	import locale from '../../locale';
 
+	import { goto } from '@sapper/app';
 	import { writable } from 'svelte/store';
 
 	import ScrollView from '../../components/ScrollView.svelte';
@@ -41,7 +42,8 @@
 	}
 
 	function displayArchivedProjects() {
-		$displayingArchivedProjects = true;
+		// $displayingArchivedProjects = true;
+		goto('projects/archive');
 	}
 
 	let myProjects = writable([]);
@@ -59,8 +61,8 @@
 
 	$: showArchivedButton = $displayingAllMyProjects || ($followingProjects && $filteredMyProjects.length < myProjectsLimit);
 
-	$: { $filteredMyProjects = getFilteredProjects(filteredMyProjects, $myProjects, { searchString, limit: myProjectsLimit }) }
-	$: { $filteredFollowingProjects = getFilteredProjects(filteredFollowingProjects, $followingProjects, { searchString, limit: followingProjectLimit }) }
+	$: { $filteredMyProjects = getFilteredProjects($myProjects, { searchString, limit: myProjectsLimit }) }
+	$: { $filteredFollowingProjects = getFilteredProjects($followingProjects, { searchString, limit: followingProjectLimit }) }
 
 </script>
 

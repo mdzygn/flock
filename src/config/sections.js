@@ -58,6 +58,12 @@ export const sections = [
 	},
 
 	{
+		path: '/projects/archive',
+		id: 'projectArchive',
+		label: 'Archived Projects',
+		showBack: true,
+	},
+	{
 		path: '/projects/.+/messages',
 		id: 'projectMessages',
 		label: 'Messages',

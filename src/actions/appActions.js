@@ -164,7 +164,7 @@ export function messageUser(userId) {
 
 function gotoRoute(newPath) {
     // console.log(getPagePath()+ ' !== /' + newPath + ' : ' + (getPagePath() !== '/' + newPath));
-    if (getPagePath() !== '/' + newPath) {
+    if (getPagePath() !== '/' + newPath && typeof window !== 'undefined') {
         goto(newPath);
         return true;
     }

@@ -30,8 +30,14 @@
 		project,
 	} from '../models/appModel';
 
+	import {
+		checkUser,
+	} from '../actions/userActions';
+
 	$: {
 		$curPath = $page.path;
+
+		checkUser($page.query);
 
 		const params = $page.params;
 		if (params) {

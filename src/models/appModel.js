@@ -10,6 +10,7 @@ const appModel = createModel({
     threadId: null,
     conversationId: null,
     profileId: null,
+    userId: 'bl20a8lm', // default user
 
     viewMode: 'discover',
     locationMode: 'global',
@@ -35,12 +36,14 @@ export const channelId = appModel.channelId;
 export const threadId = appModel.threadId;
 export const conversationId = appModel.conversationId;
 export const profileId = appModel.profileId;
+export const userId = appModel.userId;
 
 export const unsavedChanges = writable(false);
 
 export const project = writable(null);
 export const conversation = writable(null);
 export const viewedUser = writable(null);
+export const user = writable(null);
 
 export const targetProject = writable(null);
 export const targetUser = writable(null);

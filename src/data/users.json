@@ -1,35 +1,5 @@
 [
 	{
-	   "id":"sl3p5oms",
-	   "isCurrentUser":true,
-	   "fullName":"Sasha Holmer",
-	   "firstName":"Sasha",
-	   "username":"sashaholmer",
-	   "bio":"Design extrodinare with a passion for building wildlife sactuaries and apps in her spare time.<br/><br/><a href='#'>www.sashaholmer.com</a>",
-	   "skills":[
-		  "design",
-		  "interior design",
-		  "programming",
-		  "front-end programming",
-		  "architectural design",
-		  "3d modelling",
-		  "logo design",
-		  "writing"
-	   ],
-	   "avatarImage":null,
-	   "coverImage":null,
-	   "postsCount":24,
-	   "likesCount":35,
-	   "followsCount":32,
-	   "location":"Wellington, New Zealand",
-	   "projects":[
-		  "36bsf5gs",
-		  "s7djj2s2",
-		  "ma9l2h4h",
-		  "m2lmad9a"
-	   ]
-	},
-	{
 	   "id":"bl20a8lm",
 	   "fullName":"Aaron Nunez",
 	   "firstName":"Aaron",
@@ -57,6 +27,37 @@
 	   "projects":[
 		  "n4vh55hg",
 		  "msl30nhg",
+		  "ma9l2h4h",
+		  "m2lmad9a"
+	   ]
+	},
+	{
+	   "id":"sl3p5oms",
+	   "isCurrentUser":true,
+	   "isAdmin":true,
+	   "fullName":"Sasha Holmer",
+	   "firstName":"Sasha",
+	   "username":"sashaholmer",
+	   "bio":"Design extrodinare with a passion for building wildlife sactuaries and apps in her spare time.<br/><br/><a href='#'>www.sashaholmer.com</a>",
+	   "skills":[
+		  "design",
+		  "interior design",
+		  "programming",
+		  "front-end programming",
+		  "architectural design",
+		  "3d modelling",
+		  "logo design",
+		  "writing"
+	   ],
+	   "avatarImage":null,
+	   "coverImage":null,
+	   "postsCount":24,
+	   "likesCount":35,
+	   "followsCount":32,
+	   "location":"Wellington, New Zealand",
+	   "projects":[
+		  "36bsf5gs",
+		  "s7djj2s2",
 		  "ma9l2h4h",
 		  "m2lmad9a"
 	   ]

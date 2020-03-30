@@ -8,6 +8,7 @@
         project,
         conversation,
         viewedUser,
+        user,
     } from '../../models/appModel';
 
 	import { loadProfile } from '../../actions/appActions';
@@ -78,7 +79,7 @@
         {/if}
     {/if}
     <div class="avatarIcon" class:button="{!isMyProfile}" on:click="{loadMyProfile}">
-        <AvatarIcon />
+        <AvatarIcon user="{$user}" />
     </div>
 </div>
 

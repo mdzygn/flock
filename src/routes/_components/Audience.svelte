@@ -6,10 +6,11 @@
 
     export let isPublic = true;
     export let onClick = null;
+    export let disabled = false;
 </script>
 
 <div class="audienceButton">
-    <Button className="button" {onClick} icon="{isPublic ? PublicIcon : PrivateIcon}">{isPublic ? 'public' : 'private'}</Button>
+    <Button className="button" {onClick} {disabled} icon="{isPublic ? PublicIcon : PrivateIcon}">{isPublic ? 'public' : 'private'}</Button>
 </div>
 
 <style>

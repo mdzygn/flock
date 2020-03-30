@@ -12,6 +12,8 @@
     $: links = (project && project.links) || null;
     $: isOwner = (project && project.isOwner) || false;
 
+	$: canEdit = (project && project.isOwner && !project.archived) || false;
+
     $: areMoreItems = links && links.length > MAX_DISPLAYED_LINK_COUNT;
 
     function getUrlLabel(url) {
@@ -33,8 +35,8 @@
 </script>
 
 {#if links && links.length}
-    <div class="content" class:isEditable="{isOwner}">
-        <ContentPanel showEdit="{isOwner}" showMoreAction="{areMoreItems}">
+    <div class="content" class:isEditable="{canEdit}">
+        <ContentPanel showEdit="{canEdit}" showMoreAction="{areMoreItems}">
             {#each links as link, index}
                 {#if index < MAX_DISPLAYED_LINK_COUNT}
                     <div class="linkItem">

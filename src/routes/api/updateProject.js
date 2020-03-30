@@ -7,7 +7,7 @@ export async function post(req, res, next) {
 	const details = options.details;
 	const projectId = options.id;
 
-	//TODO: check allowed to modify project
+	//TODO: check allowed to modify project, isOwner, !archive, !deleted
 
 	const result = await db.collection('projects').updateOne({ id: projectId }, { $set: details } );
 

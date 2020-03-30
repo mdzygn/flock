@@ -13,7 +13,7 @@ import {
 
 import {
     project,
-    resetScrollRegionPosition
+    resetScrollRegionPosition,
 } from '../models/appModel';
 
 import {
@@ -137,6 +137,7 @@ export function archiveProject(projectId) {
         targetProjectModel.set(targetProject);
         checkUpdateProject(targetProject);
         updateProject(targetProject, details);
+        resetScrollRegionPosition('project');
     }
 }
 

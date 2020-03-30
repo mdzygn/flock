@@ -17,6 +17,8 @@
 	$: isOwner = (project && project.isOwner) || false;
     $: isNew = (project && project.isNew) || false;
 
+	$: canEdit = (project && project.isOwner && !project.archived) || false;
+
 	$: teamMembers = (project && project.team) || null;
 
     $: areMoreItems = teamMembers && teamMembers.length > MAX_TEAM_MEMBERS;
@@ -45,7 +47,7 @@
                 height: 56px;" />
         </Proxy> -->
 
-        <ContentPanel title="Team" showEdit="{isOwner}" showMoreAction="{areMoreItems}">
+        <ContentPanel title="Team" showEdit="{canEdit}" showMoreAction="{areMoreItems}">
             {#each teamMembers as teamMember, index}
                 {#if index < MAX_TEAM_MEMBERS}
                     <TeamMemberItem user="{getUser(teamMember)}" />

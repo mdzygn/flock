@@ -10,6 +10,7 @@
 
 	import ActionBar from '../../_components/ActionBar.svelte';
 	import ActionButton from '../../_components/ActionButton.svelte';
+	import ArchivedBar from '../../_components/ArchivedBar.svelte';
 	import Counter from '../../_components/Counter.svelte';
 	import Location from '../../_components/Location.svelte';
 	import Audience from '../../_components/Audience.svelte';
@@ -57,6 +58,7 @@
 		togglePublic,
 		projectToggleFollowing,
 		projectToggleLiked,
+		unarchiveProject,
 	} from '../../../actions/projectActions';
 
 	import Feed from './../../_components/Feed.svelte';
@@ -80,6 +82,10 @@
 		}
 	}
 
+	function unarchiveCurrentProject() {
+		unarchiveProject($projectId);
+	}
+
 	// let proxyHeaderImage;
 	// let proxyActionsImage;
 	let proxyOverviewImage;
@@ -93,6 +99,9 @@
 	$: following = ($project && $project.following) || false;
 	$: liked = ($project && $project.liked) || false;
 	$: isPublic = ($project && $project.public) || false;
+
+	$: canEdit = ($project && $project.isOwner && !$project.archived) || false;
+	$: isArchived = ($project && $project.archived) || false;
 
 	$: unreadMessageCount = ($project && $project.unreadMessageCount) || 0;
 	$: messageCount = ($project && $project.messageCount) || 0;
@@ -175,11 +184,11 @@
 	<title>World Creator - Flock</title>
 </svelte:head>
 
-<div class="pageContent">
+<div class="pageContent" class:archived="{!canEdit}">
 	{#if $loadingProjects && (!$project || $project.id !== $projectId ) }
 		<ContentLoader label="{locale.LOADING.PROJECT}" />
 	{:else}
-		<ScrollView id="project" headerStartHidden="{true}">
+		<ScrollView id="project" headerStartHidden="{!isArchived}">
 			<div class="content">
 				<div class="contentItem" class:collapsedOptions="{$projectReturnView && !showInfo}" class:collapsedHeader="{$projectReturnView && !showInfo && !isNew}">
 					<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$projectReturnView}" alt="project header image" />
@@ -301,8 +310,8 @@
 						<div class="contentContainer">
 							<Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProjectOptions}"></Button>
 							{#if isOwner}
-								<Button className="editButton" onClick="{() => editProjectDetails({editingProject: true})}" icon="{EditIcon}"></Button>
-								<Audience {isPublic} onClick="{togglePublic}" />
+								<Button className="editButton" onClick="{() => editProjectDetails({editingProject: true})}" icon="{EditIcon}" disabled="{!canEdit}"></Button>
+								<Audience {isPublic} onClick="{togglePublic}" disabled="{!canEdit}" />
 							{/if}
 							<div class="itemContent">
 								<div class="header" class:headerOwner="{isOwner}">{projectTitle}</div>
@@ -375,13 +384,13 @@
 					<ProjectLinks project="{$project}" />
 					<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
 					<ProjectSkillsList project="{$project}" />
-					<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
-					{#if isOwner}
+					<Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" />
+					{#if canEdit}
 						<NewPostButton type="project_post_update" />
 					{/if}
 				{:else if $projectReturnView}
-					<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
-					{#if isOwner}
+					<Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" />
+					{#if canEdit}
 						<NewPostButton type="project_post_update" />
 					{/if}
 					<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
@@ -390,11 +399,11 @@
 					<ProjectSkillsList project="{$project}" />
 					<ProjectTeamList project="{$project}" />
 					<div>
-						<Proxy image="project_post_1" className="contentItem" />
-						<Proxy image="project_post_2" className="contentItem" />
-						<Proxy image="project_post_3" className="contentItem" />
+						<Proxy image="project_post_1" className="contentItem projectPost" />
+						<Proxy image="project_post_2" className="contentItem projectPost" />
+						<Proxy image="project_post_3" className="contentItem projectPost" />
 					</div>
-					{#if isOwner}
+					{#if canEdit}
 						<NewPostButton type="project_post_update" />
 					{/if}
 				{:else}
@@ -403,38 +412,42 @@
 					<ProjectSkillsList project="{$project}" />
 					<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
 					<ProjectLinks project="{$project}" />
-					<Proxy image="{proxyChannelsImage}" className="contentItem" onClick="{e => loadChannel('7m2ldksm')}" />
+					<Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" />
 					<div id="post" />
 					<div>
-						<Proxy image="project_post_1" className="contentItem" />
-						<Proxy image="project_post_2" className="contentItem" />
-						<Proxy image="project_post_3" className="contentItem" />
+						<Proxy image="project_post_1" className="contentItem projectPost" />
+						<Proxy image="project_post_2" className="contentItem projectPost" />
+						<Proxy image="project_post_3" className="contentItem projectPost" />
 					</div>
 				{/if}
 			</div>
 
 			<div slot="scrollHeader">
-				{#if isOwner}
-					<ActionBar targetItemId="{$projectId}" targetItem="{$project}">
-						<div slot="buttonMiddle">
-							<ActionButton
-								label = "followers"
-
-								icon = "{FollowSelectedIcon}"
-
-								targetItem = "{$project}"
-								targetItemId = "{$projectId}"
-								action = "{showProjectFollowers}"
-
-								countProperty= "followCount"
-
-								buttonContentStyle = "padding-right: 56px;"
-								iconStyle = "padding-bottom: 4px"
-							/>
-						</div>
-					</ActionBar>
+				{#if isArchived}
+					<ArchivedBar onClick="{unarchiveCurrentProject}"/>
 				{:else}
-					<ActionBar targetItemId="{$projectId}" targetItem="{$project}" />
+					{#if isOwner}
+						<ActionBar targetItemId="{$projectId}" targetItem="{$project}">
+							<div slot="buttonMiddle">
+								<ActionButton
+									label = "followers"
+
+									icon = "{FollowSelectedIcon}"
+
+									targetItem = "{$project}"
+									targetItemId = "{$projectId}"
+									action = "{showProjectFollowers}"
+
+									countProperty= "followCount"
+
+									buttonContentStyle = "padding-right: 56px;"
+									iconStyle = "padding-bottom: 4px"
+								/>
+							</div>
+						</ActionBar>
+					{:else}
+						<ActionBar targetItemId="{$projectId}" targetItem="{$project}" />
+					{/if}
 				{/if}
 			</div>
 		</ScrollView>
@@ -477,6 +490,9 @@
 	.overviewContent {
 		position: relative;
 		background-color: #ffffff;
+	}
+	.archived .overviewContent {
+    	background-color: #eeeeee;
 	}
 
     .contentContainer :global(.optionsButton) {
@@ -768,5 +784,16 @@
 	.projectActions :global(.ownerLocation) {
 		padding-bottom: 14px;
 		margin-top: -37px;
+	}
+
+	.archived :global(.contentPanel) {
+    	background-color: #eeeeee;
+	}
+
+	.archived :global(.channelsItem) {
+    	opacity: 0.75;
+	}
+	.archived :global(.projectPost) {
+    	opacity: 0.5;
 	}
 </style>

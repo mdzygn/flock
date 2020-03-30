@@ -57,7 +57,7 @@
 	.overlayPrompt {
         display: inline-block;
 
-        width: 240px;
+        width: 250px;
 
         background-color: #ffffff;
         border-radius: 5px;

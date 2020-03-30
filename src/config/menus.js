@@ -42,6 +42,7 @@ export const menus = {
         menuItems: [
             {
                 label: 'Copy Project Link',
+                condition: () => { const p = get(project); return !p.archived },
                 action: () => { const p = get(project); p && p.id && copyProjectLink(p.id) },
             },
             {
@@ -51,7 +52,7 @@ export const menus = {
             },
             {
                 label: 'Make Private',
-                condition: () => { const p = get(project); return p && p.public },
+                condition: () => { const p = get(project); return p && p.public && !p.archived },
                 action: makePrivate,
             },
             {

@@ -21,6 +21,7 @@
 
 	import {
 		projectsSearchString,
+		projectsArchiveSearchString,
 		displayingAllMyProjects,
 		displayingAllFollowingProjects,
 	} from '../../models/appModel';
@@ -41,6 +42,9 @@
 	}
 
 	function displayArchivedProjects() {
+		if ($projectsSearchString) {
+			$projectsArchiveSearchString = $projectsSearchString;
+		}
 		goto('projects/archive');
 	}
 

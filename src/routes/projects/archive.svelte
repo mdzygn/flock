@@ -16,7 +16,10 @@
 
     import AddProjectIcon from "../../assets/icons/add_project.png";
 
-	import { getMyProjects, getFilteredProjects, loadingProjects } from '../../models/projectsModel';
+	import {
+		getArchivedProjects,
+		getFilteredProjects,
+	} from '../../models/projectsModel';
 
 	import {
 		projectsArchiveSearchString,
@@ -27,7 +30,7 @@
 	let archivedProjects = writable([]);
 	let filteredArchivedProjects = writable([]);
 
-	$: { archivedProjects = getMyProjects() }
+	$: { archivedProjects = getArchivedProjects() }
 	$: { $filteredArchivedProjects = getFilteredProjects($archivedProjects, { searchString }) }
 
 </script>

@@ -20,6 +20,7 @@ let tempProjectsUpdatedHandlers = [];
 
 let projects = writable([]);
 let myProjects = writable([]);
+let archivedProjects = writable([]);
 let followingProjects = writable([]);
 let otherProjects = writable([]);
 let discoveryProjects = writable([]);
@@ -164,6 +165,12 @@ export function getMyProjects() {
 	return myProjects;
 }
 
+export function getArchivedProjects() {
+	updateArchivedProjects();
+	loadProjects();
+	return archivedProjects;
+}
+
 export function getFollowingProjects() {
 	updateFollowingProjects();
 	loadProjects();
@@ -181,10 +188,21 @@ export function updateMyProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return project.isOwner;
+			return project.isOwner && !project.archived;
 		});
 		// console.log('updateMyProjects: ', newProjects);
 		myProjects.set(newProjects);
+	}
+}
+export function updateArchivedProjects() {
+	let newProjects = get(projects);
+	if (newProjects) {
+		newProjects = newProjects.filter(projectModel => {
+			const project = get(projectModel);
+			return project.isOwner && project.archived;
+		});
+		// console.log('updateArchivedProjects: ', newProjects);
+		archivedProjects.set(newProjects);
 	}
 }
 export function updateFollowingProjects() {
@@ -192,7 +210,7 @@ export function updateFollowingProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return project.following && !project.isOwner;
+			return project.following && !project.isOwner && !project.archived && project.public;
 		});
 		// console.log('updateFollowingProjects: ', newProjects);
 		followingProjects.set(newProjects);
@@ -203,7 +221,7 @@ export function updateOtherProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return !project.following && !project.isOwner;
+			return !project.following && !project.isOwner && !project.archived && project.public;
 		});
 		// console.log('updateOtherProjects: ', newProjects);
 		otherProjects.set(newProjects);
@@ -237,6 +255,7 @@ function projectsUpdated() {
 	updateFollowingProjects();
 	updateOtherProjects();
 	updateDiscoveryProjects();
+	updateArchivedProjects();
 }
 
 export function addProject(projectDetails) {

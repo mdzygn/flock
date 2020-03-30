@@ -23,7 +23,6 @@
 		projectsSearchString,
 		displayingAllMyProjects,
 		displayingAllFollowingProjects,
-		displayingArchivedProjects,
 	} from '../../models/appModel';
 
 	import { newProject, loadProject } from '../../actions/appActions';
@@ -42,7 +41,6 @@
 	}
 
 	function displayArchivedProjects() {
-		// $displayingArchivedProjects = true;
 		goto('projects/archive');
 	}
 
@@ -95,40 +93,30 @@
 			<ContentLoader label="{locale.LOADING.FOLLOWING}" />
 		{:else}
 			<div class="projectsContent">
-				{#if !$displayingArchivedProjects}
-					<ProjectList title="My Projects"
-						projects="{filteredMyProjects}"
-						{searchString}
-						showLastActive="{true}"
-						displayLimit="{$displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}"
-						showMoreAction="{showArchivedButton ? displayArchivedProjects : displayAllMyProjects}"
-						forceShowMoreShow="{showArchivedButton}"
-						showMoreLabel="{showArchivedButton ? locale.FOLLOWING_PROJECTS.BUTTON_ARCHIVED_PROJECTS : null}"
-						showIfNoProjects="{true}"
-						hideShowMoreWithVisibility="{true}">
-						{#if searchString}
-							<slot>No projects found matching "{searchString}"</slot>
-						{:else}
-							<slot>You have not shared any projects<br/>Create a <a href="projects/new">New Project</a></slot>
-						{/if}
-					</ProjectList>
-					<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">new project</Button>
-					<ProjectList title="Following" className="followingProjects" projects="{filteredFollowingProjects}" showLastActive="{true}" displayLimit="{$displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} showIfNoProjects="{true}">
-						{#if searchString}
-							<slot>No followed projects matching "{searchString}"</slot>
-						{:else}
-							<slot>You aren't following any projects<br/><a href="discover">Discover</a> inspiring projects to follow</slot>
-						{/if}
-					</ProjectList>
-				{:else}
-					<ProjectList title="Archived Projects" projects="{filteredFollowingProjects}" showLastActive="{true}" {searchString} showIfNoProjects="{true}">
-						{#if searchString}
-							<slot>No archived projects matching "{searchString}"</slot>
-						{:else}
-							<slot>You have not archived any projects</slot>
-						{/if}
-					</ProjectList>
-				{/if}
+				<ProjectList title="My Projects"
+					projects="{filteredMyProjects}"
+					{searchString}
+					showLastActive="{true}"
+					displayLimit="{$displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}"
+					showMoreAction="{showArchivedButton ? displayArchivedProjects : displayAllMyProjects}"
+					forceShowMoreShow="{showArchivedButton}"
+					showMoreLabel="{showArchivedButton ? locale.FOLLOWING_PROJECTS.BUTTON_ARCHIVED_PROJECTS : null}"
+					showIfNoProjects="{true}"
+					hideShowMoreWithVisibility="{true}">
+					{#if searchString}
+						<slot>No projects found matching "{searchString}"</slot>
+					{:else}
+						<slot>You have not shared any projects<br/>Create a <a href="projects/new">New Project</a></slot>
+					{/if}
+				</ProjectList>
+				<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">new project</Button>
+				<ProjectList title="Following" className="followingProjects" projects="{filteredFollowingProjects}" showLastActive="{true}" displayLimit="{$displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} showIfNoProjects="{true}">
+					{#if searchString}
+						<slot>No followed projects matching "{searchString}"</slot>
+					{:else}
+						<slot>You aren't following any projects<br/><a href="discover">Discover</a> inspiring projects to follow</slot>
+					{/if}
+				</ProjectList>
 			</div>
 		{/if}
 	</ScrollView>

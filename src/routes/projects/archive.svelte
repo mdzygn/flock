@@ -19,10 +19,10 @@
 	import { getMyProjects, getFilteredProjects, loadingProjects } from '../../models/projectsModel';
 
 	import {
-		projectsSearchString,
+		projectsArchiveSearchString,
 	} from '../../models/appModel';
 
-	$: searchString = $projectsSearchString;
+	$: searchString = $projectsArchiveSearchString;
 
 	let archivedProjects = writable([]);
 	let filteredArchivedProjects = writable([]);
@@ -38,7 +38,7 @@
 
 <div class="content">
 	<ScrollView id="projects">
-		<SearchBar bind:searchString={$projectsSearchString} />
+		<SearchBar bind:searchString={$projectsArchiveSearchString} />
 		<ProjectList title="{null}" projects="{filteredArchivedProjects}" {searchString} showIfNoProjects="{true}"> <!--  title="Archived Projects" -->
 			{#if searchString}
 				<slot>No archived projects matching "{searchString}"</slot>

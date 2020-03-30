@@ -6,7 +6,7 @@ import { generateId } from '../utils';
 
 import config from '../config';
 
-import { locationMode, getIsProjectOwner } from '../models/appModel';
+import { locationMode, getIsProjectOwner, userId } from '../models/appModel';
 
 import ProjectModel from '../models/projectModel';
 
@@ -292,6 +292,7 @@ export function addProject(projectDetails) {
 	newProjectModel.createdAt = (new Date()).getTime();
 	newProjectModel.lastActiveAt = newProjectModel.createdAt;
 
+	newProjectModel.owner = get(userId);
 	newProjectModel.following = true;
 
 	newProjectModel.isNew = true;

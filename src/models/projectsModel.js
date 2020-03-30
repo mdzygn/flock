@@ -26,6 +26,10 @@ let followingProjects = writable([]);
 let otherPublicProjects = writable([]);
 let discoveryProjects = writable([]);
 
+locationMode.subscribe(() => {
+	updateDiscoveryProjects(true);
+});
+
 onProjectsUpdated(projectsUpdated);
 
 // let projects = [];
@@ -245,19 +249,30 @@ export function updateDiscoveryProjects(updateDependencies) {
 		updateFollowingProjects();
 		updateOtherPublicProjects();
 	}
-	const sourceMyPublicProjects = get(myPublicProjects);
+	let sourceMyPublicProjects = get(myPublicProjects);
 	if (sourceMyPublicProjects) {
-		const sourceFollowingProjects = get(followingProjects);
-		const sourceOtherPublicProjects = get(otherPublicProjects);
+		let sourceFollowingProjects = get(followingProjects);
+		let sourceOtherPublicProjects = get(otherPublicProjects);
 		if (sourceFollowingProjects && sourceOtherPublicProjects) {
+			if (get(locationMode) !== 'local') {
+				sourceOtherPublicProjects = [...sourceOtherPublicProjects].reverse();
+				sourceMyPublicProjects = [...sourceMyPublicProjects].reverse();
+				sourceFollowingProjects = [...sourceFollowingProjects].reverse();
+			}
+
 			let newProjects = [...sourceOtherPublicProjects, ...sourceMyPublicProjects, ...sourceFollowingProjects];
 
-			if (get(locationMode) === 'local') {
-				const testArrayCycleOffset = Math.min(4, newProjects.length - 1);
-				newProjects = newProjects.slice(testArrayCycleOffset, newProjects.length).concat(newProjects.slice(0, testArrayCycleOffset));
-			}
-			// console.log('updateDiscoveryProjects: ', newProjects);
+			// if (get(locationMode) === 'local') {
+			// 	const testArrayCycleOffset = Math.min(4, newProjects.length - 1);
+			// 	newProjects = newProjects.slice(testArrayCycleOffset, newProjects.length).concat(newProjects.slice(0, testArrayCycleOffset));
+			// }
+
+			// if (get(locationMode) === 'local') {
+			// 	newProjects = newProjects.reverse();
+			// }
+
 			discoveryProjects.set(newProjects);
+			// console.log('updateDiscoveryProjects: ', newProjects);
 		}
 	}
 }

@@ -18,16 +18,21 @@
     import { viewedUser } from '../../models/appModel';
 
     import {
+        getIsCurrentUser,
+    } from '../../models/appModel';
+
+    import {
         showLikes,
         messageUser,
         showMenu,
-    } from '../../actions/appActions';
+    } from '../../actions/appActions'
 
 	import { requestConnection } from '../../actions/userActions';
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
 	$: connected = ($viewedUser && $viewedUser.connected) || false;
-    $: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
+    $: isCurrentUser = getIsCurrentUser($viewedUser && $viewedUser.id);
+    // $: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
 
     $: showConnect = !requestedConnection && !connected;
 

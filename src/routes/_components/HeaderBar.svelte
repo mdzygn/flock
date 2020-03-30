@@ -10,6 +10,7 @@
         viewedUser,
         user,
         userId,
+        getIsCurrentUser,
     } from '../../models/appModel';
 
 	import { loadProfile } from '../../actions/appActions';
@@ -20,9 +21,14 @@
     export let segment;
     export let path;
 
+    $: isCurrentUser = getIsCurrentUser($viewedUser && $viewedUser.id);
+
+    $: console.log(isCurrentUser +' , ' + getIsCurrentUser($viewedUser && $viewedUser.id) + ',' + $viewedUser +' && ' + viewedUser.id);
+
     $: appState = {
         viewMode: $viewMode,
-        viewingOwnProfile: $viewedUser ? $viewedUser.isCurrentUser : false,
+        viewingOwnProfile: isCurrentUser,
+        // viewingOwnProfile: $viewedUser ? $viewedUser.isCurrentUser : false,
     };
 
     $: curSection = getSectionByPath(path, appState);
@@ -38,7 +44,7 @@
     $: {
         if (/\/projects\/.+/.test(path) && !/\/projects\/new/.test(path) && !/\/projects\/archive/.test(path) && $project) {
             sectionLabel = $project.title;
-        } else if (/\/profile\/.+/.test(path) && $viewedUser && !$viewedUser.isCurrentUser) {
+        } else if (/\/profile\/.+/.test(path) && !isCurrentUser) {//$viewedUser && !$viewedUser.isCurrentUser) {
             sectionLabel = $viewedUser.fullName;
         } else if (/\/messages\/.+/.test(path) && $conversation && ($conversation.user || $conversation.project)) {
             if ($conversation.project && $project) { // // temporary

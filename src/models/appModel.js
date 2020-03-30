@@ -127,4 +127,10 @@ export function resetScrollRegionPosition(id) {
 //     }
 // }
 
+
+export function getIsCurrentUser(targetUserId) {
+    const curUserId = get(userId);
+	return (targetUserId === curUserId);
+}
+
 export default appModel;

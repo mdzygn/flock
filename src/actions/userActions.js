@@ -51,14 +51,14 @@ export function setUser(targetUserId) {
     if (curUser) {
         userId.set(targetUserId);
         user.set(curUser);
-        console.log(get(user));
+        // console.log(get(user));
     }
 }
 
 export function checkUser(query) {
     if (query && query.admin !== undefined) {
         setUser(config.MAIN_USER);
-    } else if (query && query.xadmin !== undefined) {
+    } else if (query && query.x !== undefined) {
         setUser(config.GENERAL_USER);
     } else if (get(userId) && !get(user)) {
         setUser(get(userId));

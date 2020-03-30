@@ -21,10 +21,15 @@
 
 	import { requestConnection } from '../../../actions/userActions';
 
+    import {
+        getIsCurrentUser,
+	} from '../../../models/appModel';
+
 	$: userId = ($viewedUser && $viewedUser.id) || null;
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
-	$: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
+    $: isCurrentUser = getIsCurrentUser($viewedUser && $viewedUser.id);
+	// $: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
 
 	$: skills = ($viewedUser && $viewedUser.skills) || null;
 	$: projectIds = ($viewedUser && $viewedUser.projects) || null;

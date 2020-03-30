@@ -60,7 +60,7 @@ export function projectToggleLiked(projectId) {
     }
 }
 
-export function makePublic() {
+export async function makePublic() {
     const curProject = get(project);
     if (curProject) {
         updateProject(curProject, {
@@ -68,32 +68,38 @@ export function makePublic() {
             isNew: false,
         });
         project.set(curProject);
+
+        await tick();
+        showPrompt(promptIds.MAKE_PUBLIC_COMPLETE);
     }
 }
 
-export function makePrivate() {
+export async function makePrivate() {
     const curProject = get(project);
     if (curProject) {
         updateProject(curProject, {
             public: false,
         });
         project.set(curProject);
+
+        await tick();
+        showPrompt(promptIds.MAKE_PRIVATE_COMPLETE);
     }
 }
 
-export function togglePublic() {
-    const curProject = get(project);
-    if (curProject) {
-        const details = {
-            public: !curProject.public,
-        }
-        if (details.public) {
-            details.isNew = false;
-        }
-        updateProject(curProject, details);
-        project.set(curProject);
-    }
-}
+// export async function togglePublic() {
+//     const curProject = get(project);
+//     if (curProject) {
+//         const details = {
+//             public: !curProject.public,
+//         }
+//         if (details.public) {
+//             details.isNew = false;
+//         }
+//         updateProject(curProject, details);
+//         project.set(curProject);
+//     }
+// }
 
 export function saveProjectDetails(projectDetails, options) {
     const curProject = get(project);

@@ -20,6 +20,7 @@ let tempProjectsUpdatedHandlers = [];
 
 let projects = writable([]);
 let myProjects = writable([]);
+let myPublicProjects = writable([]);
 let archivedProjects = writable([]);
 let followingProjects = writable([]);
 let otherProjects = writable([]);
@@ -194,6 +195,17 @@ export function updateMyProjects() {
 		myProjects.set(newProjects);
 	}
 }
+export function updateMyPublicProjects() {
+	let newProjects = get(projects);
+	if (newProjects) {
+		newProjects = newProjects.filter(projectModel => {
+			const project = get(projectModel);
+			return project.isOwner && !project.archived && project.public;
+		});
+		// console.log('updateMyPublicProjects: ', newProjects);
+		myPublicProjects.set(newProjects);
+	}
+}
 export function updateArchivedProjects() {
 	let newProjects = get(projects);
 	if (newProjects) {
@@ -229,16 +241,16 @@ export function updateOtherProjects() {
 }
 export function updateDiscoveryProjects(updateDependencies) {
 	if (updateDependencies) {
-		updateMyProjects();
+		updateMyPublicProjects();
 		updateFollowingProjects();
 		updateOtherProjects();
 	}
-	const sourceMyProjects = get(myProjects);
-	if (sourceMyProjects) {
+	const sourceMyPublicProjects = get(myPublicProjects);
+	if (sourceMyPublicProjects) {
 		const sourceFollowingProjects = get(followingProjects);
 		const sourceOtherProjects = get(otherProjects);
 		if (sourceFollowingProjects && sourceOtherProjects) {
-			let newProjects = [...sourceOtherProjects, ...sourceMyProjects, ...sourceFollowingProjects];
+			let newProjects = [...sourceOtherProjects, ...sourceMyPublicProjects, ...sourceFollowingProjects];
 
 			if (get(locationMode) === 'local') {
 				const testArrayCycleOffset = Math.min(4, newProjects.length - 1);
@@ -254,6 +266,7 @@ function projectsUpdated() {
 	updateMyProjects();
 	updateFollowingProjects();
 	updateOtherProjects();
+	updateMyPublicProjects();
 	updateDiscoveryProjects();
 	updateArchivedProjects();
 }

@@ -64,10 +64,53 @@ const prompts = {
         ],
     },
 
+    MAKE_PUBLIC: {
+        title: 'Make Public',
+        message: 'Make this project public?',
+        subMessage: 'It can then be discovered, followed and shared with others outside the team',
+        menuItems: [
+            {
+                label: 'Make Public',
+                action: makePublic,
+                default: true,
+            },
+            {
+                label: 'Cancel',
+            },
+        ],
+    },
+    MAKE_PUBLIC_COMPLETE: {
+        title: 'Project Live!',
+        subMessage: 'Your project is now discoverable<br/>and sharable with others!',
+        menuItems: [
+            {
+                label: 'Copy Link',
+                action: () => { const p = get(project); p && p.id && copyProjectLink(p.id); showPrompt(promptIds.MAKE_PUBLIC_COMPLETE_COPIED); },
+                default: true,
+            },
+            {
+                label: 'Ok',
+            },
+        ],
+    },
+    MAKE_PUBLIC_COMPLETE_COPIED: {
+        title: 'Project Live!',
+        subMessage: 'Your project is now discoverable<br/>and sharable with others!',
+        menuItems: [
+            {
+                label: 'Link Copied',
+                disabled: true,
+            },
+            {
+                label: 'Ok',
+            },
+        ],
+    },
+
     MAKE_PRIVATE: {
         title: 'Make Private',
         message: 'Make this project private?',
-        subMessage: 'It will no longer be visible<br/>to members outside the team',
+        subMessage: 'It will no longer be visible<br/>to followers and others outside the team',
         menuItems: [
             {
                 label: 'Make Private',
@@ -79,18 +122,12 @@ const prompts = {
             },
         ],
     },
-    MAKE_PUBLIC: {
-        title: 'Make Public',
-        message: 'Make this project public?',
-        subMessage: 'It can then be discovered by other users and shared with members outside the team',
+    MAKE_PRIVATE_COMPLETE: {
+        title: 'Make Private',
+        subMessage: 'Project no longer visible<br/>to followers and non-team members',
         menuItems: [
             {
-                label: 'Make Public',
-                action: makePublic,
-                default: true,
-            },
-            {
-                label: 'Cancel',
+                label: 'Ok',
             },
         ],
     },

@@ -95,7 +95,7 @@
 					height: 47px;" />
 			{:else}
 				<!-- Request Connect -->
-				<Hotspot onClick="{e => requestConnection('l40smlp3')}" style="
+				<Hotspot onClick="{e => requestConnection(userId)}" style="
 					left: 0px;
 					top: 0px;
 					width: 122px;

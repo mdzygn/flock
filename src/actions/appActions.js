@@ -239,3 +239,14 @@ export function showShareProfileDialog(userId) {
 
     showPrompt(promptIds.SHARE_PROFILE);
 }
+
+export function showTogglePublicDialog() {
+    const curProject = get(project);
+    if (curProject) {
+        if (!curProject.public) {
+            showPrompt(promptIds.MAKE_PUBLIC);
+        } else {
+            showPrompt(promptIds.MAKE_PRIVATE);
+        }
+    }
+}

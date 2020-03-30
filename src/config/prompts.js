@@ -15,6 +15,8 @@ import {
 import {
     archiveProject,
     copyProjectLink,
+    makePublic,
+    makePrivate,
 } from '../actions/projectActions';
 
 import {
@@ -61,6 +63,38 @@ const prompts = {
             },
         ],
     },
+
+    MAKE_PRIVATE: {
+        title: 'Make Private',
+        message: 'Make this project private?',
+        subMessage: 'It will no longer be visible<br/>to members outside the team',
+        menuItems: [
+            {
+                label: 'Make Private',
+                action: makePrivate,
+                default: true,
+            },
+            {
+                label: 'Cancel',
+            },
+        ],
+    },
+    MAKE_PUBLIC: {
+        title: 'Make Public',
+        message: 'Make this project public?',
+        subMessage: 'It can then be discovered by other users and shared with members outside the team',
+        menuItems: [
+            {
+                label: 'Make Public',
+                action: makePublic,
+                default: true,
+            },
+            {
+                label: 'Cancel',
+            },
+        ],
+    },
+
     SHARE_PROJECT: {
         title: 'Share Project',
         message: 'Select copy link below to share this project with others',

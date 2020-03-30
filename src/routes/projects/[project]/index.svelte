@@ -28,7 +28,10 @@
     import LikeIcon from "../../../assets/icons/like.png";
     import LikeSelectedIcon from "../../../assets/icons/like_selected.png";
     import FollowIcon from "../../../assets/icons/follow.png";
-    import FollowSelectedIcon from "../../../assets/icons/follow_selected.png";
+	import FollowSelectedIcon from "../../../assets/icons/follow_selected.png";
+
+    import LikesIcon from "../../../assets/icons/likes.png";
+    import FollowerIcon from "../../../assets/icons/followers.png";
 
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
@@ -51,11 +54,10 @@
 		toggleProjectInfo,
 		showProjectFollowers,
 		showMenu,
+		showTogglePublicDialog,
 	} from '../../../actions/appActions';
 
 	import {
-		makePublic,
-		togglePublic,
 		projectToggleFollowing,
 		projectToggleLiked,
 		unarchiveProject,
@@ -184,7 +186,7 @@
 	<title>World Creator - Flock</title>
 </svelte:head>
 
-<div class="pageContent" class:archived="{!canEdit}">
+<div class="pageContent" class:archived="{isArchived}">
 	{#if $loadingProjects && (!$project || $project.id !== $projectId ) }
 		<ContentLoader label="{locale.LOADING.PROJECT}" />
 	{:else}
@@ -311,7 +313,7 @@
 							<Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProjectOptions}"></Button>
 							{#if isOwner}
 								<Button className="editButton" onClick="{() => editProjectDetails({editingProject: true})}" icon="{EditIcon}" disabled="{!canEdit}"></Button>
-								<Audience {isPublic} onClick="{togglePublic}" disabled="{!canEdit}" />
+								<Audience {isPublic} onClick="{showTogglePublicDialog}" disabled="{!canEdit}" />
 							{/if}
 							<div class="itemContent">
 								<div class="header" class:headerOwner="{isOwner}">{projectTitle}</div>
@@ -356,7 +358,7 @@
 								{#if !isOwner}
 									<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
 								{:else if isNew && !isPublic}
-									<Button className="makePublicButton isButton" onClick="{makePublic}">make public</Button>
+									<Button className="makePublicButton isButton" onClick="{showTogglePublicDialog}">make public</Button>
 								{:else}
 									<Button className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
 										<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
@@ -428,11 +430,27 @@
 				{:else}
 					{#if isOwner}
 						<ActionBar targetItemId="{$projectId}" targetItem="{$project}">
+							<div slot="buttonLeft">
+								<ActionButton
+									label = "likes"
+
+									icon = "{LikesIcon}"
+
+									targetItem = "{$project}"
+									targetItemId = "{$projectId}"
+
+									countProperty= "likeCount"
+
+									buttonContentStyle = "padding-right: 56px;"
+									iconStyle = "padding-bottom: 4px; margin-top: 1px;"
+								/>
+									<!-- action = "{showProjectFollowers}" -->
+							</div>
 							<div slot="buttonMiddle">
 								<ActionButton
 									label = "followers"
 
-									icon = "{FollowSelectedIcon}"
+									icon = "{FollowerIcon}"
 
 									targetItem = "{$project}"
 									targetItemId = "{$projectId}"

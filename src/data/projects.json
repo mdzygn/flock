@@ -79,7 +79,7 @@
        "unreadCount":3,
        "unreadMessageCount":0,
        "messageCount":5,
-       "following":true,
+       "following":false,
        "owner":"sl3p5oms",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -205,7 +205,7 @@
        "unreadCount":6,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":true,
+       "following":false,
        "liked":true,
        "owner":"sl3p5oms",
        "location":"Wellington, New Zealand",

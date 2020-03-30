@@ -17,7 +17,13 @@
 
     import AddProjectIcon from "../../assets/icons/add_project.png";
 
-	import { getMyProjects, getFollowingProjects, getFilteredProjects, loadingProjects } from '../../models/projectsModel';
+	import {
+		getMyProjects,
+		getFollowingProjects,
+		getFilteredProjects,
+		loadingProjects,
+		getArchivedProjects,
+	} from '../../models/projectsModel';
 
 	import {
 		projectsSearchString,
@@ -50,18 +56,20 @@
 
 	let myProjects = writable([]);
 	let followingProjects = writable([]);
+	let archivedProjects = writable([]);
 
 	let filteredMyProjects = writable([]);
 	let filteredFollowingProjects = writable([]);
 
 	$: { myProjects = getMyProjects() }
 	$: { followingProjects = getFollowingProjects() }
+	$: { archivedProjects = getArchivedProjects() }
 
 	// add one to limit to ensure show more button appears
 	$: myProjectsLimit = $displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT + 1;
 	$: followingProjectLimit = $displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT + 1;
 
-	$: showArchivedButton = $displayingAllMyProjects || ($followingProjects && $filteredMyProjects.length < myProjectsLimit);
+	$: showArchivedButton = ($archivedProjects && $archivedProjects.length) && ($displayingAllMyProjects || ($followingProjects && $filteredMyProjects.length < myProjectsLimit));
 
 	$: { $filteredMyProjects = getFilteredProjects($myProjects, { searchString, limit: myProjectsLimit }) }
 	$: { $filteredFollowingProjects = getFilteredProjects($followingProjects, { searchString, limit: followingProjectLimit }) }

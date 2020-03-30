@@ -715,7 +715,7 @@
 	}
 
     .header {
-		font-size: 2.5rem;
+		font-size: 2.4rem;
 		padding-top: 23px;
 		padding-right: 60px;
 		padding-bottom: 5px;

@@ -5,15 +5,19 @@
 
     import { loadProject } from '../../actions/appActions';
 
-	import FollowingSmallIcon from "../../assets/icons/following_small.png";
+    import FollowingSmallIcon from "../../assets/icons/following_small.png";
+	import PrivateIcon from "../../assets/icons/private.png";
 
     export let project;
     export let showLastActive = false;
     export let showInfoIcons = true;
+    export let showPrivateIcon = false;
 
     $: thumbImage = getProjectHeaderImage($project);
 
     $: detail = (showLastActive ? $project.lastActiveInfo : $project.createdInfo) || '';
+
+    $: isPrivate = ($project && !$project.public) || false;
 
     function loadCurrentProject() {
         loadProject($project.id);
@@ -32,6 +36,9 @@
     </div>
     {#if ($project.following || $project.isOwner) && showInfoIcons}
         <div class="info">
+            {#if showPrivateIcon && isPrivate}
+                <div class="privateIcon" style="background-image: url({PrivateIcon})"></div>
+            {/if}
             <Counter visible="{$project.unreadCount}" count="{$project.unreadCount}" hasNew="{true}" />
             <div class="followingIcon" style="background-image: url({FollowingSmallIcon})"></div>
         </div>
@@ -102,5 +109,20 @@
         background-size: cover;
         width: 21px;
         height: 20px;
+    }
+
+    .info :global(.privateIcon) {
+        float: right;
+        position: relative;
+        display: inline-block;
+
+        background-size: cover;
+        width: 19px;
+        height: 20px;
+
+        margin-top: 3px;
+        margin-left: 10px;
+
+        opacity: 0.5;
     }
 </style>

@@ -106,7 +106,8 @@
 					forceShowMoreShow="{showArchivedButton}"
 					showMoreLabel="{showArchivedButton ? locale.FOLLOWING_PROJECTS.BUTTON_ARCHIVED_PROJECTS : null}"
 					showIfNoProjects="{true}"
-					hideShowMoreWithVisibility="{true}">
+					hideShowMoreWithVisibility="{true}"
+					showPrivateIcon="{true}">
 					{#if searchString}
 						<slot>No projects found matching "{searchString}"</slot>
 					{:else}
@@ -114,7 +115,7 @@
 					{/if}
 				</ProjectList>
 				<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">new project</Button>
-				<ProjectList title="Following" className="followingProjects" projects="{filteredFollowingProjects}" showLastActive="{true}" displayLimit="{$displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} showIfNoProjects="{true}">
+				<ProjectList title="Following" className="followingProjects" projects="{filteredFollowingProjects}" showLastActive="{true}" displayLimit="{$displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} showIfNoProjects="{true}" showPrivateIcon="{true}">
 					{#if searchString}
 						<slot>No followed projects matching "{searchString}"</slot>
 					{:else}

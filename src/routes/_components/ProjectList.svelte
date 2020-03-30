@@ -27,10 +27,13 @@
 
     export let showMoreAction = false;
 
-    export let hideShowMoreWithVisibility = false;
     export let showIfNoProjects = false;
+
+    export let hideShowMoreWithVisibility = false;
     export let forceShowMoreShow = false;
     export let showMoreLabel = null;
+
+    export let showPrivateIcon = false;
 
     $: areMoreItems = displayLimit && $projects.length > displayLimit;
 
@@ -54,7 +57,7 @@
             {:else}
                 {#each $projects as project, index}
                     {#if !displayLimit || index < displayLimit}
-                        <ProjectListItem {project} {showLastActive} {showInfoIcons} />
+                        <ProjectListItem {project} {showLastActive} {showInfoIcons} {showPrivateIcon} />
                     {/if}
                 {:else}
                     <div class="noProjects">

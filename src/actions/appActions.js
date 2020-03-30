@@ -46,6 +46,7 @@ import {
 
     displayingAllMyProjects,
     displayingAllFollowingProjects,
+    displayingArchivedProjects,
 
     curMenu,
     curPrompt,
@@ -90,6 +91,7 @@ export function setNavSection(section) {
         case 'projects':
             displayingAllMyProjects.set(false);
             displayingAllFollowingProjects.set(false);
+            displayingArchivedProjects.set(false);
             goto('projects');
             break;
         case undefined:

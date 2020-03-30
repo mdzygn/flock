@@ -24,7 +24,7 @@
 
     export let showLastActive = false;
 
-    export let showMoreAction = true;
+    export let showMoreAction = false;
 
     export let hideShowMoreWithVisibility = false;
     export let showIfNoProjects = false;

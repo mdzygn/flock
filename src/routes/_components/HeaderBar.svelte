@@ -23,8 +23,6 @@
 
     $: isCurrentUser = getIsCurrentUser($viewedUser && $viewedUser.id);
 
-    $: console.log(isCurrentUser +' , ' + getIsCurrentUser($viewedUser && $viewedUser.id) + ',' + $viewedUser +' && ' + viewedUser.id);
-
     $: appState = {
         viewMode: $viewMode,
         viewingOwnProfile: isCurrentUser,

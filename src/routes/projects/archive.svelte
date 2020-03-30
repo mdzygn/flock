@@ -42,7 +42,7 @@
 <div class="content">
 	<ScrollView id="projects">
 		<SearchBar bind:searchString={$projectsArchiveSearchString} />
-		<ProjectList title="{null}" projects="{filteredArchivedProjects}" showLastActive="{true}" showInfoIcons="{false}" {searchString} showIfNoProjects="{true}" showPrivateIcon="{true}"> <!--  title="Archived Projects" -->
+		<ProjectList title="{null}" projects="{filteredArchivedProjects}" showLastActive="{true}" showUpdateCounter="{false}" {searchString} showIfNoProjects="{true}" showPrivateIcon="{true}"> <!--  title="Archived Projects" -->
 			{#if searchString}
 				<slot>No archived projects matching "{searchString}"</slot>
 			{:else}

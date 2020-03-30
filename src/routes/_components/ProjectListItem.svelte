@@ -10,7 +10,7 @@
 
     export let project;
     export let showLastActive = false;
-    export let showInfoIcons = true;
+    export let showUpdateCounter = true;
     export let showPrivateIcon = false;
 
     $: thumbImage = getProjectHeaderImage($project);
@@ -34,12 +34,14 @@
             {/if}
         </div>
     </div>
-    {#if ($project.following || $project.isOwner) && showInfoIcons}
+    {#if ($project.following || $project.isOwner)}
         <div class="info">
             {#if showPrivateIcon && isPrivate}
                 <div class="privateIcon" style="background-image: url({PrivateIcon})"></div>
             {/if}
-            <Counter visible="{$project.unreadCount}" count="{$project.unreadCount}" hasNew="{true}" />
+            {#if showUpdateCounter}
+                <Counter visible="{$project.unreadCount}" count="{$project.unreadCount}" hasNew="{true}" />
+            {/if}
             <div class="followingIcon" style="background-image: url({FollowingSmallIcon})"></div>
         </div>
     {/if}
@@ -117,12 +119,15 @@
         display: inline-block;
 
         background-size: cover;
-        width: 19px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
+        /* width: 19px;
+        height: 20px; */
 
         margin-top: 3px;
         margin-left: 10px;
+        margin-right: 2px;
 
-        opacity: 0.5;
+        opacity: 0.75;
     }
 </style>

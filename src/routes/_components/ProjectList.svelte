@@ -23,7 +23,7 @@
     export let searchString = null;
 
     export let showLastActive = false;
-    export let showInfoIcons = true;
+    export let showUpdateCounter = true;
 
     export let showMoreAction = false;
 
@@ -57,7 +57,7 @@
             {:else}
                 {#each $projects as project, index}
                     {#if !displayLimit || index < displayLimit}
-                        <ProjectListItem {project} {showLastActive} {showInfoIcons} {showPrivateIcon} />
+                        <ProjectListItem {project} {showLastActive} {showUpdateCounter} {showPrivateIcon} />
                     {/if}
                 {:else}
                     <div class="noProjects">

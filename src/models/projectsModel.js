@@ -132,7 +132,7 @@ export function getFilteredProjects(filteredProjects, projects, options) {
 
 	let filteredCount = 0;
 	let project, curProject;
-	for (let index = 0; index < projects.length; index++) {
+	for (let index = 0; index < projects.length && index < 4; index++) {
 		project = projects[index];
 		curProject = get(project);
 		if (curProject && (!searchString || projectSearchMatch(curProject, searchString))) {
@@ -145,7 +145,8 @@ export function getFilteredProjects(filteredProjects, projects, options) {
 		}
 	}
 
-	filteredProjects.set(newFilteredProjects);
+	return newFilteredProjects;
+	// filteredProjects.set(newFilteredProjects);
 }
 
 function projectSearchMatch(project, searchString) {

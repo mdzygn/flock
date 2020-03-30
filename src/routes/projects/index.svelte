@@ -54,8 +54,13 @@
 	$: { followingProjects = getFollowingProjects() }
 
 	// add one to limit to ensure show more button appears
-	$: { getFilteredProjects(filteredMyProjects, $myProjects, { searchString, limit: $displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT + 1 }) }
-	$: { getFilteredProjects(filteredFollowingProjects, $followingProjects, { searchString, limit: $displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT + 1 }) }
+	$: myProjectsLimit = $displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT + 1;
+	$: followingProjectLimit = $displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT + 1;
+
+	$: showArchivedButton = $displayingAllMyProjects || ($followingProjects && $filteredMyProjects.length < myProjectsLimit);
+
+	$: { $filteredMyProjects = getFilteredProjects(filteredMyProjects, $myProjects, { searchString, limit: myProjectsLimit }) }
+	$: { $filteredFollowingProjects = getFilteredProjects(filteredFollowingProjects, $followingProjects, { searchString, limit: followingProjectLimit }) }
 
 </script>
 
@@ -94,9 +99,9 @@
 						{searchString}
 						showLastActive="{true}"
 						displayLimit="{$displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}"
-						showMoreAction="{$displayingAllMyProjects ? displayArchivedProjects : displayAllMyProjects}"
-						forceShowMoreShow="{$displayingAllMyProjects}"
-						showMoreLabel="{$displayingAllMyProjects ? locale.FOLLOWING_PROJECTS.BUTTON_ARCHIVED_PROJECTS : null}"
+						showMoreAction="{showArchivedButton ? displayArchivedProjects : displayAllMyProjects}"
+						forceShowMoreShow="{showArchivedButton}"
+						showMoreLabel="{showArchivedButton ? locale.FOLLOWING_PROJECTS.BUTTON_ARCHIVED_PROJECTS : null}"
 						showIfNoProjects="{true}"
 						hideShowMoreWithVisibility="{true}">
 						{#if searchString}

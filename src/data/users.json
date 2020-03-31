@@ -20,7 +20,9 @@
 	   "coverImage":null,
 	   "colors":{
 			"profileTop":"#91d5ec",
-			"profileBottom":"#5994ab"
+			"profileBottom":"#5994ab",
+			"coverTop":"#8e8cec",
+			"coverBottom":"#224673"
 	   },
 	   "postsCount":24,
 	   "likesCount":35,
@@ -54,7 +56,9 @@
 	   "coverImage":false,
 	   "colors":{
 			"profileTop":"#f9c35c",
-			"profileBottom":"#d88060"
+			"profileBottom":"#d88060",
+			"coverTop":"#a7ec8c",
+			"coverBottom":"#72a768"
 	   },
 	   "connected":false,
 	   "requestedConnection":false,

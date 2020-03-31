@@ -59,7 +59,7 @@
     $: userColors = ($viewedUser && $viewedUser.colors) || null;
     $: profileImageBgStyling = userColors ? 'background-image: linear-gradient(' + userColors.profileTop + ', ' + userColors.profileBottom + ');' : '';
 
-    $: coverBgStyling = userColors ? 'background-image: linear-gradient(' + userColors.coverTop + ', ' + userColors.coverBottom + ');' : null;
+    $: coverBgStyling = (userColors && userColors.coverTop) ? 'background-image: linear-gradient(' + userColors.coverTop + ', ' + userColors.coverBottom + ');' : null;
 
     // $: proxyImage = isCurrentUser ? 'profile_overview_owner' : 'profile_overview';
     // $: proxyOverviewActionsImage = isCurrentUser ? 'profile_overview_owner_actions' : 'profile_overview_actions';

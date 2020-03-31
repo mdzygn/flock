@@ -245,8 +245,8 @@
 	   "avatarImage":null,
 	   "coverImage":false,
 	   "colors":{
-			"profileTop":"#80d9e8",
-			"profileBottom":"#7c9da2",
+			"profileTop":"#f9e7be",
+			"profileBottom":"#a08064",
 			"coverTop":"#fbc7ae",
 			"coverBottom":"#b37866"
 	   },

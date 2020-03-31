@@ -21,8 +21,8 @@
 	   "colors":{
 			"profileTop":"#91d5ec",
 			"profileBottom":"#5994ab",
-			"coverTop":"#8e8cec",
-			"coverBottom":"#224673"
+			"coverTop":"#bed9f1",
+			"coverBottom":"#7489a9"
 	   },
 	   "postsCount":24,
 	   "likesCount":35,
@@ -57,8 +57,8 @@
 	   "colors":{
 			"profileTop":"#f9c35c",
 			"profileBottom":"#d88060",
-			"coverTop":"#a7ec8c",
-			"coverBottom":"#72a768"
+			"coverTop":"#cbe4c1",
+			"coverBottom":"#81947d"
 	   },
 	   "connected":false,
 	   "requestedConnection":false,
@@ -92,6 +92,12 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":null,
+	   "colors":{
+			"profileTop":"#9b99ec",
+			"profileBottom":"#6155a2",
+			"coverTop":"#fbc7ae",
+			"coverBottom":"#b37866"
+	   },
 	   "connected":false,
 	   "requestedConnection":false,
 	   "postsCount":12,
@@ -124,6 +130,12 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
+	   "colors":{
+			"profileTop":"#ceaef1",
+			"profileBottom":"#795373",
+			"coverTop":"#fbc7ae",
+			"coverBottom":"#b37866"
+	   },
 	   "connected":false,
 	   "requestedConnection":false,
 	   "postsCount":12,
@@ -156,6 +168,12 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
+	   "colors":{
+			"profileTop":"#f1aec1",
+			"profileBottom":"#b38098",
+			"coverTop":"#fbc7ae",
+			"coverBottom":"#b37866"
+	   },
 	   "connected":false,
 	   "requestedConnection":false,
 	   "postsCount":12,
@@ -188,6 +206,12 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
+	   "colors":{
+			"profileTop":"#80e8a5",
+			"profileBottom":"#66886c",
+			"coverTop":"#fbc7ae",
+			"coverBottom":"#b37866"
+	   },
 	   "connected":false,
 	   "requestedConnection":false,
 	   "postsCount":12,
@@ -220,6 +244,12 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
+	   "colors":{
+			"profileTop":"#80d9e8",
+			"profileBottom":"#7c9da2",
+			"coverTop":"#fbc7ae",
+			"coverBottom":"#b37866"
+	   },
 	   "connected":false,
 	   "requestedConnection":false,
 	   "postsCount":12,
@@ -252,6 +282,12 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
+	   "colors":{
+			"profileTop":"#ade0aa",
+			"profileBottom":"#6b8e5f",
+			"coverTop":"#fbc7ae",
+			"coverBottom":"#b37866"
+	   },
 	   "connected":false,
 	   "requestedConnection":false,
 	   "postsCount":12,
@@ -284,6 +320,12 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
+	   "colors":{
+			"profileTop":"#6787e2",
+			"profileBottom":"#35457d",
+			"coverTop":"#fbc7ae",
+			"coverBottom":"#b37866"
+	   },
 	   "connected":false,
 	   "requestedConnection":false,
 	   "postsCount":12,
@@ -316,6 +358,12 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
+	   "colors":{
+			"profileTop":"#80e8d5",
+			"profileBottom":"#7bada1",
+			"coverTop":"#fbc7ae",
+			"coverBottom":"#b37866"
+	   },
 	   "connected":false,
 	   "requestedConnection":false,
 	   "postsCount":12,
@@ -348,6 +396,12 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
+	   "colors":{
+			"profileTop":"#ece2bd",
+			"profileBottom":"#b5b17d",
+			"coverTop":"#fbc7ae",
+			"coverBottom":"#b37866"
+	   },
 	   "connected":false,
 	   "requestedConnection":false,
 	   "postsCount":12,

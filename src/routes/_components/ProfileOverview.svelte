@@ -15,6 +15,8 @@
     import SendMessageIcon from "../../assets/icons/send.png";
     import ConnectIcon from "../../assets/icons/connect.png";
 
+    import ProfileDefaultImage from "../../assets/icons/profileDefault.png";
+
     import { viewedUser } from '../../models/appModel';
 
     import {
@@ -50,8 +52,12 @@
 
     $: coverImageId = ($viewedUser && $viewedUser.coverImage !== false) ? username : '_default';
 
-	$: coverImage = 'content/users/' + coverImageId + '/cover.jpg';
-	$: profileImage = 'content/users/' + username + '/profile.jpg';
+    $: coverImage = 'content/users/' + coverImageId + '/cover.jpg';
+
+	// $: profileImage = 'content/users/' + username + '/profile.jpg';
+    $: profileImage = ProfileDefaultImage;
+    $: userColors = ($viewedUser && $viewedUser.colors) || null;
+    $: profileImageBgStyling = userColors ? 'background-image: linear-gradient(' + userColors.profileTop + ', ' + userColors.profileBottom + ');' : '';
 
     // $: proxyImage = isCurrentUser ? 'profile_overview_owner' : 'profile_overview';
     // $: proxyOverviewActionsImage = isCurrentUser ? 'profile_overview_owner_actions' : 'profile_overview_actions';
@@ -84,7 +90,7 @@
         </Proxy> -->
         <img src="{coverImage}" class="coverImage" alt="cover image" />
         <div class="profileOverviewHeader">
-            <div class="profileImage">
+            <div class="profileImage" style="{profileImageBgStyling}">
                 <img src="{profileImage}" alt="{userFirstName}" />
             </div>
             <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProfileOptions}"></Button>
@@ -173,8 +179,9 @@
         height: 108px;
 
         border-radius: 999px;
-        overflow: hidden;
         border: 4px solid #ffffff;
+
+        /* overflow: hidden; */
 
         background-color: #C8C8C8;
     }
@@ -182,6 +189,13 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+
+        border-radius: 999px;
+        overflow: hidden;
+        border: 1px solid #cacaca;
+
+        margin-left: -1px;
+        margin-top: -1px;
     }
 
     .itemContent {

@@ -19,8 +19,8 @@
 	   "avatarImage":null,
 	   "coverImage":null,
 	   "colors":{
-			"profileTop":"#38BDEA",
-			"profileBottom":"#185871"
+			"profileTop":"#91d5ec",
+			"profileBottom":"#5994ab"
 	   },
 	   "postsCount":24,
 	   "likesCount":35,
@@ -53,8 +53,8 @@
 	   "avatarImage":null,
 	   "coverImage":false,
 	   "colors":{
-			"profileTop":"#EAAD38",
-			"profileBottom":"#713018"
+			"profileTop":"#f9c35c",
+			"profileBottom":"#d88060"
 	   },
 	   "connected":false,
 	   "requestedConnection":false,

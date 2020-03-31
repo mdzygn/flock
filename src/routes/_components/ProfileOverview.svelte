@@ -54,8 +54,8 @@
 
     $: coverImage = 'content/users/' + coverImageId + '/cover.jpg';
 
-	// $: profileImage = 'content/users/' + username + '/profile.jpg';
-    $: profileImage = ProfileDefaultImage;
+	// $: profileImageSrc = 'content/users/' + username + '/profile.jpg';
+    $: profileImageSrc = ProfileDefaultImage;
     $: userColors = ($viewedUser && $viewedUser.colors) || null;
     $: profileImageBgStyling = userColors ? 'background-image: linear-gradient(' + userColors.profileTop + ', ' + userColors.profileBottom + ');' : '';
 
@@ -91,7 +91,7 @@
         <img src="{coverImage}" class="coverImage" alt="cover image" />
         <div class="profileOverviewHeader">
             <div class="profileImage" style="{profileImageBgStyling}">
-                <img src="{profileImage}" alt="{userFirstName}" />
+                <img src="{profileImageSrc}" alt="{userFirstName}" />
             </div>
             <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProfileOptions}"></Button>
             <Button className="editButton" icon="{EditIcon}" disabled="{true}">edit</Button>

@@ -1,12 +1,20 @@
 <script>
+    import ProfileDefaultImage from "../../assets/icons/profileDefault_small.png";
+
     export let user = null;
 
     $: thumbImageId = (user && user.username) || '_default';
 
-    $: profileImageSrc = 'content/users/' + thumbImageId + '/thumb.jpg';
+    // $: profileImageSrc = 'content/users/' + thumbImageId + '/thumb.jpg';
+
+    $: profileImageSrc = ProfileDefaultImage;
+
+    $: userColors = (user && user.colors) || null;
+    $: profileImageBgStyling = userColors ? 'background-image: linear-gradient(' + userColors.profileTop + ', ' + userColors.profileBottom + ');' : '';
 </script>
 
-<div class="avatarIcon" style='background-image: url({profileImageSrc})'>
+<div class="avatarIcon" style="{profileImageBgStyling}">
+    <div class="avatarIconImage" style='background-image: url({profileImageSrc})'></div>
 </div>
 
 <style>
@@ -19,10 +27,17 @@
         border-radius: 999px;
 
         background-color: #C8C8C8;
-        background-size: contain;
+        /* background-size: cover; */
 
         overflow: hidden;
 
         border: 1px solid #AAA;
+    }
+
+    .avatarIconImage {
+        width: 100%;
+        height: 100%;
+
+        background-size: cover;
     }
 </style>

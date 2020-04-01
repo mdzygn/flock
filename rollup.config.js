@@ -7,6 +7,7 @@ import { terser } from 'rollup-plugin-terser';
 import config from 'sapper/config/rollup.js';
 import pkg from './package.json';
 import json from '@rollup/plugin-json';
+import dotenv from 'dotenv';
 
 import image from '@rollup/plugin-image';
 
@@ -15,6 +16,11 @@ const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
+
+const envVars = dotenv.config().parsed;
+if (!envVars) {
+	console.error('.env config vars file not found');
+}
 
 export default {
 	client: {
@@ -25,7 +31,9 @@ export default {
 
 			replace({
 				'process.browser': true,
-				'process.env.NODE_ENV': JSON.stringify(mode)
+				'process.env.NODE_ENV': JSON.stringify(mode),
+				'process.env.MONGODB_URI': JSON.stringify(envVars.MONGODB_URI),
+				'process.env.MONGODB_DB': JSON.stringify(envVars.MONGODB_DB),
 			}),
 			json(),
 			svelte({

@@ -190,6 +190,8 @@
 <div class="pageContent" class:archived="{isArchived}">
 	{#if $loadingProjects && (!$project || $project.id !== $projectId ) }
 		<ContentLoader label="{locale.LOADING.PROJECT}" />
+	{:else if !$project || !$project.id}
+		<ContentLoader label="Project not found" />
 	{:else}
 		<ScrollView id="project" headerStartHidden="{!isArchived}">
 			<div class="content">

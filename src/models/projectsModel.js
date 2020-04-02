@@ -340,10 +340,23 @@ export function updateProject(project, projectDetails) {
 }
 
 
+export function setLikeProject(targetProject, like) {
+	updateProject(targetProject, {
+		liked: like,
+		likeCount: Math.max(0, targetProject.likeCount + (like ? 1 : -1)),
+	});
+
+	if (like) {
+		api.likeProject({userId: get(userId), projectId: targetProject.id});
+	} else {
+		api.unlikeProject({userId: get(userId), projectId: targetProject.id});
+	}
+}
+
 export function setFollowProject(targetProject, follow) {
 	updateProject(targetProject, {
 		following: follow,
-		followCount: targetProject.followCount + (follow ? 1 : -1),
+		followCount: Math.max(0, targetProject.followCount + (follow ? 1 : -1)),
 	});
 
 	if (follow) {

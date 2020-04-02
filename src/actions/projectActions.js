@@ -14,6 +14,7 @@ import {
     updateProject,
     getProject,
     setFollowProject,
+    setLikeProject,
 } from '../models/projectsModel';
 
 import {
@@ -55,10 +56,11 @@ export function projectToggleLiked(projectId) {
     const targetProject = get(targetProjectModel);
 
     if (targetProject) {
-        updateProject(targetProject, {
-            liked: !targetProject.liked,
-            likeCount: targetProject.likeCount + (!targetProject.liked ? 1 : -1),
-        });
+        setLikeProject(targetProject, !targetProject.liked);
+        // updateProject(targetProject, {
+        //     liked: !targetProject.liked,
+        //     likeCount: targetProject.likeCount + (!targetProject.liked ? 1 : -1),
+        // });
         targetProjectModel.set(targetProject);
         checkUpdateProject(targetProject);
     }

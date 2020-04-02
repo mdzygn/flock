@@ -82,6 +82,21 @@ function unfollowProject(options) {
 	});
 }
 
+// options = { details: { userId: id, projectId: id } }
+function likeProject(options) {
+	return send('likeProject', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+// options = { details: { userId: id, projectId: id } }
+function unlikeProject(options) {
+	return send('unlikeProject', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 const api = {
 	getProjects,
 	addProject,
@@ -89,6 +104,9 @@ const api = {
 
 	followProject,
 	unfollowProject,
+
+	likeProject,
+	unlikeProject,
 }
 
 export default api;

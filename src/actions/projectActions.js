@@ -121,7 +121,8 @@ export function createProject(projectDetails) {
         projectDetails.headerImage = 'resource/headers/' + projectDetails.headerImage + '.jpg';
     }
 
-    const newProject = addProject(projectDetails);
+    const newProjectModel = addProject(projectDetails);
+    const newProject = get(newProjectModel);
 
     if (newProject) {
         loadProject(newProject.id);

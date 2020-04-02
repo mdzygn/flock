@@ -294,34 +294,40 @@ export function addProject(projectDetails) {
 	// const newProjectModel = Object.assign({}, ProjectModel);
 
 	const newProjectModel = ProjectModel();
+	const newProject = get(newProjectModel);
 
-	const curProjects = get(projects);
-	curProjects.unshift(newProjectModel);
+	newProject.id = projectId;
 
-	newProjectModel.id = projectId;
+	newProject.headerImage = projectDetails.headerImage || null;
+	newProject.title = projectDetails.title || '';
+	newProject.description = projectDetails.description || '';
 
-	newProjectModel.headerImage = projectDetails.headerImage || null;
-	newProjectModel.title = projectDetails.title || '';
-	newProjectModel.description = projectDetails.description || '';
+	newProject.createdAt = (new Date()).getTime();
+	newProject.lastActiveAt = newProject.createdAt;
 
-	newProjectModel.createdAt = (new Date()).getTime();
-	newProjectModel.lastActiveAt = newProjectModel.createdAt;
+	newProject.owner = get(userId);
 
-	newProjectModel.owner = get(userId);
-	newProjectModel.following = true;
+	newProject.isNew = true;
+	newProject.hasCreated = true;
 
-	newProjectModel.isNew = true;
-	newProjectModel.hasCreated = true;
+	// console.log('newProjectModel',newProject);
+	// debugger;
 
-	newProjectModel.followCount++;
+	newProject.liked = true;
+	newProject.likeCount++;
 
-	projects.set(curProjects);
+	newProject.following = true;
+	newProject.followCount++;
 
 	// projects.unshift(newProjectModel);
 
-	api.addProject({details: newProjectModel}).then(result => {
-		newProjectModel._id = result.insertedId;
+	api.addProject({details: newProject}).then(result => {
+		// newProject._id = result.insertedId;
 	});
+
+	const curProjects = get(projects);
+	curProjects.unshift(newProjectModel);
+	projects.set(curProjects);
 
 	return newProjectModel;
 }

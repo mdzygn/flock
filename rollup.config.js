@@ -17,9 +17,12 @@ const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
 
-const envVars = dotenv.config().parsed;
-if (!envVars) {
-	console.error('.env config vars file not found');
+let envVars = null;
+if (dev) {
+	envVars = dotenv.config().parsed;
+	if (!envVars) {
+		console.error('.env config vars file not found');
+	}
 }
 
 export default {
@@ -29,12 +32,13 @@ export default {
 		plugins: [
 			image(),
 
-			replace({
+			replace(Object.assign({
 				'process.browser': true,
 				'process.env.NODE_ENV': JSON.stringify(mode),
+			}, dev ? {
 				'process.env.MONGODB_URI': JSON.stringify(envVars.MONGODB_URI),
 				'process.env.MONGODB_DB': JSON.stringify(envVars.MONGODB_DB),
-			}),
+			} : {})),
 			json(),
 			svelte({
 				dev,

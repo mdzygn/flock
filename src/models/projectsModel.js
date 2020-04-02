@@ -302,8 +302,8 @@ export function addProject(projectDetails) {
 	newProject.title = projectDetails.title || '';
 	newProject.description = projectDetails.description || '';
 
-	newProject.createdAt = (new Date()).getTime();
-	newProject.lastActiveAt = newProject.createdAt;
+	// newProject.createdAt = (new Date()).getTime();
+	// newProject.lastActiveAt = newProject.createdAt;
 
 	newProject.owner = get(userId);
 
@@ -334,10 +334,21 @@ export function addProject(projectDetails) {
 
 export function updateProject(project, projectDetails) {
 	// projectDetails._id = project._id;
-
 	Object.assign(project, projectDetails);
 
 	api.updateProject({id: project.id, details: projectDetails});
+}
+
+
+export function setFollowProject(targetProject, follow) {
+	updateProject(targetProject, {
+		following: follow,
+		followCount: targetProject.followCount + (follow ? 1 : -1),
+	});
+
+	if (follow) {
+		api.followProject({userId: get(userId), projectId: targetProject.id});
+	}
 }
 
 export function getProjectHeaderImage(project) {

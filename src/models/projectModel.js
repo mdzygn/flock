@@ -20,6 +20,8 @@ const ProjectModel = (projectData) => {
         lastActiveAt: 0,
         lastActiveInfo: null,
 
+        modifiedAt: 0,
+
         likeCount: 0,
         followCount: 0,
         unreadCount: 0,

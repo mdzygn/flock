@@ -58,10 +58,19 @@ function updateProject(options) {
 	});
 }
 
+// options = { details: { userId: id, projectId: id } }
+function followProject(options) {
+	return send('followProject', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 const api = {
 	getProjects,
 	addProject,
 	updateProject,
+	followProject,
 }
 
 export default api;

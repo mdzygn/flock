@@ -6,6 +6,8 @@ import { tick } from 'svelte';
 
 import { copyToClipboard } from '../utils';
 
+import api from '../api';
+
 
 import promptIds from '../config/promptIds';
 
@@ -13,6 +15,7 @@ import {
     addProject,
     updateProject,
     getProject,
+    setFollowProject,
 } from '../models/projectsModel';
 
 import {
@@ -38,10 +41,12 @@ export function projectToggleFollowing(projectId) {
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
     if (targetProject) {
-        updateProject(targetProject, {
-            following: !targetProject.following,
-            followCount: targetProject.followCount + (!targetProject.following ? 1 : -1),
-        });
+        setFollowProject(targetProject, !targetProject.following);
+        // updateProject(targetProject, {
+        //     following: !targetProject.following,
+        //     followCount: targetProject.followCount + (!targetProject.following ? 1 : -1),
+        // });
+
         targetProjectModel.set(targetProject);
         checkUpdateProject(targetProject);
     }

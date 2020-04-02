@@ -348,6 +348,8 @@ export function setFollowProject(targetProject, follow) {
 
 	if (follow) {
 		api.followProject({userId: get(userId), projectId: targetProject.id});
+	} else {
+		api.unfollowProject({userId: get(userId), projectId: targetProject.id});
 	}
 }
 

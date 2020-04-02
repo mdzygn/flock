@@ -65,12 +65,21 @@ function followProject(options) {
 		return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
+// options = { details: { userId: id, projectId: id } }
+function unfollowProject(options) {
+	return send('unfollowProject', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
 
 const api = {
 	getProjects,
 	addProject,
 	updateProject,
+
 	followProject,
+	unfollowProject,
 }
 
 export default api;

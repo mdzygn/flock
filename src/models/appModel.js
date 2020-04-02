@@ -135,8 +135,8 @@ export function getIsCurrentUser(targetUserId) {
 
 export function getIsProjectOwner(project) {
     const curUserId = get(userId);
-    // console.log('getIsProjectOwner ' + (project && project.owner && project.owner === curUserId));
-	return (project && project.owner && project.owner === curUserId);
+    // console.log('getIsProjectOwner ' + (project && project.ownerId && project.ownerId === curUserId));
+	return (project && project.ownerId && project.ownerId === curUserId);
 }
 
 export default appModel;

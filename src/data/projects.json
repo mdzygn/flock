@@ -32,7 +32,7 @@
        "unreadMessageCount":4,
        "messageCount":3,
        "following":true,
-       "owner":"sl3p5oms",
+       "ownerId":"sl3p5oms",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -80,7 +80,7 @@
        "unreadMessageCount":0,
        "messageCount":5,
        "following":false,
-       "owner":"sl3p5oms",
+       "ownerId":"sl3p5oms",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -139,7 +139,7 @@
        "unreadMessageCount":3,
        "messageCount":6,
        "following":true,
-       "owner":"sl3p5oms",
+       "ownerId":"sl3p5oms",
        "location":"Wellington, New Zealand",
        "links":[
           {
@@ -207,7 +207,7 @@
        "messageCount":3,
        "following":false,
        "liked":true,
-       "owner":"sl3p5oms",
+       "ownerId":"sl3p5oms",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -245,7 +245,7 @@
        "unreadCount":2,
        "unreadMessageCount":5,
        "messageCount":5,
-       "owner":"sl3p5oms",
+       "ownerId":"sl3p5oms",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -296,7 +296,7 @@
        "unreadMessageCount":5,
        "messageCount":3,
        "following":false,
-       "owner":"bl20a8lm",
+       "ownerId":"bl20a8lm",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -357,7 +357,7 @@
        "unreadMessageCount":5,
        "messageCount":3,
        "following":false,
-       "owner":"m3ld9bna",
+       "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -415,7 +415,7 @@
        "unreadMessageCount":5,
        "messageCount":3,
        "following":false,
-       "owner":"m3ld9bna",
+       "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -472,7 +472,7 @@
        "unreadMessageCount":5,
        "messageCount":3,
        "following":false,
-       "owner":"m3ld9bna",
+       "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -529,7 +529,7 @@
        "unreadMessageCount":5,
        "messageCount":3,
        "following":false,
-       "owner":"m3ld9bna",
+       "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -586,7 +586,7 @@
        "unreadMessageCount":5,
        "messageCount":3,
        "following":false,
-       "owner":"m3ld9bna",
+       "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -647,7 +647,7 @@
        "unreadMessageCount":5,
        "messageCount":3,
        "following":false,
-       "owner":"m3ld9bna",
+       "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -704,7 +704,7 @@
        "unreadMessageCount":5,
        "messageCount":3,
        "following":false,
-       "owner":"m3ld9bna",
+       "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -761,7 +761,7 @@
        "unreadMessageCount":5,
        "messageCount":3,
        "following":false,
-       "owner":"m3ld9bna",
+       "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -820,7 +820,7 @@
        "unreadMessageCount":5,
        "messageCount":3,
        "following":false,
-       "owner":"m3ld9bna",
+       "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -882,7 +882,7 @@
        "unreadMessageCount":5,
        "messageCount":3,
        "following":false,
-       "owner":"m3ld9bna",
+       "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -941,7 +941,7 @@
        "unreadMessageCount":5,
        "messageCount":3,
        "following":false,
-       "owner":"m3ld9bna",
+       "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",
@@ -999,7 +999,7 @@
        "unreadMessageCount":5,
        "messageCount":3,
        "following":false,
-       "owner":"m3ld9bna",
+       "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
           "react",

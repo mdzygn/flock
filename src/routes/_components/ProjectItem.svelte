@@ -27,7 +27,7 @@
     export let project;
 
     $: projectId = ($project && $project.id) || null;
-    $: projectOwnerId = ($project && $project.owner) || null;
+    $: projectOwnerId = ($project && $project.ownerId) || null;
 
     $: projectSlug = ($project && $project.slug) || null;
 

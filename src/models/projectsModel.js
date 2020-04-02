@@ -307,7 +307,7 @@ export function addProject(projectDetails) {
 	// newProject.createdAt = (new Date()).getTime();
 	// newProject.lastActiveAt = newProject.createdAt;
 
-	newProject.owner = get(userId);
+	newProject.ownerId = get(userId);
 
 	newProject.isNew = true;
 	newProject.hasCreated = true;

@@ -313,11 +313,12 @@ export function addProject(projectDetails) {
 	// console.log('newProjectModel',newProject);
 	// debugger;
 
-	newProject.liked = true;
+	newProject.followCount++;
 	newProject.likeCount++;
 
-	newProject.following = true;
-	newProject.followCount++;
+	// not to send
+	// newProject.liked = true;
+	// newProject.following = true;
 
 	// projects.unshift(newProjectModel);
 
@@ -333,7 +334,6 @@ export function addProject(projectDetails) {
 }
 
 export function updateProject(project, projectDetails) {
-	// projectDetails._id = project._id;
 	Object.assign(project, projectDetails);
 
 	api.updateProject({id: project.id, details: projectDetails});
@@ -342,7 +342,6 @@ export function updateProject(project, projectDetails) {
 
 export function setLikeProject(targetProject, like) {
 	updateProject(targetProject, {
-		liked: like,
 		likeCount: Math.max(0, targetProject.likeCount + (like ? 1 : -1)),
 	});
 
@@ -351,11 +350,12 @@ export function setLikeProject(targetProject, like) {
 	} else {
 		api.unlikeProject({userId: get(userId), projectId: targetProject.id});
 	}
+
+	targetProject.liked = like;
 }
 
 export function setFollowProject(targetProject, follow) {
 	updateProject(targetProject, {
-		following: follow,
 		followCount: Math.max(0, targetProject.followCount + (follow ? 1 : -1)),
 	});
 
@@ -364,6 +364,8 @@ export function setFollowProject(targetProject, follow) {
 	} else {
 		api.unfollowProject({userId: get(userId), projectId: targetProject.id});
 	}
+
+	targetProject.following = follow;
 }
 
 export function getProjectHeaderImage(project) {

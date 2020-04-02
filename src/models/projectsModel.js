@@ -195,6 +195,8 @@ export function updateMyProjects() {
 			const project = get(projectModel);
 			return getIsProjectOwner(project) && !project.archived;
 		});
+		newProjects.sort((a,b) => get(b).lastActiveAt - get(a).lastActiveAt); // sort by reversed updated time
+
 		// console.log('updateMyProjects: ', newProjects);
 		myProjects.set(newProjects);
 	}
@@ -304,8 +306,9 @@ export function addProject(projectDetails) {
 	newProject.title = projectDetails.title || '';
 	newProject.description = projectDetails.description || '';
 
-	// newProject.createdAt = (new Date()).getTime();
-	// newProject.lastActiveAt = newProject.createdAt;
+	newProject.createdAt = (new Date()).getTime(); // use for initial sort values
+	newProject.modifiedAt = newProject.createdAt;
+	newProject.lastActiveAt = newProject.createdAt;
 
 	newProject.ownerId = get(userId);
 
@@ -335,17 +338,24 @@ export function addProject(projectDetails) {
 	return newProjectModel;
 }
 
-export function updateProject(project, projectDetails) {
+export function updateProject(project, projectDetails, nonModification) {
+	const isModification = !nonModification;
+
+	api.updateProject({id: project.id, details: projectDetails, isModification});
+
 	Object.assign(project, projectDetails);
 
-	api.updateProject({id: project.id, details: projectDetails});
+	project.lastActiveAt = (new Date()).getTime();
+	if (isModification) {
+		project.modifiedAt = project.lastActiveAt;
+	}
 }
 
 
 export function setLikeProject(targetProject, like) {
 	updateProject(targetProject, {
 		likeCount: Math.max(0, targetProject.likeCount + (like ? 1 : -1)),
-	});
+	}, true);
 
 	if (like) {
 		api.likeProject({userId: get(userId), projectId: targetProject.id});
@@ -359,7 +369,7 @@ export function setLikeProject(targetProject, like) {
 export function setFollowProject(targetProject, follow) {
 	updateProject(targetProject, {
 		followCount: Math.max(0, targetProject.followCount + (follow ? 1 : -1)),
-	});
+	}, true);
 
 	if (follow) {
 		api.followProject({userId: get(userId), projectId: targetProject.id});

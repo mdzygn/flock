@@ -7,6 +7,7 @@ export async function post(req, res, next) {
 	const details = options.details;
 
 	details.createdAt = (new Date()).getTime();
+	details.modifiedAt = details.createdAt;
 	details.lastActiveAt = details.createdAt;
 
 	const result = await db.collection('projects').insertOne(details);

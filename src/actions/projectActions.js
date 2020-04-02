@@ -154,7 +154,7 @@ export async function archiveProject(projectId) {
         targetProject.archived = details.archived;
         targetProjectModel.set(targetProject);
         checkUpdateProject(targetProject);
-        updateProject(targetProject, details);
+        updateProject(targetProject, details, true);
         resetScrollRegionPosition('project');
 
         await tick();
@@ -171,7 +171,7 @@ export async function unarchiveProject(projectId) {
         targetProject.archived = details.archived;
         targetProjectModel.set(targetProject);
         checkUpdateProject(targetProject);
-        updateProject(targetProject, details);
+        updateProject(targetProject, details, true);
 
         await tick();
         showPrompt(promptIds.PROJECT_UNARCHIVED);

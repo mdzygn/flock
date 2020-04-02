@@ -228,6 +228,8 @@ export function updateFollowingProjects() {
 			const project = get(projectModel);
 			return project.following && !getIsProjectOwner(project) && !project.archived && project.public;
 		});
+		newProjects.sort((a,b) => get(b).followTime - get(a).followTime); // sort by reversed follow time
+
 		// console.log('updateFollowingProjects: ', newProjects);
 		followingProjects.set(newProjects);
 	}
@@ -366,6 +368,7 @@ export function setFollowProject(targetProject, follow) {
 	}
 
 	targetProject.following = follow;
+	targetProject.followTime = (new Date()).getTime();
 }
 
 export function getProjectHeaderImage(project) {

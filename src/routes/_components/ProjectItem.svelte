@@ -7,8 +7,14 @@
     import Button from '../../components/Button.svelte';
 
     import ActionBar from './ActionBar.svelte';
+    import ActionButton from './ActionButton.svelte';
 
-	import Proxy from '../../components/Proxy.svelte';
+    import LikesIcon from "../../assets/icons/likes.png";
+    import FollowerIcon from "../../assets/icons/followers.png";
+
+    import Proxy from '../../components/Proxy.svelte';
+
+    import { userId } from '../../models/appModel'; // getProject
     import { getProjectHeaderImage } from '../../models/projectsModel'; // getProject
     import { loadProject } from '../../actions/appActions';
 
@@ -21,6 +27,7 @@
     export let project;
 
     $: projectId = ($project && $project.id) || null;
+    $: projectOwnerId = ($project && $project.owner) || null;
 
     $: projectSlug = ($project && $project.slug) || null;
 
@@ -40,7 +47,43 @@
             <div class="description">{projectDescription}</div>
         </div>
     </div>
-    <ActionBar targetItemId="{projectId}" targetItem="{$project}" />
+    {#if projectOwnerId === $userId}
+        <ActionBar targetItemId="{projectId}" targetItem="{$project}">
+            <div slot="buttonLeft">
+                <ActionButton
+                    label = "likes"
+
+                    icon = "{LikesIcon}"
+
+                    targetItem = "{$project}"
+                    targetItemId = "{projectId}"
+
+                    countProperty= "likeCount"
+
+                    buttonContentStyle = "padding-right: 56px;"
+                    iconStyle = "padding-bottom: 4px; margin-top: 1px;"
+                />
+                    <!-- action = "{showProjectFollowers}" -->
+            </div>
+            <div slot="buttonMiddle">
+                <ActionButton
+                    label = "followers"
+
+                    icon = "{FollowerIcon}"
+
+                    targetItem = "{$project}"
+                    targetItemId = "{projectId}"
+
+                    countProperty= "followCount"
+
+                    buttonContentStyle = "padding-right: 56px;"
+                    iconStyle = "padding-bottom: 4px"
+                />
+            </div>
+        </ActionBar>
+    {:else}
+        <ActionBar targetItemId="{projectId}" targetItem="{$project}" />
+    {/if}
 </div>
 
 <style>

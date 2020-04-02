@@ -1,4 +1,10 @@
+import { get } from 'svelte/store';
+
 import { API_PATH } from './config';
+
+
+import { userId } from '../models/appModel';
+
 
 function send(path, options) {
 	const fetch = process.browser ? window.fetch : require('node-fetch').default;
@@ -36,6 +42,9 @@ function send(path, options) {
 
 // options = { limit: number, cursor: string, sort: {} }
 function getProjects(options) {
+	options = options || {};
+	options.userId = get(userId);
+
 	return send('getProjects', options).catch(error => {
 		console.error('API Error: ' + error, { error });
 		return Promise.reject(error); // TODO: prevent followups being called

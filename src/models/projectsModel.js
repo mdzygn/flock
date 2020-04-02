@@ -338,16 +338,18 @@ export function addProject(projectDetails) {
 	return newProjectModel;
 }
 
-export function updateProject(project, projectDetails, nonModification) {
+export function updateProject(project, projectDetails, nonModification, isSuperficial) {
 	const isModification = !nonModification;
 
-	api.updateProject({id: project.id, details: projectDetails, isModification});
+	api.updateProject({id: project.id, details: projectDetails, isModification, isSuperficial});
 
 	Object.assign(project, projectDetails);
 
-	project.lastActiveAt = (new Date()).getTime();
-	if (isModification) {
-		project.modifiedAt = project.lastActiveAt;
+	if (!isSuperficial) {
+		project.lastActiveAt = (new Date()).getTime();
+		if (isModification) {
+			project.modifiedAt = project.lastActiveAt;
+		}
 	}
 }
 
@@ -355,7 +357,7 @@ export function updateProject(project, projectDetails, nonModification) {
 export function setLikeProject(targetProject, like) {
 	updateProject(targetProject, {
 		likeCount: Math.max(0, targetProject.likeCount + (like ? 1 : -1)),
-	}, true);
+	}, true, true);
 
 	if (like) {
 		api.likeProject({userId: get(userId), projectId: targetProject.id});
@@ -369,7 +371,7 @@ export function setLikeProject(targetProject, like) {
 export function setFollowProject(targetProject, follow) {
 	updateProject(targetProject, {
 		followCount: Math.max(0, targetProject.followCount + (follow ? 1 : -1)),
-	}, true);
+	}, true, true);
 
 	if (follow) {
 		api.followProject({userId: get(userId), projectId: targetProject.id});

@@ -6,11 +6,14 @@ export async function post(req, res, next) {
 	const options = req.body;
 	const details = options.details;
 	const projectId = options.id;
+	const isSuperficial = options.isSuperficial;
 	const isModification = options.isModification;
 
-	details.lastActiveAt = (new Date()).getTime();
-	if (isModification) {
-		details.modifiedAt = details.lastActiveAt;
+	if (!isSuperficial) {
+		details.lastActiveAt = (new Date()).getTime();
+		if (isModification) {
+			details.modifiedAt = details.lastActiveAt;
+		}
 	}
 
 	//TODO: check allowed to modify project, isOwner, !archive, !deleted

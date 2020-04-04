@@ -9,8 +9,8 @@
 
     $: profileImageSrc = ProfileDefaultImage;
 
-    $: userColors = (user && user.colors) || null;
-    $: profileImageBgStyling = userColors ? 'background-image: linear-gradient(' + userColors.profileTop + ', ' + userColors.profileBottom + ');' : '';
+    $: userStyle = (user && user.style) || null;
+    $: profileImageBgStyling = userStyle ? 'background-image: linear-gradient(' + userStyle.profileTop + ', ' + userStyle.profileBottom + ');' : '';
 </script>
 
 <div class="avatarIcon" style="{profileImageBgStyling}">

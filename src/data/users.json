@@ -18,7 +18,7 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":null,
-	   "colors":{
+	   "style":{
 			"profileTop":"#91d5ec",
 			"profileBottom":"#5994ab",
 			"coverTop":"#bed9f1",
@@ -54,7 +54,7 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
-	   "colors":{
+	   "style":{
 			"profileTop":"#f9c35c",
 			"profileBottom":"#d88060",
 			"coverTop":"#cbe4c1",
@@ -92,7 +92,7 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":null,
-	   "colors":{
+	   "style":{
 			"profileTop":"#9b99ec",
 			"profileBottom":"#6155a2",
 			"coverTop":"#fbc7ae",
@@ -130,7 +130,7 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
-	   "colors":{
+	   "style":{
 			"profileTop":"#ceaef1",
 			"profileBottom":"#795373",
 			"coverTop":"#fbc7ae",
@@ -168,7 +168,7 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
-	   "colors":{
+	   "style":{
 			"profileTop":"#f1aec1",
 			"profileBottom":"#b38098",
 			"coverTop":"#fbc7ae",
@@ -206,7 +206,7 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
-	   "colors":{
+	   "style":{
 			"profileTop":"#80e8a5",
 			"profileBottom":"#66886c",
 			"coverTop":"#fbc7ae",
@@ -244,7 +244,7 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
-	   "colors":{
+	   "style":{
 			"profileTop":"#f9e7be",
 			"profileBottom":"#a08064",
 			"coverTop":"#fbc7ae",
@@ -282,7 +282,7 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
-	   "colors":{
+	   "style":{
 			"profileTop":"#ade0aa",
 			"profileBottom":"#6b8e5f",
 			"coverTop":"#fbc7ae",
@@ -320,7 +320,7 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
-	   "colors":{
+	   "style":{
 			"profileTop":"#6787e2",
 			"profileBottom":"#35457d",
 			"coverTop":"#fbc7ae",
@@ -358,7 +358,7 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
-	   "colors":{
+	   "style":{
 			"profileTop":"#80e8d5",
 			"profileBottom":"#7bada1",
 			"coverTop":"#fbc7ae",
@@ -396,7 +396,7 @@
 	   ],
 	   "avatarImage":null,
 	   "coverImage":false,
-	   "colors":{
+	   "style":{
 			"profileTop":"#ece2bd",
 			"profileBottom":"#b5b17d",
 			"coverTop":"#fbc7ae",

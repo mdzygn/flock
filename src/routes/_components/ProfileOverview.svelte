@@ -56,10 +56,10 @@
 
 	// $: profileImageSrc = 'content/users/' + username + '/profile.jpg';
     $: profileImageSrc = ProfileDefaultImage;
-    $: userColors = ($viewedUser && $viewedUser.colors) || null;
-    $: profileImageBgStyling = userColors ? 'background-image: linear-gradient(' + userColors.profileTop + ', ' + userColors.profileBottom + ');' : '';
+    $: userStyle = ($viewedUser && $viewedUser.style) || null;
+    $: profileImageBgStyling = userStyle ? 'background-image: linear-gradient(' + userStyle.profileTop + ', ' + userStyle.profileBottom + ');' : '';
 
-    $: coverBgStyling = (userColors && userColors.coverTop) ? 'background-image: linear-gradient(' + userColors.coverTop + ', ' + userColors.coverBottom + ');' : null;
+    $: coverBgStyling = (userStyle && userStyle.coverTop) ? 'background-image: linear-gradient(' + userStyle.coverTop + ', ' + userStyle.coverBottom + ');' : null;
 
     // $: proxyImage = isCurrentUser ? 'profile_overview_owner' : 'profile_overview';
     // $: proxyOverviewActionsImage = isCurrentUser ? 'profile_overview_owner_actions' : 'profile_overview_actions';

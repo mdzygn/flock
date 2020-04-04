@@ -11,13 +11,10 @@
 	import { closeOverlay } from '../../actions/appActions';
 
 	let signUpNewUser;
-	let signUpfirstName;
-	let signUpLastName;
-
 	let signUpUpdateMenuItems;
 
 	function signUpSubmit() {
-		console.log(signUpNewUser, signUpfirstName, signUpLastName);
+		console.log($signUpNewUser);
 	}
 </script>
 
@@ -31,8 +28,6 @@
 				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{signUpSubmit}" bind:updateMenuItems="{signUpUpdateMenuItems}">
 					<SignUpPrompt
 						bind:newUser="{signUpNewUser}"
-						bind:firstName="{signUpfirstName}"
-						bind:lastName="{signUpLastName}"
 						on:confirm="{signUpSubmit}"
 						on:change="{signUpUpdateMenuItems}"
 					/>

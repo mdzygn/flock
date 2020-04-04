@@ -42,3 +42,21 @@ export function copyToClipboard(string) {
 
     document.body.removeChild(textArea);
 }
+
+
+export function formatAsId(string, maxLength, spaceReplaceString) {
+    if (!spaceReplaceString) {
+        spaceReplaceString = '';
+    }
+    let newString = '';
+    if (string) {
+        newString = string.replace(/\s+/g,'');
+        newString = string.replace(/[^a-z0-9]+/g,'');
+        newString = newString.toLowerCase();
+
+        if (maxLength && newString.length > maxLength) {
+            newString = newString.substr(0, maxLength);
+        }
+    }
+    return newString;
+}

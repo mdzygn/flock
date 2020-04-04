@@ -7,13 +7,17 @@ export const contentFolder = 'content/';
 export const projectContentFolder = 'content/projects/';
 export const projectHeaderImage = 'header.jpg';
 
+export const MAX_ID_LENGTH = 12;
+
 export default {
     DEBUG,
+
+    MAIN_USER,
+    GENERAL_USER,
 
     contentFolder,
     projectContentFolder,
     projectHeaderImage,
 
-    MAIN_USER,
-    GENERAL_USER,
+    MAX_ID_LENGTH,
 };

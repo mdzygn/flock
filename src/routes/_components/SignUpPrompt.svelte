@@ -1,10 +1,11 @@
 <script>
     import locale from '../../locale';
+    import config from '../../config';
 
 	import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    import { testInputDefocus } from '../../utils';
+    import { testInputDefocus, formatAsId } from '../../utils';
 
     import { signUpFormValidated } from '../../models/appModel';
 
@@ -19,10 +20,9 @@
 
     $: firstNameField && firstNameField.focus();
 
-    export let firstName = '';
-    export let lastName = '';
-
-    $: $signUpFormValidated = firstName && lastName;
+    $: $signUpFormValidated = $newUser.firstName && $newUser.lastName;
+    $: $newUser.fullName = $newUser.firstName + ' ' + $newUser.lastName;
+    $: $newUser.username = formatAsId($newUser.firstName + $newUser.lastName, config.MAX_ID_LENGTH);
 
     $: {
         $signUpFormValidated;
@@ -44,11 +44,11 @@
     <AvatarIcon user="{newUser}" onClick="{randomiseProfileColor}"/>
     <div class="field descriptionField">
         <div class="label">{locale.SIGN_UP.FIRST_NAME}</div>
-        <input type="text" id="fname" name="fname" autocomplete="given-name" autocapitalize="words" bind:value="{firstName}" bind:this="{firstNameField}" on:keypress="{(e) => testInputDefocus(e, {target: lastNameField})}" />
+        <input type="text" id="fname" name="fname" autocomplete="given-name" autocapitalize="words" bind:value="{$newUser.firstName}" bind:this="{firstNameField}" on:keypress="{(e) => testInputDefocus(e, {target: lastNameField})}" />
     </div>
     <div class="field descriptionField">
         <div class="label">{locale.SIGN_UP.LAST_NAME}</div>
-        <input type="text" id="lname" name="lname" autocomplete="family-name" autocapitalize="words" bind:value="{lastName}" bind:this="{lastNameField}" on:keypress="{(e) => testInputDefocus(e, {action: submit})}" />
+        <input type="text" id="lname" name="lname" autocomplete="family-name" autocapitalize="words" bind:value="{$newUser.lastName}" bind:this="{lastNameField}" on:keypress="{(e) => testInputDefocus(e, {action: submit})}" />
     </div>
 </div>
 

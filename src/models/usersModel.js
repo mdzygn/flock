@@ -72,14 +72,15 @@ function mergeUsers(newUsers) {
 }
 
 export function getNewUser() {
-	const newUser = UserModel();
+	const newUserModel = UserModel();
+	const newUser = get(newUserModel);
 
 	newUser.id = generateId();
 
-	randomiseUserProfileImageColor(newUser);
-	randomiseUserCoverImageColor(newUser);
+	randomiseUserProfileImageColor(newUserModel);
+	randomiseUserCoverImageColor(newUserModel);
 
-	return newUser;
+	return newUserModel;
 }
 
 export function randomiseUserProfileImageColor(userModel) {
@@ -102,4 +103,23 @@ export function randomiseUserCoverImageColor(userModel) {
 	user.style.coverBottom = curCoverImageColors.coverBottom;
 
 	userModel.set(user);
+}
+
+export function addUser(newUserModel) {
+	const newUser = get(newUserModel);
+
+	newUser.createdAt = (new Date()).getTime(); // use for initial sort values
+	newUser.modifiedAt = newUser.createdAt;
+	newUser.lastActiveAt = newUser.createdAt;
+
+	api.addUser({details: newUser}).then(result => {
+		// newUser._id = result.insertedId;
+		console.log(result);
+	});
+
+	const curUsers = get(users);
+	curUsers.unshift(newUserModel);
+	users.set(curUsers);
+
+	return newUserModel;
 }

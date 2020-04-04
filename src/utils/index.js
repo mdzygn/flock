@@ -50,9 +50,9 @@ export function formatAsId(string, maxLength, spaceReplaceString) {
     }
     let newString = '';
     if (string) {
-        newString = string.replace(/\s+/g,'');
-        newString = string.replace(/[^a-z0-9]+/g,'');
-        newString = newString.toLowerCase();
+        newString = string.toLowerCase();
+        newString = newString.replace(/\s+/g,'');
+        newString = newString.replace(/[^a-z0-9]+/g,'');
 
         if (maxLength && newString.length > maxLength) {
             newString = newString.substr(0, maxLength);

@@ -8,13 +8,15 @@
 	import OverlayMenu from './OverlayMenu.svelte';
 	import OverlayPrompt from './OverlayPrompt.svelte';
 
+	import { createUser } from '../../actions/userActions';
+
 	import { closeOverlay } from '../../actions/appActions';
 
 	let signUpNewUser;
 	let signUpUpdateMenuItems;
 
 	function signUpSubmit() {
-		console.log($signUpNewUser);
+		createUser(signUpNewUser);
 	}
 </script>
 

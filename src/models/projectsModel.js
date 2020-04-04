@@ -295,8 +295,6 @@ export function addProject(projectDetails) {
 	do { projectId = generateId(); } while (getProject(projectId) && trialIndex < 99);
 	if (trialIndex === 99) { return null; }
 
-	// const newProjectModel = Object.assign({}, ProjectModel);
-
 	const newProjectModel = ProjectModel();
 	const newProject = get(newProjectModel);
 
@@ -315,17 +313,12 @@ export function addProject(projectDetails) {
 	newProject.isNew = true;
 	newProject.hasCreated = true;
 
-	// console.log('newProjectModel',newProject);
-	// debugger;
-
 	newProject.followCount++;
 	newProject.likeCount++;
 
 	// not to send
 	// newProject.liked = true;
 	// newProject.following = true;
-
-	// projects.unshift(newProjectModel);
 
 	api.addProject({details: newProject}).then(result => {
 		// newProject._id = result.insertedId;

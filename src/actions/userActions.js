@@ -1,6 +1,7 @@
 import config from "../config";
 
 import { get } from 'svelte/store';
+import { goto } from '@sapper/app';
 // import { DEBUG } from '../config';
 
 import { copyToClipboard } from '../utils';
@@ -13,6 +14,7 @@ import {
 
 import {
     getUser,
+    addUser,
 } from '../models/usersModel';
 
 function checkUpdateUser(targetUser) {
@@ -71,5 +73,16 @@ export function checkUser(query) {
         logOut();
     } else if (get(userId) && !get(user)) {
         setUser(get(userId));
+    }
+}
+
+export function createUser(newUserModel) {
+    const newUser = get(newUserModel);
+
+    if (newUser) {
+        addUser(newUserModel);
+
+        setUser(newUser.id);
+        goto('profile/' + newUser.id);
     }
 }

@@ -111,6 +111,14 @@ function getUsers(options) {
 	});
 }
 
+// options = { details: {} }
+function addUser(options) {
+	return send('addUser', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 const api = {
 	getProjects,
 	addProject,
@@ -124,6 +132,7 @@ const api = {
 
 
 	getUsers,
+	addUser,
 }
 
 export default api;

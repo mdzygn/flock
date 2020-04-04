@@ -148,7 +148,7 @@
 
             {#if userLocation || isCurrentUser}
                 <div class="footerActions">
-                    <Location location="{userLocation}" />
+                    <Location location="{userLocation}" hideWithVisibility="{isCurrentUser}" />
                     {#if isCurrentUser}
 						<Audience />
                     {/if}

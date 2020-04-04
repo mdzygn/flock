@@ -2,10 +2,12 @@
     import LocationIcon from "../../assets/icons/location.png";
 
     export let className = '';
-    export let location = '';
+	export let location = '';
+
+    export let hideWithVisibility = false;
 </script>
 
-<div class="location {className}" class:hidden={!location}><div class="locationIcon" style="background-image: url({LocationIcon})" />{location}</div>
+<div class="location {className}" class:hidden={!hideWithVisibility && !location} class:visibilityHidden={hideWithVisibility && !location}><div class="locationIcon" style="background-image: url({LocationIcon})" />{location}</div>
 
 <style>
 	.location {
@@ -21,6 +23,9 @@
 
     .hidden {
         display: none;
+    }
+    .visibilityHidden {
+        visibility: hidden;
     }
 
 	.locationIcon {

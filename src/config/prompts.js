@@ -227,6 +227,15 @@ const prompts = {
                 action: () => { showPrompt(promptIds.SIGN_UP); },
             },
         ],
+    },
+    LOGGED_OUT: {
+        title: 'Logged Out',
+        message: 'You\'re now logged out',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
     }
 }
 

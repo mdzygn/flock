@@ -1,4 +1,6 @@
 <script>
+    import { tick } from 'svelte';
+
     import OverlayMenuItem from './OverlayMenuItem.svelte';
 
 	import { closeOverlay } from '../../actions/appActions';
@@ -11,11 +13,13 @@
     $: menu = menus[menuId];
     $: menuItems = (menu && menu.menuItems) || null;
 
-    function selectMenuItem(event) {
+    async function selectMenuItem(event) {
         const menuItem = event.detail && event.detail.menuItem;
         const action = menuItem && menuItem.action;
 
         closeOverlay(); // ensure doing first in case opening new menu
+        await tick();
+
         if (action) {
             action(targetItem);
         }

@@ -1,4 +1,6 @@
 <script>
+    import { tick } from 'svelte';
+
     import OverlayMenuItem from './OverlayMenuItem.svelte';
 
 	import { closeOverlay } from '../../actions/appActions';
@@ -20,11 +22,12 @@
 
     let hasSlots = $$props.$$slots;
 
-    function selectMenuItem(event) {
+    async function selectMenuItem(event) {
         const menuItem = event.detail && event.detail.menuItem;
         const action = menuItem && menuItem.action;
 
         closeOverlay(); // ensure doing first in case opening new menu
+        await tick();
 
         if (action) {
             action(targetItem);

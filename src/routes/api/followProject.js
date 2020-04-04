@@ -1,4 +1,4 @@
-import { init, ObjectID } from '../../server/mongo.js';
+import { init } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();

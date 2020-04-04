@@ -5,12 +5,10 @@ export async function post(req, res, next) {
 
 	const options = req.body;
 
-	const details = {};
-	details.userId = options.userId;
-	details.projectId = options.projectId;
+	const projects = await db.collection('users').find({}).toArray();
 
-	const result = await db.collection('likes').deleteMany(details);
+	// const projects = []; // to test returning no users
 
 	res.writeHead(200, {'Content-Type': 'application/json'});
-	res.end(JSON.stringify(result));
+	res.end(JSON.stringify(projects));
 }

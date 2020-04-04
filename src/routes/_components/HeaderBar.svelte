@@ -42,7 +42,7 @@
     $: {
         if (/\/projects\/.+/.test(path) && !/\/projects\/new/.test(path) && !/\/projects\/archive/.test(path) && $project) {
             sectionLabel = $project.title;
-        } else if (/\/profile\/.+/.test(path) && !isCurrentUser) {//$viewedUser && !$viewedUser.isCurrentUser) {
+        } else if (/\/profile\/.+/.test(path) && !isCurrentUser && $viewedUser) {//$viewedUser && !$viewedUser.isCurrentUser) {
             sectionLabel = $viewedUser.fullName;
         } else if (/\/messages\/.+/.test(path) && $conversation && ($conversation.user || $conversation.project)) {
             if ($conversation.project && $project) { // // temporary
@@ -84,7 +84,7 @@
         {/if}
     {/if}
     <div class="avatarIcon" class:button="{!isMyProfile}" on:click="{loadMyProfile}">
-        <AvatarIcon user="{$user}" />
+        <AvatarIcon user="{user}" />
     </div>
 </div>
 

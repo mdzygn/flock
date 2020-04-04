@@ -23,7 +23,7 @@ function checkUpdateUser(targetUser) {
 }
 export function requestConnection(userId) {
     const userModel = getUser(userId);
-    const user = userModel;
+    const user = get(userModel);
 
     user.requestedConnection = true;
     checkUpdateUser(user);
@@ -33,7 +33,7 @@ export function requestConnection(userId) {
 
 export function reportUser(userId) {
     const userModel = getUser(userId);
-    const user = userModel;
+    const user = get(userModel);
 
     user.reported = true;
     checkUpdateUser(user);
@@ -47,7 +47,9 @@ export function copyProfileLink(userId) {
 }
 
 export function setUser(targetUserId) {
-    const curUser = getUser(targetUserId);
+    const curUserModel = getUser(targetUserId);
+    const curUser = get(curUserModel);
+
     if (curUser) {
         userId.set(targetUserId);
         user.set(curUser);

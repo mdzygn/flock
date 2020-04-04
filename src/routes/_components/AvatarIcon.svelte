@@ -1,15 +1,17 @@
 <script>
+    // import { writable } from 'svelte/store';
+
     import ProfileDefaultImage from "../../assets/icons/profileDefault_small.png";
 
-    export let user = null;
+    export let user = null; // writable({})
 
-    $: thumbImageId = (user && user.username) || '_default';
+    $: thumbImageId = ($user && $user.username) || '_default';
 
     // $: profileImageSrc = 'content/users/' + thumbImageId + '/thumb.jpg';
 
     $: profileImageSrc = ProfileDefaultImage;
 
-    $: userStyle = (user && user.style) || null;
+    $: userStyle = ($user && $user.style) || null;
     $: profileImageBgStyling = userStyle ? 'background-image: linear-gradient(' + userStyle.profileTop + ', ' + userStyle.profileBottom + ');' : '';
 </script>
 

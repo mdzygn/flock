@@ -6,7 +6,7 @@
     export let user;
 
     function loadCurrentUser() {
-        loadProfile(user.id);
+        loadProfile($user.id);
     }
 </script>
 
@@ -14,8 +14,8 @@
     <AvatarIcon {user} />
     <div class="detailContent">
         <div class="detailInnerContent">
-            <div class="title">{user.fullName}</div>
-            <div class="username">@{user.username}</div>
+            <div class="title">{$user.fullName}</div>
+            <div class="username">@{$user.username}</div>
         </div>
     </div>
 </div>

@@ -39,6 +39,8 @@ function send(path, options) {
 		});
 }
 
+/*** Projects ***/
+
 // options = { limit: number, cursor: string, sort: {} }
 function getProjects(options) {
 	options = options || {};
@@ -96,6 +98,19 @@ function unlikeProject(options) {
 	});
 }
 
+/*** Users ***/
+
+// options = { limit: number, cursor: string, sort: {} }
+function getUsers(options) {
+	options = options || {};
+	options.userId = get(userId);
+
+	return send('getUsers', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 const api = {
 	getProjects,
 	addProject,
@@ -106,6 +121,9 @@ const api = {
 
 	likeProject,
 	unlikeProject,
+
+
+	getUsers,
 }
 
 export default api;

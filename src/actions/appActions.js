@@ -138,7 +138,9 @@ export function loadProfile(targetProfileId, options) {
 
     profileId.set(targetProfileId);
 
-    const curUser = users.find(item => item.id === targetProfileId);
+    // const curUser = users.find(item => item.id === targetProfileId);
+    const curUserModel = getUser(targetProfileId);
+    const curUser = get(curUserModel);
     viewedUser.set(curUser);
 
     if (gotoRoute('profile/' + targetProfileId)) {
@@ -234,7 +236,7 @@ export function showShareProjectDialog(projectId) {
 
 export function showShareProfileDialog(userId) {
     const userModel = getUser(userId);
-    const user = userModel; // get(userModel);
+    const user = get(userModel);
 
     targetUser.set(user);
 

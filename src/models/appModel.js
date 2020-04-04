@@ -12,6 +12,9 @@ const appModel = createModel({
     profileId: null,
     userId: null, // 'bl20a8lm', // default user
 
+    username: null,
+    usercode: null,
+
     viewMode: 'discover',
     locationMode: 'global',
     exploreZoomed: false,
@@ -44,6 +47,9 @@ export const project = writable(null);
 export const conversation = writable(null);
 export const viewedUser = writable(null);
 export const user = writable(null);
+
+export const username = appModel.username;
+export const usercode = appModel.usercode;
 
 export const targetProject = writable(null);
 export const targetUser = writable(null);

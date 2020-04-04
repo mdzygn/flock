@@ -8,12 +8,19 @@
 
     import { testInputDefocus } from '../../utils';
 
-    import { logInFormValidated } from '../../models/appModel';
+    import {
+        logInFormValidated,
+        username,
+        usercode,
+    } from '../../models/appModel';
 
     export const details = writable({});
 
     let usernameField;
     let passField;
+
+    $details.username = $username;
+    $details.pass = $usercode;
 
     $: usernameField && usernameField.focus();
 

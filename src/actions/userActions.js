@@ -6,7 +6,7 @@ import { get } from 'svelte/store';
 import { goto } from '@sapper/app';
 // import { DEBUG } from '../config';
 
-import { copyToClipboard } from '../utils';
+import { copyToClipboard, generateId } from '../utils';
 
 import promptIds from '../config/promptIds';
 
@@ -14,6 +14,8 @@ import {
     viewedUser,
     user,
     userId,
+    username,
+    usercode,
 } from '../models/appModel';
 
 import {
@@ -97,6 +99,9 @@ export function createUser(newUserModel) {
 
     if (newUser) {
         addUser(newUserModel);
+
+        username.set(newUser.username);
+        usercode.set(generateId());
 
         setUser(newUser.id);
         goto('profile/' + newUser.id);

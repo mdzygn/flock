@@ -1,6 +1,10 @@
-export function generateId() {
+export function generateId(length) {
+    if (!length) {
+        length = 8;
+    }
     const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    return 'xxxxxxxx'.replace(/x/g, function() {
+    const idBase = new Array(length + 1).join('x');
+    return idBase.replace(/x/g, function() {
         return chars[Math.floor(Math.random() * chars.length)];
     });
 }

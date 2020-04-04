@@ -15,7 +15,10 @@
 	let description = '';
 	let headerImage = 'header2';
 
+	let titleField;
 	let descriptionField;
+
+    // $: titleField && titleField.focus();
 
 	$: nextEnabled = title && description && headerImage;
 
@@ -40,11 +43,11 @@
 		<div class="panelContent">
 			<div class="field">
 				<div class="label">{locale.NEW_PROJECT.TITLE}</div>
-        		<input type="text" bind:value="{title}" on:keypress="{(e) => testInputDefocus(e, {target: descriptionField})}" />
+        		<input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{(e) => testInputDefocus(e, {target: descriptionField})}" />
 			</div>
 			<div class="field descriptionField">
 				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
-        		<textarea bind:this="{descriptionField}" bind:value="{description}" on:keypress="{testInputDefocus}" />
+        		<textarea bind:value="{description}" bind:this="{descriptionField}" on:keypress="{testInputDefocus}" />
 			</div>
 			<div class="field headerImageField">
 				<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>

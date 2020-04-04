@@ -7,16 +7,22 @@
 
     import AvatarIcon from '../_components/AvatarIcon.svelte';
 
-    const newUser = getNewUser();
+    export const newUser = getNewUser();
 
     let firstNameField;
     let lastNameField;
 
-    let firstName = '';
-    let lastName = '';
+    $: firstNameField && firstNameField.focus();
+
+    export let firstName = '';
+    export let lastName = '';
+
+    export let onConfirm = null;
 
     function submit() {
-
+        if (onConfirm) {
+            onConfirm();
+        }
     }
 
     function randomiseProfileColor() {

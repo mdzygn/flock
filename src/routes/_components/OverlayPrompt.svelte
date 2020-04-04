@@ -6,6 +6,8 @@
     export let promptId;
     export let targetItem = null;
 
+    export let onConfirm = null;
+
     import promptIds from '../../config/promptIds';
     import prompts from '../../config/prompts';
 
@@ -26,6 +28,10 @@
 
         if (action) {
             action(targetItem);
+        }
+
+        if (menuItem.default && onConfirm) {
+            onConfirm();
         }
     }
 </script>

@@ -191,7 +191,6 @@ const prompts = {
         menuItems: [
             {
                 label: 'Create User',
-                disabled: true,
                 default: true,
             },
         ],

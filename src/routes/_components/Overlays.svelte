@@ -9,6 +9,14 @@
 	import OverlayPrompt from './OverlayPrompt.svelte';
 
 	import { closeOverlay } from '../../actions/appActions';
+
+	let signUpNewUser;
+	let signUpfirstName;
+	let signUpLastName;
+
+	function signUpSubmit() {
+		console.log(signUpNewUser, signUpfirstName, signUpLastName);
+	}
 </script>
 
 {#if $curMenu || $curPrompt}
@@ -18,8 +26,13 @@
 			<OverlayMenu menuId="{$curMenu}" />
 		{:else}
 			{#if $curPrompt === promptIds.SIGN_UP }
-				<OverlayPrompt promptId="{$curPrompt}">
-					<SignUpPrompt />
+				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{signUpSubmit}">
+					<SignUpPrompt
+						bind:newUser="{signUpNewUser}"
+						bind:firstName="{signUpfirstName}"
+						bind:lastName="{signUpLastName}"
+						onConfirm="{signUpSubmit}"
+					/>
 				</OverlayPrompt>
 			{:else}
 				<OverlayPrompt promptId="{$curPrompt}" />

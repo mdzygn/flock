@@ -2,7 +2,7 @@ import { get } from 'svelte/store';
 
 import { API_PATH, DEBUG } from './config';
 
-import { userId } from '../models/appModel';
+import { userId, usercode } from '../models/appModel';
 
 
 function send(path, options) {
@@ -44,12 +44,28 @@ function send(path, options) {
 		});
 }
 
+function addOptions(curOptions, newOptions) {
+	curOptions = curOptions || {};
+	Object.assign(curOptions, newOptions);
+	return curOptions;
+}
+
+function addCredentials(curOptions) {
+	curOptions = curOptions || {};
+	curOptions = addOptions(curOptions, {
+		userId: get(userId),
+		usercode: get(usercode),
+	});
+	return curOptions;
+}
+
 /*** Projects ***/
 
 // options = { limit: number, cursor: string, sort: {} }
 function getProjects(options) {
-	options = options || {};
-	options.userId = get(userId);
+	options = addOptions(options, {
+		userId: get(userId),
+	});
 
 	return send('getProjects', options).catch(error => {
 		console.error('API Error: ' + error, { error });
@@ -59,6 +75,7 @@ function getProjects(options) {
 
 // options = { details: {} }
 function addProject(options) {
+	options = addCredentials(options);
 	return send('addProject', options).catch(error => {
 		console.error('API Error: ' + error, { error });
 		return Promise.reject(error); // TODO: prevent followups being called
@@ -67,6 +84,7 @@ function addProject(options) {
 
 // options = { id: string, details: {} }
 function updateProject(options) {
+	options = addCredentials(options);
 	return send('updateProject', options).catch(error => {
 		console.error('API Error: ' + error, { error });
 		return Promise.reject(error); // TODO: prevent followups being called
@@ -75,6 +93,7 @@ function updateProject(options) {
 
 // options = { details: { userId: id, projectId: id } }
 function followProject(options) {
+	options = addCredentials(options);
 	return send('followProject', options).catch(error => {
 		console.error('API Error: ' + error, { error });
 		return Promise.reject(error); // TODO: prevent followups being called
@@ -82,6 +101,7 @@ function followProject(options) {
 }
 // options = { details: { userId: id, projectId: id } }
 function unfollowProject(options) {
+	options = addCredentials(options);
 	return send('unfollowProject', options).catch(error => {
 		console.error('API Error: ' + error, { error });
 		return Promise.reject(error); // TODO: prevent followups being called
@@ -90,6 +110,7 @@ function unfollowProject(options) {
 
 // options = { details: { userId: id, projectId: id } }
 function likeProject(options) {
+	options = addCredentials(options);
 	return send('likeProject', options).catch(error => {
 		console.error('API Error: ' + error, { error });
 		return Promise.reject(error); // TODO: prevent followups being called
@@ -97,6 +118,7 @@ function likeProject(options) {
 }
 // options = { details: { userId: id, projectId: id } }
 function unlikeProject(options) {
+	options = addCredentials(options);
 	return send('unlikeProject', options).catch(error => {
 		console.error('API Error: ' + error, { error });
 		return Promise.reject(error); // TODO: prevent followups being called
@@ -115,8 +137,9 @@ function login(options) {
 
 // options = { limit: number, cursor: string, sort: {} }
 function getUsers(options) {
-	options = options || {};
-	options.userId = get(userId);
+	options = addOptions(options, {
+		userId: get(userId),
+	});
 
 	return send('getUsers', options).catch(error => {
 		console.error('API Error: ' + error, { error });

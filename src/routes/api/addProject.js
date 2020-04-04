@@ -1,4 +1,4 @@
-import { init } from '../../server/mongo.js';
+import { init, response } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -6,12 +6,19 @@ export async function post(req, res, next) {
 	const options = req.body;
 	const details = options.details;
 
-	details.createdAt = (new Date()).getTime();
-	details.modifiedAt = details.createdAt;
-	details.lastActiveAt = details.createdAt;
+	if (details && details.id) {
+		details.createdAt = (new Date()).getTime();
+		details.modifiedAt = details.createdAt;
+		details.lastActiveAt = details.createdAt;
 
-	const result = await db.collection('projects').insertOne(details);
+		const result = await db.collection('projects').insertOne(details);
 
-	res.writeHead(200, {'Content-Type': 'application/json'});
-	res.end(JSON.stringify(result));
+		if (result) {
+			response(res, {success: true});
+		} else {
+			response(res, {error: true});
+		}
+	} else {
+		response(res, {error: true});
+	}
 }

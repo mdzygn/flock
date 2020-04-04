@@ -7,7 +7,7 @@ export async function post(req, res, next) {
 	const details = options.details;
 
 	if (details && details.username && details.usercode) {
-		let exisitingUser = await db.collection('users').findOne({ username: details.username });
+		const exisitingUser = await db.collection('users').findOne({ username: details.username });
 		if (exisitingUser) {
 			response(res, {invalid: true, errorType: 'username_exists'});
 		} else {
@@ -17,7 +17,11 @@ export async function post(req, res, next) {
 
 			const result = await db.collection('users').insertOne(details);
 
-			response(res, result);
+			if (result) {
+				response(res, {success: true});
+			} else {
+				response(res, {error: true});
+			}
 		}
 	} else {
 		response(res, {error: true});

@@ -6,7 +6,7 @@ export async function post(req, res, next) {
 	const options = req.body;
 
 	if (options.userId && options.projectId) {
-		let projectUpdateResult = await db.collection('projects').updateOne({ id: options.projectId }, { $inc: { followCount: 1 } });
+		const projectUpdateResult = await db.collection('projects').updateOne({ id: options.projectId }, { $inc: { followCount: 1 } });
 
 		if (projectUpdateResult) {
 			const details = {};
@@ -16,7 +16,7 @@ export async function post(req, res, next) {
 
 			const result = await db.collection('follows').insertOne(details);
 
-			let userUpdateResult = await db.collection('users').updateOne({ id: options.userId }, { $inc: { followsCount: 1 } });
+			const userUpdateResult = await db.collection('users').updateOne({ id: options.userId }, { $inc: { followsCount: 1 } });
 			if (userUpdateResult) {
 				response(res, {success: true});
 			} else {

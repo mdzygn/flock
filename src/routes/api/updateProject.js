@@ -1,4 +1,4 @@
-import { init } from '../../server/mongo.js';
+import { init, response } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -20,6 +20,9 @@ export async function post(req, res, next) {
 
 	const result = await db.collection('projects').updateOne({ id: projectId }, { $set: details } );
 
-	res.writeHead(200, {'Content-Type': 'application/json'});
-	res.end(JSON.stringify(result));
+	if (result) {
+		response(res, {success: true});
+	} else {
+		response(res, {error: true});
+	}
 }

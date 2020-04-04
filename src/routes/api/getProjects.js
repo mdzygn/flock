@@ -1,4 +1,4 @@
-import { init } from '../../server/mongo.js';
+import { init, response } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -43,6 +43,9 @@ export async function post(req, res, next) {
 		}
 	}
 
-	res.writeHead(200, {'Content-Type': 'application/json'});
-	res.end(JSON.stringify(projects));
+	if (projects) {
+		response(res, projects);
+	} else {
+		response(res, {error: true});
+	}
 }

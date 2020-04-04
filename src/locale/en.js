@@ -2,6 +2,10 @@ const locale = {
 	GENERAL: {
 		SHOW_MORE: 'show more',
 	},
+	HEADER: {
+		SIGN_IN: 'sign in',
+		SIGN_UP: 'sign up',
+	},
 	DISCOVER: {
 		NO_PROJECTS: 'no projects found',
 	},

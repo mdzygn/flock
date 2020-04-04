@@ -1,5 +1,8 @@
 <script>
+    import locale from '../../locale';
     import { goto } from '@sapper/app';
+
+    import Button from '../../components/Button.svelte';
 
     import { getSectionByPath, getIdForSection } from "../../models/sectionsModel";
 
@@ -28,6 +31,8 @@
         viewingOwnProfile: isCurrentUser,
         // viewingOwnProfile: $viewedUser ? $viewedUser.isCurrentUser : false,
     };
+
+    $: loggedIn = !!$user;
 
     $: curSection = getSectionByPath(path, appState);
     $: isProjectView = curSection ? curSection.isProjectView : false;
@@ -70,6 +75,13 @@
             loadProfile($userId); // , {owner: true});
         }
     }
+
+    function signIn() {
+
+    }
+    function signUp() {
+
+    }
 </script>
 
 <div class="headerBar">
@@ -83,9 +95,16 @@
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
         {/if}
     {/if}
-    <div class="avatarIcon" class:button="{!isMyProfile}" on:click="{loadMyProfile}">
-        <AvatarIcon user="{user}" />
-    </div>
+    {#if loggedIn}
+        <div class="avatarIcon" class:button="{!isMyProfile}" on:click="{loadMyProfile}">
+            <AvatarIcon user="{user}" />
+        </div>
+    {:else}
+        <div class="signInButtonContainer">
+            <Button className="signUpButton" onClick="{signUp}">{locale.HEADER.SIGN_UP}</Button>
+            <Button className="signInButton" onClick="{signIn}">{locale.HEADER.SIGN_IN}</Button>
+        </div>
+    {/if}
 </div>
 
 <style>
@@ -149,5 +168,40 @@
 
     .header.hasBack {
         left: 50px;
+    }
+
+    .signInButtonContainer {
+        position: absolute;
+        right: 0;
+    }
+
+    .headerBar :global(.signInButton) {
+        display: inline-block;
+        float: right;
+    }
+    .headerBar :global(.signInButton .buttonContent) {
+        margin: 11px 0px;
+        padding: 7px 8px;
+
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    .headerBar :global(.signUpButton) {
+        display: inline-block;
+        float: right;
+    }
+    .headerBar :global(.signUpButton .buttonContent) {
+        margin: 11px;
+        margin-right: 11px;
+        margin-left: 6px;
+
+        padding: 7px 12px;
+
+        font-size: 1.5rem;
+        font-weight: 700;
+
+        background-color: #222222;
+        border-radius: 999px;
+        color: #ffffff;
     }
 </style>

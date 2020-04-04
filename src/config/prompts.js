@@ -187,7 +187,7 @@ const prompts = {
         ],
     },
     SIGN_UP: {
-        title: 'Sign Up',
+        title: 'New User',
         menuItems: [
             {
                 label: 'Create User',

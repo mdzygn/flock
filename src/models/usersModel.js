@@ -2,13 +2,17 @@ import api from '../api';
 
 import { writable, get } from 'svelte/store';
 
+import profileImageColors from '../config/profileImageColors.json';
+import coverImageColors from '../config/coverImageColors.json';
+
+import { generateId } from '../utils';
+
 // import usersData from '../data/users.json';
 // const users = JSON.parse(JSON.stringify(usersData));
 
 import UserModel from '../models/userModel';
 
 export let loadingUsers = writable(false);
-export let loadedUsers = writable(false);
 
 let users = writable([]);
 
@@ -26,7 +30,6 @@ export function loadUsers(options) {
 		api.getUsers(options).then(result => {
 			mergeUsers(result);
 			loadingUsers.set(false);
-			loadedUsers.set(true);
 		});
 	}
 }
@@ -66,4 +69,37 @@ function mergeUsers(newUsers) {
 
 		users.set(curUsers);
 	}
+}
+
+export function getNewUser() {
+	const newUser = UserModel();
+
+	newUser.id = generateId();
+
+	randomiseUserProfileImageColor(newUser);
+	randomiseUserCoverImageColor(newUser);
+
+	return newUser;
+}
+
+export function randomiseUserProfileImageColor(userModel) {
+	const user = get(userModel);
+
+	const curProfileImageColors = profileImageColors[Math.floor(Math.random() * profileImageColors.length)];
+
+	user.style.profileTop = curProfileImageColors.profileTop;
+	user.style.profileBottom = curProfileImageColors.profileBottom;
+
+	userModel.set(user);
+}
+
+export function randomiseUserCoverImageColor(userModel) {
+	const user = get(userModel);
+
+	const curCoverImageColors = coverImageColors[Math.floor(Math.random() * coverImageColors.length)];
+
+	user.style.coverTop = curCoverImageColors.coverTop;
+	user.style.coverBottom = curCoverImageColors.coverBottom;
+
+	userModel.set(user);
 }

@@ -5,6 +5,8 @@
 
     export let user = null; // writable({})
 
+    export let onClick = null;
+
     $: thumbImageId = ($user && $user.username) || '_default';
 
     // $: profileImageSrc = 'content/users/' + thumbImageId + '/thumb.jpg';
@@ -15,7 +17,7 @@
     $: profileImageBgStyling = userStyle ? 'background-image: linear-gradient(' + userStyle.profileTop + ', ' + userStyle.profileBottom + ');' : '';
 </script>
 
-<div class="avatarIcon" style="{profileImageBgStyling}">
+<div class="avatarIcon" style="{profileImageBgStyling}" class:button="{onClick}" on:click="{onClick}">
     <div class="avatarIconImage" style='background-image: url({profileImageSrc})'></div>
 </div>
 
@@ -41,5 +43,9 @@
         height: 100%;
 
         background-size: cover;
+    }
+
+    .button {
+        cursor: pointer;
     }
 </style>

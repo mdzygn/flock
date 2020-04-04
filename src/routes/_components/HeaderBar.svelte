@@ -23,8 +23,6 @@
         getIsCurrentUser,
     } from '../../models/appModel';
 
-    import { loadedUsers } from '../../models/usersModel';
-
     import {
         loadProfile,
         showMenu,
@@ -114,18 +112,16 @@
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
         {/if}
     {/if}
-    {#if $loadedUsers}
-        {#if loggedIn}
-            <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showMainOptions}"></Button>
-            <div class="avatarIcon" class:button="{!isMyProfile}" on:click="{loadMyProfile}">
-                <AvatarIcon user="{user}" />
-            </div>
-        {:else}
-            <div class="signInButtonContainer">
-                <Button className="signUpButton" onClick="{signUp}">{locale.HEADER.SIGN_UP}</Button>
-                <Button className="signInButton" onClick="{signIn}">{locale.HEADER.SIGN_IN}</Button>
-            </div>
-        {/if}
+    {#if $userId}
+        <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showMainOptions}"></Button>
+        <div class="avatarIcon" class:button="{!isMyProfile}" on:click="{loadMyProfile}">
+            <AvatarIcon user="{user}" />
+        </div>
+    {:else}
+        <div class="signInButtonContainer">
+            <Button className="signUpButton" onClick="{signUp}">{locale.HEADER.SIGN_UP}</Button>
+            <Button className="signInButton" onClick="{signIn}">{locale.HEADER.SIGN_IN}</Button>
+        </div>
     {/if}
 </div>
 

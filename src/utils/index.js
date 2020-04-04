@@ -18,7 +18,9 @@ export function testInputDefocus(event, options) {
         event.target.blur();
         event.preventDefault();
 
-        if (options && options.target) {
+        if (options && options.action) {
+            options.action();
+        } else if (options && options.target) {
             options.target.focus();
         }
     }

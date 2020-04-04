@@ -44,6 +44,10 @@ const locale = {
 	},
 	PROFILE: {
 		NOT_FOUND: 'Profile not found',
+	},
+	SIGN_UP: {
+		FIRST_NAME: 'First name',
+		LAST_NAME: 'Last name',
 	}
 }
 

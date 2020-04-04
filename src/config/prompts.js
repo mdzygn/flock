@@ -236,7 +236,16 @@ const prompts = {
                 label: 'Ok',
             },
         ],
-    }
+    },
+    ADD_PROJECT_ERROR: {
+        title: 'New Project',
+        message: 'Error adding project',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
 }
 
 export default prompts;

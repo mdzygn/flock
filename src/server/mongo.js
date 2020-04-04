@@ -19,3 +19,15 @@ export function response(res, responseObject) {
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(responseObject));
 }
+
+export async function validateCredentials(db, options) {
+    const userItem = await db.collection('users').findOne({ id: options.userId });
+
+    console.log('userItem', userItem);
+
+    if (userItem && userItem.usercode === options.usercode) {
+        return true;
+    } else {
+        return false;
+    }
+}

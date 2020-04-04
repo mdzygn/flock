@@ -5,8 +5,13 @@
 
     export let user;
 
+    $: fullName = $user && $user.fullName || '';
+    $: username = $user && $user.username || '';
+
     function loadCurrentUser() {
-        loadProfile($user.id);
+        if ($user) {
+            loadProfile($user.id);
+        }
     }
 </script>
 
@@ -14,8 +19,8 @@
     <AvatarIcon {user} />
     <div class="detailContent">
         <div class="detailInnerContent">
-            <div class="title">{$user.fullName}</div>
-            <div class="username">@{$user.username}</div>
+            <div class="title">{fullName}</div>
+            <div class="username">@{username}</div>
         </div>
     </div>
 </div>

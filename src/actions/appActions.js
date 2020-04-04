@@ -139,7 +139,7 @@ export function loadProjectPost(targetProjectId) {
 }
 
 export function newProject() {
-    if (!checkLoggedIn()) { return; }
+    // if (!checkLoggedIn()) { return; }
 
     goto('projects/new');
 }

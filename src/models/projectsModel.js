@@ -4,9 +4,11 @@ import { writable, get } from 'svelte/store';
 
 import { generateId } from '../utils';
 
+// import promptIds from '../config/promptIds';
+
 import config from '../config';
 
-import { locationMode, getIsProjectOwner, user, userId } from '../models/appModel';
+import { locationMode, getIsProjectOwner, user, userId, project } from '../models/appModel';
 
 import ProjectModel from '../models/projectModel';
 
@@ -324,6 +326,10 @@ export function addProject(projectDetails) {
 	// newProject.following = true;
 
 	api.addProject({details: newProject}).then(result => {
+		if (!result || result.error || result.invalid) {
+			// showPrompt(promptIds.ADD_PROJECT_ERROR);
+			removeProjectModel(newProjectModel);
+		}
 		// newProject._id = result.insertedId;
 	});
 
@@ -332,6 +338,21 @@ export function addProject(projectDetails) {
 	projects.set(curProjects);
 
 	return newProjectModel;
+}
+
+function removeProjectModel(projectModel) {
+	if (projectModel && get(projectModel)) {
+		const curProjects = get(projects);
+		const projectIndex = curProjects.indexOf(projectModel);
+
+		curProjects.splice(projectIndex, 1);
+		projects.set(curProjects);
+
+		if (get(project) && get(project).id === get(projectModel).id) {
+			project.set(null);
+		}
+		projectModel.set(null);
+	}
 }
 
 export function updateProject(project, projectDetails, nonModification, isSuperficial) {

@@ -52,7 +52,7 @@ const locale = {
 	LOG_IN: {
 		USERNAME: 'username',
 		PASS: 'password',
-	}
+	},
 }
 
 export default locale;

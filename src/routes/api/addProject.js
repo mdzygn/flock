@@ -1,9 +1,17 @@
-import { init, response } from '../../server/mongo.js';
+import { init, validateCredentials, response } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
+
+	if (!await validateCredentials(db, options)) {
+		response(res, {invalid: true});
+		return;
+	}
+
+    console.log('options', options);
+
 	const details = options.details;
 
 	if (details && details.id) {

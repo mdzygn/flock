@@ -10,8 +10,6 @@ export async function post(req, res, next) {
 		return;
 	}
 
-    console.log('options', options);
-
 	const details = options.details;
 
 	if (details && details.id) {

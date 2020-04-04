@@ -132,7 +132,7 @@ export function saveProjectDetails(projectDetails, options) {
 }
 
 export function createProject(projectDetails) {
-    // if (!checkLoggedIn()) { return; }
+    if (!checkLoggedIn()) { return; }
 
     if (projectDetails.headerImage) {
         projectDetails.headerImage = 'resource/headers/' + projectDetails.headerImage + '.jpg';

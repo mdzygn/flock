@@ -1,17 +1,26 @@
-import { init } from '../../server/mongo.js';
+import { init, response } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
 
-	const details = {};
-	details.userId = options.userId;
-	details.projectId = options.projectId;
-	details.createdAt = (new Date()).getTime();
+	if (options.userId && options.projectId) {
+		let projectUpdateResult = await db.collection('projects').updateOne({ id: options.projectId }, { $inc: { likeCount: 1 } });
 
-	const result = await db.collection('likes').insertOne(details);
+		if (projectUpdateResult) {
+			const details = {};
+			details.userId = options.userId;
+			details.projectId = options.projectId;
+			details.createdAt = (new Date()).getTime();
 
-	res.writeHead(200, {'Content-Type': 'application/json'});
-	res.end(JSON.stringify(result));
+			const result = await db.collection('likes').insertOne(details);
+
+			response(res, result);
+		} else {
+			response(res, {error: true});
+		}
+	} else {
+		response(res, {error: true});
+	}
 }

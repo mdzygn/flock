@@ -14,3 +14,8 @@ export async function init() {
     }
     return { client, db };
 }
+
+export function response(res, responseObject) {
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify(responseObject));
+}

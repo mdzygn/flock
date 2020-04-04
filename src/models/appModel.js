@@ -10,7 +10,7 @@ const appModel = createModel({
     threadId: null,
     conversationId: null,
     profileId: null,
-    userId: 'bl20a8lm', // default user
+    userId: null, // 'bl20a8lm', // default user
 
     viewMode: 'discover',
     locationMode: 'global',

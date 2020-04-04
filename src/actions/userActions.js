@@ -57,11 +57,18 @@ export function setUser(targetUserId) {
     }
 }
 
+export function logOut() {
+    userId.set(null);
+    user.set(null);
+}
+
 export function checkUser(query) {
     if (query && query.admin !== undefined) {
         setUser(config.MAIN_USER);
-    } else if (query && query.x !== undefined) {
+    } else if (query && query.general !== undefined) {
         setUser(config.GENERAL_USER);
+    } else  if (query && query.x !== undefined) {
+        logOut();
     } else if (get(userId) && !get(user)) {
         setUser(get(userId));
     }

@@ -31,7 +31,6 @@
        "unreadCount":0,
        "unreadMessageCount":4,
        "messageCount":3,
-       "following":true,
        "ownerId":"sl3p5oms",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -79,7 +78,6 @@
        "unreadCount":3,
        "unreadMessageCount":0,
        "messageCount":5,
-       "following":false,
        "ownerId":"sl3p5oms",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -138,7 +136,6 @@
        "unreadCount":6,
        "unreadMessageCount":3,
        "messageCount":6,
-       "following":true,
        "ownerId":"sl3p5oms",
        "location":"Wellington, New Zealand",
        "links":[
@@ -205,7 +202,6 @@
        "unreadCount":6,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "liked":true,
        "ownerId":"sl3p5oms",
        "location":"Wellington, New Zealand",
@@ -295,7 +291,6 @@
        "unreadCount":0,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "ownerId":"bl20a8lm",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -356,7 +351,6 @@
        "unreadCount":2,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -414,7 +408,6 @@
        "unreadCount":0,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -471,7 +464,6 @@
        "unreadCount":0,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -528,7 +520,6 @@
        "unreadCount":3,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -585,7 +576,6 @@
        "unreadCount":5,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -646,7 +636,6 @@
        "unreadCount":0,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -703,7 +692,6 @@
        "unreadCount":12,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -760,7 +748,6 @@
        "unreadCount":2,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -819,7 +806,6 @@
        "unreadCount":2,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -881,7 +867,6 @@
        "unreadCount":0,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -940,7 +925,6 @@
        "unreadCount":0,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[
@@ -998,7 +982,6 @@
        "unreadCount":2,
        "unreadMessageCount":5,
        "messageCount":3,
-       "following":false,
        "ownerId":"m3ld9bna",
        "location":"Wellington, New Zealand",
        "skills":[

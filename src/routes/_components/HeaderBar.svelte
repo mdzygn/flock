@@ -29,8 +29,6 @@
         showPrompt,
     } from '../../actions/appActions';
 
-	import { setUser } from '../../actions/userActions';
-
     import BackIcon from "../../assets/icons/back.png";
     import AvatarIcon from './AvatarIcon.svelte';
 

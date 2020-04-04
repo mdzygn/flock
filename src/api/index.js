@@ -36,6 +36,11 @@ function send(path, options) {
 				error.response = json;
 				return Promise.reject(error);
 			}
+		}).then(result => {
+			if (result && result.error) {
+				console.error('API Error: ', result);
+			}
+			return result;
 		});
 }
 

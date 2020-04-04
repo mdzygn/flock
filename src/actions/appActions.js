@@ -1,12 +1,11 @@
+import api from '../api';
+
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 
-import { copyToClipboard } from '../utils';
+import conversations from '../data/conversations.json';
 
 import promptIds from '../config/promptIds';
-
-import conversations from '../data/conversations.json';
-import users from '../data/users.json';
 
 // const { page } = stores();
 
@@ -19,6 +18,7 @@ import {
 import {
     getUser,
     onUsersUpdated,
+    mergeUsers,
 } from '../models/usersModel';
 
 import {
@@ -29,6 +29,12 @@ import {
     threadId,
     conversationId,
     profileId,
+
+    user,
+    userId,
+
+    username,
+    usercode,
 
     project,
     conversation,
@@ -84,18 +90,29 @@ onProjectsUpdated(() => {
     }
 });
 
-function setUser(targetProfileId) {
+function setViewedUser(targetProfileId) {
     const curUserModel = getUser(targetProfileId);
     const curUser = get(curUserModel);
 
     viewedUser.set(curUser);
 }
 
+export function setUser(targetUserId) {
+    const curUserModel = getUser(targetUserId);
+    const curUser = get(curUserModel);
+
+    if (curUser) {
+        userId.set(targetUserId);
+        user.set(curUser);
+        // console.log(get(user));
+    }
+}
+
 onUsersUpdated(() => {
     // if project object not found but project id set then update project model
     if (!get(viewedUser) && get(profileId)) {
         const targetProfileId = get(profileId);
-        setUser(targetProfileId);
+        setViewedUser(targetProfileId);
     }
 });
 
@@ -268,4 +285,21 @@ export function showTogglePublicDialog() {
             showPrompt(promptIds.MAKE_PRIVATE);
         }
     }
+}
+
+export function login(details) {
+	api.login(details).then(result => {
+        if (result && !result.invalid && !result.error) {
+            const userInfo = result;
+            if (userInfo.id) {
+                mergeUsers([userInfo]);
+                setUser(userInfo.id);
+
+                username.set(userInfo.username);
+                usercode.set(userInfo.usercode);
+            }
+        } else {
+            showPrompt(promptIds.LOG_IN_ERROR);
+        }
+	});
 }

@@ -11,6 +11,7 @@ import { generateId } from '../utils';
 // const users = JSON.parse(JSON.stringify(usersData));
 
 import UserModel from '../models/userModel';
+import { viewedUser, profileId } from './appModel';
 
 export let loadingUsers = writable(false);
 
@@ -50,6 +51,8 @@ export function mergeUsers(newUsers) {
 	if (newUsers && newUsers.length) {
 		const curUsers = get(users);
 
+		const viewedProfileId = get(profileId);
+
 		let curUser, newUserData, userId, newUser;
 		for (var userI = 0; userI < newUsers.length; userI++) {
 			newUserData = newUsers[userI];
@@ -64,6 +67,9 @@ export function mergeUsers(newUsers) {
 				newUser = get(curUser);
 				newUser = Object.assign(newUser, newUserData);
 				curUser.set(newUser);
+			}
+			if (viewedProfileId && !get(viewedUser) && userId === viewedProfileId) {
+				viewedUser.set(newUser);
 			}
 		}
 
@@ -105,20 +111,24 @@ export function randomiseUserCoverImageColor(userModel) {
 	userModel.set(user);
 }
 
-export function addUser(newUserModel) {
-	const newUser = get(newUserModel);
+// export function addUser(newUserModel) {
+// 	const newUser = get(newUserModel);
 
-	newUser.createdAt = (new Date()).getTime(); // use for initial sort values
-	newUser.modifiedAt = newUser.createdAt;
-	newUser.lastActiveAt = newUser.createdAt;
+// 	newUser.createdAt = (new Date()).getTime(); // use for initial sort values
+// 	newUser.modifiedAt = newUser.createdAt;
+// 	newUser.lastActiveAt = newUser.createdAt;
 
-	api.addUser({details: newUser}).then(result => {
-		// newUser._id = result.insertedId;
-	});
+// 	api.addUser({details: newUser}).then(result => {
+// 		// newUser._id = result.insertedId;
 
-	const curUsers = get(users);
-	curUsers.unshift(newUserModel);
-	users.set(curUsers);
+// 		// TODO: use added item
+// 		mergeUsers([newUser]);
+// 		setUser(newUser.id);
+// 	});
 
-	return newUserModel;
-}
+// 	// const curUsers = get(users);
+// 	// curUsers.unshift(newUserModel);
+// 	// users.set(curUsers);
+
+// 	return newUserModel;
+// }

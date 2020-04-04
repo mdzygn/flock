@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 import { get } from 'svelte/store';
 
 import { createModel } from '../utils/createModel';
-import { init } from 'svelte/internal';
+// import { init } from 'svelte/internal';
 
 const appModel = createModel({
     projectId: null,
@@ -135,7 +135,6 @@ export function resetScrollRegionPosition(id) {
 //         scrollRegionProperties.set(curScrollRegionProperties);
 //     }
 // }
-
 
 export function getIsCurrentUser(targetUserId) {
     const curUserId = get(userId);

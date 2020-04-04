@@ -8,8 +8,6 @@ import { goto } from '@sapper/app';
 
 import { copyToClipboard, generateId } from '../utils';
 
-import promptIds from '../config/promptIds';
-
 import {
     viewedUser,
     user,
@@ -20,12 +18,12 @@ import {
 
 import {
     getUser,
-    addUser,
     mergeUsers,
 } from '../models/usersModel';
 
 import {
-    showPrompt,
+    // showPrompt,
+    setUser,
 } from '../actions/appActions';
 
 function checkUpdateUser(targetUser) {
@@ -59,17 +57,6 @@ export function copyProfileLink(userId) {
     copyToClipboard(url);
 }
 
-export function setUser(targetUserId) {
-    const curUserModel = getUser(targetUserId);
-    const curUser = get(curUserModel);
-
-    if (curUser) {
-        userId.set(targetUserId);
-        user.set(curUser);
-        // console.log(get(user));
-    }
-}
-
 export function logOut() {
     const curUser = get(user);
     if (curUser) {
@@ -98,27 +85,40 @@ export function createUser(newUserModel) {
     const newUser = get(newUserModel);
 
     if (newUser) {
-        addUser(newUserModel);
+        newUser.usercode = generateId();
 
         username.set(newUser.username);
-        usercode.set(generateId());
+        usercode.set(newUser.usercode);
 
-        setUser(newUser.id);
+        addUser(newUserModel);
+
+        // setUser(newUser.id);
         goto('profile/' + newUser.id);
     }
 }
 
-export function loginUser(details) {
-	api.login(details).then(result => {
+function addUser(newUserModel) {
+	const newUser = get(newUserModel);
+
+    // newUser.usercode = ''; // test breaking
+
+	newUser.createdAt = (new Date()).getTime(); // use for initial sort values
+	newUser.modifiedAt = newUser.createdAt;
+	newUser.lastActiveAt = newUser.createdAt;
+
+	api.addUser({details: newUser}).then(result => {
         if (result && !result.error) {
-            console.log('result', result);
-            const userInfo = result;
-            if (userInfo.id) {
-                mergeUsers(userInfo);
-                setUser(userInfo.id);
-            }
-        } else {
-            showPrompt(promptIds.LOG_IN_ERROR);
+            // newUser._id = result.insertedId;
+
+            // TODO: use added item
+            mergeUsers([newUser]);
+            setUser(newUser.id);
         }
 	});
+
+	// const curUsers = get(users);
+	// curUsers.unshift(newUserModel);
+	// users.set(curUsers);
+
+	return newUserModel;
 }

@@ -6,6 +6,11 @@ export async function post(req, res, next) {
 	const options = req.body;
 	const details = options.details;
 
+	if (!details.username || !details.usercode) {
+		res.end(JSON.stringify({error: true}));
+		return;
+	}
+
 	details.createdAt = (new Date()).getTime();
 	details.modifiedAt = details.createdAt;
 	details.lastActiveAt = details.createdAt;

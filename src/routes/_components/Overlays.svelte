@@ -9,9 +9,9 @@
 	import OverlayMenu from './OverlayMenu.svelte';
 	import OverlayPrompt from './OverlayPrompt.svelte';
 
-	import { createUser, loginUser } from '../../actions/userActions';
+	import { createUser } from '../../actions/userActions';
 
-	import { closeOverlay } from '../../actions/appActions';
+	import { closeOverlay, login } from '../../actions/appActions';
 
 	let signUpNewUser;
 	let signUpUpdateMenuItems;
@@ -24,7 +24,7 @@
 	let logInUpdateMenuItems;
 	function logInSubmit() {
 		closeOverlay();
-		loginUser($logInDetails);
+		login($logInDetails);
 	}
 </script>
 

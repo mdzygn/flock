@@ -2,6 +2,8 @@
     import locale from '../../locale';
     import { goto } from '@sapper/app';
 
+    import config from '../../config';
+
     import Button from '../../components/Button.svelte';
 
     import { getSectionByPath, getIdForSection } from "../../models/sectionsModel";
@@ -16,7 +18,11 @@
         getIsCurrentUser,
     } from '../../models/appModel';
 
-	import { loadProfile } from '../../actions/appActions';
+    import { loadedUsers } from '../../models/usersModel';
+
+    import { loadProfile } from '../../actions/appActions';
+
+	import { setUser } from '../../actions/userActions';
 
     import BackIcon from "../../assets/icons/back.png";
     import AvatarIcon from './AvatarIcon.svelte';
@@ -77,7 +83,7 @@
     }
 
     function signIn() {
-
+        setUser(config.GENERAL_USER);
     }
     function signUp() {
 
@@ -95,15 +101,17 @@
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
         {/if}
     {/if}
-    {#if loggedIn}
-        <div class="avatarIcon" class:button="{!isMyProfile}" on:click="{loadMyProfile}">
-            <AvatarIcon user="{user}" />
-        </div>
-    {:else}
-        <div class="signInButtonContainer">
-            <Button className="signUpButton" onClick="{signUp}">{locale.HEADER.SIGN_UP}</Button>
-            <Button className="signInButton" onClick="{signIn}">{locale.HEADER.SIGN_IN}</Button>
-        </div>
+    {#if $loadedUsers}
+        {#if loggedIn}
+            <div class="avatarIcon" class:button="{!isMyProfile}" on:click="{loadMyProfile}">
+                <AvatarIcon user="{user}" />
+            </div>
+        {:else}
+            <div class="signInButtonContainer">
+                <Button className="signUpButton" onClick="{signUp}">{locale.HEADER.SIGN_UP}</Button>
+                <Button className="signInButton" onClick="{signIn}">{locale.HEADER.SIGN_IN}</Button>
+            </div>
+        {/if}
     {/if}
 </div>
 

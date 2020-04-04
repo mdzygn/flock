@@ -8,6 +8,7 @@ import { writable, get } from 'svelte/store';
 import UserModel from '../models/userModel';
 
 export let loadingUsers = writable(false);
+export let loadedUsers = writable(false);
 
 let users = writable([]);
 
@@ -25,6 +26,7 @@ export function loadUsers(options) {
 		api.getUsers(options).then(result => {
 			mergeUsers(result);
 			loadingUsers.set(false);
+			loadedUsers.set(true);
 		});
 	}
 }

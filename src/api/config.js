@@ -3,12 +3,8 @@ const folder = 'api';
 
 export const API_PATH = base + '/' + folder;
 
-export const MONGODB_URI = process && process.env.MONGODB_URI;
-export const MONGODB_DB = process && process.env.MONGODB_DB;
-
 const config = {
-    MONGODB_URI,
-    MONGODB_DB,
+    API_PATH,
 }
 
 export default config;

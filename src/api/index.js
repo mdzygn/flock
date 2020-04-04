@@ -2,7 +2,6 @@ import { get } from 'svelte/store';
 
 import { API_PATH } from './config';
 
-
 import { userId } from '../models/appModel';
 
 

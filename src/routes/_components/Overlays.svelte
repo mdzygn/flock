@@ -19,9 +19,6 @@
 	function signUpSubmit() {
 		console.log(signUpNewUser, signUpfirstName, signUpLastName);
 	}
-	function onSignUpChange() {
-		signUpUpdateMenuItems();
-	}
 </script>
 
 {#if $curMenu || $curPrompt}
@@ -37,7 +34,7 @@
 						bind:firstName="{signUpfirstName}"
 						bind:lastName="{signUpLastName}"
 						on:confirm="{signUpSubmit}"
-						on:change="{onSignUpChange}"
+						on:change="{signUpUpdateMenuItems}"
 					/>
 				</OverlayPrompt>
 			{:else}

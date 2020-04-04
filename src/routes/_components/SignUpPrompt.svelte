@@ -44,11 +44,11 @@
     <AvatarIcon user="{newUser}" onClick="{randomiseProfileColor}"/>
     <div class="field descriptionField">
         <div class="label">{locale.SIGN_UP.FIRST_NAME}</div>
-        <input type="text" bind:value="{firstName}" bind:this="{firstNameField}" on:keypress="{(e) => testInputDefocus(e, {target: lastNameField})}" />
+        <input type="text" id="fname" name="fname" autocomplete="given-name" autocapitalize="words" bind:value="{firstName}" bind:this="{firstNameField}" on:keypress="{(e) => testInputDefocus(e, {target: lastNameField})}" />
     </div>
     <div class="field descriptionField">
         <div class="label">{locale.SIGN_UP.LAST_NAME}</div>
-        <input type="text" bind:value="{lastName}" bind:this="{lastNameField}" on:keypress="{(e) => testInputDefocus(e, {action: submit})}" />
+        <input type="text" id="lname" name="lname" autocomplete="family-name" autocapitalize="words" bind:value="{lastName}" bind:this="{lastNameField}" on:keypress="{(e) => testInputDefocus(e, {action: submit})}" />
     </div>
 </div>
 

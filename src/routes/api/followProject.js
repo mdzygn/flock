@@ -1,9 +1,14 @@
-import { init, response } from '../../server/mongo.js';
+import { init, response, validateCredentials } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
+
+	if (!await validateCredentials(db, options)) {
+		response(res, {invalid: true});
+		return;
+	}
 
 	if (options.userId && options.projectId) {
 		const projectUpdateResult = await db.collection('projects').updateOne({ id: options.projectId }, { $inc: { followCount: 1 } });

@@ -1,9 +1,15 @@
-import { init, response } from '../../server/mongo.js';
+import { init, response, validateCredentials } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
+
+	if (!await validateCredentials(db, options)) {
+		response(res, {invalid: true});
+		return;
+	}
+
 	const details = options.details;
 	const projectId = options.id;
 	const isSuperficial = options.isSuperficial;

@@ -1,5 +1,6 @@
 <script>
     import locale from '../../locale';
+    import promptIds from '../../config/promptIds';
     import { menuIds } from '../../config/menus';
 
     import { goto } from '@sapper/app';
@@ -27,6 +28,7 @@
     import {
         loadProfile,
         showMenu,
+        showPrompt,
     } from '../../actions/appActions';
 
 	import { setUser } from '../../actions/userActions';
@@ -93,7 +95,7 @@
         setUser(config.GENERAL_USER);
     }
     function signUp() {
-
+		showPrompt(promptIds.SIGN_UP);
     }
 
     function showMainOptions() {

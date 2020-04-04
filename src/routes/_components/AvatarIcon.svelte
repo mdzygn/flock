@@ -33,7 +33,7 @@
 
         overflow: hidden;
 
-        border: 1px solid #AAA;
+        border: 1px solid #cacaca;
     }
 
     .avatarIconImage {

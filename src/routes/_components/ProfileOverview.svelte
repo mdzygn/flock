@@ -6,6 +6,7 @@
     import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
 
+    import AvatarIcon from '../_components/AvatarIcon.svelte';
 	import Location from '../_components/Location.svelte';
 	import Audience from '../_components/Audience.svelte';
 
@@ -55,10 +56,10 @@
     $: coverImage = 'content/users/' + coverImageId + '/cover.jpg';
 
 	// $: profileImageSrc = 'content/users/' + username + '/profile.jpg';
-    $: profileImageSrc = ProfileDefaultImage;
-    $: userStyle = ($viewedUser && $viewedUser.style) || null;
-    $: profileImageBgStyling = userStyle ? 'background-image: linear-gradient(' + userStyle.profileTop + ', ' + userStyle.profileBottom + ');' : '';
+    // $: profileImageSrc = ProfileDefaultImage;
+    // $: profileImageBgStyling = userStyle ? 'background-image: linear-gradient(' + userStyle.profileTop + ', ' + userStyle.profileBottom + ');' : '';
 
+    $: userStyle = ($viewedUser && $viewedUser.style) || null;
     $: coverBgStyling = (userStyle && userStyle.coverTop) ? 'background-image: linear-gradient(' + userStyle.coverTop + ', ' + userStyle.coverBottom + ');' : null;
 
     // $: proxyImage = isCurrentUser ? 'profile_overview_owner' : 'profile_overview';
@@ -96,9 +97,10 @@
             <img src="{coverImage}" class="coverImage" alt="cover image" />
         {/if}
         <div class="profileOverviewHeader">
-            <div class="profileImage" style="{profileImageBgStyling}">
+            <!-- <div class="profileImage" style="{profileImageBgStyling}">
                 <img src="{profileImageSrc}" alt="{userFirstName}" />
-            </div>
+            </div> -->
+            <AvatarIcon user="{viewedUser}" />
             <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProfileOptions}"></Button>
             <Button className="editButton" icon="{EditIcon}" disabled="{true}">edit</Button>
             <div class="userStats">
@@ -176,7 +178,27 @@
     .profileOverviewHeader {
         position: relative;
     }
-    .profileImage {
+
+    .content :global(.avatarIcon) {
+        position: absolute;
+        left: 14px;
+        margin-top: -48px;
+
+        width: 108px;
+        height: 108px;
+
+        border: 4px solid #ffffff;
+        box-sizing: content-box;
+        overflow: initial;
+    }
+    .content :global(.avatarIconImage) {
+        border: 1px solid #cacaca;
+        border-radius: 999px;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    /* .profileImage {
         position: absolute;
         left: 14px;
         margin-top: -48px;
@@ -186,8 +208,6 @@
 
         border-radius: 999px;
         border: 4px solid #ffffff;
-
-        /* overflow: hidden; */
 
         background-color: #C8C8C8;
     }
@@ -202,7 +222,7 @@
 
         margin-left: -1px;
         margin-top: -1px;
-    }
+    } */
 
     .itemContent {
         padding-top: 70px;

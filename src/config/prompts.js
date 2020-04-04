@@ -186,6 +186,16 @@ const prompts = {
             },
         ],
     },
+    SIGN_UP: {
+        title: 'Sign Up',
+        menuItems: [
+            {
+                label: 'Create User',
+                disabled: true,
+                default: true,
+            },
+        ],
+    }
 }
 
 export default prompts;

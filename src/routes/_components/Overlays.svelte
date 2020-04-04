@@ -1,4 +1,8 @@
 <script>
+	import promptIds from '../../config/promptIds';
+
+	import SignUpPrompt from './SignUpPrompt.svelte';
+
 	import { curMenu, curPrompt } from '../../models/appModel';
 
 	import OverlayMenu from './OverlayMenu.svelte';
@@ -13,7 +17,13 @@
 		{#if $curMenu}
 			<OverlayMenu menuId="{$curMenu}" />
 		{:else}
-			<OverlayPrompt promptId="{$curPrompt}" />
+			{#if $curPrompt === promptIds.SIGN_UP }
+				<OverlayPrompt promptId="{$curPrompt}">
+					<SignUpPrompt />
+				</OverlayPrompt>
+			{:else}
+				<OverlayPrompt promptId="{$curPrompt}" />
+			{/if}
 		{/if}
 	</div>
 {/if}

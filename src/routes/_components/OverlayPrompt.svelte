@@ -16,6 +16,8 @@
     $: message = (prompt && prompt.message) || null;
     $: subMessage = (prompt && prompt.subMessage) || null;
 
+    let hasSlots = $$props.$$slots;
+
     function selectMenuItem(event) {
         const menuItem = event.detail && event.detail.menuItem;
         const action = menuItem && menuItem.action;
@@ -39,6 +41,11 @@
             {/if}
             {#if subMessage}
                 <div class="subMessage">{@html subMessage}</div>
+            {/if}
+            {#if hasSlots}
+                <div class="panelContent">
+                    <slot></slot>
+                </div>
             {/if}
         </div>
     {/if}

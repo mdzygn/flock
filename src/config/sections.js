@@ -156,7 +156,7 @@ export const sections = [
 	{
 		path: '/profile/.+',
 		id: 'profile_view',
-		label: 'User Profile', // 'Sasha Holmer',
+		label: '', // 'Sasha Holmer',
 		darkBg: true,
 		showBack: true,
 		// parentSection: 'messages',

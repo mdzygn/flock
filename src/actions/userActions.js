@@ -8,6 +8,8 @@ import { goto } from '@sapper/app';
 
 import { copyToClipboard, generateId } from '../utils';
 
+import promptIds from '../config/promptIds';
+
 import {
     viewedUser,
     user,
@@ -23,7 +25,7 @@ import {
 } from '../models/usersModel';
 
 import {
-    // showPrompt,
+    showPrompt,
     setUser,
 } from '../actions/appActions';
 
@@ -60,14 +62,11 @@ export function copyProfileLink(userId) {
 
 export function logOut() {
     const curUser = get(user);
-    if (curUser) {
-        if (get(viewedUser) && curUser.id === get(viewedUser).id) {
-            viewedUser.set(curUser);
-        }
-
-        userId.set(null);
-        user.set(null);
+    if (curUser && get(viewedUser) && curUser.id === get(viewedUser).id) {
+        viewedUser.set(get(viewedUser));
     }
+    userId.set(null);
+    user.set(null);
 }
 
 export function checkUser(query) {
@@ -88,13 +87,7 @@ export function createUser(newUserModel) {
     if (newUser) {
         newUser.usercode = generateId();
 
-        username.set(newUser.username);
-        usercode.set(newUser.usercode);
-
         addUser(newUserModel);
-
-        // setUser(newUser.id);
-        goto('profile/' + newUser.id);
     }
 }
 
@@ -110,11 +103,24 @@ function addUser(newUserModel) {
     loadingUsers.set(true);
 	api.addUser({details: newUser}).then(result => {
         if (result && !result.error) {
-            // newUser._id = result.insertedId;
+            if (!result.invalid) {
+                // newUser._id = result.insertedId;
 
-            // TODO: use added item
-            mergeUsers([newUser]);
-            setUser(newUser.id);
+                // TODO: use added item
+                mergeUsers([newUser]);
+                setUser(newUser.id);
+
+                username.set(newUser.username);
+                usercode.set(newUser.usercode);
+
+                goto('profile/' + newUser.id);
+            } else {
+                switch (result.errorType) {
+                    case 'username_exists':
+                        showPrompt(promptIds.SIGN_UP_USERNAME_EXISTS);
+                        break;
+                }
+            }
         }
         loadingUsers.set(false);
 	});

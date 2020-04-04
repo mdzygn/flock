@@ -14,6 +14,7 @@ const promptIds = {
     SIGN_UP: 'SIGN_UP',
     LOG_IN: 'LOG_IN',
     LOG_IN_ERROR: 'LOG_IN_ERROR',
+    SIGN_UP_USERNAME_EXISTS: 'SIGN_UP_USERNAME_EXISTS',
 }
 
 export default promptIds;

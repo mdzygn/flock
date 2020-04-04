@@ -11,6 +11,12 @@ export async function post(req, res, next) {
 		return;
 	}
 
+	let exisitingUser = await db.collection('users').findOne({ username: details.username });
+	if (exisitingUser) {
+		res.end(JSON.stringify({invalid: true, errorType: 'username_exists'}));
+		return;
+	}
+
 	details.createdAt = (new Date()).getTime();
 	details.modifiedAt = details.createdAt;
 	details.lastActiveAt = details.createdAt;

@@ -217,6 +217,16 @@ const prompts = {
                 action: () => { showPrompt(promptIds.LOG_IN); },
             },
         ],
+    },
+    SIGN_UP_USERNAME_EXISTS: {
+        title: 'Sign Up',
+        message: 'User name already exists',
+        menuItems: [
+            {
+                label: 'Ok',
+                action: () => { showPrompt(promptIds.SIGN_UP); },
+            },
+        ],
     }
 }
 

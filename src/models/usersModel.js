@@ -68,7 +68,7 @@ export function mergeUsers(newUsers) {
 				newUser = Object.assign(newUser, newUserData);
 				curUser.set(newUser);
 			}
-			if (viewedProfileId && !get(viewedUser) && userId === viewedProfileId) {
+			if (viewedProfileId && userId === viewedProfileId) {
 				viewedUser.set(newUser);
 			}
 		}

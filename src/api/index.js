@@ -1,6 +1,6 @@
 import { get } from 'svelte/store';
 
-import { API_PATH } from './config';
+import { API_PATH, DEBUG } from './config';
 
 import { userId } from '../models/appModel';
 
@@ -37,7 +37,7 @@ function send(path, options) {
 				return Promise.reject(error);
 			}
 		}).then(result => {
-			if (result && result.error) {
+			if (DEBUG && result && result.error) {
 				console.error('API Error: ', result);
 			}
 			return result;

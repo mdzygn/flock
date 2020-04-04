@@ -12,9 +12,16 @@ import promptIds from '../config/promptIds';
 
 
 import {
+    project,
+    viewedUser,
+    userId,
+} from '../models/appModel';
+
+import {
     editProjectDetails,
     messageUser,
     showPrompt,
+    loadProfile,
 } from '../actions/appActions';
 
 import {
@@ -32,11 +39,6 @@ import {
     copyProfileLink,
     logOut,
 } from '../actions/userActions';
-
-import {
-    project,
-    viewedUser,
-} from '../models/appModel';
 
 
 export const menus = {
@@ -135,6 +137,10 @@ export const menus = {
     },
     MAIN_OPTIONS: {
         menuItems: [
+            {
+                label: 'My Profile',
+                action: () => { loadProfile(get(userId)) },
+            },
             {
                 label: 'Log Out',
                 action: logOut,

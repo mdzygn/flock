@@ -139,9 +139,13 @@ export function loadProjectPost(targetProjectId) {
 }
 
 export function newProject() {
+    if (!checkLoggedIn()) { return; }
+
     goto('projects/new');
 }
 export function editProjectDetails(options) {
+    if (!checkLoggedIn()) { return; }
+
     editingProject.set(options && options.editingProject);
 
     goto('projects/' + get(projectId) + '/details');
@@ -183,6 +187,8 @@ export function loadProfile(targetProfileId, options) {
 }
 
 export function loadConversation(targetConversationId) {
+    if (!checkLoggedIn()) { return; }
+
     // console.log('loadConversation: ' + targetConversationId);
 
     conversationId.set(targetConversationId);
@@ -195,6 +201,8 @@ export function loadConversation(targetConversationId) {
 }
 
 export function messageUser(userId) {
+    if (!checkLoggedIn()) { return; }
+
     loadConversation('r70dp2bf');
 }
 
@@ -302,4 +310,13 @@ export function login(details) {
             showPrompt(promptIds.LOG_IN_ERROR);
         }
     });
+}
+
+export function checkLoggedIn() {
+    if (!get(user)) {
+        showPrompt(promptIds.SIGN_UP);
+
+        return false;
+    }
+    return true;
 }

@@ -26,6 +26,7 @@ import {
     loadProject,
     showProjectInfo,
     showPrompt,
+    checkLoggedIn,
 } from '../actions/appActions';
 
 function checkUpdateProject(targetProject) {
@@ -36,6 +37,8 @@ function checkUpdateProject(targetProject) {
 }
 
 export function projectToggleFollowing(projectId) {
+    if (!checkLoggedIn()) { return; }
+
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
     if (targetProject) {
@@ -51,6 +54,8 @@ export function projectToggleFollowing(projectId) {
 }
 
 export function projectToggleLiked(projectId) {
+    if (!checkLoggedIn()) { return; }
+
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
 
@@ -66,6 +71,8 @@ export function projectToggleLiked(projectId) {
 }
 
 export async function makePublic() {
+    if (!checkLoggedIn()) { return; }
+
     const curProject = get(project);
     if (curProject) {
         updateProject(curProject, {
@@ -80,6 +87,8 @@ export async function makePublic() {
 }
 
 export async function makePrivate() {
+    if (!checkLoggedIn()) { return; }
+
     const curProject = get(project);
     if (curProject) {
         updateProject(curProject, {
@@ -107,6 +116,8 @@ export async function makePrivate() {
 // }
 
 export function saveProjectDetails(projectDetails, options) {
+    if (!checkLoggedIn()) { return; }
+
     const curProject = get(project);
     if (curProject) {
         updateProject(curProject, projectDetails);
@@ -121,6 +132,8 @@ export function saveProjectDetails(projectDetails, options) {
 }
 
 export function createProject(projectDetails) {
+    if (!checkLoggedIn()) { return; }
+
     if (projectDetails.headerImage) {
         projectDetails.headerImage = 'resource/headers/' + projectDetails.headerImage + '.jpg';
     }
@@ -134,6 +147,8 @@ export function createProject(projectDetails) {
 }
 
 export function reportProject(projectId) {
+    if (!checkLoggedIn()) { return; }
+
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
 
@@ -145,6 +160,8 @@ export function reportProject(projectId) {
 }
 
 export async function archiveProject(projectId) {
+    if (!checkLoggedIn()) { return; }
+
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
 
@@ -162,6 +179,8 @@ export async function archiveProject(projectId) {
 }
 
 export async function unarchiveProject(projectId) {
+    if (!checkLoggedIn()) { return; }
+
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
 

@@ -189,7 +189,7 @@ const prompts = {
         ],
     },
     SIGN_UP: {
-        title: 'New User',
+        title: 'Create User',
         menuItems: [
             {
                 label: 'Create User',
@@ -198,33 +198,33 @@ const prompts = {
             },
         ],
     },
-    LOG_IN: {
-        title: 'Log In',
+    SIGN_UP_USERNAME_EXISTS: {
+        title: 'Create User',
+        message: 'User name already exists',
         menuItems: [
             {
-                label: 'Log In',
+                label: 'Ok',
+                action: () => { showPrompt(promptIds.SIGN_UP); },
+            },
+        ],
+    },
+    LOG_IN: {
+        title: 'Sign In',
+        menuItems: [
+            {
+                label: 'Sign In',
                 disabled: () => !get(logInFormValidated),
                 default: true,
             },
         ],
     },
     LOG_IN_ERROR: {
-        title: 'Log In',
+        title: 'Sign In',
         message: 'Invalid username<br />or password',
         menuItems: [
             {
                 label: 'Ok',
                 action: () => { showPrompt(promptIds.LOG_IN); },
-            },
-        ],
-    },
-    SIGN_UP_USERNAME_EXISTS: {
-        title: 'Sign Up',
-        message: 'User name already exists',
-        menuItems: [
-            {
-                label: 'Ok',
-                action: () => { showPrompt(promptIds.SIGN_UP); },
             },
         ],
     },

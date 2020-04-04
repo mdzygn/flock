@@ -28,6 +28,7 @@ import {
 import {
     showPrompt,
     setUser,
+    checkLoggedIn,
 } from '../actions/appActions';
 
 function checkUpdateUser(targetUser) {
@@ -37,6 +38,8 @@ function checkUpdateUser(targetUser) {
     }
 }
 export function requestConnection(userId) {
+    if (!checkLoggedIn()) { return; }
+
     const userModel = getUser(userId);
     const user = get(userModel);
 
@@ -47,6 +50,8 @@ export function requestConnection(userId) {
 }
 
 export function reportUser(userId) {
+    if (!checkLoggedIn()) { return; }
+
     const userModel = getUser(userId);
     const user = get(userModel);
 

@@ -3,6 +3,7 @@ export const menuIds = {
     PROJECT_MENU: 'PROJECT_MENU',
     PROFILE_OWNER_MENU: 'PROFILE_OWNER_MENU',
     PROFILE_MENU: 'PROFILE_MENU',
+    MAIN_OPTIONS: 'MAIN_OPTIONS',
 }
 
 import { get } from 'svelte/store';
@@ -29,6 +30,7 @@ import {
     requestConnection,
     reportUser,
     copyProfileLink,
+    logOut,
 } from '../actions/userActions';
 
 import {
@@ -128,6 +130,14 @@ export const menus = {
                 disabled: () => { const u = get(viewedUser); return u && u.reported },
                 action: () => { const u = get(viewedUser); u && u.id && reportUser(u.id) },
                 disabled: true,
+            },
+        ],
+    },
+    MAIN_OPTIONS: {
+        menuItems: [
+            {
+                label: 'Log Out',
+                action: logOut,
             },
         ],
     },

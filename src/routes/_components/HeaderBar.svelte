@@ -1,10 +1,14 @@
 <script>
     import locale from '../../locale';
+    import { menuIds } from '../../config/menus';
+
     import { goto } from '@sapper/app';
 
     import config from '../../config';
 
     import Button from '../../components/Button.svelte';
+
+	import OptionsMenuIcon from "../../assets/icons/menu.png";
 
     import { getSectionByPath, getIdForSection } from "../../models/sectionsModel";
 
@@ -20,7 +24,10 @@
 
     import { loadedUsers } from '../../models/usersModel';
 
-    import { loadProfile } from '../../actions/appActions';
+    import {
+        loadProfile,
+        showMenu,
+    } from '../../actions/appActions';
 
 	import { setUser } from '../../actions/userActions';
 
@@ -88,6 +95,10 @@
     function signUp() {
 
     }
+
+    function showMainOptions() {
+		showMenu(menuIds.MAIN_OPTIONS);
+    }
 </script>
 
 <div class="headerBar">
@@ -103,6 +114,7 @@
     {/if}
     {#if $loadedUsers}
         {#if loggedIn}
+            <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showMainOptions}"></Button>
             <div class="avatarIcon" class:button="{!isMyProfile}" on:click="{loadMyProfile}">
                 <AvatarIcon user="{user}" />
             </div>
@@ -154,9 +166,25 @@
 
     .avatarIcon {
         position: absolute;
-        right: 11px;
         top: 11px;
+        /* right: 11px; */
+        right: 41px;
     }
+
+    .headerBar :global(.optionsButton) {
+		position: absolute;
+
+    	top: 8px;
+    	right: 0;
+
+		width: 28px;
+		height: 26px;
+        padding: 8px 3px;
+	}
+    .headerBar :global(.optionsButton .icon) {
+		margin-top: 1px;
+        margin-left: 5px;
+	}
 
     .button {
         cursor: pointer;

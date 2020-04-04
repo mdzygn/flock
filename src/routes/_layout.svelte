@@ -67,8 +67,8 @@
 </script>
 
 <appContainer>
-	<Overlays />
 	<appContent class:showFeedBg="{showFeedBg}">
+		<Overlays />
 		<div class="pageContent">
 			<main>
 				<slot></slot>

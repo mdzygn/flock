@@ -6,6 +6,7 @@ import {
     project,
     targetProject,
     targetUser,
+    signUpFormValidated,
 } from '../models/appModel';
 
 // import {
@@ -191,6 +192,7 @@ const prompts = {
         menuItems: [
             {
                 label: 'Create User',
+                disabled: () => !get(signUpFormValidated),
                 default: true,
             },
         ],

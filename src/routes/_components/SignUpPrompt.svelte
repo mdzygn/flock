@@ -1,7 +1,12 @@
 <script>
     import locale from '../../locale';
 
+	import { createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
+
     import { testInputDefocus } from '../../utils';
+
+    import { signUpFormValidated } from '../../models/appModel';
 
     import { getNewUser, randomiseUserProfileImageColor } from '../../models/usersModel';
 
@@ -17,11 +22,16 @@
     export let firstName = '';
     export let lastName = '';
 
-    export let onConfirm = null;
+    $: $signUpFormValidated = firstName && lastName;
+
+    $: {
+        $signUpFormValidated;
+        dispatch('change');
+    }
 
     function submit() {
-        if (onConfirm) {
-            onConfirm();
+        if ($signUpFormValidated) {
+            dispatch('confirm');
         }
     }
 

@@ -14,8 +14,13 @@
 	let signUpfirstName;
 	let signUpLastName;
 
+	let signUpUpdateMenuItems;
+
 	function signUpSubmit() {
 		console.log(signUpNewUser, signUpfirstName, signUpLastName);
+	}
+	function onSignUpChange() {
+		signUpUpdateMenuItems();
 	}
 </script>
 
@@ -26,12 +31,13 @@
 			<OverlayMenu menuId="{$curMenu}" />
 		{:else}
 			{#if $curPrompt === promptIds.SIGN_UP }
-				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{signUpSubmit}">
+				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{signUpSubmit}" bind:updateMenuItems="{signUpUpdateMenuItems}">
 					<SignUpPrompt
 						bind:newUser="{signUpNewUser}"
 						bind:firstName="{signUpfirstName}"
 						bind:lastName="{signUpLastName}"
-						onConfirm="{signUpSubmit}"
+						on:confirm="{signUpSubmit}"
+						on:change="{onSignUpChange}"
 					/>
 				</OverlayPrompt>
 			{:else}

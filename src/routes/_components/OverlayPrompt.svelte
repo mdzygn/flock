@@ -34,6 +34,10 @@
             onConfirm();
         }
     }
+
+    export function updateMenuItems() {
+        menuItems = menuItems;
+    }
 </script>
 
 <div class="overlayPrompt">

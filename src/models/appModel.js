@@ -74,6 +74,8 @@ export const projectsArchiveSearchString = appModel.projectsArchiveSearchString;
 export const displayingAllMyProjects = appModel.displayingAllMyProjects;
 export const displayingAllFollowingProjects = appModel.displayingAllFollowingProjects;
 
+export const signUpFormValidated = writable(false);
+
 initApp();
 
 function initApp() {

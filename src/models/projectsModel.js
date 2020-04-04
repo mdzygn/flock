@@ -298,6 +298,8 @@ export function addProject(projectDetails) {
 	const newProjectModel = ProjectModel();
 	const newProject = get(newProjectModel);
 
+	const ownerId = get(userId);
+
 	newProject.id = projectId;
 
 	newProject.headerImage = projectDetails.headerImage || null;
@@ -308,7 +310,8 @@ export function addProject(projectDetails) {
 	newProject.modifiedAt = newProject.createdAt;
 	newProject.lastActiveAt = newProject.createdAt;
 
-	newProject.ownerId = get(userId);
+	newProject.ownerId = ownerId;
+	newProject.team = [ownerId];
 
 	newProject.isNew = true;
 	newProject.hasCreated = true;

@@ -6,7 +6,7 @@ import { generateId } from '../utils';
 
 import config from '../config';
 
-import { locationMode, getIsProjectOwner, userId } from '../models/appModel';
+import { locationMode, getIsProjectOwner, user, userId } from '../models/appModel';
 
 import ProjectModel from '../models/projectModel';
 
@@ -348,10 +348,6 @@ export function updateProject(project, projectDetails, nonModification, isSuperf
 
 
 export function setLikeProject(targetProject, like) {
-	// updateProject(targetProject, {
-	// 	likeCount: Math.max(0, targetProject.likeCount + (like ? 1 : -1)),
-	// }, true, true);
-
 	if (like) {
 		api.likeProject({userId: get(userId), projectId: targetProject.id});
 	} else {
@@ -360,13 +356,15 @@ export function setLikeProject(targetProject, like) {
 
 	targetProject.liked = like;
 	targetProject.likeCount = targetProject.likeCount + (like ? 1 : -1);
+
+	const curUserDetails = get(user);
+	if (curUserDetails) {
+		curUserDetails.likesCount = curUserDetails.likesCount + (like ? 1 : -1);
+	}
+	user.set(curUserDetails);
 }
 
 export function setFollowProject(targetProject, follow) {
-	// updateProject(targetProject, {
-	// 	followCount: Math.max(0, targetProject.followCount + (follow ? 1 : -1)),
-	// }, true, true);
-
 	if (follow) {
 		api.followProject({userId: get(userId), projectId: targetProject.id});
 	} else {
@@ -376,6 +374,12 @@ export function setFollowProject(targetProject, follow) {
 	targetProject.following = follow;
 	targetProject.followCount = targetProject.followCount + (follow ? 1 : -1);
 	targetProject.followTime = (new Date()).getTime();
+
+	const curUserDetails = get(user);
+	if (curUserDetails) {
+		curUserDetails.followsCount = curUserDetails.followsCount + (follow ? 1 : -1);
+	}
+	user.set(curUserDetails);
 }
 
 export function getProjectHeaderImage(project) {

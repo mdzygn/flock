@@ -15,7 +15,12 @@ export async function post(req, res, next) {
 
 			const result = await db.collection('likes').deleteMany(details);
 
-			response(res, result);
+			let userUpdateResult = await db.collection('users').updateOne({ id: options.userId }, { $inc: { likesCount: -1 } });
+			if (userUpdateResult) {
+				response(res, {success: true});
+			} else {
+				response(res, {error: true});
+			}
 		} else {
 			response(res, {error: true});
 		}

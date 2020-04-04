@@ -19,6 +19,7 @@ import {
 import {
     getUser,
     mergeUsers,
+    loadingUsers,
 } from '../models/usersModel';
 
 import {
@@ -106,6 +107,7 @@ function addUser(newUserModel) {
 	newUser.modifiedAt = newUser.createdAt;
 	newUser.lastActiveAt = newUser.createdAt;
 
+    loadingUsers.set(true);
 	api.addUser({details: newUser}).then(result => {
         if (result && !result.error) {
             // newUser._id = result.insertedId;
@@ -114,6 +116,7 @@ function addUser(newUserModel) {
             mergeUsers([newUser]);
             setUser(newUser.id);
         }
+        loadingUsers.set(false);
 	});
 
 	// const curUsers = get(users);

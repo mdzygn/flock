@@ -288,7 +288,7 @@ export function showTogglePublicDialog() {
 }
 
 export function login(details) {
-	api.login(details).then(result => {
+    api.login(details).then(result => {
         if (result && !result.invalid && !result.error) {
             const userInfo = result;
             if (userInfo.id) {
@@ -301,5 +301,5 @@ export function login(details) {
         } else {
             showPrompt(promptIds.LOG_IN_ERROR);
         }
-	});
+    });
 }

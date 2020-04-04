@@ -11,6 +11,8 @@ export let loadingUsers = writable(false);
 
 let users = writable([]);
 
+let usersUpdatedHandlers = [];
+
 loadUsers();
 
 export function getUser(userId) {
@@ -26,6 +28,18 @@ export function loadUsers(options) {
 		});
 	}
 }
+
+export function onUsersUpdated(handler) {
+	if (!usersUpdatedHandlers.includes(handler)) {
+		usersUpdatedHandlers.push(handler);
+	}
+}
+
+users.subscribe(() => {
+	usersUpdatedHandlers.forEach(handler => {
+		handler();
+	});
+});
 
 function mergeUsers(newUsers) {
 	if (newUsers && newUsers.length) {

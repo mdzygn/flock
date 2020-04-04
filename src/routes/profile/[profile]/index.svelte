@@ -1,4 +1,5 @@
 <script>
+	import locale from '../../../locale';
 	import { writable } from 'svelte/store';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
@@ -6,6 +7,7 @@
 	import Proxy from '../../../components/Proxy.svelte';
     import Hotspot from '../../../components/Hotspot.svelte';
 
+	import ContentLoader from '../../_components/ContentLoader.svelte';
 	import ProfileOverview from './../../_components/ProfileOverview.svelte';
 
 	import ContentPanel from './../../_components/ContentPanel.svelte';
@@ -15,11 +17,17 @@
 
 	import { getUserProjectsFromId } from '../../../models/projectsModel';
 
-	import { viewedUser, profileDisplayingAllProjects } from '../../../models/appModel';
+	import {
+		viewedUser,
+		profileId,
+		profileDisplayingAllProjects,
+	} from '../../../models/appModel';
 
 	import { loadConversation, messageUser, showShareProfileDialog } from '../../../actions/appActions';
 
 	import { requestConnection } from '../../../actions/userActions';
+
+	import { loadingUsers } from '../../../models/usersModel';
 
     import {
         getIsCurrentUser,
@@ -59,70 +67,76 @@
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView id="profile" headerStartHidden="{true}">
-	<div class="content">
-		<div class="contentItem">
-			<ProfileOverview />
-		</div>
-		<!-- <Proxy image="{proxySkillsImage}" className="proxyOverlay" /> -->
-		{#if skills && skills.length}
-			<ContentPanel title="Skills" showEdit="{isCurrentUser}">
-				<TagSet tags="{skills}" />
-			</ContentPanel>
-		{/if}
-		{#if projectIds && projectIds.length}
-			<ProjectList projects="{userProjects}" showIfNoProjects="{true}" displayLimit="{$profileDisplayingAllProjects ? 0 : PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllProjects}" />
-		{/if}
-	</div>
-
-	<div slot="scrollHeader">
-		<Proxy image="{proxyActionsImage}">
-			{#if isCurrentUser}
-				<!-- Connections -->
-				<Hotspot href="contacts" style="
-					left: 0px;
-					top: 0px;
-					width: 122px;
-					height: 47px;" />
-
-				<!-- Messages -->
-				<Hotspot href="messages" style="
-					left: 152px;
-					top: 0px;
-					width: 129px;
-					height: 47px;" />
-
-				<!-- Share -->
-				<Hotspot onClick="{shareCurrentProfile}" style="
-    				right: 0;
-					top: 0px;
-    				width: 95px;
-					height: 47px;" />
-			{:else}
-				<!-- Request Connect -->
-				<Hotspot onClick="{e => requestConnection(userId)}" style="
-					left: 0px;
-					top: 0px;
-					width: 122px;
-					height: 47px;" />
-
-				<!-- Action Send Message -->
-				<Hotspot onClick="{messageCurrentUser}" style="
-					left: 128px;
-					top: 0px;
-					width: 132px;
-					height: 47px;" />
-
-				<!-- Share -->
-				<Hotspot onClick="{shareCurrentProfile}" style="
-    				right: 0;
-					top: 0px;
-    				width: 111px;
-					height: 47px;" />
+{#if $loadingUsers && (!$viewedUser || $viewedUser.id !== $profileId ) }
+	<ContentLoader label="{locale.LOADING.PROFILE}" />
+{:else if !$viewedUser || !$viewedUser.id}
+	<ContentLoader label="{locale.PROFILE.NOT_FOUND}" />
+{:else}
+	<ScrollView id="profile" headerStartHidden="{true}">
+		<div class="content">
+			<div class="contentItem">
+				<ProfileOverview />
+			</div>
+			<!-- <Proxy image="{proxySkillsImage}" className="proxyOverlay" /> -->
+			{#if skills && skills.length}
+				<ContentPanel title="Skills" showEdit="{isCurrentUser}">
+					<TagSet tags="{skills}" />
+				</ContentPanel>
 			{/if}
-		</Proxy>
-	</div>
-</ScrollView>
+			{#if projectIds && projectIds.length}
+				<ProjectList projects="{userProjects}" showIfNoProjects="{true}" displayLimit="{$profileDisplayingAllProjects ? 0 : PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllProjects}" />
+			{/if}
+		</div>
+
+		<div slot="scrollHeader">
+			<Proxy image="{proxyActionsImage}">
+				{#if isCurrentUser}
+					<!-- Connections -->
+					<Hotspot href="contacts" style="
+						left: 0px;
+						top: 0px;
+						width: 122px;
+						height: 47px;" />
+
+					<!-- Messages -->
+					<Hotspot href="messages" style="
+						left: 152px;
+						top: 0px;
+						width: 129px;
+						height: 47px;" />
+
+					<!-- Share -->
+					<Hotspot onClick="{shareCurrentProfile}" style="
+						right: 0;
+						top: 0px;
+						width: 95px;
+						height: 47px;" />
+				{:else}
+					<!-- Request Connect -->
+					<Hotspot onClick="{e => requestConnection(userId)}" style="
+						left: 0px;
+						top: 0px;
+						width: 122px;
+						height: 47px;" />
+
+					<!-- Action Send Message -->
+					<Hotspot onClick="{messageCurrentUser}" style="
+						left: 128px;
+						top: 0px;
+						width: 132px;
+						height: 47px;" />
+
+					<!-- Share -->
+					<Hotspot onClick="{shareCurrentProfile}" style="
+						right: 0;
+						top: 0px;
+						width: 111px;
+						height: 47px;" />
+				{/if}
+			</Proxy>
+		</div>
+	</ScrollView>
+{/if}
 
 <style>
 	.content :global(.contentItem) {

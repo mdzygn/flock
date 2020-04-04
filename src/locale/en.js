@@ -32,8 +32,15 @@ const locale = {
 		DISCOVER: 'loading projects...',
 		FOLLOWING: 'loading projects...',
 		PROJECT: 'loading project...',
+		PROFILE: 'loading profile...',
 		PROFILE_PROJECTS: 'loading projects...',
 	},
+	PROJECT: {
+		NOT_FOUND: 'Project not found',
+	},
+	PROFILE: {
+		NOT_FOUND: 'Profile not found',
+	}
 }
 
 export default locale;

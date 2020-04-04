@@ -18,6 +18,7 @@ import {
 
 import {
     getUser,
+    onUsersUpdated,
 } from '../models/usersModel';
 
 import {
@@ -77,9 +78,24 @@ function setProject(targetProjectId) {
 
 onProjectsUpdated(() => {
     // if project object not found but project id set then update project model
-    if (!get(project)) {
+    if (!get(project) && get(projectId)) {
         const targetProjectId = get(projectId);
         setProject(targetProjectId);
+    }
+});
+
+function setUser(targetProfileId) {
+    const curUserModel = getUser(targetProfileId);
+    const curUser = get(curUserModel);
+
+    viewedUser.set(curUser);
+}
+
+onUsersUpdated(() => {
+    // if project object not found but project id set then update project model
+    if (!get(viewedUser) && get(profileId)) {
+        const targetProfileId = get(profileId);
+        setUser(targetProfileId);
     }
 });
 

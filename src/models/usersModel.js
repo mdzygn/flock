@@ -114,7 +114,6 @@ export function addUser(newUserModel) {
 
 	api.addUser({details: newUser}).then(result => {
 		// newUser._id = result.insertedId;
-		console.log(result);
 	});
 
 	const curUsers = get(users);

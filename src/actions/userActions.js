@@ -60,8 +60,15 @@ export function setUser(targetUserId) {
 }
 
 export function logOut() {
-    userId.set(null);
-    user.set(null);
+    const curUser = get(user);
+    if (curUser) {
+        if (get(viewedUser) && curUser.id === get(viewedUser).id) {
+            viewedUser.set(curUser);
+        }
+
+        userId.set(null);
+        user.set(null);
+    }
 }
 
 export function checkUser(query) {

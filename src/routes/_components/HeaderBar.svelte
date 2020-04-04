@@ -90,7 +90,8 @@
     }
 
     function signIn() {
-        setUser(config.GENERAL_USER);
+		showPrompt(promptIds.LOG_IN);
+        // setUser(config.GENERAL_USER);
     }
     function signUp() {
 		showPrompt(promptIds.SIGN_UP);

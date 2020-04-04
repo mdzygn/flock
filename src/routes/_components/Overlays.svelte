@@ -2,21 +2,29 @@
 	import promptIds from '../../config/promptIds';
 
 	import SignUpPrompt from './SignUpPrompt.svelte';
+	import LogInPrompt from './LogInPrompt.svelte';
 
 	import { curMenu, curPrompt } from '../../models/appModel';
 
 	import OverlayMenu from './OverlayMenu.svelte';
 	import OverlayPrompt from './OverlayPrompt.svelte';
 
-	import { createUser } from '../../actions/userActions';
+	import { createUser, loginUser } from '../../actions/userActions';
 
 	import { closeOverlay } from '../../actions/appActions';
 
 	let signUpNewUser;
 	let signUpUpdateMenuItems;
-
 	function signUpSubmit() {
+		closeOverlay();
 		createUser(signUpNewUser);
+	}
+
+	let logInDetails;
+	let logInUpdateMenuItems;
+	function logInSubmit() {
+		closeOverlay();
+		loginUser($logInDetails);
 	}
 </script>
 
@@ -26,7 +34,15 @@
 		{#if $curMenu}
 			<OverlayMenu menuId="{$curMenu}" />
 		{:else}
-			{#if $curPrompt === promptIds.SIGN_UP }
+			{#if $curPrompt === promptIds.LOG_IN }
+				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{logInSubmit}" bind:updateMenuItems="{logInUpdateMenuItems}">
+					<LogInPrompt
+						bind:details="{logInDetails}"
+						on:confirm="{logInSubmit}"
+						on:change="{logInUpdateMenuItems}"
+					/>
+				</OverlayPrompt>
+			{:else if $curPrompt === promptIds.SIGN_UP }
 				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{signUpSubmit}" bind:updateMenuItems="{signUpUpdateMenuItems}">
 					<SignUpPrompt
 						bind:newUser="{signUpNewUser}"

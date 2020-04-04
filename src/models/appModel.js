@@ -75,6 +75,7 @@ export const displayingAllMyProjects = appModel.displayingAllMyProjects;
 export const displayingAllFollowingProjects = appModel.displayingAllFollowingProjects;
 
 export const signUpFormValidated = writable(false);
+export const logInFormValidated = writable(false);
 
 initApp();
 

@@ -1,3 +1,5 @@
+import api from '../api';
+
 import config from "../config";
 
 import { get } from 'svelte/store';
@@ -5,6 +7,8 @@ import { goto } from '@sapper/app';
 // import { DEBUG } from '../config';
 
 import { copyToClipboard } from '../utils';
+
+import promptIds from '../config/promptIds';
 
 import {
     viewedUser,
@@ -15,7 +19,12 @@ import {
 import {
     getUser,
     addUser,
+    mergeUsers,
 } from '../models/usersModel';
+
+import {
+    showPrompt,
+} from '../actions/appActions';
 
 function checkUpdateUser(targetUser) {
     const curViewedUser = get(viewedUser);
@@ -92,4 +101,19 @@ export function createUser(newUserModel) {
         setUser(newUser.id);
         goto('profile/' + newUser.id);
     }
+}
+
+export function loginUser(details) {
+	api.login(details).then(result => {
+        if (result && !result.error) {
+            console.log('result', result);
+            const userInfo = result;
+            if (userInfo.id) {
+                mergeUsers(userInfo);
+                setUser(userInfo.id);
+            }
+        } else {
+            showPrompt(promptIds.LOG_IN_ERROR);
+        }
+	});
 }

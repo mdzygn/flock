@@ -7,6 +7,7 @@ import {
     targetProject,
     targetUser,
     signUpFormValidated,
+    logInFormValidated,
 } from '../models/appModel';
 
 // import {
@@ -194,6 +195,26 @@ const prompts = {
                 label: 'Create User',
                 disabled: () => !get(signUpFormValidated),
                 default: true,
+            },
+        ],
+    },
+    LOG_IN: {
+        title: 'Log In',
+        menuItems: [
+            {
+                label: 'Log In',
+                disabled: () => !get(logInFormValidated),
+                default: true,
+            },
+        ],
+    },
+    LOG_IN_ERROR: {
+        title: 'Log In',
+        message: 'Invalid username<br />or password',
+        menuItems: [
+            {
+                label: 'Ok',
+                action: () => { showPrompt(promptIds.LOG_IN); },
             },
         ],
     }

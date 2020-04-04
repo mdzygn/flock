@@ -6,7 +6,6 @@ import { tick } from 'svelte';
 
 import { copyToClipboard } from '../utils';
 
-
 import promptIds from '../config/promptIds';
 
 import {

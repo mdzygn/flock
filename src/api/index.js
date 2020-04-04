@@ -100,6 +100,14 @@ function unlikeProject(options) {
 
 /*** Users ***/
 
+// options = { details: {} }
+function login(options) {
+	return send('login', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 // options = { limit: number, cursor: string, sort: {} }
 function getUsers(options) {
 	options = options || {};
@@ -130,6 +138,8 @@ const api = {
 	likeProject,
 	unlikeProject,
 
+
+	login,
 
 	getUsers,
 	addUser,

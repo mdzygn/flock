@@ -46,7 +46,7 @@ users.subscribe(() => {
 	});
 });
 
-function mergeUsers(newUsers) {
+export function mergeUsers(newUsers) {
 	if (newUsers && newUsers.length) {
 		const curUsers = get(users);
 

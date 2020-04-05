@@ -4,6 +4,7 @@
 	import { writable } from 'svelte/store';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
+	import SearchBar from './../../_components/SearchBar.svelte';
 
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspots from '../../../components/Hotspots.svelte';
@@ -13,7 +14,13 @@
 	import ProjectItem from './../../_components/ProjectItem.svelte';
 	import ContentLoader from './../../_components/ContentLoader.svelte';
 
-	import { viewMode, locationMode, resetScrollRegionPosition, showBetaFeatures } from '../../../models/appModel';
+	import {
+		viewMode,
+		locationMode,
+		resetScrollRegionPosition,
+		showBetaFeatures,
+		discoverSearchString,
+	} from '../../../models/appModel';
 
 	import { getDiscoveryProjects, loadingProjects } from '../../../models/projectsModel';
 
@@ -68,6 +75,8 @@
 						width: 232px;
 						height: 46px;" />
 				</Proxy>
+			{:else}
+				<SearchBar bind:searchString={$discoverSearchString} />
 			{/if}
 		</div>
 	</ScrollView>
@@ -83,4 +92,13 @@
 	/* .feed :global(.proxy) {
 		padding-bottom: 10px;
 	} */
+
+	.pageContent :global(.scrollHeader) {
+    	background-color: #ffffff;
+	}
+
+	.pageContent :global(.searchBarField) {
+    	margin: 10px 16px;
+    	/* margin: 8px 11px; */
+	}
 </style>

@@ -32,6 +32,7 @@ const appModel = createModel({
 
     projectsSearchString: '',
     projectsArchiveSearchString: '',
+    discoverSearchString: '',
 }, {persist: true}, 'appState');
 
 export const curPath = writable(null);
@@ -80,6 +81,7 @@ export const editingProject = appModel.editingProject;
 
 export const projectsSearchString = appModel.projectsSearchString;
 export const projectsArchiveSearchString = appModel.projectsArchiveSearchString;
+export const discoverSearchString = appModel.discoverSearchString;
 
 export const displayingAllMyProjects = appModel.displayingAllMyProjects;
 export const displayingAllFollowingProjects = appModel.displayingAllFollowingProjects;

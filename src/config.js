@@ -7,6 +7,10 @@ export const contentFolder = 'content/';
 export const projectContentFolder = 'content/projects/';
 export const projectHeaderImage = 'header.jpg';
 
+export const headerImageLibraryFolder = 'content/library/headers/';
+export const headerImageLibraryThumbFolder = 'content/library/headers/thumbs/';
+export const headerImageExtension = '.jpg';
+
 export const MAX_ID_LENGTH = 12;
 
 export default {
@@ -18,6 +22,10 @@ export default {
     contentFolder,
     projectContentFolder,
     projectHeaderImage,
+
+    headerImageLibraryFolder,
+    headerImageLibraryThumbFolder,
+    headerImageExtension,
 
     MAX_ID_LENGTH,
 };

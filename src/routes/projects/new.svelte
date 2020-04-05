@@ -15,9 +15,7 @@
 
 	let title = '';
 	let description = '';
-	let headerImage = 'header2';
-
-	let image = null;
+	let image = null; // 'header2';
 
 	let titleField;
 	let descriptionField;
@@ -30,7 +28,7 @@
 		const projectDetails = {
 			title,
 			description,
-			headerImage,
+			headerImage: image,
 		};
 		createProject(projectDetails);
 	}

@@ -16,12 +16,13 @@
     import CancelIcon from "../../../assets/icons/cancel.png";
 	import SaveIcon from "../../../assets/icons/save.png";
 
-	import { project, projectId, editingProject } from '../../../models/appModel';
+	import { project, projectId, editingProject, showBetaFeatures } from '../../../models/appModel';
 	import { saveProjectDetails } from '../../../actions/projectActions';
 
 	let title = ($project && $project.title) || '';
 	let description = ($project && $project.description) || '';
 	let headerImage = ($project && $project.headerImage) || '';
+	let tags = ($project && $project.tags) || '';
 
 	$: saveEnabled = !editingProject || (title && description);
 
@@ -31,6 +32,8 @@
 	let detail4 = '';
 
 	let descriptionInput;
+	let tagsInput;
+
 	let detailInput1;
 	let detailInput2;
 	let detailInput3;
@@ -108,6 +111,7 @@
 				title,
 				description,
 				headerImage,
+				tags,
 			});
 		}
 
@@ -156,37 +160,49 @@
 					<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
 					<div class="headerImageContainer"></div>
 				</div>
+				<div class="field descriptionField">
+					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
+					<textarea bind:this="{tagsInput}" bind:value="{tags}" />
+				</div>
 			</div>
 			{/if}
-			<div class="imageField">
-				<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
-			</div>
+			{#if $showBetaFeatures}
+				<div class="imageField">
+					<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+				</div>
+			{/if}
 			<div class="field">
-				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_1_TIP}</span></div>
+				<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_1_TIP}</span></div>
         		<textarea bind:this="{detailInput1}" bind:value="{detail1}" class="detailTextarea" />
 			</div>
 
-			<div class="imageField">
-				<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
-			</div>
+			{#if $showBetaFeatures}
+				<div class="imageField">
+					<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+				</div>
+			{/if}
 			<div class="field">
-				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_2_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_2_TIP}</span></div>
+				<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_2_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_2_TIP}</span></div>
         		<textarea bind:this="{detailInput2}" bind:value="{detail2}" class="detailTextarea" />
 			</div>
 
-			<div class="imageField">
-				<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
-			</div>
+			{#if $showBetaFeatures}
+				<div class="imageField">
+					<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+				</div>
+			{/if}
 			<div class="field">
-				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_3_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_3_TIP}</span></div>
+				<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_3_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_3_TIP}</span></div>
         		<textarea bind:this="{detailInput3}" bind:value="{detail3}" class="detailTextarea" />
 			</div>
 
-			<div class="imageField">
-				<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
-			</div>
+			{#if $showBetaFeatures}
+				<div class="imageField">
+					<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+				</div>
+			{/if}
 			<div class="field">
-				<div class="label">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_4_TIP}</span></div>
+				<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_4_TIP}</span></div>
         		<textarea bind:this="{detailInput4}" bind:value="{detail4}" class="detailTextarea" />
 			</div>
 
@@ -226,8 +242,14 @@
 		color: #555555;
 	}
 
+	.labelDetails {
+		font-weight: 700;
+	}
+
 	.tip {
     	padding-left: 13px;
+
+		font-weight: initial;
 
 		color: #999999;
 	}

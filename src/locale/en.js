@@ -19,6 +19,9 @@ const locale = {
 		CONFIRM: 'next',
 	},
 	EDIT_PROJECT_DETAILS: {
+		TAGS: 'tags',
+		TAGS_TIP: 'project keywords / categories, separated by commas',
+		// TAGS_TIP: 'add at least 5 keywords/terms/categories for this project, separated by commas',
 		DETAIL_1_LABEL: 'introduction',
 		DETAIL_2_LABEL: 'additional info',
 		DETAIL_3_LABEL: 'additional info',

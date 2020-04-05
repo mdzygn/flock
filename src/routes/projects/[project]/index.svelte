@@ -42,6 +42,7 @@
 		projectReturnView,
 		projectShowingInfo,
 		getIsProjectTeamMember,
+		showBetaFeatures,
 	} from '../../../models/appModel';
 
 	import { getProjectHeaderImage, getProjectHasDetails, loadingProjects } from '../../../models/projectsModel';
@@ -89,8 +90,6 @@
 		unarchiveProject($projectId);
 	}
 
-	// let proxyHeaderImage;
-	// let proxyActionsImage;
 	let proxyOverviewImage;
 	let proxyShowingInfoActionsImage;
 	let proxyChannelsImage;
@@ -197,119 +196,6 @@
 			<div class="content">
 				<div class="contentItem" class:collapsedOptions="{$projectReturnView && !showInfo}" class:collapsedHeader="{$projectReturnView && !showInfo && !isNew}">
 					<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$projectReturnView}" alt="project header image" />
-					<!-- {#if isNew}
-						<Proxy image="{proxyOverviewImage}" className="proxyOverlay">
-							<Hotspot onClick="{editProjectDetails}" style="
-								left: 8px;
-								top: 123px;
-								width: 172px;
-								height: 38px;" />
-
-							<Hotspot onClick="{makePublic}" style="
-								right: 11px;
-								top: 120px;
-								width: 125px;
-								height: 41px;" />
-						</Proxy>
-					{:else if !showInfo}
-						<Proxy image="{proxyOverviewImage}" className="proxyOverlay" style="pointer-events: none">
-							<Hotspot onClick="{showProjectInfo}" style="
-								left: 0;
-								top: 55px;
-								width: 100%;
-								height: 70px;" />
-							<Hotspot onClick="{showProjectInfo}" style="
-								left: 8px;
-								top: 125px;
-								width: 110px;
-								height: 30px;" />
-
-							{#if isTeamMember}
-								<Hotspot href="projects/{$projectId}/messages" style="
-									right: 11px;
-									top: 122px;
-									width: 147px;
-									height: 40px;" />
-							{:else if $projectReturnView}
-								<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
-									right: 11px;
-									top: 122px;
-									width: 116px;
-									height: 40px;" />
-							{:else}
-								<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
-									left: 7px;
-									top: 155px;
-									width: 121px;
-									height: 46px;" />
-							{/if}
-
-							{#if !$projectReturnView}
-								{#if liked}
-									<Proxy image="project_like_selected" absolutePlacement="true" style="
-										left: 175px;
-										top: 164px;" />
-								{/if}
-
-								<Hotspot onClick="{toggleLiked}" style="
-									left: 170px;
-									top: 159px;
-									width: 59px;
-									height: 40px;" />
-
-								<Hotspot onClick="{toggleFollowing}" style="
-									right: 35px;
-									top: 155px;
-									width: 110px;
-									height: 46px;" />
-							{/if}
-						</Proxy>
-					{:else}
-						<div class="proxyOverlay">
-							<Proxy image="project_overview_info" />
-							<div>
-								<Proxy image="project_info_image_1" />
-								<Proxy image="project_info_content_1" />
-								<Proxy image="project_info_image_2" />
-								<Proxy image="project_info_content_2" />
-								<Proxy image="project_info_image_3" />
-								<Proxy image="project_info_content_3" />
-							</div>
-							<Proxy image="{proxyshowInfoActionsImage}">
-								{#if isTeamMember}
-									<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
-										right: 6px;
-										top: 2px;
-										width: 156px;
-										height: 46px;" />
-								{:else}
-									<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
-										left: 7px;
-										top: 8px;
-										width: 121px;
-										height: 46px;" />
-
-									{#if liked}
-										<Proxy image="project_like_selected" absolutePlacement="true" style="
-											left: 175px;
-											top: 16px;" />
-									{/if}
-
-									<Hotspot onClick="{toggleLiked}" style="
-										left: 170px;
-										top: 11px;
-										width: 59px;
-										height: 40px;" />
-
-									<Hotspot onClick="{toggleFollowing}" style="
-										right: 35px;
-										top: 8px;
-										width: 110px;
-										height: 46px;" />
-								{/if}
-							</Proxy>
-						</div>
-					{/if} -->
 
 					<div class="overviewContent" class:returnView="{$projectReturnView}">
 						<div class="contentContainer">
@@ -343,12 +229,6 @@
 										<div class="projectInfoDetail">{@html projectDetailItem.detail}</div>
 									{/if}
 								{/each}
-								<!-- <Proxy image="project_info_image_1" />
-								<Proxy image="project_info_content_1" />
-								<Proxy image="project_info_image_2" />
-								<Proxy image="project_info_content_2" />
-								<Proxy image="project_info_image_3" />
-								<Proxy image="project_info_content_3" /> -->
 							</div>
 						{/if}
 						<div class="projectActions">
@@ -359,13 +239,17 @@
 									<Button className="addProjectDetailsButton" onClick="{editProjectDetails}" icon="{AddDetailsIcon}">add project details</Button>
 								{/if}
 								{#if !isTeamMember}
-									<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
+									{#if $showBetaFeatures}
+										<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
+									{/if}
 								{:else if isNew && !isPublic}
 									<Button className="makePublicButton isButton" onClick="{showTogglePublicDialog}">make public</Button>
 								{:else}
-									<Button className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
-										<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
-									</Button>
+									{#if $showBetaFeatures}
+										<Button className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
+											<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
+										</Button>
+									{/if}
 								{/if}
 								{#if (!$projectReturnView || showInfo) && !isTeamMember}
 									<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
@@ -385,45 +269,51 @@
 
 				{#if isNew}
 					<ProjectTeamList project="{$project}" />
-					<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
-					<ProjectLinks project="{$project}" />
-					<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
-					<ProjectSkillsList project="{$project}" />
-					<Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" />
-					{#if canEdit}
-						<NewPostButton type="project_post_update" />
+					{#if $showBetaFeatures}
+						<ProjectLinks project="{$project}" />
+						<ProjectSkillsList project="{$project}" />
+					{/if}
+						<Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" />
+					{#if $showBetaFeatures}
+						{#if canEdit}
+							<NewPostButton type="project_post_update" />
+						{/if}
 					{/if}
 				{:else if $projectReturnView}
 					<Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" />
-					{#if canEdit}
-						<NewPostButton type="project_post_update" />
+					{#if $showBetaFeatures}
+						{#if canEdit}
+							<NewPostButton type="project_post_update" />
+						{/if}
+						<ProjectLinks project="{$project}" />
+						<ProjectSkillsList project="{$project}" />
 					{/if}
-					<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
-					<ProjectLinks project="{$project}" />
-					<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
-					<ProjectSkillsList project="{$project}" />
 					<ProjectTeamList project="{$project}" />
-					<div>
-						<Proxy image="project_post_1" className="contentItem projectPost" />
-						<Proxy image="project_post_2" className="contentItem projectPost" />
-						<Proxy image="project_post_3" className="contentItem projectPost" />
-					</div>
-					{#if canEdit}
-						<NewPostButton type="project_post_update" />
+					{#if $showBetaFeatures}
+						<div>
+							<Proxy image="project_post_1" className="contentItem projectPost" />
+							<Proxy image="project_post_2" className="contentItem projectPost" />
+							<Proxy image="project_post_3" className="contentItem projectPost" />
+						</div>
+						{#if canEdit}
+							<NewPostButton type="project_post_update" />
+						{/if}
 					{/if}
 				{:else}
 					<ProjectTeamList project="{$project}" />
-					<!-- <Proxy image="{proxySkillsImage}" className="contentItem" /> -->
-					<ProjectSkillsList project="{$project}" />
-					<!-- <Proxy image="{proxyLinksImage}" className="contentItem proxyOverlay" /> -->
-					<ProjectLinks project="{$project}" />
+					{#if $showBetaFeatures}
+						<ProjectSkillsList project="{$project}" />
+						<ProjectLinks project="{$project}" />
+					{/if}
 					<Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" />
-					<div id="post" />
-					<div>
-						<Proxy image="project_post_1" className="contentItem projectPost" />
-						<Proxy image="project_post_2" className="contentItem projectPost" />
-						<Proxy image="project_post_3" className="contentItem projectPost" />
-					</div>
+					{#if $showBetaFeatures}
+						<div id="post" />
+						<div>
+							<Proxy image="project_post_1" className="contentItem projectPost" />
+							<Proxy image="project_post_2" className="contentItem projectPost" />
+							<Proxy image="project_post_3" className="contentItem projectPost" />
+						</div>
+					{/if}
 				{/if}
 			</div>
 
@@ -447,7 +337,6 @@
 									buttonContentStyle = "padding-right: 56px;"
 									iconStyle = "padding-bottom: 4px; margin-top: 1px;"
 								/>
-									<!-- action = "{showProjectFollowers}" -->
 							</div>
 							<div slot="buttonMiddle">
 								<ActionButton

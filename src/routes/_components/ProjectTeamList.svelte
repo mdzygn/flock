@@ -12,6 +12,7 @@
 
     import {
         getIsProjectTeamMember,
+        showBetaFeatures,
     } from '../../models/appModel';
 
     export let project = null;
@@ -51,7 +52,7 @@
                 height: 56px;" />
         </Proxy> -->
 
-        <ContentPanel title="Team" showEdit="{canEdit}" showMoreAction="{areMoreItems}">
+        <ContentPanel title="Team" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
             {#each teamMembers as teamMember, index}
                 {#if index < MAX_TEAM_MEMBERS}
                     <TeamMemberItem user="{getUser(teamMember)}" />

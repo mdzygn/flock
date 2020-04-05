@@ -48,6 +48,7 @@ const locale = {
 	SIGN_UP: {
 		FIRST_NAME: 'First name',
 		LAST_NAME: 'Last name',
+		EMAIL: 'Email',
 	},
 	LOG_IN: {
 		USERNAME: 'username',

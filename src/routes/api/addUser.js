@@ -1,12 +1,45 @@
-import { init, response } from '../../server/mongo.js';
+import { init, response, filterItemDetails } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
-	const details = options.details;
+	let details = options.details;
 
 	if (details && details.username && details.usercode) {
+
+		const userDetails = {
+			id: true,
+
+			username: true,
+			usercode: true,
+
+			fullName: true,
+			firstName: true,
+			lastName: true,
+
+			email: true,
+
+			bio: true,
+
+			skills: true,
+
+			avatarImage: true,
+			coverImage: true,
+
+			style: true,
+
+			location: true,
+		};
+
+		details = filterItemDetails(details, userDetails);
+
+		// TODO: validate username
+		// TODO: validate usercode
+		// TODO: validate email
+
+		// console.log('filtered user details', details);
+
 		const exisitingUser = await db.collection('users').findOne({ username: details.username });
 		if (exisitingUser) {
 			response(res, {invalid: true, errorType: 'username_exists'});

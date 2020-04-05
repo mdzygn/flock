@@ -17,10 +17,12 @@
 
     let firstNameField;
     let lastNameField;
+    let emailField;
 
     $: firstNameField && firstNameField.focus();
 
-    $: $signUpFormValidated = !!($newUser.firstName && $newUser.lastName);
+    $: emailValidated = ($newUser.email || '').match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]{2,}\.[A-Z]{2,8}$/i);
+    $: $signUpFormValidated = !!($newUser.firstName && $newUser.lastName && emailValidated);
     $: $newUser.fullName = $newUser.firstName + ' ' + $newUser.lastName;
     $: $newUser.username = formatAsId($newUser.firstName + $newUser.lastName, config.MAX_ID_LENGTH);
 
@@ -48,7 +50,11 @@
     </div>
     <div class="field">
         <div class="label">{locale.SIGN_UP.LAST_NAME}</div>
-        <input type="text" id="lname" name="lname" autocomplete="family-name" autocapitalize="words" bind:value="{$newUser.lastName}" bind:this="{lastNameField}" on:keypress="{(e) => testInputDefocus(e, {action: submit})}" />
+        <input type="text" id="lname" name="lname" autocomplete="family-name" autocapitalize="words" bind:value="{$newUser.lastName}" bind:this="{lastNameField}" on:keypress="{(e) => testInputDefocus(e, {action: emailField})}" />
+    </div>
+    <div class="field">
+        <div class="label">{locale.SIGN_UP.EMAIL}</div>
+        <input type="text" id="email" name="email" autocomplete="email" bind:value="{$newUser.email}" bind:this="{emailField}" on:keypress="{(e) => testInputDefocus(e, {action: submit})}" />
     </div>
 </div>
 

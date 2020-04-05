@@ -1,5 +1,32 @@
 [
 	{
+		"_id": {
+			"$oid": "5e8922d988fbdd286871f998"
+		},
+		"id": "YRVQ6vOE",
+		"username": "matth",
+		"fullName": "Matt Halford",
+		"firstName": "Matt",
+		"lastName": "Halford",
+		"email": "mattdhalford@gmail.com",
+		"usercode": "arock",
+		"admin": true,
+		"bio": "",
+		"skills": [],
+		"avatarImage": null,
+		"coverImage": null,
+		"style": {
+			"profileTop": "#f9c35c",
+			"profileBottom": "#d88060",
+			"coverTop": "#fbc7ae",
+			"coverBottom": "#b37866"
+		},
+		"location": "",
+		"createdAt": 1586045657054,
+		"modifiedAt": 1586045657054,
+		"lastActiveAt": 1586045657054
+	},
+	{
 	   "id":"bl20a8lm",
 	   "isAdmin":true,
 	   "fullName":"Sasha Holmer",

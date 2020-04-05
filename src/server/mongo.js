@@ -29,3 +29,28 @@ export async function validateCredentials(db, options) {
         return false;
     }
 }
+
+export function filterItemArrayDetails(items, itemDetails) {
+    const filteredItems = [];
+	if (items && items.length) {
+		let newItem, sourceItem, key;
+		for (var itemI = 0; itemI < items.length; itemI++) {
+            sourceItem = items[itemI];
+            newItem = filterItemDetails(sourceItem, itemDetails);
+            filteredItems.push(newItem);
+		}
+    }
+    return filteredItems;
+}
+
+export function filterItemDetails(sourceItem, itemDetails) {
+    const newItem = {};
+
+    for (let key in itemDetails) {
+        if (sourceItem[key] !== undefined) {
+            newItem[key] = sourceItem[key];
+        }
+    }
+
+    return newItem;
+}

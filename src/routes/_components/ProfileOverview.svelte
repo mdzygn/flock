@@ -154,12 +154,14 @@
             {/if}
 
             {#if userLocation}
-                <div class="footerActions">
-                    <Location location="{userLocation}" hideWithVisibility="{isCurrentUser}" />
-                    {#if isCurrentUser}
-						<Audience />
-                    {/if}
-                </div>
+                {#if $showBetaFeatures}
+                    <div class="footerActions">
+                        <Location location="{userLocation}" hideWithVisibility="{isCurrentUser}" />
+                        {#if isCurrentUser}
+                            <Audience />
+                        {/if}
+                    </div>
+                {/if}
             {/if}
         </div>
     </div>

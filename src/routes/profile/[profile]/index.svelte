@@ -21,6 +21,7 @@
 		viewedUser,
 		profileId,
 		profileDisplayingAllProjects,
+		showBetaFeatures,
 	} from '../../../models/appModel';
 
 	import { loadConversation, messageUser, showShareProfileDialog } from '../../../actions/appActions';
@@ -78,13 +79,15 @@
 				<ProfileOverview />
 			</div>
 			<!-- <Proxy image="{proxySkillsImage}" className="proxyOverlay" /> -->
-			{#if skills && skills.length}
-				<ContentPanel title="Skills" showEdit="{isCurrentUser}">
-					<TagSet tags="{skills}" />
-				</ContentPanel>
-			{/if}
-			{#if projectIds && projectIds.length}
-				<ProjectList projects="{userProjects}" showIfNoProjects="{true}" displayLimit="{$profileDisplayingAllProjects ? 0 : PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllProjects}" />
+            {#if $showBetaFeatures}
+				{#if skills && skills.length}
+					<ContentPanel title="Skills" showEdit="{isCurrentUser}">
+						<TagSet tags="{skills}" />
+					</ContentPanel>
+				{/if}
+				{#if projectIds && projectIds.length}
+					<ProjectList projects="{userProjects}" showIfNoProjects="{true}" displayLimit="{$profileDisplayingAllProjects ? 0 : PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllProjects}" />
+				{/if}
 			{/if}
 		</div>
 	</ScrollView>

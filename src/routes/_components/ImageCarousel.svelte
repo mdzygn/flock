@@ -17,7 +17,7 @@
 
     function selectImage(targetImage) {
         image = targetImage.imageId;
-        dispatch('select');
+        dispatch('select', {thumbImage: imageBasePath + image + imageExtension});
     }
 
     function filterItems(items, searchString) {

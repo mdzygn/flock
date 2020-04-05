@@ -33,10 +33,18 @@
 
     $: imageSrc = (image && (config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
 
+    // $: console.log('imageSrc', imageSrc);
+
     function toggleCarousel() {
         if (image) {
             carouselShown = !carouselShown;
         }
+    }
+
+    function selectImage(event) {
+        imageSrc = event.detail.thumbImage; // force thumb to load in image first
+        image = image; // then reupdate with current image
+        toggleCarousel();
     }
 
     function uploadImage() {
@@ -55,7 +63,7 @@
             imageExtension="{config.headerImageExtension}"
             bind:image="{image}"
             searchString="{imageLibrarySearchString}"
-            on:select="{toggleCarousel}" />
+            on:select="{selectImage}" />
         <!-- <Button className="uploadButton" onClick="{uploadImage}" disabled="{true}">
             <div class="uploadButtonIcon" style="background-image: url({UploadImageIcon})"/>
             <div class="buttonLabel">{locale.GENERAL.UPLOAD_IMAGE}</div>

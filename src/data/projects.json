@@ -61,7 +61,8 @@
           "m3ld9bna",
           "59sndsf3",
           "69snksd2"
-       ]
+       ],
+       "tags":"games, game, game creator, design, tech, social, app, 3d, software, editor, creation, art, arts, animation"
     },
     {
        "title":"Tesseract",
@@ -103,7 +104,8 @@
           "69snksd2",
           "3n67s32h",
           "j6o7sd21"
-       ]
+       ],
+       "tags":"game, games, puzzle, adventure, arts, art, design, tech, VR, AR, mobile, 3d, mystery, sci-fi"
     },
     {
        "title":"Green Guardians",
@@ -170,7 +172,8 @@
           "n36dvd1f",
           "bl20a8lm",
           "m3ld9bna"
-       ]
+       ],
+       "tags":"environment, environmental, social, community, tv show, tv series, series, show, animation, kids show, kids, childrens, children, te reo, adventure, super heroes, heroes, nature, green, eco, planet, arts, media"
     },
     {
        "title":"Leonardo's World",
@@ -226,7 +229,8 @@
           "64sn24bs",
           "59sndsf3",
           "69snksd2"
-       ]
+       ],
+       "tags":"app, tech, software, social, environment, education, learning, kids, children, kids game, game, math, maths, english, language, te reo, science, adventure, activity"
     },
     {
        "title":"New Earth",
@@ -255,7 +259,8 @@
        "team":[
           "YRVQ6vOE",
           "bl20a8lm"
-       ]
+       ],
+       "tags":"narrative, story, adventure, mystery, sci-fi, game, media, arts, art, design"
     },
     {
        "title":"Shared Cafe",
@@ -318,7 +323,8 @@
           "69snksd2",
           "3n67s32h",
           "j6o7sd21"
-       ]
+       ],
+       "tags":"social, community, service"
     },
     {
        "title":"Plant Share",
@@ -376,7 +382,8 @@
          "m3ld9bna",
           "3n67s32h",
           "j6o7sd21"
-       ]
+       ],
+       "tags":"social, community, service, food, hospitality"
     },
     {
        "title":"Aerial Views Book",
@@ -433,7 +440,8 @@
        "team":[
          "m3ld9bna",
           "bfd63zdv"
-       ]
+       ],
+       "tags":"book, arts, media, design, environmental"
     },
     {
        "title":"Shared Transport",
@@ -490,7 +498,8 @@
        "team":[
          "m3ld9bna",
           "j6o7sd21"
-       ]
+       ],
+       "tags":"social, transport, community, environment"
     },
     {
        "title":"Sweet Treats",
@@ -547,7 +556,8 @@
        "team":[
          "m3ld9bna",
           "bfd63zdv"
-       ]
+       ],
+       "tags":"social, community, service, food"
     },
     {
        "title":"Architecture Walks",
@@ -608,7 +618,8 @@
           "69snksd2",
           "3n67s32h",
           "j6o7sd21"
-       ]
+       ],
+       "tags":"social, community, architecture, touring"
     },
     {
        "title":"Holiday Hideaways",
@@ -664,7 +675,8 @@
        ],
        "team":[
          "m3ld9bna"
-       ]
+       ],
+       "tags":"social, community, holiday, adventure, world, touring, tourism"
     },
     {
        "title":"Antarctic Trust",
@@ -721,7 +733,8 @@
        "team":[
          "m3ld9bna",
           "3n67s32h"
-       ]
+       ],
+       "tags":"social, community, environmental, ecology, eco, arctic, antartic, ice, saving"
     },
     {
        "title":"Electric Car Sharing",
@@ -779,7 +792,8 @@
          "m3ld9bna",
           "64sn24bs",
           "5d4jh4vs"
-       ]
+       ],
+       "tags":"social, community, environmental, ecology, eco, sharing, pollution, greenhouse gases, climate change"
     },
     {
        "title":"Shared Art Spaces",
@@ -840,7 +854,8 @@
           "bl20a8lm",
           "m3ld9bna",
           "59sndsf3"
-       ]
+       ],
+       "tags":"social, community, arts, art, design, shared, shared space, resource"
     },
     {
        "title":"Village Trading",
@@ -898,7 +913,8 @@
          "m3ld9bna",
           "bfd63zdv",
           "YRVQ6vOE"
-       ]
+       ],
+       "tags":"social, community, shared, shared space, resource"
     },
     {
        "title":"Cat Daycare",
@@ -955,7 +971,8 @@
        "team":[
          "m3ld9bna",
           "3n67s32h"
-       ]
+       ],
+       "tags":"social, community, animals, pets, cats, cat, shelter"
     },
     {
        "title":"Improved Public Transport",
@@ -1011,6 +1028,7 @@
        ],
        "team":[
          "m3ld9bna"
-       ]
+       ],
+       "tags":"social, community, transport, environment, cars, car pool, public"
     }
  ]

@@ -7,6 +7,8 @@
 
 	import Button from '../../components/Button.svelte';
 
+	import ImageSelectionBox from '../_components/ImageSelectionBox.svelte';
+
     import NextArrowIcon from "../../assets/icons/next_arrow.png";
 
 	import { createProject } from '../../actions/projectActions';
@@ -14,6 +16,8 @@
 	let title = '';
 	let description = '';
 	let headerImage = 'header2';
+
+	let image = null;
 
 	let titleField;
 	let descriptionField;
@@ -51,7 +55,7 @@
 			</div>
 			<div class="field headerImageField">
 				<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
-        		<div class="headerImageContainer"></div>
+				<ImageSelectionBox bind:image />
 			</div>
 			<div class="actions">
 				<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewProject}" icon="{NextArrowIcon}">{locale.NEW_PROJECT.CONFIRM}</Button>
@@ -64,7 +68,7 @@
     /* .content :global(.proxyOverlay) {
         position: absolute;
 		pointer-events: none;
-        opacity: 0;
+        opacity: 0.5;
     } */
 
 	.panelContent {
@@ -133,11 +137,8 @@
     	padding-right: 21px;
 	}
 
-	.headerImageContainer {
-		width: 100%;
+	.headerImageField :global(.imageSelectionBox) {
 		height: 220px;
-
-    	background-color: #E3E3E3;
     	margin-top: 10px;
 	}
 

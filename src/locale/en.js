@@ -1,6 +1,7 @@
 const locale = {
 	GENERAL: {
 		SHOW_MORE: 'show more',
+		UPLOAD_IMAGE: 'upload image',
 	},
 	HEADER: {
 		SIGN_IN: 'sign in',

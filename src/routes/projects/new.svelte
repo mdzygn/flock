@@ -22,7 +22,7 @@
 
     // $: titleField && titleField.focus();
 
-	$: nextEnabled = title && description && headerImage;
+	$: nextEnabled = title && description && image;
 
 	function createNewProject() {
 		const projectDetails = {

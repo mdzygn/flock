@@ -69,7 +69,7 @@
     }
 
     .carouselShown {
-        opacity: 0.33;
+        opacity: 0.4;
     }
 
     .imageSelectionBox :global(.imageCarousel) {

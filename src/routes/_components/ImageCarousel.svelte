@@ -32,7 +32,7 @@
         overflow-x: scroll;
         overflow-y: hidden;
 
-        padding: 0px 75px;
+        padding: 0px 45px;
 
         -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
     }
@@ -50,8 +50,10 @@
 
         margin: 0 12px;
 
-        width: 94px;
-        height: 56px;
+        width: 168px;
+        height: 100px;
+        /* width: 94px;
+        height: 56px; */
 
         background-size: cover;
         border: 3px solid #ffffff;

@@ -42,7 +42,7 @@
         if (hasScrollHeader && scrollHeader) {
             scrollHeaderHeight = scrollHeader.offsetHeight;
             curScrollHeaderPosition = Math.min(regionProps.scrollTop, Math.max(regionProps.scrollTop - scrollHeaderHeight, curScrollHeaderPosition));
-            scrollHeaderOffset = Math.max(0, curScrollHeaderPosition - regionProps.scrollTop);
+            scrollHeaderOffset = curScrollHeaderPosition - regionProps.scrollTop;
 
             // console.log('curScrollHeaderPosition: ' + curScrollHeaderPosition + ', scrollHeaderOffset: ' + scrollHeaderOffset);
         }
@@ -138,7 +138,7 @@
                 }
             }
 
-            scrollHeaderOffset = Math.max(0, curScrollHeaderPosition - regionProps.scrollTop);
+            scrollHeaderOffset = curScrollHeaderPosition - regionProps.scrollTop;
             // console.log('scrollHeaderOffset: ' + scrollHeaderOffset);
         }
     }

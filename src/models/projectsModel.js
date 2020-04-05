@@ -163,6 +163,7 @@ function projectSearchMatch(project, searchString) {
 	if (project.title && project.title.toLowerCase().includes(searchString)) return true;
 	if (project.description && project.description.toLowerCase().includes(searchString)) return true;
 	if (project.location && project.location.toLowerCase().includes(searchString)) return true;
+	if (project.tags && project.tags.toLowerCase().includes(searchString)) return true;
 	return false;
 }
 

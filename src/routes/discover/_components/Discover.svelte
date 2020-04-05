@@ -22,12 +22,21 @@
 		discoverSearchString,
 	} from '../../../models/appModel';
 
-	import { getDiscoveryProjects, loadingProjects } from '../../../models/projectsModel';
+	import {
+		getDiscoveryProjects,
+		loadingProjects,
+		getFilteredProjects,
+	} from '../../../models/projectsModel';
 
 	import { loadProject } from '../../../actions/appActions';
 
-	let projects = writable({});
-	$: { projects = getDiscoveryProjects(); }
+	let discoveryProjects = writable([]);
+	let filteredDiscoveryProjects = writable([]);
+
+	$: { discoveryProjects = getDiscoveryProjects(); }
+
+	$: { $filteredDiscoveryProjects = getFilteredProjects($discoveryProjects, { searchString: $discoverSearchString }) }
+
 
 	function toggleViewMode() {
 		$viewMode = ($viewMode === 'explore') ? 'discover' : 'explore';
@@ -47,13 +56,17 @@
 		<!-- <Feed type="discover" linkToProjects="{true}" count="{5}" offset="{proxyContentOffset}"/> -->
 
 		<div class="feed">
-			{#if $loadingProjects && (!$projects || !$projects.length) }
+			{#if $loadingProjects && (!$filteredDiscoveryProjects || !$filteredDiscoveryProjects.length) }
 				<ContentLoader label="{locale.LOADING.DISCOVER}" />
 			{:else}
-				{#each $projects as project}
+				{#each $filteredDiscoveryProjects as project}
 					<ProjectItem {project} />
 				{:else}
-					<ContentLoader label="{locale.DISCOVER.NO_PROJECTS}" />
+					{#if $discoverSearchString}
+						<slot><ContentLoader label="No projects matching &quot;{$discoverSearchString}&quot;" /></slot>
+					{:else}
+						<ContentLoader label="{locale.DISCOVER.NO_PROJECTS}" />
+					{/if}
 				{/each}
 			{/if}
 		</div>

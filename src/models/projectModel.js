@@ -31,10 +31,11 @@ const ProjectModel = (projectData) => {
 
         location: null,
 
-        skills: [],
+        tags: '',
+        skills: '',
+
         links: [],
         team: [],
-        tags: [],
         posts: [],
     };
     if (projectData) {

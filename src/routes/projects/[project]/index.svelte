@@ -41,7 +41,7 @@
 		project,
 		projectReturnView,
 		projectShowingInfo,
-		getIsProjectOwner,
+		getIsProjectTeamMember,
 	} from '../../../models/appModel';
 
 	import { getProjectHeaderImage, getProjectHasDetails, loadingProjects } from '../../../models/projectsModel';
@@ -78,7 +78,7 @@
 	}
 
 	function showProjectOptions() {
-		if (isOwner) {
+		if (isTeamMember) {
 			showMenu(menuIds.PROJECT_OWNER_MENU);
 		} else {
 			showMenu(menuIds.PROJECT_MENU);
@@ -97,14 +97,14 @@
 	let proxyLinksImage;
 	let proxySkillsImage;
 
-	$: isOwner = getIsProjectOwner($project);
+	$: isTeamMember = getIsProjectTeamMember($project);
 	$: isNew = ($project && $project.isNew) || false;
 	$: following = ($project && $project.following) || false;
 	$: liked = ($project && $project.liked) || false;
 	$: isPublic = ($project && $project.public) || false;
 
-	$: canEdit = (isOwner && !$project.archived) || false;
-	$: isArchived = (isOwner && $project && $project.archived) || false;
+	$: canEdit = (isTeamMember && !$project.archived) || false;
+	$: isArchived = (isTeamMember && $project && $project.archived) || false;
 
 	$: unreadMessageCount = ($project && $project.unreadMessageCount) || 0;
 	$: messageCount = ($project && $project.messageCount) || 0;
@@ -132,7 +132,7 @@
 		// 	proxyHeaderImage = 'project_header_image';
 		// }
 
-		if (isOwner) {
+		if (isTeamMember) {
 			// proxyActionsImage = 'project_actions_owner';
 
 			if (isNew) {
@@ -173,7 +173,7 @@
 			proxySkillsImage = 'project_skills';
 		}
 
-		if (isOwner) {
+		if (isTeamMember) {
 			proxyShowingInfoActionsImage = 'project_info_actions_owner';
 		} else if (following) {
 			proxyShowingInfoActionsImage = 'project_info_actions_following';
@@ -224,7 +224,7 @@
 								width: 110px;
 								height: 30px;" />
 
-							{#if isOwner}
+							{#if isTeamMember}
 								<Hotspot href="projects/{$projectId}/messages" style="
 									right: 11px;
 									top: 122px;
@@ -276,7 +276,7 @@
 								<Proxy image="project_info_content_3" />
 							</div>
 							<Proxy image="{proxyshowInfoActionsImage}">
-								{#if isOwner}
+								{#if isTeamMember}
 									<Hotspot onClick="{e => loadConversation('s0g1la34')}" style="
 										right: 6px;
 										top: 2px;
@@ -314,12 +314,12 @@
 					<div class="overviewContent" class:returnView="{$projectReturnView}">
 						<div class="contentContainer">
 							<Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProjectOptions}"></Button>
-							{#if isOwner}
+							{#if isTeamMember}
 								<Button className="editButton" onClick="{() => editProjectDetails({editingProject: true})}" icon="{EditIcon}" disabled="{!canEdit}"></Button>
 								<Audience {isPublic} onClick="{showTogglePublicDialog}" disabled="{!canEdit}" />
 							{/if}
 							<div class="itemContent">
-								<div class="header" class:headerOwner="{isOwner}">{projectTitle}</div>
+								<div class="header" class:headerOwner="{isTeamMember}">{projectTitle}</div>
 								<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? toggleProjectInfo : null}">{projectDescription}</div>
 							</div>
 							{#if projectHasDetails}
@@ -355,10 +355,10 @@
 							<div class="projectActionButtons">
 								{#if projectHasDetails && !showInfo && $projectReturnView}
 									<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
-								{:else if !projectHasDetails && isOwner}
+								{:else if !projectHasDetails && isTeamMember}
 									<Button className="addProjectDetailsButton" onClick="{editProjectDetails}" icon="{AddDetailsIcon}">add project details</Button>
 								{/if}
-								{#if !isOwner}
+								{#if !isTeamMember}
 									<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
 								{:else if isNew && !isPublic}
 									<Button className="makePublicButton isButton" onClick="{showTogglePublicDialog}">make public</Button>
@@ -367,7 +367,7 @@
 										<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
 									</Button>
 								{/if}
-								{#if (!$projectReturnView || showInfo) && !isOwner}
+								{#if (!$projectReturnView || showInfo) && !isTeamMember}
 									<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
 										<div class="count">{likeCount}</div>
 									</div></Button>
@@ -377,7 +377,7 @@
 								{/if}
 							</div>
 							{#if (!$projectReturnView || showInfo) && projectLocation}
-								<Location className="{(isOwner && showInfo) ? 'ownerLocation' : ''}" location="{projectLocation}" />
+								<Location className="{(isTeamMember && showInfo) ? 'ownerLocation' : ''}" location="{projectLocation}" />
 							{/if}
 						</div>
 					</div>
@@ -431,7 +431,7 @@
 				{#if isArchived}
 					<ArchivedBar onClick="{unarchiveCurrentProject}"/>
 				{:else}
-					{#if isOwner}
+					{#if isTeamMember}
 						<ActionBar targetItemId="{$projectId}" targetItem="{$project}">
 							<div slot="buttonLeft">
 								<ActionButton

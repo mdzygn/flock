@@ -145,7 +145,7 @@
         top: 14px;
 
         left: 20px;
-        right: 55px;
+        right: 82px;
 
         overflow: hidden;
         white-space: nowrap;

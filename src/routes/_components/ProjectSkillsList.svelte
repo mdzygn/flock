@@ -3,15 +3,15 @@
 	import TagSet from './TagSet.svelte';
 
     import {
-        getIsProjectOwner,
+        getIsProjectTeamMember,
     } from '../../models/appModel';
 
     export let project = null;
 
     $: skills = (project && project.skills) || null;
-    $: isOwner = getIsProjectOwner(project);
+    $: isTeamMember = getIsProjectTeamMember(project);
 
-	$: canEdit = (isOwner && !project.archived) || false;
+	$: canEdit = (isTeamMember && !project.archived) || false;
 
     $: areMoreItems = skills && skills.length > 0; // > MAX_PROJECT_PREVIEW_COUNT;
 </script>

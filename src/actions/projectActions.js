@@ -19,7 +19,7 @@ import {
 import {
     project,
     resetScrollRegionPosition,
-    getIsProjectOwner,
+    getIsProjectTeamMember,
 } from '../models/appModel';
 
 import {
@@ -165,7 +165,7 @@ export async function archiveProject(projectId) {
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
 
-    if (getIsProjectOwner(targetProject)) { // targetProject.isOwner) {
+    if (getIsProjectTeamMember(targetProject)) { // targetProject.isOwner) {
         const details = { archived: true };
         targetProject.archived = details.archived;
         targetProjectModel.set(targetProject);
@@ -184,7 +184,7 @@ export async function unarchiveProject(projectId) {
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
 
-    if (getIsProjectOwner(targetProject)) { // targetProject.isOwner) {
+    if (getIsProjectTeamMember(targetProject)) { // targetProject.isOwner) {
         const details = { archived: false };
         targetProject.archived = details.archived;
         targetProjectModel.set(targetProject);

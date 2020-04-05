@@ -11,17 +11,17 @@
     import { loadProfile } from '../../actions/appActions';
 
     import {
-        getIsProjectOwner,
+        getIsProjectTeamMember,
     } from '../../models/appModel';
 
     export let project = null;
 
     const MAX_TEAM_MEMBERS = 10;
 
-	$: isOwner = getIsProjectOwner(project);
+	$: isTeamMember = getIsProjectTeamMember(project);
     $: isNew = (project && project.isNew) || false;
 
-	$: canEdit = (isOwner && !project.archived) || false;
+	$: canEdit = (isTeamMember && !project.archived) || false;
 
 	$: teamMembers = (project && project.team) || null;
 
@@ -32,7 +32,7 @@
         if (isNew) {
             proxyImage = 'project_team_populate';
         } else {
-            if (isOwner) {
+            if (isTeamMember) {
                 proxyImage = 'project_team_owner';
             } else {
                 proxyImage = 'project_team';

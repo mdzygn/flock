@@ -56,7 +56,7 @@ import {
 
     curMenu,
     curPrompt,
-    getIsProjectOwner,
+    getIsProjectTeamMember,
 } from '../models/appModel';
 
 export function loadProject(targetProjectId, options) {
@@ -79,7 +79,7 @@ function setProject(targetProjectId) {
     const curProject = get(curProjectModel);
 
     project.set(curProject);
-    projectReturnView.set(curProject && (curProject.following || getIsProjectOwner(curProject))); // curProject.isOwner
+    projectReturnView.set(curProject && (curProject.following || getIsProjectTeamMember(curProject))); // curProject.isOwner
 }
 
 onProjectsUpdated(() => {

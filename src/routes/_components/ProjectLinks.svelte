@@ -6,7 +6,7 @@
     import GitHubButton from "../../assets/icons/github_button.png";
 
     import {
-        getIsProjectOwner,
+        getIsProjectTeamMember,
     } from '../../models/appModel';
 
     export let project = null;
@@ -14,10 +14,9 @@
     const MAX_DISPLAYED_LINK_COUNT = 3;
 
     $: links = (project && project.links) || null;
-    // $: isOwner = (project && project.isOwner) || false;
-    $: isOwner = getIsProjectOwner(project);
+    $: isTeamMember = getIsProjectTeamMember(project);
 
-	$: canEdit = (isOwner && !project.archived) || false;
+	$: canEdit = (isTeamMember && !project.archived) || false;
 
     $: areMoreItems = links && links.length > MAX_DISPLAYED_LINK_COUNT;
 

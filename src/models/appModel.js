@@ -141,9 +141,9 @@ export function getIsCurrentUser(targetUserId) {
 	return (targetUserId === curUserId);
 }
 
-export function getIsProjectOwner(project) {
+export function getIsProjectTeamMember(project) {
     const curUserId = get(userId);
-    // console.log('getIsProjectOwner ' + (project && project.ownerId && project.ownerId === curUserId));
+    // console.log('getIsProjectTeamMember ' + (project && project.ownerId && project.ownerId === curUserId));
 	return (project && project.team && project.team.includes(curUserId));
 	// return (project && project.ownerId && project.ownerId === curUserId);
 }

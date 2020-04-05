@@ -8,7 +8,7 @@ import { generateId } from '../utils';
 
 import config from '../config';
 
-import { locationMode, getIsProjectOwner, user, userId, project } from '../models/appModel';
+import { locationMode, getIsProjectTeamMember, user, userId, project } from '../models/appModel';
 
 import ProjectModel from '../models/projectModel';
 
@@ -195,7 +195,7 @@ export function updateMyProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return getIsProjectOwner(project) && !project.archived;
+			return getIsProjectTeamMember(project) && !project.archived;
 		});
 		newProjects.sort((a,b) => get(b).lastActiveAt - get(a).lastActiveAt); // sort by reversed updated time
 
@@ -208,7 +208,7 @@ export function updateMyPublicProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return getIsProjectOwner(project) && !project.archived && project.public;
+			return getIsProjectTeamMember(project) && !project.archived && project.public;
 		});
 		// console.log('updateMyPublicProjects: ', newProjects);
 		myPublicProjects.set(newProjects);
@@ -219,7 +219,7 @@ export function updateArchivedProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return getIsProjectOwner(project) && project.archived;
+			return getIsProjectTeamMember(project) && project.archived;
 		});
 		// console.log('updateArchivedProjects: ', newProjects);
 		archivedProjects.set(newProjects);
@@ -230,7 +230,7 @@ export function updateFollowingProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return project.following && !getIsProjectOwner(project) && !project.archived && project.public;
+			return project.following && !getIsProjectTeamMember(project) && !project.archived && project.public;
 		});
 		newProjects.sort((a,b) => get(b).followTime - get(a).followTime); // sort by reversed follow time
 
@@ -243,7 +243,7 @@ export function updateOtherPublicProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return !project.following && !getIsProjectOwner(project) && !project.archived && project.public;
+			return !project.following && !getIsProjectTeamMember(project) && !project.archived && project.public;
 		});
 		// console.log('updateOtherPublicProjects: ', newProjects);
 		otherPublicProjects.set(newProjects);

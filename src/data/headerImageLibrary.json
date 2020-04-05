@@ -5,7 +5,7 @@
 	},
 	{
 	   "imageId":"abstract-21883_960_720",
-	   "tags":"city, building, glass"
+	   "tags":"city, building, glass, abstract"
 	},
 	{
 	   "imageId":"abstract-22122_960_720",
@@ -61,11 +61,12 @@
 	},
 	{
 	   "imageId":"analysis-2030261_960_720",
-	   "tags":"medical, science, microscope, bacteria"
+	   "tags":"medical, medicine, science, microscope, bacteria",
+	   "disabled":true
 	},
 	{
 	   "imageId":"analysis-2030265_960_720",
-	   "tags":"medical, science, microscope, bacteria"
+	   "tags":"medical, medicine, science, microscope, bacteria"
 	},
 	{
 	   "imageId":"anemones-4984095_960_720",
@@ -101,11 +102,11 @@
 	},
 	{
 	   "imageId":"architecture-768432_960_720",
-	   "tags":"architecture, building, city, glass"
+	   "tags":"architecture, building, city, glass, abstract"
 	},
 	{
 	   "imageId":"architecture-1048092_960_720",
-	   "tags":"architecture, building, city, glass"
+	   "tags":"architecture, building, city, glass, abstract"
 	},
 	{
 	   "imageId":"architecture-1477041_960_720",

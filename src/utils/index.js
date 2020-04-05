@@ -64,3 +64,16 @@ export function formatAsId(string, maxLength, spaceReplaceString) {
     }
     return newString;
 }
+
+export function shuffle(array) {
+    let sourceArray = [...array];
+
+    const newArray = [];
+    let index;
+    while (sourceArray.length > 0) {
+        index = Math.floor(Math.random() * sourceArray.length);
+        newArray.push(sourceArray.splice(index, 1)[0]);
+    }
+
+    return newArray;
+}

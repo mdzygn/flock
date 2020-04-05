@@ -135,7 +135,8 @@ export function createProject(projectDetails) {
     if (!checkLoggedIn()) { return; }
 
     if (projectDetails.headerImage) {
-        projectDetails.headerImage = 'resource/headers/' + projectDetails.headerImage + '.jpg';
+        projectDetails.headerImage = projectDetails.headerImage;
+        // projectDetails.headerImage = 'resource/headers/' + projectDetails.headerImage + '.jpg';
     }
 
     const newProjectModel = addProject(projectDetails);

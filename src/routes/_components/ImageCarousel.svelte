@@ -20,7 +20,9 @@
 <div class="imageCarousel">
     <div class="imageContainer">
         {#each images as image}
-            <Button className="imageItem" onClick="{() => { selectImage(image); } }" style="background-image: url({imageBasePath + image.imageId + imageExtension})"/>
+            {#if !image.disabled}
+                <Button className="imageItem" onClick="{() => { selectImage(image); } }" style="background-image: url({imageBasePath + image.imageId + imageExtension})"/>
+            {/if}
         {/each}
     </div>
 </div>

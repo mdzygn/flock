@@ -3,6 +3,8 @@
 
     import config from '../../config';
 
+    import { shuffle } from '../../utils';
+
     import Button from '../../components/Button.svelte';
 
     import ImageCarousel from './ImageCarousel.svelte';
@@ -10,6 +12,8 @@
     import UploadImageIcon from "../../assets/icons/upload_image.png";
 
     import headerImageLibrary from '../../data/headerImageLibrary.json';
+
+    const libraryImages = shuffle(headerImageLibrary);
 
     export let image = null;
 
@@ -33,7 +37,7 @@
     {/if}
     <div class="carouselContainer" class:hidden="{!carouselShown}">
         <ImageCarousel
-            images="{headerImageLibrary}"
+            images="{libraryImages}"
             imageBasePath="{config.headerImageLibraryThumbFolder}"
             imageExtension="{config.headerImageExtension}"
             bind:image="{image}"

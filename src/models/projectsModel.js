@@ -439,10 +439,11 @@ export function setFollowProject(targetProject, follow) {
 	}
 }
 
-export function getProjectHeaderImage(project) {
+export function getProjectHeaderImage(project, fullImage) {
 	if (project) {
 		if (project.headerImage) {
-			return config.contentFolder + project.headerImage;
+			// return config.contentFolder + project.headerImage;
+			return (fullImage ? config.headerImageLibraryFolder : config.headerImageLibraryThumbFolder) + project.headerImage + config.headerImageExtension;
 		} else {
 			const headerImageId = project.slug || '_default';
 			return config.projectContentFolder + headerImageId + '/' + config.projectHeaderImage;

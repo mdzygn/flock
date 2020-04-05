@@ -33,6 +33,12 @@
 		createProject(projectDetails);
 	}
 
+	function testSubmit() {
+		if (nextEnabled) {
+			createNewProject();
+		}
+	}
+
 </script>
 
 <svelte:head>
@@ -45,11 +51,11 @@
 		<div class="panelContent">
 			<div class="field">
 				<div class="label">{locale.NEW_PROJECT.TITLE}</div>
-        		<input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{(e) => testInputDefocus(e, {target: descriptionField})}" />
+        		<input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: descriptionField})}" />
 			</div>
 			<div class="field descriptionField">
 				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
-        		<textarea bind:value="{description}" bind:this="{descriptionField}" on:keypress="{testInputDefocus}" />
+        		<textarea bind:value="{description}" bind:this="{descriptionField}" on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" />
 			</div>
 			<div class="field headerImageField">
 				<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>

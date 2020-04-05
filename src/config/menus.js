@@ -24,11 +24,10 @@ import {
     showPrompt,
     loadProfile,
     logOut,
+    showTogglePublicDialog,
 } from '../actions/appActions';
 
 import {
-    makePrivate,
-    makePublic,
     reportProject,
     projectToggleFollowing,
     unarchiveProject,
@@ -58,12 +57,12 @@ export const menus = {
             {
                 label: 'Make Private',
                 condition: () => { const p = get(project); return p && p.public && !p.archived },
-                action: makePrivate,
+                action: showTogglePublicDialog,
             },
             {
                 label: 'Make Public',
                 condition: () => { const p = get(project); return p && !p.public && !p.archived },
-                action: makePublic,
+                action: showTogglePublicDialog,
             },
             {
                 label: 'Achive Project',

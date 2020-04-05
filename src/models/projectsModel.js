@@ -210,19 +210,9 @@ export function updateMyPublicProjects() {
 			const project = get(projectModel);
 			return getIsProjectTeamMember(project) && !project.archived && project.public;
 		});
+		newProjects.sort((a,b) => get(b).lastActiveAt - get(a).lastActiveAt); // sort by reversed updated time
 		// console.log('updateMyPublicProjects: ', newProjects);
 		myPublicProjects.set(newProjects);
-	}
-}
-export function updateArchivedProjects() {
-	let newProjects = get(projects);
-	if (newProjects) {
-		newProjects = newProjects.filter(projectModel => {
-			const project = get(projectModel);
-			return getIsProjectTeamMember(project) && project.archived;
-		});
-		// console.log('updateArchivedProjects: ', newProjects);
-		archivedProjects.set(newProjects);
 	}
 }
 export function updateFollowingProjects() {
@@ -245,10 +235,24 @@ export function updateOtherPublicProjects() {
 			const project = get(projectModel);
 			return !project.following && !getIsProjectTeamMember(project) && !project.archived && project.public;
 		});
+		newProjects.sort((a,b) => get(b).lastActiveAt - get(a).lastActiveAt); // sort by reversed updated time
 		// console.log('updateOtherPublicProjects: ', newProjects);
 		otherPublicProjects.set(newProjects);
 	}
 }
+export function updateArchivedProjects() {
+	let newProjects = get(projects);
+	if (newProjects) {
+		newProjects = newProjects.filter(projectModel => {
+			const project = get(projectModel);
+			return getIsProjectTeamMember(project) && project.archived;
+		});
+		newProjects.sort((a,b) => get(b).lastActiveAt - get(a).lastActiveAt); // sort by reversed updated time
+		// console.log('updateArchivedProjects: ', newProjects);
+		archivedProjects.set(newProjects);
+	}
+}
+
 export function updateDiscoveryProjects(updateDependencies) {
 	if (updateDependencies) {
 		updateMyPublicProjects();

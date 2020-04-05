@@ -13,7 +13,7 @@
 	import ProjectItem from './../../_components/ProjectItem.svelte';
 	import ContentLoader from './../../_components/ContentLoader.svelte';
 
-	import { viewMode, locationMode, resetScrollRegionPosition } from '../../../models/appModel';
+	import { viewMode, locationMode, resetScrollRegionPosition, showBetaFeatures } from '../../../models/appModel';
 
 	import { getDiscoveryProjects, loadingProjects } from '../../../models/projectsModel';
 
@@ -52,21 +52,23 @@
 		</div>
 
 		<div slot="scrollHeader">
-			<Proxy image="{proxyFilterImage}">
-				<!-- Toggle View Mode -->
-				<Hotspot onClick="{toggleViewMode}" style="
-					left: 7px;
-					top: 5px;
-					width: 38px;
-					height: 39px;" />
+			{#if $showBetaFeatures}
+				<Proxy image="{proxyFilterImage}">
+					<!-- Toggle View Mode -->
+					<Hotspot onClick="{toggleViewMode}" style="
+						left: 7px;
+						top: 5px;
+						width: 38px;
+						height: 39px;" />
 
-				<!-- Toggle Location Mode -->
-				<Hotspot onClick="{toggleLocationMode}" style="
-					right: 10px;
-					top: 5px;
-					width: 232px;
-					height: 46px;" />
-			</Proxy>
+					<!-- Toggle Location Mode -->
+					<Hotspot onClick="{toggleLocationMode}" style="
+						right: 10px;
+						top: 5px;
+						width: 232px;
+						height: 46px;" />
+				</Proxy>
+			{/if}
 		</div>
 	</ScrollView>
 </div>

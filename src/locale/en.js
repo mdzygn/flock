@@ -22,6 +22,7 @@ const locale = {
 		TAGS: 'tags',
 		TAGS_TIP: 'project keywords / categories, separated by commas',
 		// TAGS_TIP: 'add at least 5 keywords/terms/categories for this project, separated by commas',
+		LOCATION: 'location',
 		DETAIL_1_LABEL: 'introduction',
 		DETAIL_2_LABEL: 'additional info',
 		DETAIL_3_LABEL: 'additional info',

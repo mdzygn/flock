@@ -23,6 +23,7 @@
 	let description = ($project && $project.description) || '';
 	let headerImage = ($project && $project.headerImage) || '';
 	let tags = ($project && $project.tags) || '';
+	let location = ($project && $project.location) || '';
 
 	$: saveEnabled = !editingProject || (title && description);
 
@@ -33,6 +34,7 @@
 
 	let descriptionInput;
 	let tagsInput;
+	let locationInput;
 
 	let detailInput1;
 	let detailInput2;
@@ -112,6 +114,7 @@
 				description,
 				headerImage,
 				tags,
+				location,
 			});
 		}
 
@@ -154,7 +157,7 @@
 				</div>
 				<div class="field descriptionField">
 					<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
-					<textarea bind:this="{descriptionInput}" bind:value="{description}" on:keypress="{testInputDefocus}" />
+					<textarea bind:value="{description}" bind:this="{descriptionInput}" on:keypress="{testInputDefocus}" />
 				</div>
 				<div class="field headerImageField">
 					<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
@@ -162,7 +165,11 @@
 				</div>
 				<div class="field descriptionField">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
-					<textarea bind:this="{tagsInput}" bind:value="{tags}" />
+					<textarea bind:value="{tags}" bind:this="{tagsInput}" />
+				</div>
+				<div class="field">
+					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}</div>
+					<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput1})}" />
 				</div>
 			</div>
 			{/if}

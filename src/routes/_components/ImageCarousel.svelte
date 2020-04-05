@@ -11,15 +11,42 @@
     export let imageBasePath = '';
     export let imageExtension = '.jpg';
 
+    export let searchString = null;
+
+    $: filteredImages = filterItems(images, searchString);
+
     function selectImage(targetImage) {
         image = targetImage.imageId;
         dispatch('select');
+    }
+
+    function filterItems(items, searchString) {
+        const filteredItems = [];
+
+        if (searchString) {
+            searchString = searchString.toLowerCase();
+        }
+
+        let item, curProject;
+        for (let index = 0; index < items.length; index++) {
+            item = items[index];
+            if (item && itemSearchMatch(item, searchString)) {
+                filteredItems.push(item);
+            }
+        }
+
+        return filteredItems;
+    }
+
+    function itemSearchMatch(item, searchString) {
+        if (item.tags && item.tags.toLowerCase().includes(searchString)) return true;
+        return false;
     }
 </script>
 
 <div class="imageCarousel">
     <div class="imageContainer">
-        {#each images as image}
+        {#each filteredImages as image}
             {#if !image.disabled}
                 <Button className="imageItem" onClick="{() => { selectImage(image); } }" style="background-image: url({imageBasePath + image.imageId + imageExtension})"/>
             {/if}

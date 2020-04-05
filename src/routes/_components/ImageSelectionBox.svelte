@@ -7,6 +7,7 @@
 
     import Button from '../../components/Button.svelte';
 
+	import SearchBar from '../_components/SearchBar.svelte';
     import ImageCarousel from './ImageCarousel.svelte';
 
     import UploadImageIcon from "../../assets/icons/upload_image.png";
@@ -18,6 +19,7 @@
     export let image = null;
 
     let carouselShown = true;
+    let imageLibrarySearchString = '';
 
     let inited = false;
     $: {
@@ -46,11 +48,13 @@
         <img class="imageSelectionBoxImage" class:carouselShown="{carouselShown}" on:click="{toggleCarousel}" src="{imageSrc}" alt="project header image" />
     {/if}
     <div class="carouselContainer" class:hidden="{!carouselShown}">
+        <SearchBar bind:searchString={imageLibrarySearchString} />
         <ImageCarousel
             images="{libraryImages}"
             imageBasePath="{config.headerImageLibraryThumbFolder}"
             imageExtension="{config.headerImageExtension}"
             bind:image="{image}"
+            searchString="{imageLibrarySearchString}"
             on:select="{toggleCarousel}" />
         <!-- <Button className="uploadButton" onClick="{uploadImage}" disabled="{true}">
             <div class="uploadButtonIcon" style="background-image: url({UploadImageIcon})"/>
@@ -68,6 +72,14 @@
 
     	background-color: #E3E3E3;
     }
+
+	.imageSelectionBox :global(.searchBar) {
+        position: absolute;
+	}
+	.imageSelectionBox :global(.searchBarField) {
+        margin: 28px 80px;
+        background-color: #ffffff;
+	}
 
     .hidden {
         display: none;
@@ -87,8 +99,8 @@
     }
 
     .imageSelectionBox :global(.imageCarousel) {
-        /* padding-top: 120px; */
-        padding-top: 40px;
+        padding-top: 78px;
+        /* padding-top: 40px; */
     }
 
     .imageSelectionBox :global(.uploadButton) {

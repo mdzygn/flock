@@ -134,6 +134,10 @@ export function getUserProjectsFromId(filteredProjects, projectIds, dontLoad) {
 
 export function getFilteredProjects(projects, options) { // filteredProjects
 	let searchString = (options && options.searchString) || null;
+	if (searchString) {
+		searchString = searchString.toLowerCase();
+	}
+
 	let limit = (options && options.limit) || 0;
 
 	const newFilteredProjects = [];
@@ -158,8 +162,6 @@ export function getFilteredProjects(projects, options) { // filteredProjects
 }
 
 function projectSearchMatch(project, searchString) {
-	searchString = searchString.toLowerCase();
-
 	if (project.title && project.title.toLowerCase().includes(searchString)) return true;
 	if (project.description && project.description.toLowerCase().includes(searchString)) return true;
 	if (project.location && project.location.toLowerCase().includes(searchString)) return true;

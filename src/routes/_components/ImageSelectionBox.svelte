@@ -1,4 +1,6 @@
 <script>
+    import { tick } from 'svelte';
+
     import locale from '../../locale';
 
     import config from '../../config';
@@ -31,9 +33,10 @@
         }
     }
 
-    $: imageSrc = (image && (config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
-
-    // $: console.log('imageSrc', imageSrc);
+    let imageSrc = null;
+    $: {
+        imageSrc = (image && (config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
+    }
 
     function toggleCarousel() {
         if (image) {
@@ -41,9 +44,14 @@
         }
     }
 
-    function selectImage(event) {
+    async function selectImage(event) {
+        await tick();
         imageSrc = event.detail.thumbImage; // force thumb to load in image first
-        image = image; // then reupdate with current image
+
+        await tick(); // then reupdate with current image
+        imageSrc = (image && (config.headerImageLibraryFolder + image + config.headerImageExtension)) || null; //TODO: find better way
+
+        await tick();
         toggleCarousel();
     }
 

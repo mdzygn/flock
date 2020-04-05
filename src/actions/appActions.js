@@ -2,7 +2,7 @@ import api from '../api';
 
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
-import { tick } from 'svelte';
+// import { tick } from 'svelte';
 
 import conversations from '../data/conversations.json';
 

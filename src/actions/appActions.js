@@ -329,10 +329,10 @@ export async function logOut(dontDisplayMessage) {
 
     updateProjectLists();
 
-    if (!dontDisplayMessage) {
-        await tick();
-        showPrompt(promptIds.LOGGED_OUT);
-    }
+    // if (!dontDisplayMessage) {
+    //     await tick();
+    //     showPrompt(promptIds.LOGGED_OUT);
+    // }
 }
 
 export function checkLoggedIn() {

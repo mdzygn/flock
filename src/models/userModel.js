@@ -22,7 +22,7 @@ const UserModel = (userData) => {
         connected: false, // TODO: move to connection
         requestedConnection: false, // TODO: move to connection
 
-        location: '',
+        location: null,
 
         // postsCount: 0,
         // likesCount: 0,

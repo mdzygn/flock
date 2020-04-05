@@ -22,6 +22,7 @@
 
     import {
         getIsCurrentUser,
+        showBetaFeatures,
     } from '../../models/appModel';
 
     import {
@@ -102,12 +103,16 @@
             </div> -->
             <AvatarIcon user="{viewedUser}" />
             <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProfileOptions}"></Button>
-            <Button className="editButton" icon="{EditIcon}" disabled="{true}">edit</Button>
-            <div class="userStats">
-                <Button><span class="label">posts</span><div class="count">{postsCount}</div></Button>
-                <Button onClick="{showLikes}"><span class="label">likes</span><div class="count">{likesCount}</div></Button>
-                <Button><span class="label">follows</span><div class="count">{followsCount}</div></Button>
-            </div>
+            {#if $showBetaFeatures}
+                <Button className="editButton" icon="{EditIcon}" disabled="{true}">edit</Button>
+            {/if}
+            {#if $showBetaFeatures}
+                <div class="userStats">
+                    <Button><span class="label">posts</span><div class="count">{postsCount}</div></Button>
+                    <Button onClick="{showLikes}"><span class="label">likes</span><div class="count">{likesCount}</div></Button>
+                    <Button><span class="label">follows</span><div class="count">{followsCount}</div></Button>
+                </div>
+            {/if}
             <div class="itemContent">
                 <div class="header">{userFullName}</div>
                 <div class="username">@{username}</div>
@@ -142,11 +147,13 @@
             {#if !isCurrentUser}
                 <div class="overviewActions">
                     <Button className="sendMessageButton" onClick="{messageCurrentUser}" icon="{SendMessageIcon}">message</Button>
-                    <Button className="connectButton {showConnect ? 'isButton' : ''}" onClick="{showConnect ? userRequestConnection : null}" icon="{ConnectIcon}">{showConnect ? 'connect' : (requestedConnection ? 'request sent' : 'connected')}</Button>
+                    {#if $showBetaFeatures}
+                        <Button className="connectButton {showConnect ? 'isButton' : ''}" onClick="{showConnect ? userRequestConnection : null}" icon="{ConnectIcon}">{showConnect ? 'connect' : (requestedConnection ? 'request sent' : 'connected')}</Button>
+                    {/if}
                 </div>
             {/if}
 
-            {#if userLocation || isCurrentUser}
+            {#if userLocation}
                 <div class="footerActions">
                     <Location location="{userLocation}" hideWithVisibility="{isCurrentUser}" />
                     {#if isCurrentUser}

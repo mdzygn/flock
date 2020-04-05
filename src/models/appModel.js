@@ -19,6 +19,8 @@ const appModel = createModel({
     locationMode: 'global',
     exploreZoomed: false,
 
+    showBetaFeatures: false,
+
     profileDisplayingAllProjects: false,
 
     projectReturnView: false,
@@ -42,6 +44,8 @@ export const profileId = appModel.profileId;
 export const userId = appModel.userId;
 
 export const unsavedChanges = writable(false);
+
+export const showBetaFeatures = appModel.showBetaFeatures;
 
 export const project = writable(null);
 export const conversation = writable(null);
@@ -146,6 +150,14 @@ export function getIsProjectTeamMember(project) {
     // console.log('getIsProjectTeamMember ' + (project && project.ownerId && project.ownerId === curUserId));
 	return (project && project.team && project.team.includes(curUserId));
 	// return (project && project.ownerId && project.ownerId === curUserId);
+}
+
+export function checkParams(query) {
+    if (query.beta !== undefined) {
+        showBetaFeatures.set(true);
+    } else if (query.xbeta !== undefined) {
+        showBetaFeatures.set(false);
+    }
 }
 
 export default appModel;

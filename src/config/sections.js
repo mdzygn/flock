@@ -5,6 +5,7 @@ export const sections = [
 		label: 'Home',
 		main: true,
 		darkBg: true,
+		beta: true,
 	},
 	{
 		segment: 'discover',
@@ -22,11 +23,13 @@ export const sections = [
 		segment: 'activity',
 		label: 'Activity',
 		main: true,
+		beta: true,
 	},
 	{
 		segment: 'messages',
 		label: 'Messages',
 		main: true,
+		beta: true,
 	},
 
 	{

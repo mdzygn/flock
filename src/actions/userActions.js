@@ -112,7 +112,7 @@ function addUser(newUserModel) {
                 username.set(newUser.username);
                 usercode.set(newUser.usercode);
 
-                goto('profile/' + newUser.id);
+                // goto('profile/' + newUser.id);
             } else {
                 switch (result.errorType) {
                     case 'username_exists':

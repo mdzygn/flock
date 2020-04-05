@@ -3,7 +3,7 @@
 
 	import { getMainSections, getIconForSection, getMainSectionForSegment, getMainSectionForRoute } from "../../models/sectionsModel.js";
 
-	import { project, getIsProjectTeamMember } from '../../models/appModel';
+	import { project, getIsProjectTeamMember, showBetaFeatures } from '../../models/appModel';
 
 	import { setNavSection } from '../../actions/appActions';
 
@@ -41,7 +41,7 @@
 <nav>
 	<ul>
 		{#each mainSections as section}
-			<li><div class="button" aria-current="{mainSection === section.segment ? 'page' : undefined}" on:click="{() => setNavSection(section)}" title="{section.label}">
+			<li><div class="button" class:disabled="{!$showBetaFeatures && section.beta}" aria-current="{mainSection === section.segment ? 'page' : undefined}" on:click="{($showBetaFeatures || !section.beta) ? () => setNavSection(section) : null}" title="{section.label}">
 				<NavIcon iconId="{getIconForSection(section)}" active="{mainSection === section.segment}" label="{section.label}" />
 			</div></li>
 		{/each}
@@ -76,6 +76,11 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.disabled {
+		cursor: initial;
+		opacity: 0.2;
 	}
 
 	ul {

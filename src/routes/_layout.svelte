@@ -2,6 +2,8 @@
 	import { stores } from '@sapper/app';
 	const { page } = stores();
 
+    import GoogleAnalytics from '../components/GoogleAnalytics.svelte';
+
 	import { isDarkBgForPath } from "../models/sectionsModel.js";
 
 	import ScrollView from '../components/ScrollView.svelte';
@@ -28,10 +30,14 @@
 		conversation,
 		viewedUser,
 		project,
+
+		checkParams,
 	} from '../models/appModel';
 
 	$: {
 		$curPath = $page.path;
+
+		checkParams($page.query);
 
 		const params = $page.params;
 		if (params) {

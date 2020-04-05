@@ -19,6 +19,16 @@
 
     let carouselShown = true;
 
+    let inited = false;
+    $: {
+        if (!inited) {
+            inited = true;
+            if (image) {
+                carouselShown = false;
+            }
+        }
+    }
+
     $: imageSrc = (image && (config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
 
     function toggleCarousel() {

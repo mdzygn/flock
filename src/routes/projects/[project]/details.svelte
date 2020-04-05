@@ -11,6 +11,7 @@
 	import Hotspot from '../../../components/Hotspot.svelte';
 
 	import Button from '../../../components/Button.svelte';
+	import ImageSelectionBox from '../../_components/ImageSelectionBox.svelte';
 
 	import AddImageIcon from "../../../assets/icons/add_small.png";
     import CancelIcon from "../../../assets/icons/cancel.png";
@@ -21,7 +22,7 @@
 
 	let title = ($project && $project.title) || '';
 	let description = ($project && $project.description) || '';
-	let headerImage = ($project && $project.headerImage) || '';
+	let image = ($project && $project.headerImage) || '';
 	let tags = ($project && $project.tags) || '';
 	let location = ($project && $project.location) || '';
 
@@ -112,7 +113,7 @@
 			Object.assign(projectDetails, {
 				title,
 				description,
-				headerImage,
+				headerImage: image,
 				tags,
 				location,
 			});
@@ -161,7 +162,7 @@
 				</div>
 				<div class="field headerImageField">
 					<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
-					<div class="headerImageContainer"></div>
+					<ImageSelectionBox bind:image />
 				</div>
 				<div class="field descriptionField">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
@@ -308,11 +309,9 @@
     	padding-right: 21px;
 	}
 
-	.headerImageContainer {
-		width: 100%;
-		height: 220px;
 
-    	background-color: #E3E3E3;
+	.headerImageField :global(.imageSelectionBox) {
+		height: 220px;
     	margin-top: 10px;
 	}
 

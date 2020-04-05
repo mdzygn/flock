@@ -80,18 +80,6 @@ export async function logOut(dontDisplayMessage) {
     }
 }
 
-export function checkUser(query) {
-    if (query && query.admin !== undefined) {
-        setUser(config.MAIN_USER);
-    } else if (query && query.general !== undefined) {
-        setUser(config.GENERAL_USER);
-    } else  if (query && query.x !== undefined) {
-        logOut(true);
-    } else if (get(userId) && !get(user)) {
-        setUser(get(userId));
-    }
-}
-
 export function createUser(newUserModel) {
     const newUser = get(newUserModel);
 

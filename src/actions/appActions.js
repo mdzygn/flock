@@ -114,6 +114,9 @@ onUsersUpdated(() => {
         const targetProfileId = get(profileId);
         setViewedUser(targetProfileId);
     }
+    if (get(userId) && (!get(user) || get(user).id !== get(userId))) {
+        setUser(get(userId));
+    }
 });
 
 export function setNavSection(section) {

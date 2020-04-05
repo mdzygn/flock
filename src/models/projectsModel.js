@@ -384,8 +384,8 @@ export function setLikeProject(targetProject, like) {
 	const curUserDetails = get(user);
 	if (curUserDetails) {
 		curUserDetails.likesCount = curUserDetails.likesCount + (like ? 1 : -1);
+		user.set(curUserDetails);
 	}
-	user.set(curUserDetails);
 }
 
 export function setFollowProject(targetProject, follow) {
@@ -402,8 +402,8 @@ export function setFollowProject(targetProject, follow) {
 	const curUserDetails = get(user);
 	if (curUserDetails) {
 		curUserDetails.followsCount = curUserDetails.followsCount + (follow ? 1 : -1);
+		user.set(curUserDetails);
 	}
-	user.set(curUserDetails);
 }
 
 export function getProjectHeaderImage(project) {

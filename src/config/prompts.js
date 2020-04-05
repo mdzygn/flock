@@ -208,6 +208,16 @@ const prompts = {
             },
         ],
     },
+    SIGN_UP_EMAIL_EXISTS: {
+        title: 'Create User',
+        message: 'Email already exists',
+        menuItems: [
+            {
+                label: 'Ok',
+                action: () => { showPrompt(promptIds.SIGN_UP); },
+            },
+        ],
+    },
     LOG_IN: {
         title: 'Sign In',
         menuItems: [

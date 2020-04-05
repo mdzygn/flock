@@ -24,7 +24,7 @@
     $: emailValidated = ($newUser.email || '').match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]{2,}\.[A-Z]{2,8}$/i);
     $: $signUpFormValidated = !!($newUser.firstName && $newUser.lastName && emailValidated);
     $: $newUser.fullName = $newUser.firstName + ' ' + $newUser.lastName;
-    $: $newUser.username = formatAsId($newUser.firstName + $newUser.lastName, config.MAX_ID_LENGTH);
+    $: $newUser.username = formatAsId($newUser.firstName + $newUser.lastName.substr(0, Math.min(1, $newUser.lastName.length)), config.MAX_ID_LENGTH);
 
     $: {
         $signUpFormValidated;

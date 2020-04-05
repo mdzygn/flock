@@ -130,6 +130,9 @@ function addUser(newUserModel) {
                     case 'username_exists':
                         showPrompt(promptIds.SIGN_UP_USERNAME_EXISTS);
                         break;
+                    case 'email_exists':
+                        showPrompt(promptIds.SIGN_UP_EMAIL_EXISTS);
+                        break;
                 }
             }
         }

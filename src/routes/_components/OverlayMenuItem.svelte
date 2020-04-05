@@ -9,6 +9,7 @@
 
     $: label = (menuItem && menuItem.label && (typeof menuItem.label === 'function' ? menuItem.label() : menuItem.label)) || '';
     $: disabled = (menuItem && menuItem.disabled && (typeof menuItem.disabled === 'function' ? menuItem.disabled() : menuItem.disabled)) || false;
+    $: visible = (menuItem && menuItem.visible !== undefined) ? (typeof menuItem.visible === 'function' ? menuItem.visible() : menuItem.visible) : true;
     $: action = (menuItem && menuItem.action) || null;
 
     $: isDefault = (menuItem && menuItem.default) || false;
@@ -18,9 +19,11 @@
     }
 </script>
 
-<div class="overlayMenuItem">
-    <Button {onClick} {disabled} className="{isDefault ? 'default' : ''}">{label}</Button>
-</div>
+{#if visible}
+    <div class="overlayMenuItem">
+        <Button {onClick} {disabled} className="{isDefault ? 'default' : ''}">{label}</Button>
+    </div>
+{/if}
 
 <style>
 	.overlayMenuItem :global(.button) {

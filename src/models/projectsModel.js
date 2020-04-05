@@ -283,7 +283,35 @@ export function updateDiscoveryProjects(updateDependencies) {
 	}
 }
 
+function clearProjectStates() {
+	const curProjects = get(projects);
+	let project, projectModel;
+	for (var projectI = 0; projectI < curProjects.length; projectI++) {
+		projectModel = curProjects[projectI];
+		project = get(projectModel);
+		if (project) {
+			delete project.liked;
+			delete project.following;
+			delete project.followTime;
+			projectModel.set(project);
+		}
+	}
+	projects.set(curProjects);
+}
+
+export function updateProjectLists() {
+	// TODO not to update all of these, only if on current view
+	clearProjectStates();
+	loadProjects();
+	updateMyProjects();
+	// getDiscoveryProjects();
+	// getMyProjects();
+	// getFollowingProjects();
+	// getArchivedProjects();
+}
+
 function projectsUpdated() {
+	// TODO not to update all of these, only if on current view
 	updateMyProjects();
 	updateFollowingProjects();
 	updateOtherPublicProjects();

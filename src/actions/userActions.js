@@ -1,10 +1,9 @@
 import api from '../api';
 
-import config from "../config";
+// import config from "../config";
 
-import { tick } from 'svelte';
 import { get } from 'svelte/store';
-import { goto } from '@sapper/app';
+// import { goto } from '@sapper/app';
 // import { DEBUG } from '../config';
 
 import { copyToClipboard, generateId } from '../utils';
@@ -13,8 +12,6 @@ import promptIds from '../config/promptIds';
 
 import {
     viewedUser,
-    user,
-    userId,
     username,
     usercode,
 } from '../models/appModel';
@@ -64,20 +61,6 @@ export function reportUser(userId) {
 export function copyProfileLink(userId) {
     const url = location.protocol + '//' + location.host + '/profile/' + userId;
     copyToClipboard(url);
-}
-
-export async function logOut(dontDisplayMessage) {
-    const curUser = get(user);
-    if (curUser && get(viewedUser) && curUser.id === get(viewedUser).id) {
-        viewedUser.set(get(viewedUser));
-    }
-    userId.set(null);
-    user.set(null);
-
-    if (!dontDisplayMessage) {
-        await tick();
-        showPrompt(promptIds.LOGGED_OUT);
-    }
 }
 
 export function createUser(newUserModel) {

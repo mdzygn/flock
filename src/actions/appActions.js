@@ -2,6 +2,7 @@ import api from '../api';
 
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
+import { tick } from 'svelte';
 
 import conversations from '../data/conversations.json';
 
@@ -13,6 +14,7 @@ import {
     getProject,
     loadProjects,
     onProjectsUpdated,
+    updateProjectLists,
 } from '../models/projectsModel';
 
 import {
@@ -308,11 +310,29 @@ export function login(details) {
 
                 username.set(userInfo.username);
                 usercode.set(userInfo.usercode);
+
+                updateProjectLists();
             }
         } else {
             showPrompt(promptIds.LOG_IN_ERROR);
         }
     });
+}
+
+export async function logOut(dontDisplayMessage) {
+    const curUser = get(user);
+    if (curUser && get(viewedUser) && curUser.id === get(viewedUser).id) {
+        viewedUser.set(get(viewedUser));
+    }
+    userId.set(null);
+    user.set(null);
+
+    updateProjectLists();
+
+    if (!dontDisplayMessage) {
+        await tick();
+        showPrompt(promptIds.LOGGED_OUT);
+    }
 }
 
 export function checkLoggedIn() {

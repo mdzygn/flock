@@ -15,6 +15,7 @@ import {
     project,
     viewedUser,
     userId,
+    showBetaFeatures,
 } from '../models/appModel';
 
 import {
@@ -22,6 +23,7 @@ import {
     messageUser,
     showPrompt,
     loadProfile,
+    logOut,
 } from '../actions/appActions';
 
 import {
@@ -37,7 +39,6 @@ import {
     requestConnection,
     reportUser,
     copyProfileLink,
-    logOut,
 } from '../actions/userActions';
 
 
@@ -121,17 +122,20 @@ export const menus = {
             {
                 label: 'Send Message',
                 action: () => { const u = get(viewedUser); u && u.id && messageUser(u.id) },
+                visible: () => { return get(showBetaFeatures) },
             },
             {
                 label: () => { const u = get(viewedUser); return (u && !u.requestedConnection) ? 'Send Connection Request' : 'Connection Request Sent' },
                 disabled: () => { const u = get(viewedUser); return u && u.requestedConnection },
                 action: () => { const u = get(viewedUser); u && u.id && requestConnection(u.id) },
+                visible: () => { return get(showBetaFeatures) },
             },
             {
                 label: () => { const u = get(viewedUser); return (u && !u.reported) ? 'Report User' : 'User Reported' },
                 disabled: () => { const u = get(viewedUser); return u && u.reported },
                 action: () => { const u = get(viewedUser); u && u.id && reportUser(u.id) },
                 disabled: true,
+                visible: () => { return get(showBetaFeatures) },
             },
         ],
     },

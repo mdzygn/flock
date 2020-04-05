@@ -87,48 +87,6 @@
 				<ProjectList projects="{userProjects}" showIfNoProjects="{true}" displayLimit="{$profileDisplayingAllProjects ? 0 : PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllProjects}" />
 			{/if}
 		</div>
-
-		<!-- <div slot="scrollHeader">
-			<Proxy image="{proxyActionsImage}">
-				{#if isCurrentUser}
-					<Hotspot href="contacts" style="
-						left: 0px;
-						top: 0px;
-						width: 122px;
-						height: 47px;" />
-
-					<Hotspot href="messages" style="
-						left: 152px;
-						top: 0px;
-						width: 129px;
-						height: 47px;" />
-
-					<Hotspot onClick="{shareCurrentProfile}" style="
-						right: 0;
-						top: 0px;
-						width: 95px;
-						height: 47px;" />
-				{:else}
-					<Hotspot onClick="{e => requestConnection(userId)}" style="
-						left: 0px;
-						top: 0px;
-						width: 122px;
-						height: 47px;" />
-
-					<Hotspot onClick="{messageCurrentUser}" style="
-						left: 128px;
-						top: 0px;
-						width: 132px;
-						height: 47px;" />
-
-					<Hotspot onClick="{shareCurrentProfile}" style="
-						right: 0;
-						top: 0px;
-						width: 111px;
-						height: 47px;" />
-				{/if}
-			</Proxy>
-		</div> -->
 	</ScrollView>
 {/if}
 

@@ -41,9 +41,11 @@
 <nav>
 	<ul>
 		{#each mainSections as section}
-			<li><div class="button" class:disabled="{!$showBetaFeatures && section.beta}" aria-current="{mainSection === section.segment ? 'page' : undefined}" on:click="{($showBetaFeatures || !section.beta) ? () => setNavSection(section) : null}" title="{section.label}">
-				<NavIcon iconId="{getIconForSection(section)}" active="{mainSection === section.segment}" label="{section.label}" />
-			</div></li>
+			{#if $showBetaFeatures || !section.betaHidden}
+				<li><div class="button" class:disabled="{!$showBetaFeatures && section.beta}" aria-current="{mainSection === section.segment ? 'page' : undefined}" on:click="{($showBetaFeatures || !section.beta) ? () => setNavSection(section) : null}" title="{section.label}">
+					<NavIcon iconId="{getIconForSection(section)}" active="{mainSection === section.segment}" label="{section.label}" />
+				</div></li>
+			{/if}
 		{/each}
 	</ul>
 </nav>

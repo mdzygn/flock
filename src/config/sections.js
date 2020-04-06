@@ -6,6 +6,7 @@ export const sections = [
 		main: true,
 		darkBg: true,
 		beta: true,
+		betaHidden: true,
 	},
 	{
 		segment: 'discover',

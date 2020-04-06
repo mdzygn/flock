@@ -145,12 +145,12 @@
             </Proxy> -->
 
             {#if !isCurrentUser}
-                {#if $showBetaFeatures}
                     <div class="overviewActions">
-                        <Button className="sendMessageButton" onClick="{messageCurrentUser}" icon="{SendMessageIcon}">message</Button>
-                        <Button className="connectButton {showConnect ? 'isButton' : ''}" onClick="{showConnect ? userRequestConnection : null}" icon="{ConnectIcon}">{showConnect ? 'connect' : (requestedConnection ? 'request sent' : 'connected')}</Button>
+                        <Button className="sendMessageButton" disabled="{!$showBetaFeatures}" onClick="{messageCurrentUser}" icon="{SendMessageIcon}">message</Button>
+                        {#if $showBetaFeatures}
+                            <Button className="connectButton {showConnect ? 'isButton' : ''}" onClick="{showConnect ? userRequestConnection : null}" icon="{ConnectIcon}">{showConnect ? 'connect' : (requestedConnection ? 'request sent' : 'connected')}</Button>
+                        {/if}
                     </div>
-                {/if}
             {/if}
 
             {#if userLocation}

@@ -16,6 +16,7 @@
 	import Audience from '../../_components/Audience.svelte';
 	import ProjectSkillsList from '../../_components/ProjectSkillsList.svelte';
 	import ProjectLinks from '../../_components/ProjectLinks.svelte';
+	import ChannelList from '../../_components/ChannelList.svelte';
 	import ContentLoader from '../../_components/ContentLoader.svelte';
 
     import SendMessageIcon from "../../../assets/icons/send.png";
@@ -48,7 +49,7 @@
 	import { getProjectHeaderImage, getProjectHasDetails, loadingProjects } from '../../../models/projectsModel';
 
 	import {
-		loadChannel,
+		// loadChannel,
 		loadConversation,
 		editProjectDetails,
 		showProjectInfo,
@@ -90,7 +91,7 @@
 		unarchiveProject($projectId);
 	}
 
-	let proxyChannelsImage;
+	// let proxyChannelsImage;
 
 	$: isTeamMember = getIsProjectTeamMember($project);
 	$: isNew = ($project && $project.isNew) || false;
@@ -120,21 +121,21 @@
 	$: projectHasDetails = getProjectHasDetails($project);
 	$: showInfo = $projectShowingInfo && projectHasDetails;
 
-	$: {
-		if (isTeamMember) {
-			if (isNew) {
-				proxyChannelsImage = 'project_channels_populate';
-			} else {
-				proxyChannelsImage = 'project_channels_owner';
-			}
-		} else {
-			if (following) {
-				proxyChannelsImage = 'project_channels_following';
-			} else {
-				proxyChannelsImage = 'project_channels';
-			}
-		}
-	}
+	// $: {
+	// 	if (isTeamMember) {
+	// 		if (isNew) {
+	// 			proxyChannelsImage = 'project_channels_populate';
+	// 		} else {
+	// 			proxyChannelsImage = 'project_channels_owner';
+	// 		}
+	// 	} else {
+	// 		if (following) {
+	// 			proxyChannelsImage = 'project_channels_following';
+	// 		} else {
+	// 			proxyChannelsImage = 'project_channels';
+	// 		}
+	// 	}
+	// }
 </script>
 
 <svelte:head>
@@ -228,14 +229,16 @@
 						<ProjectLinks project="{$project}" />
 						<ProjectSkillsList project="{$project}" />
 					{/if}
-						<Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" />
+						<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
+						<ChannelList project="{project}" />
 					{#if $showBetaFeatures}
 						{#if canEdit}
 							<NewPostButton type="project_post_update" />
 						{/if}
 					{/if}
 				{:else if $projectReturnView}
-					<Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" />
+					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
+					<ChannelList project="{project}" />
 					{#if $showBetaFeatures}
 						{#if canEdit}
 							<NewPostButton type="project_post_update" />
@@ -260,7 +263,8 @@
 						<ProjectSkillsList project="{$project}" />
 						<ProjectLinks project="{$project}" />
 					{/if}
-					<Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" />
+					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
+					<ChannelList project="{project}" />
 					{#if $showBetaFeatures}
 						<div id="post" />
 						<div>
@@ -655,9 +659,9 @@
     	background-color: #eeeeee;
 	}
 
-	.archived :global(.channelsItem) {
+	/* .archived :global(.channelsItem) {
     	opacity: 0.75;
-	}
+	} */
 	.archived :global(.projectPost) {
     	opacity: 0.5;
 	}

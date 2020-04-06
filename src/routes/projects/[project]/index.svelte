@@ -90,11 +90,7 @@
 		unarchiveProject($projectId);
 	}
 
-	let proxyOverviewImage;
-	let proxyShowingInfoActionsImage;
 	let proxyChannelsImage;
-	let proxyLinksImage;
-	let proxySkillsImage;
 
 	$: isTeamMember = getIsProjectTeamMember($project);
 	$: isNew = ($project && $project.isNew) || false;
@@ -125,59 +121,18 @@
 	$: showInfo = $projectShowingInfo && projectHasDetails;
 
 	$: {
-		// if ($projectReturnView) {
-		// 	proxyHeaderImage = 'project_header_image_compact';
-		// } else {
-		// 	proxyHeaderImage = 'project_header_image';
-		// }
-
 		if (isTeamMember) {
-			// proxyActionsImage = 'project_actions_owner';
-
 			if (isNew) {
-				proxyOverviewImage = 'project_overview_populate';
 				proxyChannelsImage = 'project_channels_populate';
 			} else {
-				proxyOverviewImage = 'project_overview_owner';
 				proxyChannelsImage = 'project_channels_owner';
-			}
-
-			if (isNew) {
-				proxyLinksImage = 'project_links_populate';
-				proxySkillsImage = 'project_skills_populate';
-			} else {
-				proxyLinksImage = 'project_links_owner';
-				proxySkillsImage = 'project_skills_owner';
 			}
 		} else {
 			if (following) {
-				// proxyActionsImage = 'project_actions_following';
-				if ($projectReturnView) {
-					proxyOverviewImage = 'project_overview_following';
-				} else {
-					proxyOverviewImage = 'project_overview_following_changed';
-				}
 				proxyChannelsImage = 'project_channels_following';
 			} else {
-				// proxyActionsImage = 'project_actions';
-				if ($projectReturnView) {
-					proxyOverviewImage = 'project_overview_following';
-				} else {
-					proxyOverviewImage = 'project_overview';
-				}
 				proxyChannelsImage = 'project_channels';
 			}
-
-			proxyLinksImage = 'project_links';
-			proxySkillsImage = 'project_skills';
-		}
-
-		if (isTeamMember) {
-			proxyShowingInfoActionsImage = 'project_info_actions_owner';
-		} else if (following) {
-			proxyShowingInfoActionsImage = 'project_info_actions_following';
-		} else {
-			proxyShowingInfoActionsImage = 'project_info_actions';
 		}
 	}
 </script>
@@ -268,8 +223,8 @@
 				</div>
 
 				{#if isNew}
-					<ProjectTeamList project="{$project}" />
 					{#if $showBetaFeatures}
+						<ProjectTeamList project="{$project}" />
 						<ProjectLinks project="{$project}" />
 						<ProjectSkillsList project="{$project}" />
 					{/if}
@@ -287,8 +242,8 @@
 						{/if}
 						<ProjectLinks project="{$project}" />
 						<ProjectSkillsList project="{$project}" />
+						<ProjectTeamList project="{$project}" />
 					{/if}
-					<ProjectTeamList project="{$project}" />
 					{#if $showBetaFeatures}
 						<div>
 							<Proxy image="project_post_1" className="contentItem projectPost" />
@@ -300,8 +255,8 @@
 						{/if}
 					{/if}
 				{:else}
-					<ProjectTeamList project="{$project}" />
 					{#if $showBetaFeatures}
+						<ProjectTeamList project="{$project}" />
 						<ProjectSkillsList project="{$project}" />
 						<ProjectLinks project="{$project}" />
 					{/if}

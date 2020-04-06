@@ -14,11 +14,18 @@
 	import {
 		channel,
 		channelId,
+		projectId,
 	} from '../../models/appModel';
 
 	import {
 		createPost,
 	} from '../../actions/postActions';
+
+	import { loadChannels } from '../../models/channelsModel';
+
+	if ($projectId) {
+		loadChannels( { projectId: $projectId } );
+	}
 
 	let title = '';
 	let message = '';

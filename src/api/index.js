@@ -156,6 +156,19 @@ function addUser(options) {
 	});
 }
 
+/*** Channels ***/
+
+// options = { limit: number, cursor: string, sort: {} }
+function getChannels(options) {
+	options = addOptions(options, {
+		userId: get(userId),
+	});
+
+	return send('getChannels', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
 
 /*** Posts ***/
 
@@ -197,6 +210,7 @@ const api = {
 	getUsers,
 	addUser,
 
+	getChannels,
 
 	getPosts,
 	addPost,

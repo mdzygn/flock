@@ -1,0 +1,44 @@
+[
+	{
+	   "title":"Announcements",
+	   "description":"",
+	   "teamOnly":true,
+	   "sortIndex": 0
+	},
+	{
+	   "title":"General",
+	   "description":"",
+	   "sortIndex": 1
+	},
+	{
+	   "title":"Workshop",
+	   "description":"",
+	   "teamOnly":true,
+	   "sortIndex": 2
+	},
+	{
+	   "title":"Questions",
+	   "description":"",
+	   "sortIndex": 3
+	},
+	{
+	   "title":"Ideas",
+	   "description":"",
+	   "sortIndex": 4
+	},
+	{
+	   "title":"Inspiration",
+	   "description":"",
+	   "sortIndex": 5
+	},
+	{
+	   "title":"Random",
+	   "description":"",
+	   "sortIndex": 6
+	},
+	{
+	   "title":"Suggestions",
+	   "description":"",
+	   "sortIndex": 7
+	}
+ ]

@@ -54,3 +54,14 @@ export function filterItemDetails(sourceItem, itemDetails) {
 
     return newItem;
 }
+
+export function generateId(length) {
+    if (!length) {
+        length = 8;
+    }
+    const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const idBase = new Array(length + 1).join('x');
+    return idBase.replace(/x/g, function() {
+        return chars[Math.floor(Math.random() * chars.length)];
+    });
+}

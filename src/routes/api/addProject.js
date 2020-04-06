@@ -1,4 +1,6 @@
-import { init, validateCredentials, response } from '../../server/mongo.js';
+import { init, validateCredentials, response, generateId } from '../../server/mongo.js';
+
+import projectDefaultChannels from '../../server/data/projectDefaultChannels';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -20,7 +22,32 @@ export async function post(req, res, next) {
 		const result = await db.collection('projects').insertOne(details);
 
 		if (result) {
-			response(res, {success: true});
+			let channelAddFailed = false;
+			let channelDetails;
+			for (var channelI = 0; channelI < projectDefaultChannels.length; channelI++) {
+				channelDetails = Object.assign({}, projectDefaultChannels[channelI]);
+
+				channelDetails.id = generateId(10);
+
+				channelDetails.projectId = details.id;
+				channelDetails.userId = options.userId;
+
+				channelDetails.createdAt = (new Date()).getTime();
+				channelDetails.modifiedAt = channelDetails.createdAt;
+				channelDetails.lastActiveAt = channelDetails.createdAt;
+
+				const channelResult = await db.collection('channels').insertOne(channelDetails);
+				if (!channelResult) {
+					channelAddFailed = true;
+					break;
+				}
+			}
+
+			if (!channelAddFailed) {
+				response(res, {success: true});
+			} else {
+				response(res, {error: true});
+			}
 		} else {
 			response(res, {error: true});
 		}

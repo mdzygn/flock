@@ -100,7 +100,7 @@
     } */
 
     .channelList :global(.editButton) {
-        top: initial;
+        top: 0;
         bottom: 5px;
     }
 </style>

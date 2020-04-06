@@ -25,6 +25,7 @@ import {
 
 import {
     getChannel,
+    onChannelsUpdated,
 } from '../models/channelsModel';
 
 import {
@@ -94,6 +95,13 @@ onProjectsUpdated(() => {
     if (!get(project) && get(projectId)) {
         const targetProjectId = get(projectId);
         setProject(targetProjectId);
+    }
+});
+onChannelsUpdated(() => {
+    // if channel object not found but channel id set then update channel model
+    if (!get(channel) && get(channelId)) {
+        const targetChannelId = get(channelId);
+        setChannel(targetChannelId);
     }
 });
 

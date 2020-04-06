@@ -8,7 +8,13 @@ import { generateId } from '../utils';
 
 import config from '../config';
 
-import { locationMode, getIsProjectTeamMember, user, userId, project } from '../models/appModel';
+import {
+	locationMode,
+	getIsProjectTeamMember,
+	user,
+	userId,
+	project,
+} from '../models/appModel';
 
 import ProjectModel from '../models/projectModel';
 

@@ -11,7 +11,14 @@
 
     import NextArrowIcon from "../../assets/icons/next_arrow.png";
 
-	// import { createPost } from '../../actions/postActions';
+	import {
+		channel,
+		channelId,
+	} from '../../models/appModel';
+
+	import {
+		createPost,
+	} from '../../actions/postActions';
 
 	let title = '';
 	let message = '';
@@ -28,8 +35,11 @@
 		const postDetails = {
 			title,
 			message,
+			type: 'thread',
+			channelId: $channel && $channel.id,
+			projectId: $channel && $channel.projectId,
 		};
-		// createPost(postDetails);
+		createPost(postDetails);
 	}
 
 	function testSubmit() {

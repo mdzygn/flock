@@ -171,6 +171,15 @@ function getPosts(options) {
 	});
 }
 
+// options = { details: {} }
+function addPost(options) {
+	options = addCredentials(options);
+	return send('addPost', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 const api = {
 	getProjects,
 	addProject,
@@ -190,6 +199,7 @@ const api = {
 
 
 	getPosts,
+	addPost,
 }
 
 export default api;

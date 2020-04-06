@@ -2,6 +2,12 @@ import api from '../api';
 
 import { writable, get } from 'svelte/store';
 
+import { generateId } from '../utils';
+
+import {
+	userId,
+} from '../models/appModel';
+
 import PostModel from '../models/postModel';
 
 export let loadingPosts = writable(false);
@@ -106,18 +112,59 @@ function filterCurrentPosts() {
 	const channelId = curPostFilterOptions && curPostFilterOptions.channelId;
 	const type = curPostFilterOptions && curPostFilterOptions.type;
 
+	let newFilteredPosts = get(posts);
 	if (channelId || type) {
-		const newFilteredPosts = get(posts).filter(postModel => {
+		newFilteredPosts = newFilteredPosts.filter(postModel => {
 			const post = get(postModel);
 			return (!channelId || post.channelId === channelId) && (!type || post.type === type);
 		});
-		filteredPosts.set(newFilteredPosts);
-	} else {
-		const newFilteredPosts = get(posts);
-		filteredPosts.set(newFilteredPosts);
 	}
+	newFilteredPosts.sort((a,b) => get(b).createdAt - get(a).createdAt); // sort by reversed created time
+	filteredPosts.set(newFilteredPosts);
 }
 
 export function getPost(postId) {
 	return get(posts).find(item => get(item).id === postId);
+}
+
+export function addPost(postDetails) {
+    let postId, trialIndex;
+	do { postId = generateId(); } while (getPost(postId) && trialIndex < 99);
+	if (trialIndex === 99) { return null; }
+
+	const newPostModel = PostModel();
+	const newPost = get(newPostModel);
+
+	const ownerId = get(userId);
+
+	newPost.id = postId;
+
+	newPost.type = postDetails.type;
+
+	newPost.projectId = postDetails.projectId;
+	newPost.channelId = postDetails.channelId;
+
+	newPost.title = postDetails.title || '';
+	newPost.message = postDetails.message || '';
+
+	newPost.userId = ownerId;
+
+	newPost.createdAt = (new Date()).getTime(); // use for initial sort values
+	newPost.modifiedAt = newPost.createdAt;
+	newPost.lastActiveAt = newPost.createdAt;
+
+	// console.log('newPost', newPost);
+
+	api.addPost({details: newPost}).then(result => {
+		if (!result || result.error || result.invalid) {
+			console.error(result);
+		}
+		// newPost._id = result.insertedId;
+	});
+
+	const curPosts = get(posts);
+	curPosts.unshift(newPostModel);
+	posts.set(curPosts);
+
+	return newPostModel;
 }

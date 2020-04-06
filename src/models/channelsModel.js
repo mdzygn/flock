@@ -7,7 +7,7 @@ import ChannelModel from '../models/channelModel';
 export let loadingChannels = writable(false);
 
 let channelsUpdatedHandlers = [];
-let tempChannelsUpdatedHandlers = [];
+// let tempChannelsUpdatedHandlers = [];
 
 let channels = writable([]);
 
@@ -29,11 +29,16 @@ mergeChannels(channelItems);
 // 	}
 // }
 
-// export function onChannelsUpdated(handler) {
-// 	if (!channelsUpdatedHandlers.includes(handler)) {
-// 		channelsUpdatedHandlers.push(handler);
-// 	}
-// }
+export function onChannelsUpdated(handler) {
+	if (!channelsUpdatedHandlers.includes(handler)) {
+		channelsUpdatedHandlers.push(handler);
+	}
+
+	//TODO: temp to focus channel set
+		channelsUpdatedHandlers.forEach(handler => {
+			handler();
+		});
+}
 
 // export function onTempChannelsUpdated(handler) {
 // 	if (!tempChannelsUpdatedHandlers.includes(handler)) {

@@ -4,15 +4,22 @@
 
     import ArrowIcon from "../../assets/icons/next_arrow.png";
 
+	import {
+		loadChannel,
+	} from '../../actions/appActions';
+
     export let channel;
 
     // const unreadMessageCount = 5;
     // const messageCount = 10;
 
     $: channelTitle = (channel && channel.title) || '';
+    $: channelId = (channel && channel.id) || null;
 
     function loadCurrentChannel() {
-
+        if (channelId) {
+            loadChannel(channelId);
+        }
     }
 </script>
 
@@ -26,7 +33,7 @@
 <style>
 
     .channelListItem :global(.button) {
-        padding-top: 5px;
+        padding-top: 9px;
         padding-bottom: 6px;
 
     	padding-left: 20px;
@@ -35,9 +42,9 @@
 		font-size: 1.6rem;
 		font-weight: 700;
         color: #000000;
-
-    	margin-top: 4px;
-
+    }
+    .channelListItem :global(.button:hover) {
+        background-color: #f9f9f9;
     }
 
     .channelListItem :global(.button .counterContainer) {

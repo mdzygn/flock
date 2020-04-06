@@ -11,10 +11,6 @@
 		showBetaFeatures,
     } from '../../models/appModel';
 
-	import {
-		loadChannel,
-	} from '../../actions/appActions';
-
     export let project;
 
 	$: isNew = ($project && $project.isNew) || false;

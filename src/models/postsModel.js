@@ -58,24 +58,24 @@ function mergePosts(newPosts) {
 	if (newPosts && newPosts.length) {
 		const curPosts = get(posts);
 
-		curPosts.length = 0; // TODO: temp clear posts
+		// curPosts.length = 0; // TODO: temp clear posts
 
 		let curPost, newPostData, postId, newPost;
 		for (var postI = 0; postI < newPosts.length; postI++) {
 			newPostData = newPosts[postI];
-			// postId = newPostData.id;
-			// curPost = curPosts.find(match => get(match).id === postId);
-			// if (!curPost) {
+			postId = newPostData.id;
+			curPost = curPosts.find(match => get(match).id === postId);
+			if (!curPost) {
 				curPost = PostModel(newPostData);
-				curPosts.push(curPost);
-				// curPosts.unshift(curPost);
+				// curPosts.push(curPost);
+				curPosts.unshift(curPost);
 				// console.log('add post: ', curPost, newPostData);
-			// } else {
-			// 	// console.log('update existing post: ', curPost, newPostData);
-			// 	newPost = get(curPost);
-			// 	newPost = Object.assign(newPost, newPostData);
-			// 	curPost.set(newPost);
-			// }
+			} else {
+				// console.log('update existing post: ', curPost, newPostData);
+				newPost = get(curPost);
+				newPost = Object.assign(newPost, newPostData);
+				curPost.set(newPost);
+			}
 		}
 		// console.log('update posts: ', curPosts);
 
@@ -86,9 +86,9 @@ function mergePosts(newPosts) {
 export function getPosts(options) {
 	curPostFilterOptions = options;
 
-	// if (curPostFilterOptions && options && (curPostFilterOptions.channelId !== options.channelId || curPostFilterOptions.type !== options.type)) {
+	if (curPostFilterOptions && options && (curPostFilterOptions.channelId !== options.channelId || curPostFilterOptions.type !== options.type)) {
 		clearFilteredPosts();
-	// }
+	}
 	filterCurrentPosts();
 
 	loadPosts(curPostFilterOptions);
@@ -116,6 +116,7 @@ function filterCurrentPosts() {
 	if (channelId || type) {
 		newFilteredPosts = newFilteredPosts.filter(postModel => {
 			const post = get(postModel);
+			// console.log(post.title + ', ' + post.channelId + ', ' + post.type);
 			return (!channelId || post.channelId === channelId) && (!type || post.type === type);
 		});
 	}
@@ -165,6 +166,8 @@ export function addPost(postDetails) {
 	const curPosts = get(posts);
 	curPosts.unshift(newPostModel);
 	posts.set(curPosts);
+
+	filterCurrentPosts();
 
 	return newPostModel;
 }

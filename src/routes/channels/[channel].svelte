@@ -42,10 +42,8 @@
 <div class="pageContent">
 	<ScrollView id="channel">
 		<div slot="scrollHeader">
-			{#if $posts && $posts.length}
-				<!-- <Proxy image="channel_actions" className="channelActions" /> -->
-				<NewPostButton onClick="{postThread}" className="newPostHeader" />
-			{/if}
+			<!-- <Proxy image="channel_actions" className="channelActions" /> -->
+			<NewPostButton onClick="{postThread}" className="newPostHeader" />
 		</div>
 
 		<div class="content">
@@ -62,7 +60,9 @@
 					{/if}
 				{/each}
 			</div>
-			<NewPostButton onClick="{postThread}" />
+			{#if $posts && $posts.length}
+				<NewPostButton onClick="{postThread}" />
+			{/if}
 		</div>
 	</ScrollView>
 </div>

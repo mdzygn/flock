@@ -37,14 +37,14 @@ export const sections = [
 		segment: 'contacts',
 		label: 'Connections',
 		showBack: true,
-		// parentSection: 'messages',
+		// parentPath: 'messages',
 	},
 	{
 		segment: 'profile',
 		label: 'My Profile',
 		darkBg: true,
 		showBack: true,
-		// parentSection: 'messages',
+		// parentPath: 'messages',
 	},
 	{
 		segment: 'explore',
@@ -84,7 +84,7 @@ export const sections = [
 		id: 'create',
 		label: 'Details',
 		showBack: true,
-		// parentSection: 'projects/m62lsp2o/populate',
+		// parentPath: 'projects/m62lsp2o/populate',
 	},
 	{
 		path: '/projects/new',
@@ -98,7 +98,7 @@ export const sections = [
 	// 	label: 'World Creator',
 	// 	darkBg: true,
 	// 	// showBack: true,
-	// 	parentSection: 'projects',
+	// 	parentPath: 'projects',
 	// },
 	// {
 	// 	path: '/projects/.+/.+',
@@ -106,7 +106,7 @@ export const sections = [
 	// 	label: 'World Creator',
 	// 	darkBg: true,
 	// 	showBack: true,
-	// 	// parentSection: 'projects',
+	// 	// parentPath: 'projects',
 	// },
 	{
 		path: '/projects/.+',
@@ -115,16 +115,16 @@ export const sections = [
 		darkBg: true,
 		showBack: true,
 		isProjectView: true,
-		// parentSection: 'discover',
+		// parentPath: 'discover',
 	},
 
 	{
 		path: '/channels/.+',
 		id: 'channel',
 		label: '',
-		showBack: true,
-		// parentSection: 'projects/m62lsp2o',
 		darkBg: true,
+		// showBack: true,
+		parentPath: 'projects/[project]',
 	},
 	{
 		path: '/threads/new',
@@ -137,7 +137,7 @@ export const sections = [
 		id: 'thread',
 		label: '',
 		showBack: true,
-		// parentSection: 'channels/7m2ldksm',
+		// parentPath: 'channels/7m2ldksm',
 		darkBg: true,
 	},
 
@@ -146,14 +146,14 @@ export const sections = [
 		id: 'message_group_view',
 		label: 'Messages',
 		showBack: true,
-		// parentSection: 'projects/m62lsp2o',
+		// parentPath: 'projects/m62lsp2o',
 	},
 	{
 		path: '/messages/.+',
 		id: 'message_view',
 		label: 'Conversation', // 'Mia',
 		showBack: true,
-		// parentSection: 'messages',
+		// parentPath: 'messages',
 	},
 	{
 		path: '/profile/.+/likes',
@@ -161,7 +161,7 @@ export const sections = [
 		label: 'Likes',
 		darkBg: true,
 		showBack: true,
-		// parentSection: 'messages',
+		// parentPath: 'messages',
 	},
 	{
 		path: '/profile/.+',
@@ -169,7 +169,7 @@ export const sections = [
 		label: '', // 'Sasha Holmer',
 		darkBg: true,
 		showBack: true,
-		// parentSection: 'messages',
+		// parentPath: 'messages',
 	},
 ];
 

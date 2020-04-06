@@ -15,6 +15,7 @@
 
     import {
         viewMode,
+        projectId,
         project,
         channel,
         conversation,
@@ -49,7 +50,7 @@
 
     $: curSection = getSectionByPath(path, appState);
     $: isProjectView = curSection ? curSection.isProjectView : false;
-    $: parentSection = curSection ? curSection.parentSection : null;
+    $: parentPath = curSection ? curSection.parentPath : null;
     $: showBack = curSection ? curSection.showBack : false;
     $: isMyProfile = curSection ? (curSection.segment === 'profile') : false;
     // $: sectionLabel = curSection ? curSection.label : '';
@@ -80,10 +81,14 @@
     function goBack () {
         if (isProjectView && hasCreated) {
             goto('projects');
+        } else if (parentPath) {
+            let match;
+            if (match = parentPath.match(/\[project\]/)) {
+                parentPath = parentPath.substr(0, match.index) + $projectId + parentPath.substr(match.index + match[0].length);
+            }
+            goto(parentPath);
         } else if (showBack) {
             history.back();
-        } else if (parentSection) {
-            goto(parentSection);
         }
     }
 
@@ -114,8 +119,8 @@
             </div>
         {/if}
     {:else}
-        <div class="header" class:hasBack="{showBack || parentSection}">{sectionLabel}</div>
-        {#if showBack || parentSection}
+        <div class="header" class:hasBack="{showBack || parentPath}">{sectionLabel}</div>
+        {#if showBack || parentPath}
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
         {/if}
     {/if}

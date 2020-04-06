@@ -5,7 +5,7 @@ const ChannelModel = (channelData) => {
         id: '',
 
         title: '',
-        description: '',
+        description: null,
 
         projectId: '',
         userId: '',

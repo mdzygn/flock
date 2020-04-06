@@ -71,13 +71,10 @@ projects.subscribe(() => {
 });
 
 function mergeProjects(newProjects) {
-	// projects.set(projects);
-
 	if (newProjects && newProjects.length) {
 		const curProjects = get(projects);
 
 		let curProject, newProjectData, projectId, newProject;
-		// newProjects.forEach(newProjectData => {
 		for (var projectI = 0; projectI < newProjects.length; projectI++) {
 			newProjectData = newProjects[projectI];
 			projectId = newProjectData.id;

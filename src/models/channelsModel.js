@@ -11,6 +11,8 @@ let tempChannelsUpdatedHandlers = [];
 
 let channels = writable([]);
 
+let filteredChannels = writable([]);
+
 // onChannelsUpdated(channelsUpdated);
 
 import channelsData from '../data/channels.json';
@@ -51,13 +53,10 @@ mergeChannels(channelItems);
 // });
 
 function mergeChannels(newChannels) {
-	// channels.set(channels);
-
 	if (newChannels && newChannels.length) {
 		const curChannels = get(channels);
 
 		let curChannel, newChannelData, channelId, newChannel;
-		// newChannels.forEach(newChannelData => {
 		for (var channelI = 0; channelI < newChannels.length; channelI++) {
 			newChannelData = newChannels[channelI];
 			channelId = newChannelData.id;
@@ -79,8 +78,19 @@ function mergeChannels(newChannels) {
 	}
 }
 
-export function getChannels() {
-    return channels;
+export function getChannels(options) {
+	const projectId = options && options.projectId;
+
+	if (projectId) {
+		const newFilteredChannels = get(channels).filter(channelModel => {
+			const channel = get(channelModel);
+			return (channel.projectId === projectId);
+		});
+		filteredChannels.set(newFilteredChannels);
+		return filteredChannels;
+	} else {
+		return channels;
+	}
 }
 
 export function getChannel(channelId) {

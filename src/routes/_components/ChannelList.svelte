@@ -1,8 +1,11 @@
 <script>
+    import { writable } from 'svelte/store';
+
     import Proxy from '../../components/Proxy.svelte';
 
     import ContentPanel from './ContentPanel.svelte';
     import ChannelListItem from './ChannelListItem.svelte';
+	import ContentLoader from './ContentLoader.svelte';
 
 	import {
 		getIsProjectTeamMember,
@@ -13,9 +16,10 @@
 		getChannels,
     } from '../../models/channelsModel';
 
-    const channels = getChannels();
-
     export let project;
+
+    let channels = writable([]);
+    $: { channels = getChannels( { projectId: $project.id } ) };
 
 	$: isNew = ($project && $project.isNew) || false;
     $: isTeamMember = getIsProjectTeamMember($project);
@@ -48,6 +52,8 @@
         <div class="channelListContainer">
             {#each $channels as channel}
                 <ChannelListItem channel="{channel}" />
+			{:else}
+				<ContentLoader label="This project has no channels" />
             {/each}
         </div>
     </ContentPanel>

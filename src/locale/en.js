@@ -43,6 +43,7 @@ const locale = {
 		PROJECT: 'loading project...',
 		PROFILE: 'loading profile...',
 		PROFILE_PROJECTS: 'loading projects...',
+		CHANNEL: 'loading posts...',
 	},
 	PROJECT: {
 		NOT_FOUND: 'Project not found',

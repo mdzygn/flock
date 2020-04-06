@@ -125,6 +125,7 @@ function unlikeProject(options) {
 	});
 }
 
+
 /*** Users ***/
 
 // options = { details: {} }
@@ -155,6 +156,21 @@ function addUser(options) {
 	});
 }
 
+
+/*** Posts ***/
+
+// options = { limit: number, cursor: string, sort: {} }
+function getPosts(options) {
+	options = addOptions(options, {
+		userId: get(userId),
+	});
+
+	return send('getPosts', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 const api = {
 	getProjects,
 	addProject,
@@ -171,6 +187,9 @@ const api = {
 
 	getUsers,
 	addUser,
+
+
+	getPosts,
 }
 
 export default api;

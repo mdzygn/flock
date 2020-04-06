@@ -1,4 +1,6 @@
 <script>
+	import locale from '../../locale';
+
 	import { writable } from 'svelte/store';
 	import { goto } from '@sapper/app';
 
@@ -15,6 +17,7 @@
 
 	import {
 		getPosts,
+		loadingPosts,
 	} from '../../models/postsModel';
 
     let posts = writable([]);
@@ -51,7 +54,12 @@
 				{#each $posts as post}
 					<PostItem {post} />
 				{:else}
-					<ContentLoader label="This channel has no posts" />
+
+					{#if $loadingPosts && (!$posts || !$posts.length) }
+						<ContentLoader label="{locale.LOADING.CHANNEL}" />
+					{:else}
+						<ContentLoader label="This channel has no posts" />
+					{/if}
 				{/each}
 			</div>
 			<NewPostButton onClick="{postThread}" />

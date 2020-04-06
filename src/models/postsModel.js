@@ -7,21 +7,52 @@ import PostModel from '../models/postModel';
 export let loadingPosts = writable(false);
 
 let postsUpdatedHandlers = [];
-let tempPostsUpdatedHandlers = [];
+// let tempPostsUpdatedHandlers = [];
+
+let curPostFilterOptions = null;
 
 let posts = writable([]);
 
 let filteredPosts = writable([]);
 
-// onPostsUpdated(postsUpdated);
+onPostsUpdated(postsUpdated);
 
-import postsData from '../data/posts.json';
-const postItems = JSON.parse(JSON.stringify(postsData));
-mergePosts(postItems);
+// import postsData from '../data/posts.json';
+// const postItems = JSON.parse(JSON.stringify(postsData));
+// mergePosts(postItems);
+
+export function onPostsUpdated(handler) {
+	if (!postsUpdatedHandlers.includes(handler)) {
+		postsUpdatedHandlers.push(handler);
+	}
+}
+
+posts.subscribe(() => {
+	postsUpdatedHandlers.forEach(handler => {
+		handler();
+	});
+
+	// tempProjectsUpdatedHandlers.forEach(handler => {
+	// 	handler();
+	// });
+	// tempProjectsUpdatedHandlers.length = 0;
+});
+
+export function loadPosts(options) {
+	if (!get(loadingPosts)) {
+		loadingPosts.set(true);
+		api.getPosts(options).then(result => {
+			mergePosts(result);
+			loadingPosts.set(false);
+		});
+	}
+}
 
 function mergePosts(newPosts) {
 	if (newPosts && newPosts.length) {
 		const curPosts = get(posts);
+
+		curPosts.length = 0; // TODO: temp clear posts
 
 		let curPost, newPostData, postId, newPost;
 		for (var postI = 0; postI < newPosts.length; postI++) {
@@ -47,8 +78,33 @@ function mergePosts(newPosts) {
 }
 
 export function getPosts(options) {
-	const channelId = options && options.channelId;
-	const type = options && options.type;
+	curPostFilterOptions = options;
+
+	// if (curPostFilterOptions && options && (curPostFilterOptions.channelId !== options.channelId || curPostFilterOptions.type !== options.type)) {
+		clearFilteredPosts();
+	// }
+	filterCurrentPosts();
+
+	loadPosts(curPostFilterOptions);
+
+	// console.log(get(filteredPosts));
+
+	return filteredPosts;
+}
+
+function postsUpdated() {
+	filterCurrentPosts();
+}
+
+function clearFilteredPosts() {
+	const curFilteredPosts = get(filteredPosts);
+	curFilteredPosts.length = 0;
+	filteredPosts.set(curFilteredPosts);
+}
+
+function filterCurrentPosts() {
+	const channelId = curPostFilterOptions && curPostFilterOptions.channelId;
+	const type = curPostFilterOptions && curPostFilterOptions.type;
 
 	if (channelId || type) {
 		const newFilteredPosts = get(posts).filter(postModel => {
@@ -56,9 +112,9 @@ export function getPosts(options) {
 			return (!channelId || post.channelId === channelId) && (!type || post.type === type);
 		});
 		filteredPosts.set(newFilteredPosts);
-		return filteredPosts;
 	} else {
-		return posts;
+		const newFilteredPosts = get(posts);
+		filteredPosts.set(newFilteredPosts);
 	}
 }
 

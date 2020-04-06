@@ -18,6 +18,7 @@
 		loadProject,
 		loadConversation,
 		loadProfile,
+		loadChannel,
 		closeOverlay,
 	} from '../actions/appActions';
 
@@ -26,10 +27,13 @@
 		projectId,
 		conversationId,
 		profileId,
+		channelId,
 
 		conversation,
 		viewedUser,
 		project,
+
+		channel,
 
 		checkParams,
 	} from '../models/appModel';
@@ -54,6 +58,11 @@
 			if (params.project) {
 				if ($projectId !== params.project || !$project) {
 					loadProject(params.project);
+				}
+			}
+			if (params.channel) {
+				if ($channelId !== params.channel || !$channel) {
+					loadChannel(params.channel);
 				}
 			}
 		}

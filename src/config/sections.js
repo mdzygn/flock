@@ -121,15 +121,21 @@ export const sections = [
 	{
 		path: '/channels/.+',
 		id: 'channel',
-		label: '#Questions',
+		label: '',
 		showBack: true,
 		// parentSection: 'projects/m62lsp2o',
 		darkBg: true,
 	},
 	{
+		path: '/threads/new',
+		id: 'thread',
+		label: '',
+		showBack: true,
+	},
+	{
 		path: '/threads/.+',
 		id: 'thread',
-		label: '#Questions',
+		label: '',
 		showBack: true,
 		// parentSection: 'channels/7m2ldksm',
 		darkBg: true,

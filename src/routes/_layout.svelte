@@ -1,6 +1,7 @@
 <script>
 	import { stores } from '@sapper/app';
 	const { page } = stores();
+    import { onMount } from 'svelte';
 
     import GoogleAnalytics from '../components/GoogleAnalytics.svelte';
 
@@ -38,36 +39,43 @@
 		checkParams,
 	} from '../models/appModel';
 
+	let mounted = false;
+    onMount(() => {
+		mounted = true;
+    });
+
 	$: {
 		$curPath = $page.path;
 
 		checkParams($page.query);
 
-		const params = $page.params;
-		if (params) {
-			if (params.conversation) {
-				if ($conversationId !== params.conversation || !$conversation) {
-					loadConversation(params.conversation);
+		if (mounted) {
+			const params = $page.params;
+			if (params) {
+				if (params.conversation) {
+					if ($conversationId !== params.conversation || !$conversation) {
+						loadConversation(params.conversation);
+					}
+				}
+				if (params.profile) {
+					if ($profileId !== params.profile || !$viewedUser) {
+						loadProfile(params.profile);
+					}
+				}
+				if (params.project) {
+					if ($projectId !== params.project || !$project) {
+						loadProject(params.project);
+					}
+				}
+				if (params.channel) {
+					if ($channelId !== params.channel || !$channel) {
+						loadChannel(params.channel);
+					}
 				}
 			}
-			if (params.profile) {
-				if ($profileId !== params.profile || !$viewedUser) {
-					loadProfile(params.profile);
-				}
-			}
-			if (params.project) {
-				if ($projectId !== params.project || !$project) {
-					loadProject(params.project);
-				}
-			}
-			if (params.channel) {
-				if ($channelId !== params.channel || !$channel) {
-					loadChannel(params.channel);
-				}
-			}
-		}
 
-		closeOverlay();
+			closeOverlay();
+		}
 	}
 
 	$: showFeedBg = isDarkBgForPath(path);

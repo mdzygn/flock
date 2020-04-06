@@ -8,6 +8,10 @@
 
     import { getUser } from '../../models/usersModel';
 
+	import {
+		loadProfile,
+	} from '../../actions/appActions';
+
     export let post;
 
     // export let type = 'thread';
@@ -15,19 +19,24 @@
     $: userId = ($post && $post.userId) || null;
     $: user = userId && getUser(userId) || null;
 
-    $: userFullName = (user && user.fullName) || '';
-
-    $: console.log('userId', userId);
+    $: userLoaded = ($user && $user.fullName) || false;
+    $: userFullName = ($user && $user.fullName) || '&nbsp;';
 
     $: title = ($post && $post.title) || null;
     $: message = ($post && $post.message) || null;
+
+    function viewUserProfile() {
+        if (userLoaded) {
+            loadProfile(userId);
+        }
+    }
 </script>
 
 <div class="postItem">
     <!-- <Avatar  -->
-    <AvatarIcon {user} />
+    <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
     <div class="info">
-        <div class="userFullName">{userFullName}</div>
+        <div class="userFullName" class:button="{userLoaded}" on:click="{viewUserProfile}">{@html userFullName}</div>
         {#if title}
             <div class="title">{title}</div>
         {/if}
@@ -45,6 +54,10 @@
         background-color: #ffffff;
 
         margin-bottom: 5px;
+    }
+
+    .button {
+        cursor: pointer;
     }
 
     .postItem :global(.avatarIcon) {

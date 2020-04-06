@@ -63,7 +63,8 @@ function mergeChannels(newChannels) {
 			curChannel = curChannels.find(match => get(match).id === channelId);
 			if (!curChannel) {
 				curChannel = ChannelModel(newChannelData);
-				curChannels.unshift(curChannel);
+				curChannels.push(curChannel);
+				// curChannels.unshift(curChannel);
 				// console.log('add channel: ', curChannel, newChannelData);
 			} else {
 				// console.log('update existing channel: ', curChannel, newChannelData);

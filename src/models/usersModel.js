@@ -22,7 +22,15 @@ let usersUpdatedHandlers = [];
 loadUsers();
 
 export function getUser(userId) {
-	return get(users).find(item => get(item).id === userId);
+	let curUser = get(users).find(item => get(item).id === userId);
+	if (!curUser) {
+		curUser = UserModel( { id: userId } );
+
+		const curUsers = get(users);
+		curUsers.unshift(curUser);
+		users.set(curUsers);
+	}
+	return curUser;
 }
 
 export function loadUsers(options) {

@@ -59,6 +59,11 @@ const locale = {
 		USERNAME: 'username',
 		PASS: 'password',
 	},
+	NEW_THREAD: {
+		TITLE: 'title',
+		MESSAGE: 'message',
+		CONFIRM: 'Post',
+	},
 }
 
 export default locale;

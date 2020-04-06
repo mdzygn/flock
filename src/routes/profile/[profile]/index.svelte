@@ -34,6 +34,7 @@
         getIsCurrentUser,
 	} from '../../../models/appModel';
 
+	$: viewedUserLoaded = ($viewedUser && $viewedUser.fullName) || false;
 	$: userId = ($viewedUser && $viewedUser.id) || null;
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
@@ -68,9 +69,9 @@
 	<title>Flock</title>
 </svelte:head>
 
-{#if $loadingUsers && (!$viewedUser || $viewedUser.id !== $profileId ) }
+{#if $loadingUsers && (!viewedUserLoaded || $viewedUser.id !== $profileId ) }
 	<ContentLoader label="{locale.LOADING.PROFILE}" />
-{:else if !$viewedUser || !$viewedUser.id}
+{:else if !viewedUserLoaded || !$viewedUser.id}
 	<ContentLoader label="{locale.PROFILE.NOT_FOUND}" />
 {:else}
 	<ScrollView id="profile" headerStartHidden="{true}">

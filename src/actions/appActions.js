@@ -226,7 +226,7 @@ export function messageUser(userId) {
 
 function gotoRoute(newPath) {
     // console.log(getPagePath()+ ' !== /' + newPath + ' : ' + (getPagePath() !== '/' + newPath));
-    if (getPagePath() !== '/' + newPath && typeof window !== 'undefined') {
+    if (getPagePath() !== '/' + newPath && typeof window !== 'undefined') { //  && !/\/projects\/.*\/details/.test(get(curPath)) //  && !/\/channels\/.*\/post/.test(get(curPath))
         goto(newPath);
         return true;
     }

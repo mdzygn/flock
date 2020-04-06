@@ -1,5 +1,6 @@
 <script>
 	import { writable } from 'svelte/store';
+	import { goto } from '@sapper/app';
 
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
@@ -19,35 +20,62 @@
     let posts = writable([]);
 	$: { posts = getPosts( { channelId: $channelId, type: 'thread' } ) };
 
-	import { loadThread } from '../../actions/appActions';
+	import {
+		loadThread,
+    	checkLoggedIn,
+	} from '../../actions/appActions';
+
+	function postThread() {
+		if (!checkLoggedIn()) { return; }
+
+		goto('threads/new');
+	}
 </script>
 
 <svelte:head>
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView id="channel">
-	<div class="content">
-		{#if $showBetaFeatures}
-			<Proxy image="channel_actions" className="channelActions" />
-		{/if}
-		<!-- <Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadThread('sm2ld9p2')}" /> -->
-		<div class="postsContainer">
-            {#each $posts as post}
-				<PostItem {post} />
-			{:else}
-				<ContentLoader label="This channel has no posts" />
-            {/each}
+<div class="pageContent">
+	<ScrollView id="channel">
+		<div slot="scrollHeader">
+			{#if $posts && $posts.length}
+				<!-- <Proxy image="channel_actions" className="channelActions" /> -->
+				<NewPostButton onClick="{postThread}" className="newPostHeader" />
+			{/if}
 		</div>
-		<NewPostButton />
-	</div>
-</ScrollView>
+
+		<div class="content">
+			<!-- <Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadThread('sm2ld9p2')}" /> -->
+			<div class="postsContainer">
+				{#each $posts as post}
+					<PostItem {post} />
+				{:else}
+					<ContentLoader label="This channel has no posts" />
+				{/each}
+			</div>
+			<NewPostButton onClick="{postThread}" />
+		</div>
+	</ScrollView>
+</div>
 
 <style>
 	/* .content :global(.proxyOverlay) {
 		position: absolute;
 		opacity: 0.5;
 	} */
+
+	.pageContent :global(.newPostHeader) {
+		padding: 0;
+	}
+
+	.content :global(.channelActions) {
+		box-shadow: 0 2px 3px 0 rgba(0,0,0,0.12);
+	}
+
+	.content :global(.contentLoader) {
+    	background-color: #ffffff;
+	}
 
 	.content :global(.channelActions) {
 		box-shadow: 0 2px 3px 0 rgba(0,0,0,0.12);

@@ -24,40 +24,45 @@
 	$: isNew = ($project && $project.isNew) || false;
     $: isTeamMember = getIsProjectTeamMember($project);
     $: canEdit = (isTeamMember && !$project.archived) || false;
+	$: following = ($project && $project.following) || false;
 
     let areMoreItems = false;
 
-    let proxyChannelsImage;
+    // let proxyChannelsImage;
 
-	$: {
-		if (isTeamMember) {
-			if (isNew) {
-				proxyChannelsImage = 'project_channels_populate';
-			} else {
-				proxyChannelsImage = 'project_channels_owner';
-			}
-		} else {
-			if (following) {
-				proxyChannelsImage = 'project_channels_following';
-			} else {
-				proxyChannelsImage = 'project_channels';
-			}
-		}
-	}
+	// $: {
+	// 	if (isTeamMember) {
+	// 		if (isNew) {
+	// 			proxyChannelsImage = 'project_channels_populate';
+	// 		} else {
+	// 			proxyChannelsImage = 'project_channels_owner';
+	// 		}
+	// 	} else {
+	// 		if (following) {
+	// 			proxyChannelsImage = 'project_channels_following';
+	// 		} else {
+	// 			proxyChannelsImage = 'project_channels';
+	// 		}
+	// 	}
+	// }
 </script>
 
-<div class="channelList" class:isEditable="{canEdit}">
-    <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" onClick="{e => loadChannel('7m2ldksm')}" /> -->
-    <ContentPanel title="Channels" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
-        <div class="channelListContainer">
-            {#each $channels as channel}
-                <ChannelListItem channel="{channel}" />
-			{:else}
-				<ContentLoader label="This project has no channels" />
-            {/each}
-        </div>
-    </ContentPanel>
-</div>
+{#if $channels && $channels.length}
+    <div class="channelList" class:isEditable="{canEdit}">
+        <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" onClick="{e => loadChannel('7m2ldksm')}" /> -->
+        <ContentPanel title="Channels" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
+            <!-- {#if $channels && $channels.length} -->
+                <div class="channelListContainer">
+                    {#each $channels as channel}
+                        <ChannelListItem channel="{channel}" />
+                    {/each}
+                </div>
+            <!-- {:else}
+                <ContentLoader label="This project has no channels" />
+            {/if} -->
+        </ContentPanel>
+    </div>
+{/if}
 
 <style>
 	/* .channelList :global(.proxyOverlay) {

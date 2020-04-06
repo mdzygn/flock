@@ -7,6 +7,7 @@
 	   "userId":"sl3p5oms",
 	   "createdAt":0,
 	   "sortIndex": 0,
+	   "postCount": 0,
 	   "teamOnly":true
 	},
 	{
@@ -16,7 +17,8 @@
 	   "projectId":"s7djj2s2",
 	   "userId":"sl3p5oms",
 	   "createdAt":0,
-	   "sortIndex": 1
+	   "sortIndex": 1,
+	   "postCount": 0
 	},
 	{
 	   "id":"454sdytd",
@@ -26,7 +28,8 @@
 	   "userId":"sl3p5oms",
 	   "createdAt":0,
 	   "sortIndex": 2,
-	   "teamOnly":true
+	   "teamOnly":true,
+	   "postCount": 0
 	},
 	{
 	   "id":"bf234sg3",
@@ -35,7 +38,8 @@
 	   "projectId":"s7djj2s2",
 	   "userId":"sl3p5oms",
 	   "createdAt":0,
-	   "sortIndex": 3
+	   "sortIndex": 3,
+	   "postCount": 0
 	},
 	{
 	   "id":"v24gfdg4",
@@ -44,7 +48,8 @@
 	   "projectId":"s7djj2s2",
 	   "userId":"sl3p5oms",
 	   "createdAt":0,
-	   "sortIndex": 4
+	   "sortIndex": 4,
+	   "postCount": 0
 	},
 	{
 	   "id":"45bfd43vb",
@@ -53,7 +58,8 @@
 	   "projectId":"s7djj2s2",
 	   "userId":"sl3p5oms",
 	   "createdAt":0,
-	   "sortIndex": 5
+	   "sortIndex": 5,
+	   "postCount": 0
 	},
 	{
 	   "id":"243h6sd",
@@ -62,7 +68,8 @@
 	   "projectId":"s7djj2s2",
 	   "userId":"sl3p5oms",
 	   "createdAt":0,
-	   "sortIndex": 6
+	   "sortIndex": 6,
+	   "postCount": 0
 	},
 	{
 	   "id":"45hh5bfdbg",
@@ -71,6 +78,7 @@
 	   "projectId":"s7djj2s2",
 	   "userId":"sl3p5oms",
 	   "createdAt":0,
-	   "sortIndex": 7
+	   "sortIndex": 7,
+	   "postCount": 0
 	}
  ]

@@ -180,7 +180,7 @@ export function showLikes() {
 export function loadThread(targetThreadId) {
     threadId.set(targetThreadId);
 
-    goto('threads/' + targetThreadId );
+    gotoRoute('threads/' + targetThreadId );
     resetScrollRegionPosition('thread');
 }
 
@@ -188,7 +188,7 @@ export function loadChannel(targetChannelId) {
     channelId.set(targetChannelId);
     setChannel(targetChannelId);
 
-    goto('channels/' + targetChannelId );
+    gotoRoute('channels/' + targetChannelId );
     resetScrollRegionPosition('channel');
 }
 

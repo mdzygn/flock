@@ -10,11 +10,9 @@
 
     export let channel;
 
-    // const unreadMessageCount = 5;
-    // const messageCount = 10;
-
     $: channelTitle = ($channel && $channel.title) || '';
     $: channelId = ($channel && $channel.id) || null;
+    $: messageCount = ($channel && $channel.postCount) || 0;
 
     function loadCurrentChannel() {
         if (channelId) {
@@ -26,6 +24,7 @@
 <div class="channelListItem">
     <Button onClick="{loadCurrentChannel}"># {channelTitle}
         <div class="buttonIcon" style="background-image: url({ArrowIcon})"/>
+        <Counter visible="{messageCount}" count="{messageCount}" />
         <!-- <Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" /> -->
     </Button>
 </div>

@@ -84,6 +84,7 @@
         /* width: 94px;
         height: 56px; */
 
+        background-color: #333333;
         background-size: cover;
         border: 3px solid #ffffff;
 

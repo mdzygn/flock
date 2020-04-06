@@ -90,7 +90,8 @@
 	},
 	{
 	   "imageId":"apple-1868496_960_720",
-	   "tags":"technology, computer, lamp, tabletop, desktop, office, home, mac"
+	   "tags":"tech, technology, computer, lamp, tabletop, desktop, office, home, mac",
+	   "disabled": true
 	},
 	{
 	   "imageId":"apple-1873078_960_720",
@@ -114,7 +115,7 @@
 	},
 	{
 	   "imageId":"architecture-1857175_960_720",
-	   "tags":"architecture, design, plan, drawing, sketch, pen, art, tech"
+	   "tags":"architecture, design, plan, drawing, sketch, pen, art, tech, technology"
 	},
 	{
 	   "imageId":"architecture-1868667_960_720",

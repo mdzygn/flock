@@ -302,6 +302,7 @@
 
 	.headerImageField {
     	padding: 0;
+    	padding-top: 10px;
 	}
 
 	.headerImageLabel {

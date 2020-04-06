@@ -21,6 +21,7 @@
         user,
         userId,
         getIsCurrentUser,
+        showBetaFeatures,
     } from '../../models/appModel';
 
     import {
@@ -102,9 +103,11 @@
 
 <div class="headerBar">
     {#if segment === undefined}
-        <div class="logo">
-            <img src='assets/logo.png' alt="Flock">
-        </div>
+        {#if $showBetaFeatures}
+            <div class="logo">
+                <img src='assets/logo.png' alt="Flock">
+            </div>
+        {/if}
     {:else}
         <div class="header" class:hasBack="{showBack || parentSection}">{sectionLabel}</div>
         {#if showBack || parentSection}

@@ -3,42 +3,67 @@
 	   "title":"Announcements",
 	   "description":"",
 	   "teamOnly":true,
-	   "sortIndex": 0
+	   "sortIndex": 0,
+	   "postCount": 0
+
 	},
 	{
 	   "title":"General",
 	   "description":"",
-	   "sortIndex": 1
+	   "sortIndex": 1,
+	   "postCount": 0
+	},
+	{
+	   "title":"Resources",
+	   "disabled": true,
+	   "description":"",
+	   "teamOnly":true,
+	   "sortIndex": 2,
+	   "postCount": 0
 	},
 	{
 	   "title":"Workshop",
 	   "description":"",
 	   "teamOnly":true,
-	   "sortIndex": 2
+	   "sortIndex": 3,
+	   "postCount": 0
 	},
 	{
 	   "title":"Questions",
 	   "description":"",
-	   "sortIndex": 3
+	   "sortIndex": 4,
+	   "postCount": 0
+	},
+	{
+	   "title":"Issues",
+	   "disabled": true,
+	   "description":"",
+	   "teamOnly":true,
+	   "sortIndex": 5,
+	   "postCount": 0
 	},
 	{
 	   "title":"Ideas",
 	   "description":"",
-	   "sortIndex": 4
+	   "sortIndex": 6,
+	   "postCount": 0
 	},
 	{
 	   "title":"Inspiration",
 	   "description":"",
-	   "sortIndex": 5
+	   "sortIndex": 7,
+	   "postCount": 0
 	},
 	{
 	   "title":"Random",
 	   "description":"",
-	   "sortIndex": 6
+	   "sortIndex": 8,
+	   "postCount": 0
 	},
 	{
 	   "title":"Suggestions",
 	   "description":"",
-	   "sortIndex": 7
+	   "sortIndex": 9,
+	   "postCount": 0
 	}
  ]

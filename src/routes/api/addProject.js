@@ -23,23 +23,26 @@ export async function post(req, res, next) {
 
 		if (result) {
 			let channelAddFailed = false;
-			let channelDetails;
+			let defaultChannel, channelDetails;
 			for (var channelI = 0; channelI < projectDefaultChannels.length; channelI++) {
-				channelDetails = Object.assign({}, projectDefaultChannels[channelI]);
+				defaultChannel = projectDefaultChannels[channelI];
+				if (!defaultChannel.disabled) {
+					channelDetails = Object.assign({}, defaultChannel);
 
-				channelDetails.id = generateId(10);
+					channelDetails.id = generateId(10);
 
-				channelDetails.projectId = details.id;
-				channelDetails.userId = options.userId;
+					channelDetails.projectId = details.id;
+					channelDetails.userId = options.userId;
 
-				channelDetails.createdAt = (new Date()).getTime();
-				channelDetails.modifiedAt = channelDetails.createdAt;
-				channelDetails.lastActiveAt = channelDetails.createdAt;
+					channelDetails.createdAt = (new Date()).getTime();
+					channelDetails.modifiedAt = channelDetails.createdAt;
+					channelDetails.lastActiveAt = channelDetails.createdAt;
 
-				const channelResult = await db.collection('channels').insertOne(channelDetails);
-				if (!channelResult) {
-					channelAddFailed = true;
-					break;
+					const channelResult = await db.collection('channels').insertOne(channelDetails);
+					if (!channelResult) {
+						channelAddFailed = true;
+						break;
+					}
 				}
 			}
 

@@ -29,6 +29,10 @@ import {
     checkLoggedIn,
 } from '../actions/appActions';
 
+import {
+    loadChannels,
+} from '../models/channelsModel';
+
 function checkUpdateProject(targetProject) {
     const curProject = get(project);
     if (curProject && curProject.id === targetProject.id) {
@@ -144,6 +148,11 @@ export function createProject(projectDetails) {
 
     if (newProject) {
         loadProject(newProject.id);
+
+        // TODO: temporary, to load channels after adding project
+        setTimeout(() => {
+            loadChannels( { projectId: newProject.id })
+        }, 1000);
     }
 }
 

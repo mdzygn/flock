@@ -18,14 +18,14 @@
 	} from '../../models/appModel';
 
 	import {
+		loadCurrentProject,
+	} from '../../actions/appActions';
+
+	import {
 		createPost,
 	} from '../../actions/postActions';
 
 	import { loadChannels } from '../../models/channelsModel';
-
-	if ($projectId) {
-		loadChannels( { projectId: $projectId } );
-	}
 
 	let title = '';
 	let message = '';

@@ -11,17 +11,30 @@
 	import PostItem from '../_components/PostItem.svelte';
 
 	import {
+		project,
+		channel,
 		channelId,
 		showBetaFeatures,
+		getIsProjectTeamMember,
 	} from '../../models/appModel';
+
+	import {
+		loadCurrentProject,
+		loadCurrentChannel,
+	} from '../../actions/appActions';
 
 	import {
 		getPosts,
 		loadingPosts,
 	} from '../../models/postsModel';
 
+	loadCurrentProject();
+	loadCurrentChannel();
+
     let posts = writable([]);
 	$: { posts = getPosts( { channelId: $channelId, type: 'thread' } ) };
+
+	$: canPost = $channel && (!$channel.teamOnly || getIsProjectTeamMember($project));
 
 	import {
 		loadThread,
@@ -42,8 +55,10 @@
 <div class="pageContent">
 	<ScrollView id="channel">
 		<div slot="scrollHeader">
-			<!-- <Proxy image="channel_actions" className="channelActions" /> -->
-			<NewPostButton onClick="{postThread}" className="newPostHeader" />
+			{#if canPost}
+				<!-- <Proxy image="channel_actions" className="channelActions" /> -->
+				<NewPostButton onClick="{postThread}" className="newPostHeader" />
+			{/if}
 		</div>
 
 		<div class="content">
@@ -60,7 +75,7 @@
 					{/if}
 				{/each}
 			</div>
-			{#if $posts && $posts.length}
+			{#if canPost && $posts && $posts.length}
 				<NewPostButton onClick="{postThread}" />
 			{/if}
 		</div>

@@ -15,6 +15,7 @@ import {
     loadProjects,
     onProjectsUpdated,
     updateProjectLists,
+    loadingProjects,
 } from '../models/projectsModel';
 
 import {
@@ -25,7 +26,9 @@ import {
 
 import {
     getChannel,
+    loadChannels,
     onChannelsUpdated,
+    loadingChannels,
 } from '../models/channelsModel';
 
 import {
@@ -363,4 +366,16 @@ export function checkLoggedIn() {
         return false;
     }
     return true;
+}
+
+export function loadCurrentProject() {
+    if (get(projectId) && !get(project) && !get(loadingProjects)) {
+        loadProjects( { id: get(projectId) } );
+    }
+}
+
+export function loadCurrentChannel() {
+    if (get(projectId) && !get(channel) && !get(loadingChannels)) {
+        loadChannels( { projectId: get(projectId) } );
+    }
 }

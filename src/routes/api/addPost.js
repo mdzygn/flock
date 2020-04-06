@@ -39,7 +39,13 @@ export async function post(req, res, next) {
 			const channelUpdateResult = await db.collection('channels').updateOne({ id: details.channelId }, { $inc: { postCount: 1 } });
 
 			if (channelUpdateResult) {
-				response(res, {success: true});
+				const channelUpdateResult = await db.collection('users').updateOne({ id: details.userId }, { $inc: { postsCount: 1 } });
+
+				if (channelUpdateResult) {
+					response(res, {success: true});
+				} else {
+					response(res, {error: true});
+				}
 			} else {
 				response(res, {error: true});
 			}

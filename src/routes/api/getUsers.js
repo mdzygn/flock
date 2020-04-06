@@ -8,27 +8,31 @@ export async function post(req, res, next) {
 	const userResults = await db.collection('users').find({}).toArray();
 
 	const userDetails = {
-        id: true,
+                id: true,
 
-        username: true,
+                username: true,
 
-        fullName: true,
-        firstName: true,
-        lastName: true,
+                fullName: true,
+                firstName: true,
+                lastName: true,
 
-        bio: true,
+                bio: true,
 
-        skills: true,
+                skills: true,
 
-        avatarImage: true,
-        coverImage: true,
+                postsCount: true,
+                likesCount: true,
+                followsCount: true,
 
-        style: true,
+                avatarImage: true,
+                coverImage: true,
 
-        connected: true,
-        requestedConnection: true,
+                style: true,
 
-        location: true,
+                connected: true,
+                requestedConnection: true,
+
+                location: true,
 	};
 
 	const users = filterItemArrayDetails(userResults, userDetails);

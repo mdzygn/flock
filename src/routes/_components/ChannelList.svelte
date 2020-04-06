@@ -4,12 +4,16 @@
     import ContentPanel from './ContentPanel.svelte';
     import ChannelListItem from './ChannelListItem.svelte';
 
-    import channelsData from '../../data/channels.json';
-
 	import {
 		getIsProjectTeamMember,
 		showBetaFeatures,
     } from '../../models/appModel';
+
+	import {
+		getChannels,
+    } from '../../models/channelsModel';
+
+    const channels = getChannels();
 
     export let project;
 
@@ -42,7 +46,7 @@
     <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" onClick="{e => loadChannel('7m2ldksm')}" /> -->
     <ContentPanel title="Channels" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
         <div class="channelListContainer">
-            {#each channelsData as channel}
+            {#each $channels as channel}
                 <ChannelListItem channel="{channel}" />
             {/each}
         </div>

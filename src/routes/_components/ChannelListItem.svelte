@@ -13,8 +13,8 @@
     // const unreadMessageCount = 5;
     // const messageCount = 10;
 
-    $: channelTitle = (channel && channel.title) || '';
-    $: channelId = (channel && channel.id) || null;
+    $: channelTitle = ($channel && $channel.title) || '';
+    $: channelId = ($channel && $channel.id) || null;
 
     function loadCurrentChannel() {
         if (channelId) {

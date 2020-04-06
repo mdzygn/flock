@@ -16,6 +16,7 @@
     import {
         viewMode,
         project,
+        channel,
         conversation,
         viewedUser,
         user,
@@ -59,6 +60,8 @@
     $: {
         if (/\/projects\/.+/.test(path) && !/\/projects\/new/.test(path) && !/\/projects\/archive/.test(path) && $project) {
             sectionLabel = $project.title;
+        } else if (/\/channels\/.+/.test(path) && $channel) {
+            sectionLabel = '#'+$channel.title;
         } else if (/\/profile\/.+/.test(path) && !isCurrentUser && $viewedUser) {//$viewedUser && !$viewedUser.isCurrentUser) {
             sectionLabel = $viewedUser.fullName;
         } else if (/\/messages\/.+/.test(path) && $conversation && ($conversation.user || $conversation.project)) {

@@ -24,6 +24,10 @@ import {
 } from '../models/usersModel';
 
 import {
+    getChannel,
+} from '../models/channelsModel';
+
+import {
     curPath,
 
     projectId,
@@ -41,6 +45,8 @@ import {
     project,
     conversation,
     viewedUser,
+
+    channel,
 
     targetProject,
     targetUser,
@@ -67,7 +73,6 @@ export function loadProject(targetProjectId, options) {
     loadProjects({ id: targetProjectId });
 
     projectId.set(targetProjectId);
-
     setProject(targetProjectId);
 
     if (gotoRoute('projects/' + targetProjectId)) {
@@ -170,9 +175,17 @@ export function loadThread(targetThreadId) {
 
 export function loadChannel(targetChannelId) {
     channelId.set(targetChannelId);
+    setChannel(targetChannelId);
 
     goto('channels/' + targetChannelId );
     resetScrollRegionPosition('channel');
+}
+
+function setChannel(targetChannelId) {
+    const curChannelModel = getChannel(targetChannelId);
+    const curChannel = get(curChannelModel);
+
+    channel.set(curChannel);
 }
 
 export function loadProfile(targetProfileId, options) {

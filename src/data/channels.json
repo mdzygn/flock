@@ -96,5 +96,88 @@
 		"createdAt": 1586248519044,
 		"modifiedAt": 1586248519044,
 		"lastActiveAt": 1586248519044
+	},
+
+	{
+		"id": "454sdytd",
+		"title": "Workshop",
+		"description": "",
+		"projectId": "s7djj2s2",
+		"userId": "sl3p5oms",
+		"createdAt": 0,
+		"sortIndex": 2,
+		"teamOnly": true,
+		"postCount": 0
+	},
+	{
+		"id": "58d23355",
+		"title": "General",
+		"description": "",
+		"projectId": "s7djj2s2",
+		"userId": "sl3p5oms",
+		"createdAt": 0,
+		"sortIndex": 1,
+		"postCount": 0
+	},
+	{
+		"id": "0n2ofn32",
+		"title": "Announcements",
+		"description": "",
+		"projectId": "s7djj2s2",
+		"userId": "sl3p5oms",
+		"createdAt": 0,
+		"sortIndex": 0,
+		"teamOnly": true,
+		"postCount": 0
+	},
+	{
+		"id": "243h6sd",
+		"title": "Random",
+		"description": "",
+		"projectId": "s7djj2s2",
+		"userId": "sl3p5oms",
+		"createdAt": 0,
+		"sortIndex": 6,
+		"postCount": 0
+	},
+	{
+		"id": "bf234sg3",
+		"title": "Questions",
+		"description": "",
+		"projectId": "s7djj2s2",
+		"userId": "sl3p5oms",
+		"createdAt": 0,
+		"sortIndex": 3,
+		"postCount": 0
+	},
+	{
+		"id": "45hh5bfdbg",
+		"title": "Suggestions",
+		"description": "",
+		"projectId": "s7djj2s2",
+		"userId": "sl3p5oms",
+		"createdAt": 0,
+		"sortIndex": 7,
+		"postCount": 0
+	},
+	{
+		"id": "v24gfdg4",
+		"title": "Ideas",
+		"description": "",
+		"projectId": "s7djj2s2",
+		"userId": "sl3p5oms",
+		"createdAt": 0,
+		"sortIndex": 4,
+		"postCount": 0
+	},
+	{
+		"id": "45bfd43vb",
+		"title": "Inspiration",
+		"description": "",
+		"projectId": "s7djj2s2",
+		"userId": "sl3p5oms",
+		"createdAt": 0,
+		"sortIndex": 5,
+		"postCount": 0
 	}
  ]

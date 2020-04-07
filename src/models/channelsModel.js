@@ -30,9 +30,9 @@ const primaryChannelNames = [
 
 onChannelsUpdated(channelsUpdated);
 
-import channelsData from '../data/channels.json';
-const channelItems = JSON.parse(JSON.stringify(channelsData));
-mergeChannels(channelItems);
+// import channelsData from '../data/channels.json';
+// const channelItems = JSON.parse(JSON.stringify(channelsData));
+// mergeChannels(channelItems);
 
 export function loadChannels(options) {
 	if (!get(loadingChannels)) {

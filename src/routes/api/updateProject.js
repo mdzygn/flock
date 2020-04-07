@@ -32,10 +32,7 @@ export async function post(req, res, next) {
 
 		likeCount: true,
 		followCount: true,
-		unreadCount: true,
 
-		unreadMessageCount: true,
-		messageCount: true,
 		location: true,
 		tags: true,
 		skills: true,

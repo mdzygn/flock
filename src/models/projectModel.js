@@ -21,10 +21,6 @@ const ProjectModel = (projectData) => {
 
         likeCount: 0,
         followCount: 0,
-        unreadCount: 0,
-
-        unreadMessageCount: 0,
-        messageCount: 0,
 
         location: null,
 

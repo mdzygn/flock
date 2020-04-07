@@ -40,10 +40,16 @@ export async function post(req, res, next) {
 			let updateParentCountResult;
 			switch (details.type) {
 				case 'thread':
-					updateParentCountResult = await db.collection('channels').updateOne({ id: details.channelId }, { $inc: { postCount: 1 } });
+					updateParentCountResult = await db.collection('channels').updateOne({ id: details.channelId }, {
+						$set: { lastActiveAt: details.lastActiveAt },
+						$inc: { postCount: 1 },
+					});
 					break;
 				case 'threadPost':
-					updateParentCountResult = await db.collection('posts').updateOne({ id: details.threadId }, { $inc: { postCount: 1 } });
+					updateParentCountResult = await db.collection('posts').updateOne({ id: details.threadId }, {
+						$set: { lastActiveAt: details.lastActiveAt },
+						$inc: { postCount: 1 },
+					});
 					break;
 			}
 

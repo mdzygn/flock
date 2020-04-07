@@ -39,13 +39,14 @@
     $: canLinkThrough = (type === 'thread');
     $: linkUserName = (type === 'threadPost');
     $: displayBreaks = (type !== 'thread');
+    $: showLastActiveTime = (type === 'thread');
 
     $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
     $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
 
     $: repliesCount = ($post && $post.postCount) || 0;
 
-    $: dateString = getDateString($post.createdAt);
+    $: dateString = showLastActiveTime ? getDateString($post.lastActiveAt) : getDateString($post.createdAt);
 
 
     // $: titleHTML = parseHTML(title);

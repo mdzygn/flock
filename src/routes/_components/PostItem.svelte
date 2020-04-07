@@ -10,6 +10,8 @@
 
     import AvatarIcon from '../_components/AvatarIcon.svelte';
 
+    import CommentIcon from "../../assets/icons/comment_small.png";
+
     import { parseHTML, getUnbrokenText, getDateString, getDateAge, getDateAgeString } from '../../utils';
 
     import { getUser } from '../../models/usersModel';
@@ -87,7 +89,10 @@
 <div class="postItem" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}">
     <!-- <Avatar  -->
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
-    <Counter visible="{repliesCount}" count="{repliesCount}" />
+    {#if repliesCount}
+        <div class="commentIcon" style="background-image: url({CommentIcon})"/>
+        <Counter count="{repliesCount}" />
+    {/if}
     <div class="info">
         <div class="userFullName" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userFullName}
             {#if dateString}<span class="date"> - {dateString}</span>{/if}
@@ -163,5 +168,15 @@
         float: right;
         margin-top: 12px;
         margin-right: 18px;
+    }
+
+    .commentIcon {
+        position: absolute;
+        right: 48px;
+        top: 15px;
+
+        background-size: cover;
+        width: 17px;
+        height: 17px;
     }
 </style>

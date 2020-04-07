@@ -10,7 +10,7 @@
 
     import AvatarIcon from '../_components/AvatarIcon.svelte';
 
-    import { parseHTML, getUnbrokenText, getDateString, getDateAgeString } from '../../utils';
+    import { parseHTML, getUnbrokenText, getDateString, getDateAge, getDateAgeString } from '../../utils';
 
     import { getUser } from '../../models/usersModel';
 
@@ -46,8 +46,9 @@
 
     $: repliesCount = ($post && $post.postCount) || 0;
 
-    $: dateString = (showLastActiveTime ? getDateAgeString($post.lastActiveAt) : getDateString($post.createdAt)) || '';
-    $: dateStringPrefix = showLastActiveTime ? 'active ' : '';
+    $: date = showLastActiveTime ? $post.lastActiveAt : $post.createdAt;
+    $: isRecent = !showLastActiveTime && getDateAge(date).hours < 1;
+    $: dateString = (showLastActiveTime && repliesCount) ? 'active ' + getDateAgeString(date) : (isRecent ? getDateAgeString(date) : getDateString(date));
 
 
     // $: titleHTML = parseHTML(title);
@@ -74,7 +75,7 @@
     <Counter visible="{repliesCount}" count="{repliesCount}" />
     <div class="info">
         <div class="userFullName" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userFullName}
-            {#if dateString}<span class="date"> - {dateStringPrefix}{dateString}</span>{/if}
+            {#if dateString}<span class="date"> - {dateString}</span>{/if}
         </div>
         {#if showTitle && title}
             <div class="title">{@html titleHTML}</div>

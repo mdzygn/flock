@@ -6,7 +6,7 @@
 
 	import NewPostButton from '../_components/NewPostButton.svelte';
 
-    import { parseHTML } from '../../utils';
+    import { parseHTML, getDateString } from '../../utils';
 
     import {
         loadProfile,
@@ -26,6 +26,9 @@
 
     $: title = ($post && $post.title) || '';
     $: message = ($post && $post.message) || '';
+    $: createdAt = ($post && $post.createdAt) || '';
+
+    $: dateString = (createdAt && getDateString(createdAt, 'ddd d MMM') + ' at ' + getDateString(createdAt, 'h:mmtt')) || '&nbsp;';
 
     $: titleHTML = parseHTML(title);
     $: messageHTML = parseHTML(message);
@@ -62,9 +65,7 @@
     </div>
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
     <div class="postContent">
-        {#if date}
-            <div class="date">{date}</div>
-        {/if}
+        <div class="date">{@html dateString}</div>
         {#if title}
             <div class="title">{@html titleHTML}</div>
         {/if}
@@ -135,7 +136,7 @@
         line-height: 2rem;
         color: #000000;
         font-weight: 700;
-        padding-bottom: 10px;
+        padding-bottom: 2px;
         padding-top: 8px;
 
         /* white-space: nowrap;
@@ -147,5 +148,6 @@
         font-size: 1.5rem;
         line-height: 1.7rem;
         color: #333333;
+        padding-top: 8px;
     }
 </style>

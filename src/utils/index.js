@@ -110,53 +110,61 @@ export function linkify(string) {
     // /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm,
 };
 
-export function getDateAgeString(date) {
-    if (!date) { return null; }
+export function getDateAge(date) {
+    const dateAge = {};
 
     const curDate = new Date(date);
 
-    var ageDiff = Date.now() - curDate;
+    var age = Date.now() - curDate;
     // var ageDate = new Date(ageDifMs);
     // return Math.abs(ageDate.getUTCFullYear() - 1970);
 
-    const secondsDiff = ageDiff / 1000;
-    const minsDiff = secondsDiff / 60;
-    const hoursDiff = minsDiff / 60;
-    const daysDiff = hoursDiff / 24;
-    const weeksDiff = daysDiff / 7;
-    const monthsDiff = weeksDiff / 4;
-    const yearsDiff = monthsDiff / 12;
+    dateAge.seconds = age / 1000;
+    dateAge.mins = dateAge.seconds / 60;
+    dateAge.hours = dateAge.mins / 60;
+    dateAge.days = dateAge.hours / 24;
+    dateAge.weeks = dateAge.days / 7;
+    dateAge.months = dateAge.weeks / 4;
+    dateAge.years = dateAge.months / 12;
+
+    return dateAge;
+}
+
+export function getDateAgeString(date) {
+    if (!date) { return null; }
+
+    const dateAge = getDateAge(date);
 
     let ageString = '';
 
-    if (yearsDiff > 1.66) {
-        ageString = Math.round(yearsDiff) + ' years';
-    } else if (yearsDiff > 1) {
+    if (dateAge.years > 1.66) {
+        ageString = Math.round(dateAge.years) + ' years';
+    } else if (dateAge.years > 1) {
         ageString = '1 year';
 
-    } else if (monthsDiff > 1.66) {
-        ageString = Math.round(monthsDiff) + ' months';
-    } else if (monthsDiff > 1) {
+    } else if (dateAge.months > 1.66) {
+        ageString = Math.round(dateAge.months) + ' months';
+    } else if (dateAge.months > 1) {
         ageString = '1 month';
 
-    } else if (weeksDiff > 1.66) {
-        ageString = Math.round(weeksDiff) + ' weeks';
-    } else if (weeksDiff > 1) {
+    } else if (dateAge.weeks > 1.66) {
+        ageString = Math.round(dateAge.weeks) + ' weeks';
+    } else if (dateAge.weeks > 1) {
         ageString = '1 week';
 
-    } else if (daysDiff > 1.66) {
-        ageString = Math.round(daysDiff) + ' days';
-    } else if (daysDiff > 0.66) {
+    } else if (dateAge.days > 1.66) {
+        ageString = Math.round(dateAge.days) + ' days';
+    } else if (dateAge.days > 0.66) {
         ageString = '1 day';
 
-    } else if (hoursDiff > 1.66) {
-        ageString = Math.round(hoursDiff) + ' hours';
-    } else if (hoursDiff > 0.66) {
+    } else if (dateAge.hours > 1.66) {
+        ageString = Math.round(dateAge.hours) + ' hours';
+    } else if (dateAge.hours > 0.66) {
         ageString = '1 hour';
 
-    } else if (minsDiff > 1.66) {
-        ageString = Math.round(minsDiff) + ' mins';
-    } else if (minsDiff > 1) {
+    } else if (dateAge.minutes > 1.66) {
+        ageString = Math.round(dateAge.minutes) + ' mins';
+    } else if (dateAge.minutes > 1) {
         ageString = '1 min';
     } else {
         ageString = 'less than a minute';
@@ -169,11 +177,14 @@ export function getDateAgeString(date) {
     return ageString;
 }
 
-export function getDateString(date) {
+export function getDateString(date, format) {
     if (!date) { return null; }
+    if (!format) {
+        format = 'd MMM h:mmtt';
+    }
 
     const curDate = new Date(date);
-    return formatDate(curDate, 'd MMM h:mmtt');
+    return formatDate(curDate, format);
 }
 
 function formatDate(date, format, utc) {

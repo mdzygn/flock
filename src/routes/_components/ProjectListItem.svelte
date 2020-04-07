@@ -13,15 +13,15 @@
 	import PrivateIcon from "../../assets/icons/private.png";
 
     export let project;
-    // export let showLastActive = false;
+    export let showLastActive = false;
     export let showUpdateCounter = true;
     export let showPrivateIcon = false;
 
-    let showLastActive = false; // hardcode until updating project active dates
+    let enableLastActive = false; // hardcode until updating project active dates
 
     $: thumbImage = getProjectHeaderImage($project);
 
-    $: date = $project && showLastActive ? $project.lastActiveAt : $project.createdAt;
+    $: date = $project && ((enableLastActive && showLastActive) ? $project.lastActiveAt : $project.createdAt);
     // $: detail = (showLastActive ? $project.lastActiveInfo : $project.createdInfo) || '';
 
     let dateString = '';

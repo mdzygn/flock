@@ -92,6 +92,7 @@
 </script>
 
 <appContainer>
+	<GoogleAnalytics />
 	<appContent class:showFeedBg="{showFeedBg}">
 		<Overlays />
 		<div class="pageContent">

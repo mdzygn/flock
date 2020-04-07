@@ -47,8 +47,23 @@
     $: repliesCount = ($post && $post.postCount) || 0;
 
     $: date = showLastActiveTime ? $post.lastActiveAt : $post.createdAt;
-    $: isRecent = !showLastActiveTime && getDateAge(date).hours < 1;
-    $: dateString = (showLastActiveTime && repliesCount) ? 'active ' + getDateAgeString(date) : (isRecent ? getDateAgeString(date) : getDateString(date));
+
+    let dateString = '';
+    // $: isRecent = !showLastActiveTime && getDateAge(date).hours < 1;
+    // $: dateString = (showLastActiveTime && repliesCount) ? 'active ' + getDateAgeString(date) : (isRecent ? getDateAgeString(date) : getDateString(date));
+    $: {
+        if (showLastActiveTime && repliesCount) {
+            dateString = 'active ' + getDateAgeString(date);
+        } else {
+            if (getDateAge(date).hours < 0.66) {
+                dateString = getDateAgeString(date);
+            } else if (getDateAge(date).days < 0.66) {
+                dateString = getDateString(date, 'h:mmtt');
+            } else {
+                dateString = getDateString(date);
+            }
+        }
+    }
 
 
     // $: titleHTML = parseHTML(title);

@@ -162,9 +162,9 @@ export function getDateAgeString(date) {
     } else if (dateAge.hours > 0.66) {
         ageString = '1 hour';
 
-    } else if (dateAge.minutes > 1.66) {
-        ageString = Math.round(dateAge.minutes) + ' mins';
-    } else if (dateAge.minutes > 1) {
+    } else if (dateAge.mins > 1.66) {
+        ageString = Math.round(dateAge.mins) + ' mins';
+    } else if (dateAge.mins > 1) {
         ageString = '1 min';
     } else {
         ageString = 'less than a minute';

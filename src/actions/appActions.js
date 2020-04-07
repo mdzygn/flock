@@ -67,6 +67,8 @@ import {
 
     resetScrollRegionPosition,
 
+    postsAnchorToBottom,
+
     profileDisplayingAllProjects,
 
     projectReturnView,
@@ -209,12 +211,14 @@ function setChannel(targetChannelId) {
     channel.set(curChannel);
 }
 
-export function loadPost(targetPostId) {
+export function loadPost(targetPostId, options) {
     postId.set(targetPostId);
     setPost(targetPostId);
 
+    postsAnchorToBottom.set(options && options.anchorToBottom);
+
     gotoRoute('posts/' + targetPostId );
-    resetScrollRegionPosition('post');
+    resetScrollRegionPosition('thread');
 }
 
 function setPost(targetPostId) {

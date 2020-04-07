@@ -32,6 +32,8 @@ const appModel = createModel({
     displayingAllMyProjects: false,
     displayingAllFollowingProjects: false,
 
+    postsAnchorToBottom: false,
+
     projectsSearchString: '',
     projectsArchiveSearchString: '',
     discoverSearchString: '',
@@ -61,6 +63,8 @@ export const postType = appModel.postType;
 
 export const username = appModel.username;
 export const usercode = appModel.usercode;
+
+export const postsAnchorToBottom = appModel.postsAnchorToBottom;
 
 export const targetProject = writable(null);
 export const targetUser = writable(null);

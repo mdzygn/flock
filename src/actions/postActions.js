@@ -20,7 +20,7 @@ export function createPost(postDetails) {
             loadChannel(postDetails.channelId);
             break;
         case 'threadPost':
-            loadPost(postDetails.threadId);
+            loadPost(postDetails.threadId, { anchorToBottom: true });
             break;
     }
 }

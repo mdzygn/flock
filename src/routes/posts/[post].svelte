@@ -19,6 +19,7 @@
 	import {
 		postId,
 		post,
+		postsAnchorToBottom,
 	} from '../../models/appModel';
 
 	import {
@@ -55,7 +56,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-<ScrollView id="thread">
+<ScrollView id="thread" anchorToBottom="{$postsAnchorToBottom}">
 	<!-- <div slot="scrollHeader">
 		<ThreadPost {post} />
 	</div> -->

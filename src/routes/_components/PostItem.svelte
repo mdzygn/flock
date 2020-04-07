@@ -13,7 +13,8 @@
     import { getUser } from '../../models/usersModel';
 
 	import {
-		loadProfile,
+        loadProfile,
+        loadPost,
 	} from '../../actions/appActions';
 
     export let post;
@@ -42,7 +43,8 @@
 
     function loadCurrentPost() {
         if (postId) {
-            goto('posts/' + postId);
+            loadPost(postId);
+            // goto('posts/' + postId);
         }
     }
 </script>

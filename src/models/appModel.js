@@ -52,8 +52,8 @@ export const project = writable(null);
 export const conversation = writable(null);
 export const viewedUser = writable(null);
 export const user = writable(null);
-
 export const channel = writable(null);
+export const post = writable(null);
 
 export const username = appModel.username;
 export const usercode = appModel.usercode;

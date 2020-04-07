@@ -20,6 +20,7 @@
 		loadConversation,
 		loadProfile,
 		loadChannel,
+		loadPost,
 		closeOverlay,
 	} from '../actions/appActions';
 
@@ -29,10 +30,12 @@
 		conversationId,
 		profileId,
 		channelId,
+		postId,
 
 		conversation,
 		viewedUser,
 		project,
+		post,
 
 		channel,
 
@@ -70,6 +73,11 @@
 				if (params.channel) {
 					if ($channelId !== params.channel || !$channel) {
 						loadChannel(params.channel);
+					}
+				}
+				if (params.post) {
+					if ($postId !== params.post || !$post) {
+						loadPost(params.post);
 					}
 				}
 			}

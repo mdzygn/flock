@@ -32,6 +32,13 @@ import {
 } from '../models/channelsModel';
 
 import {
+    getPost,
+    loadPosts,
+    onPostsUpdated,
+    loadingPosts,
+} from '../models/postsModel';
+
+import {
     curPath,
 
     projectId,
@@ -51,6 +58,7 @@ import {
     viewedUser,
 
     channel,
+    post,
 
     targetProject,
     targetUser,
@@ -105,6 +113,13 @@ onChannelsUpdated(() => {
     if (!get(channel) && get(channelId)) {
         const targetChannelId = get(channelId);
         setChannel(targetChannelId);
+    }
+});
+onPostsUpdated(() => {
+    // if channel object not found but channel id set then update channel model
+    if (!get(post) && get(postId)) {
+        const targetPostId = get(postId);
+        setPost(targetPostId);
     }
 });
 
@@ -177,13 +192,6 @@ export function showLikes() {
     resetScrollRegionPosition('likes');
 }
 
-export function loadPost(targetPostId) {
-    postId.set(targetPostId);
-
-    gotoRoute('posts/' + targetPostId );
-    resetScrollRegionPosition('post');
-}
-
 export function loadChannel(targetChannelId) {
     channelId.set(targetChannelId);
     setChannel(targetChannelId);
@@ -197,6 +205,21 @@ function setChannel(targetChannelId) {
     const curChannel = get(curChannelModel);
 
     channel.set(curChannel);
+}
+
+export function loadPost(targetPostId) {
+    postId.set(targetPostId);
+    setPost(targetPostId);
+
+    gotoRoute('posts/' + targetPostId );
+    resetScrollRegionPosition('post');
+}
+
+function setPost(targetPostId) {
+    const curPostModel = getPost(targetPostId);
+    const curPost = get(curPostModel);
+
+    post.set(curPost);
 }
 
 export function loadProfile(targetProfileId, options) {
@@ -377,5 +400,11 @@ export function loadCurrentProject() {
 export function loadCurrentChannel() {
     if (get(projectId) && !get(channel) && !get(loadingChannels)) {
         loadChannels( { projectId: get(projectId) } );
+    }
+}
+
+export function loadCurrentPost() {
+    if (get(postId) && !get(post) && !get(loadingPosts)) {
+        loadPosts( { postId: get(postId) } );
     }
 }

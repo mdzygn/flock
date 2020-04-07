@@ -8,10 +8,27 @@
 	import { loadProfile } from '../../actions/appActions';
 
 	import {
+		postId,
+		post,
+	} from '../../models/appModel';
+
+	import {
 		loadCurrentChannel,
+		loadCurrentPost,
 	} from '../../actions/appActions';
 
+	import {
+		getPost,
+	} from '../../models/postsModel';
+
 	loadCurrentChannel();
+	loadCurrentPost();
+
+    // let post = writable([]);
+	// $: { post = getPost( { postId: $postId, type: 'thread' } ) };
+
+	$: title = ($post && $post.title) || '';
+
 </script>
 
 <svelte:head>
@@ -20,7 +37,7 @@
 
 <ScrollView id="thread">
 	<div class="content">
-		<Proxy image="thread_post" className="threadPost">
+		<Proxy image="thread_post" className="threadPost proxyOverlay">
 			<!-- Profile -->
 			<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
 				left: 12px;
@@ -28,6 +45,9 @@
 				width: 67px;
 				height: 65px;" />
 		</Proxy>
+		<div class="threadPost">
+			<div class="threadPostTitle">{title}</div>
+		</div>
 		<Proxy image="thread_actions" className="threadActions" />
 		<Proxy image="thread_posts" className="threadPosts">
 			<!-- Profiles -->
@@ -42,6 +62,11 @@
 </ScrollView>
 
 <style>
+	.content :global(.proxyOverlay) {
+		position: absolute;
+		opacity: 0.5;
+	}
+
 	.content {
 		margin-bottom: 40px;
 	}

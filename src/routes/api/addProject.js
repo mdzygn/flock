@@ -50,7 +50,6 @@ export async function post(req, res, next) {
 		};
 
 		details = filterItemDetails(details, projectDetails);
-		console.log(details);
 
 		details.createdAt = (new Date()).getTime();
 		details.modifiedAt = details.createdAt;

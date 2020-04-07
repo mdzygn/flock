@@ -10,7 +10,7 @@
 
     import AvatarIcon from '../_components/AvatarIcon.svelte';
 
-    import { parseHTML, getUnbrokenText } from '../../utils';
+    import { parseHTML, getUnbrokenText, getDateString } from '../../utils';
 
     import { getUser } from '../../models/usersModel';
 
@@ -45,6 +45,8 @@
 
     $: repliesCount = ($post && $post.postCount) || 0;
 
+    $: dateString = getDateString($post.createdAt);
+
 
     // $: titleHTML = parseHTML(title);
     // $: messageHTML = parseHTML(message);
@@ -69,7 +71,9 @@
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
     <Counter visible="{repliesCount}" count="{repliesCount}" />
     <div class="info">
-        <div class="userFullName" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userFullName}</div>
+        <div class="userFullName" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userFullName}
+            <span class="date"> - {dateString}</span>
+        </div>
         {#if showTitle && title}
             <div class="title">{@html titleHTML}</div>
         {/if}
@@ -109,6 +113,10 @@
         color: #777777;
         /* font-weight: 700; */
         padding-bottom: 5px;
+    }
+
+    .date {
+        color: #bbbbbb;
     }
 
     .title {

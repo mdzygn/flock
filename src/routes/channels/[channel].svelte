@@ -113,12 +113,12 @@
 	}
 
 	.pageContent :global(.newPostHeader) {
-		padding: 0;
+		margin: 0;
 
-	    height: 54px;
+	    /* height: 54px;
 		display:flex;
 		align-items: center;
-		background-color: #ffffff;
+		background-color: #ffffff; */
 	}
 
 	.content :global(.channelActions) {

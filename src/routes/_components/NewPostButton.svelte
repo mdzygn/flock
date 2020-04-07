@@ -13,8 +13,11 @@
 
 <style>
 	.newPostButton {
-        padding-top: 10px;
-        padding-bottom: 10px;
+        background-color: #ffffff;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        margin-top: 10px;
+        margin-bottom: 10px;
 	}
 
     .button {

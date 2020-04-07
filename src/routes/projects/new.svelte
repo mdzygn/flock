@@ -1,5 +1,8 @@
 <script>
 	import locale from '../../locale';
+
+	import config from '../../config';
+
 	import { testInputDefocus } from '../../utils';
 
 	import ScrollView from '../../components/ScrollView.svelte';
@@ -19,6 +22,21 @@
 
 	let titleField;
 	let descriptionField;
+
+	$: fieldRemainingCharCount = Math.max(0, config.MAX_PROJECT_DESCRIPTION_CHARS - description.length);
+	$: charCountLow = fieldRemainingCharCount < config.PROJECT_DESCRIPTION_CHARS_LOW;
+
+	$: {
+		if (description.length > config.MAX_PROJECT_DESCRIPTION_CHARS) {
+			description = description.substr(0, config.MAX_PROJECT_DESCRIPTION_CHARS);
+		}
+	}
+
+	function checkFieldLimit(event) {
+		if (description.length >= config.MAX_PROJECT_DESCRIPTION_CHARS) {
+            event.preventDefault();
+		}
+	}
 
     // $: titleField && titleField.focus();
 
@@ -55,7 +73,8 @@
 			</div>
 			<div class="field descriptionField">
 				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
-        		<textarea bind:value="{description}" bind:this="{descriptionField}" on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" />
+				<div class="fieldCharCount" class:charCountLow="{charCountLow}">{fieldRemainingCharCount}{charCountLow ? ' characters remaining' : ''}</div>
+        		<textarea bind:value="{description}" bind:this="{descriptionField}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{e => { checkFieldLimit(e); testInputDefocus(e, {action: testSubmit}) } }" />
 			</div>
 			<div class="field headerImageField">
 				<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
@@ -80,6 +99,7 @@
 	}
 
 	.field {
+		position: relative;
     	padding: 0 21px;
 		padding-bottom: 30px;
 	}
@@ -93,6 +113,17 @@
     	padding-left: 4px;
     	padding-bottom: 4px;
 		color: #555555;
+	}
+
+	.fieldCharCount {
+		position: absolute;
+		right: 20px;
+		margin-top: -21px;
+		font-size: 1.2rem;
+		color: #888888;
+	}
+	.charCountLow {
+		color: #DF3C3C;
 	}
 
 	input {

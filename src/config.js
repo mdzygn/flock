@@ -13,6 +13,9 @@ export const headerImageExtension = '.jpg';
 
 export const MAX_ID_LENGTH = 12;
 
+export const MAX_PROJECT_DESCRIPTION_CHARS = 140;
+export const PROJECT_DESCRIPTION_CHARS_LOW = 20;
+
 export default {
     DEBUG,
 
@@ -28,4 +31,7 @@ export default {
     headerImageExtension,
 
     MAX_ID_LENGTH,
+
+    MAX_PROJECT_DESCRIPTION_CHARS,
+    PROJECT_DESCRIPTION_CHARS_LOW,
 };

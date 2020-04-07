@@ -24,7 +24,7 @@
     $: titleHTML = parseHTML(title);
     $: messageHTML = parseHTML(message);
 
-    const date = '5 Jan at 4:23pm';
+    const date = ''; //'5 Jan at 4:23pm';
 
     function viewUserProfile() {
         if (userLoaded) {
@@ -111,7 +111,7 @@
     .date {
         font-size: 1.3rem;
         color: #999999;
-        padding-bottom: 10px;
+        padding-bottom: 2px;
     }
 
     .title {
@@ -120,6 +120,7 @@
         color: #000000;
         font-weight: 700;
         padding-bottom: 10px;
+        padding-top: 8px;
 
         /* white-space: nowrap;
         overflow: hidden;

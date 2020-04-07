@@ -11,6 +11,7 @@
     import AvatarIcon from '../_components/AvatarIcon.svelte';
 
     import CommentIcon from "../../assets/icons/comment_small.png";
+    import ReplyIcon from "../../assets/icons/reply_small.png";
 
     import { parseHTML, getUnbrokenText, getDateString, getDateAge, getDateAgeString } from '../../utils';
 
@@ -42,6 +43,7 @@
     $: linkUserName = (type === 'threadPost');
     $: displayBreaks = (type !== 'thread');
     $: showLastActiveTime = (type === 'thread');
+    $: showReplyIcon = (type === 'thread');
 
     $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
     $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
@@ -92,6 +94,10 @@
     {#if repliesCount}
         <div class="commentIcon" style="background-image: url({CommentIcon})"/>
         <Counter count="{repliesCount}" />
+    {:else}
+        {#if showReplyIcon}
+            <div class="replyIcon" style="background-image: url({ReplyIcon})"/>
+        {/if}
     {/if}
     <div class="info">
         <div class="userFullName" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userFullName}
@@ -178,5 +184,15 @@
         background-size: cover;
         width: 17px;
         height: 17px;
+    }
+
+    .replyIcon {
+        position: absolute;
+        right: 19px;
+        top: 15px;
+
+        background-size: cover;
+        width: 22px;
+        height: 22px;
     }
 </style>

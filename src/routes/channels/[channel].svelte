@@ -28,6 +28,10 @@
 		loadingPosts,
 	} from '../../models/postsModel';
 
+	import {
+		getChannelDefaultDescription,
+	} from '../../models/channelsModel';
+
 	loadCurrentProject();
 	loadCurrentChannel();
 
@@ -35,6 +39,8 @@
 	$: { posts = getPosts( { channelId: $channelId, type: 'thread' } ) };
 
 	$: canPost = $channel && (!$channel.teamOnly || getIsProjectTeamMember($project));
+
+	$: channelDescription = $channel && ($channel.description || getChannelDefaultDescription($channel)) || null;
 
 	import {
 		loadThread,
@@ -63,6 +69,9 @@
 
 		<div class="content">
 			<!-- <Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadThread('sm2ld9p2')}" /> -->
+			{#if channelDescription}
+				<div class="channelHeader">{channelDescription}</div>
+			{/if}
 			<div class="postsContainer">
 				{#each $posts as post}
 					<PostItem {post} />
@@ -88,8 +97,21 @@
 		opacity: 0.5;
 	} */
 
+	.channelHeader {
+		background-color: #ffffff;
+		padding: 20px;
+		font-size: 1.4rem;
+		color: #666666;
+		margin-bottom: 5px;
+	}
+
 	.pageContent :global(.newPostHeader) {
 		padding: 0;
+
+	    height: 54px;
+		display:flex;
+		align-items: center;
+		background-color: #ffffff;
 	}
 
 	.content :global(.channelActions) {

@@ -1,5 +1,7 @@
 import api from '../api';
 
+import locale from '../locale';
+
 import { writable, get } from 'svelte/store';
 
 import { generateId } from '../utils';
@@ -201,6 +203,10 @@ export function addChannel(channelDetails) {
 
 export function getIsPrimaryChannel(channel) {
 	return primaryChannelNames && primaryChannelNames.includes(channel.title.toLowerCase());
+}
+
+export function getChannelDefaultDescription(channel) {
+	return locale.CHANNEL_DESCRIPTIONS[channel.title.toUpperCase()] || null;
 }
 
 // export function addChannel(channelDetails) {

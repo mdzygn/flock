@@ -47,7 +47,7 @@ const locale = {
 	},
 	PROJECT: {
 		NOT_FOUND: 'Project not found',
-		GET_STARTED: 'get the conversation started',
+		GET_STARTED: 'get the conversations started',
 	},
 	PROFILE: {
 		NOT_FOUND: 'Profile not found',
@@ -66,6 +66,16 @@ const locale = {
 		MESSAGE: 'message',
 		CONFIRM: 'Post',
 	},
+	CHANNEL_DESCRIPTIONS: {
+		ANNOUNCEMENTS: 'A place for the team to make project announcements',
+		GENERAL: 'A place for general discussion',
+		WORKSHOP: 'A place for the team to share developments, work in progress and get community feedback',
+		QUESTIONS: 'A place for people to ask questions about the project',
+		IDEAS: 'A place for people to share ideas for the project',
+		INSPIRATION: 'A place for people to share inspirational content and links toward the project',
+		RANDOM: 'A place for random off-topic conversations',
+		SUGGESTIONS: 'A place for people to make suggestions to improve the community',
+	}
 }
 
 export default locale;

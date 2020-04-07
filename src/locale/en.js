@@ -67,14 +67,14 @@ const locale = {
 		CONFIRM: 'Post',
 	},
 	CHANNEL_DESCRIPTIONS: {
-		ANNOUNCEMENTS: 'A place for the team to make project announcements',
-		GENERAL: 'A place for general discussion',
-		WORKSHOP: 'A place for the team to share developments, work in progress and get community feedback',
-		QUESTIONS: 'A place for people to ask questions about the project',
-		IDEAS: 'A place for people to share ideas for the project',
-		INSPIRATION: 'A place for people to share inspirational content and links toward the project',
-		RANDOM: 'A place for random off-topic conversations',
-		SUGGESTIONS: 'A place for people to make suggestions to improve the community',
+		ANNOUNCEMENTS: 'Project announcements from the team',
+		GENERAL: 'General project discussion',
+		WORKSHOP: 'Developments, work in progress, and calls for feedback',
+		QUESTIONS: 'Questions from the community',
+		IDEAS: 'Ideas and feedback for the project',
+		INSPIRATION: 'Inspirational content and links',
+		RANDOM: 'Random off-topic conversations',
+		SUGGESTIONS: 'Suggestions to improve the community',
 	}
 }
 

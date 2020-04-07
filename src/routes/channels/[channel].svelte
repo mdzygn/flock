@@ -63,15 +63,15 @@
 		<div slot="scrollHeader">
 			{#if canPost}
 				<!-- <Proxy image="channel_actions" className="channelActions" /> -->
+				{#if channelDescription}
+					<div class="channelHeader">{channelDescription}</div>
+				{/if}
 				<NewPostButton onClick="{postThread}" className="newPostHeader" />
 			{/if}
 		</div>
 
 		<div class="content">
 			<!-- <Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadThread('sm2ld9p2')}" /> -->
-			{#if channelDescription}
-				<div class="channelHeader">{channelDescription}</div>
-			{/if}
 			<div class="postsContainer">
 				{#each $posts as post}
 					<PostItem {post} />
@@ -99,10 +99,12 @@
 
 	.channelHeader {
 		background-color: #ffffff;
-		padding: 20px;
 		font-size: 1.4rem;
 		color: #666666;
-		margin-bottom: 5px;
+
+		padding: 20px;
+    	padding-bottom: 0;
+		/* margin-bottom: 5px; */
 	}
 
 	.pageContent :global(.newPostHeader) {

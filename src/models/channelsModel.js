@@ -21,6 +21,11 @@ let channels = writable([]);
 
 let filteredChannels = writable([]);
 
+const primaryChannelNames = [
+	'announcements',
+	'general',
+];
+
 onChannelsUpdated(channelsUpdated);
 
 import channelsData from '../data/channels.json';
@@ -192,6 +197,10 @@ export function addChannel(channelDetails) {
 	filterCurrentChannels();
 
 	return newChannelModel;
+}
+
+export function getIsPrimaryChannel(channel) {
+	return primaryChannelNames && primaryChannelNames.includes(channel.title.toLowerCase());
 }
 
 // export function addChannel(channelDetails) {

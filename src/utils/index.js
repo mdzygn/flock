@@ -110,7 +110,65 @@ export function linkify(string) {
     // /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm,
 };
 
+export function getDateAgeString(date) {
+    if (!date) { return null; }
+
+    const curDate = new Date(date);
+
+    var ageDiff = Date.now() - curDate;
+    // var ageDate = new Date(ageDifMs);
+    // return Math.abs(ageDate.getUTCFullYear() - 1970);
+
+    const secondsDiff = ageDiff / 1000;
+    const minsDiff = secondsDiff / 60;
+    const hoursDiff = minsDiff / 60;
+    const daysDiff = hoursDiff / 24;
+    const weeksDiff = daysDiff / 7;
+    const monthsDiff = weeksDiff / 4;
+    const yearsDiff = monthsDiff / 12;
+
+    let ageString = '';
+
+    if (yearsDiff > 1.66) {
+        ageString = Math.round(yearsDiff) + ' years';
+    } else if (yearsDiff > 1) {
+        ageString = '1 year';
+
+    } else if (monthsDiff > 1.66) {
+        ageString = Math.round(monthsDiff) + ' months';
+    } else if (monthsDiff > 1) {
+        ageString = '1 month';
+
+    } else if (weeksDiff > 1.66) {
+        ageString = Math.round(weeksDiff) + ' weeks';
+    } else if (weeksDiff > 1) {
+        ageString = '1 week';
+
+    } else if (daysDiff > 1.66) {
+        ageString = Math.round(daysDiff) + ' days';
+    } else if (daysDiff > 0.66) {
+        ageString = '1 day';
+
+    } else if (hoursDiff > 1.66) {
+        ageString = Math.round(hoursDiff) + ' hours';
+    } else if (hoursDiff > 0.66) {
+        ageString = '1 hour';
+
+    } else if (minsDiff > 1.66) {
+        ageString = Math.round(minsDiff) + ' mins';
+    } else if (minsDiff > 1) {
+        ageString = '1 min';
+    } else {
+        ageString = 'less than a minute';
+    }
+    ageString += ' ago'
+
+    return ageString;
+}
+
 export function getDateString(date) {
+    if (!date) { return null; }
+
     const curDate = new Date(date);
     return formatDate(curDate, 'd MMM h:mmtt');
 }

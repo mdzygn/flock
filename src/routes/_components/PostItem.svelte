@@ -10,7 +10,7 @@
 
     import AvatarIcon from '../_components/AvatarIcon.svelte';
 
-    import { parseHTML, getUnbrokenText, getDateString } from '../../utils';
+    import { parseHTML, getUnbrokenText, getDateString, getDateAgeString } from '../../utils';
 
     import { getUser } from '../../models/usersModel';
 
@@ -46,7 +46,7 @@
 
     $: repliesCount = ($post && $post.postCount) || 0;
 
-    $: dateString = showLastActiveTime ? getDateString($post.lastActiveAt) : getDateString($post.createdAt);
+    $: dateString = (showLastActiveTime ? getDateAgeString($post.lastActiveAt) : getDateString($post.createdAt)) || '';
 
 
     // $: titleHTML = parseHTML(title);
@@ -73,7 +73,7 @@
     <Counter visible="{repliesCount}" count="{repliesCount}" />
     <div class="info">
         <div class="userFullName" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userFullName}
-            <span class="date"> - {dateString}</span>
+            {#if dateString}<span class="date"> - {dateString}</span>{/if}
         </div>
         {#if showTitle && title}
             <div class="title">{@html titleHTML}</div>

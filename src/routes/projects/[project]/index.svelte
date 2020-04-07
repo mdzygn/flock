@@ -1,5 +1,6 @@
 <script>
 	import locale from '../../../locale';
+	import config from '../../../config';
 	import { menuIds } from '../../../config/menus';
 	import { parseHTML } from '../../../utils';
 
@@ -92,6 +93,10 @@
 		unarchiveProject($projectId);
 	}
 
+	function getProjectDetailImage(imageId) {
+		return config.headerImageLibraryFolder + imageId + config.headerImageExtension;
+	}
+
 	// let proxyChannelsImage;
 
 	$: isTeamMember = getIsProjectTeamMember($project);
@@ -182,7 +187,8 @@
 								{#each projectDetails as projectDetailItem, index}
 									{#if projectDetailItem.detail}
 										{#if projectDetailItem.image}
-											<Proxy image="project_info_image_{index + 1}" />
+											<img class="projectDetailImage" src="{getProjectDetailImage(projectDetailItem.image)}" alt="project header image" />
+											<!-- <Proxy image="project_info_image_{index + 1}" /> -->
 										{/if}
 										<!-- <Proxy image="project_info_content_3" className="proxyOverlay" /> -->
 										<div class="projectInfoDetail">{@html parseHTML(projectDetailItem.detail)}</div>
@@ -432,6 +438,10 @@
 
 	.projectInfo {
     	padding-top: 30px;
+	}
+
+	.projectDetailImage {
+		width: 100%;
 	}
 
 	.projectInfoDetail {

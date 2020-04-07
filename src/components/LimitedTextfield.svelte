@@ -28,8 +28,7 @@
 	}
 </script>
 
-<textarea bind:value="{value}" bind:this="{field}" on:keypress on:keypress />
-<!-- {maxlength}  -->
+<textarea bind:value="{value}" bind:this="{field}" {maxlength} on:keypress on:keypress />
 
 <style>
 </style>

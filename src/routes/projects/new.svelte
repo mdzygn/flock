@@ -7,8 +7,8 @@
 
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
-	import LimitedTextfield from '../../components/LimitedTextfield.svelte';
 
+	import LimitedTextfield from '../../components/LimitedTextfield.svelte';
 	import Button from '../../components/Button.svelte';
 
 	import ImageSelectionBox from '../_components/ImageSelectionBox.svelte';
@@ -107,7 +107,7 @@
 	.fieldCharCount {
 		position: absolute;
 		right: 20px;
-		margin-top: -21px;
+		margin-top: -22px;
 		font-size: 1.2rem;
 		color: #888888;
 	}

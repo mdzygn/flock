@@ -2,6 +2,7 @@
     import { tick } from 'svelte';
 	import { goto } from '@sapper/app';
 
+	import config from '../../../config';
 	import locale from '../../../locale';
 
 	import { testInputDefocus, getFormattedText, getUnformattedText } from '../../../utils';
@@ -10,6 +11,7 @@
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
 
+	import LimitedTextfield from '../../../components/LimitedTextfield.svelte';
 	import Button from '../../../components/Button.svelte';
 	import ImageSelectionBox from '../../_components/ImageSelectionBox.svelte';
 
@@ -25,6 +27,9 @@
 	let image = ($project && $project.headerImage) || '';
 	let tags = ($project && $project.tags) || '';
 	let location = ($project && $project.location) || '';
+
+	let remainingChars;
+	$: charCountLow = remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
 
 	$: saveEnabled = !editingProject || (title && description);
 
@@ -204,7 +209,9 @@
 				</div>
 				<div class="field descriptionField">
 					<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
-					<textarea bind:value="{description}" bind:this="{descriptionInput}" on:keypress="{testInputDefocus}" />
+					<!-- <textarea bind:value="{description}" bind:this="{descriptionInput}" on:keypress="{testInputDefocus}" /> -->
+					<div class="fieldCharCount" class:charCountLow="{charCountLow}">{remainingChars}{charCountLow ? ' characters remaining' : ''}</div>
+					<LimitedTextfield bind:value="{description}" bind:field="{descriptionInput}" bind:remainingChars="{remainingChars}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{testInputDefocus}" />
 				</div>
 				<div class="field headerImageField">
 					<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
@@ -322,6 +329,17 @@
 		font-weight: 700;
 	}
 
+	.fieldCharCount {
+		position: absolute;
+		right: 20px;
+		margin-top: -22px;
+		font-size: 1.2rem;
+		color: #888888;
+	}
+	.charCountLow {
+		color: #DF3C3C;
+	}
+
 	.tip {
     	padding-left: 13px;
 
@@ -347,7 +365,7 @@
         padding: 6px 4px;
 	}
 
-	textarea {
+	.content :global(textarea) {
         border: 1px solid #999999;
 
         outline: none;

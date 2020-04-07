@@ -35,6 +35,7 @@
 
     $: showTitle = (type === 'thread');
     $: canLinkThrough = (type === 'thread');
+    $: linkUserName = (type === 'threadPost');
 
     $: titleHTML = getUnbrokenText(title);
     $: messageHTML = getUnbrokenText(message);
@@ -60,7 +61,7 @@
     <!-- <Avatar  -->
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
     <div class="info">
-        <div class="userFullName">{@html userFullName}</div>
+        <div class="userFullName" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userFullName}</div>
         {#if showTitle && title}
             <div class="title">{@html titleHTML}</div>
         {/if}
@@ -99,7 +100,7 @@
     .userFullName {
         font-size: 1.3rem;
         color: #777777;
-        font-weight: 700;
+        /* font-weight: 700; */
         padding-bottom: 5px;
     }
 

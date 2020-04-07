@@ -56,11 +56,11 @@
         <Proxy image="thread_actions" className="proxyThreadActions" />
     </div> -->
 
-    <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
-    <div class="info">
+    <div class="info" on:click="{userLoaded ? viewUserProfile : null}">
         <div class="userFullName" class:button="{userLoaded}">{@html userFullName}</div>
         <div class="username" class:button="{userLoaded}">{username}</div>
     </div>
+    <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
     <div class="postContent">
         {#if date}
             <div class="date">{date}</div>
@@ -84,6 +84,10 @@
     .threadPost {
 		margin-top: 5px;
         background-color: #ffffff;
+    }
+
+    .button {
+        cursor: pointer;
     }
 
     .threadPost :global(.avatarIcon) {

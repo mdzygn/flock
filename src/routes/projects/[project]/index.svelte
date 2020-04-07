@@ -308,13 +308,13 @@
 
 									targetItem = "{$project}"
 									targetItemId = "{$projectId}"
-									action = "{showProjectFollowers}"
 
 									countProperty= "followCount"
 
 									buttonContentStyle = "padding-right: 56px;"
 									iconStyle = "padding-bottom: 4px"
 								/>
+									<!-- action = "{showProjectFollowers}" -->
 							</div>
 						</ActionBar>
 					{:else}

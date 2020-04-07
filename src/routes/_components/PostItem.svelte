@@ -64,7 +64,7 @@
                 dateString = 'active ' + getDateAgeString(date);
             } else {
                 const dateAge = getDateAge(date);
-                if (getdateAge.hours < 0.66) {
+                if (dateAge.hours < 0.66) {
                     dateString = getDateAgeString(date);
                 } else if (dateAge.days < 0.66) {
                     dateString = getDateString(date, 'h:mmtt');

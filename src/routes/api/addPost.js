@@ -20,6 +20,7 @@ export async function post(req, res, next) {
 			userId: true,
 			channelId: true,
 			projectId: true,
+			threadId: true,
 
 			type: true,
 

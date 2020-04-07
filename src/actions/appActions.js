@@ -60,6 +60,8 @@ import {
     channel,
     post,
 
+    postType,
+
     targetProject,
     targetUser,
 
@@ -407,4 +409,16 @@ export function loadCurrentPost() {
     if (get(postId) && !get(post) && !get(loadingPosts)) {
         loadPosts( { postId: get(postId) } );
     }
+}
+
+export function newThread() {
+    postType.set('thread');
+
+    goto('posts/new');
+}
+
+export function newThreadPost() {
+    postType.set('threadPost');
+
+    goto('posts/new');
 }

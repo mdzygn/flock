@@ -18,6 +18,8 @@
 		channel,
 		channelId,
 		projectId,
+		postType,
+		postId,
 	} from '../../models/appModel';
 
 	import {
@@ -43,15 +45,26 @@
 
 	$: nextEnabled = title || message;
 
+	$: showTitleField = ($postType === 'thread');
+
 	function createNewPost() {
-		const postDetails = {
-			title,
-			message: getUnformattedText(message),
-			type: 'thread',
-			channelId: $channel && $channel.id,
-			projectId: $channel && $channel.projectId,
-		};
-		createPost(postDetails);
+		if ($postType) {
+			const postDetails = {
+				message: getUnformattedText(message),
+				type: $postType,
+				channelId: $channel && $channel.id,
+				projectId: $channel && $channel.projectId,
+			};
+			switch ($postType) {
+				case 'thread':
+					postDetails.title =title;
+					break;
+				case 'threadPost':
+					postDetails.threadId = $postId;
+					break;
+			}
+			createPost(postDetails);
+		}
 	}
 
 	function testSubmit() {
@@ -70,11 +83,13 @@
 	<div class="content">
 		<!-- <Proxy image="create_project" className="proxyOverlay" /> -->
 		<div class="panelContent">
-			<div class="field">
-				<div class="label">{locale.NEW_THREAD.TITLE}</div>
-        		<!-- <input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField})}" /> -->
-        		<textarea class="titleField" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField})}" />
-			</div>
+			{#if showTitleField}
+				<div class="field">
+					<div class="label">{locale.NEW_THREAD.TITLE}</div>
+					<!-- <input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField})}" /> -->
+					<textarea class="titleField" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField})}" />
+				</div>
+			{/if}
 			<div class="field messageField">
 				<div class="label">{locale.NEW_THREAD.MESSAGE}</div>
         		<textarea bind:value="{message}" bind:this="{messageField}" />

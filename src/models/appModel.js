@@ -15,6 +15,8 @@ const appModel = createModel({
     username: null,
     usercode: null,
 
+    postType: null,
+
     viewMode: 'discover',
     locationMode: 'global',
     exploreZoomed: false,
@@ -54,6 +56,8 @@ export const viewedUser = writable(null);
 export const user = writable(null);
 export const channel = writable(null);
 export const post = writable(null);
+
+export const postType = appModel.postType;
 
 export const username = appModel.username;
 export const usercode = appModel.usercode;

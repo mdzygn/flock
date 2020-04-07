@@ -4,9 +4,15 @@
 
     import AvatarIcon from '../_components/AvatarIcon.svelte';
 
+	import NewPostButton from '../_components/NewPostButton.svelte';
+
     import { parseHTML } from '../../utils';
 
-    import { loadProfile } from '../../actions/appActions';
+    import {
+        loadProfile,
+        checkLoggedIn,
+		newThreadPost,
+    } from '../../actions/appActions';
 
     import { getUser } from '../../models/usersModel';
 
@@ -30,6 +36,12 @@
         if (userLoaded) {
             loadProfile(userId);
         }
+    }
+
+    function reply() {
+		if (!checkLoggedIn()) { return; }
+
+		newThreadPost();
     }
 </script>
 
@@ -61,6 +73,7 @@
             <div class="message">{@html messageHTML}</div>
         {/if}
     </div>
+	<NewPostButton onClick="{reply}" className="replyButton" />
 </div>
 
 <style>
@@ -72,7 +85,6 @@
     .threadPost {
 		margin-top: 5px;
         background-color: #ffffff;
-        padding-bottom: 20px;
     }
 
     .threadPost :global(.avatarIcon) {
@@ -106,6 +118,7 @@
         padding-top: 95px;
         padding-left: 26px;
         padding-right: 40px;
+        padding-bottom: 5px;
     }
 
     .date {

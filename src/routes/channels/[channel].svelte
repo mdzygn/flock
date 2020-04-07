@@ -21,6 +21,7 @@
 	import {
 		loadCurrentProject,
 		loadCurrentChannel,
+		newThread,
 	} from '../../actions/appActions';
 
 	import {
@@ -52,7 +53,7 @@
 	function newPost() {
 		if (!checkLoggedIn()) { return; }
 
-		goto('posts/new');
+		newThread();
 	}
 </script>
 

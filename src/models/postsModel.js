@@ -144,6 +144,7 @@ export function addPost(postDetails) {
 
 	newPost.projectId = postDetails.projectId;
 	newPost.channelId = postDetails.channelId;
+	newPost.threadId = postDetails.threadId;
 
 	newPost.title = postDetails.title || '';
 	newPost.message = postDetails.message || '';

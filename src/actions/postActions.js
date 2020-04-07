@@ -3,6 +3,7 @@ import { get } from 'svelte/store';
 import {
     checkLoggedIn,
     loadChannel,
+    loadPost,
 } from '../actions/appActions';
 
 import {
@@ -17,6 +18,9 @@ export function createPost(postDetails) {
     switch (postDetails.type) {
         case 'thread':
             loadChannel(postDetails.channelId);
+            break;
+        case 'threadPost':
+            loadPost(postDetails.threadId);
             break;
     }
 }

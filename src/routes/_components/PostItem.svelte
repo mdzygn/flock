@@ -6,6 +6,8 @@
 
     import AvatarIcon from '../_components/AvatarIcon.svelte';
 
+    import { parseHTML } from '../../utils';
+
     import { getUser } from '../../models/usersModel';
 
 	import {
@@ -25,6 +27,9 @@
     $: title = ($post && $post.title) || null;
     $: message = ($post && $post.message) || null;
 
+    $: titleHTML = parseHTML(title);
+    $: messageHTML = parseHTML(message);
+
     function viewUserProfile() {
         if (userLoaded) {
             loadProfile(userId);
@@ -38,10 +43,10 @@
     <div class="info">
         <div class="userFullName" class:button="{userLoaded}" on:click="{viewUserProfile}">{@html userFullName}</div>
         {#if title}
-            <div class="title">{title}</div>
+            <div class="title">{@html titleHTML}</div>
         {/if}
         {#if message}
-            <div class="message">{message}</div>
+            <div class="message">{@html messageHTML}</div>
         {/if}
     </div>
 

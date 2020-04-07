@@ -1,6 +1,8 @@
 <script>
     import { menuIds } from '../../config/menus';
 
+    import { parseHTML } from '../../utils';
+
     import Button from '../../components/Button.svelte';
 
     import Proxy from '../../components/Proxy.svelte';
@@ -47,6 +49,8 @@
     $: userFirstName = ($viewedUser && $viewedUser.firstName) || '';
     $: userBio = ($viewedUser && $viewedUser.bio) || '';
     $: userLocation = ($viewedUser && $viewedUser.location) || '';
+
+    $: userBioHTML = parseHTML(userBio);
 
     $: postsCount = ($viewedUser && $viewedUser.postsCount) || 0;
     $: likesCount = ($viewedUser && $viewedUser.likesCount) || 0;
@@ -116,7 +120,7 @@
             <div class="itemContent">
                 <div class="header">{userFullName}</div>
                 <div class="username">@{username}</div>
-                <div class="description">{@html userBio}</div>
+                <div class="description">{@html userBioHTML}</div>
             </div>
 
             <!-- <Proxy image="{proxyOverviewActionsImage}" className="proxyOverview">

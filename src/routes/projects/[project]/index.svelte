@@ -1,6 +1,7 @@
 <script>
 	import locale from '../../../locale';
 	import { menuIds } from '../../../config/menus';
+	import { parseHTML } from '../../../utils';
 
 	import { onMount } from 'svelte';
 
@@ -116,6 +117,8 @@
 	$: projectDescription = ($project && $project.description) || '';
 	$: projectLocation = ($project && $project.location) || '';
 
+    $: projectDescriptionHTML = parseHTML(projectDescription);
+
 	$: projectDetails = ($project && $project.details) || null;
 
 	$: projectHasDetails = getProjectHasDetails($project);
@@ -162,7 +165,7 @@
 							{/if}
 							<div class="itemContent">
 								<div class="header" class:headerOwner="{isTeamMember}">{projectTitle}</div>
-								<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? toggleProjectInfo : null}">{projectDescription}</div>
+								<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? toggleProjectInfo : null}">{@html projectDescriptionHTML}</div>
 							</div>
 							{#if projectHasDetails}
 								{#if !showInfo}
@@ -182,7 +185,7 @@
 											<Proxy image="project_info_image_{index + 1}" />
 										{/if}
 										<!-- <Proxy image="project_info_content_3" className="proxyOverlay" /> -->
-										<div class="projectInfoDetail">{@html projectDetailItem.detail}</div>
+										<div class="projectInfoDetail">{@html parseHTML(projectDetailItem.detail)}</div>
 									{/if}
 								{/each}
 							</div>

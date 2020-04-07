@@ -19,6 +19,8 @@
 
     export let post;
 
+    export let type = 'thread';
+
     // export let type = 'thread';
 
     $: postId = ($post && $post.id) || null;
@@ -30,6 +32,9 @@
 
     $: title = ($post && $post.title) || null;
     $: message = ($post && $post.message) || null;
+
+    $: showTitle = (type === 'thread');
+    $: canLinkThrough = (type === 'thread');
 
     $: titleHTML = getUnbrokenText(title);
     $: messageHTML = getUnbrokenText(message);
@@ -51,12 +56,12 @@
     }
 </script>
 
-<div class="postItem" on:click="{loadCurrentPost}">
+<div class="postItem" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}">
     <!-- <Avatar  -->
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
     <div class="info">
-        <div class="userFullName" class:button="{userLoaded}">{@html userFullName}</div>
-        {#if title}
+        <div class="userFullName">{@html userFullName}</div>
+        {#if showTitle && title}
             <div class="title">{@html titleHTML}</div>
         {/if}
         {#if message}

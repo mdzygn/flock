@@ -40,7 +40,6 @@
 
     function reply() {
 		if (!checkLoggedIn()) { return; }
-
 		newThreadPost();
     }
 </script>

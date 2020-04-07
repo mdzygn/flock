@@ -5,16 +5,19 @@ export async function post(req, res, next) {
 
 	const options = req.body;
 
-
-	const channelId = options && options.channelId;
 	const type = options && options.type;
 
+	const channelId = options && options.channelId;
+	const threadId = options && options.threadId;
+
 	const filter = {};
-	if (channelId) {
-		filter.channelId = channelId;
-	}
 	if (type) {
 		filter.type = type;
+	}
+	if (threadId) {
+		filter.threadId = threadId;
+	} else if (channelId) {
+		filter.channelId = channelId;
 	}
 
 	const posts = await db.collection('posts').find(filter).toArray();

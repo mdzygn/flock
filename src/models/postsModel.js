@@ -86,7 +86,11 @@ function mergePosts(newPosts) {
 export function getPosts(options) {
 	curPostFilterOptions = options;
 
-	if (curPostFilterOptions && options && (curPostFilterOptions.channelId !== options.channelId || curPostFilterOptions.type !== options.type)) {
+	if (curPostFilterOptions && options && (
+		curPostFilterOptions.type !== options.type ||
+		curPostFilterOptions.channelId !== options.channelId ||
+		curPostFilterOptions.threadId !== options.threadId
+	)) {
 		clearFilteredPosts();
 	}
 	filterCurrentPosts();
@@ -110,6 +114,7 @@ function clearFilteredPosts() {
 
 function filterCurrentPosts() {
 	const channelId = curPostFilterOptions && curPostFilterOptions.channelId;
+	const threadId = curPostFilterOptions && curPostFilterOptions.threadId;
 	const type = curPostFilterOptions && curPostFilterOptions.type;
 
 	let newFilteredPosts = get(posts);
@@ -117,10 +122,15 @@ function filterCurrentPosts() {
 		newFilteredPosts = newFilteredPosts.filter(postModel => {
 			const post = get(postModel);
 			// console.log(post.title + ', ' + post.channelId + ', ' + post.type);
-			return (!channelId || post.channelId === channelId) && (!type || post.type === type);
+			return (!type || post.type === type) && (!channelId || post.channelId === channelId) && (!threadId || post.threadId === threadId);
 		});
 	}
 	newFilteredPosts.sort((a,b) => get(b).createdAt - get(a).createdAt); // sort by reversed created time
+	switch (type) {
+		case 'threadPost':
+			newFilteredPosts.reverse();
+			break;
+	}
 	filteredPosts.set(newFilteredPosts);
 }
 

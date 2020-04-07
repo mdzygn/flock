@@ -18,7 +18,7 @@
 	} from '../../models/appModel';
 
 	import {
-		loadCurrentProject,
+		loadCurrentChannel,
 	} from '../../actions/appActions';
 
 	import {
@@ -33,6 +33,8 @@
 
 	let titleField;
 	let messageField;
+
+	loadCurrentChannel();
 
     // $: titleField && titleField.focus();
 
@@ -115,7 +117,7 @@
         background: none;
 
         width: 100%;
-		height: 88px;
+		height: 142px;
 
         box-sizing: border-box;
 
@@ -130,7 +132,8 @@
 	}
 
 	.titleField {
-		height: 52px;
+		height: 32px;
+		/* height: 52px; */
 	}
 
 	/* .headerImageField {

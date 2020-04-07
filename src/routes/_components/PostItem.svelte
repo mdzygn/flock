@@ -41,7 +41,7 @@
     <!-- <Avatar  -->
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
     <div class="info">
-        <div class="userFullName" class:button="{userLoaded}" on:click="{viewUserProfile}">{@html userFullName}</div>
+        <div class="userFullName" class:button="{userLoaded}">{@html userFullName}</div>
         {#if title}
             <div class="title">{@html titleHTML}</div>
         {/if}
@@ -90,11 +90,19 @@
         color: #000000;
         font-weight: 700;
         padding-bottom: 8px;
+
+        /* white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; */
     }
 
     .message {
         font-size: 1.5rem;
         line-height: 1.7rem;
         color: #333333;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 </style>

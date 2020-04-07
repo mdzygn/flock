@@ -187,8 +187,11 @@
 								{#each projectDetails as projectDetailItem, index}
 									{#if projectDetailItem.detail}
 										{#if projectDetailItem.image}
-											<img class="projectDetailImage" src="{getProjectDetailImage(projectDetailItem.image)}" alt="project header image" />
-											<!-- <Proxy image="project_info_image_{index + 1}" /> -->
+											{#if projectDetailItem.image === true}
+												<Proxy image="project_info_image_{index + 1}" />
+											{:else}
+												<img class="projectDetailImage" src="{getProjectDetailImage(projectDetailItem.image)}" alt="project header image" />
+											{/if}
 										{/if}
 										<!-- <Proxy image="project_info_content_3" className="proxyOverlay" /> -->
 										<div class="projectInfoDetail">{@html parseHTML(projectDetailItem.detail)}</div>

@@ -595,7 +595,7 @@
 
 		margin-left: -10px;
 
-    	min-height: 30px;
+    	min-height: 50px;
 
 		color: #555555;
 	}

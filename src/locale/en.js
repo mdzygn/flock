@@ -67,14 +67,19 @@ const locale = {
 		CONFIRM: 'Post',
 	},
 	CHANNEL_DESCRIPTIONS: {
-		ANNOUNCEMENTS: 'Project announcements from the team',
+		ANNOUNCEMENTS: 'Project announcements and news from the team',
+		// About and FAQs - About the world creation platform and Frequently Asked Questions
+		// RESOURCES: 'Community resources and links',
+		// Questions and Answers - General questions or queries on how to use the app
 		GENERAL: 'General project discussion',
-		WORKSHOP: 'Developments, work in progress, and calls for feedback',
+		WORKSHOP: 'Work in progress, project developments, and calls for feedback',
 		QUESTIONS: 'Questions from the community',
-		IDEAS: 'Ideas and feedback for the project',
-		INSPIRATION: 'Inspirational content and links',
-		RANDOM: 'Random off-topic conversations',
-		SUGGESTIONS: 'Suggestions to improve the community',
+		// Current Features Discussion - Discussion of current features and functionality
+		// ISSUES: 'Issues and bugs',
+		IDEAS: 'Ideas, requests and recommendations for the project',
+		INSPIRATION: 'Inspirational references and links',
+		RANDOM: 'Off-topic discussions and links',
+		SUGGESTIONS: 'Suggestions to improve the project community',
 	}
 }
 

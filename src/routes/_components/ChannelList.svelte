@@ -53,7 +53,9 @@
     <div class="channelList" class:isEditable="{canEdit}">
         <Proxy image="{proxyChannelsImage}" className="proxyOverlay" />
         <ContentPanel title="Channels" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
-            <div class="getTheConversationStarted">{locale.PROJECT.GET_STARTED}</div>
+            {#if isNew}
+                <div class="getTheConversationStarted">{locale.PROJECT.GET_STARTED}</div>
+            {/if}
             <!-- {#if $channels && $channels.length} -->
                 <div class="channelListContainer">
                     {#each $channels as channel}

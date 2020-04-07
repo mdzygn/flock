@@ -35,6 +35,8 @@
 	loadCurrentProject();
 	loadCurrentChannel();
 
+	const DISPLAY_BOTTOM_LINK_POST_COUNT = 6;
+
     let posts = writable([]);
 	$: { posts = getPosts( { channelId: $channelId, type: 'thread' } ) };
 
@@ -61,11 +63,11 @@
 <div class="pageContent">
 	<ScrollView id="channel">
 		<div slot="scrollHeader">
+			{#if channelDescription}
+				<div class="channelHeader" class:channelHeaderPost="{canPost}">{channelDescription}</div>
+			{/if}
 			{#if canPost}
 				<!-- <Proxy image="channel_actions" className="channelActions" /> -->
-				{#if channelDescription}
-					<div class="channelHeader">{channelDescription}</div>
-				{/if}
 				<NewPostButton onClick="{postThread}" className="newPostHeader" />
 			{/if}
 		</div>
@@ -84,7 +86,7 @@
 					{/if}
 				{/each}
 			</div>
-			{#if canPost && $posts && $posts.length}
+			{#if canPost && $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
 				<NewPostButton onClick="{postThread}" />
 			{/if}
 		</div>
@@ -102,9 +104,11 @@
 		font-size: 1.4rem;
 		color: #666666;
 
-		padding: 20px;
-    	padding-bottom: 0;
+		padding: 16px 20px;
 		/* margin-bottom: 5px; */
+	}
+	.channelHeaderPost {
+    	padding-bottom: 0;
 	}
 
 	.pageContent :global(.newPostHeader) {

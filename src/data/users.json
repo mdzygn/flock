@@ -1,8 +1,5 @@
 [
 	{
-		"_id": {
-			"$oid": "5e8922d988fbdd286871f998"
-		},
 		"id": "YRVQ6vOE",
 		"username": "matth",
 		"fullName": "Matt Halford",

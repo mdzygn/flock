@@ -1,32 +1,33 @@
 [
    {
-      "_id": {
-          "$oid": "5e8c3b440a151e1c904e2e4e"
-      },
       "id": "hPS9cRq2",
       "slug": "flock",
       "title": "Flock",
       "description": "A platform for building communities and teams around creative and innovative projects",
       "details": [
-          {
-              "detail": "Flock provides a platform to share, discover and support and collaborate on inspirational projects to help bring them to life."
-          },
-          {
-              "detail": "As a creator it can be hard to get your projects off the ground. Flock provides a platform to share your projects and find collaborators, keeping your followers and supporters up to date and enabling them to contribute ideas, inspiration and support, growing your community, building your team and turning your projects into reality."
-          },
-          {
-              "detail": "It can be hard to make meaningful differences to causes that you care about. Flock allows you to find exciting creative projects around the world and in your community to support and get involved in, sharing ideas, inspiration, advice and skills, developing connections and finding exciting opportunities. Helping you find purpose and contributing your skills to causes that matter to you."
-          },
-          {
-              "detail": "Join our innovative creative community and share you own projects here, where others can follow, support and start contributing, and you can discover and collaborate on exciting innovative projects around the world!"
-          }
+         {
+            "detail": "Flock provides a platform to share, discover and support and collaborate on inspirational projects to help bring them to life.",
+            "image": null
+         },
+         {
+            "detail": "As a creator it can be hard to get your projects off the ground.<br/><br/>Flock provides a platform to share your projects and find collaborators. Keeping your followers and supporters up to date and enabling them to contribute ideas, inspiration and support.<br/><br/>So you can grow you community, build your team and turn your projects into reality.",
+            "image": "architecture-1857175_960_720"
+         },
+         {
+            "detail": "It can be hard to make meaningful differences to causes that you care about. Flock allows you to find exciting creative projects around the world and in your community to support and get involved in, sharing ideas, inspiration, advice and skills, developing connections and finding exciting opportunities.<br/><br/>Helping you find purpose and contributing your skills to causes that matter to you.",
+            "image": "ara-3601194_960_720"
+         },
+         {
+            "detail": "Join our innovative creative community and share you own projects, where others can follow, support and start getting involved, helping make your dreams a reality!",
+            "image": null
+         }
       ],
-      "public": false,
+      "public": true,
       "createdAt": 1586248516546,
       "createdInfo": null,
-      "lastActiveAt": 1586249193772,
+      "lastActiveAt": 1586255410281,
       "lastActiveInfo": null,
-      "modifiedAt": 1586249193772,
+      "modifiedAt": 1586255410281,
       "likeCount": 1,
       "followCount": 1,
       "unreadCount": 0,
@@ -37,14 +38,12 @@
       "skills": "",
       "links": [],
       "team": [
-          "YRVQ6vOE"
+         "YRVQ6vOE"
       ],
       "posts": [],
       "ownerId": "YRVQ6vOE",
-      "isNew": true,
-      "hasCreated": true,
       "headerImage": ""
-  },
+   },
     {
        "title":"World Creator",
        "id":"s7djj2s2",
@@ -283,7 +282,7 @@
        "id":"9dm4l7ps",
        "slug":"new-earth",
        "description":"Aliquam sem fringilla ut morbi. In metus vulputate eu scelerisque felis imperdiet proin. Sagittis orci a scelerisque purus semper eget duis.",
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",
@@ -330,7 +329,7 @@
             "detail":"Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href='http://www.aliquamut.le'>http://www.aliquamut.le</a>.<br/><br/>Tempor orci eu.<br/><br/>Arcu odio ut sem nulla pharetra."
          }
       ],
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",
@@ -392,7 +391,7 @@
              "detail":"Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href='http://www.aliquamut.le'>http://www.aliquamut.le</a>.<br/><br/>Tempor orci eu.<br/><br/>Arcu odio ut sem nulla pharetra."
           }
        ],
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",
@@ -452,7 +451,7 @@
              "detail":"Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href='http://www.aliquamut.le'>http://www.aliquamut.le</a>.<br/><br/>Tempor orci eu.<br/><br/>Arcu odio ut sem nulla pharetra."
           }
        ],
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",
@@ -511,7 +510,7 @@
              "detail":"Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href='http://www.aliquamut.le'>http://www.aliquamut.le</a>.<br/><br/>Tempor orci eu.<br/><br/>Arcu odio ut sem nulla pharetra."
           }
        ],
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",
@@ -570,7 +569,7 @@
              "detail":"Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href='http://www.aliquamut.le'>http://www.aliquamut.le</a>.<br/><br/>Tempor orci eu.<br/><br/>Arcu odio ut sem nulla pharetra."
           }
        ],
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",
@@ -629,7 +628,7 @@
              "detail":"Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href='http://www.aliquamut.le'>http://www.aliquamut.le</a>.<br/><br/>Tempor orci eu.<br/><br/>Arcu odio ut sem nulla pharetra."
           }
        ],
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",
@@ -692,7 +691,7 @@
              "detail":"Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href='http://www.aliquamut.le'>http://www.aliquamut.le</a>.<br/><br/>Tempor orci eu.<br/><br/>Arcu odio ut sem nulla pharetra."
           }
        ],
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",
@@ -750,7 +749,7 @@
              "detail":"Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href='http://www.aliquamut.le'>http://www.aliquamut.le</a>.<br/><br/>Tempor orci eu.<br/><br/>Arcu odio ut sem nulla pharetra."
           }
        ],
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",
@@ -809,7 +808,7 @@
              "detail":"Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href='http://www.aliquamut.le'>http://www.aliquamut.le</a>.<br/><br/>Tempor orci eu.<br/><br/>Arcu odio ut sem nulla pharetra."
           }
        ],
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",
@@ -869,7 +868,7 @@
              "detail":"Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href='http://www.aliquamut.le'>http://www.aliquamut.le</a>.<br/><br/>Tempor orci eu.<br/><br/>Arcu odio ut sem nulla pharetra."
           }
        ],
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",
@@ -932,7 +931,7 @@
              "detail":"Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href='http://www.aliquamut.le'>http://www.aliquamut.le</a>.<br/><br/>Tempor orci eu.<br/><br/>Arcu odio ut sem nulla pharetra."
           }
        ],
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",
@@ -992,7 +991,7 @@
              "detail":"Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href='http://www.aliquamut.le'>http://www.aliquamut.le</a>.<br/><br/>Tempor orci eu.<br/><br/>Arcu odio ut sem nulla pharetra."
           }
        ],
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",
@@ -1051,7 +1050,7 @@
              "detail":"Aliquet risus feugiat in. Est ultricies integer quis auctor elit sed vulputate mi sit. Ipsum dolor sit amet consectetur adipiscing elit.<br/><br/>Lacus laoreet non curabitur gravida. Euismod nisi porta lorem mollis <a href='http://www.aliquamut.le'>http://www.aliquamut.le</a>.<br/><br/>Tempor orci eu.<br/><br/>Arcu odio ut sem nulla pharetra."
           }
        ],
-       "public":true,
+       "public":false,
        "createdAt":0,
        "lastActiveAt":0,
        "lastActiveInfo":"last activity yesterday 3:40pm",

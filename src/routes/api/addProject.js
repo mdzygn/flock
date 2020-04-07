@@ -1,4 +1,4 @@
-import { init, validateCredentials, response, generateId } from '../../server/mongo.js';
+import { init, validateCredentials, response, filterItemDetails, generateId } from '../../server/mongo.js';
 
 import projectDefaultChannels from '../../server/data/projectDefaultChannels';
 
@@ -12,9 +12,46 @@ export async function post(req, res, next) {
 		return;
 	}
 
-	const details = options.details;
+	let details = options.details;
 
 	if (details && details.id) {
+
+		const projectDetails = {
+			id: true,
+
+			slug: true,
+			title: true,
+			description: true,
+			details: true,
+
+			headerImage: true,
+
+			public: true,
+
+			createdAt: true,
+			createdInfo: true,
+			lastActiveAt: true,
+			lastActiveInfo: true,
+			modifiedAt: true,
+
+			likeCount: true,
+			followCount: true,
+			unreadCount: true,
+
+			unreadMessageCount: true,
+			messageCount: true,
+			location: true,
+			tags: true,
+			skills: true,
+			links: true,
+			team: true,
+			posts: true,
+			ownerId: true,
+		};
+
+		details = filterItemDetails(details, projectDetails);
+		console.log(details);
+
 		details.createdAt = (new Date()).getTime();
 		details.modifiedAt = details.createdAt;
 		details.lastActiveAt = details.createdAt;

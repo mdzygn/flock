@@ -229,8 +229,8 @@
 				</div>
 
 				{#if isNew}
+					<ProjectTeamList project="{$project}" />
 					{#if $showBetaFeatures}
-						<ProjectTeamList project="{$project}" />
 						<ProjectLinks project="{$project}" />
 						<ProjectSkillsList project="{$project}" />
 					{/if}
@@ -250,8 +250,8 @@
 						{/if}
 						<ProjectLinks project="{$project}" />
 						<ProjectSkillsList project="{$project}" />
-						<ProjectTeamList project="{$project}" />
 					{/if}
+					<ProjectTeamList project="{$project}" />
 					{#if $showBetaFeatures}
 						<div>
 							<Proxy image="project_post_1" className="contentItem projectPost" />
@@ -263,8 +263,8 @@
 						{/if}
 					{/if}
 				{:else}
+					<ProjectTeamList project="{$project}" />
 					{#if $showBetaFeatures}
-						<ProjectTeamList project="{$project}" />
 						<ProjectSkillsList project="{$project}" />
 						<ProjectLinks project="{$project}" />
 					{/if}

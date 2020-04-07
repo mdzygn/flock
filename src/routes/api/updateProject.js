@@ -1,4 +1,4 @@
-import { init, response, validateCredentials } from '../../server/mongo.js';
+import { init, response, validateCredentials, filterItemDetails } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -10,10 +10,44 @@ export async function post(req, res, next) {
 		return;
 	}
 
-	const details = options.details;
+	let details = options.details;
+
 	const projectId = options.id;
 	const isSuperficial = options.isSuperficial;
 	const isModification = options.isModification;
+
+	const projectDetails = {
+		slug: true,
+		title: true,
+		description: true,
+		details: true,
+
+		headerImage: true,
+
+		public: true,
+
+		createdAt: true,
+		createdInfo: true,
+		lastActiveAt: true,
+		lastActiveInfo: true,
+		modifiedAt: true,
+
+		likeCount: true,
+		followCount: true,
+		unreadCount: true,
+
+		unreadMessageCount: true,
+		messageCount: true,
+		location: true,
+		tags: true,
+		skills: true,
+		links: true,
+		team: true,
+		posts: true,
+		ownerId: true,
+	};
+
+	details = filterItemDetails(details, projectDetails);
 
 	if (!isSuperficial) {
 		details.lastActiveAt = (new Date()).getTime();

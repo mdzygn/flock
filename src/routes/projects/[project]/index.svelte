@@ -150,7 +150,7 @@
 	{:else}
 		<ScrollView id="project" headerStartHidden="{!isArchived}">
 			<div class="content">
-				<div class="contentItem" class:collapsedOptions="{$projectReturnView && !showInfo}" class:collapsedHeader="{$projectReturnView && !showInfo && !isNew}">
+				<div class="contentItem" class:collapsedOptions="{$projectReturnView && !showInfo}" class:collapsedHeader="{$projectReturnView && !showInfo && !isNew && $showBetaFeatures}">
 					<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$projectReturnView}" alt="project header image" />
 
 					<div class="overviewContent" class:returnView="{$projectReturnView}">

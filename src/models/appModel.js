@@ -7,7 +7,7 @@ import { createModel } from '../utils/createModel';
 const appModel = createModel({
     projectId: null,
     channelId: null,
-    threadId: null,
+    postId: null,
     conversationId: null,
     profileId: null,
     userId: null, // 'bl20a8lm', // default user
@@ -39,7 +39,7 @@ export const curPath = writable(null);
 
 export const projectId = appModel.projectId;
 export const channelId = appModel.channelId;
-export const threadId = appModel.threadId;
+export const postId = appModel.postId;
 export const conversationId = appModel.conversationId;
 export const profileId = appModel.profileId;
 export const userId = appModel.userId;

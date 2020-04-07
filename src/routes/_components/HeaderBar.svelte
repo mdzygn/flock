@@ -63,7 +63,7 @@
             sectionLabel = $project.title;
         } else if (/\/channels\/.+/.test(path) && $channel) {
             sectionLabel = '#'+$channel.title;
-        } else if (/\/threads\/new/.test(path) && $channel) {
+        } else if (/\/posts\/.+/.test(path) && $channel) {
             sectionLabel = '#'+$channel.title;
         } else if (/\/profile\/.+/.test(path) && !isCurrentUser && $viewedUser) {//$viewedUser && !$viewedUser.isCurrentUser) {
             sectionLabel = $viewedUser.fullName;

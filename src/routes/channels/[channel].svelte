@@ -45,14 +45,14 @@
 	$: channelDescription = $channel && ($channel.description || getChannelDefaultDescription($channel)) || null;
 
 	import {
-		loadThread,
+		loadPost,
     	checkLoggedIn,
 	} from '../../actions/appActions';
 
-	function postThread() {
+	function newPost() {
 		if (!checkLoggedIn()) { return; }
 
-		goto('threads/new');
+		goto('posts/new');
 	}
 </script>
 
@@ -68,12 +68,12 @@
 			{/if}
 			{#if canPost}
 				<!-- <Proxy image="channel_actions" className="channelActions" /> -->
-				<NewPostButton onClick="{postThread}" className="newPostHeader" />
+				<NewPostButton onClick="{newPost}" className="newPostHeader" />
 			{/if}
 		</div>
 
 		<div class="content">
-			<!-- <Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadThread('sm2ld9p2')}" /> -->
+			<!-- <Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadPost('sm2ld9p2')}" /> -->
 			<div class="postsContainer">
 				{#each $posts as post}
 					<PostItem {post} />
@@ -87,7 +87,7 @@
 				{/each}
 			</div>
 			{#if canPost && $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
-				<NewPostButton onClick="{postThread}" />
+				<NewPostButton onClick="{newPost}" />
 			{/if}
 		</div>
 	</ScrollView>

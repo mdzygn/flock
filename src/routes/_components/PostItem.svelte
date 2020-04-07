@@ -1,4 +1,6 @@
 <script>
+	import { goto } from '@sapper/app';
+
     // import Button from '../../components/Button.svelte';
     // import Counter from '../_components/Counter.svelte';
 
@@ -18,6 +20,8 @@
 
     // export let type = 'thread';
 
+    $: postId = ($post && $post.id) || null;
+
     $: userId = ($post && $post.userId) || null;
     $: user = userId && getUser(userId) || null;
 
@@ -35,9 +39,15 @@
             loadProfile(userId);
         }
     }
+
+    function loadCurrentPost() {
+        if (postId) {
+            goto('posts/' + postId);
+        }
+    }
 </script>
 
-<div class="postItem">
+<div class="postItem" on:click="{loadCurrentPost}">
     <!-- <Avatar  -->
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
     <div class="info">

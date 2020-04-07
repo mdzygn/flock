@@ -15,7 +15,7 @@
 		});
 	}
 
-	import { loadProject, loadProjectPost, loadThread } from '../actions/appActions';
+	import { loadProject, loadProjectPost, loadPost } from '../actions/appActions';
 
 </script>
 
@@ -27,7 +27,7 @@
 	<ScrollView id="newsfeed">
 		<div class="feed">
 			<Proxy image="feed1" onClick="{e => loadProjectPost('s7djj2s2')}" />
-			<Proxy image="feed2" onClick="{e => loadThread('ma9l2h4h')}" />
+			<Proxy image="feed2" onClick="{e => loadPost('ma9l2h4h')}" />
 			<Proxy image="feed3" onClick="{e => loadProjectPost('s7djj2s2')}" />
 			<Proxy image="feed4" onClick="{e => loadProject('36bsf5gs')}" />
 			<Proxy image="feed5" onClick="{e => loadProjectPost('s7djj2s2')}" />

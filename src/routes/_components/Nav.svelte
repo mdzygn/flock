@@ -22,7 +22,7 @@
 			mainSection = null; // don't select 'following' nav icon if not following or not owner of project
 		} else if (/\/channels\/.+/.test(path) && isFollowing) {
 			mainSection = 'projects';
-		} else if (/\/threads\/.+/.test(path) && isFollowing) {
+		} else if (/\/posts\/.+/.test(path) && isFollowing) {
 			mainSection = 'projects';
 		}
 		// if (mainSection === 'projects' && !isFollowing) {

@@ -36,7 +36,7 @@ import {
 
     projectId,
     channelId,
-    threadId,
+    postId,
     conversationId,
     profileId,
 
@@ -177,11 +177,11 @@ export function showLikes() {
     resetScrollRegionPosition('likes');
 }
 
-export function loadThread(targetThreadId) {
-    threadId.set(targetThreadId);
+export function loadPost(targetPostId) {
+    postId.set(targetPostId);
 
-    gotoRoute('threads/' + targetThreadId );
-    resetScrollRegionPosition('thread');
+    gotoRoute('posts/' + targetPostId );
+    resetScrollRegionPosition('post');
 }
 
 export function loadChannel(targetChannelId) {

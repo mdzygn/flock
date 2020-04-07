@@ -5,8 +5,13 @@
 
 	import NewPostButton from '../_components/NewPostButton.svelte';
 
-	import { threadId } from '../../models/appModel';
 	import { loadProfile } from '../../actions/appActions';
+
+	import {
+		loadCurrentChannel,
+	} from '../../actions/appActions';
+
+	loadCurrentChannel();
 </script>
 
 <svelte:head>

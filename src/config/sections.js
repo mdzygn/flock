@@ -127,14 +127,14 @@ export const sections = [
 		parentPath: 'projects/[project]',
 	},
 	{
-		path: '/threads/new',
-		id: 'thread',
+		path: '/posts/new',
+		id: 'new_post',
 		label: '',
 		showBack: true,
 	},
 	{
-		path: '/threads/.+',
-		id: 'thread',
+		path: '/posts/.+',
+		id: 'posts',
 		label: '',
 		showBack: true,
 		// parentPath: 'channels/7m2ldksm',

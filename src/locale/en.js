@@ -33,6 +33,7 @@ const locale = {
 		DETAIL_3_TIP: 'e.g. <strong>How</strong> it works',
 		DETAIL_4_TIP: 'What\'s next? How can someone help?',
 		ADD_IMAGE: 'add image',
+		REMOVE_IMAGE: 'remove image',
 		CONFIRM: 'save',
 		CANCEL: 'cancel',
 	},

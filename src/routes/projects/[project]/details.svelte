@@ -33,6 +33,13 @@
 	let detail3 = '';
 	let detail4 = '';
 
+	let detailImage1 = null;
+	let detailImage2 = null;
+	let detailImage3 = null;
+	let detailImage4 = null;
+
+	let addingDetailImage = [];
+
 	let descriptionInput;
 	let tagsInput;
 	let locationInput;
@@ -55,6 +62,11 @@
 			detail2 = getFormattedDetail($project, 1);
 			detail3 = getFormattedDetail($project, 2);
 			detail4 = getFormattedDetail($project, 3);
+
+			detailImage1 = getDetailImage($project, 0);
+			detailImage2 = getDetailImage($project, 1);
+			detailImage3 = getDetailImage($project, 2);
+			detailImage4 = getDetailImage($project, 3);
 
 			updateRegionSizes();
 		}
@@ -83,6 +95,11 @@
 		}
 	}
 
+	function getDetailImage(project, index) {
+		const image = (project && project.details && project.details[index] && project.details[index].image) || null;
+		return image;
+	}
+
 	function save() {
 		let details = null;
 		if ($project.details) {
@@ -99,10 +116,17 @@
 			detail3,
 			detail4,
 		];
+		const sourceDetailsImages = [
+			detailImage1,
+			detailImage2,
+			detailImage3,
+			detailImage4,
+		];
 
 		for (let detailI = 0; detailI < 4; detailI++) {
 			details[detailI] = details[detailI] || {};
 			details[detailI].detail = getUnformattedText(sourceDetails[detailI]);
+			details[detailI].image = sourceDetailsImages[detailI];
 		}
 
 		const projectDetails = {
@@ -120,6 +144,28 @@
 		}
 
 		saveProjectDetails(projectDetails, {showProjectInfo: !$editingProject});
+	}
+
+	function addImage(index) {
+		addingDetailImage[index] = true;
+	}
+
+	function removeImage(index) {
+		addingDetailImage[index] = false;
+		switch (index) {
+			case 0:
+				detailImage1 = null;
+				break;
+			case 0:
+				detailImage2 = null;
+				break;
+			case 0:
+				detailImage3 = null;
+				break;
+			case 0:
+				detailImage4 = null;
+				break;
+		}
 	}
 
 	function cancel() {
@@ -174,11 +220,18 @@
 				</div>
 			</div>
 			{/if}
-			{#if $showBetaFeatures}
+
+			{#if detailImage1 || addingDetailImage[0]}
 				<div class="imageField">
-					<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+					<Button className="addImage" onClick="{() => removeImage(0) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
+				</div>
+				<ImageSelectionBox bind:image="{detailImage1}" />
+			{:else}
+				<div class="imageField">
+					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(0) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
 				</div>
 			{/if}
+
 			<div class="field">
 				<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_1_TIP}</span></div>
         		<textarea bind:this="{detailInput1}" bind:value="{detail1}" class="detailTextarea" />
@@ -240,7 +293,7 @@
 
 	.imageField {
 		position: relative;
-		height: 29px;
+		height: 44px;
 	}
 
 	.label {

@@ -82,14 +82,15 @@
         float: right;
 
         margin-right: 40px;
-        margin-top: -2px;
 
-		font-size: 1.5rem;
+		font-size: 1.3rem;
+        margin-top: 1px;
 		font-weight: 700;
 
 		color: #DF3C3C;
 	}
     .channelListItem :global(.addFirstPostCTA .icon) {
     	padding-left: 16px;
+        margin-top: -2px;
 	}
 </style>

@@ -47,6 +47,7 @@ const locale = {
 	},
 	PROJECT: {
 		NOT_FOUND: 'Project not found',
+		GET_STARTED: 'get the conversation started',
 	},
 	PROFILE: {
 		NOT_FOUND: 'Profile not found',

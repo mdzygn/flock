@@ -6,6 +6,8 @@
 
     // import ArrowIcon from "../../assets/icons/next_arrow.png";
 
+    import Counter from '../_components/Counter.svelte';
+
     import AvatarIcon from '../_components/AvatarIcon.svelte';
 
     import { parseHTML, getUnbrokenText } from '../../utils';
@@ -41,6 +43,9 @@
     $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
     $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
 
+    $: repliesCount = ($post && $post.postCount) || 0;
+
+
     // $: titleHTML = parseHTML(title);
     // $: messageHTML = parseHTML(message);
 
@@ -62,6 +67,7 @@
 <div class="postItem" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}">
     <!-- <Avatar  -->
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
+    <Counter visible="{repliesCount}" count="{repliesCount}" />
     <div class="info">
         <div class="userFullName" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userFullName}</div>
         {#if showTitle && title}
@@ -71,7 +77,6 @@
             <div class="message">{@html  messageHTML}</div>
         {/if}
     </div>
-
 </div>
 
 <style>
@@ -126,5 +131,11 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    .postItem :global(.counterContainer) {
+        float: right;
+        margin-top: 12px;
+        margin-right: 18px;
     }
 </style>

@@ -21,6 +21,8 @@ const PostModel = (postData) => {
         createdInfo: null,
 
         likeCount: 0,
+
+        postCount: 0,
     };
     if (postData) {
         initData = Object.assign(initData, postData);

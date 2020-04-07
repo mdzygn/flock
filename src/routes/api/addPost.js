@@ -37,9 +37,17 @@ export async function post(req, res, next) {
 		const result = await db.collection('posts').insertOne(details);
 
 		if (result) {
-			const channelUpdateResult = await db.collection('channels').updateOne({ id: details.channelId }, { $inc: { postCount: 1 } });
+			let updateParentCountResult;
+			switch (details.type) {
+				case 'thread':
+					updateParentCountResult = await db.collection('channels').updateOne({ id: details.channelId }, { $inc: { postCount: 1 } });
+					break;
+				case 'threadPost':
+					updateParentCountResult = await db.collection('posts').updateOne({ id: details.threadId }, { $inc: { postCount: 1 } });
+					break;
+			}
 
-			if (channelUpdateResult) {
+			if (updateParentCountResult) {
 				const channelUpdateResult = await db.collection('users').updateOne({ id: details.userId }, { $inc: { postsCount: 1 } });
 
 				if (channelUpdateResult) {

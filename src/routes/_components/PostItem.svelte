@@ -1,5 +1,6 @@
 <script>
-	import { goto } from '@sapper/app';
+    import { goto } from '@sapper/app';
+    import { writable } from 'svelte/store';
 
     // import Button from '../../components/Button.svelte';
     // import Counter from '../_components/Counter.svelte';
@@ -28,10 +29,12 @@
 
     // export let type = 'thread';
 
+    let user = writable([]);
+
     $: postId = ($post && $post.id) || null;
 
     $: userId = ($post && $post.userId) || null;
-    $: user = userId && getUser(userId) || null;
+    $: { user = getUser(userId) };
     $: userLoaded = ($user && $user.fullName) || false;
     $: userFullName = ($user && $user.fullName) || '&nbsp;';
 

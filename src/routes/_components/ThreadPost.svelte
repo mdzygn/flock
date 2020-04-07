@@ -1,4 +1,6 @@
 <script>
+    import { writable } from 'svelte/store';
+
     import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
 
@@ -18,8 +20,10 @@
 
     export let post;
 
+    let user = writable([]);
+
     $: userId = ($post && $post.userId) || null;
-    $: user = userId && getUser(userId) || null;
+    $: { user = getUser(userId) };
     $: userLoaded = ($user && $user.fullName) || false;
     $: userFullName = ($user && $user.fullName) || '&nbsp;';
     $: username = ($user && $user.username && '@' + $user.username) || '';

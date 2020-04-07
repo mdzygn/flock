@@ -1,5 +1,8 @@
 <script>
 	import locale from '../../locale';
+
+	import { onMount } from 'svelte';
+
 	import {
 		testInputDefocus,
 		getUnformattedText,
@@ -41,11 +44,18 @@
 
 	loadCurrentChannel();
 
-    // $: titleField && titleField.focus();
-
 	$: nextEnabled = title || message;
 
 	$: showTitleField = ($postType === 'thread');
+
+    onMount(() => {
+		// TODO: not focusing
+		if (showTitleField) {
+			titleField && titleField.focus();
+		} else {
+			messageField && messageField.focus();
+		}
+    });
 
 	function createNewPost() {
 		if ($postType) {

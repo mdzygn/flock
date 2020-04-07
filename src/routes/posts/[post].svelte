@@ -56,6 +56,10 @@
 </svelte:head>
 
 <ScrollView id="thread">
+	<!-- <div slot="scrollHeader">
+		<ThreadPost {post} />
+	</div> -->
+
 	<div class="content">
 		<ThreadPost {post} />
 		<!-- <Proxy image="thread_posts" className="proxyOverlay">
@@ -82,7 +86,7 @@
 				{/each}
 			</div>
 			{#if $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
-				<NewPostButton onClick="{reply}" />
+				<NewPostButton onClick="{reply}" type="reply" />
 			{/if}
 		</div>
 	</div>

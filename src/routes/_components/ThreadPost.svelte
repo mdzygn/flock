@@ -72,7 +72,7 @@
             <div class="message">{@html messageHTML}</div>
         {/if}
     </div>
-	<NewPostButton onClick="{reply}" className="replyButton" />
+	<NewPostButton onClick="{reply}" className="replyButton" type="reply" />
 </div>
 
 <style>

@@ -8,7 +8,7 @@ import { copyToClipboard } from '../utils';
 
 import promptIds from '../config/promptIds';
 
-import {
+import ProjectModel, {
     addProject,
     updateProject,
     getProject,
@@ -32,6 +32,8 @@ import {
 import {
     loadChannels,
 } from '../models/channelsModel';
+
+ProjectModel.on('projectAdded', loadChannels);
 
 function checkUpdateProject(targetProject) {
     const curProject = get(project);
@@ -148,11 +150,6 @@ export function createProject(projectDetails) {
 
     if (newProject) {
         loadProject(newProject.id);
-
-        // TODO: temporary, to load channels after adding project
-        setTimeout(() => {
-            loadChannels( { projectId: newProject.id })
-        }, 1000);
     }
 }
 

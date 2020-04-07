@@ -1,5 +1,8 @@
 import api from '../api';
 
+import EventEmitter from 'eventemitter3';
+// const EventEmitter = require('events');
+
 import { writable, get } from 'svelte/store';
 
 import { generateId } from '../utils';
@@ -20,6 +23,9 @@ import ProjectModel from '../models/projectModel';
 
 // import projectsData from '../data/projects.json';
 // const projects = JSON.parse(JSON.stringify(projectsData));
+
+const ProjectsModel = new EventEmitter();
+export default ProjectsModel;
 
 export let loadingProjects = writable(false);
 
@@ -367,6 +373,8 @@ export function addProject(projectDetails) {
 		if (!result || result.error || result.invalid) {
 			// showPrompt(promptIds.ADD_PROJECT_ERROR);
 			removeProjectModel(newProjectModel);
+		} else {
+			ProjectsModel.emit('projectAdded');
 		}
 		// newProject._id = result.insertedId;
 	});

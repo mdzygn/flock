@@ -161,6 +161,9 @@ export function getDateAgeString(date) {
     } else {
         ageString = 'less than a minute';
     }
+    // } else {
+    //     ageString = '1 min';
+    // }
     ageString += ' ago'
 
     return ageString;

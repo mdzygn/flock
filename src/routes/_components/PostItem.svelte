@@ -47,6 +47,7 @@
     $: repliesCount = ($post && $post.postCount) || 0;
 
     $: dateString = (showLastActiveTime ? getDateAgeString($post.lastActiveAt) : getDateString($post.createdAt)) || '';
+    $: dateStringPrefix = showLastActiveTime ? 'active ' : '';
 
 
     // $: titleHTML = parseHTML(title);
@@ -73,7 +74,7 @@
     <Counter visible="{repliesCount}" count="{repliesCount}" />
     <div class="info">
         <div class="userFullName" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userFullName}
-            {#if dateString}<span class="date"> - {dateString}</span>{/if}
+            {#if dateString}<span class="date"> - {dateStringPrefix}{dateString}</span>{/if}
         </div>
         {#if showTitle && title}
             <div class="title">{@html titleHTML}</div>

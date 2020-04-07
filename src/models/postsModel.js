@@ -125,10 +125,12 @@ function filterCurrentPosts() {
 			return (!type || post.type === type) && (!channelId || post.channelId === channelId) && (!threadId || post.threadId === threadId);
 		});
 	}
-	newFilteredPosts.sort((a,b) => get(b).createdAt - get(a).createdAt); // sort by reversed created time
 	switch (type) {
+		case 'thread':
+			newFilteredPosts.sort((a,b) => get(b).lastActiveAt - get(a).lastActiveAt); // sort by reversed created time
+			break;
 		case 'threadPost':
-			newFilteredPosts.reverse();
+			newFilteredPosts.sort((a,b) => get(a).createdAt - get(b).createdAt ); // sort by reversed created time
 			break;
 	}
 	filteredPosts.set(newFilteredPosts);

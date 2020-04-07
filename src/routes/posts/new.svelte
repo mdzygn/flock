@@ -87,12 +87,12 @@
 				<div class="field">
 					<div class="label">{locale.NEW_THREAD.TITLE}</div>
 					<!-- <input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField})}" /> -->
-					<textarea class="titleField" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField})}" />
+					<textarea class="titleField" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField, action: testSubmit, actionOnCtrl: true})}" />
 				</div>
 			{/if}
 			<div class="field messageField">
 				<div class="label">{locale.NEW_THREAD.MESSAGE}</div>
-        		<textarea bind:value="{message}" bind:this="{messageField}" />
+        		<textarea bind:value="{message}" bind:this="{messageField}" on:keypress="{e => testInputDefocus(e, {action: testSubmit, actionOnCtrl: true})}" />
 				<!-- on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" -->
 			</div>
 			<!-- <div class="field headerImageField">

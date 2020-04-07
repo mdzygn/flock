@@ -16,6 +16,7 @@
     import {
         viewMode,
         projectId,
+        channelId,
         project,
         channel,
         conversation,
@@ -85,6 +86,8 @@
             let match;
             if (match = parentPath.match(/\[project\]/)) {
                 parentPath = parentPath.substr(0, match.index) + $projectId + parentPath.substr(match.index + match[0].length);
+            } else if (match = parentPath.match(/\[channel\]/)) {
+                parentPath = parentPath.substr(0, match.index) + $channelId + parentPath.substr(match.index + match[0].length);
             }
             goto(parentPath);
         } else if (showBack) {

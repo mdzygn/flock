@@ -123,8 +123,8 @@ export const sections = [
 		id: 'channel',
 		label: '',
 		darkBg: true,
-		// showBack: true,
 		parentPath: 'projects/[project]',
+		// showBack: true,
 	},
 	{
 		path: '/posts/new',
@@ -136,8 +136,8 @@ export const sections = [
 		path: '/posts/.+',
 		id: 'posts',
 		label: '',
+		parentPath: 'channels/[channel]',
 		showBack: true,
-		// parentPath: 'channels/7m2ldksm',
 		darkBg: true,
 	},
 

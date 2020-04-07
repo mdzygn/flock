@@ -22,13 +22,16 @@ export function getUnbrokenText(text) {
 }
 
 export function testInputDefocus(event, options) {
-    if (event.keyCode === 13 && event.target && event.target.blur) {
-        event.target.blur();
-        event.preventDefault();
-
-        if (options && options.action) {
+    const actionOnCtrl = options && options.actionOnCtrl;
+    // const isActionKeyAllowed = (!actionOnCtrl && !event.ctrlKey) || (actionOnCtrl && event.ctrlKey);
+    const keyCode = event.keyCode;
+    if ((keyCode === 13 || keyCode == 10) && event.target && event.target.blur) { //&& isActionKeyAllowed) {
+        if (options && options.action && (!actionOnCtrl || event.ctrlKey)) {
+            event.target.blur();
             options.action();
         } else if (options && options.target) {
+            event.target.blur();
+            event.preventDefault();
             options.target.focus();
         }
     }

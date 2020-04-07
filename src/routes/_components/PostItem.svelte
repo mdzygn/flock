@@ -36,9 +36,11 @@
     $: showTitle = (type === 'thread');
     $: canLinkThrough = (type === 'thread');
     $: linkUserName = (type === 'threadPost');
+    $: displayBreaks = (type !== 'thread');
 
-    $: titleHTML = getUnbrokenText(title);
-    $: messageHTML = getUnbrokenText(message);
+    $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
+    $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
+
     // $: titleHTML = parseHTML(title);
     // $: messageHTML = parseHTML(message);
 

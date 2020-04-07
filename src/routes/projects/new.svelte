@@ -7,6 +7,7 @@
 
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
+	import LimitedTextfield from '../../components/LimitedTextfield.svelte';
 
 	import Button from '../../components/Button.svelte';
 
@@ -23,20 +24,8 @@
 	let titleField;
 	let descriptionField;
 
-	$: fieldRemainingCharCount = Math.max(0, config.MAX_PROJECT_DESCRIPTION_CHARS - description.length);
-	$: charCountLow = fieldRemainingCharCount < config.PROJECT_DESCRIPTION_CHARS_LOW;
-
-	$: {
-		if (description.length > config.MAX_PROJECT_DESCRIPTION_CHARS) {
-			description = description.substr(0, config.MAX_PROJECT_DESCRIPTION_CHARS);
-		}
-	}
-
-	function checkFieldLimit(event) {
-		if (description.length >= config.MAX_PROJECT_DESCRIPTION_CHARS) {
-            event.preventDefault();
-		}
-	}
+	let remainingChars;
+	$: charCountLow = remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
 
     // $: titleField && titleField.focus();
 
@@ -73,8 +62,8 @@
 			</div>
 			<div class="field descriptionField">
 				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
-				<div class="fieldCharCount" class:charCountLow="{charCountLow}">{fieldRemainingCharCount}{charCountLow ? ' characters remaining' : ''}</div>
-        		<textarea bind:value="{description}" bind:this="{descriptionField}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{e => { checkFieldLimit(e); testInputDefocus(e, {action: testSubmit}) } }" />
+				<div class="fieldCharCount" class:charCountLow="{charCountLow}">{remainingChars}{charCountLow ? ' characters remaining' : ''}</div>
+				<LimitedTextfield bind:value="{description}" bind:field="{descriptionField}" bind:remainingChars="{remainingChars}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" />
 			</div>
 			<div class="field headerImageField">
 				<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
@@ -142,7 +131,7 @@
         padding: 6px 4px;
 	}
 
-	textarea {
+	.content :global(textarea) {
         border: 1px solid #999999;
 
         outline: none;

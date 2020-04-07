@@ -10,11 +10,15 @@ export function generateId(length) {
 }
 
 export function getFormattedText(text) {
-    return text.replace(/<br\/>/g, '\r\n');
+    return text ? text.replace(/<br\/>/g, '\r\n') : text;
 }
 
 export function getUnformattedText(text) {
-    return text.replace(/\r?\n/g, '<br/>');
+    return text ? text.replace(/\r?\n/g, '<br/>') : text;
+}
+
+export function getUnbrokenText(text) {
+    return text ? text.replace(/<br\/>/g, '&nbsp;&nbsp;') : text;
 }
 
 export function testInputDefocus(event, options) {

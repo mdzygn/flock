@@ -1,6 +1,9 @@
 <script>
 	import locale from '../../locale';
-	import { testInputDefocus } from '../../utils';
+	import {
+		testInputDefocus,
+		getUnformattedText,
+	} from '../../utils';
 
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
@@ -43,7 +46,7 @@
 	function createNewPost() {
 		const postDetails = {
 			title,
-			message,
+			message: getUnformattedText(message),
 			type: 'thread',
 			channelId: $channel && $channel.id,
 			projectId: $channel && $channel.projectId,
@@ -70,7 +73,7 @@
 			<div class="field">
 				<div class="label">{locale.NEW_THREAD.TITLE}</div>
         		<!-- <input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField})}" /> -->
-        		<textarea class="titleField" bind:value="{title}" bind:this="{titleField}" />
+        		<textarea class="titleField" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField})}" />
 			</div>
 			<div class="field messageField">
 				<div class="label">{locale.NEW_THREAD.MESSAGE}</div>

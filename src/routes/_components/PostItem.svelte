@@ -8,7 +8,7 @@
 
     import AvatarIcon from '../_components/AvatarIcon.svelte';
 
-    import { parseHTML } from '../../utils';
+    import { parseHTML, getUnbrokenText } from '../../utils';
 
     import { getUser } from '../../models/usersModel';
 
@@ -31,6 +31,8 @@
     $: title = ($post && $post.title) || null;
     $: message = ($post && $post.message) || null;
 
+    $: titleHTML = getUnbrokenText(title);
+    $: messageHTML = getUnbrokenText(message);
     // $: titleHTML = parseHTML(title);
     // $: messageHTML = parseHTML(message);
 
@@ -55,10 +57,10 @@
     <div class="info">
         <div class="userFullName" class:button="{userLoaded}">{@html userFullName}</div>
         {#if title}
-            <div class="title">{title}</div>
+            <div class="title">{@html titleHTML}</div>
         {/if}
         {#if message}
-            <div class="message">{message}</div>
+            <div class="message">{@html  messageHTML}</div>
         {/if}
     </div>
 

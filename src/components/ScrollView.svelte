@@ -18,12 +18,14 @@
     let hasScrollHeader = ($$props.$$slots && $$props.$$slots.scrollHeader) || false;
 
     let windowWidth;
+    let minScrollContentHeight = 0;
 
     $: {
         //listen to window resize
         if (hasScrollHeader && scrollHeader && windowWidth) {
             scrollHeaderHeight = scrollHeader.offsetHeight;
         }
+        minScrollContentHeight = (scrollRegion && scrollRegion.offsetHeight) || 0;
     }
 
     let scrollRegion;
@@ -173,7 +175,9 @@
 {#if hasScrollHeader}
     <div class="content">
         <div class="scrollView" bind:this="{scrollRegion}" style="padding-top: {scrollHeaderHeight}px">
-            <slot></slot>
+            <div class="scrollContent" style="min-height: {minScrollContentHeight}px">
+                <slot></slot>
+            </div>
         </div>
         <div class="scrollHeader" style="top: {scrollHeaderOffset}px" bind:this="{scrollHeader}">
             <slot name="scrollHeader"></slot>
@@ -181,7 +185,9 @@
     </div>
 {:else}
     <div class="scrollView" bind:this="{scrollRegion}">
-        <slot></slot>
+        <div class="scrollContent" style="min-height: {minScrollContentHeight}px">
+            <slot></slot>
+        </div>
     </div>
 {/if}
 

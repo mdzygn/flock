@@ -25,20 +25,20 @@
 
     $: userId = ($post && $post.userId) || null;
     $: user = userId && getUser(userId) || null;
-
     $: userLoaded = ($user && $user.fullName) || false;
     $: userFullName = ($user && $user.fullName) || '&nbsp;';
 
     $: title = ($post && $post.title) || null;
     $: message = ($post && $post.message) || null;
 
-    $: titleHTML = parseHTML(title);
-    $: messageHTML = parseHTML(message);
+    // $: titleHTML = parseHTML(title);
+    // $: messageHTML = parseHTML(message);
 
-    function viewUserProfile() {
+    function viewUserProfile(event) {
         if (userLoaded) {
             loadProfile(userId);
         }
+        event && event.stopPropagation();
     }
 
     function loadCurrentPost() {
@@ -55,10 +55,10 @@
     <div class="info">
         <div class="userFullName" class:button="{userLoaded}">{@html userFullName}</div>
         {#if title}
-            <div class="title">{@html titleHTML}</div>
+            <div class="title">{title}</div>
         {/if}
         {#if message}
-            <div class="message">{@html messageHTML}</div>
+            <div class="message">{message}</div>
         {/if}
     </div>
 

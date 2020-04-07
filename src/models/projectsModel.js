@@ -276,11 +276,11 @@ export function updateDiscoveryProjects(updateDependencies) {
 		let sourceFollowingProjects = get(followingProjects);
 		let sourceOtherPublicProjects = get(otherPublicProjects);
 		if (sourceFollowingProjects && sourceOtherPublicProjects) {
-			if (get(locationMode) !== 'local') {
-				sourceOtherPublicProjects = [...sourceOtherPublicProjects].reverse();
-				sourceMyPublicProjects = [...sourceMyPublicProjects].reverse();
-				sourceFollowingProjects = [...sourceFollowingProjects].reverse();
-			}
+			// if (get(locationMode) !== 'local') {
+			// 	sourceOtherPublicProjects = [...sourceOtherPublicProjects].reverse();
+			// 	sourceMyPublicProjects = [...sourceMyPublicProjects].reverse();
+			// 	sourceFollowingProjects = [...sourceFollowingProjects].reverse();
+			// }
 
 			let newProjects = [...sourceOtherPublicProjects, ...sourceMyPublicProjects, ...sourceFollowingProjects];
 

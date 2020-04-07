@@ -82,7 +82,7 @@
 					{#if $loadingPosts && (!$posts || !$posts.length) }
 						<ContentLoader label="{locale.LOADING.THREAD}" />
 					{:else}
-						<ContentLoader label="This thread has no replies" />
+						<ContentLoader label="{locale.THREAD.NO_POSTS}" />
 					{/if}
 				{/each}
 			</div>

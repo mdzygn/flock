@@ -44,7 +44,7 @@ const locale = {
 		PROFILE: 'loading profile...',
 		PROFILE_PROJECTS: 'loading projects...',
 		CHANNEL: 'loading posts...',
-		THREAD: 'loading replies...',
+		THREAD: 'loading comments...',
 	},
 	PROJECT: {
 		NOT_FOUND: 'Project not found',
@@ -81,6 +81,9 @@ const locale = {
 		INSPIRATION: 'Inspirational references and links',
 		RANDOM: 'Off-topic discussions and links',
 		SUGGESTIONS: 'Suggestions to improve the project community',
+	},
+	THREAD: {
+		NO_POSTS: 'This thread has no comments',
 	}
 }
 

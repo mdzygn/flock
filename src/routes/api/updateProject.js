@@ -27,9 +27,7 @@ export async function post(req, res, next) {
 		public: true,
 
 		createdAt: true,
-		createdInfo: true,
 		lastActiveAt: true,
-		lastActiveInfo: true,
 		modifiedAt: true,
 
 		likeCount: true,

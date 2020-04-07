@@ -18,7 +18,6 @@ const PostModel = (postData) => {
         projectId: '',
 
         createdAt: 0,
-        createdInfo: null,
 
         likeCount: 0,
 

@@ -11,7 +11,6 @@ const ChannelModel = (channelData) => {
         userId: '',
 
         createdAt: 0,
-        createdInfo: null,
     };
     if (channelData) {
         initData = Object.assign(initData, channelData);

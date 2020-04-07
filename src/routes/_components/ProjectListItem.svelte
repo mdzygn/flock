@@ -1,23 +1,41 @@
 <script>
     import Counter from './Counter.svelte';
 
+    import { getDateAgeString, getDateAge, getDateString } from '../../utils';
+
     import { getProjectHeaderImage } from '../../models/projectsModel';
 
     import { loadProject } from '../../actions/appActions';
 
-	import { getIsProjectTeamMember } from '../../models/appModel';
+	import { getIsProjectTeamMember, showBetaFeatures } from '../../models/appModel';
 
     import FollowingSmallIcon from "../../assets/icons/following_small.png";
 	import PrivateIcon from "../../assets/icons/private.png";
 
     export let project;
-    export let showLastActive = false;
+    // export let showLastActive = false;
     export let showUpdateCounter = true;
     export let showPrivateIcon = false;
 
+    let showLastActive = false; // hardcode until updating project active dates
+
     $: thumbImage = getProjectHeaderImage($project);
 
-    $: detail = (showLastActive ? $project.lastActiveInfo : $project.createdInfo) || '';
+    $: date = $project && showLastActive ? $project.lastActiveAt : $project.createdAt;
+    // $: detail = (showLastActive ? $project.lastActiveInfo : $project.createdInfo) || '';
+
+    let dateString = '';
+    $: {
+        if (date) {
+            if (showLastActive) {
+                dateString = 'active ' + getDateAgeString(date);
+            } else {
+                dateString = 'created ' + getDateString(date, 'd MMM yyyy');
+            }
+        }
+    }
+
+    $: detail = dateString;
 
     $: isPrivate = ($project && !$project.public) || false;
 
@@ -41,7 +59,7 @@
             {#if showPrivateIcon && isPrivate}
                 <div class="privateIcon" style="background-image: url({PrivateIcon})"></div>
             {/if}
-            {#if showUpdateCounter}
+            {#if $showBetaFeatures && showUpdateCounter}
                 <Counter visible="{$project.unreadCount}" count="{$project.unreadCount}" hasNew="{true}" />
             {/if}
             <div class="followingIcon" style="background-image: url({FollowingSmallIcon})"></div>

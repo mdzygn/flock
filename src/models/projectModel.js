@@ -15,10 +15,7 @@ const ProjectModel = (projectData) => {
         headerImage: null,
 
         createdAt: 0,
-        createdInfo: null,
-
         lastActiveAt: 0,
-        lastActiveInfo: null,
 
         modifiedAt: 0,
 

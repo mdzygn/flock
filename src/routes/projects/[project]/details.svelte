@@ -156,13 +156,13 @@
 			case 0:
 				detailImage1 = null;
 				break;
-			case 0:
+			case 1:
 				detailImage2 = null;
 				break;
-			case 0:
+			case 2:
 				detailImage3 = null;
 				break;
-			case 0:
+			case 3:
 				detailImage4 = null;
 				break;
 		}
@@ -237,9 +237,14 @@
         		<textarea bind:this="{detailInput1}" bind:value="{detail1}" class="detailTextarea" />
 			</div>
 
-			{#if $showBetaFeatures}
+			{#if detailImage2 || addingDetailImage[1]}
 				<div class="imageField">
-					<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+					<Button className="addImage" onClick="{() => removeImage(1) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
+				</div>
+				<ImageSelectionBox bind:image="{detailImage2}" />
+			{:else}
+				<div class="imageField">
+					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(1) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
 				</div>
 			{/if}
 			<div class="field">
@@ -247,9 +252,14 @@
         		<textarea bind:this="{detailInput2}" bind:value="{detail2}" class="detailTextarea" />
 			</div>
 
-			{#if $showBetaFeatures}
+			{#if detailImage3 || addingDetailImage[2]}
 				<div class="imageField">
-					<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+					<Button className="addImage" onClick="{() => removeImage(2) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
+				</div>
+				<ImageSelectionBox bind:image="{detailImage3}" />
+			{:else}
+				<div class="imageField">
+					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(2) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
 				</div>
 			{/if}
 			<div class="field">
@@ -257,9 +267,14 @@
         		<textarea bind:this="{detailInput3}" bind:value="{detail3}" class="detailTextarea" />
 			</div>
 
-			{#if $showBetaFeatures}
+			{#if detailImage4 || addingDetailImage[3]}
 				<div class="imageField">
-					<Button className="addImage" icon="{AddImageIcon}" disabled="{true}">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+					<Button className="addImage" onClick="{() => removeImage(3) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
+				</div>
+				<ImageSelectionBox bind:image="{detailImage4}" />
+			{:else}
+				<div class="imageField">
+					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(3) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
 				</div>
 			{/if}
 			<div class="field">

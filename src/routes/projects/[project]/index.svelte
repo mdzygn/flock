@@ -204,17 +204,13 @@
 									<Button className="addProjectDetailsButton" onClick="{editProjectDetails}" icon="{AddDetailsIcon}">add project details</Button>
 								{/if}
 								{#if !isTeamMember}
-									{#if $showBetaFeatures}
-										<Button className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
-									{/if}
+									<Button disabled="{!$showBetaFeatures}" className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
 								{:else if isNew && !isPublic}
 									<Button className="makePublicButton isButton" onClick="{showTogglePublicDialog}">make public</Button>
 								{:else}
-									{#if $showBetaFeatures}
-										<Button className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
-											<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
-										</Button>
-									{/if}
+									<Button disabled="{!$showBetaFeatures}" className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
+										<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
+									</Button>
 								{/if}
 								{#if (!$projectReturnView || showInfo) && !isTeamMember}
 									<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">

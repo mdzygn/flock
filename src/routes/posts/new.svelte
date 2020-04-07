@@ -1,7 +1,7 @@
 <script>
 	import locale from '../../locale';
 
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 
 	import {
 		testInputDefocus,
@@ -37,7 +37,6 @@
 
 	let title = '';
 	let message = '';
-	// let image = null; // 'header2';
 
 	let titleField;
 	let messageField;
@@ -48,8 +47,8 @@
 
 	$: showTitleField = ($postType === 'thread');
 
-    onMount(() => {
-		// TODO: not focusing
+    onMount(async () => {
+		await tick();
 		if (showTitleField) {
 			titleField && titleField.focus();
 		} else {

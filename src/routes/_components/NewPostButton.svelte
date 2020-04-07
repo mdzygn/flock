@@ -14,6 +14,7 @@
 <style>
 	.newPostButton {
         background-color: #ffffff;
+        height: 41px;
         padding-top: 3px;
         padding-bottom: 3px;
         margin-top: 10px;

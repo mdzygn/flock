@@ -78,6 +78,7 @@ const locale = {
 		QUESTIONS: 'Questions from the community',
 		// Current Features Discussion - Discussion of current features and functionality
 		// ISSUES: 'Issues and bugs',
+		ISSUES: 'Issues, bugs and problems',
 		IDEAS: 'Ideas, requests and recommendations for the project',
 		INSPIRATION: 'Inspirational references and links',
 		RANDOM: 'Off-topic discussions and links',

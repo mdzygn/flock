@@ -50,6 +50,21 @@
 		"lastActiveAt": 1586248518148
 	},
 	{
+		"_id": {
+			"$oid": "5e8d6b2d7c213e0338d1ab12"
+		},
+		"title": "Issues",
+		"description": "",
+		"sortIndex": 4.5,
+		"postCount": 0,
+		"id": "gg5y63h5g",
+		"projectId": "hPS9cRq2",
+		"userId": "YRVQ6vOE",
+		"createdAt": 1586248517665,
+		"modifiedAt": 1586248517665,
+		"lastActiveAt": 1586248517665
+	},
+	{
 		"title": "Ideas",
 		"description": "",
 		"sortIndex": 6,
@@ -171,7 +186,7 @@
 		"postCount": 0
 	},
 	{
-		"id": "45bfd43vb",
+		"id": "hPS9cRq2",
 		"title": "Inspiration",
 		"description": "",
 		"projectId": "s7djj2s2",

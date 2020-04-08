@@ -114,12 +114,16 @@
         font-size: 1.7rem;
         color: #222222;
         font-weight: 700;
+
+        user-select: text;
     }
 
     .username {
         font-size: 1.4rem;
         color: #666666;
         margin-top: -2px;
+
+        user-select: text;
     }
 
     .postContent {
@@ -133,6 +137,8 @@
         font-size: 1.3rem;
         color: #999999;
         padding-bottom: 2px;
+
+        user-select: text;
     }
 
     .title {
@@ -142,6 +148,8 @@
         font-weight: 700;
         padding-bottom: 2px;
         padding-top: 8px;
+
+        user-select: text;
 
         /* white-space: nowrap;
         overflow: hidden;
@@ -153,5 +161,7 @@
         line-height: 1.7rem;
         color: #333333;
         padding-top: 8px;
+
+        user-select: text;
     }
 </style>

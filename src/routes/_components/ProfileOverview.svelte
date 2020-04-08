@@ -248,6 +248,8 @@
         padding-top: 3px;
         padding-right: 136px;
     	line-height: 3rem;
+
+        user-select: text;
 	}
 
     .username {
@@ -256,6 +258,8 @@
         padding-bottom: 5px;
         margin-top: -6px;
         line-height: 3rem;
+
+        user-select: text;
 
         color: #999999;
     }
@@ -269,6 +273,8 @@
 		line-height: 2rem;
 
 		margin-left: -10px;
+
+        user-select: text;
 
 		color: #555555;
 	}

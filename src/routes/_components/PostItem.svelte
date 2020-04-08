@@ -47,6 +47,7 @@
     $: displayBreaks = (type !== 'thread');
     $: showLastActiveTime = (type === 'thread');
     $: showReplyIcon = (type === 'thread');
+    $: textSelectable = (type !== 'thread');
 
     $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
     $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
@@ -106,14 +107,15 @@
         {/if}
     {/if}
     <div class="info">
-        <div class="userFullName" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userFullName}
+        <div class="userFullName" class:selectable="{textSelectable}">
+            <span div="userFullNameLabel" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userFullName}</span>
             {#if dateString}<span class="date"> - {dateString}</span>{/if}
         </div>
         {#if showTitle && title}
             <div class="title">{@html titleHTML}</div>
         {/if}
         {#if message}
-            <div class="message">{@html  messageHTML}</div>
+            <div class="message" class:selectable="{textSelectable}">{@html  messageHTML}</div>
         {/if}
     </div>
 </div>
@@ -174,6 +176,9 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    .selectable {
+        user-select: text;
     }
 
     .postItem :global(.counterContainer) {

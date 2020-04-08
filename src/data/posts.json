@@ -1,99 +1,50 @@
 [
-	{
-		"id": "Gkop4zzy",
-		"userId": "YRVQ6vOE",
-		"channelId": "IntDOhGjF6",
-		"projectId": "hPS9cRq2",
-		"type": "thread",
-		"title": "Flock Pre-alpha is Open!",
-		"message": "Welcome to Flock!<br/><br/>Come and explore, create your own projects, and start getting involved chatting with others about their projects!<br/>",
-		"createdAt": 1586249512298,
-		"modifiedAt": 1586249512298,
-		"lastActiveAt": 1586249512298
-	},
-
-	{
-	   "id":"6dbvj5h3",
-	   "userId":"sl3p5oms",
-	   "channelId":"58d23355",
-	   "projectId":"s7djj2s2",
-	   "type":"thread",
-	   "title":"Pri ad mucius voluptatibus ea usu tincidunt  indoctum explicari deseruisse?",
-	   "message":"Delectus ei est aliquando definitiones denique.",
-	   "image":"",
-	   "createdAt":0,
-	   "likeCount":23
-	},
-	{
-	   "id":"43t4ghu3",
-	   "userId":"bl20a8lm",
-	   "channelId":"58d23355",
-	   "projectId":"s7djj2s2",
-	   "type":"thread",
-	   "title":"What are the primary applications of this platform? Is there a list?",
-	   "message":"Aecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.",
-	   "image":"",
-	   "createdAt":0,
-	   "likeCount":45
-	},
-	{
-	   "id":"43t4g3vgdf",
-	   "userId":"sl3p5oms",
-	   "channelId":"58d23355",
-	   "projectId":"s7djj2s2",
-	   "type":"thread",
-	   "title":"What is the launch date for this?",
-	   "message":"I hear that there is one coming up and really excited for the release",
-	   "image":"testImage",
-	   "createdAt":0,
-	   "likeCount":36
-	},
-	{
-	   "id":"hsty43bs",
-	   "userId":"sl3p5oms",
-	   "channelId":"58d23355",
-	   "projectId":"s7djj2s2",
-	   "type":"thread",
-	   "title":"How do I sign up?",
-	   "message":"Does anyone know? I really want to know!",
-	   "image":"",
-	   "createdAt":0,
-	   "likeCount":25
-	},
-	{
-	   "id":"56bs42t4",
-	   "userId":"bl20a8lm",
-	   "channelId":"58d23355",
-	   "projectId":"s7djj2s2",
-	   "type":"thread",
-	   "title":"Where do I create new spaces?",
-	   "message":"",
-	   "image":"",
-	   "createdAt":0,
-	   "likeCount":34
-	},
-	{
-	   "id":"4th66g2t4",
-	   "userId":"bl20a8lm",
-	   "channelId":"58d23355",
-	   "projectId":"s7djj2s2",
-	   "type":"thread",
-	   "title":"Nullam dictum felis eu pede?",
-	   "message":"",
-	   "image":"",
-	   "createdAt":0,
-	   "likeCount":34
-	},
-	{
-	   "id":"g535h576",
-	   "userId":"sl3p5oms",
-	   "channelId":"58d23355",
-	   "projectId":"s7djj2s2",
-	   "type":"thread",
-	   "title":"",
-	   "message":"Maecenas nec odio et ante tincidunt tempus, etiam sit amet orci eget?",
-	   "image":"",
-	   "createdAt":0,
-	   "likeCount":34
-	}
- ]
+   {
+      "id":"Gkop4zzy",
+      "userId":"YRVQ6vOE",
+      "channelId":"IntDOhGjF6",
+      "projectId":"hPS9cRq2",
+      "type":"thread",
+      "title":"Flock Pre-alpha is Open!",
+      "message":"Welcome to Flock!<br/><br/>Come and explore, create your own projects, and start getting involved chatting with others about their projects!<br/>",
+      "createdAt":1586249512298,
+      "modifiedAt":1586249512298,
+      "lastActiveAt":1586249512298
+   },
+   {
+      "id":"vED3N2vg",
+      "userId":"YRVQ6vOE",
+      "channelId":"IntDOhGjF6",
+      "projectId":"hPS9cRq2",
+      "type":"thread",
+      "title":"v1.0.1 Launch Notes",
+      "message":"This is the first version of Flock.<br/><br/>Following are the initial pre-alpha features and features coming soon.<br/><br/>features<br/>- discover projects<br/>- create a user<br/>- like and follow projects<br/>- create projects<br/>- add and edit project details<br/>- make projects public<br/>- create channel posts<br/>- comment on channel posts<br/><br/>coming soon<br/>- editing posts<br/>- liking posts<br/>- editing profile<br/>- adding project team members<br/>- adding and editing channels<br/>- extended image library<br/>- uploading project images<br/>- adding profile image<br/>- posting images<br/>- setting username and password<br/>- reseting password<br/>- messaging<br/>- nofications<br/>- and much more!",
+      "createdAt":1586312948517,
+      "modifiedAt":1586312948517,
+      "lastActiveAt":1586312948517
+   },
+   {
+      "id":"gBNJIBO9",
+      "userId":"YRVQ6vOE",
+      "channelId":"4sjgua2op3",
+      "projectId":"hPS9cRq2",
+      "type":"thread",
+      "title":"Looking for a name!",
+      "message":"Flock is a working title, we're looking for names, ideas welcome!<br/><br/>thought starters<br/>- lauching projects<br/>- collaboration<br/>- community<br/>- teamwork<br/>- creativity<br/>- innovation",
+      "createdAt":1.586313013281E+12,
+      "modifiedAt":1.586313013281E+12,
+      "lastActiveAt":1.586313013281E+12
+   },
+   {
+      "id":"9jp5w3no",
+      "userId":"YRVQ6vOE",
+      "channelId":"6Uv2aNP4wE",
+      "projectId":"hPS9cRq2",
+      "type":"thread",
+      "title":"Welcome to Flock!",
+      "message":"Welcome to the first version of Flock.<br/><br/>Please explore, create some projects start chatting and sharing ideas!<br/><br/><br/>Post any issues and bugs you find in the #Issues channel and share your ideas and feature suggestions for the platform in the #Ideas channel.<br/>",
+      "createdAt":1586327860536,
+      "modifiedAt":1586327860536,
+      "lastActiveAt":1586327860536
+   }
+]

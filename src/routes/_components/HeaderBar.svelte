@@ -23,6 +23,7 @@
         viewedUser,
         user,
         userId,
+        lastPreProjectPath,
         getIsCurrentUser,
         showBetaFeatures,
     } from '../../models/appModel';
@@ -82,6 +83,8 @@
     function goBack () {
         if (isProjectView && hasCreated) {
             goto('projects');
+        } else if (curSection && curSection.useLastPreProjectPath && $lastPreProjectPath) {
+            goto($lastPreProjectPath);
         } else if (parentPath) {
             let match;
             if (match = parentPath.match(/\[project\]/)) {

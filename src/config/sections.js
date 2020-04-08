@@ -113,8 +113,10 @@ export const sections = [
 		id: 'project',
 		label: '',
 		darkBg: true,
-		showBack: true,
 		isProjectView: true,
+		showBack: true,
+		useLastPreProjectPath: true,
+		parentPath: 'projects',
 		// parentPath: 'discover',
 	},
 

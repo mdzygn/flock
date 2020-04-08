@@ -41,6 +41,8 @@ const appModel = createModel({
 
 export const curPath = writable(null);
 
+export const lastPreProjectPath = writable(null);
+
 export const projectId = appModel.projectId;
 export const channelId = appModel.channelId;
 export const postId = appModel.postId;

@@ -40,6 +40,7 @@ import {
 
 import {
     curPath,
+    lastPreProjectPath,
 
     projectId,
     channelId,
@@ -85,6 +86,11 @@ import {
 
 export function loadProject(targetProjectId, options) {
     // console.log('loadProject', targetProjectId);
+
+    const path = get(curPath);
+    if (!/\/projects\/.+/.test(path)) {
+        lastPreProjectPath.set(path);
+    }
 
     loadProjects({ id: targetProjectId });
 

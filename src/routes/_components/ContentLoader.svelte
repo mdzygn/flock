@@ -1,10 +1,12 @@
 <script>
     import locale from '../../locale';
 
-    export let label = locale.LOADING.DEFAULT;
+    let hasSlots = $$props.$$slots;
+
+    export let label = !hasSlots ? locale.LOADING.DEFAULT : '';
 </script>
 
-<div class="contentLoader">{label}</div>
+<div class="contentLoader">{label}<slot></slot></div>
 
 <style>
     .contentLoader {

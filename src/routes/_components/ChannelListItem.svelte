@@ -34,7 +34,7 @@
     }
 </script>
 
-<div class="channelListItem">
+<div class="channelListItem" class:noPosts="{!messageCount}">
     <Button className="channelListItemButton" onClick="{loadCurrentChannel}"># {channelTitle}
         <div class="buttonIcon" style="background-image: url({ArrowIcon})"/>
         {#if messageCount}
@@ -61,6 +61,10 @@
     }
     .channelListItem :global(.channelListItemButton:hover) {
         background-color: #f9f9f9;
+    }
+
+    .channelListItem.noPosts :global(.channelListItemButton) {
+        color: #666666;
     }
 
     .channelListItem :global(.channelListItemButton .counterContainer) {

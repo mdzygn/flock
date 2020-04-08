@@ -47,6 +47,12 @@ const locale = {
 		CHANNEL: 'loading posts...',
 		THREAD: 'loading comments...',
 	},
+	CHANNEL: {
+		NO_POSTS: 'This channel has no posts',
+	},
+	THREAD: {
+		NO_POSTS: 'This post has no comments',
+	},
 	PROJECT: {
 		NOT_FOUND: 'Project not found',
 		GET_STARTED: 'get the conversations started',
@@ -83,9 +89,6 @@ const locale = {
 		INSPIRATION: 'Inspirational references and links',
 		RANDOM: 'Off-topic discussions and links',
 		SUGGESTIONS: 'Suggestions to improve the project community',
-	},
-	THREAD: {
-		NO_POSTS: 'This thread has no comments',
 	}
 }
 

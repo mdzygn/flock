@@ -48,6 +48,7 @@
     $: showLastActiveTime = (type === 'thread');
     $: showReplyIcon = (type === 'thread');
     $: textSelectable = (type !== 'thread');
+    $: messageLimited = (type === 'thread');
 
     $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
     $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
@@ -115,7 +116,7 @@
             <div class="title">{@html titleHTML}</div>
         {/if}
         {#if message}
-            <div class="message" class:selectable="{textSelectable}">{@html  messageHTML}</div>
+            <div class="message" class:selectable="{textSelectable}" class:messageLimited="{messageLimited}">{@html  messageHTML}</div>
         {/if}
     </div>
 </div>
@@ -143,6 +144,7 @@
     .info {
         padding: 15px;
         padding-left: 66px;
+        padding-right: 20px;
     }
 
     .userFullName {
@@ -172,7 +174,8 @@
         font-size: 1.5rem;
         line-height: 1.7rem;
         color: #333333;
-
+    }
+    .messageLimited {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;

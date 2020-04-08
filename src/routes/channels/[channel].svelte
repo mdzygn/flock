@@ -83,7 +83,7 @@
 					{#if $loadingPosts && (!$posts || !$posts.length) }
 						<ContentLoader label="{locale.LOADING.CHANNEL}" />
 					{:else}
-						<ContentLoader>{locale.CHANNEL.NO_POSTS},<br/>be the first to <a href="javascript:void(0)" on:click="{newPost}">add a post</a></ContentLoader>
+						<ContentLoader>{locale.CHANNEL.NO_POSTS}{#if canPost},<br/>be the first to <a href="javascript:void(0)" on:click="{newPost}">add a post</a>{/if}</ContentLoader>
 					{/if}
 				{/each}
 			</div>

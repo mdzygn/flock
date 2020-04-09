@@ -1,4 +1,4 @@
-import { init, response } from '../../server/mongo.js';
+import { init, response, filterItemDetails } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -11,8 +11,41 @@ export async function post(req, res, next) {
 
 	if (user) {
 		const targetPass = user.pass ? user.pass : user.usercode;
+
+		const userDetailsSchema = {
+			id: true,
+
+			username: true,
+
+			usercode: true, // return so can login and authorise
+
+			fullName: true,
+			firstName: true,
+			lastName: true,
+
+			bio: true,
+
+			skills: true,
+
+			postsCount: true,
+			likesCount: true,
+			followsCount: true,
+
+			avatarImage: true,
+			coverImage: true,
+
+			style: true,
+
+			connected: true,
+			requestedConnection: true,
+
+			location: true,
+		};
+
+		const userDetails = filterItemDetails(user, userDetailsSchema);
+
 		if (pass === targetPass) {
-			response(res, user);
+			response(res, userDetails);
 		} else {
 			response(res, {invalid: true});
 		}

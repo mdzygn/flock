@@ -20,7 +20,7 @@
     let passField;
 
     $details.username = $username;
-    $details.pass = $usercode;
+    $details.pass = ''; // $usercode;
 
     $: usernameField && usernameField.focus();
 

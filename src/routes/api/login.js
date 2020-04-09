@@ -10,7 +10,8 @@ export async function post(req, res, next) {
 	const user = await db.collection('users').findOne({ username: username });
 
 	if (user) {
-		if (user.usercode === pass) {
+		const targetPass = user.pass ? user.pass : user.usercode;
+		if (pass === targetPass) {
 			response(res, user);
 		} else {
 			response(res, {invalid: true});

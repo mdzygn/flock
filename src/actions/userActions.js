@@ -145,7 +145,7 @@ function updateUser(userDetails) {
             Object.assign(curUser, localUserDetails);
             // console.log(curUser);
 
-            // api.updateUser({id: curUserId, details: userDetails});
+            api.updateUser({id: curUserId, details: userDetails});
         }
     }
 }

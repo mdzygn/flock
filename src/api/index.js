@@ -156,6 +156,14 @@ function addUser(options) {
 	});
 }
 
+// options = { id: string, details: {} }
+function updateUser(options) {
+	return send('updateUser', options).catch(error => {
+		console.error('API Error: ' + error, { error });
+		return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 /*** Channels ***/
 
 // options = { limit: number, cursor: string, sort: {} }
@@ -209,6 +217,7 @@ const api = {
 
 	getUsers,
 	addUser,
+	updateUser,
 
 	getChannels,
 

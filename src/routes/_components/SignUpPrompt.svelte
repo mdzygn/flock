@@ -31,6 +31,25 @@
         dispatch('change');
     }
 
+    const INVALID_EMAIL_DELAY = 700;
+
+    let emailFlagInvalid = false;
+    let emailValidateTimeout = null;
+    $: {
+        $newUser.email;
+
+        emailFlagInvalid = false;
+        if (typeof window !== 'undefined') {
+            if (emailValidateTimeout !== null) {
+                window.clearTimeout(emailValidateTimeout);
+                emailValidateTimeout = null;
+            }
+            emailValidateTimeout = window.setTimeout(() => {
+                emailFlagInvalid = $newUser.email && !emailValidated;
+            }, INVALID_EMAIL_DELAY);
+        }
+    }
+
     function submit() {
         if ($signUpFormValidated) {
             dispatch('confirm');
@@ -54,7 +73,8 @@
     </div>
     <div class="field">
         <div class="label">{locale.SIGN_UP.EMAIL}</div>
-        <input type="text" id="email" name="email" autocomplete="email" bind:value="{$newUser.email}" bind:this="{emailField}" on:keypress="{(e) => testInputDefocus(e, {action: submit})}" />
+        <input type="text" id="email" name="email" autocomplete="email" class:invalid="{emailFlagInvalid}" bind:value="{$newUser.email}" bind:this="{emailField}" on:keypress="{(e) => testInputDefocus(e, {action: submit})}" />
+        {#if emailFlagInvalid}<div class="errorLabel">Invalid Email</div>{/if}
     </div>
 </div>
 
@@ -64,6 +84,8 @@
         align-items: center;
         justify-content: center;
         flex-flow: wrap;
+
+        padding-bottom: 2px;
     }
 
     .signUpPrompt :global(.avatarIcon) {
@@ -74,7 +96,8 @@
         box-sizing: content-box;
         overflow: initial;
 
-        margin-top: 8px;
+        margin-top: 4px;
+        margin-bottom: -4px;
     }
     .signUpPrompt :global(.avatarIconImage) {
         border: 1px solid #cacaca;
@@ -84,9 +107,10 @@
     }
 
 	.field {
+        position: relative;
     	padding: 0 21px;
         padding-top: 20px;
-        padding-bottom: 10px;
+        /* padding-bottom: 10px; */
 	}
 
 	.label {
@@ -112,4 +136,17 @@
 
         padding: 6px 4px;
 	}
+
+    .invalid {
+        color: #DF3C3C;
+    }
+
+    .errorLabel {
+        position: absolute;
+        right: 20px;
+
+        font-size: 1.2rem;
+
+        color: #DF3C3C;
+    }
 </style>

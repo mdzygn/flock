@@ -7,6 +7,7 @@ import {
     targetProject,
     targetUser,
     signUpFormValidated,
+    setAccountFormValidated,
     logInFormValidated,
 } from '../models/appModel';
 
@@ -198,16 +199,6 @@ const prompts = {
             },
         ],
     },
-    SIGN_UP_USERNAME_EXISTS: {
-        title: 'Create User',
-        message: 'User name already exists',
-        menuItems: [
-            {
-                label: 'Ok',
-                action: () => { showPrompt(promptIds.SIGN_UP); },
-            },
-        ],
-    },
     SIGN_UP_EMAIL_EXISTS: {
         title: 'Create User',
         message: 'Email already exists',
@@ -215,6 +206,27 @@ const prompts = {
             {
                 label: 'Ok',
                 action: () => { showPrompt(promptIds.SIGN_UP); },
+            },
+        ],
+    },
+    SET_ACCOUNT: {
+        title: 'Create User',
+        menuItems: [
+            {
+                label: 'Get Started!',
+                disabled: () => !get(setAccountFormValidated),
+                default: true,
+            },
+        ],
+    },
+    USERNAME_EXISTS: {
+        title: 'Create User',
+        message: 'User name already exists',
+        menuItems: [
+            {
+                label: 'Ok',
+                action: () => { showPrompt(promptIds.SET_ACCOUNT); },
+                // action: () => { showPrompt(promptIds.SIGN_UP); },
             },
         ],
     },

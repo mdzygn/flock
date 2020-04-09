@@ -98,8 +98,9 @@ export const discoverSearchString = appModel.discoverSearchString;
 export const displayingAllMyProjects = appModel.displayingAllMyProjects;
 export const displayingAllFollowingProjects = appModel.displayingAllFollowingProjects;
 
-export const signUpFormValidated = writable(false);
 export const logInFormValidated = writable(false);
+export const signUpFormValidated = writable(false);
+export const setAccountFormValidated = writable(false);
 
 initApp();
 

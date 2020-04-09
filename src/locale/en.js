@@ -65,6 +65,11 @@ const locale = {
 		LAST_NAME: 'Last name',
 		EMAIL: 'Email',
 	},
+	SET_ACCOUNT: {
+		USERNAME: 'username',
+		PASS: 'password',
+		PASS_REPEAT: 'confirm password',
+	},
 	LOG_IN: {
 		USERNAME: 'username',
 		PASS: 'password',

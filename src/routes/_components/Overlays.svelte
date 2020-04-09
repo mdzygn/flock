@@ -1,17 +1,25 @@
 <script>
 	import promptIds from '../../config/promptIds';
 
-	import SignUpPrompt from './SignUpPrompt.svelte';
 	import LogInPrompt from './LogInPrompt.svelte';
+	import SignUpPrompt from './SignUpPrompt.svelte';
+	import SetAccountPrompt from './SetAccountPrompt.svelte';
 
 	import { curMenu, curPrompt } from '../../models/appModel';
 
 	import OverlayMenu from './OverlayMenu.svelte';
 	import OverlayPrompt from './OverlayPrompt.svelte';
 
-	import { createUser } from '../../actions/userActions';
+	import { createUser, setAccountDetails } from '../../actions/userActions';
 
 	import { closeOverlay, login } from '../../actions/appActions';
+
+	let logInDetails;
+	let logInUpdateMenuItems;
+	function logInSubmit() {
+		closeOverlay();
+		login($logInDetails);
+	}
 
 	let signUpNewUser;
 	let signUpUpdateMenuItems;
@@ -20,11 +28,11 @@
 		createUser(signUpNewUser);
 	}
 
-	let logInDetails;
-	let logInUpdateMenuItems;
-	function logInSubmit() {
+	let userDetails;
+	let setAccountUpdateMenuItems;
+	function setAccountSubmit() {
 		closeOverlay();
-		login($logInDetails);
+		setAccountDetails(userDetails);
 	}
 </script>
 
@@ -48,6 +56,14 @@
 						bind:newUser="{signUpNewUser}"
 						on:confirm="{signUpSubmit}"
 						on:change="{signUpUpdateMenuItems}"
+					/>
+				</OverlayPrompt>
+			{:else if $curPrompt === promptIds.SET_ACCOUNT }
+				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{setAccountSubmit}" bind:updateMenuItems="{setAccountUpdateMenuItems}">
+					<SetAccountPrompt
+						bind:userDetails="{userDetails}"
+						on:confirm="{setAccountSubmit}"
+						on:change="{setAccountUpdateMenuItems}"
 					/>
 				</OverlayPrompt>
 			{:else}

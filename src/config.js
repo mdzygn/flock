@@ -16,6 +16,8 @@ export const MAX_ID_LENGTH = 12;
 export const MAX_PROJECT_DESCRIPTION_CHARS = 140;
 export const PROJECT_DESCRIPTION_CHARS_LOW = 20;
 
+export const INVALID_FIELD_DELAY = 700;
+
 export default {
     DEBUG,
 
@@ -34,4 +36,6 @@ export default {
 
     MAX_PROJECT_DESCRIPTION_CHARS,
     PROJECT_DESCRIPTION_CHARS_LOW,
+
+    INVALID_FIELD_DELAY,
 };

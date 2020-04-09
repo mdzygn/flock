@@ -63,6 +63,10 @@ export function copyProfileLink(userId) {
     copyToClipboard(url);
 }
 
+export function setAccountDetails(userDetails) {
+    updateUser(userDetails);
+}
+
 export function createUser(newUserModel) {
     const newUser = get(newUserModel);
 
@@ -80,26 +84,35 @@ function addUser(newUserModel) {
 
 	newUser.createdAt = (new Date()).getTime(); // use for initial sort values
 	newUser.modifiedAt = newUser.createdAt;
-	newUser.lastActiveAt = newUser.createdAt;
+    newUser.lastActiveAt = newUser.createdAt;
+
+    const newUserDetails = Object.assign({}, newUser);
+    newUserDetails.username = '';
 
     loadingUsers.set(true);
-	api.addUser({details: newUser}).then(result => {
+	api.addUser({details: newUserDetails}).then(result => {
         if (result && !result.error) {
             if (!result.invalid) {
                 // newUser._id = result.insertedId;
 
+
+                const localUserDetails = Object.assign({}, newUser);
+                delete localUserDetails.email;
+
                 // TODO: use added item
-                mergeUsers([newUser]);
+                mergeUsers([localUserDetails]);
                 setUser(newUser.id);
 
                 username.set(newUser.username);
                 usercode.set(newUser.usercode);
 
+                showPrompt(promptIds.SET_ACCOUNT);
+
                 // goto('profile/' + newUser.id);
             } else {
                 switch (result.errorType) {
                     case 'username_exists':
-                        showPrompt(promptIds.SIGN_UP_USERNAME_EXISTS);
+                        showPrompt(promptIds.USERNAME_EXISTS);
                         break;
                     case 'email_exists':
                         showPrompt(promptIds.SIGN_UP_EMAIL_EXISTS);
@@ -115,4 +128,24 @@ function addUser(newUserModel) {
 	// users.set(curUsers);
 
 	return newUserModel;
+}
+
+function updateUser(userDetails) {
+    if (userDetails && userDetails.id) {
+        const curUserId = userDetails.id;
+        delete userDetails.id;
+
+        const curUserModel = getUser(curUserId);
+        if (curUserModel) {
+            const curUser = get(curUserModel);
+
+            const localUserDetails = Object.assign({}, userDetails);
+            delete localUserDetails.pass;
+
+            Object.assign(curUser, localUserDetails);
+            // console.log(curUser);
+
+            // api.updateUser({id: curUserId, details: userDetails});
+        }
+    }
 }

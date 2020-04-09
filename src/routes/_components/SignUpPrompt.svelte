@@ -24,14 +24,12 @@
     $: emailValidated = ($newUser.email || '').match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]{2,}\.[A-Z]{2,8}$/i);
     $: $signUpFormValidated = !!($newUser.firstName && $newUser.lastName && emailValidated);
     $: $newUser.fullName = $newUser.firstName + ' ' + $newUser.lastName;
-    $: $newUser.username = formatAsId($newUser.firstName + $newUser.lastName.substr(0, Math.min(1, $newUser.lastName.length)), config.MAX_ID_LENGTH);
+    // $: $newUser.username = formatAsId($newUser.firstName + $newUser.lastName.substr(0, Math.min(1, $newUser.lastName.length)), config.MAX_ID_LENGTH);
 
     $: {
         $signUpFormValidated;
         dispatch('change');
     }
-
-    const INVALID_EMAIL_DELAY = 700;
 
     let emailFlagInvalid = false;
     let emailValidateTimeout = null;
@@ -46,7 +44,7 @@
             }
             emailValidateTimeout = window.setTimeout(() => {
                 emailFlagInvalid = $newUser.email && !emailValidated;
-            }, INVALID_EMAIL_DELAY);
+            }, config.INVALID_FIELD_DELAY);
         }
     }
 
@@ -69,7 +67,7 @@
     </div>
     <div class="field">
         <div class="label">{locale.SIGN_UP.LAST_NAME}</div>
-        <input type="text" id="lname" name="lname" autocomplete="family-name" autocapitalize="words" bind:value="{$newUser.lastName}" bind:this="{lastNameField}" on:keypress="{(e) => testInputDefocus(e, {action: emailField})}" />
+        <input type="text" id="lname" name="lname" autocomplete="family-name" autocapitalize="words" bind:value="{$newUser.lastName}" bind:this="{lastNameField}" on:keypress="{(e) => testInputDefocus(e, {target: emailField})}" />
     </div>
     <div class="field">
         <div class="label">{locale.SIGN_UP.EMAIL}</div>

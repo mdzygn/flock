@@ -6,12 +6,12 @@ export async function post(req, res, next) {
 	const options = req.body;
 	let details = options.details;
 
-	if (details && details.username && details.usercode) {
+	if (details && details.usercode) { // details.username &&
 
 		const userDetails = {
 			id: true,
 
-			username: true,
+			// username: true,
 			usercode: true,
 
 			fullName: true,
@@ -44,10 +44,10 @@ export async function post(req, res, next) {
 		if (exisitingEmail) {
 			response(res, {invalid: true, errorType: 'email_exists'});
 		} else {
-			const exisitingUser = await db.collection('users').findOne({ username: details.username });
-			if (exisitingUser) {
-				response(res, {invalid: true, errorType: 'username_exists'});
-			} else {
+			// const exisitingUser = await db.collection('users').findOne({ username: details.username });
+			// if (exisitingUser) {
+			// 	response(res, {invalid: true, errorType: 'username_exists'});
+			// } else {
 				details.createdAt = (new Date()).getTime();
 				details.modifiedAt = details.createdAt;
 				details.lastActiveAt = details.createdAt;
@@ -59,7 +59,7 @@ export async function post(req, res, next) {
 				} else {
 					response(res, {error: true});
 				}
-			}
+			// }
 		}
 	} else {
 		response(res, {error: true});

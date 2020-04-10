@@ -399,6 +399,8 @@ export async function logOut(dontDisplayMessage) {
     userId.set(null);
     user.set(null);
 
+    usercode.set('');
+
     updateProjectLists();
 
     // if (!dontDisplayMessage) {

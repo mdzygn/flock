@@ -40,7 +40,9 @@ export async function post(req, res, next) {
 
 		// console.log('filtered user details', details);
 
-		const exisitingEmail = await db.collection('users').findOne({ email: details.email });
+		details.email = details.email.trim();
+
+		const exisitingEmail = await db.collection('users').findOne({ email: { $regex : new RegExp('^' + details.email + '$', 'i') }  });
 		if (exisitingEmail) {
 			response(res, {invalid: true, errorType: 'email_exists'});
 		} else {

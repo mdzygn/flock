@@ -29,7 +29,7 @@ export async function post(req, res, next) {
             }
 
             if (!curUser.pass) {
-                const exisitingUser = await db.collection('users').findOne({ username: details.username });
+                const exisitingUser = await db.collection('users').findOne({ username: { $regex : new RegExp('^' + details.username + '$', 'i') } });
                 if (exisitingUser && exisitingUser.id !== userId) {
                     response(res, {invalid: true, errorType: 'username_exists'});
                 } else {

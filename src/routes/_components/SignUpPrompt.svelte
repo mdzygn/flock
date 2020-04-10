@@ -31,6 +31,12 @@
         dispatch('change');
     }
 
+    $: { // prevent disallowed characters
+        if ($newUser.email) {
+            $newUser.email = $newUser.email.replace(/[^a-zA-Z0-9_/-@.]/g,'')
+        }
+    }
+
     let emailFlagInvalid = false;
     let emailValidateTimeout = null;
     $: {

@@ -3,7 +3,7 @@ import api from '../api';
 // import config from "../config";
 
 import { get } from 'svelte/store';
-// import { goto } from '@sapper/app';
+import { goto } from '@sapper/app';
 // import { DEBUG } from '../config';
 
 import { copyToClipboard, generateId } from '../utils';
@@ -15,7 +15,9 @@ import {
     username,
     usercode,
     user,
+    userId,
     newUsername,
+    resetScrollRegionPosition,
 } from '../models/appModel';
 
 import {
@@ -199,14 +201,14 @@ function setUserDetails(userModel, userDetails) {
 export function saveProfile(profileDetails, options) {
     if (!checkLoggedIn()) { return; }
 
-    const userModel = get(user);
-    if (userModel) {
-        setUserDetails(userModel, profileDetails);
-        userModel.set(profileDetails);
+    const curUser = get(user);
+    if (curUser) {
+        setUserDetails(user, profileDetails);
+        user.set(curUser);
 
         console.log(profileDetails);
 
-        goto('profile/' + profileDetails.id);
+        goto('profile/' + curUser.id);
         resetScrollRegionPosition('profile');
     }
 }

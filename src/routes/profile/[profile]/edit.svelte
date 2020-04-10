@@ -53,9 +53,7 @@
 			style: $curUserProps.style,
 		};
 
-		console.log(profileDetails);
-
-		// saveProfile(profileDetails);
+		saveProfile(profileDetails);
 	}
 
     function randomiseProfileColor() {

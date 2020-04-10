@@ -25,6 +25,7 @@ import {
     loadProfile,
     logOut,
     showTogglePublicDialog,
+    editProfile,
 } from '../actions/appActions';
 
 import {
@@ -108,7 +109,7 @@ export const menus = {
             },
             {
                 label: 'Edit Profile...',
-                disabled: true,
+                action: editProfile,
             },
         ],
     },

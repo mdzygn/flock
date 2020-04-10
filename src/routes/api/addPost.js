@@ -57,7 +57,13 @@ export async function post(req, res, next) {
 				const userUpdateResult = await db.collection('users').updateOne({ id: details.userId }, { $inc: { postsCount: 1 } });
 
 				if (userUpdateResult) {
-					response(res, {success: true});
+					const projectUpdateResult = await db.collection('projects').updateOne({ id: details.projectId }, { $set: { lastActiveAt: details.lastActiveAt } });
+
+					if (projectUpdateResult) {
+						response(res, {success: true});
+					} else {
+						response(res, {error: true});
+					}
 				} else {
 					response(res, {error: true});
 				}

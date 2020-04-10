@@ -21,7 +21,7 @@
 
     $: thumbImage = getProjectHeaderImage($project);
 
-    $: date = $project && ((enableLastActive && showLastActive) ? $project.lastActiveAt : $project.createdAt);
+    $: date = $project && (showLastActive ? $project.lastActiveAt : $project.createdAt);
     // $: detail = (showLastActive ? $project.lastActiveInfo : $project.createdInfo) || '';
 
     let dateString = '';

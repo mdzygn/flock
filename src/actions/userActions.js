@@ -178,20 +178,35 @@ function updateUser(userDetails) {
             });
         }
     }
+}
 
-    function setUserDetails(userModel, userDetails) {
-        const curUser = get(userModel);
+function setUserDetails(userModel, userDetails) {
+    const curUser = get(userModel);
 
-        if (curUser) {
-            Object.assign(curUser, userDetails);
-            userModel.set(curUser);
+    if (curUser) {
+        Object.assign(curUser, userDetails);
+        userModel.set(curUser);
 
-            if (get(viewedUser) && get(viewedUser).id == curUser.id) {
-                viewedUser.set(curUser);
-            }
-            if (get(user) && get(user).id == curUser.id) {
-                user.set(curUser);
-            }
+        if (get(viewedUser) && get(viewedUser).id == curUser.id) {
+            viewedUser.set(curUser);
         }
+        if (get(user) && get(user).id == curUser.id) {
+            user.set(curUser);
+        }
+    }
+}
+
+export function saveProfile(profileDetails, options) {
+    if (!checkLoggedIn()) { return; }
+
+    const userModel = get(user);
+    if (userModel) {
+        setUserDetails(userModel, profileDetails);
+        userModel.set(profileDetails);
+
+        console.log(profileDetails);
+
+        goto('profile/' + profileDetails.id);
+        resetScrollRegionPosition('profile');
     }
 }

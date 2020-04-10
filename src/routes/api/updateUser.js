@@ -64,6 +64,6 @@ export async function post(req, res, next) {
             response(res, {error: true});
         }
     } else {
-        response(res, {error: true});
+
     }
 }

@@ -37,6 +37,18 @@ const locale = {
 		CONFIRM: 'save',
 		CANCEL: 'cancel',
 	},
+	EDIT_PROFILE: {
+		NAME: 'name',
+		BIO: 'bio',
+		BIO_TIP: 'what fuels your fire?',
+		COVER_IMAGE: 'cover image',
+		SKILLS: 'skills',
+		SKILLS_TIP: 'capabilities and talents, separated by commas',
+		LOCATION: 'location',
+		LOCATION_TIP: 'where are you based?',
+		CONFIRM: 'save',
+		CANCEL: 'cancel',
+	},
 	LOADING: {
 		DEFAULT: 'loading...',
 		DISCOVER: 'loading projects...',

@@ -24,8 +24,8 @@
 
     $: userId = ($post && $post.userId) || null;
     $: { user = getUser(userId) };
-    $: userLoaded = ($user && $user.fullName) || false;
-    $: userFullName = ($user && $user.fullName) || '&nbsp;';
+    $: userLoaded = ($user && $user.name) || false;
+    $: userName = ($user && $user.name) || '&nbsp;';
     $: username = ($user && $user.username && '@' + $user.username) || '';
 
     $: title = ($post && $post.title) || '';
@@ -64,7 +64,7 @@
     </div> -->
 
     <div class="info" on:click="{userLoaded ? viewUserProfile : null}">
-        <div class="userFullName" class:button="{userLoaded}">{@html userFullName}</div>
+        <div class="userName" class:button="{userLoaded}">{@html userName}</div>
         <div class="username" class:button="{userLoaded}">{username}</div>
     </div>
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
@@ -110,7 +110,7 @@
         padding-left: 104px;
     }
 
-    .userFullName {
+    .userName {
         font-size: 1.7rem;
         color: #222222;
         font-weight: 700;

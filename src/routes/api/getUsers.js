@@ -12,9 +12,10 @@ export async function post(req, res, next) {
 
                 username: true,
 
-                fullName: true,
-                firstName: true,
-                lastName: true,
+                name: true,
+                // fullName: true,
+                // firstName: true,
+                // lastName: true,
 
                 bio: true,
 
@@ -41,6 +42,10 @@ export async function post(req, res, next) {
                 user = userResults[userI];
                 if (!user.pass) {
                         user.set = false;
+                }
+
+                if (!user.name) {
+                        user.name = user.fullName;
                 }
         }
 

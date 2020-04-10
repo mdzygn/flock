@@ -103,6 +103,18 @@ export function getNewUser() {
 	return newUserModel;
 }
 
+export function getUserClone(userModel) {
+	const newUser = get(userModel);
+
+	const userCloneModel = writable(null);
+	if (newUser) {
+		const userClone = Object.assign({}, newUser);
+		userCloneModel.set(userClone);
+	}
+
+	return userCloneModel;
+}
+
 export function randomiseUserProfileImageColor(userModel) {
 	const user = get(userModel);
 

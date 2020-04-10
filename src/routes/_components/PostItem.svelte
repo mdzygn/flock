@@ -35,8 +35,8 @@
 
     $: userId = ($post && $post.userId) || null;
     $: { user = getUser(userId) };
-    $: userLoaded = ($user && $user.fullName) || false;
-    $: userFullName = ($user && $user.fullName) || '&nbsp;';
+    $: userLoaded = ($user && $user.name) || false;
+    $: userFullName = ($user && $user.name) || '&nbsp;';
 
     $: title = ($post && $post.title) || null;
     $: message = ($post && $post.message) || null;

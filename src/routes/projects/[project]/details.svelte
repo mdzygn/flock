@@ -407,30 +407,6 @@
 		padding-bottom: 20px;
 	}
 
-
-	.detailTextarea {
-        border: 1px solid #999999;
-
-        outline: none;
-        background: none;
-
-        width: 100%;
-    	height: 140px;
-    	/* height: 236px; */
-
-        box-sizing: border-box;
-
-        /* font-size: 1.5rem; */
-    	font-size: 1.4rem;
-    	color: #555555;
-
-        padding: 6px 4px;
-
-    	margin-top: 4px;
-
-		resize: none;
-	}
-
 	.content :global(.addImage) {
 		position: absolute;
     	top: 6px;

@@ -208,6 +208,12 @@ export function editProjectDetails(options) {
     goto('projects/' + get(projectId) + '/details');
 }
 
+export function editProfile() {
+    if (!checkLoggedIn()) { return; }
+
+    goto('profile/' + get(profileId) + '/edit');
+}
+
 export function showLikes() {
     goto('profile/' + get(profileId) + '/likes');
     resetScrollRegionPosition('likes');

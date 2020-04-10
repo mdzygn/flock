@@ -5,7 +5,7 @@
 
     export let user;
 
-    $: fullName = ($user && $user.fullName) || '';
+    $: name = ($user && $user.name) || '';
     $: username = ($user && $user.username && '@' + username) || '';
 
     function loadCurrentUser() {
@@ -19,7 +19,7 @@
     <AvatarIcon {user} />
     <div class="detailContent">
         <div class="detailInnerContent">
-            <div class="title">{fullName}</div>
+            <div class="title">{name}</div>
             <div class="username">{username}</div>
         </div>
     </div>

@@ -3,7 +3,7 @@
     const dispatch = createEventDispatcher();
 
     export let value = '';
-    export let field;
+    export let field = null;
     export let maxlength;
 
     export let remainingChars = 0;

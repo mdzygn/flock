@@ -68,7 +68,7 @@
         } else if (/\/posts\/.+/.test(path) && $channel) {
             sectionLabel = '#'+$channel.title;
         } else if (/\/profile\/.+/.test(path) && !isCurrentUser && $viewedUser) {//$viewedUser && !$viewedUser.isCurrentUser) {
-            sectionLabel = $viewedUser.fullName;
+            sectionLabel = $viewedUser.name;
         } else if (/\/messages\/.+/.test(path) && $conversation && ($conversation.user || $conversation.project)) {
             if ($conversation.project && $project) { // // temporary
                 sectionLabel = $project.title;

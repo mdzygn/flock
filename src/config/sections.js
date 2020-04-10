@@ -166,6 +166,12 @@ export const sections = [
 		// parentPath: 'messages',
 	},
 	{
+		path: '/profile/.+/edit',
+		id: 'profile_edit',
+		label: 'Likes',
+		showBack: true,
+	},
+	{
 		path: '/profile/.+',
 		id: 'profile_view',
 		label: '', // 'Sasha Holmer',

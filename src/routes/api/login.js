@@ -28,9 +28,10 @@ export async function post(req, res, next) {
 
 					usercode: true, // return so can login and authorise
 
-					fullName: true,
-					firstName: true,
-					lastName: true,
+					name: true,
+					// fullName: true,
+					// firstName: true,
+					// lastName: true,
 
 					bio: true,
 
@@ -55,6 +56,10 @@ export async function post(req, res, next) {
 
 				if (!user.pass) {
 					user.set = false;
+				}
+
+                if (!user.name) {
+					user.name = user.fullName;
 				}
 
 				const userDetails = filterItemDetails(user, userDetailsSchema);

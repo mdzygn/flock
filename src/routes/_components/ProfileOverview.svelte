@@ -31,6 +31,7 @@
         showLikes,
         messageUser,
         showMenu,
+        editProfile,
     } from '../../actions/appActions'
 
 	import { requestConnection } from '../../actions/userActions';
@@ -45,7 +46,7 @@
     $: userId = ($viewedUser && $viewedUser.id) || '';
     $: username = ($viewedUser && $viewedUser.username && '@' + $viewedUser.username) || '';
 
-    $: userFullName = ($viewedUser && $viewedUser.fullName) || '';
+    $: userName = ($viewedUser && $viewedUser.name) || '';
     $: userFirstName = ($viewedUser && $viewedUser.firstName) || '';
     $: userBio = ($viewedUser && $viewedUser.bio) || '';
     $: userLocation = ($viewedUser && $viewedUser.location) || '';
@@ -107,9 +108,9 @@
             </div> -->
             <AvatarIcon user="{viewedUser}" />
             <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProfileOptions}"></Button>
-            {#if $showBetaFeatures}
-                <Button className="editButton" icon="{EditIcon}" disabled="{true}">edit</Button>
-            {/if}
+            <!-- {#if $showBetaFeatures} -->
+                <Button className="editButton" icon="{EditIcon}" onClick="{editProfile}">edit</Button>
+            <!-- {/if} -->
             {#if $showBetaFeatures}
                 <div class="userStats">
                     <Button><span class="label">posts</span><div class="count">{postsCount}</div></Button>
@@ -118,7 +119,7 @@
                 </div>
             {/if}
             <div class="itemContent">
-                <div class="header">{userFullName}</div>
+                <div class="header">{userName}</div>
                 <div class="username">{username}</div>
                 <div class="description">{@html userBioHTML}</div>
             </div>

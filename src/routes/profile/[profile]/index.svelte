@@ -34,7 +34,7 @@
         getIsCurrentUser,
 	} from '../../../models/appModel';
 
-	$: viewedUserLoaded = ($viewedUser && $viewedUser.fullName) || false;
+	$: viewedUserLoaded = ($viewedUser && $viewedUser.name) || false;
 	$: userId = ($viewedUser && $viewedUser.id) || null;
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;

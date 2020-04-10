@@ -7,7 +7,7 @@
 
     import { testInputDefocus, formatAsId, validateEmail, invalidateTimeout } from '../../utils';
 
-    import { signUpFormValidated } from '../../models/appModel';
+    import { signUpFormValidated, newUsername } from '../../models/appModel';
 
     import { getNewUser, randomiseUserProfileImageColor } from '../../models/usersModel';
 
@@ -18,6 +18,8 @@
     let firstNameField;
     let lastNameField;
     let emailField;
+
+    $newUsername = '';
 
     $: firstNameField && firstNameField.focus();
 

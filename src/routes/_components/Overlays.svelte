@@ -14,6 +14,12 @@
 
 	import { closeOverlay, login } from '../../actions/appActions';
 
+    import { menus } from '../../config/menus';
+    import prompts from '../../config/prompts';
+
+    $: menu = $curMenu ? menus[$curMenu] : null;
+    $: prompt = $curPrompt ? prompts[$curPrompt] : null;
+
 	let logInDetails;
 	let logInUpdateMenuItems;
 	function logInSubmit() {
@@ -34,11 +40,23 @@
 		closeOverlay();
 		setAccountDetails(userDetails);
 	}
+
+	$: console.log('$curPrompt', $curPrompt);
+
+	$: canClose = (menu && menu.allowClose !== false) || (prompt && prompt.allowClose !== false);
+
+	$: console.log('canClose', canClose);
+
+	function checkClose() {
+		if (canClose) {
+			closeOverlay();
+		}
+	}
 </script>
 
 {#if $curMenu || $curPrompt}
 	<div class="overlayContainer">
-		<div class="overlayBg" on:click="{closeOverlay}" />
+		<div class="overlayBg" class:button="{canClose}" on:click="{checkClose}" />
 		{#if $curMenu}
 			<OverlayMenu menuId="{$curMenu}" />
 		{:else}
@@ -97,7 +115,8 @@
 		background: rgba(0, 0, 0, 0.5);
 		width: 100%;
 		height: 100%;
-
+	}
+	.button {
 		cursor: pointer;
 	}
 </style>

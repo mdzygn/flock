@@ -213,7 +213,7 @@ const prompts = {
         title: 'Set Account Details',
         menuItems: [
             {
-                label: 'Get Started!',
+                label: 'Let\'s Go!',
                 disabled: () => !get(setAccountFormValidated),
                 default: true,
             },

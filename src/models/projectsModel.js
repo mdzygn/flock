@@ -139,10 +139,12 @@ export function getUserProjectsFromId(filteredProjects, projectIds, dontLoad, op
 		}
 	} else if (!dontLoad) {
 		onTempProjectsUpdated(() => {
-			const curProjects = get(projects);
+			// const curProjects = get(projects);
 			getUserProjectsFromId(filteredProjects, projectIds, true);
 		});
 	}
+
+	projectItems.sort((a,b) => get(b).lastActiveAt - get(a).lastActiveAt);
 
 	filteredProjects.set(projectItems);
 }

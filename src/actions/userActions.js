@@ -14,6 +14,7 @@ import {
     viewedUser,
     username,
     usercode,
+    user,
 } from '../models/appModel';
 
 import {
@@ -154,11 +155,14 @@ function updateUser(userDetails) {
             const localUserDetails = Object.assign({}, userDetails);
             delete localUserDetails.pass;
 
+
             Object.assign(curUser, localUserDetails);
-            // console.log(curUser);
             curUserModel.set(curUser);
             if (get(viewedUser) && get(viewedUser).id == curUser.id) {
                 viewedUser.set(curUser);
+            }
+            if (get(user) && get(user).id == curUser.id) {
+                user.set(curUser);
             }
 
             username.set(userDetails.username);

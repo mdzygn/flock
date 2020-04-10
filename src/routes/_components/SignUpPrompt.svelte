@@ -93,14 +93,14 @@
     }
 
     .signUpPrompt :global(.avatarIcon) {
-        width: 108px;
-        height: 108px;
+        width: 98px;
+        height: 98px;
 
         border: 4px solid #ffffff;
         box-sizing: content-box;
         overflow: initial;
 
-        margin-top: 4px;
+        margin-top: 0;
         margin-bottom: -4px;
     }
     .signUpPrompt :global(.avatarIconImage) {

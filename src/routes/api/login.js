@@ -61,10 +61,12 @@ export async function post(req, res, next) {
 
 				response(res, userDetails);
 			} else {
-				response(res, {invalid: true});
+				response(res, {invalid: true}); // pass not valid
 			}
+		} else {
+			response(res, {invalid: true}); // no user found
 		}
 	} else {
-		response(res, {invalid: true});
+		response(res, {invalid: true}); // no user specified
 	}
 }

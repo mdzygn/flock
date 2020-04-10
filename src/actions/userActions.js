@@ -162,6 +162,8 @@ function updateUser(userDetails) {
             api.updateUser({id: curUserId, details: userDetails}).then(result => {
                 if (result && !result.error && !result.invalid) {
                     setUserDetails(curUserModel, {set: true});
+
+                    showPrompt(promptIds.ACCOUNT_READY);
                 } else {
                     if (result.invalid) {
                         switch (result.errorType) {

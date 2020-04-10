@@ -19,6 +19,7 @@ const promptIds = {
     LOGGED_OUT: 'LOGGED_OUT',
     ADD_PROJECT_ERROR: 'ADD_PROJECT_ERROR',
     SET_ACCOUNT: 'SET_ACCOUNT',
+    ACCOUNT_READY: 'ACCOUNT_READY',
 }
 
 export default promptIds;

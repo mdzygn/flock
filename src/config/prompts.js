@@ -213,15 +213,26 @@ const prompts = {
         title: 'Set Account Details',
         menuItems: [
             {
-                label: 'Let\'s Go!',
+                label: 'Confirm',
+                // label: 'Let\'s Go!',
                 disabled: () => !get(setAccountFormValidated),
                 default: true,
             },
         ],
     },
+    ACCOUNT_READY: {
+        title: 'Account Created',
+        message: 'You\'re all set!',
+        menuItems: [
+            {
+                label: 'Let\'s Go!',
+                default: true,
+            },
+        ],
+    },
     USERNAME_EXISTS: {
-        title: 'Create User',
-        message: 'User name already exists',
+        title: 'Sorry',
+        message: 'That username already exists',
         allowClose: false,
         menuItems: [
             {

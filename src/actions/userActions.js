@@ -157,13 +157,13 @@ export function setAccountDetails(userDetails) {
             username.set(userDetails.username);
             newUsername.set(userDetails.username);
 
-            goto('profile/' + curUserId);
+            // goto('profile/' + curUserId);
 
             api.updateUser({id: curUserId, details: userDetails}).then(result => {
                 if (result && !result.error && !result.invalid) {
                     setUserDetails(curUserModel, {set: true});
 
-                    // showPrompt(promptIds.ACCOUNT_READY);
+                    showPrompt(promptIds.ACCOUNT_READY);
 
                     // goto('profile/' + curUserId);
                 } else {

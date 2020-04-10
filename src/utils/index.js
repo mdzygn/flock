@@ -293,3 +293,10 @@ export function invalidateTimeout(id, callback, delay) {
         }, delay);
     }
 }
+
+export function getSplitItems(items) {
+    if (typeof items === 'string') {
+        items = items.split(',').map((item) => item.trim());
+    }
+    return items;
+}

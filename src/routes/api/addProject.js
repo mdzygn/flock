@@ -19,6 +19,8 @@ export async function post(req, res, next) {
 		const projectDetails = {
 			id: true,
 
+			ownerId: true,
+
 			slug: true,
 			title: true,
 			description: true,
@@ -41,7 +43,6 @@ export async function post(req, res, next) {
 			links: true,
 			team: true,
 			posts: true,
-			ownerId: true,
 		};
 
 		details = filterItemDetails(details, projectDetails);
@@ -78,7 +79,14 @@ export async function post(req, res, next) {
 			}
 
 			if (!channelAddFailed) {
-				response(res, {success: true});
+				console.log('details.userId', options.userId, 'details.id', details.id);
+				const userUpdateResult = await db.collection('users').updateOne({ id: options.userId }, { $push: { projects: details.id } });
+
+				if (userUpdateResult) {
+					response(res, {success: true});
+				} else {
+					response(res, {error: true});
+				}
 			} else {
 				response(res, {error: true});
 			}

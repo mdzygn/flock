@@ -348,6 +348,9 @@ export function addProject(projectDetails) {
 
 	newProject.id = projectId;
 
+	newProject.ownerId = ownerId;
+	newProject.team = [ownerId];
+
 	newProject.headerImage = projectDetails.headerImage || null;
 	newProject.title = projectDetails.title || '';
 	newProject.description = projectDetails.description || '';
@@ -355,9 +358,6 @@ export function addProject(projectDetails) {
 	newProject.createdAt = (new Date()).getTime(); // use for initial sort values
 	newProject.modifiedAt = newProject.createdAt;
 	newProject.lastActiveAt = newProject.createdAt;
-
-	newProject.ownerId = ownerId;
-	newProject.team = [ownerId];
 
 	newProject.isNew = true;
 	newProject.hasCreated = true;

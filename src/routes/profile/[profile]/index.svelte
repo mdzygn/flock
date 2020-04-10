@@ -2,6 +2,8 @@
 	import locale from '../../../locale';
 	import { writable } from 'svelte/store';
 
+	import { getSplitItems } from '../../../utils';
+
 	import ScrollView from '../../../components/ScrollView.svelte';
 
 	import Proxy from '../../../components/Proxy.svelte';
@@ -41,8 +43,10 @@
     $: isCurrentUser = getIsCurrentUser($viewedUser && $viewedUser.id);
 	// $: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
 
-	$: skills = ($viewedUser && $viewedUser.skills) || null;
+	$: skills = ($viewedUser && $viewedUser.skills && getSplitItems($viewedUser.skills)) || null;
 	$: projectIds = ($viewedUser && $viewedUser.projects) || null;
+
+	$: console.log('projectIds', projectIds);
 
 	const PROJECTS_DISPLAY_LIMIT = 3;
 
@@ -80,7 +84,7 @@
 				<ProfileOverview />
 			</div>
 			<!-- <Proxy image="{proxySkillsImage}" className="proxyOverlay" /> -->
-            {#if $showBetaFeatures}
+            <!-- {#if $showBetaFeatures} -->
 				{#if skills && skills.length}
 					<ContentPanel title="Skills" showEdit="{isCurrentUser}">
 						<TagSet tags="{skills}" />
@@ -89,7 +93,7 @@
 				{#if projectIds && projectIds.length}
 					<ProjectList projects="{userProjects}" showIfNoProjects="{true}" displayLimit="{$profileDisplayingAllProjects ? 0 : PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllProjects}" />
 				{/if}
-			{/if}
+			<!-- {/if} -->
 		</div>
 	</ScrollView>
 {/if}

@@ -35,6 +35,8 @@ export async function post(req, res, next) {
 
                 location: true,
 
+                projects: true,
+
                 set: true,
         };
 

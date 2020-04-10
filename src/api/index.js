@@ -158,6 +158,7 @@ function addUser(options) {
 
 // options = { id: string, details: {} }
 function updateUser(options) {
+	options = addCredentials(options);
 	return send('updateUser', options).catch(error => {
 		console.error('API Error: ' + error, { error });
 		return Promise.reject(error); // TODO: prevent followups being called

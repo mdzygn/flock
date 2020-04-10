@@ -3,13 +3,22 @@ import { init, response, validateCredentials, filterItemDetails } from '../../se
 export async function post(req, res, next) {
 	const { db } = await init();
 
-	const options = req.body;
+    const options = req.body;
+
+    if (details.username && details.pass) {
+        options.setAccount = true;
+    }
+
+	if (!await validateCredentials(db, options)) {
+		response(res, {invalid: true});
+		return;
+	}
 
     const userId = options.id;
 
-	let details = options.details;
+    let details = options.details;
 
-    if (details.username && details.pass) {
+    if (options.setAccount) {
         const curUser = await db.collection('users').findOne({ id: userId });
         if (curUser) {
             if (!curUser.pass) {

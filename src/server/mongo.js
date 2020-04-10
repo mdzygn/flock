@@ -23,7 +23,7 @@ export function response(res, responseObject) {
 export async function validateCredentials(db, options) {
     const userItem = await db.collection('users').findOne({ id: options.userId });
 
-    if (userItem && userItem.usercode === options.usercode) {
+    if (userItem && userItem.usercode === options.usercode && (userItem.pass || options.setAccount)) {
         return true;
     } else {
         return false;

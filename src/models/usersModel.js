@@ -11,7 +11,7 @@ import { generateId } from '../utils';
 // const users = JSON.parse(JSON.stringify(usersData));
 
 import UserModel from '../models/userModel';
-import { viewedUser, profileId } from './appModel';
+import { viewedUser, profileId, user, userId } from './appModel';
 
 export let loadingUsers = writable(false);
 
@@ -61,11 +61,13 @@ export function mergeUsers(newUsers) {
 
 		const viewedProfileId = get(profileId);
 
-		let curUser, newUserData, userId, newUser;
+		let activeUserId = get(userId);
+
+		let curUser, newUserData, curUserId, newUser;
 		for (var userI = 0; userI < newUsers.length; userI++) {
 			newUserData = newUsers[userI];
-			userId = newUserData.id;
-			curUser = curUsers.find(match => get(match).id === userId);
+			curUserId = newUserData.id;
+			curUser = curUsers.find(match => get(match).id === curUserId);
 			if (!curUser) {
 				curUser = UserModel(newUserData);
 				curUsers.unshift(curUser);
@@ -76,8 +78,11 @@ export function mergeUsers(newUsers) {
 				newUser = Object.assign(newUser, newUserData);
 				curUser.set(newUser);
 			}
-			if (viewedProfileId && userId === viewedProfileId) {
+			if (viewedProfileId && curUserId === viewedProfileId) {
 				viewedUser.set(newUser);
+			}
+			if (activeUserId && activeUserId === curUserId) {
+				user.set(newUser);
 			}
 		}
 

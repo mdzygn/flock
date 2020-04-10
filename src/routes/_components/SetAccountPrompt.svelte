@@ -107,7 +107,7 @@
         {#if usernameFlagTooShort}<div class="errorLabel">username too short</div>
         {:else if usernameFlagTooLong}<div class="errorLabel">username too long</div>
         {:else if usernameFlagInvalid}<div class="errorLabel">invalid username</div>{/if}
-        <!-- {:else if usernameExists}<div class="errorLabel">Username exists</div>{/if} -->
+        <!-- {:else if usernameExists}<div class="errorLabel">username exists</div>{/if} -->
     </div>
     <div class="field">
         <div class="label">{locale.SET_ACCOUNT.PASS}</div>

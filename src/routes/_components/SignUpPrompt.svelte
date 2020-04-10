@@ -72,7 +72,7 @@
     <div class="field">
         <div class="label">{locale.SIGN_UP.EMAIL}</div>
         <input type="text" id="email" name="email" autocomplete="email" class:invalid="{emailFlagInvalid}" bind:value="{$newUser.email}" bind:this="{emailField}" on:keypress="{(e) => testInputDefocus(e, {action: submit})}" />
-        {#if emailFlagInvalid}<div class="errorLabel">invalid Email</div>{/if}
+        {#if emailFlagInvalid}<div class="errorLabel">invalid email</div>{/if}
     </div>
 </div>
 

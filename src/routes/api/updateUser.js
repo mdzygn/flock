@@ -5,6 +5,9 @@ export async function post(req, res, next) {
 
     const options = req.body;
 
+    const userId = options.id;
+    let details = options.details;
+
     if (details.username && details.pass) {
         options.setAccount = true;
     }
@@ -13,10 +16,6 @@ export async function post(req, res, next) {
 		response(res, {invalid: true});
 		return;
 	}
-
-    const userId = options.id;
-
-    let details = options.details;
 
     if (options.setAccount) {
         const curUser = await db.collection('users').findOne({ id: userId });

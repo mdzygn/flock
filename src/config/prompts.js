@@ -210,7 +210,7 @@ const prompts = {
         ],
     },
     SET_ACCOUNT: {
-        title: 'Create User',
+        title: 'Set Account Details',
         menuItems: [
             {
                 label: 'Get Started!',

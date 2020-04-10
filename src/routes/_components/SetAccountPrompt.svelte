@@ -23,7 +23,7 @@
 
     $: usernameField && usernameField.focus();
 
-    let username = formatAsId($user.firstName + $user.lastName.substr(0, Math.min(1, $user.lastName.length)), config.MAX_ID_LENGTH);
+    let username = $user.username || formatAsId($user.firstName + $user.lastName.substr(0, Math.min(1, $user.lastName.length)), config.MAX_ID_LENGTH);
     let pass = '';
     let passRepeat = '';
 

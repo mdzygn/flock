@@ -369,6 +369,8 @@ export function showTogglePublicDialog() {
 }
 
 export function login(details) {
+    username.set(details.username);
+
     api.login(details).then(result => {
         if (result && !result.invalid && !result.error) {
             const userInfo = result;

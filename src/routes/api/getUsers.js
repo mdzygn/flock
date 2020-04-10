@@ -8,32 +8,42 @@ export async function post(req, res, next) {
 	const userResults = await db.collection('users').find({}).toArray();
 
 	const userDetails = {
-        id: true,
+                id: true,
 
-        username: true,
+                username: true,
 
-        fullName: true,
-        firstName: true,
-        lastName: true,
+                fullName: true,
+                firstName: true,
+                lastName: true,
 
-        bio: true,
+                bio: true,
 
-        skills: true,
+                skills: true,
 
-        postsCount: true,
-        likesCount: true,
-        followsCount: true,
+                postsCount: true,
+                likesCount: true,
+                followsCount: true,
 
-        avatarImage: true,
-        coverImage: true,
+                avatarImage: true,
+                coverImage: true,
 
-        style: true,
+                style: true,
 
-        connected: true,
-        requestedConnection: true,
+                connected: true,
+                requestedConnection: true,
 
-        location: true,
-	};
+                location: true,
+
+                set: true,
+        };
+
+        for (let user, userI = 0; userI < userResults.length; userI++) {
+                user = userResults[userI];
+                if (!user.pass) {
+                        user.set = false;
+                }
+        }
+
 
 	const users = filterItemArrayDetails(userResults, userDetails);
 

@@ -41,13 +41,7 @@ export async function post(req, res, next) {
 				requestedConnection: true,
 
 				location: true,
-
-				requiresAccountSetup: true,
 			};
-
-			if (!user.pass) {
-				user.requiresAccountSetup = true;
-			}
 
 			const userDetails = filterItemDetails(user, userDetailsSchema);
 

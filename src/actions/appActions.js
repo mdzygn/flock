@@ -150,7 +150,7 @@ export function setUser(targetUserId) {
         user.set(curUser);
         // console.log(get(user));
 
-        if (curUser && curUser.loaded && !curUser.username) {
+        if (curUser && curUser.loaded && (!curUser.username || curUser.set === false)) {
             (async() => {
                 await tick();
                 showPrompt(promptIds.SET_ACCOUNT);
@@ -375,10 +375,6 @@ export function login(details) {
             if (userInfo.id) {
                 mergeUsers([userInfo]);
                 setUser(userInfo.id);
-
-                if (!userInfo.username || userInfo.requiresAccountSetup) {
-                    showPrompt(promptIds.SET_ACCOUNT);
-                }
 
                 username.set(userInfo.username);
                 usercode.set(userInfo.usercode);

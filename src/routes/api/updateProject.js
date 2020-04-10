@@ -25,6 +25,7 @@ export async function post(req, res, next) {
 		headerImage: true,
 
 		public: true,
+		archived: true,
 
 		createdAt: true,
 		lastActiveAt: true,

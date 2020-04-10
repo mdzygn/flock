@@ -112,22 +112,28 @@ export function getProject(projectId) {
 	return get(projects).find(item => get(item).id === projectId);
 }
 
-export function getUserProjectsFromId(filteredProjects, projectIds, dontLoad) {
+export function getUserProjectsFromId(filteredProjects, projectIds, dontLoad, options) {
 	loadProjects();
 
 	let projectItems = [];
+
+	const showArchived = !!(options && options.filterArchived);
+	const showPrivate = !!(options && options.filterPrivate);
 
 	const curProjects = get(projects);
 	if (curProjects && curProjects.length) {
 		if (projectIds) {
 			projectItems = [];
 
-			let project, projectId;
+			let projectModel, project, projectId;
 			for (let index = 0; index < projectIds.length; index++) {
 				projectId = projectIds[index];
-				project = getProject(projectId);
+				projectModel = getProject(projectId);
+				project = get(projectModel);
 				if (project) {
-					projectItems.push(project);
+					if ((!project.archived || showArchived) && (project.public || showPrivate)) {
+						projectItems.push(projectModel);
+					}
 				}
 			}
 		}

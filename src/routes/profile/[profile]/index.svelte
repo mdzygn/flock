@@ -49,7 +49,7 @@
 	const PROJECTS_DISPLAY_LIMIT = 3;
 
 	let userProjects = writable({});
-	$: { getUserProjectsFromId(userProjects, projectIds) }
+	$: { getUserProjectsFromId(userProjects, projectIds, null, {filterArchived: false, filterPrivate: false}) }
 
 	$: proxyActionsImage = isCurrentUser ? 'profile_actions_owner' : 'profile_actions';
 	$: proxySkillsImage = isCurrentUser ? 'profile_skills_owner' : 'profile_skills';
@@ -88,7 +88,7 @@
 						<TagSet tags="{skills}" />
 					</ContentPanel>
 				{/if}
-				{#if projectIds && projectIds.length}
+				{#if $userProjects && $userProjects.length}
 					<ProjectList projects="{userProjects}" showIfNoProjects="{true}" displayLimit="{$profileDisplayingAllProjects ? 0 : PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllProjects}" />
 				{/if}
 			<!-- {/if} -->

@@ -101,7 +101,7 @@ function addUser(newUserModel) {
     setUser(newUser.id);
 
 
-    showPrompt(promptIds.SET_ACCOUNT);
+    showPrompt(promptIds.SET_ACCOUNT, {allowClose: false});
 
     loadingUsers.set(true);
 	api.addUser({details: newUserDetails}).then(result => {

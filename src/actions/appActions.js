@@ -82,6 +82,8 @@ import {
     curMenu,
     curPrompt,
     getIsProjectTeamMember,
+
+    dontAllowOverlayClose,
 } from '../models/appModel';
 import { tick } from 'svelte';
 
@@ -307,16 +309,24 @@ export function showProjectFollowers(targetProjectId) {
     resetScrollRegionPosition('followers');
 }
 
-export function showMenu(menuId) {
-    hidePrompt();
-    if (!menuId) { console.error('Menu undefined: ' + promptId); }
-	curMenu.set(menuId);
+export function showMenu(menuId, options) {
+    if (get(curMenu) !== menuId) {
+        dontAllowOverlayClose.set(options && options.allowClose === false);
+
+        hidePrompt();
+        if (!menuId) { console.error('Menu undefined: ' + promptId); }
+        curMenu.set(menuId);
+    }
 }
 
-export function showPrompt(promptId) {
-    hideMenu();
-    if (!promptId) { console.error('Prompt undefined: ' + promptId); }
-	curPrompt.set(promptId);
+export function showPrompt(promptId, options) {
+    if (get(curPrompt) !== promptId) {
+        dontAllowOverlayClose.set(options && options.allowClose === false);
+
+        hideMenu();
+        if (!promptId) { console.error('Prompt undefined: ' + promptId); }
+        curPrompt.set(promptId);
+    }
 }
 
 export function closeOverlay() {

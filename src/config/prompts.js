@@ -222,10 +222,11 @@ const prompts = {
     USERNAME_EXISTS: {
         title: 'Create User',
         message: 'User name already exists',
+        allowClose: false,
         menuItems: [
             {
                 label: 'Ok',
-                action: () => { showPrompt(promptIds.SET_ACCOUNT); },
+                action: () => { showPrompt(promptIds.SET_ACCOUNT, {allowClose: false}); },
                 // action: () => { showPrompt(promptIds.SIGN_UP); },
             },
         ],

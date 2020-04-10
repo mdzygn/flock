@@ -5,7 +5,7 @@
 	import SignUpPrompt from './SignUpPrompt.svelte';
 	import SetAccountPrompt from './SetAccountPrompt.svelte';
 
-	import { curMenu, curPrompt } from '../../models/appModel';
+	import { curMenu, curPrompt, dontAllowOverlayClose } from '../../models/appModel';
 
 	import OverlayMenu from './OverlayMenu.svelte';
 	import OverlayPrompt from './OverlayPrompt.svelte';
@@ -43,8 +43,10 @@
 
 	$: canClose = (menu && menu.allowClose !== false) || (prompt && prompt.allowClose !== false);
 
+	$: console.log('dontAllowOverlayClose', $dontAllowOverlayClose);
+
 	function checkClose() {
-		if (canClose) {
+		if (canClose && !$dontAllowOverlayClose) {
 			closeOverlay();
 		}
 	}

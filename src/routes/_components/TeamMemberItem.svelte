@@ -6,7 +6,7 @@
     export let user;
 
     $: name = ($user && $user.name) || '';
-    $: username = ($user && $user.username && '@' + username) || '';
+    $: username = ($user && $user.username && '@' + $user.username) || '';
 
     function loadCurrentUser() {
         if ($user) {

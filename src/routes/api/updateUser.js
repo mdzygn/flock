@@ -22,7 +22,9 @@ export async function post(req, res, next) {
     const curUser = await db.collection('users').findOne({ id: userId });
     if (curUser) {
         if (options.setAccount) {
-            const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i);
+            details.username = details.username.toLowerCase();
+            const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-z0-9._]+(?<![_.])$/); // lowercase only
+            // const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i);
             if (!usernameValid) {
                 response(res, {invalid: true});
                 return;

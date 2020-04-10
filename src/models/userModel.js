@@ -6,6 +6,7 @@ const UserModel = (userData) => {
 
         username: '',
 
+        name: '',
         fullName: '',
         firstName: '',
         lastName: '',

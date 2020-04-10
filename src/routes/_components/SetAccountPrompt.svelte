@@ -28,12 +28,15 @@
 
     $: usernameField && usernameField.focus();
 
-    let username = $user.username || $newUsername || formatAsId($user.firstName + $user.lastName.substr(0, Math.min(1, $user.lastName.length)), config.MAX_ID_LENGTH);
+    //let username = $user.username || $newUsername || formatAsId($user.firstName + $user.lastName.substr(0, Math.min(1, $user.lastName.length)), config.MAX_ID_LENGTH);
+    let username = $user.username || $newUsername || formatAsId($user.name, config.MAX_ID_LENGTH);
     let pass = '';
     let passRepeat = '';
 
 	$: { // prevent disallowed characters
-		username = username.replace(/[^a-zA-Z0-9._]/gi, '');
+		username = username.toLowerCase();
+		username = username.replace(/[^a-z0-9._]/g, ''); // lowercase only
+		// username = username.replace(/[^a-zA-Z0-9._]/gi, '');
     }
 
     $: usernameValidated = validateUserName(username);

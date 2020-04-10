@@ -41,7 +41,7 @@ export const sections = [
 	},
 	{
 		segment: 'profile',
-		label: 'My Profile',
+		label: '',
 		darkBg: true,
 		showBack: true,
 		// parentPath: 'messages',

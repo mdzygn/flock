@@ -113,9 +113,9 @@
             </div> -->
             <AvatarIcon user="{viewedUser}" />
             <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProfileOptions}"></Button>
-            <!-- {#if $showBetaFeatures} -->
+            {#if isCurrentUser}
                 <Button className="editButton" icon="{EditIcon}" onClick="{editProfile}">edit</Button>
-            <!-- {/if} -->
+            {/if}
             {#if $showBetaFeatures}
                 <div class="userStats">
                     <Button><span class="label">posts</span><div class="count">{postsCount}</div></Button>
@@ -164,14 +164,14 @@
             {/if}
 
             {#if userLocation}
-                {#if $showBetaFeatures}
+                <!-- {#if $showBetaFeatures} -->
                     <div class="footerActions">
                         <Location location="{userLocation}" hideWithVisibility="{isCurrentUser}" />
                         {#if isCurrentUser}
                             <Audience />
                         {/if}
                     </div>
-                {/if}
+                <!-- {/if} -->
             {/if}
         </div>
     </div>

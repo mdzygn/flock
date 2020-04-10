@@ -67,8 +67,12 @@
             sectionLabel = '#'+$channel.title;
         } else if (/\/posts\/.+/.test(path) && $channel) {
             sectionLabel = '#'+$channel.title;
-        } else if (/\/profile\/.+/.test(path) && !isCurrentUser && $viewedUser) {//$viewedUser && !$viewedUser.isCurrentUser) {
-            sectionLabel = $viewedUser.name;
+        } else if (/\/profile\/.+/.test(path) && $viewedUser) {//$viewedUser && !$viewedUser.isCurrentUser) {
+            if (isCurrentUser) {
+                sectionLabel = 'My Profile';
+            } else {
+                sectionLabel = $viewedUser.name;
+            }
         } else if (/\/messages\/.+/.test(path) && $conversation && ($conversation.user || $conversation.project)) {
             if ($conversation.project && $project) { // // temporary
                 sectionLabel = $project.title;

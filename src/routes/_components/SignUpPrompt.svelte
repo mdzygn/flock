@@ -24,6 +24,7 @@
     $: emailValidated = validateEmail($newUser.email);
     $: $signUpFormValidated = !!($newUser.firstName && $newUser.lastName && emailValidated);
     $: $newUser.fullName = $newUser.firstName + ' ' + $newUser.lastName;
+    $: $newUser.name = $newUser.fullName;
     // $: $newUser.username = formatAsId($newUser.firstName + $newUser.lastName.substr(0, Math.min(1, $newUser.lastName.length)), config.MAX_ID_LENGTH);
 
     $: {

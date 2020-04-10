@@ -14,6 +14,7 @@ export async function post(req, res, next) {
 			// username: true,
 			usercode: true,
 
+			name: true,
 			fullName: true,
 			firstName: true,
 			lastName: true,

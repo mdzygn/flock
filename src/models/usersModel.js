@@ -5,6 +5,8 @@ import { writable, get } from 'svelte/store';
 import profileImageColors from '../config/profileImageColors.json';
 import coverImageColors from '../config/coverImageColors.json';
 
+import config from '../config';
+
 import { generateId } from '../utils';
 
 // import usersData from '../data/users.json';
@@ -108,7 +110,7 @@ export function getUserClone(userModel) {
 
 	const userCloneModel = writable(null);
 	if (newUser) {
-		const userClone = Object.assign({}, newUser);
+		const userClone = JSON.parse(JSON.stringify(newUser));
 		userCloneModel.set(userClone);
 	}
 
@@ -158,3 +160,10 @@ export function randomiseUserCoverImageColor(userModel) {
 
 // 	return newUserModel;
 // }
+
+export function getProfileCoverImage(user) {
+	if (user && user.coverImage) {
+		return (config.headerImageLibraryFolder + user.coverImage + config.headerImageExtension);
+	}
+	return null;
+}

@@ -68,10 +68,6 @@ export function copyProfileLink(userId) {
     copyToClipboard(url);
 }
 
-export function setAccountDetails(userDetails) {
-    updateUser(userDetails);
-}
-
 export function createUser(newUserModel) {
     const newUser = get(newUserModel);
 
@@ -146,7 +142,7 @@ function addUser(newUserModel) {
 	return newUserModel;
 }
 
-function updateUser(userDetails) {
+export function setAccountDetails(userDetails) {
     if (userDetails && userDetails.id) {
         const curUserId = userDetails.id;
         delete userDetails.id;
@@ -182,6 +178,27 @@ function updateUser(userDetails) {
     }
 }
 
+
+function updateUser(userDetails) {
+    if (userDetails && userDetails.id) {
+        const curUserId = userDetails.id;
+        delete userDetails.id;
+
+        const curUserModel = getUser(curUserId);
+        if (curUserModel) {
+            const localUserDetails = Object.assign({}, userDetails);
+
+            setUserDetails(curUserModel, localUserDetails);
+
+            api.updateUser({id: curUserId, details: userDetails}).then(result => {
+                // if (result && !result.error && !result.invalid) {
+
+                // }
+            });
+        }
+    }
+}
+
 function setUserDetails(userModel, userDetails) {
     const curUser = get(userModel);
 
@@ -203,10 +220,10 @@ export function saveProfile(profileDetails, options) {
 
     const curUser = get(user);
     if (curUser) {
-        setUserDetails(user, profileDetails);
-        user.set(curUser);
+        profileDetails.id = curUser.id;
+        updateUser(profileDetails);
 
-        console.log(profileDetails);
+        user.set(curUser);
 
         goto('profile/' + curUser.id);
         resetScrollRegionPosition('profile');

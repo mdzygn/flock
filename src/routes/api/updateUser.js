@@ -19,9 +19,9 @@ export async function post(req, res, next) {
 		return;
 	}
 
-    if (options.setAccount) {
-        const curUser = await db.collection('users').findOne({ id: userId });
-        if (curUser) {
+    const curUser = await db.collection('users').findOne({ id: userId });
+    if (curUser) {
+        if (options.setAccount) {
             const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i);
             if (!usernameValid) {
                 response(res, {invalid: true});
@@ -61,9 +61,28 @@ export async function post(req, res, next) {
                 response(res, {error: true});
             }
         } else {
-            response(res, {error: true});
+            const setUserDetailSchema = {
+                username: true,
+
+                name: true,
+                bio: true,
+                coverImage: true,
+                skills: true,
+                location: true,
+                style: true,
+            };
+
+            details = filterItemDetails(details, setUserDetailSchema);
+
+            const result = await db.collection('users').updateOne({ id: userId }, { $set: details } );
+
+            if (result) {
+                response(res, {success: true});
+            } else {
+                response(res, {error: true});
+            }
         }
     } else {
-
+        response(res, {error: true});
     }
 }

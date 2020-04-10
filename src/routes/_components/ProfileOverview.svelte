@@ -28,6 +28,10 @@
     } from '../../models/appModel';
 
     import {
+        getProfileCoverImage,
+    } from '../../models/usersModel';
+
+    import {
         showLikes,
         messageUser,
         showMenu,
@@ -57,9 +61,10 @@
     $: likesCount = ($viewedUser && $viewedUser.likesCount) || 0;
     $: followsCount = ($viewedUser && $viewedUser.followsCount) || 0;
 
-    $: coverImageId = ($viewedUser && $viewedUser.coverImage !== false) ? username : '_default';
+    // $: coverImageId = ($viewedUser && $viewedUser.coverImage !== false) ? username : '_default';
+    // $: coverImage = 'content/users/' + coverImageId + '/cover.jpg';
 
-    $: coverImage = 'content/users/' + coverImageId + '/cover.jpg';
+    $: coverImage = getProfileCoverImage($viewedUser, true);
 
 	// $: profileImageSrc = 'content/users/' + username + '/profile.jpg';
     // $: profileImageSrc = ProfileDefaultImage;
@@ -97,10 +102,10 @@
                 width: 77px;
                 height: 39px;" />
         </Proxy> -->
-        {#if coverBgStyling}
-            <div class="coverImage" style="{coverBgStyling}" />
-        {:else}
+        {#if coverImage}
             <img src="{coverImage}" class="coverImage" alt="cover image" />
+        {:else}
+            <div class="coverImage" style="{coverBgStyling}" />
         {/if}
         <div class="profileOverviewHeader">
             <!-- <div class="profileImage" style="{profileImageBgStyling}">
@@ -187,6 +192,7 @@
 		width: 100%;
         height: 149px;
         object-fit: cover;
+        background-color: #dedede;
 	}
 
     .profileOverviewHeader {

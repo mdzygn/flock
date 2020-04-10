@@ -104,9 +104,9 @@
     <div class="field usernameField">
         <div class="label">{locale.SET_ACCOUNT.USERNAME}</div>
         <input bind:value="{username}" bind:this="{usernameField}" class:invalid="{usernameFlagInvalid}" on:keypress="{(e) => testInputDefocus(e, {target: passField})}" />
-        {#if usernameFlagTooShort}<div class="errorLabel">Username too short</div>
-        {:else if usernameFlagTooLong}<div class="errorLabel">Username too long</div>
-        {:else if usernameFlagInvalid}<div class="errorLabel">Invalid username</div>{/if}
+        {#if usernameFlagTooShort}<div class="errorLabel">username too short</div>
+        {:else if usernameFlagTooLong}<div class="errorLabel">username too long</div>
+        {:else if usernameFlagInvalid}<div class="errorLabel">invalid username</div>{/if}
         <!-- {:else if usernameExists}<div class="errorLabel">Username exists</div>{/if} -->
     </div>
     <div class="field">
@@ -116,7 +116,7 @@
     <div class="field" class:hidden="{!pass}">
         <div class="label">{locale.SET_ACCOUNT.PASS_REPEAT}</div>
         <input type="password" bind:value="{passRepeat}" bind:this="{passRepeatField}" class:invalid="{passwordInvalid}" on:keypress="{(e) => testInputDefocus(e, {action: submit})}" />
-        {#if passwordInvalid}<div class="errorLabel">Passwords don't match</div>{/if}
+        {#if passwordInvalid}<div class="errorLabel">passwords don't match</div>{/if}
     </div>
 </div>
 

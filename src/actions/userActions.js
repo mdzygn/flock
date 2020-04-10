@@ -156,6 +156,10 @@ function updateUser(userDetails) {
 
             Object.assign(curUser, localUserDetails);
             // console.log(curUser);
+            curUserModel.set(curUser);
+            if (get(viewedUser) && get(viewedUser).id == curUser.id) {
+                viewedUser.set(curUser);
+            }
 
             username.set(userDetails.username);
 

@@ -15,6 +15,9 @@
 
     $: userStyle = ($user && $user.style) || null;
     $: profileImageBgStyling = userStyle ? 'background-image: linear-gradient(' + userStyle.profileTop + ', ' + userStyle.profileBottom + ');' : '';
+
+    $: console.log($user);
+    $: console.log(userStyle);
 </script>
 
 <div class="avatarIcon" style="{profileImageBgStyling}" class:button="{onClick}" on:click="{onClick}">

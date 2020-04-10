@@ -26,6 +26,7 @@ import {
     showPrompt,
     setUser,
     checkLoggedIn,
+    logOut,
 } from '../actions/appActions';
 
 function checkUpdateUser(targetUser) {
@@ -89,27 +90,38 @@ function addUser(newUserModel) {
     const newUserDetails = Object.assign({}, newUser);
     newUserDetails.username = '';
 
+
+    const localUserDetails = Object.assign({}, newUser);
+    delete localUserDetails.email;
+
+    // TODO: use added item
+    mergeUsers([localUserDetails]);
+    setUser(newUser.id);
+
+
+    showPrompt(promptIds.SET_ACCOUNT);
+
     loadingUsers.set(true);
 	api.addUser({details: newUserDetails}).then(result => {
         if (result && !result.error) {
             if (!result.invalid) {
                 // newUser._id = result.insertedId;
 
+                // const localUserDetails = Object.assign({}, newUser);
+                // delete localUserDetails.email;
 
-                const localUserDetails = Object.assign({}, newUser);
-                delete localUserDetails.email;
+                // // TODO: use added item
+                // mergeUsers([localUserDetails]);
+                // setUser(newUser.id);
 
-                // TODO: use added item
-                mergeUsers([localUserDetails]);
-                setUser(newUser.id);
-
-                username.set(newUser.username);
+                // username.set(newUser.username);
                 usercode.set(newUser.usercode);
 
-                showPrompt(promptIds.SET_ACCOUNT);
+                // showPrompt(promptIds.SET_ACCOUNT);
 
                 // goto('profile/' + newUser.id);
             } else {
+                logOut(true);
                 switch (result.errorType) {
                     case 'username_exists':
                         showPrompt(promptIds.USERNAME_EXISTS);
@@ -145,7 +157,19 @@ function updateUser(userDetails) {
             Object.assign(curUser, localUserDetails);
             // console.log(curUser);
 
-            api.updateUser({id: curUserId, details: userDetails});
+            username.set(userDetails.username);
+
+            api.updateUser({id: curUserId, details: userDetails}).then(result => {
+                if (result && !result.error) {
+                    if (result.invalid) {
+                        switch (result.errorType) {
+                            case 'username_exists':
+                                showPrompt(promptIds.USERNAME_EXISTS);
+                                break;
+                        }
+                    }
+                }
+            });
         }
     }
 }

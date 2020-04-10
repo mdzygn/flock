@@ -43,8 +43,6 @@
 
 	$: canClose = (menu && menu.allowClose !== false) || (prompt && prompt.allowClose !== false);
 
-	$: console.log('dontAllowOverlayClose', $dontAllowOverlayClose);
-
 	function checkClose() {
 		if (canClose && !$dontAllowOverlayClose) {
 			closeOverlay();

@@ -32,6 +32,10 @@
     let pass = '';
     let passRepeat = '';
 
+	$: { // prevent disallowed characters
+		username = username.replace(/[^a-zA-Z0-9._]/gi, '');
+    }
+
     $: usernameValidated = validateUserName(username);
     $: usernameTooShort = username.length < config.USER_NAME_MIN_LENGTH;
     $: usernameTooLong = username.length > config.USER_NAME_MAX_LENGTH;

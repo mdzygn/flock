@@ -20,6 +20,8 @@
 
     import ProfileDefaultImage from "../../assets/icons/profileDefault.png";
 
+	import AddDetailsIcon from "../../assets/icons/add_highlight.png";
+
     import { viewedUser } from '../../models/appModel';
 
     import {
@@ -126,7 +128,12 @@
             <div class="itemContent">
                 <div class="header">{userName}</div>
                 <div class="username">{username}</div>
-                <div class="description">{@html userBioHTML}</div>
+
+                {#if userBio}
+                    <div class="description">{@html userBioHTML}</div>
+                {:else if isCurrentUser}
+                    <Button className="addDetailsButton" onClick="{editProfile}" icon="{AddDetailsIcon}">add bio</Button>
+                {/if}
             </div>
 
             <!-- <Proxy image="{proxyOverviewActionsImage}" className="proxyOverview">
@@ -284,6 +291,24 @@
         user-select: text;
 
 		color: #555555;
+	}
+
+    .content :global(.addDetailsButton) {
+		display: table;
+
+		padding: 10px;
+		padding-right: 45px;
+
+        padding-left: 0;
+        padding-top: 20px;
+
+		font-size: 1.5rem;
+		font-weight: 700;
+
+		color: #DF3C3C;
+	}
+    .content :global(.addDetailsButton .icon) {
+    	padding-left: 16px;
 	}
 
     .content :global(.optionsButton) {

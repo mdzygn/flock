@@ -46,8 +46,6 @@
 	$: skills = ($viewedUser && $viewedUser.skills && getSplitItems($viewedUser.skills)) || null;
 	$: projectIds = ($viewedUser && $viewedUser.projects) || null;
 
-	$: console.log('projectIds', projectIds);
-
 	const PROJECTS_DISPLAY_LIMIT = 3;
 
 	let userProjects = writable({});
@@ -86,7 +84,7 @@
 			<!-- <Proxy image="{proxySkillsImage}" className="proxyOverlay" /> -->
             <!-- {#if $showBetaFeatures} -->
 				{#if skills && skills.length}
-					<ContentPanel title="Skills" showEdit="{isCurrentUser}">
+					<ContentPanel title="Skills" showEdit="{false && isCurrentUser}">
 						<TagSet tags="{skills}" />
 					</ContentPanel>
 				{/if}

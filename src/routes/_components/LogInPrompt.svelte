@@ -22,7 +22,13 @@
     $details.username = $username;
     $details.pass = ''; // $usercode;
 
-    $: usernameField && usernameField.focus();
+    $: {
+        if ($username) {
+            passField && passField.focus();
+        } else {
+            usernameField && usernameField.focus();
+        }
+    }
 
     $: $logInFormValidated = !!($details.username && $details.pass);
 

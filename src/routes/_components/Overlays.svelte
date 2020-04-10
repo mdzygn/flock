@@ -41,11 +41,7 @@
 		setAccountDetails(userDetails);
 	}
 
-	$: console.log('$curPrompt', $curPrompt);
-
 	$: canClose = (menu && menu.allowClose !== false) || (prompt && prompt.allowClose !== false);
-
-	$: console.log('canClose', canClose);
 
 	function checkClose() {
 		if (canClose) {

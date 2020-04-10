@@ -161,7 +161,9 @@ export function setAccountDetails(userDetails) {
                 if (result && !result.error && !result.invalid) {
                     setUserDetails(curUserModel, {set: true});
 
-                    showPrompt(promptIds.ACCOUNT_READY);
+                    // showPrompt(promptIds.ACCOUNT_READY);
+
+                    goto('profile/' + curUserId);
                 } else {
                     if (result.invalid) {
                         switch (result.errorType) {

@@ -5,7 +5,7 @@
 	import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    import { testInputDefocus, formatAsId, validateEmail } from '../../utils';
+    import { testInputDefocus, formatAsId, validateEmail, invalidateTimeout } from '../../utils';
 
     import { signUpFormValidated } from '../../models/appModel';
 
@@ -38,20 +38,14 @@
     }
 
     let emailFlagInvalid = false;
-    let emailValidateTimeout = null;
     $: {
         $newUser.email;
 
         emailFlagInvalid = false;
-        if (typeof window !== 'undefined') {
-            if (emailValidateTimeout !== null) {
-                window.clearTimeout(emailValidateTimeout);
-                emailValidateTimeout = null;
-            }
-            emailValidateTimeout = window.setTimeout(() => {
-                emailFlagInvalid = $newUser.email && !emailValidated;
-            }, config.INVALID_FIELD_DELAY);
-        }
+
+        invalidateTimeout('email', () => {
+            emailFlagInvalid = $newUser.email && !emailValidated;
+        }, config.INVALID_FIELD_DELAY);
     }
 
     function submit() {

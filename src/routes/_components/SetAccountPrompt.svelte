@@ -50,30 +50,20 @@
         userDetails.pass = pass
     }
 
-    let usernameExists = false;
-    // let passwordInvalid = false;
-
     let passwordInvalid = false;
-    let passwordValidateTimeout = null;
     $: {
-        pass;
+        pass; passRepeat;
 
         passwordInvalid = false;
-        if (typeof window !== 'undefined') {
-            if (passwordValidateTimeout !== null) {
-                window.clearTimeout(passwordValidateTimeout);
-                passwordValidateTimeout = null;
-            }
-            passwordValidateTimeout = window.setTimeout(() => {
-                passwordInvalid = pass && passRepeat && !passValidated;
-            }, config.INVALID_FIELD_DELAY);
-        }
+
+        invalidateTimeout('pass', () => {
+            passwordInvalid = pass && passRepeat && !passValidated;
+        }, config.INVALID_FIELD_DELAY);
     }
 
     let usernameFlagInvalid = false;
     let usernameFlagTooShort = false;
     let usernameFlagTooLong = false;
-
     $: {
         username;
 

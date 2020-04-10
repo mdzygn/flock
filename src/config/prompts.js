@@ -199,6 +199,17 @@ const prompts = {
             },
         ],
     },
+    SET_ACCOUNT: {
+        title: 'Account Details',
+        menuItems: [
+            {
+                label: 'Confirm',
+                // label: 'Let\'s Go!',
+                disabled: () => !get(setAccountFormValidated),
+                default: true,
+            },
+        ],
+    },
     SIGN_UP_EMAIL_EXISTS: {
         title: 'Create User',
         message: 'Email already exists',
@@ -209,27 +220,16 @@ const prompts = {
             },
         ],
     },
-    SET_ACCOUNT: {
-        title: 'Set Account Details',
-        menuItems: [
-            {
-                label: 'Confirm',
-                // label: 'Let\'s Go!',
-                disabled: () => !get(setAccountFormValidated),
-                default: true,
-            },
-        ],
-    },
-    ACCOUNT_READY: {
-        title: 'Account Created',
-        message: 'Congratulations!<br/><br/>You\'re all set to discover<br/>and share projects!',
-        menuItems: [
-            {
-                label: 'Let\'s Go!',
-                default: true,
-            },
-        ],
-    },
+    // ACCOUNT_READY: {
+    //     title: 'Account Created',
+    //     message: 'Congratulations!<br/><br/>You\'re all set to discover<br/>and share projects!',
+    //     menuItems: [
+    //         {
+    //             label: 'Let\'s Go!',
+    //             default: true,
+    //         },
+    //     ],
+    // },
     USERNAME_EXISTS: {
         title: 'Sorry',
         message: 'That username already exists',

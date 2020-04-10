@@ -40,7 +40,7 @@ const locale = {
 	EDIT_PROFILE: {
 		NAME: 'name',
 		BIO: 'bio',
-		BIO_TIP: '- what fuels your fire?',
+		BIO_TIP: '- what do you like to do?', // '- what fuels your fire?',
 		COVER_IMAGE: 'cover image',
 		SKILLS: 'skills',
 		SKILLS_TIP: 'capabilities and interests, separated by commas',

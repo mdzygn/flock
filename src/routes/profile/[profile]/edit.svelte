@@ -29,7 +29,7 @@
     $: curUserProps = getUserClone(user);
 
 	let name = ($user && $user.name) || '';
-	let bio = ($user && $user.bio) || '';
+	let bio = ($user && $user.bio && getFormattedText($user.bio)) || '';
 	let image = ($user && $user.coverImage) || '';
 	let skills = ($user && $user.skills) || '';
 	let location = ($user && $user.location) || '';
@@ -46,7 +46,7 @@
 	function save() {
 		const profileDetails = {
 			name,
-			bio,
+			bio: getUnformattedText(bio),
 			coverImage: image,
 			skills,
 			location,

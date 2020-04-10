@@ -222,7 +222,7 @@ const prompts = {
     },
     ACCOUNT_READY: {
         title: 'Account Created',
-        message: 'You\'re all set!',
+        message: 'Congratulations!<br/><br/>You\'re all set to discover<br/>and share projects!',
         menuItems: [
             {
                 label: 'Let\'s Go!',

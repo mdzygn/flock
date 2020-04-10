@@ -1,3 +1,5 @@
+const invalidationTimeouts = {};
+
 export function generateId(length) {
     if (!length) {
         length = 8;
@@ -269,3 +271,24 @@ function formatDate(date, format, utc) {
 
     return format;
 };
+
+export function validateEmail(email) {
+    return email && email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]{2,}\.[A-Z]{2,8}$/i);
+}
+
+export function validateUserName(username) {
+    return username && username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i);
+}
+
+
+export function invalidateTimeout(id, callback, delay) {
+    if (typeof window !== 'undefined') {
+        if (invalidationTimeouts[id]) {
+            window.clearTimeout(invalidationTimeouts[id]);
+            invalidationTimeouts[id] = null;
+        }
+        invalidationTimeouts[id] = window.setTimeout(() => {
+            callback();
+        }, delay);
+    }
+}

@@ -5,9 +5,14 @@
 	import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    import { testInputDefocus, formatAsId } from '../../utils';
+    import { testInputDefocus, formatAsId, validateUserName, invalidateTimeout } from '../../utils';
 
-    import { setAccountFormValidated, user, userId } from '../../models/appModel';
+    import {
+        setAccountFormValidated,
+        user,
+        userId,
+        newUsername,
+    } from '../../models/appModel';
 
     import { getNewUser, randomiseUserProfileImageColor } from '../../models/usersModel';
 
@@ -23,13 +28,17 @@
 
     $: usernameField && usernameField.focus();
 
-    let username = $user.username || formatAsId($user.firstName + $user.lastName.substr(0, Math.min(1, $user.lastName.length)), config.MAX_ID_LENGTH);
+    let username = $user.username || $newUsername || formatAsId($user.firstName + $user.lastName.substr(0, Math.min(1, $user.lastName.length)), config.MAX_ID_LENGTH);
     let pass = '';
     let passRepeat = '';
 
+    $: usernameValidated = validateUserName(username);
+    $: usernameTooShort = username.length < config.USER_NAME_MIN_LENGTH;
+    $: usernameTooLong = username.length > config.USER_NAME_MAX_LENGTH;
+
     $: passValidated = pass && passRepeat && pass === passRepeat;
 
-    $: $setAccountFormValidated = !!(username && pass && passRepeat && passValidated);
+    $: $setAccountFormValidated = !!(usernameValidated && pass && passRepeat && passValidated);
 
     $: {
         userDetails.id = $userId;
@@ -57,6 +66,24 @@
         }
     }
 
+    let usernameFlagInvalid = false;
+    let usernameFlagTooShort = false;
+    let usernameFlagTooLong = false;
+
+    $: {
+        username;
+
+        usernameFlagInvalid = false;
+        usernameFlagTooShort = false;
+        usernameFlagTooLong = false;
+
+        invalidateTimeout('username', () => {
+            usernameFlagInvalid = username && !usernameValidated;
+            usernameFlagTooShort = username && usernameTooShort;
+            usernameFlagTooLong = username && usernameTooLong;
+        }, config.INVALID_FIELD_DELAY);
+    }
+
     $: {
         $setAccountFormValidated;
         dispatch('change');
@@ -72,8 +99,11 @@
 <div class="setAccountPrompt">
     <div class="field usernameField">
         <div class="label">{locale.SET_ACCOUNT.USERNAME}</div>
-        <input bind:value="{username}" bind:this="{usernameField}" class:invalid="{usernameExists}" on:keypress="{(e) => testInputDefocus(e, {target: passField})}" />
-        {#if usernameExists}<div class="errorLabel">Username exists</div>{/if}
+        <input bind:value="{username}" bind:this="{usernameField}" class:invalid="{usernameFlagInvalid}" on:keypress="{(e) => testInputDefocus(e, {target: passField})}" />
+        {#if usernameFlagTooShort}<div class="errorLabel">Username too short</div>
+        {:else if usernameFlagTooLong}<div class="errorLabel">Username too long</div>
+        {:else if usernameFlagInvalid}<div class="errorLabel">Invalid username</div>{/if}
+        <!-- {:else if usernameExists}<div class="errorLabel">Username exists</div>{/if} -->
     </div>
     <div class="field">
         <div class="label">{locale.SET_ACCOUNT.PASS}</div>

@@ -22,6 +22,12 @@ export async function post(req, res, next) {
     if (options.setAccount) {
         const curUser = await db.collection('users').findOne({ id: userId });
         if (curUser) {
+            const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i);
+            if (!usernameValid) {
+                response(res, {invalid: true});
+                return;
+            }
+
             if (!curUser.pass) {
                 const exisitingUser = await db.collection('users').findOne({ username: details.username });
                 if (exisitingUser && exisitingUser.id !== userId) {

@@ -15,6 +15,7 @@ import {
     username,
     usercode,
     user,
+    newUsername,
 } from '../models/appModel';
 
 import {
@@ -156,6 +157,7 @@ function updateUser(userDetails) {
             setUserDetails(curUserModel, localUserDetails);
 
             username.set(userDetails.username);
+            newUsername.set(userDetails.username);
 
             api.updateUser({id: curUserId, details: userDetails}).then(result => {
                 if (result && !result.error && !result.invalid) {

@@ -5,7 +5,7 @@
 	import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    import { testInputDefocus, formatAsId } from '../../utils';
+    import { testInputDefocus, formatAsId, validateEmail } from '../../utils';
 
     import { signUpFormValidated } from '../../models/appModel';
 
@@ -21,7 +21,7 @@
 
     $: firstNameField && firstNameField.focus();
 
-    $: emailValidated = ($newUser.email || '').match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]{2,}\.[A-Z]{2,8}$/i);
+    $: emailValidated = validateEmail($newUser.email);
     $: $signUpFormValidated = !!($newUser.firstName && $newUser.lastName && emailValidated);
     $: $newUser.fullName = $newUser.firstName + ' ' + $newUser.lastName;
     // $: $newUser.username = formatAsId($newUser.firstName + $newUser.lastName.substr(0, Math.min(1, $newUser.lastName.length)), config.MAX_ID_LENGTH);

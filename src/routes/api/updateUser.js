@@ -1,5 +1,7 @@
 import { init, response, validateCredentials, filterItemDetails } from '../../server/mongo.js';
 
+const bcrypt = require('bcrypt');
+
 export async function post(req, res, next) {
 	const { db } = await init();
 
@@ -25,20 +27,29 @@ export async function post(req, res, next) {
                 if (exisitingUser && exisitingUser.id !== userId) {
                     response(res, {invalid: true, errorType: 'username_exists'});
                 } else {
-                    const userDetails = {
+                    const pass = details.pass;
+
+                    const userDetailSchema = {
                         username: true,
-                        pass: true,
                     };
 
-                    details = filterItemDetails(details, userDetails);
+                    details = filterItemDetails(details, userDetailSchema);
 
-                    const result = await db.collection('users').updateOne({ id: userId }, { $set: details } );
+                    bcrypt.hash(pass, 10, async (err, hash) => {
+                        if (!err) {
+                            details.pass = hash;
 
-                    if (result) {
-                        response(res, {success: true});
-                    } else {
-                        response(res, {error: true});
-                    }
+                            const result = await db.collection('users').updateOne({ id: userId }, { $set: details } );
+
+                            if (result) {
+                                response(res, {success: true});
+                            } else {
+                                response(res, {error: true});
+                            }
+                        } else {
+                            response(res, {error: true});
+                        }
+                    });
                 }
             } else {
                 response(res, {error: true});

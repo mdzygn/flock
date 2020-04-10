@@ -150,34 +150,44 @@ function updateUser(userDetails) {
 
         const curUserModel = getUser(curUserId);
         if (curUserModel) {
-            const curUser = get(curUserModel);
-
             const localUserDetails = Object.assign({}, userDetails);
             delete localUserDetails.pass;
 
+            setUserDetails(curUserModel, localUserDetails);
 
-            Object.assign(curUser, localUserDetails);
-            curUserModel.set(curUser);
+            username.set(userDetails.username);
+
+            api.updateUser({id: curUserId, details: userDetails}).then(result => {
+                if (result && !result.error && !result.invalid) {
+                    setUserDetails(curUserModel, {set: true});
+                } else {
+                    if (result.invalid) {
+                        switch (result.errorType) {
+                            case 'username_exists':
+                                showPrompt(promptIds.USERNAME_EXISTS);
+
+                                setUserDetails(curUserModel, {username: ''});
+                                break;
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    function setUserDetails(userModel, userDetails) {
+        const curUser = get(userModel);
+
+        if (curUser) {
+            Object.assign(curUser, userDetails);
+            userModel.set(curUser);
+
             if (get(viewedUser) && get(viewedUser).id == curUser.id) {
                 viewedUser.set(curUser);
             }
             if (get(user) && get(user).id == curUser.id) {
                 user.set(curUser);
             }
-
-            username.set(userDetails.username);
-
-            api.updateUser({id: curUserId, details: userDetails}).then(result => {
-                if (result && !result.error) {
-                    if (result.invalid) {
-                        switch (result.errorType) {
-                            case 'username_exists':
-                                showPrompt(promptIds.USERNAME_EXISTS);
-                                break;
-                        }
-                    }
-                }
-            });
         }
     }
 }

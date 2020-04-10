@@ -1,5 +1,8 @@
 import { init, response, filterItemDetails } from '../../server/mongo.js';
 
+const bcrypt = require('bcrypt');
+
+
 export async function post(req, res, next) {
 	const { db } = await init();
 
@@ -11,47 +14,49 @@ export async function post(req, res, next) {
 		const user = await db.collection('users').findOne({ username: username });
 
 		if (user) {
-			const targetPass = user.pass ? user.pass : user.usercode;
+			let passValid = false;
+			if (user.pass) {
+				passValid = bcrypt.compareSync(pass, user.pass);
+			} else {
+				passValid = pass === user.usercode;
+			}
+			if (passValid) {
+				const userDetailsSchema = {
+					id: true,
 
-			const userDetailsSchema = {
-				id: true,
+					username: true,
 
-				username: true,
+					usercode: true, // return so can login and authorise
 
-				usercode: true, // return so can login and authorise
+					fullName: true,
+					firstName: true,
+					lastName: true,
 
-				fullName: true,
-				firstName: true,
-				lastName: true,
+					bio: true,
 
-				bio: true,
+					skills: true,
 
-				skills: true,
+					postsCount: true,
+					likesCount: true,
+					followsCount: true,
 
-				postsCount: true,
-				likesCount: true,
-				followsCount: true,
+					avatarImage: true,
+					coverImage: true,
 
-				avatarImage: true,
-				coverImage: true,
+					style: true,
 
-				style: true,
+					connected: true,
+					requestedConnection: true,
 
-				connected: true,
-				requestedConnection: true,
+					location: true,
+				};
 
-				location: true,
-			};
+				const userDetails = filterItemDetails(user, userDetailsSchema);
 
-			const userDetails = filterItemDetails(user, userDetailsSchema);
-
-			if (pass === targetPass) {
 				response(res, userDetails);
 			} else {
 				response(res, {invalid: true});
 			}
-		} else {
-			response(res, {invalid: true});
 		}
 	} else {
 		response(res, {invalid: true});

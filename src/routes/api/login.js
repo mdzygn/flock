@@ -49,7 +49,13 @@ export async function post(req, res, next) {
 					requestedConnection: true,
 
 					location: true,
+
+					set: true,
 				};
+
+				if (!user.pass) {
+					user.set = false;
+				}
 
 				const userDetails = filterItemDetails(user, userDetailsSchema);
 

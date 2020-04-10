@@ -49,6 +49,8 @@
     });
 
 	$: {
+		const changedPath = ($curPath !== $page.path);
+
 		$curPath = $page.path;
 
 		checkParams($page.query);
@@ -83,7 +85,9 @@
 				}
 			}
 
-			closeOverlay();
+			if (changedPath) {
+				closeOverlay();
+			}
 		}
 	}
 

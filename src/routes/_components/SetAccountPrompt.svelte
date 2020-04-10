@@ -79,7 +79,7 @@
         <div class="label">{locale.SET_ACCOUNT.PASS}</div>
         <input type="password" bind:value="{pass}" bind:this="{passField}" on:keypress="{(e) => testInputDefocus(e, {target: passRepeatField})}" />
     </div>
-    <div class="field">
+    <div class="field" class:hidden="{!pass}">
         <div class="label">{locale.SET_ACCOUNT.PASS_REPEAT}</div>
         <input type="password" bind:value="{passRepeat}" bind:this="{passRepeatField}" class:invalid="{passwordInvalid}" on:keypress="{(e) => testInputDefocus(e, {action: submit})}" />
         {#if passwordInvalid}<div class="errorLabel">Passwords don't match</div>{/if}
@@ -120,6 +120,10 @@
         padding-top: 20px;
         /* padding-bottom: 10px; */
 	}
+
+    .hidden {
+        visibility: hidden;
+    }
 
     .usernameField {
         padding-top: 15px;

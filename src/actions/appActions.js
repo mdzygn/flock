@@ -83,6 +83,7 @@ import {
     curPrompt,
     getIsProjectTeamMember,
 } from '../models/appModel';
+import { tick } from 'svelte';
 
 export function loadProject(targetProjectId, options) {
     // console.log('loadProject', targetProjectId);
@@ -148,16 +149,24 @@ export function setUser(targetUserId) {
         userId.set(targetUserId);
         user.set(curUser);
         // console.log(get(user));
+
+        if (curUser && curUser.loaded && !curUser.username) {
+            (async() => {
+                await tick();
+                showPrompt(promptIds.SET_ACCOUNT);
+            })();
+        }
     }
 }
 
 onUsersUpdated(() => {
     // if project object not found but project id set then update project model
-    if (!get(viewedUser) && get(profileId)) {
+    if (get(profileId) && (!get(viewedUser) || !get(viewedUser).loaded)) {
         const targetProfileId = get(profileId);
         setViewedUser(targetProfileId);
     }
-    if (get(userId) && (!get(user) || get(user).id !== get(userId))) {
+    // if (get(userId) && (!get(user) || !get(user).loaded || get(user).id !== get(userId))) { // is already loaded, but still need to set user object
+    if (get(userId)) { // force user object to update - to improve?
         setUser(get(userId));
     }
 });
@@ -366,6 +375,10 @@ export function login(details) {
             if (userInfo.id) {
                 mergeUsers([userInfo]);
                 setUser(userInfo.id);
+
+                if (!userInfo.username || userInfo.requiresAccountSetup) {
+                    showPrompt(promptIds.SET_ACCOUNT);
+                }
 
                 username.set(userInfo.username);
                 usercode.set(userInfo.usercode);

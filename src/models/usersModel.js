@@ -66,6 +66,7 @@ export function mergeUsers(newUsers) {
 		let curUser, newUserData, curUserId, newUser;
 		for (var userI = 0; userI < newUsers.length; userI++) {
 			newUserData = newUsers[userI];
+			newUserData.loaded = true;
 			curUserId = newUserData.id;
 			curUser = curUsers.find(match => get(match).id === curUserId);
 			if (!curUser) {
@@ -81,9 +82,9 @@ export function mergeUsers(newUsers) {
 			if (viewedProfileId && curUserId === viewedProfileId) {
 				viewedUser.set(newUser);
 			}
-			if (activeUserId && activeUserId === curUserId) {
-				user.set(newUser);
-			}
+			// if (activeUserId && activeUserId === curUserId) {
+			// 	user.set(newUser);
+			// }
 		}
 
 		users.set(curUsers);

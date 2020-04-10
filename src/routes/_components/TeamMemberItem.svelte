@@ -5,8 +5,8 @@
 
     export let user;
 
-    $: fullName = $user && $user.fullName || '';
-    $: username = $user && $user.username || '';
+    $: fullName = ($user && $user.fullName) || '';
+    $: username = ($user && $user.username && '@' + username) || '';
 
     function loadCurrentUser() {
         if ($user) {
@@ -20,7 +20,7 @@
     <div class="detailContent">
         <div class="detailInnerContent">
             <div class="title">{fullName}</div>
-            <div class="username">@{username}</div>
+            <div class="username">{username}</div>
         </div>
     </div>
 </div>

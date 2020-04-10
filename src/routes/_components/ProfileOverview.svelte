@@ -43,7 +43,7 @@
     $: showConnect = !requestedConnection && !connected;
 
     $: userId = ($viewedUser && $viewedUser.id) || '';
-    $: username = ($viewedUser && $viewedUser.username) || '';
+    $: username = ($viewedUser && $viewedUser.username && '@' + $viewedUser.username) || '';
 
     $: userFullName = ($viewedUser && $viewedUser.fullName) || '';
     $: userFirstName = ($viewedUser && $viewedUser.firstName) || '';
@@ -119,7 +119,7 @@
             {/if}
             <div class="itemContent">
                 <div class="header">{userFullName}</div>
-                <div class="username">@{username}</div>
+                <div class="username">{username}</div>
                 <div class="description">{@html userBioHTML}</div>
             </div>
 

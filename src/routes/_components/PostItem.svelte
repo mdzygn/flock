@@ -46,9 +46,11 @@
     $: linkUserName = (type === 'threadPost');
     $: displayBreaks = (type !== 'thread');
     $: showLastActiveTime = (type === 'thread');
-    $: showReplyIcon = (type === 'thread');
     $: textSelectable = (type !== 'thread');
     $: messageLimited = (type === 'thread');
+
+    $: showRepliesIcon = repliesCount;
+    $: showReplyIcon = (type === 'thread') && !repliesCount;
 
     $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
     $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
@@ -63,7 +65,7 @@
     $: {
         if (date) {
             if (showLastActiveTime && repliesCount) {
-                dateString = 'active ' + getDateAgeString(date);
+                dateString = 'active ' + getDateAgeString(date, {allowLessThanMinute: false});
             } else {
                 const dateAge = getDateAge(date);
                 if (dateAge.hours < 0.66) {
@@ -99,7 +101,7 @@
 <div class="postItem" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}">
     <!-- <Avatar  -->
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
-    {#if repliesCount}
+    {#if showRepliesIcon}
         <div class="commentIcon" style="background-image: url({CommentIcon})"/>
         <Counter count="{repliesCount}" />
     {:else}
@@ -108,7 +110,7 @@
         {/if}
     {/if}
     <div class="info">
-        <div class="userName" class:selectable="{textSelectable}">
+        <div class="userName" class:selectable="{textSelectable}" class:showRepliesIcon="{showRepliesIcon}" class:showReplyIcon="{showReplyIcon}">
             <span div="userNameLabel" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userName}</span>
             {#if dateString}<span class="date"> - {dateString}</span>{/if}
         </div>
@@ -152,6 +154,16 @@
         color: #777777;
         /* font-weight: 700; */
         padding-bottom: 5px;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .userName.showReplyIcon {
+        padding-right: 20px;
+    }
+    .userName.showRepliesIcon {
+        padding-right: 28px;
     }
 
     .date {

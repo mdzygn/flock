@@ -132,10 +132,12 @@ export function getDateAge(date) {
     return dateAge;
 }
 
-export function getDateAgeString(date) {
+export function getDateAgeString(date, options) {
     if (!date) { return null; }
 
     const dateAge = getDateAge(date);
+
+    const allowLessThanMinute = options ? options.allowLessThanMinute : true;
 
     let ageString = '';
 
@@ -166,7 +168,7 @@ export function getDateAgeString(date) {
 
     } else if (dateAge.mins > 1.66) {
         ageString = Math.round(dateAge.mins) + ' mins';
-    } else if (dateAge.mins > 1) {
+    } else if (dateAge.mins > 1 || !allowLessThanMinute) {
         ageString = '1 min';
     } else {
         ageString = 'less than a minute';

@@ -9,6 +9,7 @@ export async function post(req, res, next) {
 	const projectId = options && options.projectId;
 
 	const filter = {};
+	filter.disabled = {$ne: true};
 	if (projectId) {
 		filter.projectId = projectId;
 	}

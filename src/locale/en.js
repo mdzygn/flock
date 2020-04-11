@@ -97,12 +97,12 @@ const locale = {
 		// RESOURCES: 'Community resources and links',
 		// Questions and Answers - General questions or queries on how to use the app
 		GENERAL: 'General project discussion',
-		WORKSHOP: 'Work in progress, project developments, and calls for feedback',
-		QUESTIONS: 'Questions from the community',
+		WORKSHOP: 'Work in progress, project developments,<br/>and calls for feedback',
+		QUESTIONS: 'Questions about the project', // 'Questions from the community',
 		// Current Features Discussion - Discussion of current features and functionality
 		// ISSUES: 'Issues and bugs',
 		ISSUES: 'Issues, bugs and problems',
-		IDEAS: 'Ideas, requests and recommendations for the project',
+		IDEAS: 'Ideas, suggestions and requests for the project', // recommendations
 		INSPIRATION: 'Inspirational references and links',
 		RANDOM: 'Off-topic discussions and links',
 		SUGGESTIONS: 'Suggestions to improve the project community',

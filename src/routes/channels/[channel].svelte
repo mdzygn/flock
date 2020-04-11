@@ -38,8 +38,10 @@
 
 	const DISPLAY_BOTTOM_LINK_POST_COUNT = 6;
 
+	$: sortByCreated = ($channel && $channel.sortByCreated) || false;
+
     let posts = writable([]);
-	$: { posts = getPosts( { channelId: $channelId, type: 'thread' } ) };
+	$: { posts = getPosts( { channelId: $channelId, type: 'thread', sortByCreated } ) };
 
 	$: canPost = $channel && (!$channel.teamOnly || getIsProjectTeamMember($project));
 
@@ -65,7 +67,7 @@
 	<ScrollView id="channel">
 		<div slot="scrollHeader">
 			{#if channelDescription}
-				<div class="channelHeader" class:channelHeaderPost="{canPost}">{channelDescription}</div>
+				<div class="channelHeader" class:channelHeaderPost="{canPost}">{@html channelDescription}</div>
 			{/if}
 			{#if canPost}
 				<!-- <Proxy image="channel_actions" className="channelActions" /> -->

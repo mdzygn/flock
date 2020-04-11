@@ -4,8 +4,8 @@
 	   "description":"",
 	   "teamOnly":true,
 	   "sortIndex": 0,
-	   "postCount": 0
-
+	   "postCount": 0,
+	   "sortByCreated": true
 	},
 	{
 	   "title":"General",
@@ -63,6 +63,7 @@
 	{
 	   "title":"Suggestions",
 	   "description":"",
+	   "disabled": true,
 	   "sortIndex": 9,
 	   "postCount": 0
 	}

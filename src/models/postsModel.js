@@ -116,6 +116,7 @@ function filterCurrentPosts() {
 	const channelId = curPostFilterOptions && curPostFilterOptions.channelId;
 	const threadId = curPostFilterOptions && curPostFilterOptions.threadId;
 	const type = curPostFilterOptions && curPostFilterOptions.type;
+	const sortByCreated = (curPostFilterOptions && curPostFilterOptions.sortByCreated) || false;
 
 	let newFilteredPosts = get(posts);
 	if (channelId || type) {
@@ -127,7 +128,11 @@ function filterCurrentPosts() {
 	}
 	switch (type) {
 		case 'thread':
-			newFilteredPosts.sort((a,b) => get(b).lastActiveAt - get(a).lastActiveAt); // sort by reversed created time
+			if (sortByCreated) {
+				newFilteredPosts.sort((a,b) => get(b).createdAt - get(a).createdAt ); // sort by reversed created time
+			} else {
+				newFilteredPosts.sort((a,b) => get(b).lastActiveAt - get(a).lastActiveAt); // sort by reversed created time
+			}
 			break;
 		case 'threadPost':
 			newFilteredPosts.sort((a,b) => get(a).createdAt - get(b).createdAt ); // sort by reversed created time

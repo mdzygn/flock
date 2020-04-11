@@ -7,11 +7,15 @@ export async function post(req, res, next) {
 
 
 	const projectId = options && options.projectId;
+	const channelId = options && options.channelId;
 
 	const filter = {};
 	filter.disabled = {$ne: true};
 	if (projectId) {
 		filter.projectId = projectId;
+	}
+	if (channelId) {
+		filter.id = channelId;
 	}
 
 	const channels = await db.collection('channels').find(filter).toArray();

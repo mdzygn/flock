@@ -95,15 +95,23 @@ export function loadProject(targetProjectId, options) {
         lastPreProjectPath.set(path);
     }
 
-    loadProjects({ id: targetProjectId });
+    loadProjectItem(targetProjectId);
+    // loadProjects({ id: targetProjectId });
 
-    projectId.set(targetProjectId);
-    setProject(targetProjectId);
+    // projectId.set(targetProjectId);
+    // setProject(targetProjectId);
 
     if (gotoRoute('projects/' + targetProjectId)) {
         projectShowingInfo.set(options && options.showInfo);
     }
     resetScrollRegionPosition('project');
+}
+
+export function loadProjectItem(targetProjectId) {
+    loadProjects({ id: targetProjectId });
+
+    projectId.set(targetProjectId);
+    setProject(targetProjectId);
 }
 
 function setProject(targetProjectId) {
@@ -232,6 +240,12 @@ function setChannel(targetChannelId) {
     const curChannel = get(curChannelModel);
 
     channel.set(curChannel);
+
+    // console.log('projectId', get(projectId), curChannel && curChannel.projectId);
+    if (!get(projectId) && curChannel &&  curChannel.projectId) {
+        loadProjectItem(curChannel.projectId);
+        // setProject(curChannel.projectId);
+    }
 }
 
 export function loadPost(targetPostId, options) {
@@ -439,8 +453,14 @@ export function loadCurrentProject() {
 }
 
 export function loadCurrentChannel() {
-    if (get(projectId) && !get(channel) && !get(loadingChannels)) {
-        loadChannels( { projectId: get(projectId) } );
+    if (!get(channel) && !get(loadingChannels)) {
+        if (get(projectId)) {
+            // console.log('loadCurrentChannel projectId', get(projectId));
+            loadChannels( { projectId: get(projectId) } );
+        } else {
+            // console.log('loadCurrentChannel channelId', get(channelId));
+            loadChannels( { channelId: get(channelId) } );
+        }
     }
 }
 

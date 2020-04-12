@@ -36,7 +36,8 @@
     $: userId = ($post && $post.userId) || null;
     $: { user = getUser(userId) };
     $: userLoaded = ($user && $user.name) || false;
-    $: userName = ($user && $user.name) || '&nbsp;';
+    $: userName = ($user && $user.name) || '';
+    $: userNameString = userName || ''; // '&nbsp;';
 
     $: title = ($post && $post.title) || null;
     $: message = ($post && $post.message) || null;
@@ -111,8 +112,8 @@
     {/if}
     <div class="info">
         <div class="userName" class:selectable="{textSelectable}" class:showRepliesIcon="{showRepliesIcon}" class:showReplyIcon="{showReplyIcon}">
-            <span div="userNameLabel" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userName}</span>
-            {#if dateString}<span class="date"> - {dateString}</span>{/if}
+            <span div="userNameLabel" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userNameString}</span>
+            {#if dateString}<span class="date">{#if userName} - {/if}{dateString}</span>{/if}
         </div>
         {#if showTitle && title}
             <div class="title">{@html titleHTML}</div>

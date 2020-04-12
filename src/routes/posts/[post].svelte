@@ -43,6 +43,10 @@
 		loadingPosts,
 	} from '../../models/postsModel';
 
+	import {
+		loadingProjects,
+	} from '../../models/projectsModel';
+
 	const DISPLAY_BOTTOM_LINK_POST_COUNT = 3;
 
 	loadCurrentChannel();
@@ -72,7 +76,7 @@
 </svelte:head>
 
 <ScrollView id="thread" anchorToBottom="{$postsAnchorToBottom}">
-	{#if ($loadingPosts && (!$post || $post.id !== $postId)) || (!$user && $userId) || !$project }
+	{#if ($loadingPosts && (!$post || $post.id !== $postId)) || (!$user && $userId) || (!$project && $loadingProjects) }
 		<ContentLoader label="{locale.LOADING.THREAD}" />
 	{:else if !$post || !$post.id}
 		<ContentLoader label="{locale.THREAD.NOT_FOUND}" />

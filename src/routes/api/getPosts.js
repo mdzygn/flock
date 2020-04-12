@@ -1,4 +1,11 @@
-import { init, response, errorResponse, filterItemsByProjectAccess, validateCredentials } from '../../server/mongo.js';
+import {
+	init,
+	response,
+	errorResponse,
+	filterItemsByProjectAccess,
+	validateCredentials,
+	loadUserItemProperties,
+} from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -40,6 +47,16 @@ export async function post(req, res, next) {
 	let posts = await db.collection('posts').find(filter).toArray();
 
 	posts = await filterItemsByProjectAccess(posts, userId, validLogin);
+
+	if (posts.length && userId) {
+		await loadUserItemProperties(posts, {
+			userId,
+			itemIdProp: 'postId',
+			collections: {
+				likes: 'postLikes',
+			},
+		});
+	}
 
 	// const posts = []; // to test returning no posts
 

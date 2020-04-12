@@ -59,8 +59,7 @@
 
     $: likeCount = ($post && $post.likeCount) || '';
 
-    $: showCommentsIcons = (type === 'thread');
-    $: showRepliesIcon = repliesCount;
+    $: showRepliesIcon = (type === 'thread') && repliesCount;
     $: showReplyIcon = (type === 'thread') && !repliesCount;
 
     $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
@@ -114,7 +113,7 @@
 	}
 </script>
 
-<div class="postItem" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}" class:showCommentsIcons="{showCommentsIcons}">
+<div class="postItem" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}" class:showReplyIcon="{showReplyIcon}" class:showRepliesIcon="{showRepliesIcon}">
     <!-- <Avatar  -->
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
     <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}">
@@ -183,7 +182,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    .showCommentsIcons .userName {
+    .showReplyIcon .userName {
+        padding-right: 64px;
+    }
+    .showRepliesIcon .userName {
         padding-right: 78px;
     }
     /* .userName.showReplyIcon {
@@ -227,26 +229,31 @@
         position: absolute;
         right: -2px;
         top: 8px;
-        width: 39px;
+        width: 30px;
+        margin-right: 9px;
         height: 20px;
         padding: 6px;
     }
     .postItem :global(.likeButton .icon) {
-        margin-top: -2px;
+        margin-top: -3px;
     }
-    .postItem.showCommentsIcons :global(.likeButton) {
-        right: 48px;
+    .postItem.showReplyIcon :global(.likeButton) {
+        right: 29px;
+    }
+    .postItem.showRepliesIcon :global(.likeButton) {
+        right: 46px;
     }
 
     .count {
         position: absolute;
         margin-top: 3px;
-        margin-left: 24px;
+        margin-left: 23px;
         /* width: 20px;
         text-align: center; */
 
         font-size: 1rem;
-        color: #333333;
+        font-weight: 700;
+        color: #444444;
     }
 
     .postItem :global(.commentButton) {
@@ -283,7 +290,7 @@
 
     .replyIcon {
         position: absolute;
-        right: 26px;
+        right: 16px;
         top: 13px;
         /* right: 19px;
         top: 15px; */

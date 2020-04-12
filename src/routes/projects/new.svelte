@@ -64,6 +64,7 @@
 				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
 				<div class="fieldCharCount" class:charCountLow="{charCountLow}">{remainingChars}{charCountLow ? ' characters remaining' : ''}</div>
 				<LimitedTextfield bind:value="{description}" bind:field="{descriptionField}" bind:remainingChars="{remainingChars}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" />
+				<div class="fieldNote">{@html locale.NEW_PROJECT.DESCRIPTION_NOTE}</div>
 			</div>
 			<div class="field headerImageField">
 				<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
@@ -113,6 +114,12 @@
 	}
 	.charCountLow {
 		color: #DF3C3C;
+	}
+
+	.fieldNote {
+    	font-size: 1.1rem;
+    	color: #aaaaaa;
+    	/* color: #999999; */
 	}
 
 	input {

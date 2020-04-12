@@ -16,6 +16,9 @@ const locale = {
 	NEW_PROJECT: {
 		TITLE: 'project name',
 		DESCRIPTION: 'project summary',
+		DESCRIPTION_NOTE: 'keep your summary as concise as possible,<br/>you can to go into more detail later',
+		// DESCRIPTION_NOTE: 'keep your summary as short and to the point as possible,<br/>you have the opportunity to go into more detail later',
+		// DESCRIPTION_NOTE: 'keep your summary as concise as possible, you can go into detail later',
 		HEADER_IMAGE: 'header image',
 		CONFIRM: 'next',
 	},

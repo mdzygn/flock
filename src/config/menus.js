@@ -27,19 +27,19 @@ import {
     showTogglePublicDialog,
     editProfile,
     loadProject,
+    copyProjectLink,
+    copyProfileLink,
 } from '../actions/appActions';
 
 import {
     reportProject,
     projectToggleFollowing,
     unarchiveProject,
-    copyProjectLink,
 } from '../actions/projectActions';
 
 import {
     requestConnection,
     reportUser,
-    copyProfileLink,
 } from '../actions/userActions';
 
 

@@ -12,26 +12,18 @@ import {
     logInFormValidated,
 } from '../models/appModel';
 
-// import {
-//     copyPageLink,
-// } from '../actions/appActions';
-
 import {
     archiveProject,
-    copyProjectLink,
     makePublic,
     makePrivate,
 } from '../actions/projectActions';
 
 import {
-    copyProfileLink,
-} from '../actions/userActions';
-
-import {
+    showPrompt,
     copyPostLink,
-} from '../actions/postActions';
-
-import { showPrompt } from '../actions/appActions';
+    copyProjectLink,
+    copyProfileLink,
+} from '../actions/appActions';
 
 
 const prompts = {

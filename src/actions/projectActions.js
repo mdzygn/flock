@@ -4,8 +4,6 @@ import { tick } from 'svelte';
 
 // import { DEBUG } from '../config';
 
-import { copyToClipboard } from '../utils';
-
 import promptIds from '../config/promptIds';
 
 import ProjectModel, {
@@ -201,9 +199,4 @@ export async function unarchiveProject(projectId) {
         await tick();
         showPrompt(promptIds.PROJECT_UNARCHIVED);
     }
-}
-
-export function copyProjectLink(projectId) {
-    const url = location.protocol + '//' + location.host + '/projects/' + projectId;
-    copyToClipboard(url);
 }

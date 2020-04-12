@@ -6,7 +6,7 @@ import { get } from 'svelte/store';
 import { goto } from '@sapper/app';
 // import { DEBUG } from '../config';
 
-import { copyToClipboard, generateId } from '../utils';
+import { generateId } from '../utils';
 
 import promptIds from '../config/promptIds';
 
@@ -61,11 +61,6 @@ export function reportUser(userId) {
     checkUpdateUser(user);
 
     // TODO: report user
-}
-
-export function copyProfileLink(userId) {
-    const url = location.protocol + '//' + location.host + '/profile/' + userId;
-    copyToClipboard(url);
 }
 
 export function createUser(newUserModel) {

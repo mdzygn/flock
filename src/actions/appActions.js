@@ -4,6 +4,8 @@ import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 // import { tick } from 'svelte';
 
+import { copyToClipboard } from '../utils';
+
 import conversations from '../data/conversations.json';
 
 import promptIds from '../config/promptIds';
@@ -389,10 +391,6 @@ function hidePrompt() {
     }
 }
 
-// export function copyPageLink() {
-//     copyToClipboard(location.href);
-// }
-
 export function showShareProjectDialog(projectId) {
     const projectModel = getProject(projectId);
     const project = get(projectModel);
@@ -520,4 +518,20 @@ export function newThreadPost() {
     postType.set('threadPost');
 
     goto('posts/new');
+}
+
+
+export function copyProjectLink(projectId) {
+    const url = location.protocol + '//' + location.host + '/projects/' + projectId;
+    copyToClipboard(url);
+}
+
+export function copyProfileLink(userId) {
+    const url = location.protocol + '//' + location.host + '/profile/' + userId;
+    copyToClipboard(url);
+}
+
+export function copyPostLink(postId) {
+    const url = location.protocol + '//' + location.host + '/posts/' + postId;
+    copyToClipboard(url);
 }

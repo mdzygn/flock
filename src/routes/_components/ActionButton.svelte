@@ -21,6 +21,8 @@
 	export let iconStyle = null;
 
 	$: isSelected = targetItem && targetItem[targetItemProperty];
+
+	$: count = (targetItem && countProperty && targetItem[countProperty]) || '';
 </script>
 
 <div class="actionButton">
@@ -35,7 +37,7 @@
 		{#if selectedLabel}
 			<span style="visibility: {isSelected ? 'hidden' : 'visible'}">{label}</span><div class="selectedLabelContainer"><span class="selectedLabel" style="visibility: {isSelected ? 'visible' : 'hidden'}">{selectedLabel}</span></div>{:else}
 		{label}{/if}{#if countProperty && targetItem}<div class="countContainer">
-				<div class="count">{targetItem[countProperty]}</div>
+				<div class="count">{count}</div>
 			</div>
 		{/if}
 	</Button>

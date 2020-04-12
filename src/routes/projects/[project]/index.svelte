@@ -47,6 +47,7 @@
 		getIsProjectTeamMember,
 		showBetaFeatures,
 		user,
+		userId,
 	} from '../../../models/appModel';
 
 	import { getProjectHeaderImage, getProjectHasDetails, loadingProjects } from '../../../models/projectsModel';
@@ -152,7 +153,7 @@
 </svelte:head>
 
 <div class="pageContent" class:archived="{isArchived}">
-	{#if ($loadingProjects && (!$project || $project.id !== $projectId )) || !$user || !$project }
+	{#if ($loadingProjects && (!$project || $project.id !== $projectId )) || (!$user && $userId) || !$project }
 		<ContentLoader label="{locale.LOADING.PROJECT}" />
 	{:else if !$project || !$project.id}
 		<ContentLoader label="{locale.PROJECT.NOT_FOUND}" />

@@ -72,7 +72,7 @@
 </svelte:head>
 
 <div class="pageContent">
-	{#if ($loadingChannels && (!$channel || $channel.id !== $channelId)) || !$user || !$project }
+	{#if ($loadingChannels && (!$channel || $channel.id !== $channelId)) || (!$user && $userId) || !$project }
 		<ContentLoader label="{locale.LOADING.CHANNEL}" />
 	{:else if !$channel || !$channel.id}
 		<ContentLoader label="{locale.CHANNEL.NOT_FOUND}" />

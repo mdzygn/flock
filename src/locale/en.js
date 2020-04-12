@@ -56,21 +56,25 @@ const locale = {
 		PROJECT: 'loading project...',
 		PROFILE: 'loading profile...',
 		PROFILE_PROJECTS: 'loading projects...',
-		CHANNEL: 'loading posts...',
-		THREAD: 'loading comments...',
+		CHANNEL: 'loading channel...',
+		THREAD: 'loading post...',
+		CHANNEL_ITEMS: 'loading posts...',
+		THREAD_ITEMS: 'loading comments...',
 	},
 	CHANNEL: {
+		NOT_FOUND: 'channel not found',
 		NO_POSTS: 'This channel has no posts',
 	},
 	THREAD: {
+		NOT_FOUND: 'post not found',
 		NO_POSTS: 'This post has no comments',
 	},
 	PROJECT: {
-		NOT_FOUND: 'Project not found',
+		NOT_FOUND: 'project not found',
 		GET_STARTED: 'get the conversations started',
 	},
 	PROFILE: {
-		NOT_FOUND: 'Profile not found',
+		NOT_FOUND: 'profile not found',
 	},
 	SIGN_UP: {
 		FIRST_NAME: 'First name',

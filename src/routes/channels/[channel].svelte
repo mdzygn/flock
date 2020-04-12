@@ -23,6 +23,8 @@
 		loadCurrentProject,
 		loadCurrentChannel,
 		newThread,
+		loadPost,
+    	checkLoggedIn,
 	} from '../../actions/appActions';
 
 	import {
@@ -31,6 +33,7 @@
 	} from '../../models/postsModel';
 
 	import {
+		loadingChannels,
 		getChannelDefaultDescription,
 	} from '../../models/channelsModel';
 
@@ -49,11 +52,6 @@
 
 	$: channelDescription = $channel && ($channel.description || getChannelDefaultDescription($channel)) || null;
 
-	import {
-		loadPost,
-    	checkLoggedIn,
-	} from '../../actions/appActions';
-
 	function newPost() {
 		if (!checkLoggedIn()) { return; }
 
@@ -66,36 +64,42 @@
 </svelte:head>
 
 <div class="pageContent">
-	<ScrollView id="channel">
-		<div slot="scrollHeader">
-			{#if channelDescription}
-				<div class="channelHeader" class:channelHeaderPost="{canPost}">{@html channelDescription}</div>
-			{/if}
-			{#if canPost}
-				<!-- <Proxy image="channel_actions" className="channelActions" /> -->
-				<NewPostButton onClick="{newPost}" className="newPostHeader" />
-			{/if}
-		</div>
-
-		<div class="content">
-			<!-- <Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadPost('sm2ld9p2')}" /> -->
-			<div class="postsContainer">
-				{#each $posts as post}
-					<PostItem {post} />
-				{:else}
-
-					{#if $loadingPosts && (!$posts || !$posts.length) }
-						<ContentLoader label="{locale.LOADING.CHANNEL}" />
-					{:else}
-						<ContentLoader>{locale.CHANNEL.NO_POSTS}{#if canPost}<br/>Be the first to <a href="javascript:void(0)" on:click="{newPost}">Add a Post</a>{/if}</ContentLoader>
-					{/if}
-				{/each}
+	{#if $loadingChannels && (!$channel || $channel.id !== $channelId ) }
+		<ContentLoader label="{locale.LOADING.CHANNEL}" />
+	{:else if !$channel || !$channel.id}
+		<ContentLoader label="{locale.CHANNEL.NOT_FOUND}" />
+	{:else}
+		<ScrollView id="channel">
+			<div slot="scrollHeader">
+				{#if channelDescription}
+					<div class="channelHeader" class:channelHeaderPost="{canPost}">{@html channelDescription}</div>
+				{/if}
+				{#if canPost}
+					<!-- <Proxy image="channel_actions" className="channelActions" /> -->
+					<NewPostButton onClick="{newPost}" className="newPostHeader" />
+				{/if}
 			</div>
-			{#if canPost && $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
-				<NewPostButton onClick="{newPost}" />
-			{/if}
-		</div>
-	</ScrollView>
+
+			<div class="content">
+				<!-- <Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadPost('sm2ld9p2')}" /> -->
+				<div class="postsContainer">
+					{#each $posts as post}
+						<PostItem {post} />
+					{:else}
+
+						{#if $loadingPosts && (!$posts || !$posts.length) }
+							<ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
+						{:else}
+							<ContentLoader>{locale.CHANNEL.NO_POSTS}{#if canPost}<br/>Be the first to <a href="javascript:void(0)" on:click="{newPost}">Add a Post</a>{/if}</ContentLoader>
+						{/if}
+					{/each}
+				</div>
+				{#if canPost && $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
+					<NewPostButton onClick="{newPost}" />
+				{/if}
+			</div>
+		</ScrollView>
+	{/if}
 </div>
 
 <style>

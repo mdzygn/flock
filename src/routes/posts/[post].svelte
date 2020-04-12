@@ -57,40 +57,46 @@
 </svelte:head>
 
 <ScrollView id="thread" anchorToBottom="{$postsAnchorToBottom}">
-	<!-- <div slot="scrollHeader">
-		<ThreadPost {post} />
-	</div> -->
+	{#if $loadingPosts && (!$post || $post.id !== $postId ) }
+		<ContentLoader label="{locale.LOADING.THREAD}" />
+	{:else if !$post || !$post.id}
+		<ContentLoader label="{locale.THREAD.NOT_FOUND}" />
+	{:else}
+		<!-- <div slot="scrollHeader">
+			<ThreadPost {post} />
+		</div> -->
 
-	<div class="content">
-		<ThreadPost {post} />
-		<!-- <Proxy image="thread_posts" className="proxyOverlay">
-			<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
-				left: 7px;
-				top: 8px;
-				width: 49px;
-				height: 1013px;" />
-		</Proxy> -->
-		<!-- <NewPostButton type="thread_reply" /> -->
+		<div class="content">
+			<ThreadPost {post} />
+			<!-- <Proxy image="thread_posts" className="proxyOverlay">
+				<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
+					left: 7px;
+					top: 8px;
+					width: 49px;
+					height: 1013px;" />
+			</Proxy> -->
+			<!-- <NewPostButton type="thread_reply" /> -->
 
-		<div class="contentContainer">
-			<!-- <Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadPost('sm2ld9p2')}" /> -->
-			<div class="postsContainer">
-				{#each $posts as post}
-					<PostItem {post} type="threadPost" />
-				{:else}
-
-					{#if $loadingPosts && (!$posts || !$posts.length) }
-						<ContentLoader label="{locale.LOADING.THREAD}" />
+			<div class="contentContainer">
+				<!-- <Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadPost('sm2ld9p2')}" /> -->
+				<div class="postsContainer">
+					{#each $posts as post}
+						<PostItem {post} type="threadPost" />
 					{:else}
-						<ContentLoader>{locale.THREAD.NO_POSTS}<br/>Be the first to <a href="javascript:void(0)" on:click="{reply}">Leave a Reply</a></ContentLoader>
-					{/if}
-				{/each}
+
+						{#if $loadingPosts && (!$posts || !$posts.length) }
+							<ContentLoader label="{locale.LOADING.THREAD}" />
+						{:else}
+							<ContentLoader>{locale.THREAD.NO_POSTS}<br/>Be the first to <a href="javascript:void(0)" on:click="{reply}">Leave a Reply</a></ContentLoader>
+						{/if}
+					{/each}
+				</div>
+				{#if $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
+					<NewPostButton onClick="{reply}" type="reply" />
+				{/if}
 			</div>
-			{#if $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
-				<NewPostButton onClick="{reply}" type="reply" />
-			{/if}
 		</div>
-	</div>
+	{/if}
 </ScrollView>
 
 <style>

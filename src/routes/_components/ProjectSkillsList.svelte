@@ -4,12 +4,13 @@
 
     import {
         getIsProjectTeamMember,
+        user,
     } from '../../models/appModel';
 
     export let project = null;
 
     $: skills = (project && project.skills) || null;
-    $: isTeamMember = getIsProjectTeamMember(project);
+    $: isTeamMember = $user && getIsProjectTeamMember(project);
 
 	$: canEdit = (isTeamMember && !project.archived) || false;
 

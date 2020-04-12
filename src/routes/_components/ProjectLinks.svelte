@@ -7,6 +7,7 @@
 
     import {
         getIsProjectTeamMember,
+        user,
     } from '../../models/appModel';
 
     export let project = null;
@@ -14,7 +15,7 @@
     const MAX_DISPLAYED_LINK_COUNT = 3;
 
     $: links = (project && project.links) || null;
-    $: isTeamMember = getIsProjectTeamMember(project);
+    $: isTeamMember = $user && getIsProjectTeamMember(project);
 
 	$: canEdit = (isTeamMember && !project.archived) || false;
 

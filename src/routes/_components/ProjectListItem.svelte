@@ -7,7 +7,7 @@
 
     import { loadProject } from '../../actions/appActions';
 
-	import { getIsProjectTeamMember, showBetaFeatures } from '../../models/appModel';
+	import { getIsProjectTeamMember, showBetaFeatures, user } from '../../models/appModel';
 
     import FollowingSmallIcon from "../../assets/icons/following_small.png";
 	import PrivateIcon from "../../assets/icons/private.png";
@@ -18,6 +18,8 @@
     export let showPrivateIcon = false;
 
     let enableLastActive = false; // hardcode until updating project active dates
+
+    $: isTeamMember = $user && getIsProjectTeamMember($project);
 
     $: thumbImage = getProjectHeaderImage($project);
 
@@ -54,7 +56,7 @@
             {/if}
         </div>
     </div>
-    {#if ($project.following || getIsProjectTeamMember($project))}
+    {#if ($project.following || isTeamMember)}
         <div class="info">
             {#if showPrivateIcon && isPrivate}
                 <div class="privateIcon" style="background-image: url({PrivateIcon})"></div>

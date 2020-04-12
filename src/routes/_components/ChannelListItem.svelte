@@ -6,7 +6,9 @@
 	import AddDetailsIcon from "../../assets/icons/add_highlight.png";
 
 	import {
-		project,
+        project,
+        getIsProjectTeamMember,
+        user,
 	} from '../../models/appModel';
 
 	import {
@@ -27,6 +29,8 @@
 
     $: isPrimaryChannel = getIsPrimaryChannel($channel);
 
+    $: isTeamMember = $user && getIsProjectTeamMember($project);
+
     function loadCurrentChannel() {
         if (channelId) {
             loadChannel(channelId);
@@ -39,7 +43,7 @@
         <div class="buttonIcon" style="background-image: url({ArrowIcon})"/>
         {#if messageCount}
             <Counter count="{messageCount}" />
-        {:else if isNew && isPrimaryChannel}
+        {:else if isTeamMember && isPrimaryChannel}
 			<Button className="addFirstPostCTA" icon="{AddDetailsIcon}">add first post</Button>
         {/if}
         <!-- <Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" /> -->

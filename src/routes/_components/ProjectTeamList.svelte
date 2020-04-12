@@ -13,6 +13,7 @@
     import {
         getIsProjectTeamMember,
         showBetaFeatures,
+        user,
     } from '../../models/appModel';
 
     import {
@@ -23,7 +24,7 @@
 
     const MAX_TEAM_MEMBERS = 10;
 
-	$: isTeamMember = getIsProjectTeamMember(project);
+	$: isTeamMember = $user && getIsProjectTeamMember(project);
     $: isNew = (project && project.isNew) || false;
 
 	$: canEdit = (isTeamMember && !project.archived) || false;

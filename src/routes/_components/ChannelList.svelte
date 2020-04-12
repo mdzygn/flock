@@ -11,7 +11,8 @@
 
 	import {
 		getIsProjectTeamMember,
-		showBetaFeatures,
+        showBetaFeatures,
+        user,
     } from '../../models/appModel';
 
 	import {
@@ -24,7 +25,7 @@
     $: { channels = getChannels( { projectId: $project.id } ) };
 
 	$: isNew = ($project && $project.isNew) || false;
-    $: isTeamMember = getIsProjectTeamMember($project);
+    $: isTeamMember = $user && getIsProjectTeamMember($project);
     $: canEdit = (isTeamMember && !$project.archived) || false;
 	$: following = ($project && $project.following) || false;
 

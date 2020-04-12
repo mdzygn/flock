@@ -16,6 +16,7 @@
 		channelId,
 		showBetaFeatures,
 		getIsProjectTeamMember,
+		user,
 	} from '../../models/appModel';
 
 	import {
@@ -43,7 +44,8 @@
     let posts = writable([]);
 	$: { posts = getPosts( { channelId: $channelId, type: 'thread', sortByCreated } ) };
 
-	$: canPost = $channel && (!$channel.teamOnly || getIsProjectTeamMember($project));
+    $: isTeamMember = $user && getIsProjectTeamMember($project);
+	$: canPost = $channel && (!$channel.teamOnly || isTeamMember);
 
 	$: channelDescription = $channel && ($channel.description || getChannelDefaultDescription($channel)) || null;
 

@@ -46,6 +46,7 @@
 		projectShowingInfo,
 		getIsProjectTeamMember,
 		showBetaFeatures,
+		user,
 	} from '../../../models/appModel';
 
 	import { getProjectHeaderImage, getProjectHasDetails, loadingProjects } from '../../../models/projectsModel';
@@ -99,7 +100,7 @@
 
 	// let proxyChannelsImage;
 
-	$: isTeamMember = getIsProjectTeamMember($project);
+	$: isTeamMember = $user && getIsProjectTeamMember($project);
 	$: isNew = ($project && $project.isNew) || false;
 	$: following = ($project && $project.following) || false;
 	$: liked = ($project && $project.liked) || false;

@@ -57,11 +57,13 @@
     $: isMyProfile = curSection ? (curSection.segment === 'profile') : false;
     // $: sectionLabel = curSection ? curSection.label : '';
 
+
     $: hasCreated = $project && $project.hasCreated;
 
     let sectionLabel = '';
     let hasSuperHeader = false;
     let superHeaderLabel = '';
+    let headerLinkUrl = '';
     $: {
         if (/\/projects\/.+/.test(path) && !/\/projects\/new/.test(path) && !/\/projects\/archive/.test(path) && $project) {
             sectionLabel = $project.title;
@@ -90,13 +92,16 @@
             if ($project) {
                 superHeaderLabel = $project.title;
             }
+            headerLinkUrl = '';
         } else if (/\/posts\/.+/.test(path)) {
             hasSuperHeader = true;
             if ($project) {
                 superHeaderLabel = $project.title;
             }
+            headerLinkUrl = 'channels/' + $channelId;
         } else {
             hasSuperHeader = false;
+            headerLinkUrl = '';
         }
     }
 
@@ -146,9 +151,15 @@
         {/if}
     {:else}
         {#if hasSuperHeader}
-            <div class="superHeader" class:hasBack="{showBack || parentPath}">{superHeaderLabel}</div>
+            <div class="superHeader" class:hasBack="{showBack || parentPath}"><a href="projects/{$projectId}">{superHeaderLabel}</a></div>
         {/if}
-        <div class="header" class:loggedOut="{!loggedIn}" class:hasBack="{showBack || parentPath}">{sectionLabel}</div>
+        <div class="header" class:loggedOut="{!loggedIn}" class:hasBack="{showBack || parentPath}">
+            {#if headerLinkUrl}
+                <a href="{headerLinkUrl}">{sectionLabel}</a>
+            {:else}
+                {sectionLabel}
+            {/if}
+        </div>
         {#if showBack || parentPath}
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
         {/if}
@@ -193,6 +204,9 @@
         white-space: nowrap;
         text-overflow: ellipsis;
     }
+    .header a {
+        text-decoration: none;
+    }
     .header.loggedOut {
         right: 140px;
     }
@@ -212,11 +226,13 @@
         left: 20px;
         right: 140px;
 
-        color: #aaaaaa;
-
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+    }
+    .superHeader a {
+        text-decoration: none;
+        color: #aaaaaa;
     }
     .superHeader.hasBack {
         left: 50px;

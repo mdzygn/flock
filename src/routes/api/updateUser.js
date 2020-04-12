@@ -1,4 +1,4 @@
-import { init, response, validateCredentials, filterItemDetails } from '../../server/mongo.js';
+import { init, response, errorResponse, validateCredentials, filterItemDetails } from '../../server/mongo.js';
 
 const bcrypt = require('bcrypt');
 
@@ -7,18 +7,18 @@ export async function post(req, res, next) {
 
     const options = req.body;
 
-	if (!await validateCredentials(db, options)) {
-		response(res, {invalid: true});
-		return;
-	}
-
-    const userId = (options && options.userId) || null;
-
     let details = options.details;
 
     if (details.username && details.pass) {
         options.setAccount = true;
     }
+
+	if (!await validateCredentials(db, options)) { // after setAccount set to ensure that is validated
+		errorResponse(res, {invalid: true}, {errorMsg: 'invalid credentials'});
+		return;
+	}
+
+    const userId = (options && options.userId) || null;
 
     const curUser = await db.collection('users').findOne({ id: userId });
     if (curUser) {
@@ -28,14 +28,15 @@ export async function post(req, res, next) {
             // const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-z0-9._]+(?<![_.])$/); // lowercase only
             // const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i);
             if (!usernameValid) {
-                response(res, {invalid: true});
+                errorResponse(res, {invalid: true}, {errorMsg: 'invalid username'});
                 return;
             }
 
             if (!curUser.pass) {
                 const exisitingUser = await db.collection('users').findOne({ username: { $regex : new RegExp('^' + details.username + '$', 'i') } });
                 if (exisitingUser && exisitingUser.id !== userId) {
-                    response(res, {invalid: true, errorType: 'username_exists'});
+                    errorResponse(res, {errorType: 'username_exists'}, {errorMsg: 'username exists'});
+                    // response(res, {invalid: true, errorType: 'username_exists'});
                 } else {
                     const pass = details.pass;
 
@@ -54,15 +55,18 @@ export async function post(req, res, next) {
                             if (result) {
                                 response(res, {success: true});
                             } else {
-                                response(res, {error: true});
+                                errorResponse(res, {}, {errorMsg: 'can\'t update user details'});
+                                // response(res, {error: true});
                             }
                         } else {
-                            response(res, {error: true});
+                            errorResponse(res, {}, {errorMsg: 'error making hash'});
+                            // response(res, {error: true});
                         }
                     });
                 }
             } else {
-                response(res, {error: true});
+                errorResponse(res, {}, {errorMsg: 'account details already set'});
+                // response(res, {error: true});
             }
         } else {
             const setUserDetailSchema = {
@@ -83,10 +87,12 @@ export async function post(req, res, next) {
             if (result) {
                 response(res, {success: true});
             } else {
-                response(res, {error: true});
+                errorResponse(res, {}, {errorMsg: 'can\'t update user details'});
+                // response(res, {error: true});
             }
         }
     } else {
-        response(res, {error: true});
+        errorResponse(res, {}, {errorMsg: 'user not found'});
+        // response(res, {error: true});
     }
 }

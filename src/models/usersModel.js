@@ -9,6 +9,8 @@ import config from '../config';
 
 import { generateId } from '../utils';
 
+import loadingRequestUtil from '../utils/loadingRequestUtil';
+
 // import usersData from '../data/users.json';
 // const users = JSON.parse(JSON.stringify(usersData));
 
@@ -21,7 +23,7 @@ let users = writable([]);
 
 let usersUpdatedHandlers = [];
 
-loadUsers();
+// loadUsers();
 
 export function getUser(userId) {
 	let curUser = get(users).find(item => get(item).id === userId);
@@ -36,11 +38,11 @@ export function getUser(userId) {
 }
 
 export function loadUsers(options) {
-	if (!get(loadingUsers)) {
-		loadingUsers.set(true);
+	if (!loadingRequestUtil.isLoading('users', options)) {
+		loadingRequestUtil.setLoading('users', options, () => { loadingUsers.set(true); });
 		api.getUsers(options).then(result => {
 			mergeUsers(result);
-			loadingUsers.set(false);
+			loadingRequestUtil.clearLoading('users', options, () => { loadingUsers.set(false); });
 		});
 	}
 }

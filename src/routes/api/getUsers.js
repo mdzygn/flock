@@ -4,8 +4,14 @@ export async function post(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
+	const id = options && options.id;
 
-	const userResults = await db.collection('users').find({}).toArray();
+	const usersFilter = {};
+	if (id) {
+		usersFilter.id = id;
+	}
+
+	const userResults = await db.collection('users').find(usersFilter).toArray();
 
 	const userDetails = {
                 id: true,

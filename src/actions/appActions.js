@@ -22,6 +22,7 @@ import {
     getUser,
     onUsersUpdated,
     mergeUsers,
+    loadUsers,
 } from '../models/usersModel';
 
 import {
@@ -156,6 +157,8 @@ export function setUser(targetUserId) {
     const curUser = get(curUserModel);
 
     if (curUser) {
+        loadUsers( { id: targetUserId } );
+
         userId.set(targetUserId);
         user.set(curUser);
         // console.log(get(user));

@@ -4,6 +4,8 @@ import { writable, get } from 'svelte/store';
 
 import { generateId, objectsMatch } from '../utils';
 
+import loadingRequestUtil from '../utils/loadingRequestUtil';
+
 import {
 	userId,
 } from '../models/appModel';
@@ -14,8 +16,6 @@ export let loadingPosts = writable(false);
 
 let postsUpdatedHandlers = [];
 // let tempPostsUpdatedHandlers = [];
-
-let loadingRequests = {};
 
 let curPostFilterOptions = null;
 
@@ -49,45 +49,13 @@ posts.subscribe(() => {
 export function loadPosts(options) {
 	// if (!get(loadingPosts)) {
 	// 	loadingPosts.set(true);
-	if (!isRequestLoading('posts', options)) {
-		setRequestLoading('posts', options, () => { loadingPosts.set(true); });
+	if (!loadingRequestUtil.isLoading('posts', options)) {
+		loadingRequestUtil.setLoading('posts', options, () => { loadingPosts.set(true); });
 		api.getPosts(options).then(result => {
 			mergePosts(result);
 			// loadingPosts.set(false);
-			clearRequestLoading('posts', options, () => { loadingPosts.set(false); });
+			loadingRequestUtil.clearLoading('posts', options, () => { loadingPosts.set(false); });
 		});
-	}
-}
-
-function isRequestLoading(id, options) {
-	return !!getRequestLoading(id, options);
-}
-function getRequestLoading(id, options) {
-	return loadingRequests[id] && loadingRequests[id].find(request => objectsMatch(request.options, options));
-}
-function setRequestLoading(id, options, startCallback) {
-	if (!loadingRequests[id]) {
-		loadingRequests[id] = [];
-	}
-	loadingRequests[id].push({options});
-	console.log('add '+ loadingRequests[id].length, JSON.stringify(options));
-	if (startCallback) {
-		startCallback();
-	}
-}
-function clearRequestLoading(id, options, endCallback) {
-	const matchItem = getRequestLoading(id, options);
-	if (matchItem) {
-		const matchId = loadingRequests[id].indexOf(matchItem);
-		loadingRequests[id].splice(matchId, 1);
-
-		console.log('remove '+ loadingRequests[id].length);
-		if (loadingRequests[id].length === 0) {
-			console.log('stopped loading');
-			if (endCallback) {
-				endCallback();
-			}
-		}
 	}
 }
 
@@ -121,7 +89,7 @@ function mergePosts(newPosts) {
 }
 
 export function getPosts(options) {
-	if (options.threadId || curPostFilterOptions.channelId) {
+	if (options.threadId || options.channelId) {
 		curPostFilterOptions = options;
 
 		if (curPostFilterOptions && options && (

@@ -152,7 +152,7 @@
 </svelte:head>
 
 <div class="pageContent" class:archived="{isArchived}">
-	{#if $loadingProjects && (!$project || $project.id !== $projectId ) }
+	{#if ($loadingProjects && (!$project || $project.id !== $projectId )) || !$user || !$project }
 		<ContentLoader label="{locale.LOADING.PROJECT}" />
 	{:else if !$project || !$project.id}
 		<ContentLoader label="{locale.PROJECT.NOT_FOUND}" />

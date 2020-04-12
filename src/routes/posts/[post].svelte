@@ -20,6 +20,8 @@
 		postId,
 		post,
 		postsAnchorToBottom,
+		user,
+		project,
 	} from '../../models/appModel';
 
 	import {
@@ -69,7 +71,7 @@
 </svelte:head>
 
 <ScrollView id="thread" anchorToBottom="{$postsAnchorToBottom}">
-	{#if $loadingPosts && (!$post || $post.id !== $postId ) }
+	{#if ($loadingPosts && (!$post || $post.id !== $postId)) || !$user || !$project }
 		<ContentLoader label="{locale.LOADING.THREAD}" />
 	{:else if !$post || !$post.id}
 		<ContentLoader label="{locale.THREAD.NOT_FOUND}" />

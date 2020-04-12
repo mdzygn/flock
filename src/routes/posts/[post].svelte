@@ -30,6 +30,11 @@
 	} from '../../actions/appActions';
 
 	import {
+		loadUsersOfItem,
+		loadUsersOfItemModels,
+	} from '../../models/usersModel';
+
+	import {
 		getPost,
 		getPosts,
 		loadingPosts,
@@ -45,6 +50,13 @@
 
     let posts = writable([]);
 	$: { posts = getPosts( { threadId: $postId, type: 'threadPost' } ) };
+
+    $: {
+        loadUsersOfItem($post);
+	}
+    $: {
+        loadUsersOfItemModels($posts);
+	}
 
     function reply() {
 		if (!checkLoggedIn()) { return; }

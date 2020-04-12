@@ -24,8 +24,12 @@
 		loadCurrentChannel,
 		newThread,
 		loadPost,
-    	checkLoggedIn,
+		checkLoggedIn,
 	} from '../../actions/appActions';
+
+	import {
+		loadUsersOfItemModels,
+	} from '../../models/usersModel';
 
 	import {
 		getPosts,
@@ -51,6 +55,10 @@
 	$: canPost = $channel && (!$channel.teamOnly || isTeamMember);
 
 	$: channelDescription = $channel && ($channel.description || getChannelDefaultDescription($channel)) || null;
+
+    $: {
+        loadUsersOfItemModels($posts);
+    }
 
 	function newPost() {
 		if (!checkLoggedIn()) { return; }

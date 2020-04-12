@@ -47,6 +47,29 @@ export function loadUsers(options) {
 	}
 }
 
+export function loadUsersOfItem(item) {
+	if (item && item.userId) {
+		loadUsers( { ids: [item.userId] } );
+	}
+}
+
+export function loadUsersOfItemModels(items) {
+	const userItems = [];
+
+	let item, itemModel;
+	for (var itemI = 0; itemI < items.length; itemI++) {
+		itemModel = items[itemI];
+		item = get(itemModel);
+
+		if (item && item.userId && !userItems.includes(item.userId)) {
+			userItems.push(item.userId);
+		}
+	}
+	if (userItems.length) {
+		loadUsers( { ids: userItems } );
+	}
+}
+
 export function onUsersUpdated(handler) {
 	if (!usersUpdatedHandlers.includes(handler)) {
 		usersUpdatedHandlers.push(handler);

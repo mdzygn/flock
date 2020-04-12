@@ -138,11 +138,6 @@
 		margin-top: 10px;
 	} */
 
-	.content :global(.postItem) {
-    	margin-bottom: 0;
-		border-bottom: 2px solid #EEEEEE;
-	}
-
 	.content :global(.contentLoader) {
     	background-color: #f2f2f2;
         font-size: 1.3rem;
@@ -155,5 +150,10 @@
 
 	.postsContainer {
 		margin-top: 10px;
+	}
+
+	.content .postsContainer :global(.postItem) {
+    	margin-bottom: 0;
+		border-bottom: 2px solid #EEEEEE;
 	}
 </style>

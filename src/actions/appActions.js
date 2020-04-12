@@ -228,11 +228,16 @@ export function showLikes() {
 }
 
 export function loadChannel(targetChannelId) {
-    channelId.set(targetChannelId);
-    setChannel(targetChannelId);
+    loadChannelItem(targetChannelId);
 
     gotoRoute('channels/' + targetChannelId );
     resetScrollRegionPosition('channel');
+}
+export function loadChannelItem(targetChannelId) {
+    loadChannels( { id: targetChannelId } );
+
+    channelId.set(targetChannelId);
+    setChannel(targetChannelId);
 }
 
 function setChannel(targetChannelId) {
@@ -265,6 +270,15 @@ function setPost(targetPostId) {
     const curPost = get(curPostModel);
 
     post.set(curPost);
+
+    if (curPost) {
+        if (!get(channelId) && curPost.channelId) {
+            loadChannelItem(curPost.channelId);
+        }
+        if (!get(projectId) && curPost.projectId) {
+            loadProjectItem(curPost.projectId);
+        }
+    }
 }
 
 export function loadProfile(targetProfileId, options) {
@@ -461,7 +475,7 @@ export function loadCurrentChannel() {
             loadChannels( { projectId: get(projectId) } );
         } else {
             // console.log('loadCurrentChannel channelId', get(channelId));
-            loadChannels( { channelId: get(channelId) } );
+            loadChannels( { id: get(channelId) } );
         }
     }
 }

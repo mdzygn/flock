@@ -14,7 +14,6 @@ import promptIds from '../config/promptIds';
 import {
     project,
     viewedUser,
-    userId,
     showBetaFeatures,
 } from '../models/appModel';
 
@@ -22,7 +21,6 @@ import {
     editProjectDetails,
     messageUser,
     showPrompt,
-    loadProfile,
     logOut,
     showTogglePublicDialog,
     editProfile,

@@ -2,7 +2,7 @@
     import { goto } from '@sapper/app';
     import { writable } from 'svelte/store';
 
-    // import Button from '../../components/Button.svelte';
+    import Button from '../../components/Button.svelte';
     // import Counter from '../_components/Counter.svelte';
 
     // import ArrowIcon from "../../assets/icons/next_arrow.png";
@@ -11,6 +11,8 @@
 
     import AvatarIcon from '../_components/AvatarIcon.svelte';
 
+    import LikeIcon from "../../assets/icons/post_like.png";
+    import LikeSelectedIcon from "../../assets/icons/post_like_selected.png";
     import CommentIcon from "../../assets/icons/comment_small.png";
     import ReplyIcon from "../../assets/icons/reply_small.png";
 
@@ -21,7 +23,11 @@
 	import {
         loadProfile,
         loadPost,
-	} from '../../actions/appActions';
+    } from '../../actions/appActions';
+
+	import {
+        postToggleLiked,
+	} from '../../actions/postActions';
 
     export let post;
 
@@ -41,6 +47,7 @@
 
     $: title = ($post && $post.title) || null;
     $: message = ($post && $post.message) || null;
+	$: liked = ($post && $post.liked) || false;
 
     $: showTitle = (type === 'thread');
     $: canLinkThrough = (type === 'thread');
@@ -50,6 +57,9 @@
     $: textSelectable = (type !== 'thread');
     $: messageLimited = (type === 'thread');
 
+    $: likeCount = ($post && $post.likeCount) || '';
+
+    $: showCommentsIcons = (type === 'thread');
     $: showRepliesIcon = repliesCount;
     $: showReplyIcon = (type === 'thread') && !repliesCount;
 
@@ -97,21 +107,33 @@
             // goto('posts/' + postId);
         }
     }
+
+	function toggleLiked(event) {
+        postToggleLiked(postId);
+        event && event.stopPropagation();
+	}
 </script>
 
-<div class="postItem" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}">
+<div class="postItem" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}" class:showCommentsIcons="{showCommentsIcons}">
     <!-- <Avatar  -->
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
+    <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}">
+        <!-- <div class="likeIcon" style="background-image: url({LikeIcon})"/> -->
+        <div class="count">{likeCount}</div>
+        <!-- <Counter count="{likeCount}" /> -->
+    </Button>
     {#if showRepliesIcon}
-        <div class="commentIcon" style="background-image: url({CommentIcon})"/>
-        <Counter count="{repliesCount}" />
+        <Button className="commentButton">
+            <div class="commentIcon" style="background-image: url({CommentIcon})"/>
+            <Counter count="{repliesCount}" />
+        </Button>
     {:else}
         {#if showReplyIcon}
             <div class="replyIcon" style="background-image: url({ReplyIcon})"/>
         {/if}
     {/if}
     <div class="info">
-        <div class="userName" class:selectable="{textSelectable}" class:showRepliesIcon="{showRepliesIcon}" class:showReplyIcon="{showReplyIcon}">
+        <div class="userName" class:selectable="{textSelectable}">
             <span div="userNameLabel" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userNameString}</span>
             {#if dateString}<span class="date">{#if userName} - {/if}{dateString}</span>{/if}
         </div>
@@ -155,17 +177,21 @@
         color: #777777;
         /* font-weight: 700; */
         padding-bottom: 5px;
+        padding-right: 28px;
 
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    .userName.showReplyIcon {
+    .showCommentsIcons .userName {
+        padding-right: 78px;
+    }
+    /* .userName.showReplyIcon {
         padding-right: 20px;
     }
     .userName.showRepliesIcon {
         padding-right: 28px;
-    }
+    } */
 
     .date {
         color: #bbbbbb;
@@ -197,26 +223,70 @@
         user-select: text;
     }
 
-    .postItem :global(.counterContainer) {
-        float: right;
-        margin-top: 12px;
-        margin-right: 18px;
+    .postItem :global(.likeButton) {
+        position: absolute;
+        right: -2px;
+        top: 8px;
+        width: 39px;
+        height: 20px;
+        padding: 6px;
+    }
+    .postItem :global(.likeButton .icon) {
+        margin-top: -2px;
+    }
+    .postItem.showCommentsIcons :global(.likeButton) {
+        right: 48px;
     }
 
+    .count {
+        position: absolute;
+        margin-top: 3px;
+        margin-left: 24px;
+        /* width: 20px;
+        text-align: center; */
+
+        font-size: 1rem;
+        color: #333333;
+    }
+
+    .postItem :global(.commentButton) {
+        position: absolute;
+        right: 54px;
+        top: 16px;
+    }
     .commentIcon {
         position: absolute;
-        right: 48px;
-        top: 15px;
 
         background-size: cover;
         width: 17px;
         height: 17px;
     }
 
+    .postItem :global(.counterContainer) {
+        position: absolute;
+        margin-top: -1px;
+        margin-left: 20px;
+    }
+    .postItem :global(.counter) {
+        height: 18px;
+        width: 18px;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    /*.postItem :global(.counter) {
+        border-radius: initial;
+        background-color: initial;
+        font-size: 1rem;
+        color: #333333;
+    } */
+
+
     .replyIcon {
         position: absolute;
-        right: 19px;
-        top: 15px;
+        right: 26px;
+        top: 13px;
+        /* right: 19px;
+        top: 15px; */
 
         background-size: cover;
         width: 22px;

@@ -7,6 +7,7 @@ import { generateId, objectsMatch } from '../utils';
 import loadingRequestUtil from '../utils/loadingRequestUtil';
 
 import {
+    user,
 	userId,
 } from '../models/appModel';
 
@@ -195,4 +196,21 @@ export function addPost(postDetails) {
 	filterCurrentPosts();
 
 	return newPostModel;
+}
+
+export function setLikePost(targetPost, like) {
+	if (like) {
+		api.likePost({userId: get(userId), postId: targetPost.id});
+	} else {
+		api.unlikePost({userId: get(userId), postId: targetPost.id});
+	}
+
+	targetPost.liked = like;
+	targetPost.likeCount = (targetPost.likeCount || 0) + (like ? 1 : -1);
+
+	const curUserDetails = get(user);
+	if (curUserDetails) {
+		curUserDetails.likesCount = curUserDetails.likesCount + (like ? 1 : -1);
+		user.set(curUserDetails);
+	}
 }

@@ -10,15 +10,16 @@ export async function post(req, res, next) {
 		return;
 	}
 
-	if (options.userId && options.projectId) {
-		const projectUpdateResult = await db.collection('projects').updateOne({ id: options.projectId }, { $inc: { likeCount: 1 } });
-		if (projectUpdateResult) {
+	if (options.userId && options.postId) {
+		const postUpdateResult = await db.collection('posts').updateOne({ id: options.postId }, { $inc: { likeCount: 1 } });
+		if (postUpdateResult) {
 			const details = {};
 			details.userId = options.userId;
-			details.projectId = options.projectId;
+			details.postId = options.postId;
 			details.createdAt = (new Date()).getTime();
 
-			const likeUpdateResult = await db.collection('likes').insertOne(details);
+			const likeUpdateResult = await db.collection('postLikes').insertOne(details);
+
 			if (likeUpdateResult) {
 				const userUpdateResult = await db.collection('users').updateOne({ id: options.userId }, { $inc: { likesCount: 1 } });
 				if (userUpdateResult) {
@@ -27,12 +28,12 @@ export async function post(req, res, next) {
 					errorResponse(res, {}, {errorMsg: 'can\'t update user likes count'});
 				}
 			} else {
-				errorResponse(res, {}, {errorMsg: 'can\'t update likes'});
+				errorResponse(res, {}, {errorMsg: 'can\'t update post likes'});
 			}
 		} else {
-			errorResponse(res, {}, {errorMsg: 'can\'t project like count'});
+			errorResponse(res, {}, {errorMsg: 'can\'t post like count'});
 		}
 	} else {
-		errorResponse(res, {}, {errorMsg: 'userId or projectId not defined'});
+		errorResponse(res, {}, {errorMsg: 'userId or postId not defined'});
 	}
 }

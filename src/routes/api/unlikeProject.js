@@ -1,4 +1,4 @@
-import { init, response, validateCredentials } from '../../server/mongo.js';
+import { init, response, errorResponse, validateCredentials } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -6,7 +6,7 @@ export async function post(req, res, next) {
 	const options = req.body;
 
 	if (!await validateCredentials(db, options)) {
-		response(res, {invalid: true});
+		errorResponse(res, {invalid: true}, {errorMsg: 'invalid credentials'});
 		return;
 	}
 
@@ -18,18 +18,21 @@ export async function post(req, res, next) {
 			details.userId = options.userId;
 			details.projectId = options.projectId;
 
-			const result = await db.collection('likes').deleteMany(details);
-
-			let userUpdateResult = await db.collection('users').updateOne({ id: options.userId }, { $inc: { likesCount: -1 } });
-			if (userUpdateResult) {
-				response(res, {success: true});
+			const likeUpdateResult = await db.collection('likes').deleteMany(details);
+			if (likeUpdateResult) {
+				let userUpdateResult = await db.collection('users').updateOne({ id: options.userId }, { $inc: { likesCount: -1 } });
+				if (userUpdateResult) {
+					response(res, {success: true});
+				} else {
+					errorResponse(res, {}, {errorMsg: 'can\'t update user likes count'});
+				}
 			} else {
-				response(res, {error: true});
+				errorResponse(res, {}, {errorMsg: 'can\'t update likes'});
 			}
 		} else {
-			response(res, {error: true});
+			errorResponse(res, {}, {errorMsg: 'can\'t project like count'});
 		}
 	} else {
-		response(res, {error: true});
+		errorResponse(res, {}, {errorMsg: 'userId or projectId not defined'});
 	}
 }

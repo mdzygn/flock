@@ -96,7 +96,7 @@
 			</div>
 
 			<div class="content">
-				<!-- <Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadPost('sm2ld9p2')}" /> -->
+				<Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadPost('sm2ld9p2')}" />
 				<div class="postsContainer">
 					{#each $posts as post}
 						<PostItem {post} />
@@ -118,10 +118,10 @@
 </div>
 
 <style>
-	/* .content :global(.proxyOverlay) {
+	.content :global(.proxyOverlay) {
 		position: absolute;
 		opacity: 0.5;
-	} */
+	}
 
 	.channelHeader {
 		background-color: #ffffff;

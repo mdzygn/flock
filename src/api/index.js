@@ -250,6 +250,31 @@ function addPost(options) {
 	});
 }
 
+// options = { details: { userId: id, postId: id } }
+function likePost(options) {
+	options = addCredentials(options);
+	return send('likePost', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - likePost: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+// options = { details: { userId: id, postId: id } }
+function unlikePost(options) {
+	options = addCredentials(options);
+	return send('unlikePost', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - unlikePost: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
+
+
 const api = {
 	getProjects,
 	addProject,
@@ -272,6 +297,9 @@ const api = {
 
 	getPosts,
 	addPost,
+
+	likePost,
+	unlikePost,
 }
 
 export default api;

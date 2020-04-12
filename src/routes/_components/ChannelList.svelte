@@ -31,28 +31,28 @@
 
     let areMoreItems = false;
 
-    let proxyChannelsImage;
+    // let proxyChannelsImage;
 
-	$: {
-		if (isTeamMember) {
-			if (isNew) {
-				proxyChannelsImage = 'project_channels_populate';
-			} else {
-				proxyChannelsImage = 'project_channels_owner';
-			}
-		} else {
-			if (following) {
-				proxyChannelsImage = 'project_channels_following';
-			} else {
-				proxyChannelsImage = 'project_channels';
-			}
-		}
-	}
+	// $: {
+	// 	if (isTeamMember) {
+	// 		if (isNew) {
+	// 			proxyChannelsImage = 'project_channels_populate';
+	// 		} else {
+	// 			proxyChannelsImage = 'project_channels_owner';
+	// 		}
+	// 	} else {
+	// 		if (following) {
+	// 			proxyChannelsImage = 'project_channels_following';
+	// 		} else {
+	// 			proxyChannelsImage = 'project_channels';
+	// 		}
+	// 	}
+	// }
 </script>
 
 {#if $channels && $channels.length}
     <div class="channelList" class:isEditable="{canEdit}">
-        <Proxy image="{proxyChannelsImage}" className="proxyOverlay" />
+        <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
         <ContentPanel title="Channels" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
             {#if isNew}
                 <div class="getTheConversationStarted">{locale.PROJECT.GET_STARTED}</div>
@@ -71,10 +71,10 @@
 {/if}
 
 <style>
-	.channelList :global(.proxyOverlay) {
+	/* .channelList :global(.proxyOverlay) {
 		position: absolute;
 		opacity: 0.5;
-	}
+	} */
 
 	.channelList :global(.panelContent ) {
 		position: relative;

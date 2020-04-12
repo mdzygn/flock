@@ -23,6 +23,7 @@ import {
     onUsersUpdated,
     mergeUsers,
     loadUsers,
+    loadingUsers,
 } from '../models/usersModel';
 
 import {
@@ -157,9 +158,9 @@ export function setUser(targetUserId) {
     const curUserModel = getUser(targetUserId);
     const curUser = get(curUserModel);
 
-    if (curUser) {
-        loadUsers( { id: targetUserId } );
+    // loadUsers( { id: targetUserId } );
 
+    if (curUser) {
         userId.set(targetUserId);
         user.set(curUser);
         // console.log(get(user));
@@ -468,6 +469,11 @@ export function checkLoggedIn() {
     return true;
 }
 
+export function loadCurrentUser() {
+    if (get(userId) && !get(user) && !get(loadingUsers)) {
+        loadUsers( { id: get(userId) } );
+    }
+}
 export function loadCurrentProject() {
     if (get(projectId) && !get(project) && !get(loadingProjects)) {
         loadProjects( { id: get(projectId) } );

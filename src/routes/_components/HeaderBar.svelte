@@ -32,6 +32,7 @@
         loadProfile,
         showMenu,
         showPrompt,
+        loadCurrentUser,
     } from '../../actions/appActions';
 
     import BackIcon from "../../assets/icons/back.png";
@@ -39,6 +40,8 @@
 
     export let segment;
     export let path;
+
+    loadCurrentUser();
 
     $: isCurrentUser = $user && getIsCurrentUser($viewedUser && $viewedUser.id);
 

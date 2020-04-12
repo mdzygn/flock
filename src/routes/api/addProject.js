@@ -81,7 +81,7 @@ export async function post(req, res, next) {
 			}
 
 			if (!channelAddFailed) {
-				console.log('details.userId', options.userId, 'details.id', details.id);
+				// console.log('details.userId', options.userId, 'details.id', details.id);
 				const userUpdateResult = await db.collection('users').updateOne({ id: options.userId }, { $push: { projects: details.id } });
 
 				if (userUpdateResult) {

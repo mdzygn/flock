@@ -2,7 +2,7 @@ import api from '../api';
 
 import { writable, get } from 'svelte/store';
 
-import { generateId } from '../utils';
+import { generateId, objectsMatch } from '../utils';
 
 import {
 	userId,
@@ -14,6 +14,8 @@ export let loadingPosts = writable(false);
 
 let postsUpdatedHandlers = [];
 // let tempPostsUpdatedHandlers = [];
+
+let postRequestsLoading = [];
 
 let curPostFilterOptions = null;
 
@@ -45,12 +47,39 @@ posts.subscribe(() => {
 });
 
 export function loadPosts(options) {
-	if (!get(loadingPosts)) {
-		loadingPosts.set(true);
+	// if (!get(loadingPosts)) {
+	// 	loadingPosts.set(true);
+	if (!isPostsRequestLoading(options)) {
+		setPostsRequestLoading(options);
 		api.getPosts(options).then(result => {
 			mergePosts(result);
-			loadingPosts.set(false);
+			// loadingPosts.set(false);
+			removePostsRequestLoading(options);
 		});
+	}
+}
+
+function isPostsRequestLoading(options) {
+	return !!getPostsRequestLoading(options);
+}
+function getPostsRequestLoading(options) {
+	return postRequestsLoading.find(request => objectsMatch(request.options, options));
+}
+function setPostsRequestLoading(options) {
+	postRequestsLoading.push({options});
+	// console.log('add '+ postRequestsLoading.length, JSON.stringify(options));
+	loadingPosts.set(true);
+}
+function removePostsRequestLoading(options) {
+	const matchItem = getPostsRequestLoading(options);
+	if (matchItem) {
+		const matchId = postRequestsLoading.indexOf(matchItem);
+		postRequestsLoading.splice(matchId, 1);
+
+		// console.log('remove '+ postRequestsLoading.length);
+		if (postRequestsLoading.length === 0) {
+			loadingPosts.set(false);
+		}
 	}
 }
 

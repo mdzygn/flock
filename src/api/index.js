@@ -45,7 +45,8 @@ function send(path, options) {
 }
 
 function addOptions(curOptions, newOptions) {
-	curOptions = curOptions || {};
+	// curOptions = curOptions || {};
+	curOptions = curOptions ? Object.assign({}, curOptions) : {};
 	Object.assign(curOptions, newOptions);
 	return curOptions;
 }

@@ -7,6 +7,7 @@ export async function post(req, res, next) {
 
 	const type = options && options.type;
 
+	const id = options && options.id;
 	const channelId = options && options.channelId;
 	const threadId = options && options.threadId;
 
@@ -14,9 +15,13 @@ export async function post(req, res, next) {
 	if (type) {
 		filter.type = type;
 	}
+	if (id) {
+		filter.id = id;
+	}
 	if (threadId) {
 		filter.threadId = threadId;
-	} else if (channelId) {
+	}
+	if (channelId) {
 		filter.channelId = channelId;
 	}
 

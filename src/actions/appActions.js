@@ -249,6 +249,8 @@ function setChannel(targetChannelId) {
 }
 
 export function loadPost(targetPostId, options) {
+    loadPosts({ id: targetPostId });
+
     postId.set(targetPostId);
     setPost(targetPostId);
 
@@ -466,7 +468,7 @@ export function loadCurrentChannel() {
 
 export function loadCurrentPost() {
     if (get(postId) && !get(post) && !get(loadingPosts)) {
-        loadPosts( { postId: get(postId) } );
+        loadPosts( { id: get(postId) } );
     }
 }
 

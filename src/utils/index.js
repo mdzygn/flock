@@ -303,3 +303,8 @@ export function getSplitItems(items) {
     }
     return items;
 }
+
+export function objectsMatch(objectA, objectB) {
+    return JSON.stringify(objectA) === JSON.stringify(objectB);
+    // Object.entries(k1).toString() === Object.entries(k2).toString();
+}

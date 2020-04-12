@@ -22,7 +22,8 @@
     import {
         loadProfile,
         checkLoggedIn,
-		newThreadPost,
+        newThreadPost,
+        showSharePostDialog,
     } from '../../actions/appActions';
 
 	import {
@@ -66,7 +67,7 @@
     }
 
 	function shareItem() {
-		showShareProjectDialog(postId);
+		showSharePostDialog(postId);
 	}
 </script>
 
@@ -197,7 +198,7 @@
         padding-top: 95px;
         padding-left: 26px;
         padding-right: 40px;
-        padding-bottom: 18px;
+        padding-bottom: 22px;
     }
 
     .date {

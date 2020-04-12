@@ -6,6 +6,7 @@ import {
     project,
     targetProject,
     targetUser,
+    targetPost,
     signUpFormValidated,
     setAccountFormValidated,
     logInFormValidated,
@@ -25,6 +26,11 @@ import {
 import {
     copyProfileLink,
 } from '../actions/userActions';
+
+import {
+    copyPostLink,
+} from '../actions/postActions';
+
 import { showPrompt } from '../actions/appActions';
 
 
@@ -149,6 +155,20 @@ const prompts = {
             },
         ],
     },
+    SHARE_PROJECT_COMPLETE: {
+        title: 'Share Project',
+        message: 'Select copy link below to share this project with others',
+        menuItems: [
+            {
+                label: 'Link Copied',
+                disabled: true,
+            },
+            {
+                label: 'Close',
+            },
+        ],
+    },
+
     SHARE_PROFILE: {
         title: 'Share Profile',
         message: 'Select copy link below to share this profile',
@@ -157,19 +177,6 @@ const prompts = {
                 label: 'Copy Link',
                 action: () => { const p = get(targetUser); p && p.id && copyProfileLink(p.id); showPrompt(promptIds.SHARE_PROFILE_COMPLETE); },
                 default: true,
-            },
-            {
-                label: 'Close',
-            },
-        ],
-    },
-    SHARE_PROJECT_COMPLETE: {
-        title: 'Share Project',
-        message: 'Select copy link below to share this project with others',
-        menuItems: [
-            {
-                label: 'Link Copied',
-                disabled: true,
             },
             {
                 label: 'Close',
@@ -189,6 +196,35 @@ const prompts = {
             },
         ],
     },
+
+    SHARE_POST: {
+        title: 'Share Post',
+        message: 'Select copy link below to share this post',
+        menuItems: [
+            {
+                label: 'Copy Link',
+                action: () => { const p = get(targetPost); p && p.id && copyPostLink(p.id); showPrompt(promptIds.SHARE_POST_COMPLETE); },
+                default: true,
+            },
+            {
+                label: 'Close',
+            },
+        ],
+    },
+    SHARE_POST_COMPLETE: {
+        title: 'Share Post',
+        message: 'Select copy link below to share this post',
+        menuItems: [
+            {
+                label: 'Link Copied',
+                disabled: true,
+            },
+            {
+                label: 'Close',
+            },
+        ],
+    },
+
     SIGN_UP: {
         title: 'Create User',
         menuItems: [

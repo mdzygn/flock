@@ -70,6 +70,7 @@ export const postsAnchorToBottom = appModel.postsAnchorToBottom;
 
 export const targetProject = writable(null);
 export const targetUser = writable(null);
+export const targetPost = writable(null);
 
 export const newMessage = appModel.newMessage;
 

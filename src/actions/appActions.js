@@ -67,6 +67,7 @@ import {
 
     targetProject,
     targetUser,
+    targetPost,
 
     resetScrollRegionPosition,
 
@@ -409,6 +410,16 @@ export function showShareProfileDialog(userId) {
 
     showPrompt(promptIds.SHARE_PROFILE);
 }
+
+export function showSharePostDialog(postId) {
+    const postModel = getPost(postId);
+    const post = get(postModel);
+
+    targetPost.set(post);
+
+    showPrompt(promptIds.SHARE_POST);
+}
+
 
 export function showTogglePublicDialog() {
     const curProject = get(project);

@@ -1,5 +1,7 @@
 import { get } from 'svelte/store';
 
+import { copyToClipboard } from '../utils';
+
 import {
     checkLoggedIn,
     loadChannel,
@@ -49,4 +51,9 @@ export function postToggleLiked(postId) {
         targetPostModel.set(targetPost);
         checkUpdatePost(targetPost);
     }
+}
+
+export function copyPostLink(postId) {
+    const url = location.protocol + '//' + location.host + '/posts/' + postId;
+    copyToClipboard(url);
 }

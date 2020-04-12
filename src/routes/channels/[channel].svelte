@@ -87,7 +87,7 @@
 					{#if $loadingPosts && (!$posts || !$posts.length) }
 						<ContentLoader label="{locale.LOADING.CHANNEL}" />
 					{:else}
-						<ContentLoader>{locale.CHANNEL.NO_POSTS}{#if canPost},<br/>be the first to <a href="javascript:void(0)" on:click="{newPost}">add a post</a>{/if}</ContentLoader>
+						<ContentLoader>{locale.CHANNEL.NO_POSTS}{#if canPost}<br/>Be the first to <a href="javascript:void(0)" on:click="{newPost}">Add a Post</a>{/if}</ContentLoader>
 					{/if}
 				{/each}
 			</div>
@@ -132,7 +132,7 @@
 	.content :global(.contentLoader) {
     	background-color: #f2f2f2;
         font-size: 1.3rem;
-        line-height: 2rem;
+        line-height: 2.2rem;
 	}
 
 	.content :global(.channelActions) {

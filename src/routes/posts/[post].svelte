@@ -82,7 +82,7 @@
 					{#if $loadingPosts && (!$posts || !$posts.length) }
 						<ContentLoader label="{locale.LOADING.THREAD}" />
 					{:else}
-						<ContentLoader>{locale.THREAD.NO_POSTS},<br/>be the first to <a href="javascript:void(0)" on:click="{reply}">leave a reply</a></ContentLoader>
+						<ContentLoader>{locale.THREAD.NO_POSTS}<br/>Be the first to <a href="javascript:void(0)" on:click="{reply}">Leave a Reply</a></ContentLoader>
 					{/if}
 				{/each}
 			</div>
@@ -119,7 +119,7 @@
 	.content :global(.contentLoader) {
     	background-color: #f2f2f2;
         font-size: 1.3rem;
-        line-height: 2rem;
+        line-height: 2.2rem;
 	}
 
 	.contentContainer {

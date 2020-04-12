@@ -15,7 +15,7 @@ export let loadingPosts = writable(false);
 let postsUpdatedHandlers = [];
 // let tempPostsUpdatedHandlers = [];
 
-let postRequestsLoading = [];
+let loadingRequests = {};
 
 let curPostFilterOptions = null;
 
@@ -49,36 +49,44 @@ posts.subscribe(() => {
 export function loadPosts(options) {
 	// if (!get(loadingPosts)) {
 	// 	loadingPosts.set(true);
-	if (!isPostsRequestLoading(options)) {
-		setPostsRequestLoading(options);
+	if (!isRequestLoading('posts', options)) {
+		setRequestLoading('posts', options, () => { loadingPosts.set(true); });
 		api.getPosts(options).then(result => {
 			mergePosts(result);
 			// loadingPosts.set(false);
-			removePostsRequestLoading(options);
+			clearRequestLoading('posts', options, () => { loadingPosts.set(false); });
 		});
 	}
 }
 
-function isPostsRequestLoading(options) {
-	return !!getPostsRequestLoading(options);
+function isRequestLoading(id, options) {
+	return !!getRequestLoading(id, options);
 }
-function getPostsRequestLoading(options) {
-	return postRequestsLoading.find(request => objectsMatch(request.options, options));
+function getRequestLoading(id, options) {
+	return loadingRequests[id] && loadingRequests[id].find(request => objectsMatch(request.options, options));
 }
-function setPostsRequestLoading(options) {
-	postRequestsLoading.push({options});
-	// console.log('add '+ postRequestsLoading.length, JSON.stringify(options));
-	loadingPosts.set(true);
+function setRequestLoading(id, options, startCallback) {
+	if (!loadingRequests[id]) {
+		loadingRequests[id] = [];
+	}
+	loadingRequests[id].push({options});
+	console.log('add '+ loadingRequests[id].length, JSON.stringify(options));
+	if (startCallback) {
+		startCallback();
+	}
 }
-function removePostsRequestLoading(options) {
-	const matchItem = getPostsRequestLoading(options);
+function clearRequestLoading(id, options, endCallback) {
+	const matchItem = getRequestLoading(id, options);
 	if (matchItem) {
-		const matchId = postRequestsLoading.indexOf(matchItem);
-		postRequestsLoading.splice(matchId, 1);
+		const matchId = loadingRequests[id].indexOf(matchItem);
+		loadingRequests[id].splice(matchId, 1);
 
-		// console.log('remove '+ postRequestsLoading.length);
-		if (postRequestsLoading.length === 0) {
-			loadingPosts.set(false);
+		console.log('remove '+ loadingRequests[id].length);
+		if (loadingRequests[id].length === 0) {
+			console.log('stopped loading');
+			if (endCallback) {
+				endCallback();
+			}
 		}
 	}
 }
@@ -113,20 +121,22 @@ function mergePosts(newPosts) {
 }
 
 export function getPosts(options) {
-	curPostFilterOptions = options;
+	if (options.threadId || curPostFilterOptions.channelId) {
+		curPostFilterOptions = options;
 
-	if (curPostFilterOptions && options && (
-		curPostFilterOptions.type !== options.type ||
-		curPostFilterOptions.channelId !== options.channelId ||
-		curPostFilterOptions.threadId !== options.threadId
-	)) {
-		clearFilteredPosts();
+		if (curPostFilterOptions && options && (
+			curPostFilterOptions.type !== options.type ||
+			curPostFilterOptions.channelId !== options.channelId ||
+			curPostFilterOptions.threadId !== options.threadId
+		)) {
+			clearFilteredPosts();
+		}
+		filterCurrentPosts();
+
+		loadPosts(curPostFilterOptions);
+
+		// console.log(get(filteredPosts));
 	}
-	filterCurrentPosts();
-
-	loadPosts(curPostFilterOptions);
-
-	// console.log(get(filteredPosts));
 
 	return filteredPosts;
 }

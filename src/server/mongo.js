@@ -71,14 +71,15 @@ export function generateId(length) {
 }
 
 export async function filterItemsByProjectAccess(items, userId, validLogin) {
-	const projectIds = [];
-	let item;
-	for (var itemI = 0; itemI < items.length; itemI++) {
-		item = items[itemI];
-		if (!projectIds.includes(item.projectId)) { // !(item.public && !item.archived) &&
-			projectIds.push(item.projectId);
-		}
-	}
+	const projectIds = getItemIds(items, 'projectId');
+	// const projectIds = [];
+	// let item;
+	// for (var itemI = 0; itemI < items.length; itemI++) {
+	// 	item = items[itemI];
+	// 	if (!projectIds.includes(item.projectId)) { // !(item.public && !item.archived) &&
+	// 		projectIds.push(item.projectId);
+	// 	}
+	// }
 
 	let projects = null;
 	if (projectIds.length) {
@@ -108,4 +109,16 @@ export async function filterItemsByProjectAccess(items, userId, validLogin) {
     });
 
     return items;
+}
+
+export function getItemIds(items, propName) {
+    const itemIds = [];
+	let item;
+	for (var itemI = 0; itemI < items.length; itemI++) {
+		item = items[itemI];
+		if (item[propName] && !itemIds.includes(item[propName])) { // !(item.public && !item.archived) &&
+			itemIds.push(item[propName]);
+		}
+    }
+    return itemIds;
 }

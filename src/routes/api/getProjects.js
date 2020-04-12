@@ -1,4 +1,4 @@
-import { init, response, validateCredentials } from '../../server/mongo.js';
+import { init, response, validateCredentials, getItemIds } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -18,47 +18,66 @@ export async function post(req, res, next) {
 		projectsFilter.id = projectId;
 	}
 
-	if (userId) {
-		followedProjectIds = {};
-		likedProjectIds = {};
+	// if (userId) {
+	// 	followedProjectIds = {};
+	// 	likedProjectIds = {};
 
-		const userProjectFilter = {userId};
-		if (projectId) {
-			userProjectFilter.projectId = projectId;
-		}
+	// 	const userProjectFilter = {userId};
+	// 	if (projectId) {
+	// 		userProjectFilter.projectId = projectId;
+	// 	}
 
-		const follows = await db.collection('follows').find(userProjectFilter).toArray(); // {userId: userId}
-		for (var followI = 0; followI < follows.length; followI++) {
-			followedProjectIds[follows[followI].projectId] = follows[followI];
-		}
+	// 	const follows = await db.collection('follows').find(userProjectFilter).toArray(); // {userId: userId}
+	// 	for (var followI = 0; followI < follows.length; followI++) {
+	// 		followedProjectIds[follows[followI].projectId] = follows[followI];
+	// 	}
 
-		const likes = await db.collection('likes').find(userProjectFilter).toArray();
-		for (var likeI = 0; likeI < likes.length; likeI++) {
-			likedProjectIds[likes[likeI].projectId] = true;
-		}
+	// 	const likes = await db.collection('likes').find(userProjectFilter).toArray();
+	// 	for (var likeI = 0; likeI < likes.length; likeI++) {
+	// 		likedProjectIds[likes[likeI].projectId] = true;
+	// 	}
 
-		// console.log('followedProjectIds', followedProjectIds);
-	}
+	// 	// console.log('followedProjectIds', followedProjectIds);
+	// }
 
 	let projects = await db.collection('projects').find(projectsFilter).toArray();
-
-	// const projects = []; // to test returning no projects
 
 	projects = projects.filter((project) => {
 		return (project.public && !project.archived) || (userId && validLogin && project.team && project.team.includes(userId));
 	});
 
-	if (followedProjectIds && projects) {
-		let project, followItem;
-		for (var projectI = 0; projectI < projects.length; projectI++) {
-			project = projects[projectI];
+	if (projects.length && userId) {
+		const projectIds = getItemIds(projects, 'id');
 
-			project.liked = !!likedProjectIds[project.id];
+		if (projectIds.length) {
+			const userProjectFilter = { "userId": userId, "projectId": { "$in": projectIds } };
 
-			followItem = followedProjectIds[project.id];
-			project.following = !!followItem;
-			if (project.following) {
-				project.followTime = followItem.createdAt;
+			followedProjectIds = {};
+			likedProjectIds = {};
+
+			const follows = await db.collection('follows').find(userProjectFilter).toArray(); // {userId: userId}
+			for (var followI = 0; followI < follows.length; followI++) {
+				followedProjectIds[follows[followI].projectId] = follows[followI];
+			}
+
+			const likes = await db.collection('likes').find(userProjectFilter).toArray();
+			for (var likeI = 0; likeI < likes.length; likeI++) {
+				likedProjectIds[likes[likeI].projectId] = true;
+			}
+
+			if (followedProjectIds) {
+				let project, followItem;
+				for (var projectI = 0; projectI < projects.length; projectI++) {
+					project = projects[projectI];
+
+					project.liked = !!likedProjectIds[project.id];
+
+					followItem = followedProjectIds[project.id];
+					project.following = !!followItem;
+					if (project.following) {
+						project.followTime = followItem.createdAt;
+					}
+				}
 			}
 		}
 	}

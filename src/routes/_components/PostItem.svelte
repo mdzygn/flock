@@ -56,6 +56,7 @@
     $: showLastActiveTime = (type === 'thread');
     $: textSelectable = (type !== 'thread');
     $: messageLimited = (type === 'thread');
+    $: compressedMargin = (type === 'threadPost');
 
     $: likeCount = ($post && $post.likeCount) || '';
 
@@ -140,7 +141,7 @@
             <div class="title">{@html titleHTML}</div>
         {/if}
         {#if message}
-            <div class="message" class:selectable="{textSelectable}" class:messageLimited="{messageLimited}">{@html  messageHTML}</div>
+            <div class="message" class:selectable="{textSelectable}" class:messageLimited="{messageLimited}" class:compressedMargin="{compressedMargin}">{@html  messageHTML}</div>
         {/if}
     </div>
 </div>
@@ -223,6 +224,10 @@
     }
     .selectable {
         user-select: text;
+    }
+
+    .message.compressedMargin {
+        padding-right: 32px;
     }
 
     .postItem :global(.likeButton) {

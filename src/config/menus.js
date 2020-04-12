@@ -26,6 +26,7 @@ import {
     logOut,
     showTogglePublicDialog,
     editProfile,
+    loadProject,
 } from '../actions/appActions';
 
 import {
@@ -149,6 +150,14 @@ export const menus = {
                 label: 'Log Out',
                 action: logOut,
             },
+            {
+                label: 'About Flock',
+                action: () => { loadProject('hPS9cRq2') },
+            },
+            // {
+            //     label: 'Feedback',
+            //     action: () => { loadProject('hPS9cRq2') },
+            // },
         ],
     },
 }

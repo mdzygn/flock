@@ -65,3 +65,43 @@ export function generateId(length) {
         return chars[Math.floor(Math.random() * chars.length)];
     });
 }
+
+export async function filterItemsByProjectAccess(items, userId) {
+	const projectIds = [];
+	let item;
+	for (var itemI = 0; itemI < items.length; itemI++) {
+		item = items[itemI];
+		if (!projectIds.includes(item.projectId)) { // !(item.public && !item.archived) &&
+			projectIds.push(item.projectId);
+		}
+	}
+
+	let projects = null;
+	if (projectIds.length) {
+		const projectsFilter = { "id": { "$in": projectIds } };
+		projects = await db.collection('projects').find(projectsFilter).toArray();
+		// console.log('projectIds', projectIds, projectId, id, projects.length);
+	}
+
+	let curProject;
+	items = items.filter((item) => {
+		curProject = projects.find(project => project.id === item.projectId);
+		// console.log('curProject', curProject);
+		if (curProject) {
+			if (curProject.public && !curProject.archived) {
+				// console.log('public');
+				return true;
+			} else if (userId && curProject.team && curProject.team.includes(userId)) {
+				// console.log('team');
+				return true;
+			} else {
+				// console.log('not allowed');
+				return false;
+			}
+		} else {
+			return false;
+		}
+    });
+
+    return items;
+}

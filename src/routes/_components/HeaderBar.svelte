@@ -40,7 +40,7 @@
     export let segment;
     export let path;
 
-    $: isCurrentUser = getIsCurrentUser($viewedUser && $viewedUser.id);
+    $: isCurrentUser = $user && getIsCurrentUser($viewedUser && $viewedUser.id);
 
     $: appState = {
         viewMode: $viewMode,

@@ -27,6 +27,7 @@
     import {
         getIsCurrentUser,
         showBetaFeatures,
+        user,
     } from '../../models/appModel';
 
     import {
@@ -44,7 +45,7 @@
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
 	$: connected = ($viewedUser && $viewedUser.connected) || false;
-    $: isCurrentUser = getIsCurrentUser($viewedUser && $viewedUser.id);
+    $: isCurrentUser = $user && getIsCurrentUser($viewedUser && $viewedUser.id);
     // $: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
 
     $: showConnect = !requestedConnection && !connected;

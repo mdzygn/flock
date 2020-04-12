@@ -24,6 +24,7 @@
 		profileId,
 		profileDisplayingAllProjects,
 		showBetaFeatures,
+		user,
 	} from '../../../models/appModel';
 
 	import { loadConversation, messageUser, showShareProfileDialog } from '../../../actions/appActions';
@@ -40,7 +41,7 @@
 	$: userId = ($viewedUser && $viewedUser.id) || null;
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
-    $: isCurrentUser = getIsCurrentUser($viewedUser && $viewedUser.id);
+    $: isCurrentUser = $user && getIsCurrentUser($viewedUser && $viewedUser.id);
 	// $: isCurrentUser = ($viewedUser && $viewedUser.isCurrentUser) || false;
 
 	$: skills = ($viewedUser && $viewedUser.skills && getSplitItems($viewedUser.skills)) || null;

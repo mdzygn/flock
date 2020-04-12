@@ -10,14 +10,14 @@ export const sections = [
 	},
 	{
 		segment: 'discover',
-		label: 'Discover',
+		label: 'Discover Projects',
 		main: true,
 		darkBg: true,
 	},
 	{
 		segment: 'projects',
 		iconId: 'following',
-		label: 'Projects',
+		label: 'My Projects',
 		main: true,
 	},
 	{
@@ -50,7 +50,7 @@ export const sections = [
 		segment: 'explore',
 		path: '/discover.*',
 		mainSection: 'discover',
-		label: 'Discover',
+		label: 'Discover Projects',
 		darkBg: true,
 	},
 	{

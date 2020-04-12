@@ -105,7 +105,7 @@
 			<ContentLoader label="{locale.LOADING.FOLLOWING}" />
 		{:else}
 			<div class="projectsContent">
-				<ProjectList title="My Projects"
+				<ProjectList title="Projects"
 					projects="{filteredMyProjects}"
 					{searchString}
 					showLastActive="{true}"

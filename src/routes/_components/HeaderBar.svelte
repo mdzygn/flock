@@ -129,7 +129,7 @@
             </div>
         {/if}
     {:else}
-        <div class="header" class:hasBack="{showBack || parentPath}">{sectionLabel}</div>
+        <div class="header" class:loggedOut="{!loggedIn}" class:hasBack="{showBack || parentPath}">{sectionLabel}</div>
         {#if showBack || parentPath}
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
         {/if}
@@ -161,18 +161,22 @@
     }
 
     .header {
-        font-size: 2.2rem;
+        font-size: 2.1rem;
         font-weight: 400;
 
         position: absolute;
         top: 14px;
 
         left: 20px;
-        right: 82px;
+        right: 86px;
 
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+    }
+
+    .header.loggedOut {
+        right: 140px;
     }
 
     .logo {
@@ -237,9 +241,10 @@
     }
     .headerBar :global(.signInButton .buttonContent) {
         margin: 11px 0px;
-        padding: 7px 8px;
+        padding: 6px 4px;
+        margin-top: 15px;
 
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: 700;
     }
     .headerBar :global(.signUpButton) {
@@ -248,12 +253,13 @@
     }
     .headerBar :global(.signUpButton .buttonContent) {
         margin: 11px;
-        margin-right: 11px;
+        margin-right: 13px;
         margin-left: 6px;
+        margin-top: 15px;
 
-        padding: 7px 12px;
+        padding: 6px 11px;
 
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         font-weight: 700;
 
         background-color: #222222;

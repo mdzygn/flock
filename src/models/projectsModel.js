@@ -409,18 +409,16 @@ function removeProjectModel(projectModel) {
 	}
 }
 
-export function updateProject(project, projectDetails, nonModification, isSuperficial) {
+export function updateProject(project, projectDetails, nonModification) {
 	const isModification = !nonModification;
 
-	api.updateProject({id: project.id, details: projectDetails, isModification, isSuperficial});
+	api.updateProject({id: project.id, details: projectDetails, isModification});
 
 	Object.assign(project, projectDetails);
 
-	if (!isSuperficial) {
-		project.lastActiveAt = (new Date()).getTime();
-		if (isModification) {
-			project.modifiedAt = project.lastActiveAt;
-		}
+	project.lastActiveAt = (new Date()).getTime();
+	if (isModification) {
+		project.modifiedAt = project.lastActiveAt;
 	}
 }
 

@@ -11,55 +11,63 @@ export async function post(req, res, next) {
 	}
 
 	let details = options.details;
+	let userId = options.userId;
 
 	const projectId = options.id;
-	const isSuperficial = options.isSuperficial;
-	const isModification = options.isModification;
 
-	const projectDetails = {
-		slug: true,
-		title: true,
-		description: true,
-		details: true,
+    const curProject = await db.collection('projects').findOne({ id: projectId });
+    if (curProject) {
+		if (curProject.team && curProject.team.includes(userId)) { // is allowed to edit project
+			const isModification = options.isModification;
 
-		headerImage: true,
+			const setProjectDetailsSchema = {
+				slug: true,
+				title: true,
+				description: true,
+				details: true,
 
-		public: true,
-		archived: true,
+				headerImage: true,
 
-		createdAt: true,
-		lastActiveAt: true,
-		modifiedAt: true,
+				public: true,
+				archived: true,
 
-		likeCount: true,
-		followCount: true,
+				createdAt: true,
+				lastActiveAt: true,
+				modifiedAt: true,
 
-		isNew: true,
+				likeCount: true,
+				followCount: true,
 
-		location: true,
-		tags: true,
-		skills: true,
-		links: true,
-		team: true,
-		posts: true,
-		ownerId: true,
-	};
+				isNew: true,
 
-	details = filterItemDetails(details, projectDetails);
+				location: true,
+				tags: true,
+				skills: true,
+				links: true,
+				team: true,
+				posts: true,
+				ownerId: true,
+			};
 
-	if (!isSuperficial) {
-		details.lastActiveAt = (new Date()).getTime();
-		if (isModification) {
-			details.modifiedAt = details.lastActiveAt;
+			details = filterItemDetails(details, setProjectDetailsSchema);
+
+			details.lastActiveAt = (new Date()).getTime();
+			if (isModification) {
+				details.modifiedAt = details.lastActiveAt;
+			}
+
+			//TODO: check allowed to modify project, isOwner, !archive, !deleted
+
+			const result = await db.collection('projects').updateOne({ id: projectId }, { $set: details } );
+
+			if (result) {
+				response(res, {success: true});
+			} else {
+				response(res, {error: true});
+			}
+		} else {
+			response(res, {error: true, invalidUser: true});
 		}
-	}
-
-	//TODO: check allowed to modify project, isOwner, !archive, !deleted
-
-	const result = await db.collection('projects').updateOne({ id: projectId }, { $set: details } );
-
-	if (result) {
-		response(res, {success: true});
 	} else {
 		response(res, {error: true});
 	}

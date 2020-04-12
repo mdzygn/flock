@@ -142,17 +142,17 @@ export const menus = {
     },
     MAIN_OPTIONS: {
         menuItems: [
+            // {
+            //     label: 'My Profile',
+            //     action: () => { loadProfile(get(userId)) },
+            // },
             {
-                label: 'My Profile',
-                action: () => { loadProfile(get(userId)) },
+                label: 'About Flock',
+                action: () => { loadProject('hPS9cRq2') },
             },
             {
                 label: 'Log Out',
                 action: logOut,
-            },
-            {
-                label: 'About Flock',
-                action: () => { loadProject('hPS9cRq2') },
             },
             // {
             //     label: 'Feedback',

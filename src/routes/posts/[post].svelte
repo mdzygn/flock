@@ -21,6 +21,7 @@
 		post,
 		postsAnchorToBottom,
 		user,
+		userId,
 		project,
 	} from '../../models/appModel';
 

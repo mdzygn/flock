@@ -17,6 +17,7 @@
 		showBetaFeatures,
 		getIsProjectTeamMember,
 		user,
+		userId,
 	} from '../../models/appModel';
 
 	import {

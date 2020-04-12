@@ -60,6 +60,8 @@
     $: hasCreated = $project && $project.hasCreated;
 
     let sectionLabel = '';
+    let hasSuperHeader = false;
+    let superHeaderLabel = '';
     $: {
         if (/\/projects\/.+/.test(path) && !/\/projects\/new/.test(path) && !/\/projects\/archive/.test(path) && $project) {
             sectionLabel = $project.title;
@@ -81,6 +83,20 @@
             }
         } else {
             sectionLabel = curSection ? curSection.label : '';
+        }
+
+        if (/\/channels\/.+/.test(path)) {
+            hasSuperHeader = true;
+            if ($project) {
+                superHeaderLabel = $project.title;
+            }
+        } else if (/\/posts\/.+/.test(path)) {
+            hasSuperHeader = true;
+            if ($project) {
+                superHeaderLabel = $project.title;
+            }
+        } else {
+            hasSuperHeader = false;
         }
     }
 
@@ -121,7 +137,7 @@
     }
 </script>
 
-<div class="headerBar">
+<div class="headerBar" class:hasSuperHeader="{hasSuperHeader}">
     {#if segment === undefined}
         {#if $showBetaFeatures}
             <div class="logo">
@@ -129,6 +145,9 @@
             </div>
         {/if}
     {:else}
+        {#if hasSuperHeader}
+            <div class="superHeader" class:hasBack="{showBack || parentPath}">{superHeaderLabel}</div>
+        {/if}
         <div class="header" class:loggedOut="{!loggedIn}" class:hasBack="{showBack || parentPath}">{sectionLabel}</div>
         {#if showBack || parentPath}
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
@@ -174,9 +193,33 @@
         white-space: nowrap;
         text-overflow: ellipsis;
     }
-
     .header.loggedOut {
         right: 140px;
+    }
+    .header.hasBack {
+        left: 50px;
+    }
+    .hasSuperHeader .header {
+        top: 22px;
+        font-size: 2.0rem;
+    }
+
+    .superHeader {
+        font-size: 1.2rem;
+
+        position: absolute;
+        top: 8px;
+        left: 20px;
+        right: 140px;
+
+        color: #aaaaaa;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .superHeader.hasBack {
+        left: 50px;
     }
 
     .logo {
@@ -216,7 +259,7 @@
 
     .backButton {
         position: absolute;
-        top: 8px;
+        top: 7px;
         left: 5px;
         padding: 10px;
 
@@ -225,9 +268,8 @@
 
         cursor: pointer;
     }
-
-    .header.hasBack {
-        left: 50px;
+    .hasSuperHeader .backButton {
+        top: 13px;
     }
 
     .signInButtonContainer {

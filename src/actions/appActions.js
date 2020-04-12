@@ -149,6 +149,7 @@ function setViewedUser(targetProfileId) {
     const curUserModel = getUser(targetProfileId);
     const curUser = get(curUserModel);
 
+    loadUsers({ id: targetProfileId });
     viewedUser.set(curUser);
 }
 

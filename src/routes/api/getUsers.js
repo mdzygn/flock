@@ -5,10 +5,13 @@ export async function post(req, res, next) {
 
 	const options = req.body;
 	const id = options && options.id;
+	const ids = options && options.ids;
 
 	const usersFilter = {};
 	if (id) {
 		usersFilter.id = id;
+	} else if (ids) {
+		usersFilter.id = { $in: ids };
 	}
 
 	const userResults = await db.collection('users').find(usersFilter).toArray();

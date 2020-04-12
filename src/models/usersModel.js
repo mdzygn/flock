@@ -65,7 +65,7 @@ export function mergeUsers(newUsers) {
 
 		const viewedProfileId = get(profileId);
 
-		let activeUserId = get(userId);
+		// let activeUserId = get(userId);
 
 		let curUser, newUserData, curUserId, newUser;
 		for (var userI = 0; userI < newUsers.length; userI++) {
@@ -92,6 +92,7 @@ export function mergeUsers(newUsers) {
 		}
 
 		users.set(curUsers);
+		console.log('curUsers.length', curUsers.length);
 	}
 }
 

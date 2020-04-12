@@ -15,6 +15,10 @@
         showBetaFeatures,
     } from '../../models/appModel';
 
+    import {
+        loadUsers,
+    } from '../../models/usersModel';
+
     export let project = null;
 
     const MAX_TEAM_MEMBERS = 10;
@@ -24,7 +28,13 @@
 
 	$: canEdit = (isTeamMember && !project.archived) || false;
 
-	$: teamMembers = (project && project.team) || null;
+    $: teamMembers = (project && project.team) || null;
+
+    $: {
+        if (teamMembers && teamMembers.length) {
+            loadUsers( { ids: teamMembers } );
+        }
+    }
 
     $: areMoreItems = teamMembers && teamMembers.length > MAX_TEAM_MEMBERS;
 

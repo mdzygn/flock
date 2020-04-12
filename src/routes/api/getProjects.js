@@ -18,7 +18,7 @@ export async function post(req, res, next) {
 	let projects = await db.collection('projects').find(projectsFilter).toArray();
 
 	projects = projects.filter((project) => {
-		return (project.public && !project.archived) || (userId && validLogin && project.team && project.team.includes(userId));
+		return (project.public && !project.archived && !project.disabled) || (userId && validLogin && project.team && project.team.includes(userId));
 	});
 
 	if (projects.length && userId) {

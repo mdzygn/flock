@@ -48,6 +48,10 @@ export async function post(req, res, next) {
 
 	posts = await filterItemsByProjectAccess(posts, userId, validLogin);
 
+	posts = posts.filter((post) => {
+		return !post.disabled;
+	});
+
 	if (posts.length && userId) {
 		await loadUserItemProperties(posts, {
 			userId,

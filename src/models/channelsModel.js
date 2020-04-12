@@ -100,16 +100,18 @@ function mergeChannels(newChannels) {
 }
 
 export function getChannels(options) {
-	curChannelFilterOptions = options;
+	if (options.id || options.projectId) {
+		curChannelFilterOptions = options;
 
-	if (curChannelFilterOptions && options && (curChannelFilterOptions.projectId !== options.projectId)) {
-		clearFilteredChannels();
+		if (curChannelFilterOptions && options && (curChannelFilterOptions.projectId !== options.projectId)) {
+			clearFilteredChannels();
+		}
+		filterCurrentChannels();
+
+		loadChannels(curChannelFilterOptions);
+
+		// console.log(get(filteredChannels));
 	}
-	filterCurrentChannels();
-
-	loadChannels(curChannelFilterOptions);
-
-	// console.log(get(filteredChannels));
 
 	return filteredChannels;
 }

@@ -25,6 +25,11 @@ export async function post(req, res, next) {
 		filter.channelId = channelId;
 	}
 
+	if (!type || !(id || threadId || channelId)) {
+		response(res, {error: true});
+		return;
+	}
+
 	const posts = await db.collection('posts').find(filter).toArray();
 
 	// const posts = []; // to test returning no posts

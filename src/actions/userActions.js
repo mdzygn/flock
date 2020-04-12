@@ -159,7 +159,7 @@ export function setAccountDetails(userDetails) {
 
             // goto('profile/' + curUserId);
 
-            api.updateUser({id: curUserId, details: userDetails}).then(result => {
+            api.updateUser({details: userDetails}).then(result => {
                 if (result && !result.error && !result.invalid) {
                     setUserDetails(curUserModel, {set: true});
 
@@ -194,7 +194,7 @@ function updateUser(userDetails) {
 
             setUserDetails(curUserModel, localUserDetails);
 
-            api.updateUser({id: curUserId, details: userDetails}).then(result => {
+            api.updateUser({details: userDetails}).then(result => {
                 // if (result && !result.error && !result.invalid) {
 
                 // }

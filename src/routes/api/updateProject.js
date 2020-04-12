@@ -17,7 +17,7 @@ export async function post(req, res, next) {
 
     const curProject = await db.collection('projects').findOne({ id: projectId });
     if (curProject) {
-		if (curProject.team && curProject.team.includes(userId)) { // is allowed to edit project
+		if (userId && curProject.team && curProject.team.includes(userId)) { // is allowed to edit project
 			const isModification = options.isModification;
 
 			const setProjectDetailsSchema = {

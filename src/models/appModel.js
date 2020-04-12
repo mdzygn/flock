@@ -166,7 +166,7 @@ export function getIsCurrentUser(targetUserId) {
 export function getIsProjectTeamMember(project) {
     const curUserId = get(userId);
     // console.log('getIsProjectTeamMember ' + (project && project.ownerId && project.ownerId === curUserId));
-	return (project && project.team && project.team.includes(curUserId));
+	return (project && curUserId && project.team && project.team.includes(curUserId));
 	// return (project && project.ownerId && project.ownerId === curUserId);
 }
 

@@ -475,7 +475,7 @@ export function loadCurrentProject() {
 }
 
 export function loadCurrentChannel() {
-    if (!get(channel) && !get(loadingChannels)) {
+    if (get(channelId) && !get(channel) && !get(loadingChannels)) {
         loadChannels( { id: get(channelId) } );
         // if (get(projectId)) {
         //     // console.log('loadCurrentChannel projectId', get(projectId));

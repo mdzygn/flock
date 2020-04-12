@@ -7,17 +7,18 @@ export async function post(req, res, next) {
 
     const options = req.body;
 
-    const userId = options.id;
+	if (!await validateCredentials(db, options)) {
+		response(res, {invalid: true});
+		return;
+	}
+
+    const userId = (options && options.userId) || null;
+
     let details = options.details;
 
     if (details.username && details.pass) {
         options.setAccount = true;
     }
-
-	if (!await validateCredentials(db, options)) {
-		response(res, {invalid: true});
-		return;
-	}
 
     const curUser = await db.collection('users').findOne({ id: userId });
     if (curUser) {

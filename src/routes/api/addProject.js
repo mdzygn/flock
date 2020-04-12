@@ -37,6 +37,8 @@ export async function post(req, res, next) {
 			likeCount: true,
 			followCount: true,
 
+			isNew: true,
+
 			location: true,
 			tags: true,
 			skills: true,

@@ -62,9 +62,9 @@
                 {:else}
                     <div class="noProjects">
                         {#if searchString}
-                            <slot>No projects found matching "{searchString}"</slot>
+                            <slot>no projects found matching "{searchString}"</slot>
                         {:else}
-                            <slot>No projects found</slot>
+                            <slot>no projects found</slot>
                         {/if}
                     </div>
                 {/each}

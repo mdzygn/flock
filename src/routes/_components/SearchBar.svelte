@@ -1,11 +1,12 @@
 <script>
+    import locale from '../../locale';
+
     import { testInputDefocus } from '../../utils';
 
     import SearchIcon from "../../assets/icons/search.png";
     import ClearIcon from "../../assets/icons/clear.png";
 
     export let searchString = '';
-    export let placeholder = 'Search';
 
     let input;
 
@@ -29,7 +30,7 @@
         <div class="searchButton" on:click="{selectSearchIcon}">
             <div class="searchIcon" style="background-image: url({searchString ? ClearIcon : SearchIcon})" />
         </div>
-        <input bind:this="{input}" class="searchFieldInput" type="text" bind:value="{searchString}" placeholder="{placeholder}" on:keypress="{testInputDefocus}" />
+        <input bind:this="{input}" class="searchFieldInput" type="text" bind:value="{searchString}" placeholder="{locale.GENERAL.SEARCH_PLACEHOLDER}" on:keypress="{testInputDefocus}" />
     </div>
 </div>
 

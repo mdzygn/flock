@@ -108,7 +108,7 @@
 						{#if $loadingPosts && (!$posts || !$posts.length) }
 							<ContentLoader label="{locale.LOADING.THREAD_ITEMS}" />
 						{:else}
-							<ContentLoader>{locale.THREAD.NO_POSTS}<br/>Be the first to <a href="javascript:void(0)" on:click="{reply}">Leave a Reply</a></ContentLoader>
+							<ContentLoader>{locale.THREAD.NO_POSTS}<br/>be the first to <a href="javascript:void(0)" on:click="{reply}">Leave a Reply</a></ContentLoader>
 						{/if}
 					{/each}
 				</div>

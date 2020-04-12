@@ -117,17 +117,17 @@
 					hideShowMoreWithVisibility="{true}"
 					showPrivateIcon="{true}">
 					{#if searchString}
-						<slot>No projects found matching "{searchString}"</slot>
+						<slot>no projects found matching "{searchString}"</slot>
 					{:else}
-						<slot>You have not shared any projects<br/>Create a <a href="javascript:void(0)" on:click="{newProject}">New Project</a></slot>
+						<slot>you have not shared any projects<br/>create a <a href="javascript:void(0)" on:click="{newProject}">New Project</a></slot>
 					{/if}
 				</ProjectList>
 				<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">new project</Button>
 				<ProjectList title="Following" className="followingProjects" projects="{filteredFollowingProjects}" showLastActive="{true}" displayLimit="{$displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} showIfNoProjects="{true}" showPrivateIcon="{true}">
 					{#if searchString}
-						<slot>No followed projects matching "{searchString}"</slot>
+						<slot>no followed projects matching "{searchString}"</slot>
 					{:else}
-						<slot>You aren't following any projects<br/><a href="discover">Discover</a> inspiring projects to follow</slot>
+						<slot>you aren't following any projects<br/><a href="discover">Discover</a> inspiring projects to follow</slot>
 					{/if}
 				</ProjectList>
 			</div>

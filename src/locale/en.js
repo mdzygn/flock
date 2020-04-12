@@ -2,6 +2,7 @@ const locale = {
 	GENERAL: {
 		SHOW_MORE: 'show more',
 		UPLOAD_IMAGE: 'upload image',
+		SEARCH_PLACEHOLDER: 'search',
 	},
 	HEADER: {
 		SIGN_IN: 'sign in',
@@ -66,11 +67,11 @@ const locale = {
 	},
 	CHANNEL: {
 		NOT_FOUND: 'channel not found',
-		NO_POSTS: 'This channel has no posts',
+		NO_POSTS: 'this channel has no posts',
 	},
 	THREAD: {
 		NOT_FOUND: 'post not found',
-		NO_POSTS: 'This post has no comments',
+		NO_POSTS: 'this post has no comments',
 	},
 	PROJECT: {
 		NOT_FOUND: 'project not found',

@@ -44,9 +44,9 @@
 		<SearchBar bind:searchString={$projectsArchiveSearchString} />
 		<ProjectList title="{null}" projects="{filteredArchivedProjects}" showLastActive="{true}" showUpdateCounter="{false}" {searchString} showIfNoProjects="{true}" showPrivateIcon="{true}"> <!--  title="Archived Projects" -->
 			{#if searchString}
-				<slot>No archived projects matching "{searchString}"</slot>
+				<slot>no archived projects matching "{searchString}"</slot>
 			{:else}
-				<slot>You have not archived any projects</slot>
+				<slot>you have not archived any projects</slot>
 			{/if}
 		</ProjectList>
 	</ScrollView>

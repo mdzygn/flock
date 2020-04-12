@@ -472,13 +472,14 @@ export function loadCurrentProject() {
 
 export function loadCurrentChannel() {
     if (!get(channel) && !get(loadingChannels)) {
-        if (get(projectId)) {
-            // console.log('loadCurrentChannel projectId', get(projectId));
-            loadChannels( { projectId: get(projectId) } );
-        } else {
-            // console.log('loadCurrentChannel channelId', get(channelId));
-            loadChannels( { id: get(channelId) } );
-        }
+        loadChannels( { id: get(channelId) } );
+        // if (get(projectId)) {
+        //     // console.log('loadCurrentChannel projectId', get(projectId));
+        //     loadChannels( { projectId: get(projectId) } );
+        // } else {
+        //     // console.log('loadCurrentChannel channelId', get(channelId));
+        //     loadChannels( { id: get(channelId) } );
+        // }
     }
 }
 

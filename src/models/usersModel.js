@@ -92,7 +92,6 @@ export function mergeUsers(newUsers) {
 		}
 
 		users.set(curUsers);
-		console.log('curUsers.length', curUsers.length);
 	}
 }
 

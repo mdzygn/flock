@@ -1,9 +1,11 @@
-import { init, response } from '../../server/mongo.js';
+import { init, response, validateCredentials } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
+
+	const validLogin = await validateCredentials(db, options);
 
 	let followedProjectIds = null;
 	let likedProjectIds = null;
@@ -43,7 +45,7 @@ export async function post(req, res, next) {
 	// const projects = []; // to test returning no projects
 
 	projects = projects.filter((project) => {
-		return (project.public && !project.archived) || (userId && project.team && project.team.includes(userId));
+		return (project.public && !project.archived) || (userId && validLogin && project.team && project.team.includes(userId));
 	});
 
 	if (followedProjectIds && projects) {

@@ -1,9 +1,12 @@
-import { init, response } from '../../server/mongo.js';
+import { init, response, errorResponse, filterItemsByProjectAccess, validateCredentials } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
+	const validLogin = await validateCredentials(db, options);
+
+	const userId = options && options.userId;
 
 	const type = options && options.type;
 
@@ -25,12 +28,18 @@ export async function post(req, res, next) {
 		filter.channelId = channelId;
 	}
 
-	if (!type || !(id || threadId || channelId)) {
-		response(res, {error: true});
+	if (!(id || threadId || channelId)) {
+		errorResponse(res, {}, {errorMsg: 'post id, threadId or channelId not set'});
+		return;
+	}
+	if ((threadId || channelId) && !type) {
+		errorResponse(res, {}, {errorMsg: 'type not set'});
 		return;
 	}
 
-	const posts = await db.collection('posts').find(filter).toArray();
+	let posts = await db.collection('posts').find(filter).toArray();
+
+	posts = await filterItemsByProjectAccess(posts, userId, validLogin);
 
 	// const posts = []; // to test returning no posts
 

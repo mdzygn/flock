@@ -1,4 +1,4 @@
-import config from './config';
+import config, { DEBUG } from './config';
 
 const mongo = require('mongodb');
 
@@ -18,6 +18,10 @@ export async function init() {
 export function response(res, responseObject) {
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(responseObject));
+}
+
+export function errorResponse(res, errorObject, debugObject) {
+    response(res, Object.assign({error: true}, errorObject, (DEBUG && debugObject) ? debugObject : null));
 }
 
 export async function validateCredentials(db, options) {
@@ -66,7 +70,7 @@ export function generateId(length) {
     });
 }
 
-export async function filterItemsByProjectAccess(items, userId) {
+export async function filterItemsByProjectAccess(items, userId, validLogin) {
 	const projectIds = [];
 	let item;
 	for (var itemI = 0; itemI < items.length; itemI++) {
@@ -91,7 +95,7 @@ export async function filterItemsByProjectAccess(items, userId) {
 			if (curProject.public && !curProject.archived) {
 				// console.log('public');
 				return true;
-			} else if (userId && curProject.team && curProject.team.includes(userId)) {
+			} else if (userId && validLogin && curProject.team && curProject.team.includes(userId)) {
 				// console.log('team');
 				return true;
 			} else {

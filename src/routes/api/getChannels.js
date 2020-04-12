@@ -1,9 +1,11 @@
-import { init, response, filterItemsByProjectAccess } from '../../server/mongo.js';
+import { init, response, errorResponse, filterItemsByProjectAccess, validateCredentials } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
+
+	const validLogin = await validateCredentials(db, options);
 
 	const id = options && options.id;
 	const projectId = options && options.projectId;
@@ -19,13 +21,13 @@ export async function post(req, res, next) {
 	}
 
 	if (!(id || projectId)) {
-		response(res, {error: true});
+		errorResponse(res, {}, {errorMsg: 'id or projectId not supplied'});
 		return;
 	}
 
 	let channels = await db.collection('channels').find(filter).toArray();
 
-	channels = await filterItemsByProjectAccess(channels, userId);
+	channels = await filterItemsByProjectAccess(channels, userId, validLogin);
 
 	// const channels = []; // to test returning no channels
 

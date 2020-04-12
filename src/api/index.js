@@ -36,12 +36,13 @@ function send(path, options) {
 				error.response = json;
 				return Promise.reject(error);
 			}
-		}).then(result => {
+		})/*.then(result => {
 			if (DEBUG && result && result.error) {
 				console.error('API Error: ', result);
+				// return Promise.reject(result);
 			}
 			return result;
-		});
+		});*/
 }
 
 function addOptions(curOptions, newOptions) {
@@ -64,65 +65,87 @@ function addCredentials(curOptions) {
 
 // options = { limit: number, cursor: string, sort: {} }
 function getProjects(options) {
-	options = addOptions(options, {
-		userId: get(userId),
-	});
+	options = addCredentials(options);
+	// options = addOptions(options, {
+	// 	userId: get(userId),
+	// });
 
-	return send('getProjects', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('getProjects', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - getProjects: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 
 // options = { details: {} }
 function addProject(options) {
 	options = addCredentials(options);
-	return send('addProject', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('addProject', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - addProject: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 
 // options = { id: string, details: {} }
 function updateProject(options) {
 	options = addCredentials(options);
-	return send('updateProject', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('updateProject', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - updateProject: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 
 // options = { details: { userId: id, projectId: id } }
 function followProject(options) {
 	options = addCredentials(options);
-	return send('followProject', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('followProject', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - followProject: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 // options = { details: { userId: id, projectId: id } }
 function unfollowProject(options) {
 	options = addCredentials(options);
-	return send('unfollowProject', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('unfollowProject', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - unfollowProject: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 
 // options = { details: { userId: id, projectId: id } }
 function likeProject(options) {
 	options = addCredentials(options);
-	return send('likeProject', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('likeProject', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - likeProject: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 // options = { details: { userId: id, projectId: id } }
 function unlikeProject(options) {
 	options = addCredentials(options);
-	return send('unlikeProject', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('unlikeProject', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - unlikeProject: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 
@@ -131,38 +154,51 @@ function unlikeProject(options) {
 
 // options = { details: {} }
 function login(options) {
-	return send('login', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('login', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - login: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 
 // options = { limit: number, cursor: string, sort: {} }
 function getUsers(options) {
-	options = addOptions(options, {
-		userId: get(userId),
-	});
+	options = addCredentials(options);
+	// options = addOptions(options, {
+	// 	userId: get(userId),
+	// });
 
-	return send('getUsers', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('getUsers', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - getUsers: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 
 // options = { details: {} }
 function addUser(options) {
-	return send('addUser', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('addUser', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - addUser: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 
 // options = { id: string, details: {} }
 function updateUser(options) {
 	options = addCredentials(options);
-	return send('updateUser', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('updateUser', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - updateUser: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 
@@ -170,13 +206,17 @@ function updateUser(options) {
 
 // options = { limit: number, cursor: string, sort: {} }
 function getChannels(options) {
-	options = addOptions(options, {
-		userId: get(userId),
-	});
+	options = addCredentials(options);
+	// options = addOptions(options, {
+	// 	userId: get(userId),
+	// });
 
-	return send('getChannels', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('getChannels', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - getChannels: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 
@@ -184,22 +224,29 @@ function getChannels(options) {
 
 // options = { limit: number, cursor: string, sort: {} }
 function getPosts(options) {
-	options = addOptions(options, {
-		userId: get(userId),
-	});
+	options = addCredentials(options);
+	// options = addOptions(options, {
+	// 	userId: get(userId),
+	// });
 
-	return send('getPosts', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('getPosts', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - getPosts: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 
 // options = { details: {} }
 function addPost(options) {
 	options = addCredentials(options);
-	return send('addPost', options).catch(error => {
-		console.error('API Error: ' + error, { error });
-		return Promise.reject(error); // TODO: prevent followups being called
+	return send('addPost', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - addPost: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
 

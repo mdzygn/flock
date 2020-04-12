@@ -1,4 +1,4 @@
-import { init, response, validateCredentials, getItemIds } from '../../server/mongo.js';
+import { init, response, validateCredentials, getItemIds, loadUserItemProperties } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -6,9 +6,6 @@ export async function post(req, res, next) {
 	const options = req.body;
 
 	const validLogin = await validateCredentials(db, options);
-
-	let followedProjectIds = null;
-	let likedProjectIds = null;
 
 	const userId = (options && options.userId) || null;
 	const projectId = options && options.id;
@@ -18,28 +15,6 @@ export async function post(req, res, next) {
 		projectsFilter.id = projectId;
 	}
 
-	// if (userId) {
-	// 	followedProjectIds = {};
-	// 	likedProjectIds = {};
-
-	// 	const userProjectFilter = {userId};
-	// 	if (projectId) {
-	// 		userProjectFilter.projectId = projectId;
-	// 	}
-
-	// 	const follows = await db.collection('follows').find(userProjectFilter).toArray(); // {userId: userId}
-	// 	for (var followI = 0; followI < follows.length; followI++) {
-	// 		followedProjectIds[follows[followI].projectId] = follows[followI];
-	// 	}
-
-	// 	const likes = await db.collection('likes').find(userProjectFilter).toArray();
-	// 	for (var likeI = 0; likeI < likes.length; likeI++) {
-	// 		likedProjectIds[likes[likeI].projectId] = true;
-	// 	}
-
-	// 	// console.log('followedProjectIds', followedProjectIds);
-	// }
-
 	let projects = await db.collection('projects').find(projectsFilter).toArray();
 
 	projects = projects.filter((project) => {
@@ -47,39 +22,14 @@ export async function post(req, res, next) {
 	});
 
 	if (projects.length && userId) {
-		const projectIds = getItemIds(projects, 'id');
-
-		if (projectIds.length) {
-			const userProjectFilter = { "userId": userId, "projectId": { "$in": projectIds } };
-
-			followedProjectIds = {};
-			likedProjectIds = {};
-
-			const follows = await db.collection('follows').find(userProjectFilter).toArray(); // {userId: userId}
-			for (var followI = 0; followI < follows.length; followI++) {
-				followedProjectIds[follows[followI].projectId] = follows[followI];
-			}
-
-			const likes = await db.collection('likes').find(userProjectFilter).toArray();
-			for (var likeI = 0; likeI < likes.length; likeI++) {
-				likedProjectIds[likes[likeI].projectId] = true;
-			}
-
-			if (followedProjectIds) {
-				let project, followItem;
-				for (var projectI = 0; projectI < projects.length; projectI++) {
-					project = projects[projectI];
-
-					project.liked = !!likedProjectIds[project.id];
-
-					followItem = followedProjectIds[project.id];
-					project.following = !!followItem;
-					if (project.following) {
-						project.followTime = followItem.createdAt;
-					}
-				}
-			}
-		}
+		await loadUserItemProperties(projects, {
+			userId,
+			itemIdProp: 'projectId',
+			collections: {
+				follows: 'follows',
+				likes: 'likes',
+			},
+		});
 	}
 
 	if (projects) {

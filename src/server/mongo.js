@@ -122,3 +122,54 @@ export function getItemIds(items, propName) {
     }
     return itemIds;
 }
+
+export async function loadUserItemProperties(items, options) {
+    const itemIds = getItemIds(items, 'id');
+
+    const userId = options && options.userId;
+    const itemIdProp = options && options.itemIdProp;
+    const collections = options && options.collections;
+
+    if (itemIdProp && collections) {
+        if (itemIds.length) {
+            const userProjectFilter = { "userId": userId };
+            userProjectFilter[itemIdProp] = { "$in": itemIds };
+
+            let followedProjectIds = null;
+            let likedProjectIds = null;
+
+            if (collections.follows) {
+                followedProjectIds = {};
+                const follows = await db.collection(collections.follows).find(userProjectFilter).toArray(); // {userId: userId}
+                for (var followI = 0; followI < follows.length; followI++) {
+                    followedProjectIds[follows[followI][itemIdProp]] = follows[followI];
+                }
+            }
+
+            if (collections.likes) {
+                likedProjectIds = {};
+                const likes = await db.collection(collections.likes).find(userProjectFilter).toArray();
+                for (var likeI = 0; likeI < likes.length; likeI++) {
+                    likedProjectIds[likes[likeI][itemIdProp]] = true;
+                }
+            }
+
+            let item, followItem;
+            for (var itemI = 0; itemI < items.length; itemI++) {
+                item = items[itemI];
+
+                if (collections.likes) {
+                    item.liked = !!likedProjectIds[item.id];
+                }
+
+                if (collections.follows) {
+                    followItem = followedProjectIds[item.id];
+                    item.following = !!followItem;
+                    if (item.following) {
+                        item.followTime = followItem.createdAt;
+                    }
+                }
+            }
+        }
+    }
+}

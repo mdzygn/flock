@@ -9,6 +9,7 @@
 
 <div class="newPostButton {className}" class:button="{onClick}" on:click="{onClick}">
     <Proxy image="{type}" />
+    <slot></slot>
 </div>
 
 <style>
@@ -20,6 +21,10 @@
         margin-top: 10px;
         margin-bottom: 10px;
 	}
+
+    .newPostButton :global(.proxy) {
+        position: absolute;
+    }
 
     .button {
         cursor: pointer;

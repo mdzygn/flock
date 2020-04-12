@@ -4,9 +4,18 @@
     import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
 
+	import ActionBar from './ActionBar.svelte';
+	import ActionButton from './ActionButton.svelte';
+
     import AvatarIcon from '../_components/AvatarIcon.svelte';
 
-	import NewPostButton from '../_components/NewPostButton.svelte';
+    import ShareIcon from "../../assets/icons/share.png";
+    import LikeIcon from "../../assets/icons/like.png";
+    import LikeSelectedIcon from "../../assets/icons/like_selected.png";
+    import ReplyIcon from "../../assets/icons/reply.png";
+
+
+	// import NewPostButton from '../_components/NewPostButton.svelte';
 
     import { parseHTML, getDateString } from '../../utils';
 
@@ -16,6 +25,11 @@
 		newThreadPost,
     } from '../../actions/appActions';
 
+	import {
+		postToggleLiked,
+	} from '../../actions/postActions';
+
+
     import { getUser } from '../../models/usersModel';
 
     export let post;
@@ -23,6 +37,7 @@
     let user = writable([]);
 
     $: userId = ($post && $post.userId) || null;
+    $: postId = ($post && $post.id) || null;
     $: { user = getUser(userId) };
     $: userLoaded = ($user && $user.name) || false;
     $: userName = ($user && $user.name) || '&nbsp;';
@@ -49,6 +64,10 @@
 		if (!checkLoggedIn()) { return; }
 		newThreadPost();
     }
+
+	function shareItem() {
+		showShareProjectDialog(postId);
+	}
 </script>
 
 <div class="threadPost">
@@ -77,7 +96,55 @@
             <div class="message">{@html messageHTML}</div>
         {/if}
     </div>
-	<NewPostButton onClick="{reply}" className="replyButton" type="reply" />
+
+    <!-- <Proxy image="thread_actions" className="proxyThreadActions proxyOverlay" /> -->
+
+    <ActionBar targetItemId="{postId}" targetItem="{$post}">
+        <div slot="buttonLeft">
+            <ActionButton
+                label = "like"
+                icon = "{LikeIcon}"
+                selectedIcon = "{LikeSelectedIcon}"
+
+                targetItem = "{$post}"
+                targetItemId = "{postId}"
+                action = "{postToggleLiked}"
+                targetItemProperty = "liked"
+                countProperty = "likeCount"
+            />
+        </div>
+        <div slot="buttonMiddle">
+			<ActionButton
+				label = "share"
+
+				icon = "{ShareIcon}"
+
+				action = "{shareItem}"
+			/>
+        </div>
+        <div slot="buttonRight">
+			<ActionButton
+				label = "reply"
+
+				icon = "{ReplyIcon}"
+
+				action = "{reply}"
+			/>
+        </div>
+    </ActionBar>
+	<!-- <NewPostButton onClick="{reply}" className="replyButton" type="reply">
+        <ActionButton
+            label = "like"
+            icon = "{LikeIcon}"
+            selectedIcon = "{LikeSelectedIcon}"
+
+            targetItem = "{$post}"
+            targetItemId = "{postId}"
+            action = "{postToggleLiked}"
+            targetItemProperty = "liked"
+            countProperty = "likeCount"
+        />
+    </NewPostButton> -->
 </div>
 
 <style>
@@ -130,7 +197,7 @@
         padding-top: 95px;
         padding-left: 26px;
         padding-right: 40px;
-        padding-bottom: 5px;
+        padding-bottom: 18px;
     }
 
     .date {
@@ -163,5 +230,75 @@
         padding-top: 8px;
 
         user-select: text;
+    }
+
+    .threadPost :global(.actionBar ) {
+        position: relative;
+    }
+
+    .threadPost :global(.actionContainerButton) {
+        position: absolute;
+        width: 94px;
+        top: 0;
+        bottom: 0;
+        left: 106px;
+    }
+
+    .threadPost :global(.button .button) {
+        justify-content: initial;
+    }
+
+    .threadPost :global(.actionContainerButton.actionButtonLeft) {
+        position: absolute;
+        left: 0;
+        width: initial;
+        top: 0;
+        bottom: 0;
+    }
+    .threadPost :global(.actionContainerButton.actionButtonLeft .buttonContent) {
+        padding-right: 0;
+        margin-left: 26px;
+        margin-right: 67px;
+    }
+
+    .threadPost :global(.actionContainerButton.actionButtonMiddle) {
+        position: absolute;
+        left: 112px;
+        width: initial;
+        top: 0;
+        bottom: 0;
+    }
+    .threadPost :global(.actionContainerButton.actionButtonMiddle .buttonContent) {
+        padding-right: 0;
+        margin-left: 9px;
+        margin-right: 14px;
+    }
+
+    .threadPost :global(.actionContainerButton.actionButtonRight) {
+        position: absolute;
+        left: initial;
+        right: 0;
+        width: initial;
+        top: 0;
+        bottom: 0;
+    }
+    .threadPost :global(.actionContainerButton.actionButtonRight .buttonContent) {
+        padding-right: 0;
+        margin-left: 32px;
+        margin-right: 20px;
+
+        font-size: 1.6rem;
+        font-weight: 700;
+    }
+    .threadPost :global(.actionContainerButton.actionButtonRight .buttonContent) {
+        padding-right: 0;
+        margin-left: 32px;
+        margin-right: 57px;
+
+        font-size: 1.6rem;
+        font-weight: 700;
+    }
+    .threadPost :global(.actionContainerButton.actionButtonRight .icon) {
+        padding-left: 16px;
     }
 </style>

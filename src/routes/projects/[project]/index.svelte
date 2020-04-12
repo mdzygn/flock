@@ -80,6 +80,8 @@
 
 	import NewPostButton from '../../_components/NewPostButton.svelte';
 
+	$: userLoading = (!($user && $user.loaded) && $userId);
+
 	function toggleFollowing() {
 		projectToggleFollowing($projectId);
 	}
@@ -157,7 +159,7 @@
 </svelte:head>
 
 <div class="pageContent" class:archived="{isArchived}">
-	{#if ($loadingProjects && (!$project || $project.id !== $projectId )) || (!$user && $userId) || (!$project && $loadingProjects) }
+	{#if ($loadingProjects && (!$project || $project.id !== $projectId )) || userLoading || (!$project && $loadingProjects) }
 		<ContentLoader label="{locale.LOADING.PROJECT}" />
 	{:else if !$project || !$project.id}
 		<ContentLoader label="{locale.PROJECT.NOT_FOUND}" />

@@ -25,6 +25,7 @@
 		profileDisplayingAllProjects,
 		showBetaFeatures,
 		user,
+		userId,
 	} from '../../../models/appModel';
 
 	import { loadConversation, messageUser, showShareProfileDialog } from '../../../actions/appActions';
@@ -37,8 +38,10 @@
         getIsCurrentUser,
 	} from '../../../models/appModel';
 
+	$: userLoading = (!($user && $user.loaded) && $userId);
+
 	$: viewedUserLoaded = ($viewedUser && $viewedUser.name) || false;
-	$: userId = ($viewedUser && $viewedUser.id) || null;
+	$: viewedUserId = ($viewedUser && $viewedUser.id) || null;
 
 	$: requestedConnection = ($viewedUser && $viewedUser.requestedConnection) || false;
     $: isCurrentUser = $user && getIsCurrentUser($viewedUser && $viewedUser.id);
@@ -60,11 +63,11 @@
 	}
 
     function messageCurrentUser() {
-        messageUser(userId);
+        messageUser(viewedUserId);
 	}
 
 	function shareCurrentProfile() {
-		showShareProfileDialog(userId);
+		showShareProfileDialog(viewedUserId);
 	}
 </script>
 
@@ -72,7 +75,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-{#if $loadingUsers && (!viewedUserLoaded || $viewedUser.id !== $profileId ) }
+{#if ($loadingUsers && (!viewedUserLoaded || $viewedUser.id !== $profileId )) || userLoading }
 	<ContentLoader label="{locale.LOADING.PROFILE}" />
 {:else if !viewedUserLoaded || !$viewedUser.id}
 	<ContentLoader label="{locale.PROFILE.NOT_FOUND}" />

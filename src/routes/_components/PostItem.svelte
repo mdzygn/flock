@@ -238,7 +238,7 @@
         margin-top: -3px;
     }
     .postItem.showReplyIcon :global(.likeButton) {
-        right: 29px;
+        right: 31px;
     }
     .postItem.showRepliesIcon :global(.likeButton) {
         right: 46px;
@@ -290,7 +290,7 @@
 
     .replyIcon {
         position: absolute;
-        right: 16px;
+        right: 18px;
         top: 13px;
         /* right: 19px;
         top: 15px; */

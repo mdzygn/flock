@@ -9,17 +9,28 @@ export async function post(req, res, next) {
 	let likedProjectIds = null;
 
 	const userId = (options && options.userId) || null;
+	const projectId = options && options.id;
+
+	const projectsFilter = {};
+	if (projectId) {
+		projectsFilter.id = projectId;
+	}
 
 	if (userId) {
 		followedProjectIds = {};
 		likedProjectIds = {};
 
-		const follows = await db.collection('follows').find({userId: userId}).toArray();
+		const userProjectFilter = {userId};
+		if (projectId) {
+			userProjectFilter.projectId = projectId;
+		}
+
+		const follows = await db.collection('follows').find(userProjectFilter).toArray(); // {userId: userId}
 		for (var followI = 0; followI < follows.length; followI++) {
 			followedProjectIds[follows[followI].projectId] = follows[followI];
 		}
 
-		const likes = await db.collection('likes').find({userId: userId}).toArray();
+		const likes = await db.collection('likes').find(userProjectFilter).toArray();
 		for (var likeI = 0; likeI < likes.length; likeI++) {
 			likedProjectIds[likes[likeI].projectId] = true;
 		}
@@ -27,7 +38,7 @@ export async function post(req, res, next) {
 		// console.log('followedProjectIds', followedProjectIds);
 	}
 
-	let projects = await db.collection('projects').find({}).toArray();
+	let projects = await db.collection('projects').find(projectsFilter).toArray();
 
 	// const projects = []; // to test returning no projects
 

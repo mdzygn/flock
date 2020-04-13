@@ -23,18 +23,16 @@ function handleFiles(err, files) {
             file = fs.readFileSync(path.join(__dirname, filePath), 'utf-8');
 
             data = JSON.parse(file);
-            console.log('\x1b[32m', 'reading ' + fileName, '\x1b[0m');
 
             collectionCategory = data.category || '';
             collectionTags = data.tags || '';
             collectionItems = data.items || [];
 
-            console.log('collectionTags: ' + collectionTags);
-            console.log('collectionItems: ' + collectionItems.length);
+            console.log('reading ' + fileName + ' items: ' + collectionItems.length);
 
             if (collectionItems) {
               collectionItems.forEach((item) => {
-                if (!item.disabled) {
+                if (true) { //!item.disabled) {
                   newItem = {};
 
                   // if (collectionCategory) {
@@ -59,6 +57,8 @@ function handleFiles(err, files) {
             }
         }
     });
+
+    console.log('total items: ' + outputData.length);
 
     // const outputJson = JSON.stringify(outputData, null, 2);
     const outputJson = JSON.stringify(outputData);

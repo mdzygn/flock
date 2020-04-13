@@ -1,6 +1,6 @@
 {
     "category": "film",
-    "tags": "film, movies",
+    "tags": "film, movies, cinema",
     "items": [
         {
             "imageId":"admission-2974645_960_720",
@@ -12,6 +12,10 @@
         {
             "imageId":"popcorn-1433327_960_720",
             "tags":"popcorn, snacks, lollies"
+        },
+        {
+            "imageId":"movie-918655_960_720",
+            "tags":"movie, reels"
         },
         {
             "imageId":"popcorn-4885565_960_720",

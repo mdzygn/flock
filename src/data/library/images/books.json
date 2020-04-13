@@ -41,6 +41,38 @@
         {
             "imageId":"bookshelf-1082309_960_720",
             "tags":"shelves, library, ladder"
+        },
+        {
+            "imageId":"coffee-3025022_960_720",
+            "tags":"coffee, warm, winter, leaves, fiction, scarf"
+        },
+        {
+            "imageId":"desk-1148994_960_720",
+            "tags":"lantern, clock, night"
+        },
+        {
+            "imageId":"girl-3528292_960_720",
+            "tags":"girl, woman, lady, water, river, nature, outdoors"
+        },
+        {
+            "imageId":"knowledge-1052010_960_720",
+            "tags":"knowledge, glasses"
+        },
+        {
+            "imageId":"knowledge-1052014_960_720",
+            "tags":"knowledge, glasses, clock"
+        },
+        {
+            "imageId":"open-book-1428428_960_720",
+            "tags":"knowledge, study, research"
+        },
+        {
+            "imageId":"reading-925589_960_720",
+            "tags":"outdoor"
+        },
+        {
+            "imageId":"tea-time-3240766_960_720",
+            "tags":"coffee, flowers, poetry"
         }
     ]
 }

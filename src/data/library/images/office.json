@@ -8,7 +8,7 @@
         },
         {
             "imageId":"computer-2982270_960_720",
-            "tags":"desktop, laptop, computer, desk, table top, tech, technology, headphones"
+            "tags":"desktop, laptop, computer, desk, table top, tech, technology, headphones, project"
         },
         {
             "imageId":"conference-room-768441_960_720",
@@ -16,15 +16,15 @@
         },
         {
             "imageId":"desk-3076954_960_720",
-            "tags":"desktop, notebook, notes, mobile"
+            "tags":"desktop, notebook, notes, mobile, project"
         },
         {
             "imageId":"furniture-1840463_960_720",
-            "tags":"table, meeting, chairs, team"
+            "tags":"table, meeting, chairs, team, project"
         },
         {
             "imageId":"laptop-1478822_960_720",
-            "tags":"desktop, laptop, computer, tech, technology, desk, table top, notes"
+            "tags":"desktop, laptop, computer, tech, technology, desk, table top, notes, project"
         },
         {
             "imageId":"macbook-336704_960_720",
@@ -32,39 +32,39 @@
         },
         {
             "imageId":"meeting-2284501_960_720",
-            "tags":"colleague, team, table, meeting, meeting room, planning"
+            "tags":"colleague, team, table, meeting, meeting room, planning, project"
         },
         {
             "imageId":"office-1081807_960_720",
-            "tags":"colleague, team, laptop, computer, tech, technology, meeting, planning"
+            "tags":"colleague, team, laptop, computer, tech, technology, meeting, planning, project"
         },
         {
             "imageId":"office-1834294_960_720",
-            "tags":"creative, team, tech, technology, meeting, planning"
+            "tags":"creative, team, tech, technology, meeting, planning, project"
         },
         {
             "imageId":"startup-593327_960_720",
-            "tags":"laptop, notes, startup, computer, tech, technology, meeting, planning"
+            "tags":"laptop, notes, startup, computer, tech, technology, meeting, planning, project"
         },
         {
             "imageId":"startup-593341_960_720",
-            "tags":"colleague, team, startup, laptop, notes, computer, tech, technology, meeting, planning"
+            "tags":"colleague, team, startup, laptop, notes, computer, tech, technology, meeting, planning, project"
         },
         {
             "imageId":"startup-594090_960_720",
-            "tags":"colleague, team, startup, laptop, notes, computer, tech, technology, meeting, planning"
+            "tags":"colleague, team, startup, laptop, notes, computer, tech, technology, meeting, planning, project"
         },
         {
             "imageId":"student-849824_960_720",
-            "tags":"colleague, student, team, creative, startup, laptop, computer, tech, technology, meeting, planning"
+            "tags":"colleague, student, team, creative, startup, laptop, computer, tech, technology, meeting, planning, project, university"
         },
         {
             "imageId":"work-731198_960_720",
-            "tags":"laptop, startup, computer, coding, programming, code, coffee, tech, technology"
+            "tags":"laptop, startup, computer, coding, programming, code, coffee, tech, web, technology, project"
         },
         {
             "imageId":"writing-336370_960_720",
-            "tags":"colleague, team, startup, laptop, notes, computer, tech, technology, meeting, planning"
+            "tags":"colleague, team, startup, laptop, notes, computer, tech, technology, meeting, planning, project"
         },
         {
             "imageId":"writing-1149962_960_720",
@@ -72,7 +72,7 @@
         },
         {
             "imageId":"young-791849_960_720",
-            "tags":"colleague, managment, scheduling, paperwork, document, notes, meeting, planning"
+            "tags":"colleague, managment, scheduling, paperwork, document, notes, meeting, planning, projet"
         }
     ]
 }

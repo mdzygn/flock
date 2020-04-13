@@ -16,19 +16,19 @@
         },
         {
             "imageId":"brick-wall-1834784_960_720",
-            "tags":"kitchen, dining, table, modern, apartment, decor, brick, wall, cozy"
+            "tags":"kitchen, dining, table, modern, apartment, flat, decor, brick, wall, cozy"
         },
         {
             "imageId":"cabin-1082063_960_720",
-            "tags":"horror, spooky, snow, forest, remote, isolation, cabin, lodge, retreat, escape, light"
+            "tags":"horror, shed, spooky, snow, forest, remote, isolation, cabin, lodge, retreat, escape, light"
         },
         {
             "imageId":"carpet-1853203_960_720",
-            "tags":"lounge, couch, rug, decor"
+            "tags":"lounge, couch, rug, decor, flat, apartment"
         },
         {
             "imageId":"chair-1840526_960_720",
-            "tags":"conservatory, escape, remote, isolation, plants, cozy, meditate, mindful"
+            "tags":"conservatory, escape, remote, isolation, plants, cozy, meditate, mindful, flat, apartment"
         },
         {
             "imageId":"chair-1845270_960_720",
@@ -40,7 +40,7 @@
         },
         {
             "imageId":"couch-1835923_960_720",
-            "tags":"lounge, couch, decor"
+            "tags":"lounge, couch, decor, flat, apartment"
         },
         {
             "imageId":"country-house-540796_960_720"
@@ -51,7 +51,7 @@
         },
         {
             "imageId":"golden-791072_960_720",
-            "tags":"books, decor, meditate, mindful"
+            "tags":"books, decor, meditate, mindful, flat, apartment"
         },
         {
             "imageId":"hand-washing-4818792_960_720",
@@ -59,7 +59,7 @@
         },
         {
             "imageId":"home-2609600_960_720",
-            "tags":"plants, relax, decor, cozy, meditate, mindful"
+            "tags":"plants, relax, decor, cozy, meditate, mindful, flat, apartment"
         },
         {
             "imageId":"house-4028391_960_720",
@@ -71,19 +71,19 @@
         },
         {
             "imageId":"living-room-690174_960_720",
-            "tags":"lounge, couch, coffee table, coffee, cozy"
+            "tags":"lounge, couch, coffee table, coffee, cozy, flat, apartment"
         },
         {
             "imageId":"log-cabin-1886620_960_720",
-            "tags":"forest, cozy, remote, isolation, cabin, lodge, retreat, escape"
+            "tags":"forest, cozy, remote, shed, isolation, cabin, lodge, retreat, escape"
         },
         {
             "imageId":"pots-716579_960_720",
-            "tags":"plants, cactus, succulents"
+            "tags":"plants, cactus, succulents, flat, apartment"
         },
         {
             "imageId":"rustic-945421_960_720",
-            "tags":"mountain, nordic, remote, isolation, cabin, lodge, retreat, escape"
+            "tags":"mountain, nordic, shed, remote, isolation, cabin, lodge, retreat, escape"
         },
         {
             "imageId":"still-life-562357_960_720",
@@ -91,7 +91,7 @@
         },
         {
             "imageId":"tea-rose-corolla-1871837_960_720",
-            "tags":"tea, glass, flower, cozy, relax, meditate, mindful"
+            "tags":"tea, glass, flower, cozy, relax, meditate, mindful, flat, apartment"
         }
     ]
 }

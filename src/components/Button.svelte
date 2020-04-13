@@ -11,11 +11,21 @@
 
     export let icon = null;
 
+    export let element = null;
+
+    export let imageUrl = null;
+
+    $: {
+        if (element && imageUrl) {
+            element.imageUrl = imageUrl;
+        }
+    }
+
     // let hasSlots = $$props.$$slots;
 </script>
 
 {#if href && !disabled}
-    <a {href} class="button {className}" class:disabled="{disabled}" class:activeButton={!disabled &&  onClick} on:click={onClick} {style}>
+    <a {href} bind:this="{element}" class="button {className}" class:disabled="{disabled}" class:activeButton={!disabled &&  onClick} on:click={onClick} {style}>
         <div class="buttonContent" style="{buttonContentStyle}">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
                 <img class="icon" src="{icon}" alt="read more" {iconStyle} />
@@ -23,7 +33,7 @@
         </div>
     </a>
 {:else}
-    <div class="button {className}" class:disabled="{disabled}" class:activeButton={!disabled &&  onClick} on:click={!disabled ? onClick : null} {style}>
+    <div bind:this="{element}" class="button {className}" class:disabled="{disabled}" class:activeButton={!disabled &&  onClick} on:click={!disabled ? onClick : null} {style}>
         <div class="buttonContent" style="{buttonContentStyle}">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
                 <img class="icon" src="{icon}" alt="read more" style="{iconStyle}" />

@@ -13,14 +13,6 @@
 
     export let element = null;
 
-    export let imageUrl = null;
-
-    $: {
-        if (element && imageUrl) {
-            element.imageUrl = imageUrl;
-        }
-    }
-
     // let hasSlots = $$props.$$slots;
 </script>
 

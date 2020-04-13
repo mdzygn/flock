@@ -14,28 +14,32 @@
 
     export let searchString = null;
 
-    const MIN_X = -600; // -200;
+    const MIN_X = -1200; // -200;
     const MAX_X = 1200; // 1500; // 400;
 
     let imageElements = {};
 
     let scrollRegion = null;
 
+    $: {
+        for (let imageItem, itemI = 0; itemI < images.length; itemI++) {
+            imageItem = images[itemI];
+            imageItem.imageUrl = imageBasePath + imageItem.imageId + imageExtension;
+        }
+    }
+
     let filteredImages = null;
     $: {
         // imageItems.length = 0;
         filteredImages = filterItems(images, searchString);
+
+        for (let imageItem, element, itemI = 0; itemI < filteredImages.length; itemI++) {
+            imageItem = filteredImages[itemI];
+            imageItem.posX = undefined;
+        }
+
         (async () => {
             await tick();
-
-            for (let imageItem, element, itemI = 0; itemI < filteredImages.length; itemI++) {
-                imageItem = filteredImages[itemI];
-                element = imageElements[imageItem.imageId];
-                if (element) {
-                    element.posX = undefined;
-                }
-            }
-
             updateScroll();
         })();
     }
@@ -53,23 +57,22 @@
                 imageItem = filteredImages[itemI];
                 element = imageElements[imageItem.imageId];
                 if (element) {
-                    // if (element.posX === undefined) {
-                    //     if (element.lastPosX && element.lastPosX !== element.posX) {
-                    //         console.log(element.lastPosX + ', ' + element.imageUrl);
-                    //     }
-                    //     element.posX = element.offsetLeft;
-                    //     element.lastPosX = element.posX;
-                    // };
-                        element.posX = element.offsetLeft;
-                    elementX = element.posX - scrollX;
+                    if (imageItem.posX === undefined) {
+                        // if (imageItem.posX.lastPosX && imageItem.posX.lastPosX !== imageItem.posX.posX) {
+                        //     console.log(imageItem.posX.lastPosX + ', ' + imageItem.posX.imageUrl);
+                        // }
+                        imageItem.posX = element.offsetLeft;
+                        // imageItem.posX.lastPosX = imageItem.posX.posX;
+                    };
+                    elementX = imageItem.posX - scrollX;
                     visible = (elementX > MIN_X && elementX < MAX_X)
                     // if (itemI === 1) {
                     //     console.log('elementX', elementX, visible, element.isVisible, element.imageUrl);
                     // }
-                    if (element.isVisible !== visible && element.imageUrl) {
-                        element.isVisible = visible;
+                    if (imageItem.isVisible !== visible && imageItem.imageUrl) {
+                        imageItem.isVisible = visible;
                         if (visible) {
-                            element.style = 'visibility: visible; background-image: url(' + element.imageUrl + ')';
+                            element.style = 'visibility: visible; background-image: url(' + imageItem.imageUrl + ')';
                         } else {
                             element.style = '';
                         }
@@ -114,7 +117,7 @@
     <div class="imageContainer">
         {#each filteredImages as image, index (image.imageId)}
             {#if !image.disabled}
-                <Button className="imageItem" bind:element="{imageElements[image.imageId]}" imageUrl="{imageBasePath + image.imageId + imageExtension}" onClick="{() => { selectImage(image); } }" />
+                <Button className="imageItem" bind:element="{imageElements[image.imageId]}" onClick="{() => { selectImage(image); } }" />
                 <!-- style="background-image: url({imageBasePath + image.imageId + imageExtension})" -->
             {/if}
         {/each}

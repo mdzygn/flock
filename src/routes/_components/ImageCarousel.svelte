@@ -14,8 +14,8 @@
 
     export let searchString = null;
 
-    const MIN_X = -1200; // -200;
-    const MAX_X = 1200; // 1500; // 400;
+    const MIN_X = -1000; // -200;
+    const MAX_X = 800; // 1500; // 400;
 
     let imageElements = {};
 
@@ -30,6 +30,10 @@
 
     let filteredImages = null;
     $: {
+        updateFilteredImage(images, searchString);
+    }
+
+    function updateFilteredImage(images, searchString) {
         // imageItems.length = 0;
         filteredImages = filterItems(images, searchString);
 
@@ -40,7 +44,9 @@
 
         (async () => {
             await tick();
-            scrollRegion.scrollLeft = 0;
+            if (scrollRegion) {
+                scrollRegion.scrollLeft = 0;
+            }
             updateScroll();
         })();
     }
@@ -53,7 +59,6 @@
     function updateScroll() {
         if (scrollRegion) {
             const scrollX = scrollRegion.scrollLeft;
-            // console.log('scrollX', scrollX, imageItems[1] && imageItems[1].offsetLeft);
             for (let imageItem, element, elementX, visible, itemI = 0; itemI < filteredImages.length; itemI++) {
                 imageItem = filteredImages[itemI];
                 element = imageElements[imageItem.imageId];
@@ -82,25 +87,43 @@
     }
 
     function filterItems(items, searchString) {
-        const filteredItems = [];
+        let filteredItems = [];
 
         if (searchString) {
             searchString = searchString.toLowerCase();
         }
 
-        let item, curProject;
-        for (let index = 0; index < items.length; index++) {
-            item = items[index];
-            if (item && itemSearchMatch(item, searchString)) {
-                filteredItems.push(item);
+        if (!searchString) {
+            filteredItems = [...items];
+        } else {
+            let index, item, curProject;
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (itemSearchFullwordMatch(item, searchString)) {
+                    filteredItems.push(item);
+                }
+            }
+
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (itemSearchMatch(item, searchString) && !filteredItems.includes(item)) {
+                    filteredItems.push(item);
+                }
             }
         }
 
         return filteredItems;
     }
 
+    function itemSearchFullwordMatch(item, searchString) {
+        if (item.tags.match(new RegExp('\\b' + searchString + '\\b', 'i'))) {
+            return true;
+        }
+        return false;
+    }
+
     function itemSearchMatch(item, searchString) {
-        if (item.tags && item.tags.toLowerCase().includes(searchString)) return true;
+        if (item.tags.toLowerCase().includes(searchString)) return true;
         return false;
     }
 </script>
@@ -148,7 +171,7 @@
         /* width: 94px;
         height: 56px; */
 
-        background-color: #333333;
+        background-color: #666666;
         background-size: cover;
         border: 3px solid #ffffff;
 

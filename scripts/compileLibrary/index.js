@@ -34,7 +34,7 @@ function handleFiles(err, files) {
 
             if (collectionItems) {
               collectionItems.forEach((item) => {
-                if (true) { //!item.disabled) {
+                if (!item.disabled) {
                   newItem = {};
 
                   // if (collectionCategory) {

@@ -15,7 +15,7 @@ function handleFiles(err, files) {
 
     var jsonFilePattern=/\.[json]+$/i;
 
-    let filePath, file, data, collectionTags, collectionItems, newTags;
+    let filePath, file, data, newItem, collectionCategory, collectionTags, collectionItems, newTags;
 
     files.forEach((fileName) => {
         if (fileName.match(jsonFilePattern) && fileName.indexOf('_') !== 0) {
@@ -25,6 +25,7 @@ function handleFiles(err, files) {
             data = JSON.parse(file);
             console.log('\x1b[32m', 'reading ' + fileName, '\x1b[0m');
 
+            collectionCategory = data.category || '';
             collectionTags = data.tags || '';
             collectionItems = data.items || [];
 
@@ -33,6 +34,13 @@ function handleFiles(err, files) {
 
             if (collectionItems) {
               collectionItems.forEach((item) => {
+                newItem = {};
+
+                if (collectionCategory) {
+                  newItem.category = collectionCategory;
+                }
+                newItem.imageId = item.imageId;
+
                 newTags = item.tags || '';
                 if (collectionTags) {
                   if (newTags) {
@@ -41,8 +49,9 @@ function handleFiles(err, files) {
                     newTags = collectionTags;
                   }
                 }
-                item.tags = newTags;
-                outputData.push(item);
+                newItem.tags = newTags;
+
+                outputData.push(newItem);
               });
             }
         }

@@ -1,26 +1,82 @@
 [
   {
+    "category": "3d",
     "imageId": "architecture-3357028_960_720",
     "tags": "3d, graphics, visual, render, visualisation, visualization, architecture, futuristic, future"
   },
   {
+    "category": "3d",
     "imageId": "interior-2685521_960_720",
     "tags": "3d, graphics, visual, render, visualisation, visualization, architecture, house, interior, fancy"
   },
   {
+    "category": "3d",
     "imageId": "live-3104077_960_720",
     "tags": "3d, graphics, visual, render, visualisation, visualization, architecture, house, interior, fancy, bed, concrete, modern"
   },
   {
+    "category": "3d",
     "imageId": "mirroring-711926_960_720",
     "tags": "3d, graphics, visual, render, visualisation, visualization, sphere, chrome, ball, reflection, reflect, shiney"
   },
   {
+    "category": "3d",
     "imageId": "toast-759670_960_720",
     "tags": "3d, graphics, visual, render, visualisation, visualization, toaster, toast, food, bread, action, breakfast"
   },
   {
+    "category": "3d",
     "imageId": "wallpaper-866282_960_720",
     "tags": "3d, graphics, visual, render, visualisation, visualization, ball, abstract, dark, shiney"
+  },
+  {
+    "category": "abstract",
+    "imageId": "abstract-1850416_960_720",
+    "tags": "abstract, visual, texture, pattern, wall, concrete, rustic, weathered, worn, paint, peeling, blue"
+  },
+  {
+    "category": "abstract",
+    "imageId": "abstract-1850417_960_720",
+    "tags": "abstract, visual, texture, pattern, wall, concrete, cracked, rustic, weathered, worn, paint, peeling, blue"
+  },
+  {
+    "category": "abstract",
+    "imageId": "background-1838494_960_720",
+    "tags": "abstract, visual, texture, pattern, leather, animal, skill, brown"
+  },
+  {
+    "category": "abstract",
+    "imageId": "color-1845394_960_720",
+    "tags": "abstract, visual, texture, pattern, yellow, paint, wall, bright"
+  },
+  {
+    "category": "abstract",
+    "imageId": "color-4158152_960_720",
+    "tags": "abstract, visual, texture, pattern, paint, oil, purple, slick, wonder, art, creative"
+  },
+  {
+    "category": "abstract",
+    "imageId": "cube-2803223_960_720",
+    "tags": "abstract, visual, texture, pattern, blocks, light, tunnel, tower, bricks, 3d, render"
+  },
+  {
+    "category": "abstract",
+    "imageId": "pencils-452238_960_720",
+    "tags": "abstract, visual, texture, pattern, pencils, art, water, droplets, drops, rainbow, colours, color, colors, materials, creative"
+  },
+  {
+    "category": "abstract",
+    "imageId": "soap-bubble-3490954_960_720",
+    "tags": "abstract, visual, texture, pattern, bubble, soap, oil, slick, sphere"
+  },
+  {
+    "category": "abstract",
+    "imageId": "steelwool-458842_960_720",
+    "tags": "abstract, visual, texture, pattern, sparks, light, glow, pattern, infinity, film, photography, steel"
+  },
+  {
+    "category": "abstract",
+    "imageId": "texture-1504364_960_720",
+    "tags": "abstract, visual, texture, pattern, paint, wall, white, stucco"
   }
 ]

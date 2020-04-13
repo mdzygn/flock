@@ -103,6 +103,11 @@
     function contextFilterItems(items, contextSearchString) {
         let filteredItems = [];
 
+        if (contextSearchString) {
+            contextSearchString = contextSearchString.toLowerCase().trim();
+            contextSearchString = contextSearchString.replace(/\s+/, ' ');
+        }
+
         const fullSeparateWordContextSearchString = '\\b' + contextSearchString.split(' ').join('\\b|\\b') + '\\b';
         const separateWordContextSearchString = contextSearchString.split(' ').join('|');
 
@@ -140,6 +145,7 @@
 
         if (searchString) {
             searchString = searchString.toLowerCase().trim();
+            searchString = searchString.replace(/\s+/, ' ');
         }
 
         if (!searchString) {

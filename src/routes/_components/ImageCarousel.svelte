@@ -40,6 +40,7 @@
 
         (async () => {
             await tick();
+            scrollRegion.scrollLeft = 0;
             updateScroll();
         })();
     }
@@ -58,17 +59,10 @@
                 element = imageElements[imageItem.imageId];
                 if (element) {
                     if (imageItem.posX === undefined) {
-                        // if (imageItem.posX.lastPosX && imageItem.posX.lastPosX !== imageItem.posX.posX) {
-                        //     console.log(imageItem.posX.lastPosX + ', ' + imageItem.posX.imageUrl);
-                        // }
                         imageItem.posX = element.offsetLeft;
-                        // imageItem.posX.lastPosX = imageItem.posX.posX;
                     };
                     elementX = imageItem.posX - scrollX;
                     visible = (elementX > MIN_X && elementX < MAX_X)
-                    // if (itemI === 1) {
-                    //     console.log('elementX', elementX, visible, element.isVisible, element.imageUrl);
-                    // }
                     if (element.isVisible !== visible && imageItem.imageUrl) {
                         element.isVisible = visible;
                         if (visible) {
@@ -85,8 +79,6 @@
     function selectImage(targetImage) {
         image = targetImage.imageId;
         dispatch('select', {thumbImage: imageBasePath + image + imageExtension});
-
-        // console.log('imageItems', imageItems);
     }
 
     function filterItems(items, searchString) {

@@ -14,7 +14,7 @@
 
     export let searchString = null;
 
-    export let contextSearchString = null;
+    export let contextSearchString = '';
 
     const MIN_X = -1000; // -200;
     const MAX_X = 800; // 1500; // 400;
@@ -30,27 +30,39 @@
         }
     }
 
-    let filteredImages = null;
+    let contextFilteredImages = null;
+    let filteredImages = [];
+
     $: {
-        updateFilteredImage(images, searchString, contextSearchString);
+        updateContextFilteredImages(images, contextSearchString);
+    }
+    $: {
+        updateFilteredImages(contextFilteredImages, searchString);
     }
 
-    function updateFilteredImage(images, searchString, contextSearchString) {
-        // imageItems.length = 0;
-        filteredImages = filterItems(images, searchString, contextSearchString);
+    function updateContextFilteredImages(items, contextSearchString) {
+        contextFilteredImages = contextFilterItems(items, contextSearchString);
+        // console.log('updateContextFilteredImages', contextSearchString);
+    }
+    function updateFilteredImages(items, searchString) {
+        if (items) {
+            // imageItems.length = 0;
+            filteredImages = filterItems(items, searchString);
+            // console.log('updateFilteredImages', searchString);
 
-        for (let imageItem, element, itemI = 0; itemI < filteredImages.length; itemI++) {
-            imageItem = filteredImages[itemI];
-            imageItem.posX = undefined;
-        }
-
-        (async () => {
-            await tick();
-            if (scrollRegion) {
-                scrollRegion.scrollLeft = 0;
+            for (let imageItem, element, itemI = 0; itemI < filteredImages.length; itemI++) {
+                imageItem = filteredImages[itemI];
+                imageItem.posX = undefined;
             }
-            updateScroll();
-        })();
+
+            (async () => {
+                await tick();
+                if (scrollRegion) {
+                    scrollRegion.scrollLeft = 0;
+                }
+                updateScroll();
+            })();
+        }
     }
 
     onMount(() => {
@@ -88,39 +100,6 @@
         dispatch('select', {thumbImage: imageBasePath + image + imageExtension});
     }
 
-    function filterItems(items, searchString, contextSearchString) {
-        let filteredItems = [];
-
-        if (searchString) {
-            searchString = searchString.toLowerCase().trim();
-        }
-
-        if (!searchString && !contextSearchString) {
-            filteredItems = [...items];
-        } else {
-            if (contextSearchString) {
-                items = contextFilterItems(items, contextSearchString);
-            }
-
-            let index, item, curProject;
-            for (index = 0; index < items.length; index++) {
-                item = items[index];
-                if (itemSearchFullwordMatch(item, searchString)) {
-                    filteredItems.push(item);
-                }
-            }
-
-            for (index = 0; index < items.length; index++) {
-                item = items[index];
-                if (itemSearchMatch(item, searchString) && !filteredItems.includes(item)) {
-                    filteredItems.push(item);
-                }
-            }
-        }
-
-        return filteredItems;
-    }
-
     function contextFilterItems(items, contextSearchString) {
         let filteredItems = [];
 
@@ -148,6 +127,35 @@
             for (index = 0; index < items.length; index++) {
                 item = items[index];
                 if (!filteredItems.includes(item)) {
+                    filteredItems.push(item);
+                }
+            }
+        }
+
+        return filteredItems;
+    }
+
+    function filterItems(items, searchString) {
+        let filteredItems = [];
+
+        if (searchString) {
+            searchString = searchString.toLowerCase().trim();
+        }
+
+        if (!searchString) {
+            filteredItems = [...items];
+        } else {
+            let index, item, curProject;
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (itemSearchFullwordMatch(item, searchString)) {
+                    filteredItems.push(item);
+                }
+            }
+
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (itemSearchMatch(item, searchString) && !filteredItems.includes(item)) {
                     filteredItems.push(item);
                 }
             }

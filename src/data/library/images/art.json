@@ -1,0 +1,34 @@
+{
+    "category": "art",
+    "tags": "art, artist, creative, expression",
+    "items": [
+        {
+            "imageId":"art-1478831_960_720",
+            "tags":"painting, studio, color, paint, brushes"
+        },
+        {
+            "imageId":"art-1851483_960_720",
+            "tags":"painting, studio, color, paint, brushes, paper, watercolor, watercolour"
+        },
+        {
+            "imageId":"brush-96240_960_720",
+            "tags":"painting, studio, color, paint, brush, canvas, watercolor, watercolour"
+        },
+        {
+            "imageId":"brush-2927793_960_720",
+            "tags":"painting, studio, color, paint, brushes, medium, chalk"
+        },
+        {
+            "imageId":"brushes-3129361_960_720",
+            "tags":"painting, studio, color, paint, brushes, medium, jar"
+        },
+        {
+            "imageId":"paint-brushes-984434_960_720",
+            "tags":"painting, studio, color, paint, brushes, medium, jar"
+        },
+        {
+            "imageId":"painting-3135875_960_720",
+            "tags":"painting, studio, color, paint, green, blue, canvas, painting"
+        }
+    ]
+}

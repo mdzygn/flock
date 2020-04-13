@@ -1,0 +1,46 @@
+{
+    "category": "books",
+    "tags": "books, reading, literature, study",
+    "items": [
+        {
+            "imageId":"bible-1868070_960_720",
+            "tags":"bible"
+        },
+        {
+            "imageId":"blond-1866951_960_720",
+            "tags":"girl, woman, lady, park, sitting"
+        },
+        {
+            "imageId":"book-731199_960_720",
+            "tags":"pencil, desk"
+        },
+        {
+            "imageId":"book-1659717_960_720",
+            "tags":"ancient, leather, bookshelf, volume, fiction, classic"
+        },
+        {
+            "imageId":"book-2020460_960_720",
+            "tags":"coffee, morning, home, study, cozy"
+        },
+        {
+            "imageId":"books-918521_960_720",
+            "tags":"travel, holiday, glasses, fiction"
+        },
+        {
+            "imageId":"books-1163695_960_720",
+            "tags":"bookshop, stacks, library"
+        },
+        {
+            "imageId":"books-1617327_960_720",
+            "tags":"shelves, bookshop"
+        },
+        {
+            "imageId":"books-2596809_960_720",
+            "tags":"shelves, bookshop, library"
+        },
+        {
+            "imageId":"bookshelf-1082309_960_720",
+            "tags":"shelves, library, ladder"
+        }
+    ]
+}

@@ -1,0 +1,114 @@
+{
+    "category": "music",
+    "tags": "music, performance",
+    "items": [
+        {
+            "imageId":"audio-1844798_960_720",
+            "tags":"audio, sing, singing, record, recording, compose"
+        },
+        {
+            "imageId":"book-3510326_960_720",
+            "tags":"book"
+        },
+        {
+            "imageId":"classical-music-1838390_960_720",
+            "tags":"orchestra, live, violin"
+        },
+        {
+            "imageId":"dark-1850120_960_720",
+            "tags":"dj, live, turntable, gig, event"
+        },
+        {
+            "imageId":"dj-720589_960_720",
+            "tags":"dj, live, gig, event"
+        },
+        {
+            "imageId":"electronics-1845272_960_720",
+            "tags":"dj, record, turntable, live, gig, event"
+        },
+        {
+            "imageId":"elvis-presley-1482026_960_720",
+            "tags":"elvis, speakers, amps"
+        },
+        {
+            "imageId":"guitar-756326_960_720",
+            "tags":"guitar, live, acoustic, country"
+        },
+        {
+            "imageId":"guitar-869217_960_720",
+            "tags":"guitar, live, acoustic"
+        },
+        {
+            "imageId":"headphone-1868612_960_720",
+            "tags":"headphones"
+        },
+        {
+            "imageId":"headphones-690685_960_720",
+            "tags":"headphones"
+        },
+        {
+            "imageId":"mic-1132528_960_720",
+            "tags":"microphone, live, band, sing, singing"
+        },
+        {
+            "imageId":"microphone-2130806_960_720",
+            "tags":"microphone, live, sing, singing"
+        },
+        {
+            "imageId":"mixing-desk-351478_960_720",
+            "tags":"dj, mixing, audio, live, event"
+        },
+        {
+            "imageId":"music-1285165_960_720",
+            "tags":"tape, cassette"
+        },
+        {
+            "imageId":"musician-349790_960_720",
+            "tags":"guitar, live, acoustic, country, banjo"
+        },
+        {
+            "imageId":"piano-349928_960_720",
+            "tags":"piano, live"
+        },
+        {
+            "imageId":"piano-801707_960_720",
+            "tags":"piano, live"
+        },
+        {
+            "imageId":"piano-1655558_960_720",
+            "tags":"piano, live, sheet"
+        },
+        {
+            "imageId":"piano-1846719_960_720",
+            "tags":"piano, live"
+        },
+        {
+            "imageId":"piano-3505109_960_720",
+            "tags":"piano, live"
+        },
+        {
+            "imageId":"record-336626_960_720",
+            "tags":"turntable, record, dj"
+        },
+        {
+            "imageId":"record-player-1851576_960_720",
+            "tags":"turntable, record, dj"
+        },
+        {
+            "imageId":"saxophone-546303_960_720",
+            "tags":"jazz, live, band, sax, saxophone, brass"
+        },
+        {
+            "imageId":"table-1284507_960_720",
+            "tags":"dj, mixing, audio, live, event"
+        },
+        {
+            "imageId":"turntable-1337986_960_720",
+            "tags":"dj, mixing, audio, live, desktop, computer, event, compose"
+        },
+        {
+            "imageId":"violin-374096_960_720",
+            "tags":"orchestra, live, violin"
+        }
+    ]
+}

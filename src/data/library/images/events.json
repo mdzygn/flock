@@ -1,0 +1,46 @@
+{
+    "category": "events",
+    "tags": "events, event, social, gig, theatre, concert, performance",
+    "items": [
+        {
+            "imageId":"audience-828584_960_720",
+            "tags":"audience, crowd, black"
+        },
+        {
+            "imageId":"audience-868074_960_720",
+            "tags":"audience, crowd, band, lights"
+        },
+        {
+            "imageId":"audience-1867754_960_720",
+            "tags":"audience, crowd, band, electronic, lights"
+        },
+        {
+            "imageId":"audience-1868137_960_720",
+            "tags":"audience, crowd, band, lights"
+        },
+        {
+            "imageId":"ballet-1376250_960_720",
+            "tags":"dance, ballet, motion"
+        },
+        {
+            "imageId":"concert-336695_960_720",
+            "tags":"audience, crowd, band, electronic, lights, rave"
+        },
+        {
+            "imageId":"concert-1149979_960_720",
+            "tags":"audience, crowd, band, electronic, lights, rave"
+        },
+        {
+            "imageId":"smartphone-407108_960_720",
+            "tags":"smartphone, phone, mobile, audience, crowd, lights"
+        },
+        {
+            "imageId":"staging-258631_960_720",
+            "tags":"team, teamwork, stage"
+        },
+        {
+            "imageId":"theater-1477670_960_720",
+            "tags":"seats, tickets"
+        }
+    ]
+}

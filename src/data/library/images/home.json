@@ -1,0 +1,97 @@
+{
+    "category": "home",
+    "tags": "home, house",
+    "items": [
+        {
+            "imageId":"alley-1690053_960_720",
+            "tags":"street, alley, italian, mediterranean, ivy, travel, street, ancient, architecture"
+        },
+        {
+            "imageId":"autumn-2021154_960_720",
+            "tags":"autumn, lake, lakeside, reflection, red, orange, cabin, woods, lodge, retreat, escape"
+        },
+        {
+            "imageId":"boat-house-192990_960_720",
+            "tags":"lake, boat house, stone, lakeside, cabin, lodge, isolation, retreat, escape"
+        },
+        {
+            "imageId":"brick-wall-1834784_960_720",
+            "tags":"kitchen, dining, table, modern, apartment, decor, brick, wall, cozy"
+        },
+        {
+            "imageId":"cabin-1082063_960_720",
+            "tags":"horror, snow, forest, remote, isolation, cabin, lodge, retreat, escape, light"
+        },
+        {
+            "imageId":"carpet-1853203_960_720",
+            "tags":"lounge, couch, rug, decor"
+        },
+        {
+            "imageId":"chair-1840526_960_720",
+            "tags":"conservatory, escape, remote, isolation, plants, cozy, meditate, mindful"
+        },
+        {
+            "imageId":"chair-1845270_960_720",
+            "tags":"lounge, table, couch, decor"
+        },
+        {
+            "imageId":"chairs-2181947_960_720",
+            "tags":"lounge, dining, apartment, table, modern, decor"
+        },
+        {
+            "imageId":"couch-1835923_960_720",
+            "tags":"lounge, couch, decor"
+        },
+        {
+            "imageId":"country-house-540796_960_720"
+        },
+        {
+            "imageId":"furniture-998265_960_720",
+            "tags":"lounge, decor"
+        },
+        {
+            "imageId":"golden-791072_960_720",
+            "tags":"books, decor, meditate, mindful"
+        },
+        {
+            "imageId":"hand-washing-4818792_960_720",
+            "tags":"washing, wash, hands, clean"
+        },
+        {
+            "imageId":"home-2609600_960_720",
+            "tags":"plants, relax, decor, cozy, meditate, mindful"
+        },
+        {
+            "imageId":"house-4028391_960_720",
+            "tags":"seaside, remote, escape"
+        },
+        {
+            "imageId":"light-1603766_960_720",
+            "tags":"lights, dark, decor"
+        },
+        {
+            "imageId":"living-room-690174_960_720",
+            "tags":"lounge, couch, coffee table, coffee, cozy"
+        },
+        {
+            "imageId":"log-cabin-1886620_960_720",
+            "tags":"forest, cozy, remote, isolation, cabin, lodge, retreat, escape"
+        },
+        {
+            "imageId":"pots-716579_960_720",
+            "tags":"plants, cactus, succulents"
+        },
+        {
+            "imageId":"rustic-945421_960_720",
+            "tags":"mountain, nordic, remote, isolation, cabin, lodge, retreat, escape"
+        },
+        {
+            "imageId":"still-life-562357_960_720",
+            "tags":"fruit, still life, jug"
+        },
+        {
+            "imageId":"tea-rose-corolla-1871837_960_720",
+            "tags":"tea, glass, flower, cozy, relax, meditate, mindful"
+        }
+    ]
+}

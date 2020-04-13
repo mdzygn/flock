@@ -1,0 +1,26 @@
+{
+   "category": "agriculture",
+   "tags": "agriculture, farming, nature, food, grow, growing",
+   "items": [
+        {
+            "imageId":"agriculture-1807581_960_720",
+            "tags":"fields, terraces, rice, pattern"
+        },
+        {
+            "imageId":"potatoes-1866415_960_720",
+            "tags":"potatoes, hands, fresh"
+        },
+        {
+            "imageId":"rice-field-3490060_960_720",
+            "tags":"fields, terraces, rice, water, sun, sky, tree, reflection"
+        },
+        {
+            "imageId":"rice-plantation-1822444_960_720",
+            "tags":"fields, terraces, rice, fog, pattern"
+        },
+        {
+            "imageId":"sunflower-1127174_960_720",
+            "tags":"plant, flower, sunflower, autumn, season, sunset, sunlight, light"
+        }
+   ]
+}

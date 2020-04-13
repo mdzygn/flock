@@ -1,0 +1,46 @@
+{
+    "category": "environment",
+    "tags": "environment, environmental, ecology, nautre, conservation, eco, climate, climate change, global warming",
+    "items": [
+        {
+            "imageId":"bavarian-forest-3385966_960_720",
+            "tags":"forest, destroyed, destruction, habitat"
+        },
+        {
+            "imageId":"cyclone-2102397_960_720",
+            "tags":"weather, tornado, climate, extreme, destruction, cyclone, hurricane"
+        },
+        {
+            "imageId":"desert-2227962_960_720",
+            "tags":"desert, dead, destruction, destroyed, ruin, post-apocalypse, sand"
+        },
+        {
+            "imageId":"dry-4282884_960_720",
+            "tags":"desert, dry, cracked, dead, destruction, destroyed, ruin, post-apocalypse"
+        },
+        {
+            "imageId":"iceberg-404966_960_720",
+            "tags":"ice, iceberg, antarctica, antarctic, arctic, polar, melting, ice caps"
+        },
+        {
+            "imageId":"iceberg-4499262_960_720",
+            "tags":"ice, iceberg, antarctica, antarctic, arctic, polar, melting, ice caps, boat"
+        },
+        {
+            "imageId":"iceland-2111811_960_720",
+            "tags":"ice, antarctica, antarctic, arctic, polar, auroras, northern lights, light"
+        },
+        {
+            "imageId":"industry-611668_960_720",
+            "tags":"pollution, factory, C02"
+        },
+        {
+            "imageId":"mountains-482689_960_720",
+            "tags":"ice, iceberg, antarctica, antarctic, arctic, polar, melting, ice caps, mountains"
+        },
+        {
+            "imageId":"wind-power-4380274_960_720",
+            "tags":"power, wind power, wind turbine, wind energy, energy, farm, renewable"
+        }
+    ]
+}

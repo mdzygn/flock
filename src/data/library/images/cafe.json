@@ -1,0 +1,58 @@
+{
+    "category": "cafe",
+    "tags": "cafe, coffee, esspresso",
+    "items": [
+        {
+            "imageId":"bar-984527_960_720",
+            "tags":"bar, community, social"
+        },
+        {
+            "imageId":"breakfast-1209223_960_720",
+            "tags":"table, breakfast, donut, community, social"
+        },
+        {
+            "imageId":"cafe-768771_960_720",
+            "tags":"community, social"
+        },
+        {
+            "imageId":"cafe-984275_960_720",
+            "tags":"community, social"
+        },
+        {
+            "imageId":"city-4298285_960_720",
+            "tags":"italy, street, public, community, social"
+        },
+        {
+            "imageId":"coffee-802057_960_720",
+            "tags":"machine"
+        },
+        {
+            "imageId":"coffee-918926_960_720"
+        },
+        {
+            "imageId":"coffee-983955_960_720"
+        },
+        {
+            "imageId":"coffee-984328_960_720"
+        },
+        {
+            "imageId":"coffee-1209897_960_720",
+            "tags":"breakfast, chocolate"
+        },
+        {
+            "imageId":"coffee-2714970_960_720",
+            "tags":"beans"
+        },
+        {
+            "imageId":"coffee-shop-1209863_960_720"
+        },
+        {
+            "imageId":"donuts-690281_960_720",
+            "tags":"bakery, donuts"
+        },
+        {
+            "imageId":"street-cafe-4472312_960_720",
+            "tags":"community, social, street"
+        }
+    ]
+}

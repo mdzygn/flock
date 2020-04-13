@@ -1,0 +1,38 @@
+{
+    "category": "gaming",
+    "tags": "gaming, games, game, activity",
+    "items": [
+        {
+            "imageId":"board-761586_960_720",
+            "tags":"board game"
+        },
+        {
+            "imageId":"chess-1215079_960_720",
+            "tags":"chess, board game"
+        },
+        {
+            "imageId":"computer-1845880_960_720",
+            "tags":"video game, computer game, console game, controller, tv, lounge"
+        },
+        {
+            "imageId":"doors-1587329_960_720",
+            "tags":"doors, puzzle, hall, hallway, door"
+        },
+        {
+            "imageId":"game-2294201_960_720",
+            "tags":"video game, computer game, console game, controller"
+        },
+        {
+            "imageId":"magic-cube-378543_960_720",
+            "tags":"magic, rubix cube, cube, puzzle"
+        },
+        {
+            "imageId":"maze-2264_960_720",
+            "tags":"maze, puzzle, adventure, lost"
+        },
+        {
+            "imageId":"tunnel-3233082_960_720",
+            "tags":"computer game, video game, tunnel, future, futuristic, space"
+        }
+    ]
+}

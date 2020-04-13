@@ -1,0 +1,42 @@
+{
+    "category": "fantasy",
+    "tags": "fantasy, fiction, dream",
+    "items": [
+        {
+            "imageId":"art-2436545_960_720",
+            "tags":"girl, child, bush, flowers, garden, red"
+        },
+        {
+            "imageId":"butterfly-2049567_960_720",
+            "tags":"butterflies, butterfly, mushroom, forest, blue"
+        },
+        {
+            "imageId":"fantasy-3452327_960_720",
+            "tags":"blue, girl, forest, dream, snow"
+        },
+        {
+            "imageId":"landscape-4961094_960_720",
+            "tags":"lightning, clouds, storm, road, highway"
+        },
+        {
+            "imageId":"ocean-3605547_960_720",
+            "tags":"ocean, stars, boat, navigation"
+        },
+        {
+            "imageId":"railroad-tracks-163518_960_720",
+            "tags":"railroad, mist, clouds, journey, grass"
+        },
+        {
+            "imageId":"science-fiction-1674554_960_720",
+            "tags":"sci-fi, science fiction, stars, nebula"
+        },
+        {
+            "imageId":"spaceship-3827558_960_720",
+            "tags":"sci-fi, science fiction, stars, space ship, craft, planet"
+        },
+        {
+            "imageId":"tree-4503535_960_720",
+            "tags":"tree, forest, woods"
+        }
+    ]
+}

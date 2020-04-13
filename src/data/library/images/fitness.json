@@ -1,0 +1,38 @@
+{
+    "category": "fitness",
+    "tags": "fitness, health, excercise, fit",
+    "items": [
+        {
+            "imageId":"crossfit-534615_960_720",
+            "tags":"gym, barbell, woman, lady, black"
+        },
+        {
+            "imageId":"fitness-594143_960_720",
+            "tags":"gym, barbell, dumbell, black"
+        },
+        {
+            "imageId":"fitness-1882721_960_720",
+            "tags":"gym, barbell, dumbell, black"
+        },
+        {
+            "imageId":"jogging-4211946_960_720",
+            "tags":"run, park, jog, jogging"
+        },
+        {
+            "imageId":"people-2592247_960_720",
+            "tags":"run, park, jog, jogging, girl, woman, lady"
+        },
+        {
+            "imageId":"surfing-1210040_960_720",
+            "tags":"surf, surfing, beach, girl, woman, lady"
+        },
+        {
+            "imageId":"wave-1246560_960_720",
+            "tags":"surf, surfing, wave"
+        },
+        {
+            "imageId":"yoga-1842292_960_720",
+            "tags":"yoga, beach"
+        }
+    ]
+}

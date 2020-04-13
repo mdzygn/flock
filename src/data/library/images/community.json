@@ -1,0 +1,50 @@
+{
+    "category": "community",
+    "tags": "community, social",
+    "items": [
+        {
+            "imageId":"children-1822701_960_720",
+            "tags":"children, fighting, light"
+        },
+        {
+            "imageId":"friendship-2366955_960_720",
+            "tags":"children, play, friends, activity, sport"
+        },
+        {
+            "imageId":"girls-462072_960_720",
+            "tags":"children, play, friends, girls, park"
+        },
+        {
+            "imageId":"hand-4661763_960_720",
+            "tags":"hand, friendship, assistance, help, support, light, hope"
+        },
+        {
+            "imageId":"meetings-1149198_960_720",
+            "tags":"meetings, coffee, business"
+        },
+        {
+            "imageId":"people-2567915_960_720",
+            "tags":"people, friends, family, friendship"
+        },
+        {
+            "imageId":"picnic-1208229_960_720",
+            "tags":"picnic, park"
+        },
+        {
+            "imageId":"restaurant-690975_960_720",
+            "tags":"cafe, friends, wine, restaurant"
+        },
+        {
+            "imageId":"team-386673_960_720",
+            "tags":"team, friends, friendship, sport, girls"
+        },
+        {
+            "imageId":"team-4529717_960_720",
+            "tags":"team, friends, friendship, family"
+        },
+        {
+            "imageId":"team-spirit-2447163_960_720",
+            "tags":"team, friends, friendship, support, family"
+        }
+    ]
+}

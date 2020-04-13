@@ -1,0 +1,26 @@
+{
+    "category": "automotive",
+    "tags": "automotive, car",
+    "items": [
+        {
+            "imageId":"bmw-918408_960_720",
+            "tags":"bmw"
+        },
+        {
+            "imageId":"car-604019_960_720",
+            "tags":"audi"
+        },
+        {
+            "imageId":"car-1149997_960_720",
+            "tags":"wheel, dash, dashboard, driving, windsheild"
+        },
+        {
+            "imageId":"car-3046424_960_720",
+            "tags":"wheel, vintage, classic, dash, windsheild"
+        },
+        {
+            "imageId":"cuba-1197800_960_720",
+            "tags":"vintage, classic, road, drive"
+        }
+    ]
+}

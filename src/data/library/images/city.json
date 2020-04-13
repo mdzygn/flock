@@ -1,0 +1,110 @@
+{
+    "category": "city",
+    "tags": "city, urban",
+    "items": [
+        {
+            "imageId":"abstract-21883_960_720",
+            "tags":"glass, reflection, abstract, gold, building"
+        },
+        {
+            "imageId":"adult-1867665_960_720",
+            "tags":"rain, new york, street, streets, umbrella"
+        },
+        {
+            "imageId":"alley-3453557_960_720",
+            "tags":"travel, street, ancient, architecture"
+        },
+        {
+            "imageId":"architecture-768432_960_720",
+            "tags":"architecture, building, glass, abstract"
+        },
+        {
+            "imageId":"architecture-1048092_960_720",
+            "tags":"architecture, building, glass, abstract"
+        },
+        {
+            "imageId":"architecture-1868667_960_720",
+            "tags":"night, lights, cityscape, skyline"
+        },
+        {
+            "imageId":"chicago-690364_960_720",
+            "tags":"chicago, cityscape, skyline"
+        },
+        {
+            "imageId":"city-569093_960_720",
+            "tags":"light, buildings"
+        },
+        {
+            "imageId":"city-647400_960_720",
+            "tags":"night, lights, cityscape, skyline"
+        },
+        {
+            "imageId":"city-1209105_960_720",
+            "tags":"lights, cityscape, futuristic, shanghai, skyline"
+        },
+        {
+            "imageId":"clouds-2517653_960_720",
+            "tags":"night, lights, cityscape, futuristic, fog, mist"
+        },
+        {
+            "imageId":"girl-1026246_960_720",
+            "tags":"street, busy, crossing, woman, lady"
+        },
+        {
+            "imageId":"hong-kong-1990268_960_720",
+            "tags":"street, lights, road, highway, cars"
+        },
+        {
+            "imageId":"kuala-lumpur-1820944_960_720",
+            "tags":"kuala lumpur, skyline, cityscape, night, lights"
+        },
+        {
+            "imageId":"manhattan-336708_960_720",
+            "tags":"skyline, black, manhattan, new york, NY"
+        },
+        {
+            "imageId":"manhattan-407703_960_720",
+            "tags":"skyline, manhattan, new york, NY"
+        },
+        {
+            "imageId":"new-york-668616_960_720",
+            "tags":"skyline, manhattan, new york, NY, ice"
+        },
+        {
+            "imageId":"new-york-690868_960_720",
+            "tags":"skyline, manhattan, new york, NY, lights"
+        },
+        {
+            "imageId":"paris-843229_960_720",
+            "tags":"paris, sunset, sunrise, cityscape, skyline"
+        },
+        {
+            "imageId":"road-4988448_960_720",
+            "tags":"road, highway, lights, night, cars"
+        },
+        {
+            "imageId":"singapore-river-255116_960_720",
+            "tags":"cityscape, skyline"
+        },
+        {
+            "imageId":"station-839208_960_720",
+            "tags":"station, sunset, transport"
+        },
+        {
+            "imageId":"taxi-238478_960_720",
+            "tags":"taxi, cab, new york, NY, street"
+        },
+        {
+            "imageId":"taxi-cab-381233_960_720",
+            "tags":"taxi, cab, new york, NY, street, buildings"
+        },
+        {
+            "imageId":"town-2430571_960_720",
+            "tags":"town, buildings"
+        },
+        {
+            "imageId":"urban-438393_960_720",
+            "tags":"social, community, street, shopping"
+        }
+    ]
+}

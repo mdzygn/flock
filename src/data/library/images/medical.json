@@ -1,0 +1,46 @@
+{
+    "category": "medical",
+    "tags": "medical, medicine, doctor",
+    "items": [
+        {
+            "imageId":"analysis-2030261_960_720",
+            "tags":"microscope, lab, science, test"
+        },
+        {
+            "imageId":"anesthesia-4677401_960_720",
+            "tags":"nurse, doctor, anesthesia, hospital"
+        },
+        {
+            "imageId":"bacteria-808158_960_720",
+            "tags":"bacteria, micro"
+        },
+        {
+            "imageId":"koli-bacteria-123081_960_720",
+            "tags":"bacteria, micro"
+        },
+        {
+            "imageId":"lab-217043_960_720",
+            "tags":"lab, science, test"
+        },
+        {
+            "imageId":"medic-563423_960_720",
+            "tags":"lab, science, test"
+        },
+        {
+            "imageId":"medications-257336_960_720",
+            "tags":"medication, drugs, pills"
+        },
+        {
+            "imageId":"medications-257346_960_720",
+            "tags":"medication, drugs, pills"
+        },
+        {
+            "imageId":"mite-67638_960_720",
+            "tags":"mite, micro"
+        },
+        {
+            "imageId":"stethoscope-840125_960_720",
+            "tags":"stethoscope, doctor, hospital, gp, drugs, medication, test"
+        }
+    ]
+}

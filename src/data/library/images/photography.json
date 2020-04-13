@@ -1,0 +1,77 @@
+{
+    "category": "photography",
+    "tags": "photography, photo, camera",
+    "items": [
+        {
+            "imageId":"blonde-629726_960_720",
+            "tags":"girl, lady, woman, female, lens"
+        },
+        {
+            "imageId":"camera-581126_960_720",
+            "tags":"lens"
+        },
+        {
+            "imageId":"camera-711025_960_720",
+            "tags":"vintage, classic, lens"
+        },
+        {
+            "imageId":"camera-711040_960_720",
+            "tags":"vintage, classic, black, lens"
+        },
+        {
+            "imageId":"camera-820018_960_720",
+            "tags":"lens"
+        },
+        {
+            "imageId":"camera-1239384_960_720",
+            "tags":"lens"
+        },
+        {
+            "imageId":"camera-1246655_960_720"
+        },
+        {
+            "imageId":"camera-2598507_960_720",
+            "tags":"lens"
+        },
+        {
+            "imageId":"filmstrip-1850277_960_720",
+            "tags":"film"
+        },
+        {
+            "imageId":"lens-1209823_960_720",
+            "tags":"scenic, lens"
+        },
+        {
+            "imageId":"lens-3046269_960_720",
+            "tags":"scenic, park, lens"
+        },
+        {
+            "imageId":"photo-camera-219958_960_720",
+            "tags":"vintage, classic, film, lens"
+        },
+        {
+            "imageId":"photographer-455747_960_720",
+            "tags":"lens"
+        },
+        {
+            "imageId":"photographer-3672010_960_720",
+            "tags":"photographer, travel"
+        },
+        {
+            "imageId":"photographers-1150033_960_720",
+            "tags":"photographer, travel"
+        },
+        {
+            "imageId":"photography-801891_960_720",
+            "tags":"photographer, event, smartphone"
+        },
+        {
+            "imageId":"photography-1850469_960_720",
+            "tags":"studio, lighting"
+        },
+        {
+            "imageId":"yashica-711794_960_720",
+            "tags":"lens, tint"
+        }
+    ]
+}

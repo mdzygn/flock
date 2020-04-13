@@ -1,0 +1,26 @@
+{
+    "category": "writing",
+    "tags": "writing",
+    "items": [
+        {
+            "imageId":"pencil-1891732_960_720",
+            "tags":"pencil, notebook"
+        },
+        {
+            "imageId":"typewriter-407695_960_720",
+            "tags":"typewriter"
+        },
+        {
+            "imageId":"typewriter-801921_960_720",
+            "tags":"typewriter, desk, literature, book"
+        },
+        {
+            "imageId":"typewriter-1248088_960_720",
+            "tags":"typewriter"
+        },
+        {
+            "imageId":"vintage-2168174_960_720",
+            "tags":"typewriter, desk, literature, book"
+        }
+    ]
+}

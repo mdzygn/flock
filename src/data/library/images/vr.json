@@ -1,0 +1,33 @@
+{
+    "category": "vr",
+    "tags": "vr, virtual reality, tech, technology",
+    "items": [
+        {
+            "imageId":"augmented-reality-1853592_960_720",
+            "tags":"girl, bike"
+        },
+        {
+            "imageId":"clouds-1845517_960_720",
+            "tags":"girl, bike, woman, lady"
+        },
+        {
+            "imageId":"engineer-4904945_960_720",
+            "tags":"game, gaming, collaboration"
+        },
+        {
+            "imageId":"people-2557494_960_720",
+            "tags":"vive, game, gaming"
+        },
+        {
+            "imageId":"virtual-reality-1898441_960_720",
+            "tags":"mist, outdoor"
+        },
+        {
+            "imageId":"virtual-reality-4995294_960_720",
+            "tags":"game, gaming, entertainment"
+        },
+        {
+            "imageId":"vr-3460451_960_720"
+        }
+    ]
+}

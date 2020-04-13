@@ -34,30 +34,34 @@ function handleFiles(err, files) {
 
             if (collectionItems) {
               collectionItems.forEach((item) => {
-                newItem = {};
+                if (!item.disabled) {
+                  newItem = {};
 
-                if (collectionCategory) {
-                  newItem.category = collectionCategory;
-                }
-                newItem.imageId = item.imageId;
+                  // if (collectionCategory) {
+                  //   newItem.category = collectionCategory;
+                  // }
 
-                newTags = item.tags || '';
-                if (collectionTags) {
-                  if (newTags) {
-                    newTags = collectionTags + ', ' + newTags;
-                  } else {
-                    newTags = collectionTags;
+                  newItem.imageId = item.imageId;
+
+                  newTags = item.tags || '';
+                  if (collectionTags) {
+                    if (newTags) {
+                      newTags = collectionTags + ', ' + newTags;
+                    } else {
+                      newTags = collectionTags;
+                    }
                   }
-                }
-                newItem.tags = newTags;
+                  newItem.tags = newTags;
 
-                outputData.push(newItem);
+                  outputData.push(newItem);
+                }
               });
             }
         }
     });
 
-    const outputJson = JSON.stringify(outputData, null, 2);
+    // const outputJson = JSON.stringify(outputData, null, 2);
+    const outputJson = JSON.stringify(outputData);
     fs.writeFile(path.join(__dirname, outputPath + outputFile), outputJson, function(err) {
       if (err) {
         throw('File save error: '+ err);

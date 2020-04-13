@@ -1,0 +1,54 @@
+{
+    "category": "space",
+    "tags": "space",
+    "items": [
+        {
+            "imageId":"astronomy-1850461_960_720",
+            "tags":"astronomy, stars, milky way, galaxy"
+        },
+        {
+            "imageId":"blood-moon-3572336_960_720",
+            "tags":"moon, red, night, blood, full moon"
+        },
+        {
+            "imageId":"earth-11014_960_720",
+            "tags":"earth, moon, planet"
+        },
+        {
+            "imageId":"eclipse-1492818_960_720",
+            "tags":"eclipse, sun, sci-fi"
+        },
+        {
+            "imageId":"galaxy-3608029_960_720",
+            "tags":"earth, planet, stars, galaxy, nebula"
+        },
+        {
+            "imageId":"lunar-eclipse-3568835_960_720",
+            "tags":"moon, eclipse"
+        },
+        {
+            "imageId":"moon-416973_960_720",
+            "tags":"moon, full moon"
+        },
+        {
+            "imageId":"moon-1031483_960_720",
+            "tags":"moon"
+        },
+        {
+            "imageId":"moon-1527501_960_720",
+            "tags":"moon"
+        },
+        {
+            "imageId":"orion-nebula-11107_960_720",
+            "tags":"nebula, stars, galaxy, orion"
+        },
+        {
+            "imageId":"satellite-1030779_960_720",
+            "tags":"earth, satellite, clouds, weather"
+        },
+        {
+            "imageId":"solar-system-11188_960_720",
+            "tags":"galaxy, stars, black hole, super nova"
+        }
+    ]
+}

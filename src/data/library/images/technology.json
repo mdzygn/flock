@@ -1,0 +1,86 @@
+{
+    "category": "technology",
+    "tags": "technology, tech",
+    "items": [
+        {
+            "imageId":"apple-1868496_960_720",
+            "tags":"computer, lamp, tabletop, desktop, desk, office, home, mac"
+        },
+        {
+            "imageId":"code-1839406_960_720",
+            "tags":"computer, code, software, programming"
+        },
+        {
+            "imageId":"coding-1853305_960_720",
+            "tags":"computer, code, software, programming, laptop"
+        },
+        {
+            "imageId":"computer-1245714_960_720",
+            "tags":"computer, code, software, programming, laptop, monitor, desk, desktop"
+        },
+        {
+            "imageId":"gears-1236578_960_720",
+            "tags":"gears, machine, cogs, mechanism, mechanical"
+        },
+        {
+            "imageId":"home-office-1867761_960_720",
+            "tags":"computer, tabletop, desktop, desk, office, home"
+        },
+        {
+            "imageId":"ipad-1126136_960_720",
+            "tags":"ipad, tablet, kids, children, school, education, learning, game, games, teaching"
+        },
+        {
+            "imageId":"jet-engine-371412_960_720",
+            "tags":"engine, engineering, jet, air, plane"
+        },
+        {
+            "imageId":"lamp-3489395_960_720",
+            "tags":"lamp, light, bulb, light bulb, ideas, electriciy, electric"
+        },
+        {
+            "imageId":"macro-1452987_960_720",
+            "tags":"watch, mechanism, cogs, gears"
+        },
+        {
+            "imageId":"man-1718099_960_720",
+            "tags":"man, guy, ipad, tablet, productivity, app, business"
+        },
+        {
+            "imageId":"notebook-405755_960_720",
+            "tags":"computer, laptop, outside, park"
+        },
+        {
+            "imageId":"notebook-614213_960_720",
+            "tags":"computer, laptop, business, coffee, app, schedule, planning, managment, meeting"
+        },
+        {
+            "imageId":"office-620822_960_720",
+            "tags":"computer, laptop, business, phone, mobile, device, app, schedule, planning, managment, meeting"
+        },
+        {
+            "imageId":"person-731479_960_720",
+            "tags":"computer, report, ipad, tablet, business, planning"
+        },
+        {
+            "imageId":"solar-panels-1794467_960_720",
+            "tags":"solar, power, energy, green"
+        },
+        {
+            "imageId":"technology-792180_960_720",
+            "tags":"ipad, tablet, app, coffee, design"
+        },
+        {
+            "imageId":"turntable-1109588_960_720",
+            "tags":"dj, music, laptop, desktop, mixing"
+        },
+        {
+            "imageId":"technology-792180_960_720",
+            "tags":"creative, creativity, design, app, planning, ideas, ideation, ux, app, software"
+        },
+        {
+            "imageId":"workplace-2303851_960_720",
+            "tags":"workspace, keyboard, headphones, tools, desk, desktop"
+        }
+    ]
+}

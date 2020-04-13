@@ -1,0 +1,34 @@
+{
+    "category": "people",
+    "tags": "people, person, human",
+    "items": [
+        {
+            "imageId":"eye-1132531_960_720",
+            "tags":"eye, girl, child, young, green, female"
+        },
+        {
+            "imageId":"eye-4559763_960_720",
+            "tags":"eye, girl, child, young, brown, female"
+        },
+        {
+            "imageId":"girl-2119595_960_720",
+            "tags":"eye, girl, child, young, green, female"
+        },
+        {
+            "imageId":"guy-2617866_960_720",
+            "tags":"man, guy, boy, sad, depressed, upset, stress, social, mental, health, hands"
+        },
+        {
+            "imageId":"people-2561053_960_720",
+            "tags":"friendship, relationship, sunset, happy, happiness"
+        },
+        {
+            "imageId":"people-2563491_960_720",
+            "tags":"girl, woman, lady, shy, face, eyes"
+        },
+        {
+            "imageId":"skin-3358873_960_720",
+            "tags":"old, skin, eye, wrinkled"
+        }
+    ]
+}

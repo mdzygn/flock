@@ -1,0 +1,51 @@
+{
+    "category": "scifi",
+    "tags": "scifi, sci-fi, science fiction",
+    "items": [
+        {
+            "imageId":"apocalypse-2273069_960_720",
+            "tags":"apocalypse, armageddon, fire, burn, post apocalypse, destruction, explosion"
+        },
+        {
+            "imageId":"apocalypse-2921093_960_720",
+            "tags":"apocalypse, city, burn, post apocalypse, zombie, destruction, nuclear"
+        },
+        {
+            "imageId":"apocalyptic-374208_960_720",
+            "tags":"apocalypse, armageddon, city, burn, post apocalypse, bomb, bombs, destruction, nuclear"
+        },
+        {
+            "imageId":"armageddon-2721568_960_720",
+            "tags":"apocalypse, armageddon, city, burn, post apocalypse, destruction, nuclear"
+        },
+        {
+            "imageId":"city-1420442_960_720",
+            "tags":"apocalypse, armageddon, city, burn, post apocalypse, destruction, nuclear"
+        },
+        {
+            "imageId":"city-2444516_960_720",
+            "tags":"apocalypse, armageddon, city, burn, post apocalypse, destruction, nuclear"
+        },
+        {
+            "imageId":"explosion-123690_960_720",
+            "tags":"apocalypse, armageddon, fire, burn, destruction, post apocalypse, explosion"
+        },
+        {
+            "imageId":"fireball-422746_960_720",
+            "tags":"apocalypse, armageddon, fire, burn, destruction, post apocalypse, explosion"
+        },
+        {
+            "imageId":"gas-mask-2935144_960_720",
+            "tags":"apocalypse, armageddon, gas-mask, destruction, poison, post apocalypse",
+            "disabled": true
+        },
+        {
+            "imageId":"render-3617341_960_720",
+            "tags":"apocalypse, armageddon, city, building, post apocalypse, destruction, futuristic, future"
+        },
+        {
+            "imageId":"train-1277167_960_720",
+            "tags":"train, destroyed, ruin, apocalypse, armageddon, post apocalypse, destruction, futuristic"
+        }
+    ]
+}

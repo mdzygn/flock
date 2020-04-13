@@ -1,0 +1,42 @@
+{
+    "category": "sea",
+    "tags": "sea, ocean",
+    "items": [
+        {
+            "imageId":"abstract-2384_960_720",
+            "tags":"waves, water, ripples, calm, beach, travel, relax"
+        },
+        {
+            "imageId":"beach-1867285_960_720",
+            "tags":"waves, sunset"
+        },
+        {
+            "imageId":"beach-2089936_960_720",
+            "tags":"waves, cliffs, shore"
+        },
+        {
+            "imageId":"california-1751455_960_720",
+            "tags":"waves, beach"
+        },
+        {
+            "imageId":"jellyfish-698521_960_720",
+            "tags":"marine, jellyfish, underwater, nature"
+        },
+        {
+            "imageId":"sea-79606_960_720",
+            "tags":"marine, diving, camera, nature, underwater"
+        },
+        {
+            "imageId":"sea-192988_960_720",
+            "tags":"beach, shore, rocks"
+        },
+        {
+            "imageId":"sea-1337565_960_720",
+            "tags":"beach, sand, starfish, shells, shore"
+        },
+        {
+            "imageId":"wave-3473335_960_720",
+            "tags":"waves"
+        }
+    ]
+}

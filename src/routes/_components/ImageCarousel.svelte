@@ -69,8 +69,8 @@
                     // if (itemI === 1) {
                     //     console.log('elementX', elementX, visible, element.isVisible, element.imageUrl);
                     // }
-                    if (imageItem.isVisible !== visible && imageItem.imageUrl) {
-                        imageItem.isVisible = visible;
+                    if (element.isVisible !== visible && imageItem.imageUrl) {
+                        element.isVisible = visible;
                         if (visible) {
                             element.style = 'visibility: visible; background-image: url(' + imageItem.imageUrl + ')';
                         } else {

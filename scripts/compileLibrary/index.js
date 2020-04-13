@@ -17,6 +17,8 @@ function handleFiles(err, files) {
 
     let filePath, file, data, newItem, collectionCategory, collectionTags, collectionItems, newTags;
 
+    const existingItems = {};
+
     files.forEach((fileName) => {
         if (fileName.match(jsonFilePattern) && fileName.indexOf('_') !== 0) {
             filePath = inputPath + fileName;
@@ -40,6 +42,11 @@ function handleFiles(err, files) {
                   // }
 
                   newItem.imageId = item.imageId;
+
+                  if (existingItems[item.imageId]) {
+                    console.warn('\x1b[31m', 'item with imageId ' + item.imageId + ' in ' + collectionCategory + ' already exists', '\x1b[0m');
+                  }
+                  existingItems[item.imageId] = newItem;
 
                   newTags = item.tags || '';
                   if (collectionTags) {

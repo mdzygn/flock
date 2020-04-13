@@ -1,4 +1,4 @@
-const invalidationTimeouts = {};
+const delayedTimeouts = {};
 
 export function generateId(length) {
     if (!length) {
@@ -285,13 +285,13 @@ export function validateUserName(username) {
 }
 
 
-export function invalidateTimeout(id, callback, delay) {
+export function delayedTimeout(id, callback, delay) {
     if (typeof window !== 'undefined') {
-        if (invalidationTimeouts[id]) {
-            window.clearTimeout(invalidationTimeouts[id]);
-            invalidationTimeouts[id] = null;
+        if (delayedTimeouts[id]) {
+            window.clearTimeout(delayedTimeouts[id]);
+            delayedTimeouts[id] = null;
         }
-        invalidationTimeouts[id] = window.setTimeout(() => {
+        delayedTimeouts[id] = window.setTimeout(() => {
             callback();
         }, delay);
     }

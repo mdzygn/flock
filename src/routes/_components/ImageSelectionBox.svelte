@@ -21,6 +21,8 @@
 
     export let image = null;
 
+    export let contextSearchString = '';
+
     let carouselShown = true;
     let imageLibrarySearchString = '';
 
@@ -72,6 +74,7 @@
             imageExtension="{config.headerImageExtension}"
             bind:image="{image}"
             searchString="{imageLibrarySearchString}"
+            {contextSearchString}
             on:select="{selectImage}" />
         <!-- <Button className="uploadButton" onClick="{uploadImage}" disabled="{true}">
             <div class="uploadButtonIcon" style="background-image: url({UploadImageIcon})"/>

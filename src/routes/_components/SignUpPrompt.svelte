@@ -5,7 +5,7 @@
 	import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    import { testInputDefocus, formatAsId, validateEmail, invalidateTimeout } from '../../utils';
+    import { testInputDefocus, formatAsId, validateEmail, delayedTimeout } from '../../utils';
 
     import { signUpFormValidated, newUsername } from '../../models/appModel';
 
@@ -46,7 +46,7 @@
 
         emailFlagInvalid = false;
 
-        invalidateTimeout('email', () => {
+        delayedTimeout('email', () => {
             emailFlagInvalid = $newUser.email && !emailValidated;
         }, config.INVALID_FIELD_DELAY);
     }

@@ -3,7 +3,7 @@
 
 	import config from '../../config';
 
-	import { testInputDefocus } from '../../utils';
+	import { testInputDefocus, delayedTimeout } from '../../utils';
 
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
@@ -26,6 +26,18 @@
 
 	let remainingChars;
 	$: charCountLow = remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
+
+	let contextSearchString = '';
+
+	$: {
+		updateContextString(title, description);
+	}
+
+	function updateContextString() {
+		delayedTimeout('updateContextString', () => {
+			contextSearchString = (title + ' ' + description).trim();
+		}, 300);
+	}
 
     // $: titleField && titleField.focus();
 
@@ -68,7 +80,7 @@
 			</div>
 			<div class="field headerImageField">
 				<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
-				<ImageSelectionBox bind:image />
+				<ImageSelectionBox bind:image {contextSearchString} />
 			</div>
 			<div class="actions">
 				<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewProject}" icon="{NextArrowIcon}">{locale.NEW_PROJECT.CONFIRM}</Button>

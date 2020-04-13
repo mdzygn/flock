@@ -14,6 +14,8 @@
 
     export let searchString = null;
 
+    export let contextSearchString = null;
+
     const MIN_X = -1000; // -200;
     const MAX_X = 800; // 1500; // 400;
 
@@ -30,12 +32,12 @@
 
     let filteredImages = null;
     $: {
-        updateFilteredImage(images, searchString);
+        updateFilteredImage(images, searchString, contextSearchString);
     }
 
-    function updateFilteredImage(images, searchString) {
+    function updateFilteredImage(images, searchString, contextSearchString) {
         // imageItems.length = 0;
-        filteredImages = filterItems(images, searchString);
+        filteredImages = filterItems(images, searchString, contextSearchString);
 
         for (let imageItem, element, itemI = 0; itemI < filteredImages.length; itemI++) {
             imageItem = filteredImages[itemI];
@@ -86,16 +88,20 @@
         dispatch('select', {thumbImage: imageBasePath + image + imageExtension});
     }
 
-    function filterItems(items, searchString) {
+    function filterItems(items, searchString, contextSearchString) {
         let filteredItems = [];
 
         if (searchString) {
-            searchString = searchString.toLowerCase();
+            searchString = searchString.toLowerCase().trim();
         }
 
-        if (!searchString) {
+        if (!searchString && !contextSearchString) {
             filteredItems = [...items];
         } else {
+            if (contextSearchString) {
+                items = contextFilterItems(items, contextSearchString);
+            }
+
             let index, item, curProject;
             for (index = 0; index < items.length; index++) {
                 item = items[index];
@@ -115,6 +121,41 @@
         return filteredItems;
     }
 
+    function contextFilterItems(items, contextSearchString) {
+        let filteredItems = [];
+
+        const fullSeparateWordContextSearchString = '\\b' + contextSearchString.split(' ').join('\\b|\\b') + '\\b';
+        const separateWordContextSearchString = contextSearchString.split(' ').join('|');
+
+        if (!contextSearchString) {
+            filteredItems = [...items];
+        } else {
+            let index, item, curProject;
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (itemRegexMatch(item, fullSeparateWordContextSearchString)) {
+                    filteredItems.push(item);
+                }
+            }
+
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (itemRegexMatch(item, separateWordContextSearchString) && !filteredItems.includes(item)) {
+                    filteredItems.push(item);
+                }
+            }
+
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (!filteredItems.includes(item)) {
+                    filteredItems.push(item);
+                }
+            }
+        }
+
+        return filteredItems;
+    }
+
     function itemSearchFullwordMatch(item, searchString) {
         if (item.tags.match(new RegExp('\\b' + searchString + '\\b', 'i'))) {
             return true;
@@ -124,6 +165,13 @@
 
     function itemSearchMatch(item, searchString) {
         if (item.tags.toLowerCase().includes(searchString)) return true;
+        return false;
+    }
+
+    function itemRegexMatch(item, searchString) {
+        if (item.tags.match(new RegExp(searchString, 'i'))) {
+            return true;
+        }
         return false;
     }
 </script>

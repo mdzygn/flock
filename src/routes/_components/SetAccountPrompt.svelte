@@ -5,7 +5,7 @@
 	import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    import { testInputDefocus, formatAsId, validateUserName, invalidateTimeout } from '../../utils';
+    import { testInputDefocus, formatAsId, validateUserName, delayedTimeout } from '../../utils';
 
     import {
         setAccountFormValidated,
@@ -59,7 +59,7 @@
 
         passwordInvalid = false;
 
-        invalidateTimeout('pass', () => {
+        delayedTimeout('pass', () => {
             passwordInvalid = pass && passRepeat && !passValidated;
         }, config.INVALID_FIELD_DELAY);
     }
@@ -74,7 +74,7 @@
         usernameFlagTooShort = false;
         usernameFlagTooLong = false;
 
-        invalidateTimeout('username', () => {
+        delayedTimeout('username', () => {
             usernameFlagInvalid = username && !usernameValidated;
             usernameFlagTooShort = username && usernameTooShort;
             usernameFlagTooLong = username && usernameTooLong;

@@ -14,9 +14,9 @@
 
     import UploadImageIcon from "../../assets/icons/upload_image.png";
 
-    import headerImageLibrary from '../../data/headerImageLibrary.json';
+    import imageLibrary from '../../data/library/images/general.json';
 
-    const libraryImages = shuffle(headerImageLibrary);
+    const libraryImages = shuffle(imageLibrary);
 
     export let image = null;
 
@@ -35,7 +35,7 @@
 
     let imageSrc = null;
     $: {
-        imageSrc = (image && (config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
+        imageSrc = (image && (config.contentUrl + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
     }
 
     function toggleCarousel() {
@@ -49,7 +49,7 @@
         imageSrc = event.detail.thumbImage; // force thumb to load in image first
 
         await tick(); // then reupdate with current image
-        imageSrc = (image && (config.headerImageLibraryFolder + image + config.headerImageExtension)) || null; //TODO: find better way
+        imageSrc = (image && (config.contentUrl + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null; //TODO: find better way
 
         await tick();
         toggleCarousel();
@@ -67,7 +67,7 @@
         <SearchBar bind:searchString={imageLibrarySearchString} />
         <ImageCarousel
             images="{libraryImages}"
-            imageBasePath="{config.headerImageLibraryThumbFolder}"
+            imageBasePath="{config.contentUrl + config.headerImageLibraryThumbFolder}"
             imageExtension="{config.headerImageExtension}"
             bind:image="{image}"
             searchString="{imageLibrarySearchString}"

@@ -102,7 +102,7 @@
 	}
 
 	function getProjectDetailImage(imageId) {
-		return config.headerImageLibraryFolder + imageId + config.headerImageExtension;
+		return config.contentUrl + config.headerImageLibraryFolder + imageId + config.headerImageExtension;
 	}
 
 	// let proxyChannelsImage;

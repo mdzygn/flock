@@ -3,12 +3,14 @@ export const DEBUG = (process.env.NODE_ENV === 'development');
 export const MAIN_USER = 'sl3p5oms';
 export const GENERAL_USER = 'bl20a8lm';
 
+export const contentUrl = 'https://flock-hub-dev.s3-us-west-2.amazonaws.com/';
+
 export const contentFolder = 'content/';
 export const projectContentFolder = 'content/projects/';
 export const projectHeaderImage = 'header.jpg';
 
-export const headerImageLibraryFolder = 'content/library/headers/';
-export const headerImageLibraryThumbFolder = 'content/library/headers/thumbs/';
+export const headerImageLibraryFolder = 'library/images/';
+export const headerImageLibraryThumbFolder = 'library/images/thumbs/';
 export const headerImageExtension = '.jpg';
 
 export const MAX_ID_LENGTH = 12;
@@ -29,6 +31,8 @@ export default {
 
     MAIN_USER,
     GENERAL_USER,
+
+    contentUrl,
 
     contentFolder,
     projectContentFolder,

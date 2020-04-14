@@ -80,7 +80,8 @@ export function filterItemsBySearch(items, options) {
         fullWordSearchExpression,
         generalisedFullWordSearchExpression,
         searchExpression,
-        generalisedSearchExpression
+        generalisedSearchExpression,
+        appendAllOtherItems,
     } = options;
 
     if (!searchString) {
@@ -131,6 +132,15 @@ export function filterItemsBySearch(items, options) {
             for (index = 0; index < items.length; index++) {
                 item = items[index];
                 if (itemSearchMatch(item, generalisedSearchExpression) && !filteredItems.includes(item)) {
+                    filteredItems.push(item);
+                }
+            }
+        }
+
+        if (appendAllOtherItems) {
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (!filteredItems.includes(item)) {
                     filteredItems.push(item);
                 }
             }

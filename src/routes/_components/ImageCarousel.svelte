@@ -123,46 +123,55 @@
             generalisedContextSearchExpression = getOrWordsExpression(generalisedContextSearchString);
         }
 
-        if (!contextSearchString) {
-            filteredItems = [...items];
-        } else {
-            let index, item, curProject;
+        filteredItems = filterItemsBySearch(items, {
+            searchString: contextSearchString,
+            fullWordSearchExpression: fullWordContextSearchExpression,
+            generalisedFullWordSearchExpression: generalisedFullWordContextSearchExpression,
+            searchExpression: contextSearchExpression,
+            generalisedSearchExpression: generalisedContextSearchExpression,
+            appendAllOtherItems: true,
+        });
 
-            for (index = 0; index < items.length; index++) {
-                item = items[index];
-                if (itemRegexMatch(item, fullWordContextSearchExpression)) {
-                    filteredItems.push(item);
-                }
-            }
+        // if (!contextSearchString) {
+        //     filteredItems = [...items];
+        // } else {
+        //     let index, item;
 
-            for (index = 0; index < items.length; index++) {
-                item = items[index];
-                if (itemRegexMatch(item, generalisedFullWordContextSearchExpression) && !filteredItems.includes(item)) {
-                    filteredItems.push(item);
-                }
-            }
+        //     for (index = 0; index < items.length; index++) {
+        //         item = items[index];
+        //         if (itemRegexMatch(item, fullWordContextSearchExpression)) {
+        //             filteredItems.push(item);
+        //         }
+        //     }
 
-            for (index = 0; index < items.length; index++) {
-                item = items[index];
-                if (itemRegexMatch(item, contextSearchExpression) && !filteredItems.includes(item)) {
-                    filteredItems.push(item);
-                }
-            }
+        //     for (index = 0; index < items.length; index++) {
+        //         item = items[index];
+        //         if (itemRegexMatch(item, generalisedFullWordContextSearchExpression) && !filteredItems.includes(item)) {
+        //             filteredItems.push(item);
+        //         }
+        //     }
 
-            for (index = 0; index < items.length; index++) {
-                item = items[index];
-                if (itemRegexMatch(item, generalisedContextSearchExpression) && !filteredItems.includes(item)) {
-                    filteredItems.push(item);
-                }
-            }
+        //     for (index = 0; index < items.length; index++) {
+        //         item = items[index];
+        //         if (itemRegexMatch(item, contextSearchExpression) && !filteredItems.includes(item)) {
+        //             filteredItems.push(item);
+        //         }
+        //     }
 
-            for (index = 0; index < items.length; index++) {
-                item = items[index];
-                if (!filteredItems.includes(item)) {
-                    filteredItems.push(item);
-                }
-            }
-        }
+        //     for (index = 0; index < items.length; index++) {
+        //         item = items[index];
+        //         if (itemRegexMatch(item, generalisedContextSearchExpression) && !filteredItems.includes(item)) {
+        //             filteredItems.push(item);
+        //         }
+        //     }
+
+        //     for (index = 0; index < items.length; index++) {
+        //         item = items[index];
+        //         if (!filteredItems.includes(item)) {
+        //             filteredItems.push(item);
+        //         }
+        //     }
+        // }
 
         return filteredItems;
     }

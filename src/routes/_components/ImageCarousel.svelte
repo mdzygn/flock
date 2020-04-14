@@ -5,7 +5,7 @@
     import { onMount, tick } from 'svelte';
     import Button from '../../components/Button.svelte';
 
-    import { removeCommonWordSuffixes, getOrWordsExpression, getAndWordsExpression } from '../../utils';
+    import { removeStopWords, removeCommonWordSuffixes, getOrWordsExpression, getAndWordsExpression } from '../../utils';
 
     export let images = null;
 
@@ -114,6 +114,7 @@
 
         if (contextSearchString) {
             contextSearchString = contextSearchString.toLowerCase().trim();
+            contextSearchString = removeStopWords(contextSearchString);
             contextSearchString = contextSearchString.replace(/\s+/g, ' ');
 
             generalisedContextSearchString = removeCommonWordSuffixes(contextSearchString);
@@ -190,6 +191,7 @@
 
         if (searchString) {
             searchString = searchString.toLowerCase().trim();
+            searchString = removeStopWords(searchString);
             searchString = searchString.replace(/\s+/g, ' ');
 
             generalisedSearchString = removeCommonWordSuffixes(searchString);

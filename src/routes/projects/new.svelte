@@ -36,7 +36,7 @@
 	function updateContextString() {
 		delayedTimeout('updateContextString', () => {
 			contextSearchString = (title + ' ' + description).trim();
-		}, 300);
+		}, config.UPDATE_CONTEXT_STRING_DELAY);
 	}
 
     // $: titleField && titleField.focus();

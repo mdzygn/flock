@@ -1,16 +1,27 @@
 const delayedTimeouts = {};
 
-const commonWordPluralSuffixes = 'ers, ors, ies, es, s';
 const commonWordNounSuffixes = 'acy, cy, al, ance, ence, dom, ery, ry, er, eer, or, ism, izm, ist, ity, ty, ment, ent, ant, ness, ship, sion, tion, age, th';
 const commonWordVerbSuffixes = 'ate, ten, en, ted, ed, ify, fy, ise, ize, ing';
 const commonWordAdverbSuffixes = 'ward, wards, wise, ly';
 const commonWordAdjectiveSuffixes = 'able, ible, al, esque, est, ful, ical, ic, ious, ous, ish, ive, y'; // do not include less as means opposite
 const commonWordMiscSuffixes = 'ur'; // colour, behaviour
-const commonWordSuffixes = commonWordPluralSuffixes + ', ' + commonWordNounSuffixes + ', ' + commonWordVerbSuffixes + ', ' + commonWordAdverbSuffixes + ', ' + commonWordAdjectiveSuffixes + ', ' + commonWordMiscSuffixes;
+const commonWordPluralSuffixes = 'ers, ors, ies, es, s';
+const commonWordSuffixes = sortStringItemsByLength(commonWordNounSuffixes + ', ' + commonWordVerbSuffixes + ', ' + commonWordAdverbSuffixes + ', ' + commonWordAdjectiveSuffixes + ', ' + commonWordMiscSuffixes + ', ' + commonWordPluralSuffixes);
 
 const commonWordSuffixesExpression = '(\\w{3,})(' + commonWordSuffixes.split(', ').join(')\\b|(\\w{3,})(') + ')\\b';
 // const commonWordSuffixesRegex = new RegExp('(\\w{3,})' + commonWordSuffixes.split(', ').join('\\b|(\\w{3,})') + '\\b', 'ig');
 // const commonWordSuffixesRegex = new RegExp('\\B' + commonWordSuffixes.split(', ').join('\\b|\\B') + '\\b', 'ig');
+
+const stopWords = 'i, me, my, myself, we, our, ours, ourselves, you, your, yours, yourself, yourselves, he, him, his, himself, she, her, hers, herself, it, its, itself, they, them, their, theirs, themselves, what, which, who, whom, this, that, these, those, am, is, are, was, were, be, been, being, have, has, had, having, do, does, did, doing, a, an, the, and, but, if, or, because, as, until, while, of, at, by, for, with, about, against, between, into, through, during, before, after, above, below, to, from, up, down, in, out, on, off, over, under, again, further, then, once, here, there, when, where, why, how, all, any, both, each, few, more, most, other, some, such, no, nor, not, only, own, same, so, than, too, very, s, t, can, will, just, don, should, now';
+const stopWordsExpression = new RegExp('\\b' + stopWords.split(', ').join('\\b|\\b') + '\\b', 'ig');
+
+function sortStringItemsByLength(string) {
+    const items = string.split(', ');
+    items.sort(function(a, b){
+        return b.length - a.length;
+    });
+    return items.join(', ');
+}
 
 export function generateId(length) {
     if (!length) {
@@ -361,4 +372,8 @@ export function getAndWordsExpression(string, requireFullWords) {
         // (?=.*\bmeat\b)(?=.*\bpasta\b)(?=.*\bdinner\b).+
     }
     return new RegExp(string, 'ig');
+}
+
+export function removeStopWords(string) {
+    return string.replace(stopWordsExpression, '');
 }

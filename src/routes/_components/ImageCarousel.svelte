@@ -5,7 +5,7 @@
     import { onMount, tick } from 'svelte';
     import Button from '../../components/Button.svelte';
 
-    import { removeStopWords, removeCommonWordSuffixes, getOrWordsExpression, getAndWordsExpression } from '../../utils';
+    import { getSearchString, removeCommonWordSuffixes, getOrWordsExpression, getAndWordsExpression } from '../../utils';
 
     export let images = null;
 
@@ -113,9 +113,7 @@
         let generalisedContextSearchString;
 
         if (contextSearchString) {
-            contextSearchString = contextSearchString.toLowerCase().trim();
-            contextSearchString = removeStopWords(contextSearchString);
-            contextSearchString = contextSearchString.replace(/\s+/g, ' ');
+            contextSearchString = getSearchString(contextSearchString);
 
             generalisedContextSearchString = removeCommonWordSuffixes(contextSearchString);
 
@@ -123,16 +121,6 @@
             generalisedFullWordContextSearchExpression = getOrWordsExpression(generalisedContextSearchString, true);
             contextSearchExpression = getOrWordsExpression(contextSearchString);
             generalisedContextSearchExpression = getOrWordsExpression(generalisedContextSearchString);
-
-            // separateFullWordContextSearchExpression = '\\b' + contextSearchString.split(' ').join('\\b|\\b') + '\\b';
-            // separateFullWordContextSearchExpression = new RegExp(separateFullWordContextSearchExpression, 'i');
-
-            // separateWordContextSearchExpression = removeCommonWordSuffixes(contextSearchString);
-            // separateWordContextSearchExpression = separateWordContextSearchExpression.split(' ').join('|');
-            // separateWordContextSearchExpression = new RegExp(separateWordContextSearchExpression, 'i');
-
-            // console.log('separateFullWordContextSearchExpression', separateFullWordContextSearchExpression);
-            // console.log('separateWordContextSearchExpression', separateWordContextSearchExpression);
         }
 
         if (!contextSearchString) {
@@ -190,9 +178,7 @@
         let generalisedSearchString;
 
         if (searchString) {
-            searchString = searchString.toLowerCase().trim();
-            searchString = removeStopWords(searchString);
-            searchString = searchString.replace(/\s+/g, ' ');
+            searchString = getSearchString(searchString);
 
             generalisedSearchString = removeCommonWordSuffixes(searchString);
 

@@ -1,6 +1,6 @@
 const delayedTimeouts = {};
 
-const commonWordNounSuffixes = 'acy, cy, al, ance, ence, dom, ery, ry, er, eer, or, ism, izm, ist, ity, ty, ment, ent, ant, ness, ship, sion, tion, age, th';
+const commonWordNounSuffixes = 'acy, cy, al, ance, ence, dom, ery, ry, er, eer, or, ism, izm, ist, ity, ty, ment, ent, ant, iness, ness, ship, sion, tion, age, th';
 const commonWordVerbSuffixes = 'ate, ten, en, ted, ed, ify, fy, ise, ize, ing';
 const commonWordAdverbSuffixes = 'ward, wards, wise, ly';
 const commonWordAdjectiveSuffixes = 'able, ible, al, esque, est, ful, ical, ic, ious, ous, ish, ive, y'; // do not include less as means opposite
@@ -376,4 +376,11 @@ export function getAndWordsExpression(string, requireFullWords) {
 
 export function removeStopWords(string) {
     return string.replace(stopWordsExpression, '');
+}
+
+export function getSearchString(string) {
+    string = string.toLowerCase().trim();
+    string = removeStopWords(string);
+    string = string.replace(/\s+/g, ' ');
+    return string;
 }

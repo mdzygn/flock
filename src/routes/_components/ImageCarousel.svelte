@@ -105,17 +105,23 @@
     function contextFilterItems(items, contextSearchString) {
         let filteredItems = [];
 
-        let separateFullWordContextSearchExpression = null;
-        let separateWordContextSearchExpression = null;
+        let fullWordContextSearchExpression = null;
+        let generalisedFullWordContextSearchExpression = null;
+        let contextSearchExpression = null;
+        let generalisedContextSearchExpression = null;
+
+        let generalisedContextSearchString;
 
         if (contextSearchString) {
             contextSearchString = contextSearchString.toLowerCase().trim();
             contextSearchString = contextSearchString.replace(/\s+/g, ' ');
 
-            separateFullWordContextSearchExpression = getOrWordsExpression(contextSearchString, true);
+            generalisedContextSearchString = removeCommonWordSuffixes(contextSearchString);
 
-            separateWordContextSearchExpression = removeCommonWordSuffixes(contextSearchString);
-            separateWordContextSearchExpression = getOrWordsExpression(separateWordContextSearchExpression);
+            fullWordContextSearchExpression = getOrWordsExpression(contextSearchString, true);
+            generalisedFullWordContextSearchExpression = getOrWordsExpression(generalisedContextSearchString, true);
+            contextSearchExpression = getOrWordsExpression(contextSearchString);
+            generalisedContextSearchExpression = getOrWordsExpression(generalisedContextSearchString);
 
             // separateFullWordContextSearchExpression = '\\b' + contextSearchString.split(' ').join('\\b|\\b') + '\\b';
             // separateFullWordContextSearchExpression = new RegExp(separateFullWordContextSearchExpression, 'i');
@@ -132,16 +138,31 @@
             filteredItems = [...items];
         } else {
             let index, item, curProject;
+
             for (index = 0; index < items.length; index++) {
                 item = items[index];
-                if (itemRegexMatch(item, separateFullWordContextSearchExpression)) {
+                if (itemRegexMatch(item, fullWordContextSearchExpression)) {
                     filteredItems.push(item);
                 }
             }
 
             for (index = 0; index < items.length; index++) {
                 item = items[index];
-                if (itemRegexMatch(item, separateWordContextSearchExpression) && !filteredItems.includes(item)) {
+                if (itemRegexMatch(item, generalisedFullWordContextSearchExpression) && !filteredItems.includes(item)) {
+                    filteredItems.push(item);
+                }
+            }
+
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (itemRegexMatch(item, contextSearchExpression) && !filteredItems.includes(item)) {
+                    filteredItems.push(item);
+                }
+            }
+
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (itemRegexMatch(item, generalisedContextSearchExpression) && !filteredItems.includes(item)) {
                     filteredItems.push(item);
                 }
             }

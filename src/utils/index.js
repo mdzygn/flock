@@ -1,9 +1,9 @@
 const delayedTimeouts = {};
 
-const commonWordPluralSuffixes = 'ies, es, s';
+const commonWordPluralSuffixes = 'ers, ors, ies, es, s';
 const commonWordNounSuffixes = 'acy, cy, al, ance, ence, dom, ery, ry, er, eer, or, ism, izm, ist, ity, ty, ment, ent, ant, ness, ship, sion, tion, age, th';
 const commonWordVerbSuffixes = 'ate, ten, en, ted, ed, ify, fy, ise, ize, ing';
-const commonWordAdverbSuffixes = 'ward, wise, ly';
+const commonWordAdverbSuffixes = 'ward, wards, wise, ly';
 const commonWordAdjectiveSuffixes = 'able, ible, al, esque, ful, ical, ic, ious, ous, ish, ive, y'; // do not include less as means opposite
 const commonWordMiscSuffixes = 'ur'; // colour, behaviour
 const commonWordSuffixes = commonWordPluralSuffixes + ', ' + commonWordNounSuffixes + ', ' + commonWordVerbSuffixes + ', ' + commonWordAdverbSuffixes + ', ' + commonWordAdjectiveSuffixes + ', ' + commonWordMiscSuffixes;

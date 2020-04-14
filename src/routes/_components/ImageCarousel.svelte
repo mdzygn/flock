@@ -5,7 +5,7 @@
     import { onMount, tick } from 'svelte';
     import Button from '../../components/Button.svelte';
 
-    import { getSearchString, removeCommonWordSuffixes, getOrWordsExpression, getAndWordsExpression } from '../../utils';
+    import { getSearchString, removeCommonWordSuffixes, getOrWordsExpression, getAndWordsExpression } from '../../utils/searchUtils';
 
     export let images = null;
 

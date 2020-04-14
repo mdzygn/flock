@@ -182,37 +182,47 @@
         let filteredItems = [];
 
         let fullWordSearchExpression = null;
+        let generalisedFullWordSearchExpression = null;
         let searchExpression = null;
+        let generalisedSearchExpression = null;
+
+        let generalisedSearchString;
 
         if (searchString) {
             searchString = searchString.toLowerCase().trim();
             searchString = searchString.replace(/\s+/g, ' ');
 
-            // fullWordSearchExpression = '\\b' + searchString + '\\b';
-            // fullWordSearchExpression = new RegExp(fullWordSearchExpression, 'i');
+            generalisedSearchString = removeCommonWordSuffixes(searchString);
 
             const splitWords = searchString.split(' ');
             if (splitWords.length > 1) {
                 fullWordSearchExpression = getAndWordsExpression(searchString, true);
-                searchString = removeCommonWordSuffixes(searchString);
+                generalisedFullWordSearchExpression = getAndWordsExpression(generalisedSearchString, true);
                 searchExpression = getAndWordsExpression(searchString);
+                generalisedSearchExpression = getAndWordsExpression(generalisedSearchString);
             } else {
-                fullWordSearchExpression = '\\b' + searchString + '\\b';
-                searchString = removeCommonWordSuffixes(searchString);
+                fullWordSearchExpression = new RegExp('\\b' + searchString + '\\b', 'i');
+                generalisedFullWordSearchExpression = new RegExp('\\b' + generalisedSearchString + '\\b', 'i');
+                searchExpression = searchString;
+                generalisedSearchExpression = generalisedSearchString;
             }
-
-            // console.log('fullWordSearchExpression', fullWordSearchExpression);
-            // console.log('searchExpression', searchExpression ? searchExpression : searchString);
         }
 
         if (!searchString) {
             filteredItems = [...items];
         } else {
             let index, item, curProject;
+
             for (index = 0; index < items.length; index++) {
                 item = items[index];
-                // if (itemSearchFullwordMatch(item, searchString)) {
                 if (itemRegexMatch(item, fullWordSearchExpression)) {
+                    filteredItems.push(item);
+                }
+            }
+
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (itemRegexMatch(item, generalisedFullWordSearchExpression) && !filteredItems.includes(item)) {
                     filteredItems.push(item);
                 }
             }
@@ -224,10 +234,22 @@
                         filteredItems.push(item);
                     }
                 }
+                for (index = 0; index < items.length; index++) {
+                    item = items[index];
+                    if (itemRegexMatch(item, generalisedSearchExpression) && !filteredItems.includes(item)) {
+                        filteredItems.push(item);
+                    }
+                }
             } else {
                 for (index = 0; index < items.length; index++) {
                     item = items[index];
                     if (itemSearchMatch(item, searchString) && !filteredItems.includes(item)) {
+                        filteredItems.push(item);
+                    }
+                }
+                for (index = 0; index < items.length; index++) {
+                    item = items[index];
+                    if (itemSearchMatch(item, generalisedSearchString) && !filteredItems.includes(item)) {
                         filteredItems.push(item);
                     }
                 }

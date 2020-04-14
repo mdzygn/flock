@@ -350,7 +350,7 @@ export function getOrWordsExpression(string, requireFullWords) {
     } else {
         string = string.split(' ').join('|');
     }
-    return new RegExp(string, 'ig');
+    return new RegExp(string, 'i');
 }
 
 export function getAndWordsExpression(string, requireFullWords) {

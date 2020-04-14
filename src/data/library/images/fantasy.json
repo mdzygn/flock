@@ -1,6 +1,6 @@
 {
     "category": "fantasy",
-    "tags": "fantasy, fiction, dream",
+    "tags": "fantasy, fiction",
     "items": [
         {
             "imageId":"art-2436545_960_720",
@@ -12,7 +12,7 @@
         },
         {
             "imageId":"fantasy-3452327_960_720",
-            "tags":"blue, girl, forest, dream, snow"
+            "tags":"blue, girl, forest, snow"
         },
         {
             "imageId":"landscape-4961094_960_720",
@@ -24,7 +24,7 @@
         },
         {
             "imageId":"railroad-tracks-163518_960_720",
-            "tags":"railroad, mist, clouds, journey, grass"
+            "tags":"railroad, rail, railway, train, mist, clouds, journey, grass, dream"
         },
         {
             "imageId":"science-fiction-1674554_960_720",

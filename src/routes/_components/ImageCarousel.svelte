@@ -5,7 +5,7 @@
     import { onMount, tick } from 'svelte';
     import Button from '../../components/Button.svelte';
 
-    import { filterItemsBySearch, getSearchString, removeCommonWordSuffixes, getOrWordsExpression, getAndWordsExpression } from '../../utils/searchUtils';
+    import { contextFilterItems, filterItems } from '../../utils/searchUtils';
 
     export let images = null;
 
@@ -98,79 +98,6 @@
     function selectImage(targetImage) {
         image = targetImage.imageId;
         dispatch('select', {thumbImage: imageBasePath + image + imageExtension});
-    }
-
-    function contextFilterItems(items, contextSearchString) {
-        let filteredItems = [];
-
-        let fullWordContextSearchExpression = null;
-        let generalisedFullWordContextSearchExpression = null;
-        let contextSearchExpression = null;
-        let generalisedContextSearchExpression = null;
-
-        let generalisedContextSearchString;
-
-        if (contextSearchString) {
-            contextSearchString = getSearchString(contextSearchString);
-
-            generalisedContextSearchString = removeCommonWordSuffixes(contextSearchString);
-
-            fullWordContextSearchExpression = getOrWordsExpression(contextSearchString, true);
-            generalisedFullWordContextSearchExpression = getOrWordsExpression(generalisedContextSearchString, true);
-            contextSearchExpression = getOrWordsExpression(contextSearchString);
-            generalisedContextSearchExpression = getOrWordsExpression(generalisedContextSearchString);
-        }
-
-        filteredItems = filterItemsBySearch(items, {
-            searchString: contextSearchString,
-            fullWordSearchExpression: fullWordContextSearchExpression,
-            generalisedFullWordSearchExpression: generalisedFullWordContextSearchExpression,
-            searchExpression: contextSearchExpression,
-            generalisedSearchExpression: generalisedContextSearchExpression,
-            appendAllOtherItems: true,
-        });
-
-        return filteredItems;
-    }
-
-    function filterItems(items, searchString) {
-        let filteredItems = [];
-
-        let fullWordSearchExpression = null;
-        let generalisedFullWordSearchExpression = null;
-        let searchExpression = null;
-        let generalisedSearchExpression = null;
-
-        let generalisedSearchString;
-
-        if (searchString) {
-            searchString = getSearchString(searchString);
-
-            generalisedSearchString = removeCommonWordSuffixes(searchString);
-
-            const splitWords = searchString.split(' ');
-            if (splitWords.length > 1) {
-                fullWordSearchExpression = getAndWordsExpression(searchString, true);
-                generalisedFullWordSearchExpression = getAndWordsExpression(generalisedSearchString, true);
-                searchExpression = getAndWordsExpression(searchString);
-                generalisedSearchExpression = getAndWordsExpression(generalisedSearchString);
-            } else {
-                fullWordSearchExpression = new RegExp('\\b' + searchString + '\\b', 'i');
-                generalisedFullWordSearchExpression = new RegExp('\\b' + generalisedSearchString + '\\b', 'i');
-                searchExpression = searchString;
-                generalisedSearchExpression = generalisedSearchString;
-            }
-        }
-
-        filteredItems = filterItemsBySearch(items, {
-            searchString,
-            fullWordSearchExpression,
-            generalisedFullWordSearchExpression,
-            searchExpression,
-            generalisedSearchExpression,
-        });
-
-        return filteredItems;
     }
 </script>
 

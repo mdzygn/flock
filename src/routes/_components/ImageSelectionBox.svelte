@@ -55,7 +55,7 @@
         imageSrc = (image && (config.contentUrl + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null; //TODO: find better way
 
         await tick();
-        toggleCarousel();
+        carouselShown = false;
     }
 
     function uploadImage() {

@@ -110,7 +110,7 @@
 
         if (contextSearchString) {
             contextSearchString = contextSearchString.toLowerCase().trim();
-            contextSearchString = contextSearchString.replace(/\s+/, ' ');
+            contextSearchString = contextSearchString.replace(/\s+/g, ' ');
 
             separateFullWordContextSearchExpression = getOrWordsExpression(contextSearchString, true);
 

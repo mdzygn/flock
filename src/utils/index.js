@@ -4,12 +4,13 @@ const commonWordPluralSuffixes = 'ers, ors, ies, es, s';
 const commonWordNounSuffixes = 'acy, cy, al, ance, ence, dom, ery, ry, er, eer, or, ism, izm, ist, ity, ty, ment, ent, ant, ness, ship, sion, tion, age, th';
 const commonWordVerbSuffixes = 'ate, ten, en, ted, ed, ify, fy, ise, ize, ing';
 const commonWordAdverbSuffixes = 'ward, wards, wise, ly';
-const commonWordAdjectiveSuffixes = 'able, ible, al, esque, ful, ical, ic, ious, ous, ish, ive, y'; // do not include less as means opposite
+const commonWordAdjectiveSuffixes = 'able, ible, al, esque, est, ful, ical, ic, ious, ous, ish, ive, y'; // do not include less as means opposite
 const commonWordMiscSuffixes = 'ur'; // colour, behaviour
 const commonWordSuffixes = commonWordPluralSuffixes + ', ' + commonWordNounSuffixes + ', ' + commonWordVerbSuffixes + ', ' + commonWordAdverbSuffixes + ', ' + commonWordAdjectiveSuffixes + ', ' + commonWordMiscSuffixes;
-// const commonWordSuffixes = 'es, s, ism, izm, ur, ing, ist, ten, er, or, al, ed';
 
-const commonWordSuffixesRegex = new RegExp('\\B' + commonWordSuffixes.split(', ').join('\\b|\\B') + '\\b', 'ig');
+const commonWordSuffixesExpression = '(\\w{3,})(' + commonWordSuffixes.split(', ').join(')\\b|(\\w{3,})(') + ')\\b';
+// const commonWordSuffixesRegex = new RegExp('(\\w{3,})' + commonWordSuffixes.split(', ').join('\\b|(\\w{3,})') + '\\b', 'ig');
+// const commonWordSuffixesRegex = new RegExp('\\B' + commonWordSuffixes.split(', ').join('\\b|\\B') + '\\b', 'ig');
 
 export function generateId(length) {
     if (!length) {
@@ -321,7 +322,26 @@ export function objectsMatch(objectA, objectB) {
 }
 
 export function removeCommonWordSuffixes(string) {
-    return string.replace(commonWordSuffixesRegex, '');
+    const commonWordSuffixesRegex = new RegExp(commonWordSuffixesExpression, 'i'); // 'ig');
+
+    let outputString = string;
+
+    let trialIndex = 0;
+
+    let match, groupI, startIndex, endIndex;
+    while((match = commonWordSuffixesRegex.exec(outputString)) !== null && trialIndex++ < 100) {
+        for (groupI = 1; groupI < match.length; groupI++) {
+            if (match[groupI] !== undefined) {
+                startIndex = match.index + match[groupI].length;
+                endIndex = startIndex + match[groupI + 1].length;
+                outputString = outputString.substr(0, startIndex) + outputString.substr(endIndex);
+                break;
+            }
+        }
+    }
+
+    return outputString;
+    // return string.replace(commonWordSuffixesRegex, '');
 }
 
 export function getOrWordsExpression(string, requireFullWords) {

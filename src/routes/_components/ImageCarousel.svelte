@@ -5,7 +5,7 @@
     import { onMount, tick } from 'svelte';
     import Button from '../../components/Button.svelte';
 
-    import { contextFilterItems, filterItems } from '../../utils/searchUtils';
+    import { contextFilterItems, filterItems, removeContextStopWords } from '../../utils/searchUtils';
 
     export let images = null;
 
@@ -43,7 +43,7 @@
     }
 
     function updateContextFilteredImages(items, contextSearchString) {
-        contextFilteredImages = contextFilterItems(items, contextSearchString);
+        contextFilteredImages = contextFilterItems(items, removeContextStopWords(contextSearchString));
         // console.log('updateContextFilteredImages', contextSearchString);
     }
     function updateFilteredImages(items, searchString) {

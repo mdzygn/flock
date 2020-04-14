@@ -1,6 +1,9 @@
 const stopWords = 'i, me, my, myself, we, our, ours, ourselves, you, your, yours, yourself, yourselves, he, him, his, himself, she, her, hers, herself, it, its, itself, they, them, their, theirs, themselves, what, which, who, whom, this, that, these, those, am, is, are, was, were, be, been, being, have, has, had, having, do, does, did, doing, a, an, the, and, but, if, or, because, as, until, while, of, at, by, for, with, about, against, between, into, through, during, before, after, above, below, to, from, up, down, in, out, on, off, over, under, again, further, then, once, here, there, when, where, why, how, all, any, both, each, few, more, most, other, some, such, no, nor, not, only, own, same, so, than, too, very, s, t, can, will, just, don, should, now';
 const stopWordsExpression = new RegExp('\\b' + stopWords.split(', ').join('\\b|\\b') + '\\b', 'ig');
 
+const contextStopWords = 'worlds?, dream(s|ing)?, big, small, reality, realities, spaces?, places?, build(s|ing)?, creat(es|ing)?, mak(es|ing)?, discover, help, ground, provid(es|ing)?, develop(ing)?, links?'; // see(ing)?, hear(ing)?, feel(s|ing)?, projects?, support(s|ing)?, find(ing)?,
+const contextStopWordsExpression = new RegExp('\\b' + contextStopWords.split(', ').join('\\b|\\b') + '\\b', 'ig');
+
 const commonWordNounSuffixes = 'acy, cy, al, ance, ence, dom, ery, ry, er, eer, or, ism, izm, ist, ity, ty, ment, ent, ant, iness, ness, ship, sion, tion, age, th';
 const commonWordVerbSuffixes = 'ate, ten, en, ted, ed, ify, fy, ise, ize, ing';
 const commonWordAdverbSuffixes = 'ward, wards, wise, ly';
@@ -67,10 +70,16 @@ export function removeStopWords(string) {
     return string.replace(stopWordsExpression, '');
 }
 
+export function removeContextStopWords(string) {
+    return string.replace(contextStopWordsExpression, '');
+}
+
 export function getSearchString(string) {
-    string = string.toLowerCase().trim();
+    string = string.toLowerCase();
+    string = string.replace(/[^\w]+/g, ' ');
     string = removeStopWords(string);
     string = string.replace(/\s+/g, ' ');
+    string = string.trim();
     return string;
 }
 

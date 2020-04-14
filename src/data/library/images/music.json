@@ -48,15 +48,15 @@
         },
         {
             "imageId":"mic-1132528_960_720",
-            "tags":"microphone, live, band, sing, singing"
+            "tags":"microphone, recording, live, band, sing, singing"
         },
         {
             "imageId":"microphone-2130806_960_720",
-            "tags":"microphone, live, sing, singing"
+            "tags":"microphone, recording, live, sing, singing"
         },
         {
             "imageId":"mixing-desk-351478_960_720",
-            "tags":"dj, mixing, audio, live, event"
+            "tags":"dj, mixing, audio, recording, live, event"
         },
         {
             "imageId":"music-1285165_960_720",
@@ -100,11 +100,11 @@
         },
         {
             "imageId":"table-1284507_960_720",
-            "tags":"dj, mixing, audio, live, event"
+            "tags":"dj, mixing, recording, audio, live, event"
         },
         {
             "imageId":"turntable-1337986_960_720",
-            "tags":"dj, mixing, audio, live, desktop, computer, event, compose"
+            "tags":"dj, mixing, record, audio, live, desktop, computer, event, compose"
         },
         {
             "imageId":"violin-374096_960_720",

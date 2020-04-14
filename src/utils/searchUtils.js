@@ -73,3 +73,81 @@ export function getSearchString(string) {
     string = string.replace(/\s+/g, ' ');
     return string;
 }
+
+export function filterItemsBySearch(items, options) {
+    let {
+        searchString,
+        fullWordSearchExpression,
+        generalisedFullWordSearchExpression,
+        searchExpression,
+        generalisedSearchExpression
+    } = options;
+
+    if (!searchString) {
+        return [...items];
+    } else {
+        let filteredItems = [];
+
+        let index, item;
+
+        for (index = 0; index < items.length; index++) {
+            item = items[index];
+            if (itemRegexMatch(item, fullWordSearchExpression)) {
+                filteredItems.push(item);
+            }
+        }
+
+        for (index = 0; index < items.length; index++) {
+            item = items[index];
+            if (itemRegexMatch(item, generalisedFullWordSearchExpression) && !filteredItems.includes(item)) {
+                filteredItems.push(item);
+            }
+        }
+
+        if (searchExpression.test) {
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (itemRegexMatch(item, searchExpression) && !filteredItems.includes(item)) {
+                    filteredItems.push(item);
+                }
+            }
+        } else {
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (itemSearchMatch(item, searchExpression) && !filteredItems.includes(item)) {
+                    filteredItems.push(item);
+                }
+            }
+        }
+
+        if (generalisedSearchExpression.test) {
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (itemRegexMatch(item, generalisedSearchExpression) && !filteredItems.includes(item)) {
+                    filteredItems.push(item);
+                }
+            }
+        } else {
+            for (index = 0; index < items.length; index++) {
+                item = items[index];
+                if (itemSearchMatch(item, generalisedSearchExpression) && !filteredItems.includes(item)) {
+                    filteredItems.push(item);
+                }
+            }
+        }
+
+        return filteredItems;
+    }
+}
+
+function itemRegexMatch(item, searchExpression) {
+    if (item.tags.match(searchExpression)) {
+        return true;
+    }
+    return false;
+}
+
+function itemSearchMatch(item, searchString) {
+    if (item.tags.toLowerCase().includes(searchString)) return true;
+    return false;
+}

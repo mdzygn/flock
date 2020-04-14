@@ -5,7 +5,7 @@
     import { onMount, tick } from 'svelte';
     import Button from '../../components/Button.svelte';
 
-    import { getSearchString, removeCommonWordSuffixes, getOrWordsExpression, getAndWordsExpression } from '../../utils/searchUtils';
+    import { filterItemsBySearch, getSearchString, removeCommonWordSuffixes, getOrWordsExpression, getAndWordsExpression } from '../../utils/searchUtils';
 
     export let images = null;
 
@@ -196,53 +196,61 @@
             }
         }
 
-        if (!searchString) {
-            filteredItems = [...items];
-        } else {
-            let index, item, curProject;
+        filteredItems = filterItemsBySearch(items, {
+            searchString,
+            fullWordSearchExpression,
+            generalisedFullWordSearchExpression,
+            searchExpression,
+            generalisedSearchExpression,
+        });
 
-            for (index = 0; index < items.length; index++) {
-                item = items[index];
-                if (itemRegexMatch(item, fullWordSearchExpression)) {
-                    filteredItems.push(item);
-                }
-            }
+        // if (!searchString) {
+        //     filteredItems = [...items];
+        // } else {
+        //     let index, item;
 
-            for (index = 0; index < items.length; index++) {
-                item = items[index];
-                if (itemRegexMatch(item, generalisedFullWordSearchExpression) && !filteredItems.includes(item)) {
-                    filteredItems.push(item);
-                }
-            }
+        //     for (index = 0; index < items.length; index++) {
+        //         item = items[index];
+        //         if (itemRegexMatch(item, fullWordSearchExpression)) {
+        //             filteredItems.push(item);
+        //         }
+        //     }
 
-            if (searchExpression) {
-                for (index = 0; index < items.length; index++) {
-                    item = items[index];
-                    if (itemRegexMatch(item, searchExpression) && !filteredItems.includes(item)) {
-                        filteredItems.push(item);
-                    }
-                }
-                for (index = 0; index < items.length; index++) {
-                    item = items[index];
-                    if (itemRegexMatch(item, generalisedSearchExpression) && !filteredItems.includes(item)) {
-                        filteredItems.push(item);
-                    }
-                }
-            } else {
-                for (index = 0; index < items.length; index++) {
-                    item = items[index];
-                    if (itemSearchMatch(item, searchString) && !filteredItems.includes(item)) {
-                        filteredItems.push(item);
-                    }
-                }
-                for (index = 0; index < items.length; index++) {
-                    item = items[index];
-                    if (itemSearchMatch(item, generalisedSearchString) && !filteredItems.includes(item)) {
-                        filteredItems.push(item);
-                    }
-                }
-            }
-        }
+        //     for (index = 0; index < items.length; index++) {
+        //         item = items[index];
+        //         if (itemRegexMatch(item, generalisedFullWordSearchExpression) && !filteredItems.includes(item)) {
+        //             filteredItems.push(item);
+        //         }
+        //     }
+
+        //     if (searchExpression) {
+        //         for (index = 0; index < items.length; index++) {
+        //             item = items[index];
+        //             if (itemRegexMatch(item, searchExpression) && !filteredItems.includes(item)) {
+        //                 filteredItems.push(item);
+        //             }
+        //         }
+        //         for (index = 0; index < items.length; index++) {
+        //             item = items[index];
+        //             if (itemRegexMatch(item, generalisedSearchExpression) && !filteredItems.includes(item)) {
+        //                 filteredItems.push(item);
+        //             }
+        //         }
+        //     } else {
+        //         for (index = 0; index < items.length; index++) {
+        //             item = items[index];
+        //             if (itemSearchMatch(item, searchString) && !filteredItems.includes(item)) {
+        //                 filteredItems.push(item);
+        //             }
+        //         }
+        //         for (index = 0; index < items.length; index++) {
+        //             item = items[index];
+        //             if (itemSearchMatch(item, generalisedSearchString) && !filteredItems.includes(item)) {
+        //                 filteredItems.push(item);
+        //             }
+        //         }
+        //     }
+        // }
 
         return filteredItems;
     }

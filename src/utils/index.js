@@ -9,7 +9,7 @@ const commonWordMiscSuffixes = 'ur'; // colour, behaviour
 const commonWordSuffixes = commonWordPluralSuffixes + ', ' + commonWordNounSuffixes + ', ' + commonWordVerbSuffixes + ', ' + commonWordAdverbSuffixes + ', ' + commonWordAdjectiveSuffixes + ', ' + commonWordMiscSuffixes;
 // const commonWordSuffixes = 'es, s, ism, izm, ur, ing, ist, ten, er, or, al, ed';
 
-const commonWordSuffixesRegex = new RegExp('\\B' + commonWordSuffixes.split(', ').join('\\b|\\B') + '\\b', 'i');
+const commonWordSuffixesRegex = new RegExp('\\B' + commonWordSuffixes.split(', ').join('\\b|\\B') + '\\b', 'ig');
 
 export function generateId(length) {
     if (!length) {
@@ -322,4 +322,23 @@ export function objectsMatch(objectA, objectB) {
 
 export function removeCommonWordSuffixes(string) {
     return string.replace(commonWordSuffixesRegex, '');
+}
+
+export function getOrWordsExpression(string, requireFullWords) {
+    if (requireFullWords) {
+        string = '\\b' + string.split(' ').join('\\b|\\b') + '\\b';
+    } else {
+        string = string.split(' ').join('|');
+    }
+    return new RegExp(string, 'ig');
+}
+
+export function getAndWordsExpression(string, requireFullWords) {
+    if (requireFullWords) {
+        string = '(?=.*\\b' + string.split(' ').join('\\b)(?=.*\\b') + '\\b).+';
+    } else {
+        string = '(?=.*' + string.split(' ').join(')(?=.*') + ').+';
+        // (?=.*\bmeat\b)(?=.*\bpasta\b)(?=.*\bdinner\b).+
+    }
+    return new RegExp(string, 'ig');
 }

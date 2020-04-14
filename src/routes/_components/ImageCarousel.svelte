@@ -5,7 +5,7 @@
     import { onMount, tick } from 'svelte';
     import Button from '../../components/Button.svelte';
 
-    import { removeCommonWordSuffixes } from '../../utils';
+    import { removeCommonWordSuffixes, getOrWordsExpression, getAndWordsExpression } from '../../utils';
 
     export let images = null;
 
@@ -112,12 +112,17 @@
             contextSearchString = contextSearchString.toLowerCase().trim();
             contextSearchString = contextSearchString.replace(/\s+/, ' ');
 
-            separateFullWordContextSearchExpression = '\\b' + contextSearchString.split(' ').join('\\b|\\b') + '\\b';
-            separateFullWordContextSearchExpression = new RegExp(separateFullWordContextSearchExpression, 'i');
+            separateFullWordContextSearchExpression = getOrWordsExpression(contextSearchString, true);
 
             separateWordContextSearchExpression = removeCommonWordSuffixes(contextSearchString);
-            separateWordContextSearchExpression = separateWordContextSearchExpression.split(' ').join('|');
-            separateWordContextSearchExpression = new RegExp(separateWordContextSearchExpression, 'i');
+            separateWordContextSearchExpression = getOrWordsExpression(separateWordContextSearchExpression);
+
+            // separateFullWordContextSearchExpression = '\\b' + contextSearchString.split(' ').join('\\b|\\b') + '\\b';
+            // separateFullWordContextSearchExpression = new RegExp(separateFullWordContextSearchExpression, 'i');
+
+            // separateWordContextSearchExpression = removeCommonWordSuffixes(contextSearchString);
+            // separateWordContextSearchExpression = separateWordContextSearchExpression.split(' ').join('|');
+            // separateWordContextSearchExpression = new RegExp(separateWordContextSearchExpression, 'i');
 
             // console.log('separateFullWordContextSearchExpression', separateFullWordContextSearchExpression);
             // console.log('separateWordContextSearchExpression', separateWordContextSearchExpression);
@@ -160,14 +165,23 @@
 
         if (searchString) {
             searchString = searchString.toLowerCase().trim();
-            searchString = searchString.replace(/\s+/, ' ');
-            searchString = removeCommonWordSuffixes(searchString);
+            searchString = searchString.replace(/\s+/g, ' ');
 
-            fullWordSearchExpression = '\\b' + searchString + '\\b';
-            fullWordSearchExpression = new RegExp(fullWordSearchExpression, 'i');
+            // fullWordSearchExpression = '\\b' + searchString + '\\b';
+            // fullWordSearchExpression = new RegExp(fullWordSearchExpression, 'i');
+
+            const splitWords = searchString.split(' ');
+            if (splitWords.length > 1) {
+                fullWordSearchExpression = getAndWordsExpression(searchString, true);
+                searchString = removeCommonWordSuffixes(searchString);
+                searchExpression = getAndWordsExpression(searchString);
+            } else {
+                fullWordSearchExpression = '\\b' + searchString + '\\b';
+                searchString = removeCommonWordSuffixes(searchString);
+            }
 
             // console.log('fullWordSearchExpression', fullWordSearchExpression);
-            // console.log('searchString', searchString);
+            // console.log('searchExpression', searchExpression ? searchExpression : searchString);
         }
 
         if (!searchString) {
@@ -182,10 +196,19 @@
                 }
             }
 
-            for (index = 0; index < items.length; index++) {
-                item = items[index];
-                if (itemSearchMatch(item, searchString) && !filteredItems.includes(item)) {
-                    filteredItems.push(item);
+            if (searchExpression) {
+                for (index = 0; index < items.length; index++) {
+                    item = items[index];
+                    if (itemRegexMatch(item, searchExpression) && !filteredItems.includes(item)) {
+                        filteredItems.push(item);
+                    }
+                }
+            } else {
+                for (index = 0; index < items.length; index++) {
+                    item = items[index];
+                    if (itemSearchMatch(item, searchString) && !filteredItems.includes(item)) {
+                        filteredItems.push(item);
+                    }
                 }
             }
         }

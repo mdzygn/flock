@@ -5,6 +5,8 @@
     import { onMount, tick } from 'svelte';
     import Button from '../../components/Button.svelte';
 
+    import { removeCommonWordSuffixes } from '../../utils';
+
     export let images = null;
 
     export let image = null;
@@ -103,13 +105,23 @@
     function contextFilterItems(items, contextSearchString) {
         let filteredItems = [];
 
+        let separateFullWordContextSearchExpression = null;
+        let separateWordContextSearchExpression = null;
+
         if (contextSearchString) {
             contextSearchString = contextSearchString.toLowerCase().trim();
             contextSearchString = contextSearchString.replace(/\s+/, ' ');
-        }
 
-        const fullSeparateWordContextSearchString = '\\b' + contextSearchString.split(' ').join('\\b|\\b') + '\\b';
-        const separateWordContextSearchString = contextSearchString.split(' ').join('|');
+            separateFullWordContextSearchExpression = '\\b' + contextSearchString.split(' ').join('\\b|\\b') + '\\b';
+            separateFullWordContextSearchExpression = new RegExp(separateFullWordContextSearchExpression, 'i');
+
+            separateWordContextSearchExpression = removeCommonWordSuffixes(contextSearchString);
+            separateWordContextSearchExpression = separateWordContextSearchExpression.split(' ').join('|');
+            separateWordContextSearchExpression = new RegExp(separateWordContextSearchExpression, 'i');
+
+            // console.log('separateFullWordContextSearchExpression', separateFullWordContextSearchExpression);
+            // console.log('separateWordContextSearchExpression', separateWordContextSearchExpression);
+        }
 
         if (!contextSearchString) {
             filteredItems = [...items];
@@ -117,14 +129,14 @@
             let index, item, curProject;
             for (index = 0; index < items.length; index++) {
                 item = items[index];
-                if (itemRegexMatch(item, fullSeparateWordContextSearchString)) {
+                if (itemRegexMatch(item, separateFullWordContextSearchExpression)) {
                     filteredItems.push(item);
                 }
             }
 
             for (index = 0; index < items.length; index++) {
                 item = items[index];
-                if (itemRegexMatch(item, separateWordContextSearchString) && !filteredItems.includes(item)) {
+                if (itemRegexMatch(item, separateWordContextSearchExpression) && !filteredItems.includes(item)) {
                     filteredItems.push(item);
                 }
             }
@@ -143,9 +155,19 @@
     function filterItems(items, searchString) {
         let filteredItems = [];
 
+        let fullWordSearchExpression = null;
+        let searchExpression = null;
+
         if (searchString) {
             searchString = searchString.toLowerCase().trim();
             searchString = searchString.replace(/\s+/, ' ');
+            searchString = removeCommonWordSuffixes(searchString);
+
+            fullWordSearchExpression = '\\b' + searchString + '\\b';
+            fullWordSearchExpression = new RegExp(fullWordSearchExpression, 'i');
+
+            // console.log('fullWordSearchExpression', fullWordSearchExpression);
+            // console.log('searchString', searchString);
         }
 
         if (!searchString) {
@@ -154,7 +176,8 @@
             let index, item, curProject;
             for (index = 0; index < items.length; index++) {
                 item = items[index];
-                if (itemSearchFullwordMatch(item, searchString)) {
+                // if (itemSearchFullwordMatch(item, searchString)) {
+                if (itemRegexMatch(item, fullWordSearchExpression)) {
                     filteredItems.push(item);
                 }
             }
@@ -170,8 +193,15 @@
         return filteredItems;
     }
 
-    function itemSearchFullwordMatch(item, searchString) {
-        if (item.tags.match(new RegExp('\\b' + searchString + '\\b', 'i'))) {
+    // function itemSearchFullwordMatch(item, searchString) {
+    //     if (item.tags.match(new RegExp('\\b' + searchString + '\\b', 'i'))) {
+    //         return true;
+    //     }
+    //     return false;
+    // }
+
+    function itemRegexMatch(item, searchExpression) {
+        if (item.tags.match(searchExpression)) {
             return true;
         }
         return false;
@@ -179,13 +209,6 @@
 
     function itemSearchMatch(item, searchString) {
         if (item.tags.toLowerCase().includes(searchString)) return true;
-        return false;
-    }
-
-    function itemRegexMatch(item, searchString) {
-        if (item.tags.match(new RegExp(searchString, 'i'))) {
-            return true;
-        }
         return false;
     }
 </script>

@@ -1,5 +1,16 @@
 const delayedTimeouts = {};
 
+const commonWordPluralSuffixes = 'es, s';
+const commonWordNounSuffixes = 'acy, cy, al, ance, ence, dom, ery, ry, er, eer, or, ism, izm, ist, ity, ty, ment, ent, ant, ness, ship, sion, tion, age, th';
+const commonWordVerbSuffixes = 'ate, ten, en, ted, ed, ify, fy, ise, ize, ing';
+const commonWordAdverbSuffixes = 'ward, wise, ly';
+const commonWordAdjectiveSuffixes = 'able, ible, al, esque, ful, ical, ic, ious, ous, ish, ive, y'; // do not include less as means opposite
+const commonWordMiscSuffixes = 'ur'; // colour, behaviour
+const commonWordSuffixes = commonWordPluralSuffixes + ', ' + commonWordNounSuffixes + ', ' + commonWordVerbSuffixes + ', ' + commonWordAdverbSuffixes + ', ' + commonWordAdjectiveSuffixes + ', ' + commonWordMiscSuffixes;
+// const commonWordSuffixes = 'es, s, ism, izm, ur, ing, ist, ten, er, or, al, ed';
+
+const commonWordSuffixesRegex = new RegExp('\\B' + commonWordSuffixes.split(', ').join('\\b|\\B') + '\\b', 'i');
+
 export function generateId(length) {
     if (!length) {
         length = 8;
@@ -307,4 +318,8 @@ export function getSplitItems(items) {
 export function objectsMatch(objectA, objectB) {
     return JSON.stringify(objectA) === JSON.stringify(objectB);
     // Object.entries(k1).toString() === Object.entries(k2).toString();
+}
+
+export function removeCommonWordSuffixes(string) {
+    return string.replace(commonWordSuffixesRegex, '');
 }

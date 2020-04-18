@@ -48,6 +48,8 @@
 		showBetaFeatures,
 		user,
 		userId,
+		isProjectLoaded,
+		isUserLoaded,
 	} from '../../../models/appModel';
 
 	import {
@@ -144,7 +146,7 @@
 
 	$: {
 		if (!projectStateLoaded) {
-			if ($project && $user) {
+			if (isProjectLoaded($project, $projectId) && isUserLoaded($user, $userId)) {
 				if (!isTeamMember && !following) {
 					forceProjectShowingInfo = true;
 				}

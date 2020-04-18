@@ -181,4 +181,12 @@ export function checkParams(query) {
     }
 }
 
+export function isUserLoaded(user, userId) {
+    return !userId || (user && user.loaded);
+}
+
+export function isProjectLoaded(project, projectId) {
+    return project && project.id === projectId;
+}
+
 export default appModel;

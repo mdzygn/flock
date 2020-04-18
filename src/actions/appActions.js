@@ -79,6 +79,7 @@ import {
 
     projectReturnView,
     projectShowingInfo,
+    forceProjectShowingInfo,
     editingProject,
 
     displayingAllMyProjects,
@@ -107,7 +108,9 @@ export function loadProject(targetProjectId, options) {
     // setProject(targetProjectId);
 
     if (gotoRoute('projects/' + targetProjectId)) {
-        projectShowingInfo.set(options && options.showInfo);
+        const showInfo = options && options.showInfo;
+        projectShowingInfo.set(showInfo);
+        forceProjectShowingInfo.set(showInfo); // $project && $project.following && !getIsProjectTeamMember($project));
     }
     resetScrollRegionPosition('project');
 }

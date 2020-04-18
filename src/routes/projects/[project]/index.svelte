@@ -44,6 +44,7 @@
 		project,
 		projectReturnView,
 		projectShowingInfo,
+		forceProjectShowingInfo,
 		getIsProjectTeamMember,
 		showBetaFeatures,
 		user,
@@ -134,8 +135,11 @@
 
 	$: projectDetails = ($project && $project.details) || null;
 
+	// $: forceShowInfo = !following && !isTeamMember;
+
 	$: projectHasDetails = getProjectHasDetails($project);
-	$: showInfo = $projectShowingInfo && projectHasDetails;
+	$: showInfo = ($projectShowingInfo || $forceProjectShowingInfo) && projectHasDetails;
+
 
 	// $: {
 	// 	if (isTeamMember) {
@@ -178,20 +182,20 @@
 							{/if}
 							<div class="itemContent">
 								<div class="header" class:headerOwner="{isTeamMember}">{projectTitle}</div>
-								<div class="description" class:button="{projectHasDetails}" on:click="{projectHasDetails ? toggleProjectInfo : null}">{@html projectDescriptionHTML}</div>
+								<div class="description" class:button="{projectHasDetails && !$forceProjectShowingInfo}" on:click="{(projectHasDetails && !$forceProjectShowingInfo) ? toggleProjectInfo : null}">{@html projectDescriptionHTML}</div>
 							</div>
 							{#if projectHasDetails}
 								{#if !showInfo}
 									{#if !$projectReturnView}
 										<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 									{/if}
-								{:else}
+								{:else if !$forceProjectShowingInfo}
 									<Button className="infoCollapseButton" onClick="{hideProjectInfo}" icon="{HideInfoIcon}" />
 								{/if}
 							{/if}
 						</div>
 						{#if showInfo}
-							<div class="projectInfo">
+							<div class="projectInfo" class:forceShowInfo="{$forceProjectShowingInfo}">
 								{#each projectDetails as projectDetailItem, index}
 									{#if projectDetailItem.detail}
 										{#if projectDetailItem.image}
@@ -445,6 +449,9 @@
 
 	.projectInfo {
     	padding-top: 30px;
+	}
+	.projectInfo.forceShowInfo {
+    	padding-top: 20px;
 	}
 
 	.projectDetailImage {

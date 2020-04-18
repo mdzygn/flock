@@ -1,5 +1,6 @@
 <script>
-    import { tick } from 'svelte';
+	import { tick } from 'svelte';
+	import { writable } from 'svelte/store';
 	import { goto } from '@sapper/app';
 
 	import config from '../../../config';
@@ -26,7 +27,8 @@
 
 	import { getUserClone, randomiseUserProfileImageColor } from '../../../models/usersModel';
 
-    $: curUserProps = getUserClone(user);
+	let curUserProps = writable(null);
+    $: { curUserProps = getUserClone(user) };
 
 	let name = ($user && $user.name) || '';
 	let bio = ($user && $user.bio && getFormattedText($user.bio)) || '';

@@ -27,6 +27,7 @@ const appModel = createModel({
 
     projectReturnView: false,
     projectShowingInfo: false,
+    forceProjectShowingInfo: false,
     editingProject: false,
 
     displayingAllMyProjects: false,
@@ -90,6 +91,7 @@ export const profileDisplayingAllProjects = appModel.profileDisplayingAllProject
 
 export const projectReturnView = appModel.projectReturnView;
 export const projectShowingInfo = appModel.projectShowingInfo;
+export const forceProjectShowingInfo = appModel.forceProjectShowingInfo;
 export const editingProject = appModel.editingProject;
 
 export const projectsSearchString = appModel.projectsSearchString;

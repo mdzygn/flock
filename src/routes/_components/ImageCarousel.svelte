@@ -77,7 +77,7 @@
                 imageItem = filteredImages[itemI];
                 element = imageElements[imageItem.imageId];
                 if (element) {
-                    if (imageItem.posX === undefined) {
+                    if (imageItem.posX === undefined || imageItem.posX === 0) {
                         imageItem.posX = element.offsetLeft;
                     };
                     elementX = imageItem.posX - scrollX;
@@ -122,6 +122,8 @@
         padding: 0px 45px;
 
         -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+
+        pointer-events: none;
     }
 	.imageCarousel::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */
         display: none;
@@ -129,6 +131,8 @@
 
     .imageContainer {
         display: inline-block;
+
+        pointer-events: auto;
     }
 
     .imageCarousel :global(.imageItem) {

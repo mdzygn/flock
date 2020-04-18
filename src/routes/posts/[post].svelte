@@ -23,6 +23,7 @@
 		user,
 		userId,
 		project,
+		isUserLoaded,
 	} from '../../models/appModel';
 
 	import {
@@ -47,7 +48,7 @@
 		loadingProjects,
 	} from '../../models/projectsModel';
 
-	$: userLoading = (!($user && $user.loaded) && $userId);
+	// $: userLoading = (!($user && $user.loaded) && $userId);
 
 	const DISPLAY_BOTTOM_LINK_POST_COUNT = 3;
 
@@ -78,7 +79,7 @@
 </svelte:head>
 
 <ScrollView id="thread" anchorToBottom="{$postsAnchorToBottom}">
-	{#if ($loadingPosts && (!$post || $post.id !== $postId)) || userLoading || (!$project && $loadingProjects) }
+	{#if ($loadingPosts && (!$post || $post.id !== $postId)) || !isUserLoaded($user, $userId) || (!$project && $loadingProjects) }
 		<ContentLoader label="{locale.LOADING.THREAD}" />
 	{:else if !$post || !$post.id}
 		<ContentLoader label="{locale.THREAD.NOT_FOUND}" />

@@ -182,6 +182,7 @@ export function checkParams(query) {
 export function isUserLoaded(user, userId) {
     return !userId || (user && user.loaded);
 }
+// userLoading = (!($user && $user.loaded) && $userId);
 
 export function isProjectLoaded(project, projectId) {
     return project && project.id === projectId;

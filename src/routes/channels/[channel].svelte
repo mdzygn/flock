@@ -18,6 +18,7 @@
 		getIsProjectTeamMember,
 		user,
 		userId,
+		isUserLoaded,
 	} from '../../models/appModel';
 
 	import {
@@ -46,7 +47,7 @@
 		loadingProjects,
 	} from '../../models/projectsModel';
 
-	$: userLoading = (!($user && $user.loaded) && $userId);
+	// $: userLoading = (!($user && $user.loaded) && $userId);
 
 	loadCurrentProject();
 	loadCurrentChannel();
@@ -79,7 +80,7 @@
 </svelte:head>
 
 <div class="pageContent">
-	{#if ($loadingChannels && (!$channel || $channel.id !== $channelId)) || userLoading || (!$project && $loadingProjects) }
+	{#if ($loadingChannels && (!$channel || $channel.id !== $channelId)) || !isUserLoaded($user, $userId) || (!$project && $loadingProjects) }
 		<ContentLoader label="{locale.LOADING.CHANNEL}" />
 	{:else if !$channel || !$channel.id}
 		<ContentLoader label="{locale.CHANNEL.NOT_FOUND}" />

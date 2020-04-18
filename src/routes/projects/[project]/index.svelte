@@ -44,7 +44,6 @@
 		project,
 		projectReturnView,
 		projectShowingInfo,
-		forceProjectShowingInfo,
 		getIsProjectTeamMember,
 		showBetaFeatures,
 		user,
@@ -138,7 +137,21 @@
 	// $: forceShowInfo = !following && !isTeamMember;
 
 	$: projectHasDetails = getProjectHasDetails($project);
-	$: showInfo = ($projectShowingInfo || $forceProjectShowingInfo) && projectHasDetails;
+	$: showInfo = ($projectShowingInfo || forceProjectShowingInfo) && projectHasDetails;
+
+	let forceProjectShowingInfo = false;
+	let projectStateLoaded = false;
+
+	$: {
+		if (!projectStateLoaded) {
+			if ($project && $user) {
+				if (!isTeamMember && !following) {
+					forceProjectShowingInfo = true;
+				}
+				projectStateLoaded = true;
+			}
+		}
+	}
 
 
 	// $: {
@@ -182,20 +195,20 @@
 							{/if}
 							<div class="itemContent">
 								<div class="header" class:headerOwner="{isTeamMember}">{projectTitle}</div>
-								<div class="description" class:button="{projectHasDetails && !$forceProjectShowingInfo}" on:click="{(projectHasDetails && !$forceProjectShowingInfo) ? toggleProjectInfo : null}">{@html projectDescriptionHTML}</div>
+								<div class="description" class:button="{projectHasDetails && !forceProjectShowingInfo}" on:click="{(projectHasDetails && !forceProjectShowingInfo) ? toggleProjectInfo : null}">{@html projectDescriptionHTML}</div>
 							</div>
 							{#if projectHasDetails}
 								{#if !showInfo}
 									{#if !$projectReturnView}
 										<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 									{/if}
-								{:else if !$forceProjectShowingInfo}
+								{:else if !forceProjectShowingInfo}
 									<Button className="infoCollapseButton" onClick="{hideProjectInfo}" icon="{HideInfoIcon}" />
 								{/if}
 							{/if}
 						</div>
 						{#if showInfo}
-							<div class="projectInfo" class:forceShowInfo="{$forceProjectShowingInfo}">
+							<div class="projectInfo" class:forceShowInfo="{forceProjectShowingInfo}">
 								{#each projectDetails as projectDetailItem, index}
 									{#if projectDetailItem.detail}
 										{#if projectDetailItem.image}

@@ -28,10 +28,18 @@
 	let tags = ($project && $project.tags) || '';
 	let location = ($project && $project.location) || '';
 
+	let headerImageIsUploading;
+	let detail1ImageIsUploading;
+	let detail2ImageIsUploading;
+	let detail3ImageIsUploading;
+	let detail4ImageIsUploading;
+
+	$: imageIsUploading = headerImageIsUploading || detail1ImageIsUploading || detail2ImageIsUploading || detail3ImageIsUploading || detail4ImageIsUploading;
+
 	let remainingChars;
 	$: charCountLow = (remainingChars !== '') && remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
 
-	$: saveEnabled = !editingProject || (title && description);
+	$: saveEnabled = !editingProject || (title && description && !imageIsUploading);
 
 	let detail1 = '';
 	let detail2 = '';
@@ -106,6 +114,10 @@
 	}
 
 	function save() {
+		if (!saveEnabled) {
+			return;
+		}
+
 		let details = null;
 		if ($project.details) {
 			details = JSON.parse(JSON.stringify($project.details));
@@ -215,7 +227,7 @@
 				</div>
 				<div class="field headerImageField">
 					<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
-					<ImageSelectionBox bind:image />
+					<ImageSelectionBox bind:image bind:fileIsUploading="{headerImageIsUploading}" />
 				</div>
 				<div class="field descriptionField">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
@@ -232,7 +244,7 @@
 				<div class="imageField">
 					<Button className="addImage" onClick="{() => removeImage(0) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 				</div>
-				<ImageSelectionBox bind:image="{detailImage1}" />
+				<ImageSelectionBox bind:image="{detailImage1}" bind:fileIsUploading="{detail1ImageIsUploading}" />
 			{:else}
 				<div class="imageField">
 					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(0) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
@@ -248,7 +260,7 @@
 				<div class="imageField">
 					<Button className="addImage" onClick="{() => removeImage(1) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 				</div>
-				<ImageSelectionBox bind:image="{detailImage2}" />
+				<ImageSelectionBox bind:image="{detailImage2}" bind:fileIsUploading="{detail2ImageIsUploading}" />
 			{:else}
 				<div class="imageField">
 					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(1) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
@@ -263,7 +275,7 @@
 				<div class="imageField">
 					<Button className="addImage" onClick="{() => removeImage(2) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 				</div>
-				<ImageSelectionBox bind:image="{detailImage3}" />
+				<ImageSelectionBox bind:image="{detailImage3}" bind:fileIsUploading="{detail3ImageIsUploading}" />
 			{:else}
 				<div class="imageField">
 					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(2) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
@@ -278,7 +290,7 @@
 				<div class="imageField">
 					<Button className="addImage" onClick="{() => removeImage(3) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 				</div>
-				<ImageSelectionBox bind:image="{detailImage4}" />
+				<ImageSelectionBox bind:image="{detailImage4}" bind:fileIsUploading="{detail4ImageIsUploading}" />
 			{:else}
 				<div class="imageField">
 					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(3) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>

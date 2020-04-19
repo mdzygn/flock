@@ -36,12 +36,12 @@
 	let skills = ($user && $user.skills) || '';
 	let location = ($user && $user.location) || '';
 
-	let fileIsUploading;
+	let headerImageIsUploading;
 
 	let remainingChars;
 	$: charCountLow = (remainingChars !== '') && remainingChars < config.PROFILE_DESCRIPTION_CHARS_LOW;
 
-	$: saveEnabled = !!(name && !fileIsUploading);
+	$: saveEnabled = !!(name && !headerImageIsUploading);
 
 	let bioInput;
 	let skillsInput;
@@ -96,7 +96,7 @@
 				</div>
 				<div class="field headerImageField">
 					<div class="label headerImageLabel">{locale.EDIT_PROFILE.COVER_IMAGE}</div>
-					<ImageSelectionBox bind:image bind:fileIsUploading="{fileIsUploading}" uploadType="user" />
+					<ImageSelectionBox bind:image bind:fileIsUploading="{headerImageIsUploading}" uploadType="user" />
 				</div>
 				<div class="field skillsField">
 					<div class="label labelDetails">{locale.EDIT_PROFILE.SKILLS}<span class="tip">{@html locale.EDIT_PROFILE.SKILLS_TIP}</span></div>

@@ -50,6 +50,7 @@
 		userId,
 		isProjectLoaded,
 		isUserLoaded,
+		getHeaderImage,
 	} from '../../../models/appModel';
 
 	import {
@@ -104,7 +105,8 @@
 	}
 
 	function getProjectDetailImage(imageId) {
-		return config.contentUrl + config.headerImageLibraryFolder + imageId + config.headerImageExtension;
+		return getHeaderImage(imageId);
+		// return config.contentUrl + config.headerImageLibraryFolder + imageId + config.headerImageExtension;
 	}
 
 	// let proxyChannelsImage;

@@ -198,7 +198,7 @@
 <style>
     .imageSelectionBox {
 		width: 100%;
-		height: 220px;
+		height: 245px;
 
         position: relative;
 

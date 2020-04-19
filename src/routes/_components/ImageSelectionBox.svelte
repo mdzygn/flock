@@ -153,7 +153,7 @@
     {#if imageSrc}
         <img class="imageSelectionBoxImage" class:carouselShown="{carouselShown}" on:click="{toggleCarousel}" src="{imageSrc}" alt="project header image" />
         {#if carouselShown}
-            <Button className="cancelButton" icon="{CancelIcon}" />
+            <Button className="selectCancelButton" icon="{CancelIcon}" />
         {/if}
     {/if}
     <div class="carouselContainer" class:hidden="{!carouselShown}">
@@ -237,7 +237,7 @@
         /* padding-top: 40px; */
     }
 
-    .imageSelectionBox :global(.cancelButton) {
+    .imageSelectionBox :global(.selectCancelButton) {
         position: absolute;
         right: 17px;
         top: 17px;

@@ -1,7 +1,7 @@
 <script>
     import config from '../../config';
 
-    import { onMount } from 'svelte';
+    // import { onMount } from 'svelte';
 
     import Proxy from '../../components/Proxy.svelte';
 
@@ -10,22 +10,35 @@
     import HeartImage from "../../assets/images/heart.png";
     import FooterTaglineImage from "../../assets/images/splash_footer_tagline.png";
 
-    let shown = true;
+    import {
+        curPath,
+    } from '../../models/appModel';
+
+    let shown = false;
+    let showInited = false;
     let timeoutInited = false;
+
+    $: {
+        if (!showInited) {
+            showInited = true;
+
+            if ($curPath === '' || $curPath === '/' || $curPath === '/discover' || $curPath === '/home') {
+                shown = true;
+
+                if (!timeoutInited && setTimeout) {
+                    timeoutInited = true;
+
+                    setTimeout(() => {
+                        hideSplash();
+                    }, config.SPLASH_TIMEOUT * 1000);
+                }
+            }
+        }
+    }
 
     function hideSplash() {
         shown = false;
     }
-
-    onMount(() => {
-        if (!timeoutInited && setTimeout) {
-            timeoutInited = true;
-
-            setTimeout(() => {
-                hideSplash();
-            }, config.SPLASH_TIMEOUT * 1000);
-        }
-    });
 </script>
 
 {#if shown}

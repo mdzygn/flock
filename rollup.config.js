@@ -38,6 +38,9 @@ export default {
 			}, dev ? {
 				'process.env.MONGODB_URI': JSON.stringify(envVars.MONGODB_URI),
 				'process.env.MONGODB_DB': JSON.stringify(envVars.MONGODB_DB),
+				'process.env.AWS_ACCESS_KEY_ID': JSON.stringify(envVars.AWS_ACCESS_KEY_ID),
+				'process.env.AWS_SECRET_ACCESS_KEY': JSON.stringify(envVars.AWS_SECRET_ACCESS_KEY),
+				'process.env.S3_CONTENT_BUCKET': JSON.stringify(envVars.S3_CONTENT_BUCKET),
 			} : {})),
 			json(),
 			svelte({

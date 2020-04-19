@@ -15,6 +15,7 @@
     "test": "run-p --race dev cy:run"
   },
   "dependencies": {
+    "aws-sdk": "^2.658.0",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "compression": "^1.7.1",

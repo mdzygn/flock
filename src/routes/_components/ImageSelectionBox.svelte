@@ -31,7 +31,7 @@
 
     let uploadFileInput;
 
-    let fileIsUpload = false;
+    let fileIsUploading = false;
 
     let inited = false;
     $: {
@@ -45,7 +45,7 @@
 
     let imageSrc = null;
     $: {
-        if (!fileIsUpload) {
+        if (!fileIsUploading) {
             imageSrc = (image && (config.contentUrl + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
         }
     }
@@ -57,7 +57,7 @@
     }
 
     async function selectImage(event) {
-        fileIsUpload = false;
+        fileIsUploading = false;
 
         await tick();
         imageSrc = EmptyImage; // force empty image to load first
@@ -84,7 +84,7 @@
             // alert('The file "' + fileName +  '" has been selected.');
             // console.log('onUploadFileSelect', fileName);
 
-            fileIsUpload = true;
+            fileIsUploading = true;
             image = fileName;
 
             carouselShown = false;
@@ -93,7 +93,45 @@
 
             await tick();
             imageSrc = URL.createObjectURL(file);
+
+            await tick();
+            getSignedRequest(file);
         }
+    }
+
+    function getSignedRequest(file){
+        const request = new XMLHttpRequest();
+
+        request.open('GET', `/api/requestUpload?file-name=${encodeURIComponent(file.name)}&file-type=${encodeURIComponent(file.type)}`);
+
+        request.onreadystatechange = () => {
+            if (request.readyState === 4) {
+                if (request.status === 200){
+                    const response = JSON.parse(request.responseText);
+                    uploadFile(file, response.signedRequest, response.url);
+                } else {
+                    console.error('Could not request image upload');
+                }
+            }
+        };
+        request.send();
+    }
+
+    function uploadFile(file, signedRequest, url){
+        const request = new XMLHttpRequest();
+        request.open('PUT', signedRequest);
+        request.onreadystatechange = () => {
+            if (request.readyState === 4){
+                if (request.status === 200){
+                    fileIsUploading = false;
+                    image = 'content/projects/' + url;
+                    console.log('image', image);
+                } else {
+                    console.error('Could not upload image');
+                }
+            }
+        };
+        request.send(file);
     }
 </script>
 

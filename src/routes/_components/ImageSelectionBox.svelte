@@ -81,10 +81,10 @@
             searchString="{imageLibrarySearchString}"
             {contextSearchString}
             on:select="{selectImage}" />
-        <!-- <Button className="uploadButton" onClick="{uploadImage}" disabled="{true}">
+        <Button className="uploadButton" onClick="{uploadImage}">
             <div class="uploadButtonIcon" style="background-image: url({UploadImageIcon})"/>
             <div class="buttonLabel">{locale.GENERAL.UPLOAD_IMAGE}</div>
-        </Button> -->
+        </Button>
     </div>
 </div>
 
@@ -104,7 +104,7 @@
         pointer-events: none;
 	}
 	.imageSelectionBox :global(.searchBarField) {
-        margin: 28px 100px;
+        margin: 18px 100px;
         background-color: #ffffff;
         box-shadow: 0 2px 5px 0 rgba(0,0,0,0.15);
 
@@ -138,7 +138,8 @@
 
     .imageSelectionBox :global(.imageCarousel) {
         position: absolute;
-        top: 78px;
+        top: 62px;
+        /* top: 78px; */
         left: 0;
         width: 100%;
 
@@ -148,12 +149,16 @@
 
     .imageSelectionBox :global(.uploadButton) {
         position: absolute;
-        top: 70%;
+        top: 235px;
         left: 50%;
         margin-top: -75px;
-        margin-left: -100px;
-        width: 100px;
-        padding: 50px;
+        margin-left: -80px;
+        width: 160px;
+        height: 80px;
+        padding: 10px 0;
+        box-sizing: border-box;
+
+        pointer-events: all;
     }
 
     .imageSelectionBox :global(.uploadButton .buttonContent) {
@@ -163,7 +168,7 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-        flex-flow: wrap;
+        flex-direction: column;
     }
 
     .imageSelectionBox :global(.uploadButton .uploadButtonIcon) {
@@ -176,7 +181,8 @@
     }
 
     .imageSelectionBox :global(.uploadButton .buttonLabel) {
-        margin-top: 5px;
+        margin-top: 2px;
+        /* margin-top: 5px; */
 
         font-size: 1.2rem;
         font-weight: 700;

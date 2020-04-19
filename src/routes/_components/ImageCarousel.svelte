@@ -137,8 +137,10 @@
 
         margin: 0 12px;
 
-        width: 168px;
-        height: 100px;
+        width: 134px;
+        height: 80px;
+        /* width: 168px;
+        height: 100px; */
         /* width: 94px;
         height: 56px; */
 

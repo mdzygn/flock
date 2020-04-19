@@ -1,7 +1,7 @@
 const locale = {
 	GENERAL: {
 		SHOW_MORE: 'show more',
-		UPLOAD_IMAGE: 'upload image',
+		UPLOAD_IMAGE: 'upload own image',
 		SEARCH_PLACEHOLDER: 'search',
 	},
 	HEADER: {

@@ -186,7 +186,8 @@
 		<ScrollView id="project" headerStartHidden="{!isArchived}" headerHideOffset="{$projectReturnView ? config.RETURN_PROJECT_HEADER_OFFSET : 0}">
 			<div class="content">
 				<div class="contentItem" class:collapsedOptions="{$projectReturnView && !showInfo}" class:collapsedHeader="{$projectReturnView && !showInfo && !isNew && $showBetaFeatures}">
-					<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$projectReturnView}" alt="project header image" />
+					<img src="{headerImage}" class="headerImage" alt="project header image" />
+					 <!-- class:headerImageCollapsed="{$projectReturnView}" -->
 
 					<div class="overviewContent" class:returnView="{$projectReturnView}">
 						<div class="contentContainer">
@@ -379,13 +380,14 @@
 
 	.headerImage {
 		width: 100%;
-		/* height: 245px; */
+		height: 245px;
+    	object-fit: cover;
+        background-color: #dedede;
 	}
 
-	.headerImageCollapsed {
-		/* height: 150px;
-    	object-fit: cover; */
-	}
+	/* .headerImageCollapsed {
+		height: 150px;
+	} */
 
     .contentContainer {
         position: relative;

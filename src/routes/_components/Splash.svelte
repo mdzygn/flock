@@ -19,19 +19,19 @@
         if (!showInited) {
             showInited = true;
 
-            const path = $page.path;
+            // const path = $page.path;
 
-            if (path === '' || path === '/' || path === '/discover' || path === '/home') {
-                shown = true;
+            // if (path === '' || path === '/' || path === '/discover' || path === '/home') {
+            //     shown = true;
 
-                if (!timeoutInited && setTimeout) {
-                    timeoutInited = true;
+            //     if (!timeoutInited && setTimeout) {
+            //         timeoutInited = true;
 
-                    setTimeout(() => {
-                        hideSplash();
-                    }, config.SPLASH_TIMEOUT * 1000);
-                }
-            }
+            //         setTimeout(() => {
+            //             hideSplash();
+            //         }, config.SPLASH_TIMEOUT * 1000);
+            //     }
+            // }
         }
     }
 

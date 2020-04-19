@@ -142,6 +142,10 @@
 
     .headerImage {
         width: 100%;
+        height: 245px;
+        object-fit: cover;
+        background-color: #dedede;
+
         /* height: 154px;
         object-fit: cover; */
 

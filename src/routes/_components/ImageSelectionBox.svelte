@@ -29,6 +29,10 @@
     let carouselShown = true;
     let imageLibrarySearchString = '';
 
+    let uploadFileInput;
+
+    let fileIsUpload = false;
+
     let inited = false;
     $: {
         if (!inited) {
@@ -41,7 +45,9 @@
 
     let imageSrc = null;
     $: {
-        imageSrc = (image && (config.contentUrl + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
+        if (!fileIsUpload) {
+            imageSrc = (image && (config.contentUrl + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
+        }
     }
 
     function toggleCarousel() {
@@ -51,6 +57,8 @@
     }
 
     async function selectImage(event) {
+        fileIsUpload = false;
+
         await tick();
         imageSrc = EmptyImage; // force empty image to load first
 
@@ -65,6 +73,27 @@
     }
 
     function uploadImage() {
+        uploadFileInput.click();
+    }
+
+    async function onUploadFileSelect(event) {
+        if (event.target.files && event.target.files.length) {
+            var file = event.target.files[0];
+            var fileName = file.name;
+
+            // alert('The file "' + fileName +  '" has been selected.');
+            // console.log('onUploadFileSelect', fileName);
+
+            fileIsUpload = true;
+            image = fileName;
+
+            carouselShown = false;
+
+            imageSrc = EmptyImage; // force empty image to load first
+
+            await tick();
+            imageSrc = URL.createObjectURL(file);
+        }
     }
 </script>
 
@@ -89,6 +118,7 @@
             <div class="uploadButtonIcon" style="background-image: url({UploadImageIcon})"/>
             <div class="buttonLabel">{locale.GENERAL.UPLOAD_IMAGE}</div>
         </Button>
+        <input bind:this="{uploadFileInput}" on:change="{onUploadFileSelect}" type="file" accept="image/*" hidden/>
     </div>
 </div>
 

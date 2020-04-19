@@ -15,7 +15,7 @@ import loadingRequestUtil from '../utils/loadingRequestUtil';
 // const users = JSON.parse(JSON.stringify(usersData));
 
 import UserModel from '../models/userModel';
-import { viewedUser, profileId, user, userId } from './appModel';
+import { viewedUser, profileId, getHeaderImage } from './appModel';
 
 export let loadingUsers = writable(false);
 
@@ -188,7 +188,8 @@ export function randomiseUserCoverImageColor(userModel) {
 
 export function getProfileCoverImage(user) {
 	if (user && user.coverImage) {
-		return (config.contentUrl + config.headerImageLibraryFolder + user.coverImage + config.headerImageExtension);
+		return getHeaderImage(user.coverImage, true);
+		// return (config.contentUrl + config.headerImageLibraryFolder + user.coverImage + config.headerImageExtension);
 	}
 	return null;
 }

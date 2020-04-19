@@ -20,13 +20,15 @@
     import imageLibrary from '../../data/library/images/compiled/imageLibrary.json';
     // import imageLibrary from '../../data/library/images/_general.json';
 
-    import { getHeaderImage } from '../../models/projectsModel';
+    import { getHeaderImage } from '../../models/appModel';
 
     const libraryImages = shuffle(imageLibrary);
 
     export let image = null;
 
     export let contextSearchString = '';
+
+    export let uploadType = 'project';
 
     let carouselShown = true;
     let imageLibrarySearchString = '';
@@ -123,7 +125,10 @@
     function getSignedRequest(file){
         const request = new XMLHttpRequest();
 
-        request.open('GET', `/api/requestUpload?file-name=${encodeURIComponent(file.name)}&file-type=${encodeURIComponent(file.type)}`);
+        const fileName = encodeURIComponent(file.name);
+        const fileType = encodeURIComponent(file.type);
+
+        request.open('GET', `/api/requestUpload?file-name=${fileName}&file-type=${fileType}&upload-type=${uploadType}`);
 
         request.onreadystatechange = () => {
             if (request.readyState === 4) {

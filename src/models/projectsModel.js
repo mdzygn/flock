@@ -17,6 +17,7 @@ import {
 	user,
 	userId,
 	project,
+	getHeaderImage,
 } from '../models/appModel';
 
 import ProjectModel from '../models/projectModel';
@@ -456,19 +457,6 @@ export function setFollowProject(targetProject, follow) {
 		curUserDetails.followsCount = curUserDetails.followsCount + (follow ? 1 : -1);
 		user.set(curUserDetails);
 	}
-}
-
-export function getHeaderImage(imageUrl, fullImage) {
-	if (imageUrl) {
-		const contextIndex = imageUrl.indexOf(config.CONTENT_IDENTIFIER_PATH);
-		if (contextIndex === 0) {
-			const imagePath = imageUrl.substr(config.CONTENT_IDENTIFIER_PATH.length);
-			return config.USER_CONTENT_URL + imagePath;
-		} else {
-			return config.contentUrl + (fullImage ? config.headerImageLibraryFolder : config.headerImageLibraryThumbFolder) + imageUrl + config.headerImageExtension;
-		}
-	}
-	return null;
 }
 
 export function getProjectHeaderImage(project, fullImage) {

@@ -1,3 +1,5 @@
+import config from '../config';
+
 import { writable } from 'svelte/store';
 import { get } from 'svelte/store';
 
@@ -186,6 +188,19 @@ export function isUserLoaded(user, userId) {
 
 export function isProjectLoaded(project, projectId) {
     return project && project.id === projectId;
+}
+
+export function getHeaderImage(imageUrl, fullImage) {
+	if (imageUrl) {
+		const contextIndex = imageUrl.indexOf(config.CONTENT_IDENTIFIER_PATH);
+		if (contextIndex === 0) {
+			const imagePath = imageUrl.substr(config.CONTENT_IDENTIFIER_PATH.length);
+			return config.USER_CONTENT_URL + imagePath;
+		} else {
+			return config.contentUrl + (fullImage ? config.headerImageLibraryFolder : config.headerImageLibraryThumbFolder) + imageUrl + config.headerImageExtension;
+		}
+	}
+	return null;
 }
 
 export default appModel;

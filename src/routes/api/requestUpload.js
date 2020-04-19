@@ -16,9 +16,19 @@ export async function get(req, res, next) {
 
 	const fileName = req.query['file-name'];
 	const fileType = req.query['file-type'];
+	const uploadType = req.query['upload-type'];
 
 	const folderIndentifier = 'content/';
-	const folder = 'projects/';
+
+	let folder = '';
+
+	if (uploadType === 'project') {
+		folder = 'projects/';
+	} else if (uploadType === 'user') {
+		folder = 'users/';
+	} else {
+		errorResponse(res, {}, {errorMsg: 'invalid upload-type'});
+	}
 
 	// 'Missing credentials in config, if using AWS_CONFIG_FILE, set AWS_SDK_LOAD_CONFIG=1',
 	const s3Params = {

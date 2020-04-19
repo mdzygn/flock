@@ -29,7 +29,7 @@
 	let location = ($project && $project.location) || '';
 
 	let remainingChars;
-	$: charCountLow = remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
+	$: charCountLow = (remainingChars !== '') && remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
 
 	$: saveEnabled = !editingProject || (title && description);
 

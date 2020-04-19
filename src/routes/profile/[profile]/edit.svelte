@@ -37,7 +37,7 @@
 	let location = ($user && $user.location) || '';
 
 	let remainingChars;
-	$: charCountLow = remainingChars < config.PROFILE_DESCRIPTION_CHARS_LOW;
+	$: charCountLow = (remainingChars !== '') && remainingChars < config.PROFILE_DESCRIPTION_CHARS_LOW;
 
 	$: saveEnabled = !!(name);
 

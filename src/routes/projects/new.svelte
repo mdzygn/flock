@@ -25,7 +25,7 @@
 	let descriptionField;
 
 	let remainingChars;
-	$: charCountLow = remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
+	$: charCountLow = (remainingChars !== '') && remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
 
 	let contextSearchString = '';
 

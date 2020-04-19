@@ -6,9 +6,9 @@
     export let field = null;
     export let maxlength;
 
-    export let remainingChars = 0;
+    export let remainingChars = '';
 
-    $: { remainingChars = Math.max(0, maxlength - value.length) };
+	$: { remainingChars = Math.max(0, maxlength - value.length) };
 
 	$: {
 		if (value.length > maxlength) {

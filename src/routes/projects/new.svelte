@@ -46,12 +46,14 @@
 	$: nextEnabled = title && description && image && !fileIsUploading;
 
 	function createNewProject() {
-		const projectDetails = {
-			title,
-			description,
-			headerImage: image,
-		};
-		createProject(projectDetails);
+		if (nextEnabled) {
+			const projectDetails = {
+				title,
+				description,
+				headerImage: image,
+			};
+			createProject(projectDetails);
+		}
 	}
 
 	function testSubmit() {

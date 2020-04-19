@@ -20,6 +20,8 @@
     import imageLibrary from '../../data/library/images/compiled/imageLibrary.json';
     // import imageLibrary from '../../data/library/images/_general.json';
 
+    import { getHeaderImage } from '../../models/projectsModel';
+
     const libraryImages = shuffle(imageLibrary);
 
     export let image = null;
@@ -46,15 +48,20 @@
     let imageSrc = null;
     $: {
         if (!fileIsUploading) {
-            const contextIndex = image && image.indexOf(config.CONTENT_IDENTIFIER_PATH);
-            if (contextIndex === 0) {
-                const imagePath = image.substr(config.CONTENT_IDENTIFIER_PATH.length);
-                imageSrc = config.USER_CONTENT_URL + imagePath;
-            } else {
-                imageSrc = (image && (config.contentUrl + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
-            }
+            imageSrc = getHeaderImage(image);
         }
     }
+    // $: { imageSrc = get
+    //     if (!fileIsUploading) {
+    //         const contextIndex = image && image.indexOf(config.CONTENT_IDENTIFIER_PATH);
+    //         if (contextIndex === 0) {
+    //             const imagePath = image.substr(config.CONTENT_IDENTIFIER_PATH.length);
+    //             imageSrc = config.USER_CONTENT_URL + imagePath;
+    //         } else {
+    //             imageSrc = (image && (config.contentUrl + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
+    //         }
+    //     }
+    // }
 
     function toggleCarousel() {
         if (image) {
@@ -115,6 +122,8 @@
                 if (request.status === 200){
                     const response = JSON.parse(request.responseText);
                     uploadFile(file, response.signedRequest, response.url);
+
+                    image = response.url;
                 } else {
                     console.error('Could not request image upload');
                 }
@@ -130,8 +139,7 @@
             if (request.readyState === 4){
                 if (request.status === 200){
                     fileIsUploading = false;
-                    image = 'content/projects/' + url;
-                    console.log('image', image);
+                    image = url;
                 } else {
                     console.error('Could not upload image');
                 }

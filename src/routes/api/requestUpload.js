@@ -20,10 +20,13 @@ export async function get(req, res, next) {
 	const fileName = req.query['file-name'];
 	const fileType = req.query['file-type'];
 
+	const folderIndentifier = 'content/';
+	const folder = 'projects/';
+
 	// 'Missing credentials in config, if using AWS_CONFIG_FILE, set AWS_SDK_LOAD_CONFIG=1',
 	const s3Params = {
 	  Bucket: S3_BUCKET,
-	  Key: 'projects/' + fileName,
+	  Key: folder + fileName,
 	  Expires: 60,
 	  ContentType: fileType,
 	  ACL: 'public-read'
@@ -39,7 +42,7 @@ export async function get(req, res, next) {
 
 		const returnData = {
 			signedRequest: data,
-			url: fileName, // `${fileName}`
+			url: folderIndentifier + folder + fileName, // `${fileName}`
 			// url: `https://${S3_BUCKET}.${aws.config.region}.s3.amazonaws.com/${fileName}`
 		};
 		response(res, returnData); // {success: true});

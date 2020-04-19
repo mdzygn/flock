@@ -458,11 +458,25 @@ export function setFollowProject(targetProject, follow) {
 	}
 }
 
+export function getHeaderImage(imageUrl, fullImage) {
+	if (imageUrl) {
+		const contextIndex = imageUrl.indexOf(config.CONTENT_IDENTIFIER_PATH);
+		if (contextIndex === 0) {
+			const imagePath = imageUrl.substr(config.CONTENT_IDENTIFIER_PATH.length);
+			return config.USER_CONTENT_URL + imagePath;
+		} else {
+			return config.contentUrl + (fullImage ? config.headerImageLibraryFolder : config.headerImageLibraryThumbFolder) + imageUrl + config.headerImageExtension;
+		}
+	}
+	return null;
+}
+
 export function getProjectHeaderImage(project, fullImage) {
 	if (project) {
 		if (project.headerImage) {
+			return getHeaderImage(project.headerImage, fullImage);
 			// return config.contentFolder + project.headerImage;
-			return config.contentUrl + (fullImage ? config.headerImageLibraryFolder : config.headerImageLibraryThumbFolder) + project.headerImage + config.headerImageExtension;
+			// return config.contentUrl + (fullImage ? config.headerImageLibraryFolder : config.headerImageLibraryThumbFolder) + project.headerImage + config.headerImageExtension;
 		} else {
 			const headerImageId = project.slug || '_default';
 			return config.projectContentFolder + headerImageId + '/' + config.projectHeaderImage;

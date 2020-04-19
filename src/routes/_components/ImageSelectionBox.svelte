@@ -170,7 +170,7 @@
 
 <div class="imageSelectionBox" class:opened="{carouselShown}">
     {#if imageSrc}
-        <img class="imageSelectionBoxImage" class:carouselShown="{carouselShown}" on:click="{toggleCarousel}" src="{imageSrc}" alt="project header image" />
+        <div class="imageSelectionBoxImage" style="background-image: url({imageSrc})" class:carouselShown="{carouselShown}" on:click="{toggleCarousel}" alt="project header image" />
         {#if carouselShown}
             <Button className="selectCancelButton" icon="{CancelIcon}" />
         {:else if fileIsUploading}
@@ -198,22 +198,35 @@
 <style>
     .imageSelectionBox {
 		width: 100%;
-		height: 245px;
+        padding-top: 59.6%;
+		/* height: 245px; */
 
         position: relative;
 
     	background-color: #E3E3E3;
     }
 
+	.imageSelectionBox.opened {
+		height: 245px;
+		padding-top: 0;
+		/* height: initial; */
+		/* padding-top: 59.6%; */
+	}
+
 	.imageSelectionBox :global(.searchBar) {
         position: absolute;
         top: 102px;
 
         pointer-events: none;
+
+        display: flex;
+        justify-content: center;
 	}
 	.imageSelectionBox :global(.searchBarField) {
         /* margin: 18px 100px; */
-        margin: 0 100px;
+        /* margin: 0 100px; */
+        margin: 0;
+        width: 200px;
 
         background-color: #ffffff;
         box-shadow: 0 2px 5px 0 rgba(0,0,0,0.15);
@@ -227,15 +240,19 @@
 
     .imageSelectionBoxImage {
         position: absolute;
+        top: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        /* object-fit: cover; */
+
+    	background-size: cover;
 
         cursor: pointer;
     }
 
     .carouselContainer {
         position: absolute;
+        top: 0;
         width: 100%;
         height: 100%;
 

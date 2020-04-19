@@ -216,9 +216,12 @@
 	.headerImageField :global(.imageSelectionBox) {
 		height: 200px;
     	margin-top: 10px;
+		padding-top: initial;
 	}
 	.headerImageField :global(.imageSelectionBox.opened) {
 		height: 245px;
+		/* height: initial; */
+		/* padding-top: 59.6%; */
 	}
 
 

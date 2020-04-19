@@ -39,7 +39,7 @@
 
 <div class="projectItem">
     <!-- <Proxy image="discover1" className="proxyImage" /> -->
-    <img class="headerImage" src="{headerImage}" alt="project image" on:click="{e => loadProject(projectId)}" />
+    <div class="headerImage" style="background-image: url({headerImage})" alt="project image" on:click="{e => loadProject(projectId)}" />
     <div class="contentContainer" on:click="{e => loadProject(projectId, { showInfo: true })}">
         <Button className="readMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button>
         <div class="itemContent">
@@ -142,8 +142,12 @@
 
     .headerImage {
         width: 100%;
-        height: 245px;
-        object-fit: cover;
+    	padding-top: 59.6%;
+    	background-size: cover;
+
+        /* height: 245px;
+        object-fit: cover; */
+
         background-color: #dedede;
 
         /* height: 154px;

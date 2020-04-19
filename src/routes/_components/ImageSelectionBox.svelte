@@ -170,12 +170,23 @@
 
     .imageSelectionBox :global(.uploadButton) {
         position: absolute;
-        top: 11px;
-        /* top: 235px; */
-        left: 50%;
-        margin-left: -50px;
+
+        top: 13px;
+        margin-left: -37.5px;
+        width: 75px;
+        height: 75px;
+
+        background-color: #ffffff;
+        border-radius: 999px;
+
+        /* margin-left: -50px;
         width: 100px;
-        height: 80px;
+        height: 80px; */
+
+        /* top: 11px; */
+        /* top: 235px; */
+
+        left: 50%;
         padding: 10px 0;
         box-sizing: border-box;
 
@@ -202,11 +213,13 @@
     }
 
     .imageSelectionBox :global(.uploadButton .buttonLabel) {
-        margin-top: 2px;
+        margin-top: -2px;
+        /* margin-top: 2px; */
         /* margin-top: 5px; */
 
         font-size: 1.2rem;
         font-weight: 700;
-        color: #222222;
+        /* color: #222222; */
+        color: #333333;
     }
 </style>

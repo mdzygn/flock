@@ -30,7 +30,7 @@ export const UPDATE_CONTEXT_STRING_DELAY = 600;
 export const USER_NAME_MIN_LENGTH = 4;
 export const USER_NAME_MAX_LENGTH = 16;
 
-export const RETURN_PROJECT_HEADER_OFFSET = 100;
+export const RETURN_PROJECT_HEADER_OFFSET = 75; // 100;
 
 export const SPLASH_TIMEOUT = 3;
 

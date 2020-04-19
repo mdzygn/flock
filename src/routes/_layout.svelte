@@ -12,6 +12,8 @@
 	import Nav from './_components/Nav.svelte';
 	import Overlays from './_components/Overlays.svelte';
 
+	import Splash from './_components/Splash.svelte';
+
 	export let segment;
 	$: path = ($page && $page.path) || '';
 
@@ -99,6 +101,7 @@
 <appContainer>
 	<GoogleAnalytics />
 	<appContent class:showFeedBg="{showFeedBg}">
+		<Splash />
 		<Overlays />
 		<div class="pageContent">
 			<main>

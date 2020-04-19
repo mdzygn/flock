@@ -29,6 +29,8 @@ export const USER_NAME_MAX_LENGTH = 16;
 
 export const RETURN_PROJECT_HEADER_OFFSET = 100;
 
+export const SPLASH_TIMEOUT = 3;
+
 export default {
     DEBUG,
 
@@ -60,4 +62,6 @@ export default {
     USER_NAME_MAX_LENGTH,
 
     RETURN_PROJECT_HEADER_OFFSET,
+
+    SPLASH_TIMEOUT,
 };

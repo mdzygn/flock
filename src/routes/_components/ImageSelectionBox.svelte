@@ -62,7 +62,7 @@
     }
 </script>
 
-<div class="imageSelectionBox">
+<div class="imageSelectionBox" class:opened="{carouselShown}">
     {#if imageSrc}
         <img class="imageSelectionBoxImage" class:carouselShown="{carouselShown}" on:click="{toggleCarousel}" src="{imageSrc}" alt="project header image" />
     {/if}
@@ -132,7 +132,12 @@
     }
 
     .imageSelectionBox :global(.imageCarousel) {
-        padding-top: 78px;
+        position: absolute;
+        top: 78px;
+        left: 0;
+        width: 100%;
+
+        /* padding-top: 78px; */
         /* padding-top: 40px; */
     }
 

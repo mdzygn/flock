@@ -198,7 +198,7 @@
 
 	.coverImage {
 		width: 100%;
-        height: 149px;
+        height: 200px;
         object-fit: cover;
         background-color: #dedede;
 	}

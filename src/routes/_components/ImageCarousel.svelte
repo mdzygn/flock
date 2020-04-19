@@ -123,16 +123,10 @@
 
         -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
 
-        pointer-events: none;
+        pointer-events: auto;
     }
 	.imageCarousel::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */
         display: none;
-    }
-
-    .imageContainer {
-        display: inline-block;
-
-        pointer-events: auto;
     }
 
     .imageCarousel :global(.imageItem) {
@@ -153,5 +147,9 @@
         border: 3px solid #ffffff;
 
         box-shadow: 0 2px 5px 0 rgba(0,0,0,0.5);
+    }
+
+    .imageContainer {
+        display: inline-block;
     }
 </style>

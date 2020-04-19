@@ -210,8 +210,11 @@
 
 
 	.headerImageField :global(.imageSelectionBox) {
-		height: 220px;
+		height: 200px;
     	margin-top: 10px;
+	}
+	.headerImageField :global(.imageSelectionBox.opened) {
+		height: 245px;
 	}
 
 

@@ -12,6 +12,8 @@
 	import SearchBar from '../_components/SearchBar.svelte';
     import ImageCarousel from './ImageCarousel.svelte';
 
+    import EmptyImage from "../../assets/images/empty.png";
+
     import UploadImageIcon from "../../assets/icons/upload_image.png";
 
     import imageLibrary from '../../data/library/images/compiled/imageLibrary.json';
@@ -48,6 +50,9 @@
     }
 
     async function selectImage(event) {
+        await tick();
+        imageSrc = EmptyImage; // force empty image to load first
+
         await tick();
         imageSrc = event.detail.thumbImage; // force thumb to load in image first
 

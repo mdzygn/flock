@@ -10,9 +10,6 @@ const S3_BUCKET = process.env.S3_CONTENT_BUCKET;
 
 export async function get(req, res, next) {
 	const s3 = new aws.S3();
-	console.log('requestUpload s3');
-	console.log('aws.config.aws_access_key_id ', aws.config.aws_access_key_id);
-	console.log('S3_BUCKET ', S3_BUCKET);
 
 	aws.config.aws_access_key_id = process.env.AWS_CONTENT_ACCESS_KEY_ID;
 	aws.config.aws_secret_access_key = process.env.AWS_CONTENT_ACCESS_KEY;
@@ -33,8 +30,6 @@ export async function get(req, res, next) {
 	};
 
 	s3.getSignedUrl('putObject', s3Params, (err, data) => {
-		console.log('requestUpload result');
-
 		if (err) {
 			console.log('putObject error', err);
 			errorResponse(res, {}, {errorMsg: 'putObject error'});
@@ -42,9 +37,9 @@ export async function get(req, res, next) {
 
 		const returnData = {
 			signedRequest: data,
-			url: folderIndentifier + folder + fileName, // `${fileName}`
+			url: folderIndentifier + folder + fileName,
 			// url: `https://${S3_BUCKET}.${aws.config.region}.s3.amazonaws.com/${fileName}`
 		};
-		response(res, returnData); // {success: true});
+		response(res, returnData);
 	});
 }

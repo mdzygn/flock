@@ -33,7 +33,7 @@
 
     let uploadFileInput;
 
-    let fileIsUploading = false;
+    export let fileIsUploading = false;
 
     let inited = false;
     $: {
@@ -69,6 +69,14 @@
         }
     }
 
+    function hideCarousel() {
+        carouselShown = false;
+    }
+
+    function showCarousel() {
+        carouselShown = true;
+    }
+
     async function selectImage(event) {
         fileIsUploading = false;
 
@@ -82,7 +90,7 @@
         imageSrc = (image && (config.contentUrl + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null; //TODO: find better way
 
         await tick();
-        carouselShown = false;
+        hideCarousel();
     }
 
     function uploadImage() {
@@ -126,6 +134,10 @@
                     image = response.url;
                 } else {
                     console.error('Could not request image upload');
+
+                    image = null;
+                    fileIsUploading = false;
+                    showCarousel();
                 }
             }
         };
@@ -138,11 +150,13 @@
         request.onreadystatechange = () => {
             if (request.readyState === 4){
                 if (request.status === 200){
-                    fileIsUploading = false;
                     image = url;
                 } else {
+                    image = null;
+                    showCarousel();
                     console.error('Could not upload image');
                 }
+                fileIsUploading = false;
             }
         };
         request.send(file);
@@ -154,6 +168,8 @@
         <img class="imageSelectionBoxImage" class:carouselShown="{carouselShown}" on:click="{toggleCarousel}" src="{imageSrc}" alt="project header image" />
         {#if carouselShown}
             <Button className="selectCancelButton" icon="{CancelIcon}" />
+        {:else if fileIsUploading}
+            <div class="uploadingIndicator">uploading image...</div>
         {/if}
     {/if}
     <div class="carouselContainer" class:hidden="{!carouselShown}">
@@ -303,5 +319,17 @@
         font-weight: 700;
         /* color: #222222; */
         color: #333333;
+    }
+
+    .uploadingIndicator {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+
+        padding: 4px 12px;
+        font-size: 1.3rem;
+
+        background-color: #ffffffcc;
+        border-radius: 999px;
     }
 </style>

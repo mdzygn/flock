@@ -19,7 +19,9 @@
 
 	let title = '';
 	let description = '';
+
 	let image = null; // 'header2';
+	let fileIsUploading;
 
 	let titleField;
 	let descriptionField;
@@ -41,7 +43,7 @@
 
     // $: titleField && titleField.focus();
 
-	$: nextEnabled = title && description && image;
+	$: nextEnabled = title && description && image && !fileIsUploading;
 
 	function createNewProject() {
 		const projectDetails = {
@@ -80,7 +82,7 @@
 			</div>
 			<div class="field headerImageField">
 				<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
-				<ImageSelectionBox bind:image {contextSearchString} />
+				<ImageSelectionBox bind:image {contextSearchString} bind:fileIsUploading="{fileIsUploading}" />
 			</div>
 			<div class="actions">
 				<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewProject}" icon="{NextArrowIcon}">{locale.NEW_PROJECT.CONFIRM}</Button>

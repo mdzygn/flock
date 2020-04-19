@@ -212,16 +212,18 @@
 						{#if showInfo}
 							<div class="projectInfo" class:forceShowInfo="{forceProjectShowingInfo}">
 								{#each projectDetails as projectDetailItem, index}
-									{#if projectDetailItem.detail}
+									{#if projectDetailItem.detail || projectDetailItem.image}
 										{#if projectDetailItem.image}
 											{#if projectDetailItem.image === true}
-												<Proxy image="project_info_image_{index + 1}" />
+												<Proxy image="project_info_image_{index + 1}" className="projectDetailImage {!projectDetailItem.detail ? 'soloImage' : ''}" />
 											{:else}
-												<img class="projectDetailImage" src="{getProjectDetailImage(projectDetailItem.image)}" alt="project header image" />
+												<img class="projectDetailImage {!projectDetailItem.detail ? 'soloImage' : ''}" src="{getProjectDetailImage(projectDetailItem.image)}" alt="project header image" />
 											{/if}
 										{/if}
 										<!-- <Proxy image="project_info_content_3" className="proxyOverlay" /> -->
-										<div class="projectInfoDetail">{@html parseHTML(projectDetailItem.detail)}</div>
+										{#if projectDetailItem.detail}
+											<div class="projectInfoDetail">{@html parseHTML(projectDetailItem.detail)}</div>
+										{/if}
 									{/if}
 								{/each}
 							</div>
@@ -471,6 +473,9 @@
 
 	.projectDetailImage {
 		width: 100%;
+	}
+	.projectDetailImage.soloImage {
+		margin-bottom: 30px;
 	}
 
 	.projectInfoDetail {

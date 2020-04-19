@@ -144,6 +144,7 @@
         width: 100%;
     	padding-top: 59.6%;
     	background-size: cover;
+        background-position: center;
 
         /* height: 245px;
         object-fit: cover; */

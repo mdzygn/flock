@@ -106,7 +106,7 @@
                 height: 39px;" />
         </Proxy> -->
         {#if coverImage}
-            <img src="{coverImage}" class="coverImage" alt="cover image" />
+            <div style="background-image: url({coverImage})" class="coverImage" alt="cover image" />
         {:else}
             <div class="coverImage" style="{coverBgStyling}" />
         {/if}
@@ -198,8 +198,13 @@
 
 	.coverImage {
 		width: 100%;
-        height: 200px;
-        object-fit: cover;
+        padding-top: 48.7%;
+    	background-size: cover;
+        background-position: center;
+
+        /* height: 200px; */
+        /* object-fit: cover; */
+
         background-color: #dedede;
 	}
 

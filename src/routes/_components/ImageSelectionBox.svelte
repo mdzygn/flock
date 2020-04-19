@@ -204,6 +204,9 @@
         position: relative;
 
     	background-color: #E3E3E3;
+
+        border-top: 1px solid #cccccc;
+        border-bottom: 1px solid #cccccc;
     }
 
 	.imageSelectionBox.opened {
@@ -246,6 +249,7 @@
         /* object-fit: cover; */
 
     	background-size: cover;
+        background-position: center;
 
         cursor: pointer;
     }

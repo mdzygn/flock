@@ -109,7 +109,6 @@
                     scrollHeaderHeight = scrollHeader.offsetHeight;
                 }
                 updateHeaderScrollPosition();
-                console.log('update ' + curScrollRegion.scrollTop);
             }
         }, 100);
 

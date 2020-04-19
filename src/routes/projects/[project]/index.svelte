@@ -183,7 +183,7 @@
 	{:else if !$project || !$project.id}
 		<ContentLoader label="{locale.PROJECT.NOT_FOUND}" />
 	{:else}
-		<ScrollView id="project" headerStartHidden="{!isArchived}">
+		<ScrollView id="project" headerStartHidden="{!isArchived}" headerHideOffset="{$projectReturnView ? config.RETURN_PROJECT_HEADER_OFFSET : 0}">
 			<div class="content">
 				<div class="contentItem" class:collapsedOptions="{$projectReturnView && !showInfo}" class:collapsedHeader="{$projectReturnView && !showInfo && !isNew && $showBetaFeatures}">
 					<img src="{headerImage}" class="headerImage" class:headerImageCollapsed="{$projectReturnView}" alt="project header image" />
@@ -377,12 +377,12 @@
 
 	.headerImage {
 		width: 100%;
-		height: 245px;
+		/* height: 245px; */
 	}
 
 	.headerImageCollapsed {
-		height: 150px;
-    	object-fit: cover;
+		/* height: 150px;
+    	object-fit: cover; */
 	}
 
     .contentContainer {

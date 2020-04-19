@@ -7,6 +7,7 @@
 
     export let anchorToBottom = false;
     export let headerStartHidden = false;
+    export let headerHideOffset = 0;
     export let headerResetOnShow = false;
 
     export let id = null;
@@ -25,7 +26,7 @@
         if (hasScrollHeader && scrollHeader && windowWidth) {
             scrollHeaderHeight = scrollHeader.offsetHeight;
         }
-        minScrollContentHeight = (scrollRegion && scrollRegion.offsetHeight) || 0;
+        minScrollContentHeight = (scrollRegion && scrollRegion.offsetHeight && scrollRegion.offsetHeight + headerHideOffset) || 0;
     }
 
     let scrollRegion;
@@ -133,6 +134,9 @@
                         curScrollHeaderPosition = (curScrollHeaderPosition - regionProps.scrollTop) - scrollHeaderHeight;
                         curScrollHeaderPosition = Math.min(regionProps.scrollTop, Math.max(regionProps.scrollTop - scrollHeaderHeight, curScrollHeaderPosition));
                         // console.log('regionProps.scrollTop: ' + regionProps.scrollTop + ' curScrollHeaderPosition: ' + curScrollHeaderPosition);
+                        if (headerHideOffset) {
+                            regionProps.scrollTop += headerHideOffset;
+                        }
                         scrollRegion.scrollTo(0, regionProps.scrollTop);
                     } else {
                         curScrollHeaderPosition = regionProps.scrollTop;

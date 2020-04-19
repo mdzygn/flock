@@ -27,6 +27,8 @@ export const UPDATE_CONTEXT_STRING_DELAY = 600;
 export const USER_NAME_MIN_LENGTH = 4;
 export const USER_NAME_MAX_LENGTH = 16;
 
+export const RETURN_PROJECT_HEADER_OFFSET = 100;
+
 export default {
     DEBUG,
 
@@ -56,4 +58,6 @@ export default {
 
     USER_NAME_MIN_LENGTH,
     USER_NAME_MAX_LENGTH,
+
+    RETURN_PROJECT_HEADER_OFFSET,
 };

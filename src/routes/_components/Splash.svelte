@@ -1,7 +1,8 @@
 <script>
-    import config from '../../config';
+	import { stores } from '@sapper/app';
+    const { page } = stores();
 
-    // import { onMount } from 'svelte';
+    import config from '../../config';
 
     import Proxy from '../../components/Proxy.svelte';
 
@@ -9,10 +10,6 @@
     import TagLineImage from "../../assets/images/splash_tagline.png";
     import HeartImage from "../../assets/images/heart.png";
     import FooterTaglineImage from "../../assets/images/splash_footer_tagline.png";
-
-    import {
-        curPath,
-    } from '../../models/appModel';
 
     let shown = false;
     let showInited = false;
@@ -22,7 +19,9 @@
         if (!showInited) {
             showInited = true;
 
-            if ($curPath === '' || $curPath === '/' || $curPath === '/discover' || $curPath === '/home') {
+            const path = $page.path;
+
+            if (path === '' || path === '/' || path === '/discover' || path === '/home') {
                 shown = true;
 
                 if (!timeoutInited && setTimeout) {

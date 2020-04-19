@@ -133,7 +133,7 @@
     }
 
     .carouselShown {
-        opacity: 0.4;
+        opacity: 0.2;
     }
 
     .imageSelectionBox :global(.imageCarousel) {
@@ -186,6 +186,6 @@
 
         font-size: 1.2rem;
         font-weight: 700;
-        color: #666666;
+        color: #222222;
     }
 </style>

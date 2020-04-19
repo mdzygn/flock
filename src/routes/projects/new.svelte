@@ -15,10 +15,14 @@
 
     import NextArrowIcon from "../../assets/icons/next_arrow.png";
 
+	import { getNewProjectId } from '../../models/projectsModel';
+
 	import { createProject } from '../../actions/projectActions';
 
 	let title = '';
 	let description = '';
+
+	let projectId = getNewProjectId();
 
 	let image = null; // 'header2';
 	let headerImageIsUploading;
@@ -51,6 +55,7 @@
 				title,
 				description,
 				headerImage: image,
+				id: projectId,
 			};
 			createProject(projectDetails);
 		}
@@ -84,7 +89,7 @@
 			</div>
 			<div class="field headerImageField">
 				<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
-				<ImageSelectionBox bind:image {contextSearchString} bind:fileIsUploading="{headerImageIsUploading}" />
+				<ImageSelectionBox bind:image {contextSearchString} bind:fileIsUploading="{headerImageIsUploading}" uploadType="projectHeader" itemId="{projectId}" />
 			</div>
 			<div class="actions">
 				<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewProject}" icon="{NextArrowIcon}">{locale.NEW_PROJECT.CONFIRM}</Button>

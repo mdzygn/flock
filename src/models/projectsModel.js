@@ -345,17 +345,25 @@ function projectsUpdated() {
 	updateArchivedProjects();
 }
 
-export function addProject(projectDetails) {
+export function getNewProjectId() {
     let projectId, trialIndex;
 	do { projectId = generateId(); } while (getProject(projectId) && trialIndex < 99);
 	if (trialIndex === 99) { return null; }
+	return projectId;
+}
+
+export function addProject(projectDetails) {
+    // let projectId, trialIndex;
+	// do { projectId = generateId(); } while (getProject(projectId) && trialIndex < 99);
+	// if (trialIndex === 99) { return null; }
 
 	const newProjectModel = ProjectModel();
 	const newProject = get(newProjectModel);
 
 	const ownerId = get(userId);
 
-	newProject.id = projectId;
+	// newProject.id = projectId;
+	newProject.id = projectDetails.id;
 
 	newProject.ownerId = ownerId;
 	newProject.team = [ownerId];

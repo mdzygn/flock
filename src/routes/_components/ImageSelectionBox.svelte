@@ -28,7 +28,11 @@
 
     export let contextSearchString = '';
 
-    export let uploadType = 'project';
+    export let uploadType;
+    export let itemId;
+    export let itemIndex = '';
+
+    export let className = '';
 
     let carouselShown = true;
     let imageLibrarySearchString = '';
@@ -123,12 +127,26 @@
     }
 
     function getSignedRequest(file){
+        if (!itemId) {
+            console.error('no itemId provided for image selector');
+            return;
+        }
+
         const request = new XMLHttpRequest();
 
         const fileName = encodeURIComponent(file.name);
         const fileType = encodeURIComponent(file.type);
 
-        request.open('GET', `/api/requestUpload?file-name=${fileName}&file-type=${fileType}&upload-type=${uploadType}`);
+        let requestUrl = `/api/requestUpload`;
+        requestUrl += `?file-name=${fileName}`;
+        requestUrl += `&file-type=${fileType}`;
+        requestUrl += `&upload-type=${uploadType}`;
+        requestUrl += `&item-id=${itemId}`;
+        if (itemIndex !== '') {
+            requestUrl += `&item-index=${itemIndex}`;
+        }
+
+        request.open('GET', requestUrl);
 
         request.onreadystatechange = () => {
             if (request.readyState === 4) {
@@ -168,7 +186,7 @@
     }
 </script>
 
-<div class="imageSelectionBox" class:opened="{carouselShown}">
+<div class="imageSelectionBox {className}" class:opened="{carouselShown}">
     {#if imageSrc}
         <div class="imageSelectionBoxImage" style="background-image: url({imageSrc})" class:carouselShown="{carouselShown}" on:click="{toggleCarousel}" alt="project header image" />
         {#if carouselShown}

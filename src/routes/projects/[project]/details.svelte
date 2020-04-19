@@ -227,7 +227,7 @@
 				</div>
 				<div class="field headerImageField">
 					<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
-					<ImageSelectionBox bind:image bind:fileIsUploading="{headerImageIsUploading}" />
+					<ImageSelectionBox bind:image bind:fileIsUploading="{headerImageIsUploading}" uploadType="projectHeader" itemId="{$projectId}" />
 				</div>
 				<div class="field descriptionField">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
@@ -244,7 +244,7 @@
 				<div class="imageField">
 					<Button className="addImage" onClick="{() => removeImage(0) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 				</div>
-				<ImageSelectionBox bind:image="{detailImage1}" bind:fileIsUploading="{detail1ImageIsUploading}" />
+				<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage1}" bind:fileIsUploading="{detail1ImageIsUploading}" itemIndex="1" uploadType="projectDetail" itemId="{$projectId}" />
 			{:else}
 				<div class="imageField">
 					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(0) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
@@ -260,7 +260,7 @@
 				<div class="imageField">
 					<Button className="addImage" onClick="{() => removeImage(1) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 				</div>
-				<ImageSelectionBox bind:image="{detailImage2}" bind:fileIsUploading="{detail2ImageIsUploading}" />
+				<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage2}" bind:fileIsUploading="{detail2ImageIsUploading}" itemIndex="2" uploadType="projectDetail" itemId="{$projectId}" />
 			{:else}
 				<div class="imageField">
 					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(1) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
@@ -275,7 +275,7 @@
 				<div class="imageField">
 					<Button className="addImage" onClick="{() => removeImage(2) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 				</div>
-				<ImageSelectionBox bind:image="{detailImage3}" bind:fileIsUploading="{detail3ImageIsUploading}" />
+				<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage3}" bind:fileIsUploading="{detail3ImageIsUploading}" itemIndex="3" uploadType="projectDetail" itemId="{$projectId}" />
 			{:else}
 				<div class="imageField">
 					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(2) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
@@ -290,7 +290,7 @@
 				<div class="imageField">
 					<Button className="addImage" onClick="{() => removeImage(3) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 				</div>
-				<ImageSelectionBox bind:image="{detailImage4}" bind:fileIsUploading="{detail4ImageIsUploading}" />
+				<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage4}" bind:fileIsUploading="{detail4ImageIsUploading}" itemIndex="4" uploadType="projectDetail" itemId="{$projectId}" />
 			{:else}
 				<div class="imageField">
 					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(3) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
@@ -414,6 +414,10 @@
     	margin-top: 10px;
 	}
 
+	.content :global(.detailImageSelector .imageSelectionBoxImage) {
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
 
 	.mainProjectDetails {
 		padding-bottom: 20px;

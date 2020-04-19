@@ -96,7 +96,7 @@
 				</div>
 				<div class="field headerImageField">
 					<div class="label headerImageLabel">{locale.EDIT_PROFILE.COVER_IMAGE}</div>
-					<ImageSelectionBox bind:image bind:fileIsUploading="{headerImageIsUploading}" uploadType="user" />
+					<ImageSelectionBox bind:image bind:fileIsUploading="{headerImageIsUploading}" uploadType="userCover" itemId="{$userId}" />
 				</div>
 				<div class="field skillsField">
 					<div class="label labelDetails">{locale.EDIT_PROFILE.SKILLS}<span class="tip">{@html locale.EDIT_PROFILE.SKILLS_TIP}</span></div>

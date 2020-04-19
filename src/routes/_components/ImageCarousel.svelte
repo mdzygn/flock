@@ -119,8 +119,6 @@
         overflow-x: scroll;
         overflow-y: hidden;
 
-        padding: 0px 45px;
-
         -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
 
         pointer-events: auto;
@@ -153,5 +151,7 @@
 
     .imageContainer {
         display: inline-block;
+
+        padding: 0px 45px;
     }
 </style>

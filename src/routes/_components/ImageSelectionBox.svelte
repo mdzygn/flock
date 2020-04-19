@@ -15,6 +15,7 @@
     import EmptyImage from "../../assets/images/empty.png";
 
     import UploadImageIcon from "../../assets/icons/upload_image.png";
+    import CancelIcon from "../../assets/icons/clear.png";
 
     import imageLibrary from '../../data/library/images/compiled/imageLibrary.json';
     // import imageLibrary from '../../data/library/images/_general.json';
@@ -70,6 +71,9 @@
 <div class="imageSelectionBox" class:opened="{carouselShown}">
     {#if imageSrc}
         <img class="imageSelectionBoxImage" class:carouselShown="{carouselShown}" on:click="{toggleCarousel}" src="{imageSrc}" alt="project header image" />
+        {#if carouselShown}
+            <Button className="cancelButton" icon="{CancelIcon}" />
+        {/if}
     {/if}
     <div class="carouselContainer" class:hidden="{!carouselShown}">
         <SearchBar bind:searchString={imageLibrarySearchString} />
@@ -100,11 +104,14 @@
 
 	.imageSelectionBox :global(.searchBar) {
         position: absolute;
+        top: 102px;
 
         pointer-events: none;
 	}
 	.imageSelectionBox :global(.searchBarField) {
-        margin: 18px 100px;
+        /* margin: 18px 100px; */
+        margin: 0 100px;
+
         background-color: #ffffff;
         box-shadow: 0 2px 5px 0 rgba(0,0,0,0.15);
 
@@ -138,7 +145,8 @@
 
     .imageSelectionBox :global(.imageCarousel) {
         position: absolute;
-        top: 62px;
+        top: 142px;
+        /* top: 62px; */
         /* top: 78px; */
         left: 0;
         width: 100%;
@@ -147,13 +155,26 @@
         /* padding-top: 40px; */
     }
 
+    .imageSelectionBox :global(.cancelButton) {
+        position: absolute;
+        right: 17px;
+        top: 17px;
+        width: 30px;
+        height: 30px;
+        padding-left: 5px;
+        padding-top: 2px;
+        box-sizing: border-box;
+
+        pointer-events: none;
+    }
+
     .imageSelectionBox :global(.uploadButton) {
         position: absolute;
-        top: 235px;
+        top: 11px;
+        /* top: 235px; */
         left: 50%;
-        margin-top: -75px;
-        margin-left: -80px;
-        width: 160px;
+        margin-left: -50px;
+        width: 100px;
         height: 80px;
         padding: 10px 0;
         box-sizing: border-box;

@@ -23,7 +23,7 @@ export async function get(req, res, next) {
 	// 'Missing credentials in config, if using AWS_CONFIG_FILE, set AWS_SDK_LOAD_CONFIG=1',
 	const s3Params = {
 	  Bucket: S3_BUCKET,
-	  Key: fileName,
+	  Key: 'projects/' + fileName,
 	  Expires: 60,
 	  ContentType: fileType,
 	  ACL: 'public-read'

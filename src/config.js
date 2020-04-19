@@ -4,6 +4,7 @@ export const MAIN_USER = 'sl3p5oms';
 export const GENERAL_USER = 'bl20a8lm';
 
 export const contentUrl = 'https://flock-hub-dev.s3-us-west-2.amazonaws.com/';
+export const USER_CONTENT_URL = 'https://flock-hub-dev-content.s3-us-west-2.amazonaws.com/';
 
 export const contentFolder = 'content/';
 export const projectContentFolder = 'content/projects/';
@@ -12,6 +13,8 @@ export const projectHeaderImage = 'header.jpg';
 export const headerImageLibraryFolder = 'library/images/';
 export const headerImageLibraryThumbFolder = 'library/images/thumbs/';
 export const headerImageExtension = '.jpg';
+
+export const CONTENT_IDENTIFIER_PATH = 'content/';
 
 export const MAX_ID_LENGTH = 12;
 
@@ -64,4 +67,8 @@ export default {
     RETURN_PROJECT_HEADER_OFFSET,
 
     SPLASH_TIMEOUT,
+
+    USER_CONTENT_URL,
+
+    CONTENT_IDENTIFIER_PATH,
 };

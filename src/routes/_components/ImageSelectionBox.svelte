@@ -46,7 +46,13 @@
     let imageSrc = null;
     $: {
         if (!fileIsUploading) {
-            imageSrc = (image && (config.contentUrl + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
+            const contextIndex = image && image.indexOf(config.CONTENT_IDENTIFIER_PATH);
+            if (contextIndex === 0) {
+                const imagePath = image.substr(config.CONTENT_IDENTIFIER_PATH.length);
+                imageSrc = config.USER_CONTENT_URL + imagePath;
+            } else {
+                imageSrc = (image && (config.contentUrl + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
+            }
         }
     }
 

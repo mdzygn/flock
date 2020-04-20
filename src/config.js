@@ -74,4 +74,7 @@ export default {
     USER_CONTENT_URL,
 
     CONTENT_IDENTIFIER_PATH,
+
+    UPLOAD_MAX_WIDTH,
+    UPLOAD_MAX_HEIGHT,
 };

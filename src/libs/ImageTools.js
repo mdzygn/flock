@@ -1,4 +1,5 @@
-import EXIF from 'exif-js';
+import exifr from 'exifr';
+// import EXIF from 'exif-js';
 
 const hasBlobConstructor = typeof (Blob) !== 'undefined' && (function checkBlobConstructor() {
     try {
@@ -39,7 +40,7 @@ export default class ImageTools {
 
             const image = document.createElement('img');
 
-            image.onload = () => {
+            image.onload = async () => {
                 let width  = image.width;
                 let height = image.height;
 
@@ -51,12 +52,21 @@ export default class ImageTools {
                     height = maxDimensions.height;
                 } // else return resolve(file); // early exit; no need to resize - still may need to exif rotate
 
-                EXIF.getData(image, () => {
-                    const orientation = EXIF.getTag(image, 'Orientation');
-                    const imageCanvas = this.drawImageToCanvas(image, orientation, 0, 0, width, height, 'contain');
-                    if (hasToBlobSupport) imageCanvas.toBlob(blob => resolve(blob), file.type);
-                    else resolve(this.toBlob(imageCanvas, file.type));
-                });
+                // EXIF.getData(image, () => {
+
+                let orientation = 1;
+
+                if (file.type.match(/image\/jpeg/)) {
+                    orientation = await exifr.orientation(image);
+                    // exifr.getData(image, () => {
+                        // const orientation = EXIF.getTag(image, 'Orientation');
+                }
+
+                const imageCanvas = this.drawImageToCanvas(image, orientation, 0, 0, width, height, 'contain');
+                if (hasToBlobSupport) imageCanvas.toBlob(blob => resolve(blob), file.type);
+                else resolve(this.toBlob(imageCanvas, file.type));
+
+                // });
             };
 
             this.loadImage(image, file);

@@ -7,6 +7,11 @@
 
     import { shuffle } from '../../utils';
 
+    import ImageTools from '../../libs/ImageTools';
+    // const FileAPI = require('fileapi');
+    // import FileAPI from 'fileapi';
+    // import sharp from 'sharp';
+
     import Button from '../../components/Button.svelte';
 
 	import SearchBar from '../_components/SearchBar.svelte';
@@ -118,11 +123,31 @@
 
             imageSrc = EmptyImage; // force empty image to load first
 
-            await tick();
-            imageSrc = URL.createObjectURL(file);
+            // await tick();
+            // imageSrc = URL.createObjectURL(file);
 
             await tick();
-            getSignedRequest(file);
+            const imageTools = new ImageTools();
+            imageTools.resize(file, { width: config.UPLOAD_MAX_WIDTH, height: config.UPLOAD_MAX_HEIGHT }).then(async (blob) => {
+                imageSrc = URL.createObjectURL(blob);
+
+                await tick();
+                getSignedRequest(blob);
+            });
+
+            // sharp(file)
+            //     .rotate()
+            //     .resize(config.UPLOAD_MAX_WIDTH, config.UPLOAD_MAX_HEIGHT, {
+            //         fit: 'contain'
+            //     })
+            //     .toBuffer()
+            //     .then(async (buffer) => {
+            //         await tick();
+            //         getSignedRequest(buffer);
+            //     });
+
+            // await tick();
+            // getSignedRequest(file);
         }
     }
 
@@ -168,6 +193,37 @@
     }
 
     function uploadFile(file, signedRequest, url){
+        // const request = FileAPI.upload({
+        //     url: signedRequest,
+        //     uploadMethod: 'PUT',
+        //     files: { file: file },
+        //     imageAutoOrientation: true,
+        //     imageTransform: {
+        //         maxWidth: 1024,
+        //         maxHeight: 2048,
+        //     },
+        //     imageTransform: {
+        //         type: 'image/jpeg',
+        //         quality: 0.9,
+        //     },
+        //     progress: function (evt, file, xhr, options){
+        //         var progress = Math.round(evt.loaded/evt.total * 100);
+        //         console.log('upload progress', progress);
+        //     },
+        //     complete: function (err, xhr, file, options){
+        //         if ( !err ){
+        //             image = url;
+        //             console.log('upload complete');
+        //             // All files successfully uploaded.
+        //         } else {
+        //             image = null;
+        //             showCarousel();
+        //             console.error('Could not upload image');
+        //         }
+        //         fileIsUploading = false;
+        //     }
+        // });
+
         const request = new XMLHttpRequest();
         request.open('PUT', signedRequest);
         request.onreadystatechange = () => {

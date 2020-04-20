@@ -4,8 +4,9 @@ const aws = require('aws-sdk');
 const path = require('path');
 
 aws.config.region = 'us-west-2';
-// aws.config.aws_access_key_id = process.env.AWS_CONTENT_ACCESS_KEY_ID;
-// aws.config.aws_secret_access_key = process.env.AWS_CONTENT_ACCESS_KEY;
+// aws.config.accessKeyId = process.env.AWS_CONTENT_ACCESS_KEY_ID;
+// aws.config.secretAccessKey = process.env.AWS_CONTENT_ACCESS_KEY;
+// aws.config.update({limits: {fileSize: 1000000, files: config.MAX_FILE_COUNT || 6}
 
 const S3_BUCKET = process.env.S3_CONTENT_BUCKET;
 

@@ -1,7 +1,7 @@
 import { response, errorResponse } from '../../server/mongo.js';
 
 const aws = require('aws-sdk');
-const path = require('path');
+// const path = require('path');
 
 aws.config.region = 'us-west-2';
 // aws.config.accessKeyId = process.env.AWS_CONTENT_ACCESS_KEY_ID;
@@ -10,21 +10,36 @@ aws.config.region = 'us-west-2';
 
 const S3_BUCKET = process.env.S3_CONTENT_BUCKET;
 
-export async function get(req, res, next) {
+const fileType= 'image/jpeg';
+const fileExtension = '.jpg';
+
+// export async function get(req, res, next) {
+export async function post(req, res, next) {
 	const s3 = new aws.S3();
 
 	aws.config.aws_access_key_id = process.env.AWS_CONTENT_ACCESS_KEY_ID;
 	aws.config.aws_secret_access_key = process.env.AWS_CONTENT_ACCESS_KEY;
 
-	const fileName = req.query['file-name'];
-	const fileType = req.query['file-type'];
-	const uploadType = req.query['upload-type'];
-	const itemId = req.query['item-id'];
-	const itemIndex = req.query['item-index'];
+	const options = req.body;
+
+	// const fileName = options.fileName;
+	// const fileType = options.fileType;
+	const uploadType = options.uploadType;
+	const itemId = options.itemId;
+	const itemIndex = options.itemIndex;
+
+	// const fileName = req.query['file-name'];
+	// const fileType = req.query['file-type'];
+	// const uploadType = req.query['upload-type'];
+	// const itemId = req.query['item-id'];
+	// const itemIndex = req.query['item-index'];
 
 	const folderIndentifier = 'content/';
 
 	let folder = '';
+
+	// validate itemId
+	// validate itemIndex
 
 	let newItemFilename = itemId;
 
@@ -44,9 +59,9 @@ export async function get(req, res, next) {
 		errorResponse(res, {}, {errorMsg: 'invalid upload-type'});
 	}
 
-	const extension = path.extname(fileName);
+	// const extension = path.extname(fileName);
 
-	newItemFilename += extension;
+	newItemFilename += fileExtension; // extension;
 
 	// 'Missing credentials in config, if using AWS_CONFIG_FILE, set AWS_SDK_LOAD_CONFIG=1',
 	const s3Params = {

@@ -5,6 +5,8 @@
 
     import config from '../../config';
 
+    import api from '../../api';
+
     import { shuffle } from '../../utils';
 
     import ImageTools from '../../libs/ImageTools';
@@ -151,45 +153,70 @@
         }
     }
 
+    function fileUploadFailed() {
+        image = null;
+        fileIsUploading = false;
+        showCarousel();
+        console.error('Could not request image upload');
+    }
+
     function getSignedRequest(file){
         if (!itemId) {
             console.error('no itemId provided for image selector');
             return;
         }
 
-        const request = new XMLHttpRequest();
-
-        const fileName = encodeURIComponent(file.name);
-        const fileType = encodeURIComponent(file.type);
-
-        let requestUrl = `/api/requestUpload`;
-        requestUrl += `?file-name=${fileName}`;
-        requestUrl += `&file-type=${fileType}`;
-        requestUrl += `&upload-type=${uploadType}`;
-        requestUrl += `&item-id=${itemId}`;
-        if (itemIndex !== '') {
-            requestUrl += `&item-index=${itemIndex}`;
-        }
-
-        request.open('GET', requestUrl);
-
-        request.onreadystatechange = () => {
-            if (request.readyState === 4) {
-                if (request.status === 200){
-                    const response = JSON.parse(request.responseText);
-                    uploadFile(file, response.signedRequest, response.url);
-
-                    image = response.url;
-                } else {
-                    console.error('Could not request image upload');
-
-                    image = null;
-                    fileIsUploading = false;
-                    showCarousel();
-                }
-            }
+        const options = {
+            uploadType,
+            itemId,
+            itemIndex,
         };
-        request.send();
+
+        api.requestUpload(options).then((response) => {
+            if (response.signedRequest) {
+                uploadFile(file, response.signedRequest, response.url);
+
+                image = response.url;
+            } else {
+                fileUploadFailed();
+            }
+        }).catch(() => {
+            fileUploadFailed();
+        })
+
+        // const request = new XMLHttpRequest();
+
+        // // const fileName = encodeURIComponent(file.name);
+        // // const fileType = encodeURIComponent(file.type);
+
+        // let requestUrl = `/api/requestUpload`;
+        // requestUrl += `?file-name=${fileName}`;
+        // requestUrl += `&file-type=${fileType}`;
+        // requestUrl += `&upload-type=${uploadType}`;
+        // requestUrl += `&item-id=${itemId}`;
+        // if (itemIndex !== '') {
+        //     requestUrl += `&item-index=${itemIndex}`;
+        // }
+
+        // request.open('GET', requestUrl);
+
+        // request.onreadystatechange = () => {
+        //     if (request.readyState === 4) {
+        //         if (request.status === 200){
+        //             const response = JSON.parse(request.responseText);
+        //             uploadFile(file, response.signedRequest, response.url);
+
+        //             image = response.url;
+        //         } else {
+        //             console.error('Could not request image upload');
+
+        //             image = null;
+        //             fileIsUploading = false;
+        //             showCarousel();
+        //         }
+        //     }
+        // };
+        // request.send();
     }
 
     function uploadFile(file, signedRequest, url){

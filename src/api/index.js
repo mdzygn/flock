@@ -273,6 +273,20 @@ function unlikePost(options) {
 	});
 }
 
+/*** Upload ***/
+
+// options = { details: { uploadType: string, itemId: id, itemIndex: number } }
+function requestUpload(options) {
+	options = addCredentials(options);
+	return send('requestUpload', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - unlikePost: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 
 
 const api = {
@@ -300,6 +314,9 @@ const api = {
 
 	likePost,
 	unlikePost,
+
+
+	requestUpload,
 }
 
 export default api;

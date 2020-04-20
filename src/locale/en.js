@@ -45,6 +45,7 @@ const locale = {
 		NAME: 'name',
 		BIO: 'bio',
 		BIO_TIP: '- what do you like to do?', // '- what fuels your fire?',
+		UPLOAD_PROFILE_IMAGE: 'upload image',
 		COVER_IMAGE: 'cover image',
 		SKILLS: 'skills',
 		SKILLS_TIP: 'capabilities and interests, separated by commas',

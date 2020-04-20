@@ -21,6 +21,7 @@
 	import AddImageIcon from "../../../assets/icons/add_small.png";
     import CancelIcon from "../../../assets/icons/cancel.png";
 	import SaveIcon from "../../../assets/icons/save.png";
+    import UploadImageIcon from "../../../assets/icons/upload_image.png";
 
 	import { user, userId, showBetaFeatures } from '../../../models/appModel';
 	import { saveProfile } from '../../../actions/userActions';
@@ -69,6 +70,10 @@
 	function cancel() {
 		goto('profile/' + $userId);
 	}
+
+	function uploadProfileImage() {
+
+	}
 </script>
 
 <svelte:head>
@@ -84,6 +89,7 @@
 				</div>
 
     			<AvatarIcon user="{curUserProps}" onClick="{randomiseProfileColor}"/>
+				<Button className="uploadAvatarButton" onClick="{uploadProfileImage}" icon="{UploadImageIcon}">{locale.EDIT_PROFILE.UPLOAD_PROFILE_IMAGE}</Button>
 				<div class="field">
 					<div class="label">{locale.EDIT_PROFILE.NAME}</div>
 					<input type="text" bind:value="{name}" on:keypress="{(e) => testInputDefocus(e, {target: bioInput})}" />
@@ -277,5 +283,29 @@
     .content :global(.cancelButton .icon) {
     	padding-left: 12px;
     	margin-top: -1px;
+    }
+
+    .content :global(.uploadAvatarButton) {
+        position: absolute;
+
+		top: 102px;
+		left: 142px;
+
+    	padding: 10px 0;
+
+    	font-size: 1.3rem;
+		font-weight: 700;
+    }
+    .content :global(.uploadAvatarButton .buttonContent) {
+		position: relative;
+    	padding-left: 40px;
+    }
+    .content :global(.uploadAvatarButton .iconContainer) {
+		position: absolute;
+		left: 0;
+		top: 9px;
+    }
+    .content :global(.uploadAvatarButton .icon) {
+    	transform: scale(0.4, 0.4);
     }
 </style>

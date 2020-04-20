@@ -55,6 +55,10 @@ export async function post(req, res, next) {
 	} else if (uploadType === 'userCover') {
 		folder = 'users/';
 		newItemFilename += '-cover';
+	} else if (uploadType === 'post') {
+		folder = 'posts/';
+	} else if (uploadType === 'message') {
+		folder = 'messages/';
 	} else {
 		errorResponse(res, {}, {errorMsg: 'invalid upload-type'});
 	}
@@ -114,4 +118,15 @@ export async function post(req, res, next) {
 			response(res, returnData);
 		}
 	});
+
+	// sharp(file)
+	//     .rotate()
+	//     .resize(config.UPLOAD_MAX_WIDTH, config.UPLOAD_MAX_HEIGHT, {
+	//         fit: 'contain'
+	//     })
+	//     .toBuffer()
+	//     .then(async (buffer) => {
+	//         await tick();
+	//         getSignedRequest(buffer);
+	//     });
 }

@@ -128,7 +128,7 @@
 
             await tick();
             const imageTools = new ImageTools();
-            imageTools.resize(file, { width: config.UPLOAD_MAX_WIDTH, height: config.UPLOAD_MAX_HEIGHT }).then(async (blob) => {
+            imageTools.resize(file, { maxWidth: config.UPLOAD_MAX_WIDTH, maxHeight: config.UPLOAD_MAX_HEIGHT, type: 'image/jpeg'}).then(async (blob) => {
                 imageSrc = URL.createObjectURL(blob);
 
                 await tick();

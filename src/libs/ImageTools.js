@@ -32,7 +32,7 @@ export default class ImageTools {
 
         this.browserSupport = this.isSupportedByBrowser();
 
-        this.resize = (file, maxDimensions) => new Promise((resolve) => {
+        this.resize = (file, options) => new Promise((resolve) => {
 
             if (!this.browserSupport || !file.type.match(/image.*/)) return resolve(file);  // early exit - not supported
 
@@ -44,12 +44,12 @@ export default class ImageTools {
                 let width  = image.width;
                 let height = image.height;
 
-                if (width >= height && width > maxDimensions.width) {
-                    height *= maxDimensions.width / width;
-                    width = maxDimensions.width;
-                } else if (height > maxDimensions.height) {
-                    width *= maxDimensions.height / height;
-                    height = maxDimensions.height;
+                if (width >= height && width > options.maxWidth) {
+                    height *= options.maxWidth / width;
+                    width = options.maxWidth;
+                } else if (height > options.maxHeight) {
+                    width *= options.maxHeight / height;
+                    height = options.maxHeight;
                 } // else return resolve(file); // early exit; no need to resize - still may need to exif rotate
 
                 // EXIF.getData(image, () => {
@@ -63,7 +63,7 @@ export default class ImageTools {
                 }
 
                 const imageCanvas = this.drawImageToCanvas(image, orientation, 0, 0, width, height, 'contain');
-                if (hasToBlobSupport) imageCanvas.toBlob(blob => resolve(blob), file.type);
+                if (hasToBlobSupport) imageCanvas.toBlob(blob => resolve(blob), options.type || file.type);
                 else resolve(this.toBlob(imageCanvas, file.type));
 
                 // });

@@ -16,8 +16,8 @@ const fileExtension = '.jpg';
 export async function post(req, res, next) {
 	const s3 = new aws.S3();
 
-	aws.config.aws_access_key_id = process.env.AWS_CONTENT_ACCESS_KEY_ID;
-	aws.config.aws_secret_access_key = process.env.AWS_CONTENT_ACCESS_KEY;
+	// aws.config.aws_access_key_id = process.env.AWS_CONTENT_ACCESS_KEY_ID;
+	// aws.config.aws_secret_access_key = process.env.AWS_CONTENT_ACCESS_KEY;
 
 	const options = req.body;
 

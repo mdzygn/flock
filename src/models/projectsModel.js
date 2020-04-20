@@ -472,7 +472,7 @@ export function getProjectHeaderImage(project, thumb) {
 		if (project.headerImage) {
 			return getHeaderImage(project.headerImage, thumb);
 			// return config.contentFolder + project.headerImage;
-			// return config.contentUrl + (fullImage ? config.headerImageLibraryFolder : config.headerImageLibraryThumbFolder) + project.headerImage + config.headerImageExtension;
+			// return config.SITE_CONTENT_URL + (fullImage ? config.headerImageLibraryFolder : config.headerImageLibraryThumbFolder) + project.headerImage + config.headerImageExtension;
 		} else {
 			const headerImageId = project.slug || '_default';
 			return config.projectContentFolder + headerImageId + '/' + config.projectHeaderImage;

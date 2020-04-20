@@ -217,7 +217,7 @@ export function getHeaderImage(imageUrl, thumb) {
             // }
 			// return config.USER_CONTENT_URL + imagePath;
 		} else {
-			return config.contentUrl + (thumb ? config.headerImageLibraryThumbFolder : config.headerImageLibraryFolder) + imageUrl + config.headerImageExtension;
+			return config.SITE_CONTENT_URL + (thumb ? config.headerImageLibraryThumbFolder : config.headerImageLibraryFolder) + imageUrl + config.headerImageExtension;
 		}
 	}
 	return null;

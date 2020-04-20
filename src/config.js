@@ -3,8 +3,8 @@ export const DEBUG = (process.env.NODE_ENV === 'development');
 export const MAIN_USER = 'sl3p5oms';
 export const GENERAL_USER = 'bl20a8lm';
 
-export const contentUrl = 'https://flock-hub-dev.s3-us-west-2.amazonaws.com/';
-export const USER_CONTENT_URL = 'https://flock-hub-dev-content.s3-us-west-2.amazonaws.com/';
+export const SITE_CONTENT_URL = (process.env.NODE_ENV === 'development') ? 'https://flock-hub-dev.s3-us-west-2.amazonaws.com/' : 'https://flock-hub.s3-us-west-2.amazonaws.com/';
+export const USER_CONTENT_URL = (process.env.NODE_ENV === 'development') ? 'https://flock-hub-dev-content.s3-us-west-2.amazonaws.com/' : 'https://flock-hub-content.s3-us-west-2.amazonaws.com/';
 
 export const contentFolder = 'content/';
 export const projectContentFolder = 'content/projects/';
@@ -50,7 +50,8 @@ export default {
     MAIN_USER,
     GENERAL_USER,
 
-    contentUrl,
+    SITE_CONTENT_URL,
+    USER_CONTENT_URL,
 
     contentFolder,
     projectContentFolder,
@@ -77,8 +78,6 @@ export default {
     RETURN_PROJECT_HEADER_OFFSET,
 
     SPLASH_TIMEOUT,
-
-    USER_CONTENT_URL,
 
     CONTENT_IDENTIFIER_PATH,
 

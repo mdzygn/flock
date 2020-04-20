@@ -106,7 +106,7 @@
 
 	function getProjectDetailImage(imageId) {
 		return getHeaderImage(imageId);
-		// return config.contentUrl + config.headerImageLibraryFolder + imageId + config.headerImageExtension;
+		// return config.SITE_CONTENT_URL + config.headerImageLibraryFolder + imageId + config.headerImageExtension;
 	}
 
 	// let proxyChannelsImage;

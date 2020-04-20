@@ -84,7 +84,7 @@
         imageSrc = event.detail.thumbImage; // force thumb to load in image first
 
         await tick(); // then reupdate with current image
-        imageSrc = (image && (config.contentUrl + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null; //TODO: find better way
+        imageSrc = (image && (config.SITE_CONTENT_URL + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null; //TODO: find better way
 
         await tick();
         hideCarousel();
@@ -142,7 +142,7 @@
         <SearchBar bind:searchString={imageLibrarySearchString} />
         <ImageCarousel
             images="{libraryImages}"
-            imageBasePath="{config.contentUrl + config.headerImageLibraryThumbFolder}"
+            imageBasePath="{config.SITE_CONTENT_URL + config.headerImageLibraryThumbFolder}"
             imageExtension="{config.headerImageExtension}"
             bind:image="{image}"
             searchString="{imageLibrarySearchString}"

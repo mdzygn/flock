@@ -40,6 +40,8 @@ function uploadImage(options) {
                     getSignedRequest(imageFile, thumbFile);
                 });
             });
+
+            document.body.removeChild(uploadInput);
         }
     }
 

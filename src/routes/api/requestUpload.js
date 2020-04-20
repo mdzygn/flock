@@ -13,7 +13,6 @@ const S3_BUCKET = process.env.S3_CONTENT_BUCKET;
 const fileType= 'image/jpeg';
 const fileExtension = '.jpg';
 
-// export async function get(req, res, next) {
 export async function post(req, res, next) {
 	const s3 = new aws.S3();
 
@@ -22,8 +21,6 @@ export async function post(req, res, next) {
 
 	const options = req.body;
 
-	// const fileName = options.fileName;
-	// const fileType = options.fileType;
 	const uploadType = options.uploadType;
 	const itemId = options.itemId;
 	const itemIndex = options.itemIndex;
@@ -38,8 +35,8 @@ export async function post(req, res, next) {
 
 	let folder = '';
 
-	// validate itemId
-	// validate itemIndex
+	// TODO: validate itemId
+	// TODO: validate itemIndex
 
 	let newItemFilename = itemId;
 
@@ -63,7 +60,6 @@ export async function post(req, res, next) {
 
 	newItemFilename += fileExtension; // extension;
 
-	// 'Missing credentials in config, if using AWS_CONFIG_FILE, set AWS_SDK_LOAD_CONFIG=1',
 	const s3Params = {
 	  Bucket: S3_BUCKET,
 	  Key: folder + newItemFilename,

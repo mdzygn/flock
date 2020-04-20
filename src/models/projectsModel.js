@@ -467,10 +467,10 @@ export function setFollowProject(targetProject, follow) {
 	}
 }
 
-export function getProjectHeaderImage(project, fullImage) {
+export function getProjectHeaderImage(project, thumb) {
 	if (project) {
 		if (project.headerImage) {
-			return getHeaderImage(project.headerImage, fullImage);
+			return getHeaderImage(project.headerImage, thumb);
 			// return config.contentFolder + project.headerImage;
 			// return config.contentUrl + (fullImage ? config.headerImageLibraryFolder : config.headerImageLibraryThumbFolder) + project.headerImage + config.headerImageExtension;
 		} else {

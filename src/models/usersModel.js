@@ -188,7 +188,7 @@ export function randomiseUserCoverImageColor(userModel) {
 
 export function getProfileCoverImage(user) {
 	if (user && user.coverImage) {
-		return getHeaderImage(user.coverImage, true);
+		return getHeaderImage(user.coverImage);
 		// return (config.contentUrl + config.headerImageLibraryFolder + user.coverImage + config.headerImageExtension);
 	}
 	return null;

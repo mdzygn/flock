@@ -113,11 +113,26 @@
 
             await tick();
             const imageTools = new ImageTools();
-            imageTools.resize(file, { maxWidth: config.UPLOAD_MAX_WIDTH, maxHeight: config.UPLOAD_MAX_HEIGHT, type: 'image/jpeg'}).then(async (blob) => {
-                imageSrc = URL.createObjectURL(blob);
+            imageTools.resize(file, { maxWidth: config.UPLOAD_MAX_WIDTH, maxHeight: config.UPLOAD_MAX_HEIGHT, type: 'image/jpeg'}).then(async (imageFile) => {
+                imageSrc = URL.createObjectURL(imageFile);
 
-                await tick();
-                getSignedRequest(blob);
+                imageTools.resize(file, { maxWidth: config.UPLOAD_THUMB_MAX_WIDTH, maxHeight: config.UPLOAD_THUMB_MAX_HEIGHT, type: 'image/jpeg'}).then(async (thumbFile) => {
+                    await tick();
+                    getSignedRequest(imageFile, thumbFile);
+                });
+
+                // switch (uploadType) {
+                //     case 'projectHeader':
+                //     case 'userProfile':
+                //         imageTools.resize(file, { maxWidth: config.UPLOAD_THUMB_MAX_WIDTH, maxHeight: config.UPLOAD_THUMB_MAX_HEIGHT, type: 'image/jpeg'}).then(async (thumbFile) => {
+                //             await tick();
+                //             getSignedRequest(imageFile, thumbFile);
+                //         });
+                //         break;
+                //     default:
+                //         await tick();
+                //         getSignedRequest(imageFile);
+                // }
             });
 
             // sharp(file)
@@ -143,7 +158,7 @@
         console.error('Could not request image upload');
     }
 
-    function getSignedRequest(file){
+    function getSignedRequest(imageFile, thumbFile){
         if (!itemId) {
             console.error('no itemId provided for image selector');
             return;
@@ -157,7 +172,7 @@
 
         api.requestUpload(options).then((response) => {
             if (response.signedRequest) {
-                uploadFile(file, response.signedRequest, response.url);
+                uploadFile(imageFile, thumbFile, response);
 
                 image = response.url;
             } else {
@@ -168,13 +183,16 @@
         })
     }
 
-    function uploadFile(file, signedRequest, url){
+    function uploadFile(imageFile, thumbFile, response) {
+        const imageSignedRequest = response.signedRequest;
+        const imageUrl = response.url;
+
         const request = new XMLHttpRequest();
-        request.open('PUT', signedRequest);
+        request.open('PUT', imageSignedRequest);
         request.onreadystatechange = () => {
             if (request.readyState === 4){
                 if (request.status === 200){
-                    image = url;
+                    image = imageUrl;
                 } else {
                     image = null;
                     showCarousel();
@@ -183,7 +201,23 @@
                 fileIsUploading = false;
             }
         };
-        request.send(file);
+        request.send(imageFile);
+
+        if (response.thumbSignedRequest && thumbFile) {
+            const thumbSignedRequest = response.thumbSignedRequest;
+            // const thumbUrl = response.thumbUrl;
+
+            const thumbRequest = new XMLHttpRequest();
+            thumbRequest.open('PUT', thumbSignedRequest);
+            thumbRequest.onreadystatechange = () => {
+                if (thumbRequest.readyState === 4){
+                    if (thumbRequest.status !== 200){
+                        console.error('Could not upload thumb');
+                    }
+                }
+            };
+            thumbRequest.send(thumbFile);
+        }
     }
 </script>
 

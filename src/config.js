@@ -35,6 +35,9 @@ export const RETURN_PROJECT_HEADER_OFFSET = 75; // 100;
 export const UPLOAD_MAX_WIDTH = 1024;
 export const UPLOAD_MAX_HEIGHT = 2048;
 
+export const UPLOAD_THUMB_MAX_WIDTH = 350;
+export const UPLOAD_THUMB_MAX_HEIGHT = 350;
+
 export const SPLASH_TIMEOUT = 3;
 
 export default {
@@ -77,4 +80,7 @@ export default {
 
     UPLOAD_MAX_WIDTH,
     UPLOAD_MAX_HEIGHT,
+
+    UPLOAD_THUMB_MAX_WIDTH,
+    UPLOAD_THUMB_MAX_HEIGHT,
 };

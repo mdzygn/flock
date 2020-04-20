@@ -39,16 +39,19 @@ export async function post(req, res, next) {
 	// TODO: validate itemIndex
 
 	let newItemFilename = itemId;
+	let newItemThumbFilename = null;
 
 	if (uploadType === 'projectHeader') {
 		folder = 'projects/';
 		newItemFilename += '-header';
+		// newItemThumbFilename = newItemFilename + '-thumb';
 	} else if (uploadType === 'projectDetail') {
 		folder = 'projects/';
 		newItemFilename += '-detail-' + itemIndex;
 	} else if (uploadType === 'userProfile') {
 		folder = 'users/';
 		newItemFilename += '-profile';
+		// newItemThumbFilename = newItemFilename + '-thumb';
 	} else if (uploadType === 'userCover') {
 		folder = 'users/';
 		newItemFilename += '-cover';
@@ -58,22 +61,36 @@ export async function post(req, res, next) {
 
 	// const extension = path.extname(fileName);
 
+	newItemThumbFilename = newItemFilename + '-thumb';
 	newItemFilename += fileExtension; // extension;
 
 	const s3Params = {
-	  Bucket: S3_BUCKET,
-	  Key: folder + newItemFilename,
-	  Expires: 60,
-	  ContentType: fileType,
-	  ACL: 'public-read'
+		Bucket: S3_BUCKET,
+		Key: folder + newItemFilename,
+		Expires: 60,
+		ContentType: fileType,
+		ACL: 'public-read'
 	};
+	let s3ThumbParams;
+
+	if (newItemThumbFilename) {
+		newItemThumbFilename += fileExtension; // extension;
+
+		s3ThumbParams = {
+			Bucket: S3_BUCKET,
+			Key: folder + newItemThumbFilename,
+			Expires: 60,
+			ContentType: fileType,
+			ACL: 'public-read'
+		};
+	}
 
 	const cacheBuster = '?c=' + Math.floor(Math.random() * 9999999);
 
 	s3.getSignedUrl('putObject', s3Params, (err, data) => {
 		if (err) {
 			console.log('putObject error', err);
-			errorResponse(res, {}, {errorMsg: 'putObject error'});
+			errorResponse(res, {}, {errorMsg: 'image putObject error'});
 		}
 
 		const returnData = {
@@ -81,6 +98,20 @@ export async function post(req, res, next) {
 			url: folderIndentifier + folder + newItemFilename + cacheBuster,
 			// url: `https://${S3_BUCKET}.${aws.config.region}.s3.amazonaws.com/${fileName}`
 		};
-		response(res, returnData);
+		if (newItemThumbFilename) {
+			s3.getSignedUrl('putObject', s3ThumbParams, (err, data) => {
+				if (err) {
+					console.log('putObject error', err);
+					errorResponse(res, {}, {errorMsg: 'image thumb putObject error'});
+				}
+
+				returnData.thumbSignedRequest = data,
+				returnData.thumbUrl = folderIndentifier + folder + newItemThumbFilename + cacheBuster;
+
+				response(res, returnData);
+			});
+		} else {
+			response(res, returnData);
+		}
 	});
 }

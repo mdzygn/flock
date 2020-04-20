@@ -190,14 +190,18 @@ export function isProjectLoaded(project, projectId) {
     return project && project.id === projectId;
 }
 
-export function getHeaderImage(imageUrl, fullImage) {
+export function getHeaderImage(imageUrl, thumb) {
 	if (imageUrl) {
 		const contextIndex = imageUrl.indexOf(config.CONTENT_IDENTIFIER_PATH);
 		if (contextIndex === 0) {
-			const imagePath = imageUrl.substr(config.CONTENT_IDENTIFIER_PATH.length);
+            let imagePath = imageUrl.substr(config.CONTENT_IDENTIFIER_PATH.length);
+            const extensionIndex = imagePath.lastIndexOf('.');
+            if (thumb && extensionIndex !== -1) {
+                imagePath = imagePath.substr(0, extensionIndex) + '-thumb' + imagePath.substr(extensionIndex);
+            }
 			return config.USER_CONTENT_URL + imagePath;
 		} else {
-			return config.contentUrl + (fullImage ? config.headerImageLibraryFolder : config.headerImageLibraryThumbFolder) + imageUrl + config.headerImageExtension;
+			return config.contentUrl + (thumb ? config.headerImageLibraryThumbFolder : config.headerImageLibraryFolder) + imageUrl + config.headerImageExtension;
 		}
 	}
 	return null;

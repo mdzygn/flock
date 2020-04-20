@@ -31,7 +31,7 @@
 
     $: projectSlug = ($project && $project.slug) || null;
 
-    $: headerImage = getProjectHeaderImage($project, true);
+    $: headerImage = getProjectHeaderImage($project);
 
     $: projectTitle = ($project && $project.title) || '';
     $: projectDescription = ($project && $project.description) || '';

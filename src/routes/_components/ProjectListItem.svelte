@@ -21,7 +21,7 @@
 
     $: isTeamMember = $user && getIsProjectTeamMember($project);
 
-    $: thumbImage = getProjectHeaderImage($project);
+    $: thumbImage = getProjectHeaderImage($project, true);
 
     $: date = $project && (showLastActive ? $project.lastActiveAt : $project.createdAt);
     // $: detail = (showLastActive ? $project.lastActiveInfo : $project.createdInfo) || '';

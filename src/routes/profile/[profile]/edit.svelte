@@ -8,6 +8,8 @@
 
 	import { testInputDefocus, getFormattedText, getUnformattedText } from '../../../utils';
 
+    import UploadUtil from '../../../utils/UploadUtil';
+
 	import ScrollView from '../../../components/ScrollView.svelte';
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
@@ -21,7 +23,9 @@
 	import AddImageIcon from "../../../assets/icons/add_small.png";
     import CancelIcon from "../../../assets/icons/cancel.png";
 	import SaveIcon from "../../../assets/icons/save.png";
-    import UploadImageIcon from "../../../assets/icons/upload_image.png";
+	import UploadImageIcon from "../../../assets/icons/upload_image.png";
+
+    import EmptyImage from "../../../assets/images/empty.png";
 
 	import { user, userId, showBetaFeatures } from '../../../models/appModel';
 	import { saveProfile } from '../../../actions/userActions';
@@ -37,12 +41,13 @@
 	let skills = ($user && $user.skills) || '';
 	let location = ($user && $user.location) || '';
 
+	let profileImageIsUploading;
 	let headerImageIsUploading;
 
 	let remainingChars;
 	$: charCountLow = (remainingChars !== '') && remainingChars < config.PROFILE_DESCRIPTION_CHARS_LOW;
 
-	$: saveEnabled = !!(name && !headerImageIsUploading);
+	$: saveEnabled = !!(name && !profileImageIsUploading && !headerImageIsUploading);
 
 	let bioInput;
 	let skillsInput;
@@ -53,6 +58,7 @@
 			const profileDetails = {
 				name,
 				bio: getUnformattedText(bio),
+				avatarImage: $curUserProps.avatarImage || null,
 				coverImage: image,
 				skills,
 				location,
@@ -72,7 +78,42 @@
 	}
 
 	function uploadProfileImage() {
+        UploadUtil.uploadImage({
+            uploadType: 'userProfile',
+            itemId: $userId,
 
+            imageSettings: {
+                maxWidth: config.PROFILE_UPLOAD_MAX_WIDTH,
+                maxHeight: config.PROFILE_UPLOAD_MAX_HEIGHT,
+            },
+            thumbSettings: {
+                maxWidth: config.PROFILE_UPLOAD_THUMB_MAX_WIDTH,
+                maxHeight: config.PROFILE_UPLOAD_THUMB_MAX_HEIGHT,
+            },
+
+            onUploading: () => {
+				$curUserProps.avatarImageRawSrc = EmptyImage;
+				$curUserProps = $curUserProps;
+                profileImageIsUploading = true;
+            },
+            onImageLoaded: (imageFile) => {
+				$curUserProps.avatarImageRawSrc = URL.createObjectURL(imageFile);
+				$curUserProps = $curUserProps;
+            },
+            onComplete: (imageUrl) => {
+				$curUserProps.avatarImageRawSrc = null;
+				$curUserProps.avatarImage = imageUrl;
+                profileImageIsUploading = false;
+            },
+            onError: (error) => {
+				$curUserProps.avatarImageRawSrc = null;
+				$curUserProps.avatarImage = null;
+				$curUserProps = $curUserProps;
+
+                profileImageIsUploading = false;
+                console.error('Could not request profile image upload');
+            },
+        });
 	}
 </script>
 

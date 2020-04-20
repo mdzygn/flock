@@ -74,7 +74,10 @@ export async function post(req, res, next) {
 
                 name: true,
                 bio: true,
+
+                avatarImage: true,
                 coverImage: true,
+
                 skills: true,
                 location: true,
                 style: true,

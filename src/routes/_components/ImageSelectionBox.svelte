@@ -90,10 +90,7 @@
         hideCarousel();
     }
 
-    async function uploadHeaderImage() {
-        imageSrc = EmptyImage;
-
-        await tick();
+    function uploadHeaderImage() {
         UploadUtil.uploadImage({
             uploadType,
             itemId,
@@ -111,10 +108,11 @@
             },
 
             onUploading: () => {
+                imageSrc = EmptyImage;
                 fileIsUploading = true;
                 hideCarousel();
             },
-            onImageUpdated: (imageFile) => {
+            onImageLoaded: (imageFile) => {
                 imageSrc = URL.createObjectURL(imageFile);
             },
             onComplete: (imageUrl) => {
@@ -125,104 +123,10 @@
                 image = null;
                 fileIsUploading = false;
                 showCarousel();
-                console.error('Could not request image upload', error);
+                console.error('Could not request image upload');
             },
         });
-        // uploadFileInput.click();
     }
-
-    // async function onUploadFileSelect(event) {
-    //     if (event.target.files && event.target.files.length) {
-    //         var file = event.target.files[0];
-    //         var fileName = file.name;
-
-    //         fileIsUploading = true;
-    //         image = fileName;
-
-    //         hideCarousel();
-
-    //         imageSrc = EmptyImage; // force empty image to load first
-
-    //         await tick();
-    //         const imageTools = new ImageTools();
-    //         imageTools.resize(file, { maxWidth: config.UPLOAD_MAX_WIDTH, maxHeight: config.UPLOAD_MAX_HEIGHT, type: 'image/jpeg'}).then(async (imageFile) => {
-    //             imageSrc = URL.createObjectURL(imageFile);
-
-    //             imageTools.resize(file, { maxWidth: config.UPLOAD_THUMB_MAX_WIDTH, maxHeight: config.UPLOAD_THUMB_MAX_HEIGHT, type: 'image/jpeg'}).then(async (thumbFile) => {
-    //                 await tick();
-    //                 getSignedRequest(imageFile, thumbFile);
-    //             });
-    //         });
-    //     }
-    // }
-
-    // function fileUploadFailed() {
-    //     image = null;
-    //     fileIsUploading = false;
-    //     showCarousel();
-    //     console.error('Could not request image upload');
-    // }
-
-    // function getSignedRequest(imageFile, thumbFile){
-    //     if (!itemId) {
-    //         console.error('no itemId provided for image selector');
-    //         return;
-    //     }
-
-    //     const options = {
-    //         uploadType,
-    //         itemId,
-    //         itemIndex,
-    //     };
-
-    //     api.requestUpload(options).then((response) => {
-    //         if (response.signedRequest) {
-    //             uploadFile(imageFile, thumbFile, response);
-
-    //             image = response.url;
-    //         } else {
-    //             fileUploadFailed();
-    //         }
-    //     }).catch(() => {
-    //         fileUploadFailed();
-    //     })
-    // }
-
-    // function uploadFile(imageFile, thumbFile, response) {
-    //     const imageSignedRequest = response.signedRequest;
-    //     const imageUrl = response.url;
-
-    //     const request = new XMLHttpRequest();
-    //     request.open('PUT', imageSignedRequest);
-    //     request.onreadystatechange = () => {
-    //         if (request.readyState === 4){
-    //             if (request.status === 200){
-    //                 image = imageUrl;
-    //             } else {
-    //                 image = null;
-    //                 showCarousel();
-    //                 console.error('Could not upload image');
-    //             }
-    //             fileIsUploading = false;
-    //         }
-    //     };
-    //     request.send(imageFile);
-
-    //     if (response.thumbSignedRequest && thumbFile) {
-    //         const thumbSignedRequest = response.thumbSignedRequest;
-
-    //         const thumbRequest = new XMLHttpRequest();
-    //         thumbRequest.open('PUT', thumbSignedRequest);
-    //         thumbRequest.onreadystatechange = () => {
-    //             if (thumbRequest.readyState === 4){
-    //                 if (thumbRequest.status !== 200){
-    //                     console.error('Could not upload thumb');
-    //                 }
-    //             }
-    //         };
-    //         thumbRequest.send(thumbFile);
-    //     }
-    // }
 </script>
 
 <div class="imageSelectionBox {className}" class:opened="{carouselShown}">
@@ -248,7 +152,6 @@
             <div class="uploadButtonIcon" style="background-image: url({UploadImageIcon})"/>
             <div class="buttonLabel">{locale.GENERAL.UPLOAD_IMAGE}</div>
         </Button>
-        <!-- <input bind:this="{uploadFileInput}" on:change="{onUploadFileSelect}" type="file" accept="image/*" hidden/> -->
     </div>
 </div>
 

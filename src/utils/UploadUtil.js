@@ -12,7 +12,7 @@ function uploadImage(options) {
         thumbSettings,
 
         onUploading,
-        onImageUpdated,
+        onImageLoaded,
         onComplete,
         onError,
     } = options;
@@ -30,19 +30,11 @@ function uploadImage(options) {
         if (event && event.target && event.target.files && event.target.files.length) {
             var file = event.target.files[0];
 
-            // var fileName = file.name;
-            // image = fileName;
-
-            // imageSrc = EmptyImage; // force empty image to load first
-
             onUploading();
 
-            // await tick();
             const imageTools = new ImageTools();
             imageTools.resize(file, imageSettings).then(async (imageFile) => {
-                // imageSrc = URL.createObjectURL(imageFile);
-
-                onImageUpdated(imageFile);
+                onImageLoaded(imageFile);
 
                 imageTools.resize(file, thumbSettings).then(async (thumbFile) => {
                     getSignedRequest(imageFile, thumbFile);

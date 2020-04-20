@@ -116,7 +116,7 @@
 
 <div class="postItem" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}" class:showReplyIcon="{showReplyIcon}" class:showRepliesIcon="{showRepliesIcon}">
     <!-- <Avatar  -->
-    <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
+    <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" />
     <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}">
         <!-- <div class="likeIcon" style="background-image: url({LikeIcon})"/> -->
         <div class="count">{likeCount}</div>

@@ -16,7 +16,7 @@
 </script>
 
 <div class="teamMemberItem" on:click="{(loadCurrentUser)}">
-    <AvatarIcon {user} />
+    <AvatarIcon {user} useThumb="{true}" />
     <div class="detailContent">
         <div class="detailInnerContent">
             <div class="title">{name}</div>

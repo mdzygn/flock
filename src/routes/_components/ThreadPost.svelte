@@ -87,7 +87,7 @@
         <div class="userName" class:button="{userLoaded}">{@html userName}</div>
         <div class="username" class:button="{userLoaded}">{username}</div>
     </div>
-    <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" />
+    <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" />
     <div class="postContent">
         <div class="date">{@html dateString}</div>
         {#if title}

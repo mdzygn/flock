@@ -10,9 +10,6 @@
     import { shuffle } from '../../utils';
 
     import ImageTools from '../../libs/ImageTools';
-    // const FileAPI = require('fileapi');
-    // import FileAPI from 'fileapi';
-    // import sharp from 'sharp';
 
     import Button from '../../components/Button.svelte';
 
@@ -64,17 +61,6 @@
             imageSrc = getHeaderImage(image);
         }
     }
-    // $: { imageSrc = get
-    //     if (!fileIsUploading) {
-    //         const contextIndex = image && image.indexOf(config.CONTENT_IDENTIFIER_PATH);
-    //         if (contextIndex === 0) {
-    //             const imagePath = image.substr(config.CONTENT_IDENTIFIER_PATH.length);
-    //             imageSrc = config.USER_CONTENT_URL + imagePath;
-    //         } else {
-    //             imageSrc = (image && (config.contentUrl + config.headerImageLibraryFolder + image + config.headerImageExtension)) || null;
-    //         }
-    //     }
-    // }
 
     function toggleCarousel() {
         if (image) {
@@ -114,9 +100,6 @@
         if (event.target.files && event.target.files.length) {
             var file = event.target.files[0];
             var fileName = file.name;
-
-            // alert('The file "' + fileName +  '" has been selected.');
-            // console.log('onUploadFileSelect', fileName);
 
             fileIsUploading = true;
             image = fileName;
@@ -183,74 +166,9 @@
         }).catch(() => {
             fileUploadFailed();
         })
-
-        // const request = new XMLHttpRequest();
-
-        // // const fileName = encodeURIComponent(file.name);
-        // // const fileType = encodeURIComponent(file.type);
-
-        // let requestUrl = `/api/requestUpload`;
-        // requestUrl += `?file-name=${fileName}`;
-        // requestUrl += `&file-type=${fileType}`;
-        // requestUrl += `&upload-type=${uploadType}`;
-        // requestUrl += `&item-id=${itemId}`;
-        // if (itemIndex !== '') {
-        //     requestUrl += `&item-index=${itemIndex}`;
-        // }
-
-        // request.open('GET', requestUrl);
-
-        // request.onreadystatechange = () => {
-        //     if (request.readyState === 4) {
-        //         if (request.status === 200){
-        //             const response = JSON.parse(request.responseText);
-        //             uploadFile(file, response.signedRequest, response.url);
-
-        //             image = response.url;
-        //         } else {
-        //             console.error('Could not request image upload');
-
-        //             image = null;
-        //             fileIsUploading = false;
-        //             showCarousel();
-        //         }
-        //     }
-        // };
-        // request.send();
     }
 
     function uploadFile(file, signedRequest, url){
-        // const request = FileAPI.upload({
-        //     url: signedRequest,
-        //     uploadMethod: 'PUT',
-        //     files: { file: file },
-        //     imageAutoOrientation: true,
-        //     imageTransform: {
-        //         maxWidth: 1024,
-        //         maxHeight: 2048,
-        //     },
-        //     imageTransform: {
-        //         type: 'image/jpeg',
-        //         quality: 0.9,
-        //     },
-        //     progress: function (evt, file, xhr, options){
-        //         var progress = Math.round(evt.loaded/evt.total * 100);
-        //         console.log('upload progress', progress);
-        //     },
-        //     complete: function (err, xhr, file, options){
-        //         if ( !err ){
-        //             image = url;
-        //             console.log('upload complete');
-        //             // All files successfully uploaded.
-        //         } else {
-        //             image = null;
-        //             showCarousel();
-        //             console.error('Could not upload image');
-        //         }
-        //         fileIsUploading = false;
-        //     }
-        // });
-
         const request = new XMLHttpRequest();
         request.open('PUT', signedRequest);
         request.onreadystatechange = () => {

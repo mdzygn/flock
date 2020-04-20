@@ -69,6 +69,14 @@
 		}
 	}
 
+	function avatarIconClick() {
+		if ($curUserProps.avatarImage) {
+			uploadProfileImage();
+		} else {
+			randomiseProfileColor();
+		}
+	}
+
     function randomiseProfileColor() {
         randomiseUserProfileImageColor(curUserProps);
     }
@@ -129,7 +137,7 @@
 					<Button className="saveButton" onClick="{save}" icon="{SaveIcon}" disabled="{!saveEnabled}">{locale.EDIT_PROFILE.CONFIRM}</Button>
 				</div>
 
-    			<AvatarIcon user="{curUserProps}" onClick="{randomiseProfileColor}"/>
+    			<AvatarIcon user="{curUserProps}" onClick="{avatarIconClick}"/>
 				<Button className="uploadAvatarButton" onClick="{uploadProfileImage}" icon="{UploadImageIcon}">{locale.EDIT_PROFILE.UPLOAD_PROFILE_IMAGE}</Button>
 				<div class="field">
 					<div class="label">{locale.EDIT_PROFILE.NAME}</div>
@@ -329,7 +337,7 @@
     .content :global(.uploadAvatarButton) {
         position: absolute;
 
-		top: 102px;
+		top: 105px;
 		left: 142px;
 
     	padding: 10px 0;
@@ -339,7 +347,7 @@
     }
     .content :global(.uploadAvatarButton .buttonContent) {
 		position: relative;
-    	padding-left: 40px;
+    	padding-left: 36px;
     }
     .content :global(.uploadAvatarButton .iconContainer) {
 		position: absolute;
@@ -347,6 +355,6 @@
 		top: 9px;
     }
     .content :global(.uploadAvatarButton .icon) {
-    	transform: scale(0.4, 0.4);
+    	transform: scale(0.35, 0.35);
     }
 </style>

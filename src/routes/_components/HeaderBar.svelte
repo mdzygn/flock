@@ -170,7 +170,7 @@
     {#if $userId}
         <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showMainOptions}"></Button>
         <div class="avatarIcon" class:button="{!isMyProfile}" on:click="{loadMyProfile}">
-            <AvatarIcon user="{user}" />
+            <AvatarIcon user="{user}" useThumb="{true}" />
         </div>
     {:else}
         <div class="signInButtonContainer">

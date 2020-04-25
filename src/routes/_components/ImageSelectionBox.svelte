@@ -55,7 +55,7 @@
 
     let imageSrc = null;
     $: {
-        if (!fileIsUploading) {
+        if (!fileIsUploading && typeof image === 'string') {
             imageSrc = getHeaderImage(image);
         }
     }

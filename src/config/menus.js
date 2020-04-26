@@ -50,22 +50,22 @@ export const menus = {
                 action: () => { const p = get(project); p && p.id && copyProjectLink(p.id) },
             },
             {
-                label: 'Edit Project...',
+                label: 'Edit Project',
                 condition: () => { const p = get(project); return p && !p.archived },
                 action: () => editProjectDetails({editingProject: true}),
             },
             {
-                label: 'Make Private',
+                label: 'Make Private...',
                 condition: () => { const p = get(project); return p && p.public && !p.archived },
                 action: showTogglePublicDialog,
             },
             {
-                label: 'Make Public',
+                label: 'Make Public...',
                 condition: () => { const p = get(project); return p && !p.public && !p.archived },
                 action: showTogglePublicDialog,
             },
             {
-                label: 'Achive Project',
+                label: 'Achive Project...',
                 condition: () => { const p = get(project); return p && !p.archived },
                 action: () => { showPrompt(promptIds.PROJECT_ARCHIVE); },
             },
@@ -107,7 +107,7 @@ export const menus = {
                 action: () => { const u = get(viewedUser); u && u.id && copyProfileLink(u.id) },
             },
             {
-                label: 'Edit Profile...',
+                label: 'Edit Profile',
                 action: editProfile,
             },
         ],

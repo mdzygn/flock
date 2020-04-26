@@ -92,12 +92,12 @@ export const menus = {
                 condition: () => { const p = get(project); return p && p.following },
                 action: () => { const p = get(project); p && p.id && projectToggleFollowing(p.id) },
             },
-            {
-                label: () => { const p = get(project); return (p && !p.reported) ? 'Report Project' : 'Project Reported' },
-                disabled: () => { const p = get(project); return p && p.reported },
-                action: () => { const p = get(project); p && p.id && reportProject(p.id) },
-                disabled: true,
-            },
+            // {
+            //     label: () => { const p = get(project); return (p && !p.reported) ? 'Report Project' : 'Project Reported' },
+            //     disabled: () => { const p = get(project); return p && p.reported },
+            //     action: () => { const p = get(project); p && p.id && reportProject(p.id) },
+            //     disabled: true,
+            // },
         ],
     },
     PROFILE_OWNER_MENU: {

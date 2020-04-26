@@ -1,7 +1,7 @@
 <script>
     import locale from '../../locale';
 
-    import { writable } from 'svelte/store';
+    import { get, writable } from 'svelte/store';
 
     import Proxy from '../../components/Proxy.svelte';
 
@@ -24,10 +24,23 @@
     let channels = writable([]);
     $: { channels = getChannels( { projectId: $project.id } ) };
 
-	$: isNew = ($project && $project.isNew) || false;
+	$: isNew = (isTeamMember && $project && $project.isNew) || false;
     $: isTeamMember = $user && getIsProjectTeamMember($project);
     $: canEdit = (isTeamMember && !$project.archived) || false;
-	$: following = ($project && $project.following) || false;
+    $: following = ($project && $project.following) || false;
+
+    let hasActiveChannels = true; // false;
+
+    $: {
+        let hasActiveChannel = false;
+        for (let i = 0; i < $channels.length; i++) {
+            if (get($channels[i]).postCount) {
+                hasActiveChannel = true;
+                break;
+            }
+        }
+        hasActiveChannels = hasActiveChannel;
+    }
 
     let areMoreItems = false;
 
@@ -50,17 +63,21 @@
 	// }
 </script>
 
-{#if $channels && $channels.length}
+{#if $channels && $channels.length && (hasActiveChannels || isTeamMember || following)}
     <div class="channelList" class:isEditable="{canEdit}">
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
         <ContentPanel title="Channels" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
             {#if isNew}
-                <div class="getTheConversationStarted">{locale.PROJECT.GET_STARTED}</div>
+                <div class="getTheConversationStarted getTheConversationStartedOwner">{locale.PROJECT.GET_STARTED}</div>
+            {:else if !hasActiveChannels}
+                <div class="getTheConversationStarted">{locale.PROJECT.FOLLOWER_GET_STARTED}</div>
             {/if}
             <!-- {#if $channels && $channels.length} -->
                 <div class="channelListContainer">
                     {#each $channels as channel}
-                        <ChannelListItem channel="{channel}" />
+                        {#if (isTeamMember || following) || get(channel).postCount}
+                            <ChannelListItem channel="{channel}" />
+                        {/if}
                     {/each}
                 </div>
             <!-- {:else}
@@ -94,10 +111,16 @@
 
     .getTheConversationStarted {
         position: absolute;
-        right: 41px;
         top: -30px;
 
+        right: 20px;
+        color: #aaaaaa;
+
         font-size: 1.3rem;
+    }
+
+    .getTheConversationStartedOwner {
+        right: 41px;
         font-weight: 700;
 		color: #DF3C3C;
     }

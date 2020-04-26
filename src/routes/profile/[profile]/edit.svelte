@@ -338,23 +338,24 @@
         position: absolute;
 
 		top: 105px;
-		left: 142px;
+		left: 120px;
 
-    	padding: 10px 0;
+		padding: 10px 10px;
 
     	font-size: 1.3rem;
 		font-weight: 700;
     }
     .content :global(.uploadAvatarButton .buttonContent) {
 		position: relative;
-    	padding-left: 36px;
+		padding-left: 32px;
+		color: #333333;
     }
     .content :global(.uploadAvatarButton .iconContainer) {
 		position: absolute;
 		left: 0;
-		top: 9px;
+    	top: 10px;
     }
     .content :global(.uploadAvatarButton .icon) {
-    	transform: scale(0.35, 0.35);
+    	transform: scale(0.32, 0.32);
     }
 </style>

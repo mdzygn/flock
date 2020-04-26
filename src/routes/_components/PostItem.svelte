@@ -21,6 +21,10 @@
     import { getUser } from '../../models/usersModel';
 
 	import {
+        project,
+    } from '../../models/appModel';
+
+	import {
         loadProfile,
         loadPost,
     } from '../../actions/appActions';
@@ -36,6 +40,8 @@
     // export let type = 'thread';
 
     let user = writable([]);
+
+	$: isArchived = ($project && $project.archived) || false;
 
     $: postId = ($post && $post.id) || null;
 
@@ -117,19 +123,21 @@
 <div class="postItem" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}" class:showReplyIcon="{showReplyIcon}" class:showRepliesIcon="{showRepliesIcon}">
     <!-- <Avatar  -->
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" />
-    <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}">
-        <!-- <div class="likeIcon" style="background-image: url({LikeIcon})"/> -->
-        <div class="count">{likeCount}</div>
-        <!-- <Counter count="{likeCount}" /> -->
-    </Button>
-    {#if showRepliesIcon}
-        <Button className="commentButton">
-            <div class="commentIcon" style="background-image: url({CommentIcon})"/>
-            <Counter count="{repliesCount}" />
+    {#if !isArchived}
+        <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}">
+            <!-- <div class="likeIcon" style="background-image: url({LikeIcon})"/> -->
+            <div class="count">{likeCount}</div>
+            <!-- <Counter count="{likeCount}" /> -->
         </Button>
-    {:else}
-        {#if showReplyIcon}
-            <div class="replyIcon" style="background-image: url({ReplyIcon})"/>
+        {#if showRepliesIcon}
+            <Button className="commentButton">
+                <div class="commentIcon" style="background-image: url({CommentIcon})"/>
+                <Counter count="{repliesCount}" />
+            </Button>
+        {:else}
+            {#if showReplyIcon}
+                <div class="replyIcon" style="background-image: url({ReplyIcon})"/>
+            {/if}
         {/if}
     {/if}
     <div class="info">

@@ -28,6 +28,7 @@
     $: isTeamMember = $user && getIsProjectTeamMember($project);
     $: canEdit = (isTeamMember && !$project.archived) || false;
     $: following = ($project && $project.following) || false;
+	$: isArchived = (isTeamMember && $project && $project.archived) || false;
 
     let hasActiveChannels = true; // false;
 
@@ -67,7 +68,7 @@
     <div class="channelList" class:isEditable="{canEdit}">
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
         <ContentPanel title="Channels" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
-            {#if !hasActiveChannels || isNew}
+            {#if (!hasActiveChannels || isNew) && !isArchived}
                 {#if isTeamMember}
                     <div class="getTheConversationStarted getTheConversationStartedOwner">{locale.PROJECT.GET_STARTED}</div>
                 {:else}

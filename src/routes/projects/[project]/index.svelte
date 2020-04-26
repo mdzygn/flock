@@ -237,13 +237,15 @@
 							<div class="projectActionButtons">
 								{#if projectHasDetails && !showInfo && $projectReturnView}
 									<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
-								{:else if !projectHasDetails && isTeamMember}
+								{:else if !projectHasDetails && isTeamMember && !isArchived}
 									<Button className="addProjectDetailsButton" onClick="{editProjectDetails}" icon="{AddDetailsIcon}">add project details</Button>
 								{/if}
 								{#if !isTeamMember}
 									<Button disabled="{!$showBetaFeatures}" className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
 								{:else if isNew && !isPublic}
-									<Button className="makePublicButton isButton" onClick="{showTogglePublicDialog}">make public</Button>
+									{#if !isArchived}
+										<Button className="makePublicButton isButton" onClick="{showTogglePublicDialog}">make public</Button>
+									{/if}
 								{:else}
 									<Button disabled="{!$showBetaFeatures}" className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
 										<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />

@@ -20,6 +20,10 @@
     import { parseHTML, getDateString } from '../../utils';
 
     import {
+        project,
+    } from '../../models/appModel';
+
+    import {
         loadProfile,
         checkLoggedIn,
         newThreadPost,
@@ -36,6 +40,8 @@
     export let post;
 
     let user = writable([]);
+
+	$: isArchived = ($project && $project.archived) || false;
 
     $: userId = ($post && $post.userId) || null;
     $: postId = ($post && $post.id) || null;
@@ -100,39 +106,41 @@
 
     <!-- <Proxy image="thread_actions" className="proxyThreadActions proxyOverlay" /> -->
 
-    <ActionBar targetItemId="{postId}" targetItem="{$post}">
-        <div slot="buttonLeft">
-            <ActionButton
-                label = "like"
-                icon = "{LikeIcon}"
-                selectedIcon = "{LikeSelectedIcon}"
+    {#if !isArchived}
+        <ActionBar targetItemId="{postId}" targetItem="{$post}">
+            <div slot="buttonLeft">
+                <ActionButton
+                    label = "like"
+                    icon = "{LikeIcon}"
+                    selectedIcon = "{LikeSelectedIcon}"
 
-                targetItem = "{$post}"
-                targetItemId = "{postId}"
-                action = "{postToggleLiked}"
-                targetItemProperty = "liked"
-                countProperty = "likeCount"
-            />
-        </div>
-        <div slot="buttonMiddle">
-			<ActionButton
-				label = "share"
+                    targetItem = "{$post}"
+                    targetItemId = "{postId}"
+                    action = "{postToggleLiked}"
+                    targetItemProperty = "liked"
+                    countProperty = "likeCount"
+                />
+            </div>
+            <div slot="buttonMiddle">
+                <ActionButton
+                    label = "share"
 
-				icon = "{ShareIcon}"
+                    icon = "{ShareIcon}"
 
-				action = "{shareItem}"
-			/>
-        </div>
-        <div slot="buttonRight">
-			<ActionButton
-				label = "reply"
+                    action = "{shareItem}"
+                />
+            </div>
+            <div slot="buttonRight">
+                <ActionButton
+                    label = "reply"
 
-				icon = "{ReplyIcon}"
+                    icon = "{ReplyIcon}"
 
-				action = "{reply}"
-			/>
-        </div>
-    </ActionBar>
+                    action = "{reply}"
+                />
+            </div>
+        </ActionBar>
+    {/if}
 	<!-- <NewPostButton onClick="{reply}" className="replyButton" type="reply">
         <ActionButton
             label = "like"

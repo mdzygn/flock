@@ -50,6 +50,7 @@
 	// $: userLoading = (!($user && $user.loaded) && $userId);
 
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
+	$: isArchived = ($project && $project.archived) || false;
 
 	loadCurrentProject();
 	loadCurrentChannel();
@@ -62,7 +63,7 @@
 	$: { posts = getPosts( { channelId: $channelId, type: 'thread', sortByCreated } ) };
 
     $: isTeamMember = $user && getIsProjectTeamMember($project);
-	$: canPost = $channel && (!$channel.teamOnly || isTeamMember);
+	$: canPost = $channel && (!$channel.teamOnly || isTeamMember) && !isArchived;
 
 	$: channelDescription = $channel && ($channel.description || getChannelDefaultDescription($channel)) || null;
 
@@ -71,6 +72,7 @@
     }
 
 	function newPost() {
+		if (!canPost) { return; }
 		if (!checkLoggedIn()) { return; }
 
 		newThread();
@@ -108,7 +110,9 @@
 						{#if $loadingPosts && (!$posts || !$posts.length) }
 							<ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
 						{:else}
-							<ContentLoader>{locale.CHANNEL.NO_POSTS}{#if canPost}<br/>be the first to <a href="javascript:void(0)" on:click="{newPost}">Add a Post</a>{/if}</ContentLoader>
+							<ContentLoader>{locale.CHANNEL.NO_POSTS}
+								{#if canPost}<br/>be the first to <a href="javascript:void(0)" on:click="{newPost}">Add a Post</a>{/if}
+							</ContentLoader>
 						{/if}
 					{/each}
 				</div>

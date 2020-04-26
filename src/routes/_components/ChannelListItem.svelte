@@ -25,11 +25,12 @@
     $: channelId = ($channel && $channel.id) || null;
     $: messageCount = ($channel && $channel.postCount) || 0;
 
+    $: isTeamMember = $user && getIsProjectTeamMember($project);
+
     $: isNew = ($project && $project.isNew) || false;
+	$: isArchived = (isTeamMember && $project && $project.archived) || false;
 
     $: isPrimaryChannel = getIsPrimaryChannel($channel);
-
-    $: isTeamMember = $user && getIsProjectTeamMember($project);
 
     function loadCurrentChannel() {
         if (channelId) {
@@ -43,7 +44,7 @@
         <div class="buttonIcon" style="background-image: url({ArrowIcon})"/>
         {#if messageCount}
             <Counter count="{messageCount}" />
-        {:else if isTeamMember && isPrimaryChannel}
+        {:else if isTeamMember && isPrimaryChannel && !isArchived}
 			<Button className="addFirstPostCTA" icon="{AddDetailsIcon}">add first post</Button>
         {/if}
         <!-- <Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" /> -->

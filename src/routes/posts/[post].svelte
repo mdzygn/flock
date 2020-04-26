@@ -53,6 +53,7 @@
 	const DISPLAY_BOTTOM_LINK_POST_COUNT = 3;
 
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
+	$: isArchived = ($project && $project.archived) || false;
 
 	loadCurrentChannel();
 	loadCurrentPost();
@@ -111,7 +112,11 @@
 						{#if $loadingPosts && (!$posts || !$posts.length) }
 							<ContentLoader label="{locale.LOADING.THREAD_ITEMS}" />
 						{:else}
-							<ContentLoader>{locale.THREAD.NO_POSTS}<br/>be the first to <a href="javascript:void(0)" on:click="{reply}">Leave a Reply</a></ContentLoader>
+							<ContentLoader>{locale.THREAD.NO_POSTS}<br/>
+								{#if !isArchived}
+									be the first to <a href="javascript:void(0)" on:click="{reply}">Leave a Reply</a>
+								{/if}
+							</ContentLoader>
 						{/if}
 					{/each}
 				</div>

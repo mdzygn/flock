@@ -1,7 +1,11 @@
+<svelte:window bind:innerHeight={viewHeight} bind:innerWidth={viewWidth} />
+
 <script>
 	import { stores } from '@sapper/app';
 	const { page } = stores();
-    import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
+
+	import config from '../config';
 
     import GoogleAnalytics from '../components/GoogleAnalytics.svelte';
 
@@ -93,6 +97,25 @@
 		}
 	}
 
+	let viewHeight;
+	let viewWidth;
+	let initialHeightSet = false;
+	let initialHeight = false;
+	let keyboardShown = false;
+
+	$: {
+		if (!initialHeightSet) {
+			initialHeight = viewHeight;
+			if (initialHeight) {
+				initialHeightSet = true;
+			}
+		} else if (viewHeight && viewWidth < config.MOBILE_DEVICE_MAX_WIDTH && viewHeight < initialHeight) {
+			keyboardShown = true;
+		} else {
+			keyboardShown = false;
+		}
+	}
+
 	$: showFeedBg = isDarkBgForPath(path);
 
 	let scrollRegion;
@@ -103,13 +126,13 @@
 	<appContent class:showFeedBg="{showFeedBg}">
 		<Splash />
 		<Overlays />
-		<div class="pageContent">
+		<div class="pageContent" class:keyboardShown="{keyboardShown}">
 			<main>
 				<slot></slot>
 			</main>
 		</div>
 		<HeaderBar {segment} {path} />
-		<Nav {segment} {path} />
+		<Nav {segment} {path} {keyboardShown} />
 	</appContent>
 </appContainer>
 
@@ -148,6 +171,10 @@
 		top: 60px; /* header height */
 		bottom: 76px; /* nav height */
 		width: 100%;
+	}
+
+	.pageContent.keyboardShown {
+		bottom: 0; /* collapse nav */
 	}
 
 	.showFeedBg {

@@ -1,7 +1,7 @@
 <script>
-	import NavIcon from "../_components/NavIcon.svelte";
+	import NavIcon from '../_components/NavIcon.svelte';
 
-	import { getMainSections, getIconForSection, getMainSectionForSegment, getMainSectionForRoute } from "../../models/sectionsModel.js";
+	import { getMainSections, getIconForSection, getMainSectionForSegment, getMainSectionForRoute } from '../../models/sectionsModel.js';
 
 	import { project, getIsProjectTeamMember, showBetaFeatures, user } from '../../models/appModel';
 
@@ -13,6 +13,8 @@
 	$: isFollowing = $project && ($project.following || $user && getIsProjectTeamMember($project)); // $project.isOwner);
 
 	let mainSections = getMainSections();
+
+	export let keyboardShown = false;
 
 	let mainSection;
 
@@ -38,17 +40,19 @@
 	}
 </script>
 
-<nav>
-	<ul>
-		{#each mainSections as section}
-			{#if $showBetaFeatures || !section.betaHidden}
-				<li><div class="button" class:disabled="{!$showBetaFeatures && section.beta}" aria-current="{mainSection === section.segment ? 'page' : undefined}" on:click="{($showBetaFeatures || !section.beta) ? () => setNavSection(section) : null}" title="{section.label}">
-					<NavIcon iconId="{getIconForSection(section)}" active="{mainSection === section.segment}" label="{section.label}" />
-				</div></li>
-			{/if}
-		{/each}
-	</ul>
-</nav>
+{#if !keyboardShown}
+	<nav>
+		<ul>
+			{#each mainSections as section}
+				{#if $showBetaFeatures || !section.betaHidden}
+					<li><div class="button" class:disabled="{!$showBetaFeatures && section.beta}" aria-current="{mainSection === section.segment ? 'page' : undefined}" on:click="{($showBetaFeatures || !section.beta) ? () => setNavSection(section) : null}" title="{section.label}">
+						<NavIcon iconId="{getIconForSection(section)}" active="{mainSection === section.segment}" label="{section.label}" />
+					</div></li>
+				{/if}
+			{/each}
+		</ul>
+	</nav>
+{/if}
 
 <style>
 	nav {

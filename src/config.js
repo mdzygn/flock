@@ -16,6 +16,8 @@ export const headerImageExtension = '.jpg';
 
 export const CONTENT_IDENTIFIER_PATH = 'content/';
 
+export const MOBILE_DEVICE_MAX_WIDTH = 768;
+
 export const MAX_ID_LENGTH = 12;
 
 export const MAX_PROJECT_DESCRIPTION_CHARS = 140;
@@ -61,6 +63,10 @@ export default {
     headerImageLibraryThumbFolder,
     headerImageExtension,
 
+    CONTENT_IDENTIFIER_PATH,
+
+    MOBILE_DEVICE_MAX_WIDTH,
+
     MAX_ID_LENGTH,
 
     MAX_PROJECT_DESCRIPTION_CHARS,
@@ -78,8 +84,6 @@ export default {
     RETURN_PROJECT_HEADER_OFFSET,
 
     SPLASH_TIMEOUT,
-
-    CONTENT_IDENTIFIER_PATH,
 
     UPLOAD_MAX_WIDTH,
     UPLOAD_MAX_HEIGHT,

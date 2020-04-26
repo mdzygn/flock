@@ -124,6 +124,9 @@
 	.descriptionField {
     	padding-bottom: 18px;
 	}
+	.introField {
+    	padding-bottom: 18px;
+	}
 
 	.introField input {
 		padding-top: 0;
@@ -149,8 +152,7 @@
 
 	.fieldNote {
     	font-size: 1.1rem;
-    	color: #aaaaaa;
-    	/* color: #999999; */
+    	color: #bbbbbb;
 	}
 
 	.labelNote {

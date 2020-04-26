@@ -3,6 +3,19 @@
 	export let error;
 
 	const dev = (!!process.env.NODE_ENV.match(/development|staging/));
+
+	$: {
+		// refresh page if imported module failed - likely site was updating
+		if (typeof window !== 'undefined' && error && error.message.indexOf('Failed to fetch dynamically imported module') !== -1) {
+			status = '';
+			error.message = '';
+			error = error;
+
+			window.setTimeout(() => {
+				location.href = location.href;
+			}, 1000); // give delay to avoid infinite loop
+		}
+	}
 </script>
 
 <svelte:head>

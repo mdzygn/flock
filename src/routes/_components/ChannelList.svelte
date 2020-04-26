@@ -17,6 +17,7 @@
 
 	import {
 		getChannels,
+		getIsTeamManagedChannel,
     } from '../../models/channelsModel';
 
     export let project;
@@ -78,7 +79,7 @@
             <!-- {#if $channels && $channels.length} -->
                 <div class="channelListContainer">
                     {#each $channels as channel}
-                        {#if (isTeamMember || following) || get(channel).postCount}
+                        {#if isTeamMember || get(channel).postCount || (following && !getIsTeamManagedChannel(get(channel)))}
                             <ChannelListItem channel="{channel}" />
                         {/if}
                     {/each}

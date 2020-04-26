@@ -27,6 +27,10 @@ const primaryChannelNames = [
 	'announcements',
 	'general',
 ];
+const teamManagedChannelNames = [
+	'announcements',
+	'workshop',
+];
 
 onChannelsUpdated(channelsUpdated);
 
@@ -205,6 +209,10 @@ export function addChannel(channelDetails) {
 
 export function getIsPrimaryChannel(channel) {
 	return primaryChannelNames && primaryChannelNames.includes(channel.title.toLowerCase());
+}
+
+export function getIsTeamManagedChannel(channel) {
+	return teamManagedChannelNames && teamManagedChannelNames.includes(channel.title.toLowerCase());
 }
 
 export function getChannelDefaultDescription(channel) {

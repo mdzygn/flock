@@ -122,7 +122,7 @@
     }
 
     .getTheConversationStartedOwner {
-        right: 41px;
+        /* right: 41px; */
         font-weight: 700;
 		color: #DF3C3C;
     }

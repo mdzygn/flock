@@ -20,9 +20,9 @@ const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /
 let envVars = null;
 if (dev) {
 	envVars = dotenv.config().parsed;
-	if (!envVars) {
-		console.error('.env config vars file not found');
-	}
+	// if (!envVars) {
+	// 	console.warn('.env config vars file not found');
+	// }
 }
 
 export default {
@@ -35,7 +35,7 @@ export default {
 			replace(Object.assign({
 				'process.browser': true,
 				'process.env.NODE_ENV': JSON.stringify(mode),
-			}, dev ? {
+			}, (dev && envVars) ? {
 				'process.env.MONGODB_URI': JSON.stringify(envVars.MONGODB_URI),
 				'process.env.MONGODB_DB': JSON.stringify(envVars.MONGODB_DB),
 				'process.env.AWS_ACCESS_KEY_ID': JSON.stringify(envVars.AWS_ACCESS_KEY_ID),

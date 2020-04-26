@@ -71,6 +71,11 @@
 
 <svelte:head>
 	<title>Flock</title>
+	<style>
+		body {
+			overscroll-behavior-y: contain; /* Disables pull-to-refresh but allows overscroll effects. */
+		}
+	</style>
 </svelte:head>
 
 <ScrollView>

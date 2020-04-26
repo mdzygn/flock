@@ -175,6 +175,7 @@
 		color: #555555;
 
         padding: 6px 4px;
+		padding-left: 0;
 	}
 
 	.content :global(textarea) {

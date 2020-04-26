@@ -136,6 +136,7 @@
 		color: #333333;
 
         padding: 6px 4px;
+        padding-left: 0;
 	}
 
     .invalid {

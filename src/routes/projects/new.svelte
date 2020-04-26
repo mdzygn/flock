@@ -77,9 +77,10 @@
 	<div class="content">
 		<!-- <Proxy image="create_project" className="proxyOverlay" /> -->
 		<div class="panelContent">
-			<div class="field">
+			<div class="field introField">
 				<div class="label">{locale.NEW_PROJECT.TITLE}</div>
         		<input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: descriptionField})}" />
+				<div class="fieldNote labelNote">{@html locale.NEW_PROJECT.TITLE_NOTE}</div>
 			</div>
 			<div class="field descriptionField">
 				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
@@ -119,9 +120,17 @@
     	padding-bottom: 18px;
 	}
 
+	.introField {
+    	padding-bottom: 14px;
+	}
+
+	.introField input {
+		padding-top: 0;
+	}
+
 	.label {
 		font-size: 1.3rem;
-    	padding-left: 4px;
+    	/* padding-left: 4px; */
     	padding-bottom: 4px;
 		color: #555555;
 	}
@@ -141,6 +150,10 @@
     	font-size: 1.1rem;
     	color: #aaaaaa;
     	/* color: #999999; */
+	}
+
+	.labelNote {
+		padding-top: 6px;
 	}
 
 	input {
@@ -185,7 +198,7 @@
 	}
 
 	.headerImageLabel {
-    	padding-left: 25px;
+    	padding-left: 21px;
     	padding-right: 21px;
 	}
 

@@ -334,7 +334,7 @@
 
 	.label {
 		font-size: 1.3rem;
-    	padding-left: 4px;
+    	/* padding-left: 4px; */
     	padding-bottom: 4px;
 		color: #555555;
 	}
@@ -357,6 +357,7 @@
 	.tip {
     	padding-left: 13px;
 
+    	font-size: 1.2rem;
 		font-weight: initial;
 
 		color: #999999;
@@ -406,7 +407,7 @@
 	}
 
 	.headerImageLabel {
-    	padding-left: 25px;
+    	padding-left: 21px;
     	padding-right: 21px;
 	}
 

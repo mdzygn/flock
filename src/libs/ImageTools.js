@@ -52,6 +52,8 @@ export default class ImageTools {
                     height = options.maxHeight;
                 } // else return resolve(file); // early exit; no need to resize - still may need to exif rotate
 
+                // alert('size', width, height);
+
                 // EXIF.getData(image, () => {
 
                 let orientation = 1;

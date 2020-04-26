@@ -21,7 +21,7 @@ const locale = {
 		DESCRIPTION_NOTE: 'keep it brief, you can add detail later',
 		// DESCRIPTION_NOTE: 'keep your summary as short and to the point as possible,<br/>you have the opportunity to go into more detail later',
 		// DESCRIPTION_NOTE: 'keep your summary as concise as possible, you can go into detail later',
-		HEADER_IMAGE: 'header image',
+		HEADER_IMAGE: 'project header image',
 		CONFIRM: 'next',
 	},
 	EDIT_PROJECT_DETAILS: {

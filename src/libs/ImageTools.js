@@ -44,15 +44,47 @@ export default class ImageTools {
                 let width  = image.width;
                 let height = image.height;
 
-                if (width >= height && width > options.maxWidth) {
-                    height *= options.maxWidth / width;
-                    width = options.maxWidth;
-                } else if (height > options.maxHeight) {
+                if (height > options.maxHeight) {
                     width *= options.maxHeight / height;
                     height = options.maxHeight;
-                } // else return resolve(file); // early exit; no need to resize - still may need to exif rotate
+                }
 
-                // alert('size', width, height);
+                if (width > options.maxWidth) {
+                    height *= options.maxWidth / width;
+                    width = options.maxWidth;
+                }
+
+                // if (width >= height) {
+                //     if (width > options.maxWidth) {
+                //         height *= options.maxWidth / width;
+                //         width = options.maxWidth;
+                //     }
+
+                //     if (height > options.maxHeight) {
+                //         width *= options.maxHeight / height;
+                //         height = options.maxHeight;
+                //     }
+                // } else { // does order matter? is this the same?
+                //     if (height > options.maxHeight) {
+                //         width *= options.maxHeight / height;
+                //         height = options.maxHeight;
+                //     }
+
+                //     if (width > options.maxWidth) {
+                //         height *= options.maxWidth / width;
+                //         width = options.maxWidth;
+                //     }
+                // } // else return resolve(file); // early exit; no need to resize - still may need to exif rotate
+
+                // if (width >= height && width > options.maxWidth) {
+                //     height *= options.maxWidth / width;
+                //     width = options.maxWidth;
+                // } else if (height > options.maxHeight) {
+                //     width *= options.maxHeight / height;
+                //     height = options.maxHeight;
+                // } // else return resolve(file); // early exit; no need to resize - still may need to exif rotate
+
+                // alert('size: ' + width + ', ' + height);
 
                 // EXIF.getData(image, () => {
 

@@ -12,7 +12,7 @@
 			error = error;
 
 			window.setTimeout(() => {
-				location.href = location.href;
+				location.href = location.href; // refresh
 			}, 1000); // give delay to avoid infinite loop
 		}
 	}

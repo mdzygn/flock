@@ -2,15 +2,12 @@ import api from '../api';
 
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
-// import { tick } from 'svelte';
 
 import { copyToClipboard } from '../utils';
 
 import conversations from '../data/conversations.json';
 
 import promptIds from '../config/promptIds';
-
-// const { page } = stores();
 
 import {
     getProject,
@@ -95,18 +92,12 @@ import {
 import { tick } from 'svelte';
 
 export function loadProject(targetProjectId, options) {
-    // console.log('loadProject', targetProjectId);
-
     const path = get(curPath);
     if (!/\/projects\/.+/.test(path)) {
         lastPreProjectPath.set(path);
     }
 
     loadProjectItem(targetProjectId);
-    // loadProjects({ id: targetProjectId });
-
-    // projectId.set(targetProjectId);
-    // setProject(targetProjectId);
 
     if (gotoRoute('projects/' + targetProjectId)) {
         const showInfo = options && options.showInfo;
@@ -164,12 +155,9 @@ export function setUser(targetUserId) {
     const curUserModel = getUser(targetUserId);
     const curUser = get(curUserModel);
 
-    // loadUsers( { id: targetUserId } );
-
     if (curUser) {
         userId.set(targetUserId);
         user.set(curUser);
-        // console.log(get(user));
 
         if (curUser && curUser.loaded && (!curUser.username || curUser.set === false)) {
             (async() => {
@@ -193,9 +181,6 @@ onUsersUpdated(() => {
 });
 
 export function setNavSection(section) {
-    // const sectionId = getIdForSection(section);
-    // switch (sectionId) {
-
     switch (section.segment) {
         case 'projects':
             displayingAllMyProjects.set(false);
@@ -258,10 +243,8 @@ function setChannel(targetChannelId) {
     channel.set(curChannel);
 
     if (curChannel) {
-        // console.log('projectId', get(projectId), curChannel && curChannel.projectId);
         if ((!get(projectId) || !get(project)) && curChannel.projectId) {
             loadProjectItem(curChannel.projectId);
-            // setProject(curChannel.projectId);
         }
     }
 }
@@ -295,11 +278,8 @@ function setPost(targetPostId) {
 }
 
 export function loadProfile(targetProfileId, options) {
-    // console.log('targetProfileId: ' + targetProfileId);
-
     profileId.set(targetProfileId);
 
-    // const curUser = users.find(item => item.id === targetProfileId);
     const curUserModel = getUser(targetProfileId);
     const curUser = get(curUserModel);
     viewedUser.set(curUser);
@@ -312,8 +292,6 @@ export function loadProfile(targetProfileId, options) {
 
 export function loadConversation(targetConversationId) {
     if (!checkLoggedIn()) { return; }
-
-    // console.log('loadConversation: ' + targetConversationId);
 
     conversationId.set(targetConversationId);
 
@@ -498,13 +476,6 @@ export function loadCurrentProject() {
 export function loadCurrentChannel() {
     if (get(channelId) && !get(channel) && !get(loadingChannels)) {
         loadChannels( { id: get(channelId) } );
-        // if (get(projectId)) {
-        //     // console.log('loadCurrentChannel projectId', get(projectId));
-        //     loadChannels( { projectId: get(projectId) } );
-        // } else {
-        //     // console.log('loadCurrentChannel channelId', get(channelId));
-        //     loadChannels( { id: get(channelId) } );
-        // }
     }
 }
 

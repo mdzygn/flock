@@ -97,9 +97,14 @@ const locale = {
 		PASS: 'password',
 	},
 	NEW_THREAD: {
+		PAGE_TITLE: 'New Post',
 		TITLE: 'title',
+		TITLE_TIP: '(optional)',
 		MESSAGE: 'message',
 		CONFIRM: 'Post',
+	},
+	NEW_THREAD_POST: {
+		PAGE_TITLE: 'Reply',
 	},
 	CHANNEL_DESCRIPTIONS: {
 		ANNOUNCEMENTS: 'Project announcements and news from the team',

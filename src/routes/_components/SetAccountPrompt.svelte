@@ -159,7 +159,7 @@
 
 	.label {
 		font-size: 1.3rem;
-    	padding-left: 4px;
+    	/* padding-left: 4px; */
 		color: #888888;
 
         text-align: left;

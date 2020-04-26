@@ -50,6 +50,8 @@
 
 	$: showTitleField = ($postType === 'thread');
 
+	$: pageTitle = ($postType === 'thread') ? locale.NEW_THREAD.PAGE_TITLE : locale.NEW_THREAD_POST.PAGE_TITLE;
+
     onMount(async () => {
 		await tick();
 		if (showTitleField) {
@@ -95,9 +97,10 @@
 	<div class="content">
 		<!-- <Proxy image="create_project" className="proxyOverlay" /> -->
 		<div class="panelContent">
+        	<div class="pageTitle">{pageTitle}</div>
 			{#if showTitleField}
 				<div class="field">
-					<div class="label">{locale.NEW_THREAD.TITLE}</div>
+					<div class="label">{locale.NEW_THREAD.TITLE}<span class="tip">{@html locale.NEW_THREAD.TITLE_TIP}</span></div>
 					<!-- <input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField})}" /> -->
 					<textarea class="titleField" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField, action: testSubmit, actionOnCtrl: true})}" />
 				</div>
@@ -123,6 +126,16 @@
     	padding: 28px 0;
 	}
 
+	.pageTitle {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #444444;
+
+		padding-left: 21px;
+        margin-top: -2px;
+        padding-bottom: 15px;
+	}
+
 	.field {
     	padding: 0 21px;
 		padding-bottom: 5px;
@@ -135,9 +148,18 @@
 
 	.label {
 		font-size: 1.3rem;
-    	padding-left: 4px;
+    	/* padding-left: 4px; */
     	padding-bottom: 4px;
 		color: #555555;
+	}
+
+	.tip {
+    	padding-left: 10px;
+
+    	font-size: 1.1rem;
+		font-weight: initial;
+
+		color: #aaaaaa;
 	}
 
 	textarea {

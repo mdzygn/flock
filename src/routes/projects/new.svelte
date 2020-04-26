@@ -125,10 +125,6 @@
     	padding-bottom: 18px;
 	}
 
-	.introField {
-    	padding-bottom: 14px;
-	}
-
 	.introField input {
 		padding-top: 0;
 	}
@@ -158,7 +154,7 @@
 	}
 
 	.labelNote {
-		padding-top: 6px;
+		padding-top: 8px;
 	}
 
 	input {

@@ -117,6 +117,18 @@ function initApp() {
     //         return unsavedChanges;
     //     };
     // }
+
+    checkDomain();
+}
+
+export function checkDomain() {
+    if (typeof window !== 'undefined' && !config.LOCAL) {
+        if (!get(userId) || !get(usercode)) {
+            if(location.protocol.indexOf("https") === -1 && location.protocol.indexOf("http") !== -1) {
+                location.href = location.href.replace("http", "https");
+            }
+        }
+    }
 }
 
 export function getScrollRegionProperties(id) {

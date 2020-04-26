@@ -1,5 +1,8 @@
 export const DEBUG = (!!process.env.NODE_ENV.match(/development|staging/));
 
+export const HOSTNAME = (typeof window !== 'undefined') ? window.location.hostname : 'localhost';
+export const LOCAL = (!!process.env.NODE_ENV.match(/development/)) && (HOSTNAME === 'localhost' || HOSTNAME === '192.168.1.5');
+
 export const MAIN_USER = 'sl3p5oms';
 export const GENERAL_USER = 'bl20a8lm';
 
@@ -48,6 +51,9 @@ export const SPLASH_TIMEOUT = 3;
 
 export default {
     DEBUG,
+
+    HOSTNAME,
+    LOCAL,
 
     MAIN_USER,
     GENERAL_USER,

@@ -71,6 +71,8 @@ import {
     targetUser,
     targetPost,
 
+    checkDomain,
+
     resetScrollRegionPosition,
 
     postsAnchorToBottom,
@@ -463,6 +465,9 @@ export async function logOut(dontDisplayMessage) {
     usercode.set('');
 
     updateProjectLists();
+
+    await tick();
+    checkDomain();
 
     // if (!dontDisplayMessage) {
     //     await tick();

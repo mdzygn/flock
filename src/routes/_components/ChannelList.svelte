@@ -67,10 +67,12 @@
     <div class="channelList" class:isEditable="{canEdit}">
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
         <ContentPanel title="Channels" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
-            {#if isNew}
-                <div class="getTheConversationStarted getTheConversationStartedOwner">{locale.PROJECT.GET_STARTED}</div>
-            {:else if !hasActiveChannels}
-                <div class="getTheConversationStarted">{locale.PROJECT.FOLLOWER_GET_STARTED}</div>
+            {#if !hasActiveChannels || isNew}
+                {#if isTeamMember}
+                    <div class="getTheConversationStarted getTheConversationStartedOwner">{locale.PROJECT.GET_STARTED}</div>
+                {:else}
+                    <div class="getTheConversationStarted">{locale.PROJECT.FOLLOWER_GET_STARTED}</div>
+                {/if}
             {/if}
             <!-- {#if $channels && $channels.length} -->
                 <div class="channelListContainer">

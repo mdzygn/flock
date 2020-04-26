@@ -129,15 +129,15 @@
             <div class="count">{likeCount}</div>
             <!-- <Counter count="{likeCount}" /> -->
         </Button>
-        {#if showRepliesIcon}
-            <Button className="commentButton">
-                <div class="commentIcon" style="background-image: url({CommentIcon})"/>
-                <Counter count="{repliesCount}" />
-            </Button>
-        {:else}
-            {#if showReplyIcon}
-                <div class="replyIcon" style="background-image: url({ReplyIcon})"/>
-            {/if}
+    {/if}
+    {#if showRepliesIcon}
+        <Button className="commentButton">
+            <div class="commentIcon" style="background-image: url({CommentIcon})"/>
+            <Counter count="{repliesCount}" />
+        </Button>
+    {:else if !isArchived}
+        {#if showReplyIcon}
+            <div class="replyIcon" style="background-image: url({ReplyIcon})"/>
         {/if}
     {/if}
     <div class="info">

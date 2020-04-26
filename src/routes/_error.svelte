@@ -6,7 +6,7 @@
 
 	$: {
 		// refresh page if imported module failed - likely site was updating
-		if (typeof window !== 'undefined' && error && error.message.indexOf('Failed to fetch dynamically imported module') !== -1) {
+		if (typeof window !== 'undefined' && error && (!error.message || error.message.indexOf('Failed to fetch dynamically imported module') !== -1)) {
 			status = '';
 			error.message = '';
 			error = error;

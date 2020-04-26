@@ -16,7 +16,7 @@ const locale = {
 	},
 	NEW_PROJECT: {
 		TITLE: 'project name',
-		TITLE_NOTE: 'your project be private until you share it',
+		TITLE_NOTE: 'your project will be private until you share it',
 		DESCRIPTION: 'project summary',
 		DESCRIPTION_NOTE: 'keep it brief, you can add detail later',
 		// DESCRIPTION_NOTE: 'keep your summary as short and to the point as possible,<br/>you have the opportunity to go into more detail later',

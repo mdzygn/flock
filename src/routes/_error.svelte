@@ -2,7 +2,7 @@
 	export let status;
 	export let error;
 
-	const dev = (process.env.NODE_ENV.match(/development|staging/));
+	const dev = (!!process.env.NODE_ENV.match(/development|staging/));
 </script>
 
 <svelte:head>

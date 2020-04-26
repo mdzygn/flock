@@ -85,7 +85,7 @@
 			<div class="field introField">
 				<div class="label">{locale.NEW_PROJECT.TITLE}</div>
         		<input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: descriptionField})}" />
-				<div class="fieldNote labelNote">{@html locale.NEW_PROJECT.TITLE_NOTE}</div>
+				<!-- <div class="fieldNote labelNote">{@html locale.NEW_PROJECT.TITLE_NOTE}</div> -->
 			</div>
 			<div class="field descriptionField">
 				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
@@ -97,6 +97,7 @@
 				<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
 				<ImageSelectionBox bind:image {contextSearchString} bind:fileIsUploading="{headerImageIsUploading}" uploadType="projectHeader" itemId="{projectId}" />
 			</div>
+			<div class="fieldNote privacyNote">{@html locale.NEW_PROJECT.PRIVACY_NOTE}</div>
 			<div class="actions">
 				<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewProject}" icon="{NextArrowIcon}">{locale.NEW_PROJECT.CONFIRM}</Button>
 			</div>
@@ -152,11 +153,16 @@
 
 	.fieldNote {
     	font-size: 1.1rem;
-    	color: #bbbbbb;
+    	color: #aaaaaa;
 	}
 
-	.labelNote {
+	/* .labelNote {
 		padding-top: 8px;
+	} */
+	.privacyNote {
+		padding-top: 20px;
+		padding-left: 20px;
+		padding-bottom: 5px;
 	}
 
 	input {

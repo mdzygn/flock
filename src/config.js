@@ -35,7 +35,7 @@ export const USER_NAME_MAX_LENGTH = 16;
 export const RETURN_PROJECT_HEADER_OFFSET = 75; // 100;
 
 export const UPLOAD_MAX_WIDTH = 1024;
-export const UPLOAD_MAX_HEIGHT = 2048;
+export const UPLOAD_MAX_HEIGHT = 4096;
 export const UPLOAD_THUMB_MAX_WIDTH = 350;
 export const UPLOAD_THUMB_MAX_HEIGHT = 350;
 

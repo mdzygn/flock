@@ -1,4 +1,4 @@
-import exifr from 'exifr';
+// import exifr from 'exifr';
 // import EXIF from 'exif-js';
 
 const hasBlobConstructor = typeof (Blob) !== 'undefined' && (function checkBlobConstructor() {
@@ -56,11 +56,14 @@ export default class ImageTools {
 
                 let orientation = 1;
 
-                if (file.type.match(/image\/jpeg/)) {
-                    orientation = await exifr.orientation(image);
-                    // exifr.getData(image, () => {
-                        // const orientation = EXIF.getTag(image, 'Orientation');
-                }
+                // if (file.type.match(/image\/jpeg/)) {
+                //     orientation = await exifr.orientation(image);
+                //     // exifr.getData(image, () => {
+                //         // const orientation = EXIF.getTag(image, 'Orientation');
+                // }
+
+                // alert('exif orientation: ' + orientation);
+                // orientation = 1; // seems they are already auto rotated
 
                 const imageCanvas = this.drawImageToCanvas(image, orientation, 0, 0, width, height, 'contain');
                 if (hasToBlobSupport) imageCanvas.toBlob(blob => resolve(blob), options.type || file.type);

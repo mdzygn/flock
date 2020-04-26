@@ -5,7 +5,7 @@ import * as sapper from '@sapper/server';
 import bodyParser from 'body-parser';
 
 const { PORT, NODE_ENV } = process.env;
-const dev = NODE_ENV === 'development';
+const dev = NODE_ENV.match(/development/);
 
 polka() // You can also use Express
 	.use(

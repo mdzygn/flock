@@ -1,10 +1,10 @@
-export const DEBUG = (process.env.NODE_ENV === 'development');
+export const DEBUG = (process.env.NODE_ENV.match(/development|staging/));
 
 export const MAIN_USER = 'sl3p5oms';
 export const GENERAL_USER = 'bl20a8lm';
 
-export const SITE_CONTENT_URL = (process.env.NODE_ENV === 'development') ? 'https://flock-hub-dev.s3-us-west-2.amazonaws.com/' : 'https://flock-hub.s3-us-west-2.amazonaws.com/';
-export const USER_CONTENT_URL = (process.env.NODE_ENV === 'development') ? 'https://flock-hub-dev-content.s3-us-west-2.amazonaws.com/' : 'https://flock-hub-content.s3-us-west-2.amazonaws.com/';
+export const SITE_CONTENT_URL = (process.env.NODE_ENV.match(/development|staging/)) ? 'https://flock-hub-dev.s3-us-west-2.amazonaws.com/' : 'https://flock-hub.s3-us-west-2.amazonaws.com/';
+export const USER_CONTENT_URL = (process.env.NODE_ENV.match(/development|staging/)) ? 'https://flock-hub-dev-content.s3-us-west-2.amazonaws.com/' : 'https://flock-hub-content.s3-us-west-2.amazonaws.com/';
 
 export const contentFolder = 'content/';
 export const projectContentFolder = 'content/projects/';

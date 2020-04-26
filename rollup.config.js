@@ -12,7 +12,7 @@ import dotenv from 'dotenv';
 import image from '@rollup/plugin-image';
 
 const mode = process.env.NODE_ENV;
-const dev = mode === 'development';
+const dev = (mode === 'development');
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
@@ -20,9 +20,9 @@ const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /
 let envVars = null;
 if (dev) {
 	envVars = dotenv.config().parsed;
-	// if (!envVars) {
-	// 	console.warn('.env config vars file not found');
-	// }
+	if (!envVars) {
+		console.warn('.env config vars file not found');
+	}
 }
 
 export default {

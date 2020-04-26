@@ -1,4 +1,4 @@
-export const DEBUG = (process.env.NODE_ENV === 'development');
+export const DEBUG = (process.env.NODE_ENV.match(/development|staging/));
 
 export const MONGODB_URI = process.env.MONGODB_URI;
 export const MONGODB_DB = process.env.MONGODB_DB;

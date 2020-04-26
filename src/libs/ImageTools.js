@@ -54,28 +54,6 @@ export default class ImageTools {
                     width = options.maxWidth;
                 }
 
-                // if (width >= height) {
-                //     if (width > options.maxWidth) {
-                //         height *= options.maxWidth / width;
-                //         width = options.maxWidth;
-                //     }
-
-                //     if (height > options.maxHeight) {
-                //         width *= options.maxHeight / height;
-                //         height = options.maxHeight;
-                //     }
-                // } else { // does order matter? is this the same?
-                //     if (height > options.maxHeight) {
-                //         width *= options.maxHeight / height;
-                //         height = options.maxHeight;
-                //     }
-
-                //     if (width > options.maxWidth) {
-                //         height *= options.maxWidth / width;
-                //         width = options.maxWidth;
-                //     }
-                // } // else return resolve(file); // early exit; no need to resize - still may need to exif rotate
-
                 // if (width >= height && width > options.maxWidth) {
                 //     height *= options.maxWidth / width;
                 //     width = options.maxWidth;

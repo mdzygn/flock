@@ -22,7 +22,7 @@
     export let project;
 
     let channels = writable([]);
-    $: { channels = getChannels( { projectId: $project.id } ) };
+    $: { channels = $project && getChannels( { projectId: $project.id } ) };
 
 	$: isNew = (isTeamMember && $project && $project.isNew) || false;
     $: isTeamMember = $user && getIsProjectTeamMember($project);

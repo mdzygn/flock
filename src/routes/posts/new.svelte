@@ -23,6 +23,7 @@
 		projectId,
 		postType,
 		postId,
+		project,
 	} from '../../models/appModel';
 
 	import {
@@ -40,6 +41,8 @@
 
 	let titleField;
 	let messageField;
+
+	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 
 	loadCurrentChannel();
 
@@ -85,7 +88,7 @@
 </script>
 
 <svelte:head>
-	<title>Flock</title>
+	<title>{projectTitleString}Flock</title>
 </svelte:head>
 
 <ScrollView>

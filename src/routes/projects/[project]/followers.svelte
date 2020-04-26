@@ -4,11 +4,15 @@
 	import Proxy from '../../../components/Proxy.svelte';
     import Hotspot from '../../../components/Hotspot.svelte';
 
+	import { project } from '../../../models/appModel';
+
 	import { loadProfile, loadConversation } from '../../../actions/appActions';
+
+	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 </script>
 
 <svelte:head>
-	<title>Flock</title>
+	<title>{projectTitleString}Flock</title>
 </svelte:head>
 
 <ScrollView id="followers">

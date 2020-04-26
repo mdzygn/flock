@@ -138,6 +138,8 @@
 
 	$: projectDetails = ($project && $project.details) || null;
 
+	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
+
 	// $: forceShowInfo = !following && !isTeamMember;
 
 	$: projectHasDetails = getProjectHasDetails($project);
@@ -176,7 +178,7 @@
 </script>
 
 <svelte:head>
-	<title>World Creator - Flock</title>
+	<title>{projectTitleString}Flock</title>
 </svelte:head>
 
 <div class="pageContent" class:archived="{isArchived}">

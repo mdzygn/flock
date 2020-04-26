@@ -28,6 +28,8 @@
 	let tags = ($project && $project.tags) || '';
 	let location = ($project && $project.location) || '';
 
+	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
+
 	let headerImageIsUploading;
 	let detail1ImageIsUploading;
 	let detail2ImageIsUploading;
@@ -191,7 +193,7 @@
 </script>
 
 <svelte:head>
-	<title>Flock</title>
+	<title>{projectTitleString}Flock</title>
 </svelte:head>
 
 <ScrollView>

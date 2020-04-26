@@ -49,6 +49,8 @@
 
 	// $: userLoading = (!($user && $user.loaded) && $userId);
 
+	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
+
 	loadCurrentProject();
 	loadCurrentChannel();
 
@@ -76,7 +78,7 @@
 </script>
 
 <svelte:head>
-	<title>Flock</title>
+	<title>{projectTitleString}Flock</title>
 </svelte:head>
 
 <div class="pageContent">

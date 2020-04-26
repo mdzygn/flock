@@ -52,6 +52,8 @@
 
 	const DISPLAY_BOTTOM_LINK_POST_COUNT = 3;
 
+	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
+
 	loadCurrentChannel();
 	loadCurrentPost();
 
@@ -75,7 +77,7 @@
 </script>
 
 <svelte:head>
-	<title>Flock</title>
+	<title>{projectTitleString}Flock</title>
 </svelte:head>
 
 <ScrollView id="thread" anchorToBottom="{$postsAnchorToBottom}">

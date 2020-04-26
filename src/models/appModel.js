@@ -111,14 +111,14 @@ export const newUsername = writable(null);
 initApp();
 
 function initApp() {
+    checkDomain();
+
     //TODO: implement for reload and all svelte route navigation
     // if (typeof window !== 'undefined') {
     //     window.onbeforeunload = function(){
     //         return unsavedChanges;
     //     };
     // }
-
-    checkDomain();
 }
 
 export function checkDomain() {
@@ -153,25 +153,9 @@ export function resetScrollRegionPosition(id) {
     let curScrollRegionProperties = get(scrollRegionProperties);
     if (curScrollRegionProperties[id]) {
         curScrollRegionProperties[id].inited = false;
-        // scrollRegionReset.set({id});
         scrollRegionProperties.set(curScrollRegionProperties);
     }
 }
-
-// export function updateScrollRegionPosition(id, scrollTop) {
-//     scrollRegionUpdated.set({id, scrollTop});
-// }
-
-// if storing scroll position in local storage
-// export function updateScrollRegionProperties(id) {
-//     if (!id) {
-//         return null;
-//     }
-//     let curScrollRegionProperties = get(scrollRegionProperties);
-//     if (curScrollRegionProperties[id]) {
-//         scrollRegionProperties.set(curScrollRegionProperties);
-//     }
-// }
 
 export function getIsCurrentUser(targetUserId) {
     const curUserId = get(userId);
@@ -180,9 +164,7 @@ export function getIsCurrentUser(targetUserId) {
 
 export function getIsProjectTeamMember(project) {
     const curUserId = get(userId);
-    // console.log('getIsProjectTeamMember ' + (project && project.ownerId && project.ownerId === curUserId));
 	return (project && curUserId && project.team && project.team.includes(curUserId));
-	// return (project && project.ownerId && project.ownerId === curUserId);
 }
 
 export function checkParams(query) {
@@ -196,7 +178,6 @@ export function checkParams(query) {
 export function isUserLoaded(user, userId) {
     return !userId || (user && user.loaded);
 }
-// userLoading = (!($user && $user.loaded) && $userId);
 
 export function isProjectLoaded(project, projectId) {
     return project && project.id === projectId;
@@ -222,12 +203,6 @@ export function getHeaderImage(imageUrl, thumb) {
 		const contextIndex = imageUrl.indexOf(config.CONTENT_IDENTIFIER_PATH);
 		if (contextIndex === 0) {
             return getContentImage(imageUrl, thumb);
-            // let imagePath = imageUrl.substr(config.CONTENT_IDENTIFIER_PATH.length);
-            // const extensionIndex = imagePath.lastIndexOf('.');
-            // if (thumb && extensionIndex !== -1) {
-            //     imagePath = imagePath.substr(0, extensionIndex) + '-thumb' + imagePath.substr(extensionIndex);
-            // }
-			// return config.USER_CONTENT_URL + imagePath;
 		} else {
 			return config.SITE_CONTENT_URL + (thumb ? config.headerImageLibraryThumbFolder : config.headerImageLibraryFolder) + imageUrl + config.headerImageExtension;
 		}

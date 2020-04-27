@@ -58,15 +58,16 @@
 
     .homeIntro {
         position: relative;
-        height: 520px;
+        /* height: 520px; */
         background-color: #ffffff;
-        padding-bottom: 3px;
+        padding-bottom: 2px;
     }
 
     .headerRegion {
         position: relative;
         width: 100%;
-        height: 243px;
+        height: 200px;
+        /* height: 243px; */
         /* padding-top: 59%; */
         background-image: url('../assets/intro_image.jpg');
         background-size: cover;
@@ -97,7 +98,7 @@
         padding-left: 23px;
         padding-top: 23px;
         padding-right: 54px;
-        padding-bottom: 16px;
+        padding-bottom: 8px;
     }
 
     .introText {
@@ -108,7 +109,7 @@
     .actions {
         position: relative;
         padding: 0 23px;
-        padding-bottom: 12px;
+        padding-bottom: 6px;
     }
 
     .homeIntro :global(.signUpButton) {

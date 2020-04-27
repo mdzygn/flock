@@ -335,6 +335,10 @@
 	.imageField {
 		position: relative;
 		height: 44px;
+		margin-bottom: -20px;
+	}
+	.content :global(.detailImageSelector) {
+		margin-top: 20px;
 	}
 
 	.label {

@@ -39,10 +39,16 @@
         <div class="introText">{@html locale.HOME_INTRO.INTRO_TEXT}</div>
     </div>
 
-    <div class="actions">
+    <div class="readMoreContainer">
         <Button className="readMoreButton" onClick="{e => { loadProject(config.FLOCK_PROJECT, { showInfo: true }); }}" icon="{MoreArrowIcon}">{locale.HOME_INTRO.LEARN_MORE}</Button>
-        <Button className="signUpButton" onClick="{signUp}">{locale.HOME_INTRO.SIGN_UP}</Button>
-        <Button className="signInButton" onClick="{signIn}">{locale.HOME_INTRO.SIGN_IN}</Button>
+    </div>
+
+    <div class="actions">
+        <!-- <Button className="readMoreButton" onClick="{e => { loadProject(config.FLOCK_PROJECT, { showInfo: true }); }}" icon="{MoreArrowIcon}">{locale.HOME_INTRO.LEARN_MORE}</Button> -->
+        <div class="actionButtonsContainer">
+            <Button className="signInButton" onClick="{signIn}">{locale.HOME_INTRO.SIGN_IN}</Button>
+            <Button className="signUpButton" onClick="{signUp}">{locale.HOME_INTRO.SIGN_UP}</Button>
+        </div>
     </div>
 
     <div class="discoverIndicatorContainer">
@@ -98,7 +104,7 @@
         padding-left: 23px;
         padding-top: 23px;
         padding-right: 54px;
-        padding-bottom: 8px;
+        padding-bottom: 15px;
     }
 
     .introText {
@@ -108,13 +114,22 @@
 
     .actions {
         position: relative;
+		display: flex;
+		justify-content: center;
+        /* padding: 0 23px;
+        padding-bottom: 6px; */
+    }
+
+    .actions {
+        position: relative;
         padding: 0 23px;
-        padding-bottom: 6px;
+        padding-bottom: 2px;
     }
 
     .homeIntro :global(.signUpButton) {
         display: inline-block;
-        margin-left: -6px;
+        margin-left: -9px;
+        /* margin-left: -6px; */
     }
     .homeIntro :global(.signUpButton .buttonContent) {
         margin: 11px;
@@ -134,7 +149,7 @@
 
     .homeIntro :global(.signInButton) {
         display: inline-block;
-        margin-left: -9px;
+        /* margin-left: -9px; */
     }
     .homeIntro :global(.signInButton .buttonContent) {
         margin: 11px;
@@ -153,15 +168,22 @@
         color: #222222;
     }
 
+    .readMoreContainer {
+        position: relative;
+        height: 24px;
+    }
+
     .homeIntro :global(.readMoreButton) {
         position: absolute;
-        top: 12px;
+        top: -13px;
+        /* top: 12px; */
         right: 15px;
 
         padding: 10px;
         padding-right: 30px;
 
-        font-size: 1.5rem;
+        font-size: 1.3rem;
+        /* font-size: 1.5rem; */
         font-weight: 700;
     }
     .homeIntro :global(.readMoreButton .icon) {

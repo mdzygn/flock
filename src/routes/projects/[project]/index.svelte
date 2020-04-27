@@ -498,6 +498,8 @@
 
 		font-size: 1.5rem;
 		line-height: 2rem;
+
+		user-select: text;
 	}
 
     .contentContainer :global(.infoCollapseButton) {
@@ -629,7 +631,9 @@
 		padding-top: 23px;
 		padding-right: 60px;
 		padding-bottom: 5px;
-    	line-height: 3rem;
+		line-height: 3rem;
+
+		user-select: text;
 	}
 
     .headerOwner {
@@ -650,6 +654,8 @@
     	min-height: 50px;
 
 		color: #555555;
+
+		user-select: text;
 	}
 
 	.button {

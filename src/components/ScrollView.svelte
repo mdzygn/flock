@@ -49,6 +49,10 @@
 
         regionProps.scrollTop = scrollRegion.scrollTop;
 
+        // if (headerStartHidden && !anchorToBottom) {
+        //     regionProps.scrollTop = Math.max(regionProps.scrollTop, scrollHeaderHeight);
+        // }
+
         if (hasScrollHeader && scrollHeader) {
             scrollHeaderHeight = scrollHeader.offsetHeight;
             curScrollHeaderPosition = Math.min(regionProps.scrollTop, Math.max(regionProps.scrollTop - scrollHeaderHeight, curScrollHeaderPosition));

@@ -11,11 +11,15 @@
     import NavActivityActiveIcon from "../../assets/icons/nav_activity_active.png";
     import NavMessagesActiveIcon from "../../assets/icons/nav_messages_active.png";
 
+	import {
+		showBetaFeatures,
+    } from '../../models/appModel';
+
     export let iconId = 'home';
 
     let icons = {
         'home': {icon: NavHomeIcon, activeIcon: NavHomeActiveIcon},
-        'discover': {icon: NavDiscoverIcon, activeIcon: NavDiscoverActiveIcon},
+        'discover': {icon: $showBetaFeatures ? NavDiscoverIcon : NavHomeIcon, activeIcon: $showBetaFeatures ? NavDiscoverActiveIcon : NavHomeActiveIcon},
         'following': {icon: NavFollowingIcon, activeIcon: NavFollowingActiveIcon},
         'activity': {icon: NavActivityIcon, activeIcon: NavActivityActiveIcon},
         'messages': {icon: NavMessagesIcon, activeIcon: NavMessagesActiveIcon},

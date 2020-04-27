@@ -146,8 +146,8 @@
 </script>
 
 <div class="headerBar" class:hasSuperHeader="{hasSuperHeader}">
-    {#if segment === undefined}
-        {#if $showBetaFeatures}
+    {#if segment === undefined || (segment === 'discover' && !$showBetaFeatures)}
+        {#if $showBetaFeatures || segment === 'discover'}
             <div class="logo">
                 <img src='assets/logo.png' alt="Flock">
             </div>

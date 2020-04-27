@@ -52,8 +52,12 @@
 </script>
 
 <div class="pageContent">
-	<ScrollView id="discover" headerResetOnShow="{true}">
+	<ScrollView id="discover" headerStartHidden="{!$showBetaFeatures}" headerResetOnShow="{true}">
 		<!-- <Feed type="discover" linkToProjects="{true}" count="{5}" offset="{proxyContentOffset}"/> -->
+
+		{#if !$showBetaFeatures}
+			<Proxy image="home_intro" className="proxyOverview" />
+		{/if}
 
 		<div class="feed">
 			{#if $loadingProjects && (!$filteredDiscoveryProjects || !$filteredDiscoveryProjects.length) }
@@ -96,6 +100,11 @@
 </div>
 
 <style>
+	/* .pageContent :global(.proxyOverview) {
+		position: absolute;
+        /* opacity: 0.5; */
+	/* } */
+
 	.feed {
 		width: 100%;
 
@@ -105,6 +114,10 @@
 	/* .feed :global(.proxy) {
 		padding-bottom: 10px;
 	} */
+
+	.pageContent :global(.searchBar ) {
+		height: 39px;
+	}
 
 	.pageContent :global(.scrollHeader) {
     	background-color: #ffffff;

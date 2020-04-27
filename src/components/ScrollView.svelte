@@ -123,7 +123,7 @@
         if (hasScrollHeader && scrollHeader) {
             scrollHeaderHeight = scrollHeader.offsetHeight;
 
-            if (headerResetOnShow) {
+            if (headerResetOnShow && !headerStartHidden) {
                 curScrollHeaderPosition = regionProps.scrollTop;
             } else {
                 if (allowHeaderPositionReset) {

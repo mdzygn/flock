@@ -5,6 +5,7 @@
 
 	import ScrollView from '../../../components/ScrollView.svelte';
 	import SearchBar from './../../_components/SearchBar.svelte';
+	import HomeIntro from './../../_components/HomeIntro.svelte';
 
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspots from '../../../components/Hotspots.svelte';
@@ -56,7 +57,7 @@
 		<!-- <Feed type="discover" linkToProjects="{true}" count="{5}" offset="{proxyContentOffset}"/> -->
 
 		{#if !$showBetaFeatures}
-			<Proxy image="home_intro" className="proxyOverview" />
+			<HomeIntro />
 		{/if}
 
 		<div class="feed">
@@ -100,11 +101,6 @@
 </div>
 
 <style>
-	/* .pageContent :global(.proxyOverview) {
-		position: absolute;
-        /* opacity: 0.5; */
-	/* } */
-
 	.feed {
 		width: 100%;
 

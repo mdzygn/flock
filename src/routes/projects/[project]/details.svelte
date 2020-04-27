@@ -66,8 +66,8 @@
 
 	let detailInitialized = false;
 
-	let MIN_DETAIL_INPUT_HEIGHT = 140;
-	let MAX_DETAIL_INPUT_HEIGHT = 385;
+	let MIN_DETAIL_INPUT_HEIGHT = 130; // 140;
+	let MAX_DETAIL_INPUT_HEIGHT = 388; // 385;
 	let DETAIL_INPUT_PADDING = 4;
 
 	$: {
@@ -378,7 +378,7 @@
         outline: none;
         background: none;
 
-		border-bottom: 1px solid #999999;
+		border-bottom: 1px solid #cccccc;
 
         width: 100%;
         box-sizing: border-box;
@@ -391,13 +391,13 @@
 	}
 
 	.content :global(textarea) {
-        border: 1px solid #999999;
+        border: 1px solid #cccccc;
 
         outline: none;
         background: none;
 
         width: 100%;
-		height: 88px;
+		height: 90px;
 
         box-sizing: border-box;
 

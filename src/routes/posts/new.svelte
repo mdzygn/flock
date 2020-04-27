@@ -168,13 +168,13 @@
 	}
 
 	textarea {
-        border: 1px solid #999999;
+        border: 1px solid #cccccc;
 
         outline: none;
         background: none;
 
         width: 100%;
-		height: 142px;
+		height: 150px;
 
         box-sizing: border-box;
 

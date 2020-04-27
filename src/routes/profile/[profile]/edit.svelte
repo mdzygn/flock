@@ -230,7 +230,7 @@
         outline: none;
         background: none;
 
-		border-bottom: 1px solid #999999;
+		border-bottom: 1px solid #cccccc;
 
         width: 100%;
         box-sizing: border-box;
@@ -243,13 +243,13 @@
 	}
 
 	.content :global(textarea) {
-        border: 1px solid #999999;
+        border: 1px solid #cccccc;
 
         outline: none;
         background: none;
 
         width: 100%;
-		height: 88px;
+		height: 90px;
 
         box-sizing: border-box;
 

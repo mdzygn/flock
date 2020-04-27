@@ -170,7 +170,7 @@
         outline: none;
         background: none;
 
-		border-bottom: 1px solid #999999;
+		border-bottom: 1px solid #cccccc;
 
         width: 100%;
         box-sizing: border-box;

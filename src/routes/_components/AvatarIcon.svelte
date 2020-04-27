@@ -3,7 +3,8 @@
 
     import { getContentImage } from '../../models/appModel';
 
-    import ProfileDefaultImage from "../../assets/icons/profileDefault_small.png";
+    // import ProfileDefaultImage from "../../assets/icons/profileDefault_small.png";
+    import ProfileDefaultImage from "../../assets/icons/profileDefault.png";
 
     export let user = null; // writable({})
 

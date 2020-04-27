@@ -217,11 +217,12 @@
 		</Proxy> -->
 
 		<div class="panelContent">
+			<div class="actions topActions">
+				<Button className="saveButton" onClick="{save}" icon="{SaveIcon}" disabled="{!saveEnabled}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
+			</div>
+
 			{#if $editingProject}
 			<div class="mainProjectDetails">
-				<div class="actions topActions">
-					<Button className="saveButton" onClick="{save}" icon="{SaveIcon}" disabled="{!saveEnabled}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
-				</div>
 				<div class="field">
 					<div class="label">{locale.NEW_PROJECT.TITLE}</div>
 					<input type="text" bind:value="{title}" on:keypress="{(e) => testInputDefocus(e, {target: descriptionInput})}" />
@@ -246,6 +247,8 @@
 				</div>
 			</div>
 			{/if}
+
+        	<div class="sectionTitle">{locale.EDIT_PROJECT_DETAILS.OVERVIEW_HEADING}</div>
 
 			{#if detailImage1 || addingDetailImage[0]}
 				<div class="imageField">
@@ -340,6 +343,17 @@
 	.content :global(.detailImageSelector) {
 		margin-top: 20px;
 	}
+
+	.sectionTitle {
+        font-size: 1.5rem;
+        font-weight: 700;
+		color: #444444;
+
+		padding-left: 23px;
+		padding-bottom: 6px;
+		padding-top: 13px;
+	}
+
 
 	.label {
 		font-size: 1.3rem;

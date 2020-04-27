@@ -114,7 +114,9 @@
             <!-- <div class="profileImage" style="{profileImageBgStyling}">
                 <img src="{profileImageSrc}" alt="{userFirstName}" />
             </div> -->
-            <AvatarIcon user="{viewedUser}" />
+            <div class="avatarContainer">
+                <AvatarIcon user="{viewedUser}" />
+            </div>
             <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProfileOptions}"></Button>
             {#if isCurrentUser}
                 <Button className="editButton" icon="{EditIcon}" onClick="{editProfile}">edit</Button>
@@ -212,13 +214,27 @@
         position: relative;
     }
 
+    .avatarContainer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 52px;
+    }
+
     .content :global(.avatarIcon) {
         position: absolute;
-        left: 14px;
-        margin-top: -48px;
+        left: 16px;
+        bottom: 0;
+        /* margin-top: -48px; */
 
-        width: 108px;
-        height: 108px;
+        /* width: 108px;
+        height: 108px; */
+        min-width: 108px;
+        min-height: 108px;
+        max-width: 156px;
+        max-height: 156px;
+        width: 40vw;
+        height: 40vw;
 
         border: 4px solid #ffffff;
         box-sizing: content-box;
@@ -258,7 +274,7 @@
     } */
 
     .itemContent {
-        padding-top: 70px;
+        padding-top: 60px;
         padding-left: 23px;
         padding-bottom: 18px;
     }

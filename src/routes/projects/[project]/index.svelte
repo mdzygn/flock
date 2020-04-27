@@ -209,9 +209,12 @@
 									{#if !$projectReturnView}
 										<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 									{/if}
-								{:else if !forceProjectShowingInfo}
-									<Button className="infoCollapseButton" onClick="{hideProjectInfo}" icon="{HideInfoIcon}" />
+								{:else}
+									<div class="overviewHeader" class:button="{!forceProjectShowingInfo}" on:click="{!forceProjectShowingInfo ? hideProjectInfo : null}">Overview</div>
 								{/if}
+								<!-- {:else if !forceProjectShowingInfo}
+									<Button className="infoCollapseButton" onClick="{hideProjectInfo}" icon="{HideInfoIcon}" />
+								{/if} -->
 							{/if}
 						</div>
 						{#if showInfo}
@@ -227,7 +230,7 @@
 										{/if}
 										<!-- <Proxy image="project_info_content_3" className="proxyOverlay" /> -->
 										{#if projectDetailItem.detail}
-											<div class="projectInfoDetail">{@html parseHTML(projectDetailItem.detail)}</div>
+											<div class="projectInfoDetail" class:noImage="{!projectDetailItem.image}">{@html parseHTML(projectDetailItem.detail)}</div>
 										{/if}
 									{/if}
 								{/each}
@@ -459,6 +462,21 @@
 		font-weight: 700;
 	}
 
+	.overviewHeader {
+		padding: 10px;
+		padding-right: 30px;
+    	padding-top: 4px;
+
+		margin-left: -10px;
+
+		font-size: 1.5rem;
+		font-weight: 700;
+
+    	color: #666666;
+
+		user-select: text;
+	}
+
     .overviewContent :global(.addProjectDetailsButton) {
 		display: table;
 
@@ -478,11 +496,12 @@
 
 
 	.projectInfo {
-    	padding-top: 30px;
+    	padding-top: 5px;
+    	/* padding-top: 30px; */
 	}
-	.projectInfo.forceShowInfo {
+	/* .projectInfo.forceShowInfo {
     	padding-top: 20px;
-	}
+	} */
 
 	.projectDetailImage {
 		width: 100%;
@@ -500,6 +519,9 @@
 		line-height: 2rem;
 
 		user-select: text;
+	}
+	.projectInfoDetail.noImage {
+		padding-top: 0;
 	}
 
     .contentContainer :global(.infoCollapseButton) {
@@ -644,6 +666,7 @@
 		padding: 10px;
 		padding-top: 12px;
         padding-right: 23px;
+    	padding-bottom: 18px;
         /* padding-right: 50px; */
 
         font-size: 1.5rem;
@@ -651,7 +674,7 @@
 
 		margin-left: -10px;
 
-    	min-height: 50px;
+    	min-height: 40px;
 
 		color: #555555;
 

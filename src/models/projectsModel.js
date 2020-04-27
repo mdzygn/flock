@@ -299,11 +299,17 @@ export function updateDiscoveryProjects(updateDependencies) {
 			let newProjects = [...sourceOtherPublicProjects, ...sourceFollowingProjects];
 			// let newProjects = [...sourceOtherPublicProjects, ...sourceMyPublicProjects, ...sourceFollowingProjects];
 
-			if (!get(showBetaFeatures)) {
+			if (!get(showBetaFeatures)) { // if showing home intro and flock project within first 4 projects then move flock project further down list or remove
 				const flockProject = newProjects.find(match => get(match).id === config.FLOCK_PROJECT);
 				if (flockProject) {
 					const flockProjectIndex = newProjects.indexOf(flockProject);
-					newProjects.splice(flockProjectIndex, 1);
+					if (flockProjectIndex < config.MAX_FLOCK_PROJECT_INDEX) {
+						newProjects.splice(flockProjectIndex, 1);
+
+						if (newProjects.length > config.MAX_FLOCK_PROJECT_INDEX) { // if more than 4 projects then add at the fourth position
+							newProjects.splice(config.MAX_FLOCK_PROJECT_INDEX, 0, flockProject);
+						}
+					}
 				}
 			}
 

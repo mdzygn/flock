@@ -29,24 +29,27 @@
     function signUp() {
 		showPrompt(promptIds.SIGN_UP);
     }
+    function showFlockInfo() {
+        loadProject(config.FLOCK_PROJECT, { showInfo: true });
+    }
 </script>
 
 <div class="homeIntro">
 	<!-- <Proxy image="home_intro" className="proxyOverview" /> -->
 
-    <div class="headerRegion"></div>
+    <div class="headerRegion button" on:click="{showFlockInfo}"></div>
 
-    <div class="header">
+    <div class="header button" on:click="{showFlockInfo}">
         <div class="title">{@html locale.HOME_INTRO.TITLE}</div>
         <div class="headerText">{@html locale.HOME_INTRO.HEADER_TEXT}</div>
     </div>
 
-    <div class="panelContent">
+    <div class="panelContent button" on:click="{showFlockInfo}">
         <div class="introText">{@html locale.HOME_INTRO.INTRO_TEXT}</div>
     </div>
 
     <div class="readMoreContainer">
-        <Button className="readMoreButton" onClick="{e => { loadProject(config.FLOCK_PROJECT, { showInfo: true }); }}" icon="{MoreArrowIcon}">{locale.HOME_INTRO.LEARN_MORE}</Button>
+        <Button className="readMoreButton" onClick="{showFlockInfo}" icon="{MoreArrowIcon}">{locale.HOME_INTRO.LEARN_MORE}</Button>
     </div>
 
     {#if !loggedIn}
@@ -77,6 +80,10 @@
         padding-bottom: 2px;
     }
 
+    .button {
+        cursor: pointer;
+    }
+
     .headerRegion {
         position: relative;
         width: 100%;
@@ -94,7 +101,7 @@
         bottom: 0;
         padding-bottom: 27px; */
 
-        padding-top: 12px;
+        padding-top: 14px;
         padding-left: 23px;
         /* padding-bottom: 21px; */
 
@@ -138,6 +145,7 @@
     .actions {
         position: relative;
         padding: 0 23px;
+        padding-bottom: 4px;
         /* padding-bottom: 2px; */
     }
 
@@ -194,6 +202,8 @@
         top: -13px;
         right: 15px; */
         /* top: 12px; */
+
+        display: inline-block;
 
         padding: 10px;
         padding-right: 30px;

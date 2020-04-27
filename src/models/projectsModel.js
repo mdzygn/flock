@@ -7,6 +7,10 @@ import { writable, get } from 'svelte/store';
 
 import { generateId } from '../utils';
 
+import {
+    showBetaFeatures,
+} from '../models/appModel';
+
 // import promptIds from '../config/promptIds';
 
 import config from '../config';
@@ -294,6 +298,14 @@ export function updateDiscoveryProjects(updateDependencies) {
 
 			let newProjects = [...sourceOtherPublicProjects, ...sourceFollowingProjects];
 			// let newProjects = [...sourceOtherPublicProjects, ...sourceMyPublicProjects, ...sourceFollowingProjects];
+
+			if (!get(showBetaFeatures)) {
+				const flockProject = newProjects.find(match => get(match).id === config.FLOCK_PROJECT);
+				if (flockProject) {
+					const flockProjectIndex = newProjects.indexOf(flockProject);
+					newProjects.splice(flockProjectIndex, 1);
+				}
+			}
 
 			// if (get(locationMode) === 'local') {
 			// 	const testArrayCycleOffset = Math.min(4, newProjects.length - 1);

@@ -39,7 +39,7 @@
 
 <div class="projectItem">
     <!-- <Proxy image="discover1" className="proxyImage" /> -->
-    <div class="headerImage" style="background-image: url({headerImage})" alt="project image" on:click="{e => loadProject(projectId)}" />
+    <div class="headerImage" style="background-image: url({headerImage})" alt="project image" on:click="{e => loadProject(projectId, { showInfo: true })}" />
     <div class="contentContainer" on:click="{e => loadProject(projectId, { showInfo: true })}">
         <Button className="readMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button>
         <div class="itemContent">

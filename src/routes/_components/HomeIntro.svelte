@@ -84,9 +84,11 @@
         /* position: absolute;
         bottom: 0;
         padding-bottom: 27px; */
-        padding-top: 18px;
+
+        padding-top: 12px;
         padding-left: 23px;
-        padding-bottom: 21px;
+        /* padding-bottom: 21px; */
+
         color: #222222;
         /* color: #ffffff; */
     }
@@ -105,9 +107,10 @@
 
     .panelContent {
         padding-left: 23px;
-        padding-top: 23px;
+        padding-top: 18px;
         padding-right: 54px;
-        padding-bottom: 18px;
+        padding-bottom: 6px;
+        /* padding-top: 23px; */
     }
 
     .introText {
@@ -126,7 +129,7 @@
     .actions {
         position: relative;
         padding: 0 23px;
-        padding-bottom: 2px;
+        /* padding-bottom: 2px; */
     }
 
     .homeIntro :global(.signUpButton) {
@@ -172,18 +175,21 @@
     }
 
     .readMoreContainer {
-        position: relative;
-        height: 24px;
+        /* position: relative;
+        height: 24px; */
+        padding-bottom: 4px;
     }
 
     .homeIntro :global(.readMoreButton) {
-        position: absolute;
+        /* position: absolute;
         top: -13px;
+        right: 15px; */
         /* top: 12px; */
-        right: 15px;
 
         padding: 10px;
         padding-right: 30px;
+
+        padding-left: 23px;
 
         font-size: 1.3rem;
         /* font-size: 1.5rem; */
@@ -196,6 +202,7 @@
     .discoverIndicatorContainer {
 		display: flex;
 		justify-content: center;
+        margin-top: -3px;
     }
 
     .homeIntro :global(.discoverIndicator) {

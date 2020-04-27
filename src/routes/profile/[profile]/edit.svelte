@@ -311,7 +311,7 @@
 	.content :global(.saveButton) {
         position: absolute;
 		top: 3px;
-		right: 17px;
+		right: 8px;
 
 		padding: 10px;
 		padding-right: 46px;
@@ -328,7 +328,7 @@
 	.content :global(.cancelButton) {
         position: absolute;
 		top: 3px;
-    	left: 19px;
+    	left: 13px;
 
 		padding: 10px;
 		padding-right: 39px;

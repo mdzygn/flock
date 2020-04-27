@@ -81,7 +81,7 @@
 </svelte:head>
 
 <div class="content">
-	<ScrollView id="projects">
+	<ScrollView id="projects" headerStartHidden="{true}" headerHiddenOffset="{45}" hideHeaderShadowAtTop="{true}" hideShadowMargin="{45}">
 		<!-- <Proxy image="projects" className="proxyOverlay">
 			<Hotspot onClick="{e => loadProject('n4vh55hg')}" style="
 				left: 0;
@@ -100,7 +100,10 @@
 				height: 46px;" />
 		</Proxy> -->
 
-		<SearchBar bind:searchString={$projectsSearchString} />
+		<div slot="scrollHeader">
+			<SearchBar bind:searchString={$projectsSearchString} />
+		</div>
+
 		{#if $loadingProjects && (!$myProjects || !$myProjects.length) && (!$followingProjects || !$followingProjects.length) }
 			<ContentLoader label="{locale.LOADING.FOLLOWING}" />
 		{:else}
@@ -140,6 +143,14 @@
 		position: absolute;
 		opacity: 0.5;
 	} */
+
+	.content :global(.searchBar) {
+		/* height: 40px; */
+	}
+
+	.content :global(.scrollHeader) {
+    	background-color: #ffffff;
+	}
 
 	.projectsContent {
 		position: relative;

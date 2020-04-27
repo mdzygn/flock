@@ -115,7 +115,7 @@
 		padding-bottom: 10px;
 	} */
 
-	.pageContent :global(.searchBar ) {
+	.pageContent :global(.searchBar) {
 		height: 39px;
 	}
 

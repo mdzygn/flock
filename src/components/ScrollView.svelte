@@ -9,6 +9,9 @@
     export let headerStartHidden = false;
     export let headerHideOffset = 0;
     export let headerResetOnShow = false;
+    export let hideHeaderShadowAtTop = false
+    export let headerHiddenOffset = 0;
+    export let hideShadowMargin = 1;
 
     export let id = null;
     let regionProps = null;
@@ -26,7 +29,9 @@
         if (hasScrollHeader && scrollHeader && windowWidth) {
             scrollHeaderHeight = scrollHeader.offsetHeight;
         }
-        minScrollContentHeight = (scrollRegion && scrollRegion.offsetHeight && scrollRegion.offsetHeight + headerHideOffset) || 0;
+
+        const headerHideAmount = headerHideOffset; // headerHiddenOffset ? headerHiddenOffset : headerHideOffset;
+        minScrollContentHeight = (scrollRegion && scrollRegion.offsetHeight && scrollRegion.offsetHeight + headerHideAmount) || 0;
     }
 
     let scrollRegion;
@@ -34,6 +39,8 @@
     let scrollHeaderOffset = 0;
     let scrollHeader;
     let scrollHeaderHeight = 0;
+
+    let shadowHidden = false;
 
     function updateScroll() {
         if (!regionProps || !scrollRegion) {
@@ -48,6 +55,18 @@
             scrollHeaderOffset = curScrollHeaderPosition - regionProps.scrollTop;
 
             // console.log('curScrollHeaderPosition: ' + curScrollHeaderPosition + ', scrollHeaderOffset: ' + scrollHeaderOffset);
+        }
+    }
+
+    $: {
+        curScrollHeaderPosition;
+
+        if (hideHeaderShadowAtTop) {
+            if (regionProps.scrollTop <= hideShadowMargin) {
+                shadowHidden = true;
+            } else {
+                shadowHidden = false;
+            }
         }
     }
 
@@ -128,11 +147,12 @@
             } else {
                 if (allowHeaderPositionReset) {
                     if (headerStartHidden && !anchorToBottom) {
+                        const headerHideAmount = headerHiddenOffset ? headerHiddenOffset : scrollHeaderHeight;
                         if (regionProps.scrollTop < 30) {
-                            regionProps.scrollTop = scrollHeaderHeight;
+                            regionProps.scrollTop = headerHideAmount;
                         }
-                        curScrollHeaderPosition = (curScrollHeaderPosition - regionProps.scrollTop) - scrollHeaderHeight;
-                        curScrollHeaderPosition = Math.min(regionProps.scrollTop, Math.max(regionProps.scrollTop - scrollHeaderHeight, curScrollHeaderPosition));
+                        curScrollHeaderPosition = (curScrollHeaderPosition - regionProps.scrollTop) - headerHideAmount;
+                        curScrollHeaderPosition = Math.min(regionProps.scrollTop, Math.max(regionProps.scrollTop - headerHideAmount, curScrollHeaderPosition));
                         // console.log('regionProps.scrollTop: ' + regionProps.scrollTop + ' curScrollHeaderPosition: ' + curScrollHeaderPosition);
                         if (headerHideOffset) {
                             regionProps.scrollTop += headerHideOffset;
@@ -183,7 +203,7 @@
                 <slot></slot>
             </div>
         </div>
-        <div class="scrollHeader" style="top: {scrollHeaderOffset}px" bind:this="{scrollHeader}">
+        <div class="scrollHeader" class:shadowHidden="{shadowHidden}" style="top: {scrollHeaderOffset}px" bind:this="{scrollHeader}">
             <slot name="scrollHeader"></slot>
         </div>
     </div>
@@ -226,6 +246,13 @@
         width: 100%;
 
         box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
+
+        /* transition-property: box-shadow;
+        transition-duration: 0.33s; */
+    }
+
+    .scrollHeader.shadowHidden {
+        box-shadow: initial;
     }
 
 </style>

@@ -14,8 +14,14 @@
     import { loadProject } from '../../actions/appActions';
 
     import {
+        user,
+    } from '../../models/appModel';
+
+    import {
         showPrompt,
     } from '../../actions/appActions';
+
+    $: loggedIn = !!$user;
 
     function signIn() {
 		showPrompt(promptIds.LOG_IN);
@@ -43,13 +49,15 @@
         <Button className="readMoreButton" onClick="{e => { loadProject(config.FLOCK_PROJECT, { showInfo: true }); }}" icon="{MoreArrowIcon}">{locale.HOME_INTRO.LEARN_MORE}</Button>
     </div>
 
-    <div class="actions">
-        <!-- <Button className="readMoreButton" onClick="{e => { loadProject(config.FLOCK_PROJECT, { showInfo: true }); }}" icon="{MoreArrowIcon}">{locale.HOME_INTRO.LEARN_MORE}</Button> -->
-        <div class="actionButtonsContainer">
-            <Button className="signInButton" onClick="{signIn}">{locale.HOME_INTRO.SIGN_IN}</Button>
-            <Button className="signUpButton" onClick="{signUp}">{locale.HOME_INTRO.SIGN_UP}</Button>
+    {#if !loggedIn}
+        <div class="actions">
+            <!-- <Button className="readMoreButton" onClick="{e => { loadProject(config.FLOCK_PROJECT, { showInfo: true }); }}" icon="{MoreArrowIcon}">{locale.HOME_INTRO.LEARN_MORE}</Button> -->
+            <div class="actionButtonsContainer">
+                <Button className="signInButton" onClick="{signIn}">{locale.HOME_INTRO.SIGN_IN}</Button>
+                <Button className="signUpButton" onClick="{signUp}">{locale.HOME_INTRO.SIGN_UP}</Button>
+            </div>
         </div>
-    </div>
+    {/if}
 
     <div class="discoverIndicatorContainer">
         <Button className="discoverIndicator" icon="{DiscoverArrowIcon}">{locale.HOME_INTRO.DISCOVER}</Button>
@@ -72,7 +80,8 @@
     .headerRegion {
         position: relative;
         width: 100%;
-        padding-top: 35.5%;
+        padding-top: 39%;
+        /* padding-top: 35.5%; */
         /* height: 200px; */
         /* padding-top: 59%; */
         background-image: url('../assets/intro_image.jpg');
@@ -94,9 +103,9 @@
     }
 
     .title {
-        font-size: 3rem;
+        font-size: 2.4rem;
         font-weight: 700;
-        padding-bottom: 3px;
+        padding-bottom: 5px;
     }
 
     .headerText {
@@ -207,7 +216,7 @@
 
     .homeIntro :global(.discoverIndicator) {
         padding: 10px;
-        padding-bottom: 48px;
+        padding-bottom: 42px;
 
         font-size: 1.7rem;
     }
@@ -217,7 +226,7 @@
     .homeIntro :global(.discoverIndicator .iconContainer) {
         display: block;
         position: absolute;
-        padding-top: 12px;
+        padding-top: 8px;
         left: 50%;
     }
     .homeIntro :global(.discoverIndicator .iconInnerContainer) {

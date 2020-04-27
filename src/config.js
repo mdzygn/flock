@@ -49,6 +49,8 @@ export const PROFILE_UPLOAD_THUMB_MAX_HEIGHT = 128;
 
 export const SPLASH_TIMEOUT = 3;
 
+export const FLOCK_PROJECT = 'hPS9cRq2';
+
 export default {
     DEBUG,
 
@@ -100,4 +102,6 @@ export default {
     PROFILE_UPLOAD_MAX_HEIGHT,
     PROFILE_UPLOAD_THUMB_MAX_WIDTH,
     PROFILE_UPLOAD_THUMB_MAX_HEIGHT,
+
+    FLOCK_PROJECT,
 };

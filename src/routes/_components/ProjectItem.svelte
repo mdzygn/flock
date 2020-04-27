@@ -115,7 +115,6 @@
         font-size: 1.1rem;
         font-weight: 700;
     }
-
     .contentContainer :global(.readMoreButton .icon) {
         padding-left: 15px;
     }

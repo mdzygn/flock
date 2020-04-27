@@ -254,7 +254,8 @@ export function updateOtherPublicProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return !project.following && !getIsProjectTeamMember(project) && !project.archived && project.public;
+			return !project.following && !project.archived && project.public; // include team projects for now
+			// return !project.following && !getIsProjectTeamMember(project) && !project.archived && project.public;
 		});
 		newProjects.sort((a,b) => get(b).lastActiveAt - get(a).lastActiveAt); // sort by reversed updated time
 		// console.log('updateOtherPublicProjects: ', newProjects);
@@ -276,14 +277,14 @@ export function updateArchivedProjects() {
 
 export function updateDiscoveryProjects(updateDependencies) {
 	if (updateDependencies) {
-		updateMyPublicProjects();
+		// updateMyPublicProjects();
 		updateFollowingProjects();
 		updateOtherPublicProjects();
 	}
-	let sourceMyPublicProjects = get(myPublicProjects);
-	if (sourceMyPublicProjects) {
-		let sourceFollowingProjects = get(followingProjects);
+	// let sourceMyPublicProjects = get(myPublicProjects); // included my projects in other public projects for now
+	// if (sourceMyPublicProjects) {
 		let sourceOtherPublicProjects = get(otherPublicProjects);
+		let sourceFollowingProjects = get(followingProjects);
 		if (sourceFollowingProjects && sourceOtherPublicProjects) {
 			// if (get(locationMode) !== 'local') {
 			// 	sourceOtherPublicProjects = [...sourceOtherPublicProjects].reverse();
@@ -291,7 +292,8 @@ export function updateDiscoveryProjects(updateDependencies) {
 			// 	sourceFollowingProjects = [...sourceFollowingProjects].reverse();
 			// }
 
-			let newProjects = [...sourceOtherPublicProjects, ...sourceMyPublicProjects, ...sourceFollowingProjects];
+			let newProjects = [...sourceOtherPublicProjects, ...sourceFollowingProjects];
+			// let newProjects = [...sourceOtherPublicProjects, ...sourceMyPublicProjects, ...sourceFollowingProjects];
 
 			// if (get(locationMode) === 'local') {
 			// 	const testArrayCycleOffset = Math.min(4, newProjects.length - 1);
@@ -305,7 +307,7 @@ export function updateDiscoveryProjects(updateDependencies) {
 			discoveryProjects.set(newProjects);
 			// console.log('updateDiscoveryProjects: ', newProjects);
 		}
-	}
+	// }
 }
 
 function clearProjectStates() {
@@ -340,7 +342,7 @@ function projectsUpdated() {
 	updateMyProjects();
 	updateFollowingProjects();
 	updateOtherPublicProjects();
-	updateMyPublicProjects();
+	// updateMyPublicProjects();
 	updateDiscoveryProjects();
 	updateArchivedProjects();
 }

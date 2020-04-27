@@ -302,7 +302,7 @@
     }
     .headerBar :global(.signInButton .buttonContent) {
         margin: 11px 0px;
-        padding: 6px 4px;
+        padding: 6px 6px;
         margin-top: 15px;
 
         font-size: 1.3rem;

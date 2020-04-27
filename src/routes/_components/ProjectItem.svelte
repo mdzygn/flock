@@ -100,7 +100,8 @@
         cursor: pointer;
 
         margin-top: 7px;
-        padding-left: 18px;
+        padding-left: 23px;
+        /* padding-left: 18px; */
     }
 
     .contentContainer :global(.readMoreButton) {
@@ -164,7 +165,8 @@
 
     .description {
         padding-top: 3px;
-        padding-right: 50px;
+        padding-right: 23px;
+        /* padding-right: 50px; */
 
         font-size: 1.5rem;
         line-height: 2rem;

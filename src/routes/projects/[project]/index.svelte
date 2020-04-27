@@ -493,7 +493,7 @@
 
 	.projectInfoDetail {
 		padding: 22px 23px;
-		padding-right: 35px;
+		/* padding-right: 35px; */
     	padding-bottom: 32px;
 
 		font-size: 1.5rem;
@@ -639,7 +639,8 @@
     .description {
 		padding: 10px;
 		padding-top: 12px;
-        padding-right: 50px;
+        padding-right: 23px;
+        /* padding-right: 50px; */
 
         font-size: 1.5rem;
 		line-height: 2rem;

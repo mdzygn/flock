@@ -118,7 +118,7 @@
 
 	.field {
 		position: relative;
-    	padding: 0 21px;
+    	padding: 0 16px;
 		padding-bottom: 30px;
 	}
 
@@ -135,7 +135,7 @@
 
 	.label {
 		font-size: 1.3rem;
-    	/* padding-left: 4px; */
+    	padding-left: 7px;
     	padding-bottom: 4px;
 		color: #555555;
 	}
@@ -178,8 +178,8 @@
         font-size: 1.5rem;
 		color: #555555;
 
-        padding: 6px 4px;
-		padding-left: 0;
+        padding: 6px 7px;
+		/* padding-left: 0; */
 	}
 
 	.content :global(textarea) {
@@ -194,9 +194,10 @@
         box-sizing: border-box;
 
         font-size: 1.5rem;
+		line-height: 2rem;
     	color: #555555;
 
-        padding: 6px 4px;
+        padding: 4px 6px;
 
     	margin-top: 4px;
 
@@ -208,8 +209,8 @@
 	}
 
 	.headerImageLabel {
-    	padding-left: 21px;
-    	padding-right: 21px;
+		padding-left: 23px;
+		padding-right: 23px;
 	}
 
 	.headerImageField :global(.imageSelectionBox) {

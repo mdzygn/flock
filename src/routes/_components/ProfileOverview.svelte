@@ -286,8 +286,9 @@
 
     .description {
 		padding: 10px;
-		padding-top: 12px;
-        padding-right: 50px;
+        padding-top: 12px;
+        padding-right: 23px;
+        /* padding-right: 50px; */
 
         font-size: 1.5rem;
 		line-height: 2rem;

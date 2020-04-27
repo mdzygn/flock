@@ -143,7 +143,7 @@
 
 	.field {
         position: relative;
-    	padding: 0 21px;
+    	padding: 0 16px;
         padding-top: 20px;
         /* padding-bottom: 10px; */
 	}
@@ -159,7 +159,7 @@
 
 	.label {
 		font-size: 1.3rem;
-    	/* padding-left: 4px; */
+    	padding-left: 7px;
 		color: #888888;
 
         text-align: left;
@@ -178,8 +178,8 @@
         font-size: 1.5rem;
 		color: #333333;
 
-        padding: 6px 4px;
-        padding-left: 0;
+        padding: 6px 7px;
+        /* padding-left: 0; */
 	}
 
     .invalid {

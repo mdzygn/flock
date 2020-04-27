@@ -56,7 +56,7 @@
 	<ScrollView id="discover" headerStartHidden="{!$showBetaFeatures}" headerResetOnShow="{true}">
 		<!-- <Feed type="discover" linkToProjects="{true}" count="{5}" offset="{proxyContentOffset}"/> -->
 
-		{#if !$showBetaFeatures}
+		{#if !$showBetaFeatures && !$discoverSearchString}
 			<HomeIntro />
 		{/if}
 

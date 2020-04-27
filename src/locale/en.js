@@ -2,7 +2,7 @@ const locale = {
 	HOME_INTRO: {
 		TITLE: 'Welcome to Flock',
 		HEADER_TEXT: 'Discover and share creative and innovative projects to bring them to life.',
-		INTRO_TEXT: 'Build you community and find your team by sharing your project, allowing others to follow, support and start getting involved to make your dreams a reality!',
+		INTRO_TEXT: 'Build you community and find your team by sharing your projects, allowing others to follow, support and start getting involved to make your dreams a reality!',
 		SIGN_UP: 'create account',
 		SIGN_IN: 'sign in',
 		LEARN_MORE: 'learn more',

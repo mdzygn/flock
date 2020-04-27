@@ -28,11 +28,11 @@
 <div class="homeIntro">
 	<!-- <Proxy image="home_intro" className="proxyOverview" /> -->
 
-    <div class="headerRegion">
-        <div class="header">
-            <div class="title">{@html locale.HOME_INTRO.TITLE}</div>
-            <div class="headerText">{@html locale.HOME_INTRO.HEADER_TEXT}</div>
-        </div>
+    <div class="headerRegion"></div>
+
+    <div class="header">
+        <div class="title">{@html locale.HOME_INTRO.TITLE}</div>
+        <div class="headerText">{@html locale.HOME_INTRO.HEADER_TEXT}</div>
     </div>
 
     <div class="panelContent">
@@ -72,8 +72,8 @@
     .headerRegion {
         position: relative;
         width: 100%;
-        height: 200px;
-        /* height: 243px; */
+        padding-top: 35.5%;
+        /* height: 200px; */
         /* padding-top: 59%; */
         background-image: url('../assets/intro_image.jpg');
         background-size: cover;
@@ -81,11 +81,14 @@
     }
 
     .header {
-        position: absolute;
+        /* position: absolute;
         bottom: 0;
+        padding-bottom: 27px; */
+        padding-top: 18px;
         padding-left: 23px;
-        padding-bottom: 27px;
-        color: #ffffff;
+        padding-bottom: 21px;
+        color: #222222;
+        /* color: #ffffff; */
     }
 
     .title {
@@ -104,7 +107,7 @@
         padding-left: 23px;
         padding-top: 23px;
         padding-right: 54px;
-        padding-bottom: 15px;
+        padding-bottom: 18px;
     }
 
     .introText {

@@ -31,6 +31,7 @@ const prompts = {
         title: 'Archive Project',
         message: 'Are you sure you want to<br/>archive this project?',
         subMessage: 'It will no longer be<br/>editable by team members<br/>or visible to any followers',
+        showClose: true,
         menuItems: [
             {
                 label: 'Archive Project',
@@ -69,6 +70,7 @@ const prompts = {
         title: 'Make Public',
         message: 'Make this project public?',
         subMessage: 'It can then be discovered, followed and shared with others outside the team',
+        showClose: true,
         menuItems: [
             {
                 label: 'Make Public',
@@ -112,6 +114,7 @@ const prompts = {
         title: 'Make Private',
         message: 'Make this project private?',
         subMessage: 'It will no longer be visible<br/>to followers and others outside the team',
+        showClose: true,
         menuItems: [
             {
                 label: 'Make Private',
@@ -136,6 +139,7 @@ const prompts = {
     SHARE_PROJECT: {
         title: 'Share Project',
         message: 'Select copy link below to share this project with others',
+        showClose: true,
         menuItems: [
             {
                 label: 'Copy Link',
@@ -150,6 +154,7 @@ const prompts = {
     SHARE_PROJECT_COMPLETE: {
         title: 'Share Project',
         message: 'Select copy link below to share this project with others',
+        showClose: true,
         menuItems: [
             {
                 label: 'Link Copied',
@@ -164,6 +169,7 @@ const prompts = {
     SHARE_PROFILE: {
         title: 'Share Profile',
         message: 'Select copy link below to share this profile',
+        showClose: true,
         menuItems: [
             {
                 label: 'Copy Link',
@@ -178,6 +184,7 @@ const prompts = {
     SHARE_PROFILE_COMPLETE: {
         title: 'Share Profile',
         message: 'Select copy link below to share this profile',
+        showClose: true,
         menuItems: [
             {
                 label: 'Link Copied',
@@ -192,6 +199,7 @@ const prompts = {
     SHARE_POST: {
         title: 'Share Post',
         message: 'Select copy link below to share this post',
+        showClose: true,
         menuItems: [
             {
                 label: 'Copy Link',
@@ -206,6 +214,7 @@ const prompts = {
     SHARE_POST_COMPLETE: {
         title: 'Share Post',
         message: 'Select copy link below to share this post',
+        showClose: true,
         menuItems: [
             {
                 label: 'Link Copied',
@@ -219,6 +228,7 @@ const prompts = {
 
     SIGN_UP: {
         title: 'Create User',
+        showClose: true,
         menuItems: [
             {
                 label: 'Create User',
@@ -272,6 +282,7 @@ const prompts = {
     },
     LOG_IN: {
         title: 'Sign In',
+        showClose: true,
         menuItems: [
             {
                 label: 'Sign In',

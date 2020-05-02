@@ -41,10 +41,10 @@
 		setAccountDetails(userDetails);
 	}
 
-	$: canClose = (menu && menu.allowClose !== false) || (prompt && prompt.allowClose !== false);
+	$: canClose = ((menu && menu.allowClose !== false) || (prompt && prompt.allowClose !== false)) && !$dontAllowOverlayClose;
 
-	function checkClose() {
-		if (canClose && !$dontAllowOverlayClose) {
+	function close() {
+		if (canClose) {
 			closeOverlay();
 		}
 	}
@@ -52,7 +52,7 @@
 
 {#if $curMenu || $curPrompt}
 	<div class="overlayContainer">
-		<div class="overlayBg" class:button="{canClose}" on:click="{checkClose}" />
+		<div class="overlayBg" class:button="{canClose}" on:click="{close}" />
 		{#if $curMenu}
 			<OverlayMenu menuId="{$curMenu}" />
 		{:else}

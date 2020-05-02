@@ -3,7 +3,12 @@
 
     import OverlayMenuItem from './OverlayMenuItem.svelte';
 
-	import { closeOverlay } from '../../actions/appActions';
+    import { closeOverlay } from '../../actions/appActions';
+    import { dontAllowOverlayClose } from '../../models/appModel';
+
+    import CloseIcon from "../../assets/icons/clear.png";
+
+    import Button from '../../components/Button.svelte';
 
     export let promptId;
     export let targetItem = null;
@@ -19,6 +24,8 @@
     $: title = (prompt && prompt.title) || null;
     $: message = (prompt && prompt.message) || null;
     $: subMessage = (prompt && prompt.subMessage) || null;
+
+    $: showClose = (prompt && prompt.showClose) || null;
 
     let hasSlots = $$props.$$slots;
 
@@ -38,6 +45,12 @@
         }
     }
 
+    function close() {
+        if (!$dontAllowOverlayClose) {
+            closeOverlay();
+        }
+    }
+
     export function updateMenuItems() {
         menuItems = menuItems;
     }
@@ -48,6 +61,9 @@
         <div class="content">
             {#if title}
                 <div class="title">{title}</div>
+            {/if}
+            {#if showClose && !$dontAllowOverlayClose}
+                <Button className="closeButton" onClick="{close}" icon="{CloseIcon}" />
             {/if}
             {#if message}
                 <div class="message">{@html message}</div>
@@ -87,6 +103,7 @@
 	}
 
     .content {
+        position: relative;
         padding-top: 25px;
         padding-bottom: 30px;
     }
@@ -122,5 +139,27 @@
 	}
 	.overlayPrompt :global(.overlayMenuItem .button) {
         padding: 13px 30px;
+	}
+
+	.overlayPrompt :global(.closeButton) {
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        height: 36px;
+        width: 37px;
+        opacity: 0.4;
+	}
+	.overlayPrompt :global(.closeButton .iconContainer) {
+        display: block;
+	}
+	.overlayPrompt :global(.closeButton .iconInnerContainer) {
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+	}
+	.overlayPrompt :global(.closeButton .icon) {
+        transform-origin: center;
+        transform: scale(0.45, 0.45);
 	}
 </style>

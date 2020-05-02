@@ -34,7 +34,9 @@
     $: isTeamMember = $user && getIsProjectTeamMember($project);
     $: canEdit = (isTeamMember && !$project.archived) || false;
     $: following = ($project && $project.following) || false;
-	$: isArchived = (isTeamMember && $project && $project.archived) || false;
+    $: isArchived = (isTeamMember && $project && $project.archived) || false;
+    $: viewAllChannels = following || isTeamMember;
+    $: channelsLoading = $loadingChannels && !$channels;
 
     let hasActiveChannels = true; // false;
     let hasInactiveChannels = false;
@@ -85,10 +87,10 @@
 
 <!-- {#if $channels && $channels.length} -->
     <!-- && (hasActiveChannels || isTeamMember || following) -->
-    <div class="channelList" class:isEditable="{canEdit}" class:channelsActive="{($loadingChannels && !$channels) || hasActiveChannels || following || isTeamMember}">
+    <div class="channelList" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}">
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
         <ContentPanel title="Channels" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
-            {#if (!hasActiveChannels || isNew) && (following || isTeamMember) && !isArchived}
+            {#if (!hasActiveChannels || isNew) && viewAllChannels && !isArchived}
                 {#if isTeamMember}
                     <div class="getTheConversationStarted getTheConversationStartedOwner">{locale.PROJECT.GET_STARTED}</div>
                 {:else}
@@ -96,10 +98,10 @@
                 {/if}
             {/if}
 
-            {#if $loadingChannels && !$channels}
+            {#if channelsLoading}
                 <ContentLoader label="{locale.LOADING.CHANNELS}" />
             {:else}
-                {#if $channels && $channels.length && (hasActiveChannels || following || isTeamMember)}
+                {#if $channels && $channels.length && (hasActiveChannels || viewAllChannels)}
                     <div class="channelListContainer">
                         {#each $channels as channel}
                             {#if isTeamMember || get(channel).postCount || (following && !getIsTeamManagedChannel(get(channel)))}

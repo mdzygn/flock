@@ -95,7 +95,7 @@ const locale = {
 		FOLLOWER_GET_STARTED: 'no posts yet - be the first!',
 		CHANNELS_FOLLOW_LINK: 'Follow',
 		CHANNELS_FOLLOW: ' this project to view discussion channels and get involved.',
-		CHANNELS_FOLLOW_ALL: ' this project to view all channels and get involved.',
+		CHANNELS_FOLLOW_ALL: ' this project to view all discussion channels and get involved.',
 	},
 	PROFILE: {
 		NOT_FOUND: 'profile not found',

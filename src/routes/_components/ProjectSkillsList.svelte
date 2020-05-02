@@ -1,6 +1,8 @@
 <script>
 	import ContentPanel from './ContentPanel.svelte';
-	import TagSet from './TagSet.svelte';
+    import TagSet from './TagSet.svelte';
+
+	import { getSplitItems } from '../../utils';
 
     import {
         getIsProjectTeamMember,
@@ -9,12 +11,13 @@
 
     export let project = null;
 
-    $: skills = (project && project.skills) || null;
+    // $: skills = (project && project.skills) || null;
+	$: skills = (project && project.skills && getSplitItems(project.skills)) || null;
     $: isTeamMember = $user && getIsProjectTeamMember(project);
 
 	$: canEdit = (isTeamMember && !project.archived) || false;
 
-    $: areMoreItems = skills && skills.length > 0; // > MAX_PROJECT_PREVIEW_COUNT;
+    $: areMoreItems = false; // skills && skills.length > 0; // > MAX_PROJECT_PREVIEW_COUNT;
 </script>
 
 {#if skills && skills.length}

@@ -40,6 +40,8 @@ const locale = {
 		OVERVIEW_HEADING: 'Project Overview',
 		TAGS: 'tags',
 		TAGS_TIP: 'project keywords / categories, separated by commas',
+		SKILLS: 'seeking skills',
+		SKILLS_TIP: 'talents and job roles wanted, separated by commas',
 		// TAGS_TIP: 'add at least 5 keywords/terms/categories for this project, separated by commas',
 		LOCATION: 'location',
 		DETAIL_1_LABEL: 'introduction',

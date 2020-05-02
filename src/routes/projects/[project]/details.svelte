@@ -26,6 +26,7 @@
 	let description = ($project && $project.description) || '';
 	let image = ($project && $project.headerImage) || '';
 	let tags = ($project && $project.tags) || '';
+	let skills = ($project && $project.skills) || '';
 	let location = ($project && $project.location) || '';
 
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
@@ -57,6 +58,7 @@
 
 	let descriptionInput;
 	let tagsInput;
+	let skillsInput;
 	let locationInput;
 
 	let detailInput1;
@@ -158,6 +160,7 @@
 				description,
 				headerImage: image,
 				tags,
+				skills,
 				location,
 			});
 		}
@@ -240,6 +243,10 @@
 				<div class="field descriptionField">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
 					<textarea bind:value="{tags}" bind:this="{tagsInput}" />
+				</div>
+				<div class="field descriptionField">
+					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.SKILLS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.SKILLS_TIP}</span></div>
+					<textarea bind:value="{skills}" bind:this="{skillsInput}" />
 				</div>
 				<div class="field">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}</div>

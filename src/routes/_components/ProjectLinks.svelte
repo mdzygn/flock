@@ -1,6 +1,5 @@
 <script>
 	import ContentPanel from './ContentPanel.svelte';
-	import TagSet from './TagSet.svelte';
 
 	import PatreonButton from "../../assets/icons/patreon_button.png";
     import GitHubButton from "../../assets/icons/github_button.png";

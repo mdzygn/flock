@@ -274,10 +274,10 @@
 					<ProjectTeamList project="{$project}" />
 					{#if $showBetaFeatures}
 						<ProjectLinks project="{$project}" />
-						<ProjectSkillsList project="{$project}" />
 					{/if}
-						<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
-						<ChannelList project="{project}" />
+					<ProjectSkillsList project="{$project}" />
+					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
+					<ChannelList project="{project}" />
 					{#if $showBetaFeatures}
 						{#if canEdit}
 							<NewPostButton type="project_post_update" />
@@ -291,8 +291,8 @@
 							<NewPostButton type="project_post_update" />
 						{/if}
 						<ProjectLinks project="{$project}" />
-						<ProjectSkillsList project="{$project}" />
 					{/if}
+					<ProjectSkillsList project="{$project}" />
 					<ProjectTeamList project="{$project}" />
 					{#if $showBetaFeatures}
 						<div>
@@ -306,8 +306,8 @@
 					{/if}
 				{:else}
 					<ProjectTeamList project="{$project}" />
+					<ProjectSkillsList project="{$project}" />
 					{#if $showBetaFeatures}
-						<ProjectSkillsList project="{$project}" />
 						<ProjectLinks project="{$project}" />
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->

@@ -272,10 +272,10 @@
 
 				{#if isNew}
 					<ProjectTeamList project="{$project}" />
+					<ProjectSkillsList project="{$project}" />
 					{#if $showBetaFeatures}
 						<ProjectLinks project="{$project}" />
 					{/if}
-					<ProjectSkillsList project="{$project}" />
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<ChannelList project="{project}" />
 					{#if $showBetaFeatures}
@@ -305,8 +305,8 @@
 						{/if}
 					{/if}
 				{:else}
-					<ProjectTeamList project="{$project}" />
 					<ProjectSkillsList project="{$project}" />
+					<ProjectTeamList project="{$project}" />
 					{#if $showBetaFeatures}
 						<ProjectLinks project="{$project}" />
 					{/if}

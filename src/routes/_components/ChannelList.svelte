@@ -20,6 +20,10 @@
 		getIsTeamManagedChannel,
     } from '../../models/channelsModel';
 
+	import {
+		projectToggleFollowing,
+	} from '../../actions/projectActions';
+
     export let project;
 
     let channels = writable([]);
@@ -32,19 +36,30 @@
 	$: isArchived = (isTeamMember && $project && $project.archived) || false;
 
     let hasActiveChannels = true; // false;
+    let hasInactiveChannels = false;
 
     $: {
         let hasActiveChannel = false;
+        let hasInactiveChannel = false;
         for (let i = 0; i < $channels.length; i++) {
             if (get($channels[i]).postCount) {
                 hasActiveChannel = true;
-                break;
+                // break;
+            } else {
+                hasInactiveChannel = true;
             }
         }
         hasActiveChannels = hasActiveChannel;
+        hasInactiveChannels = hasInactiveChannel;
     }
 
     let areMoreItems = false;
+
+	function followProject() {
+        if ($project) {
+            projectToggleFollowing($project.id);
+        }
+	}
 
     // let proxyChannelsImage;
 
@@ -65,18 +80,19 @@
 	// }
 </script>
 
-{#if $channels && $channels.length && (hasActiveChannels || isTeamMember || following)}
-    <div class="channelList" class:isEditable="{canEdit}">
+{#if $channels && $channels.length}
+    <!-- && (hasActiveChannels || isTeamMember || following) -->
+    <div class="channelList" class:isEditable="{canEdit}" class:channelsActive="{hasActiveChannels || following || isTeamMember}">
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
         <ContentPanel title="Channels" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
-            {#if (!hasActiveChannels || isNew) && !isArchived}
+            {#if (!hasActiveChannels || isNew) && (following || isTeamMember) && !isArchived}
                 {#if isTeamMember}
                     <div class="getTheConversationStarted getTheConversationStartedOwner">{locale.PROJECT.GET_STARTED}</div>
                 {:else}
                     <div class="getTheConversationStarted">{locale.PROJECT.FOLLOWER_GET_STARTED}</div>
                 {/if}
             {/if}
-            <!-- {#if $channels && $channels.length} -->
+            {#if $channels && $channels.length && (hasActiveChannels || following || isTeamMember)}
                 <div class="channelListContainer">
                     {#each $channels as channel}
                         {#if isTeamMember || get(channel).postCount || (following && !getIsTeamManagedChannel(get(channel)))}
@@ -85,8 +101,11 @@
                     {/each}
                 </div>
             <!-- {:else}
-                <ContentLoader label="This project has no channels" />
-            {/if} -->
+                <ContentLoader label="This project has no channels" /> -->
+            {/if}
+            {#if (hasInactiveChannels && !following && !isTeamMember) && !isArchived}
+                <div class="channelsFollowCta"><a href="javascript:void(0)" on:click="{followProject}">{@html locale.PROJECT.CHANNELS_FOLLOW_LINK}</a>{@html hasActiveChannels ? locale.PROJECT.CHANNELS_FOLLOW_ALL : locale.PROJECT.CHANNELS_FOLLOW}</div>
+            {/if}
         </ContentPanel>
     </div>
 {/if}
@@ -123,6 +142,15 @@
         font-size: 1.3rem;
     }
 
+    .channelsFollowCta {
+        padding-top: 10px;
+        padding-left: 20px;
+        padding-bottom: 0px;
+        font-size: 1.2rem;
+        font-weight: initial;
+        color: #999999;
+    }
+
     .getTheConversationStartedOwner {
         /* right: 41px; */
         font-weight: 700;
@@ -130,6 +158,10 @@
     }
 
 	.channelList :global(.contentPanel .panelTitle) {
+        padding-left: 20px;
+        padding-bottom: 0;
+	}
+	.channelList.channelsActive :global(.contentPanel .panelTitle) {
         padding-left: 20px;
         padding-bottom: 10px;
 

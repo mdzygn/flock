@@ -17,7 +17,8 @@
 
 	import {
 		getChannels,
-		getIsTeamManagedChannel,
+        getIsTeamManagedChannel,
+        loadingChannels,
     } from '../../models/channelsModel';
 
 	import {
@@ -26,7 +27,7 @@
 
     export let project;
 
-    let channels = writable([]);
+    let channels = writable(null);
     $: { channels = $project && getChannels( { projectId: $project.id } ) };
 
 	$: isNew = (isTeamMember && $project && $project.isNew) || false;
@@ -41,12 +42,14 @@
     $: {
         let hasActiveChannel = false;
         let hasInactiveChannel = false;
-        for (let i = 0; i < $channels.length; i++) {
-            if (get($channels[i]).postCount) {
-                hasActiveChannel = true;
-                // break;
-            } else {
-                hasInactiveChannel = true;
+        if ($channels) {
+            for (let i = 0; i < $channels.length; i++) {
+                if (get($channels[i]).postCount) {
+                    hasActiveChannel = true;
+                    // break;
+                } else {
+                    hasInactiveChannel = true;
+                }
             }
         }
         hasActiveChannels = hasActiveChannel;
@@ -80,9 +83,9 @@
 	// }
 </script>
 
-{#if $channels && $channels.length}
+<!-- {#if $channels && $channels.length} -->
     <!-- && (hasActiveChannels || isTeamMember || following) -->
-    <div class="channelList" class:isEditable="{canEdit}" class:channelsActive="{hasActiveChannels || following || isTeamMember}">
+    <div class="channelList" class:isEditable="{canEdit}" class:channelsActive="{($loadingChannels && !$channels) || hasActiveChannels || following || isTeamMember}">
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
         <ContentPanel title="Channels" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
             {#if (!hasActiveChannels || isNew) && (following || isTeamMember) && !isArchived}
@@ -92,23 +95,28 @@
                     <div class="getTheConversationStarted">{locale.PROJECT.FOLLOWER_GET_STARTED}</div>
                 {/if}
             {/if}
-            {#if $channels && $channels.length && (hasActiveChannels || following || isTeamMember)}
-                <div class="channelListContainer">
-                    {#each $channels as channel}
-                        {#if isTeamMember || get(channel).postCount || (following && !getIsTeamManagedChannel(get(channel)))}
-                            <ChannelListItem channel="{channel}" />
-                        {/if}
-                    {/each}
-                </div>
-            <!-- {:else}
-                <ContentLoader label="This project has no channels" /> -->
-            {/if}
-            {#if (hasInactiveChannels && !following && !isTeamMember) && !isArchived}
-                <div class="channelsFollowCta"><a href="javascript:void(0)" on:click="{followProject}">{@html locale.PROJECT.CHANNELS_FOLLOW_LINK}</a>{@html hasActiveChannels ? locale.PROJECT.CHANNELS_FOLLOW_ALL : locale.PROJECT.CHANNELS_FOLLOW}</div>
+
+            {#if $loadingChannels && !$channels}
+                <ContentLoader label="{locale.LOADING.CHANNELS}" />
+            {:else}
+                {#if $channels && $channels.length && (hasActiveChannels || following || isTeamMember)}
+                    <div class="channelListContainer">
+                        {#each $channels as channel}
+                            {#if isTeamMember || get(channel).postCount || (following && !getIsTeamManagedChannel(get(channel)))}
+                                <ChannelListItem channel="{channel}" />
+                            {/if}
+                        {/each}
+                    </div>
+                <!-- {:else}
+                    <ContentLoader label="This project has no channels" /> -->
+                {/if}
+                {#if (hasInactiveChannels && !following && !isTeamMember) && !isArchived}
+                    <div class="channelsFollowCta"><a href="javascript:void(0)" on:click="{followProject}">{@html locale.PROJECT.CHANNELS_FOLLOW_LINK}</a>{@html hasActiveChannels ? locale.PROJECT.CHANNELS_FOLLOW_ALL : locale.PROJECT.CHANNELS_FOLLOW}</div>
+                {/if}
             {/if}
         </ContentPanel>
     </div>
-{/if}
+<!-- {/if} -->
 
 <style>
 	/* .channelList :global(.proxyOverlay) {
@@ -116,8 +124,13 @@
 		opacity: 0.5;
 	} */
 
-	.channelList :global(.panelContent ) {
+	.channelList :global(.panelContent) {
 		position: relative;
+	}
+
+	.channelList :global(.contentLoader) {
+        padding: 0 20px;
+        font-size: 1.2rem;
 	}
 
     .channelListContainer {
@@ -143,12 +156,15 @@
     }
 
     .channelsFollowCta {
-        padding-top: 10px;
+        padding-top: 0px;
         padding-left: 20px;
         padding-bottom: 0px;
         font-size: 1.2rem;
         font-weight: initial;
         color: #999999;
+    }
+    .channelsActive .channelsFollowCta {
+        padding-top: 10px;
     }
 
     .getTheConversationStartedOwner {
@@ -159,7 +175,8 @@
 
 	.channelList :global(.contentPanel .panelTitle) {
         padding-left: 20px;
-        padding-bottom: 0;
+        padding-bottom: 10px;
+        margin-top: -5px;
 	}
 	.channelList.channelsActive :global(.contentPanel .panelTitle) {
         padding-left: 20px;

@@ -206,7 +206,7 @@ function updateUser(options) {
 
 // options = { limit: number, cursor: string, sort: {} }
 function getChannels(options) {
-	if (DEBUG && !options.id && !options.projectId) {
+	if (DEBUG && !options || (!options.id && !options.projectId)) {
 		throw new Error('id or projectId not specified on getChannels ', options);
 	}
 

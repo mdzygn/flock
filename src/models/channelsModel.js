@@ -19,9 +19,9 @@ let channelsUpdatedHandlers = [];
 
 let curChannelFilterOptions = null;
 
-let channels = writable([]);
+let channels = writable(null);
 
-let filteredChannels = writable([]);
+let filteredChannels = writable(null);
 
 const primaryChannelNames = [
 	'announcements',
@@ -78,7 +78,11 @@ channels.subscribe(() => {
 
 function mergeChannels(newChannels) {
 	if (newChannels && newChannels.length) {
-		const curChannels = get(channels);
+		let curChannels = get(channels);
+
+		if (!curChannels) {
+			curChannels = [];
+		}
 
 		let curChannel, newChannelData, channelId, newChannel;
 		for (var channelI = 0; channelI < newChannels.length; channelI++) {
@@ -134,15 +138,17 @@ function filterCurrentChannels() {
 	const projectId = curChannelFilterOptions && curChannelFilterOptions.projectId;
 
 	let newFilteredChannels = get(channels);
-	if (projectId) {
-		newFilteredChannels = newFilteredChannels.filter(channelModel => {
-			const channel = get(channelModel);
-			// console.log(channel.title + ', ' + channel.channelId + ', ' + channel.type);
-			return channel.projectId === projectId;
-		});
+	if (newFilteredChannels) {
+		if (projectId) {
+			newFilteredChannels = newFilteredChannels.filter(channelModel => {
+				const channel = get(channelModel);
+				// console.log(channel.title + ', ' + channel.channelId + ', ' + channel.type);
+				return channel.projectId === projectId;
+			});
+		}
+		newFilteredChannels.sort((a,b) => get(a).sortIndex - get(b).sortIndex); // sort by reversed created time
+		// newFilteredChannels.sort((a,b) => get(b).createdAt - get(a).createdAt); // sort by reversed created time
 	}
-	newFilteredChannels.sort((a,b) => get(a).sortIndex - get(b).sortIndex); // sort by reversed created time
-	// newFilteredChannels.sort((a,b) => get(b).createdAt - get(a).createdAt); // sort by reversed created time
 	filteredChannels.set(newFilteredChannels);
 }
 
@@ -161,7 +167,12 @@ function filterCurrentChannels() {
 // }
 
 export function getChannel(channelId) {
-	return get(channels).find(item => get(item).id === channelId);
+	const curChannels = get(channels);
+	if (curChannels) {
+		return get(channels).find(item => get(item).id === channelId);
+	} else {
+		return null;
+	}
 }
 
 export function addChannel(channelDetails) {
@@ -198,7 +209,10 @@ export function addChannel(channelDetails) {
 		// newChannel._id = result.insertedId;
 	});
 
-	const curChannels = get(channels);
+	let curChannels = get(channels);
+	if (!curChannels) {
+		curChannels = [];
+	}
 	curChannels.unshift(newChannelModel);
 	channels.set(curChannels);
 

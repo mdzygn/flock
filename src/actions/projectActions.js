@@ -16,6 +16,7 @@ import ProjectModel, {
 
 import {
     project,
+    projectId,
     resetScrollRegionPosition,
     getIsProjectTeamMember,
 } from '../models/appModel';
@@ -31,7 +32,11 @@ import {
     loadChannels,
 } from '../models/channelsModel';
 
-ProjectModel.on('projectAdded', loadChannels);
+ProjectModel.on('projectAdded', loadProjectChannels);
+
+function loadProjectChannels() {
+    loadChannels( { projectId: get(projectId) } );
+}
 
 function checkUpdateProject(targetProject) {
     const curProject = get(project);

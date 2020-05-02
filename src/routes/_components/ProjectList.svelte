@@ -1,6 +1,8 @@
 <script>
     import locale from '../../locale';
 
+    import config from '../../config';
+
     import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
 
@@ -15,7 +17,7 @@
 
     export let projects;
 
-    export let displayLimit = 3;
+    export let displayLimit = config.MAX_PROJECT_PREVIEW_COUNT;
 
     export let title = 'Projects';
     export let className = '';

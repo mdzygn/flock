@@ -2,12 +2,16 @@
     import Button from '../../components/Button.svelte';
 
     export let tags = null;
+
+    export let displayLimit = 0;
 </script>
 
 {#if tags}
     <div class="tagSet">
-        {#each tags as tag}
-            <Button className="tag">{tag}</Button>
+        {#each tags as tag, index}
+            {#if !displayLimit || index < displayLimit}
+                <Button className="tag">{tag}{#if index < tags.length - 1 && (!displayLimit || index < displayLimit-1)}<span class="invisibleSeparator">,&nbsp;</span>{/if}</Button>
+            {/if}
         {/each}
     </div>
 {/if}
@@ -30,5 +34,18 @@
         margin-bottom: 8px;
 
         color: #0D0D0D;
+    }
+
+    .tagSet :global(.buttonContent) {
+        display: inline-block;
+        user-select: text;
+    }
+
+    .invisibleSeparator {
+        display: inline-block;
+        overflow: hidden;
+        opacity: 0;
+        width: 1px;
+        font-size: 1px;
     }
 </style>

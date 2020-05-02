@@ -152,6 +152,7 @@
 	}
 
 	.fieldNote {
+    	padding-left: 7px;
     	font-size: 1.1rem;
     	color: #aaaaaa;
 	}
@@ -161,7 +162,7 @@
 	} */
 	.privacyNote {
 		padding-top: 20px;
-		padding-left: 20px;
+		padding-left: 27px;
 		padding-bottom: 5px;
 	}
 

@@ -135,6 +135,12 @@ export const sections = [
 		showBack: true,
 	},
 	{
+		path: '/posts/.+/edit',
+		id: 'edit_post',
+		label: '',
+		showBack: true,
+	},
+	{
 		path: '/posts/.+',
 		id: 'posts',
 		label: '',

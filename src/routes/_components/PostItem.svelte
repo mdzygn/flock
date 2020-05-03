@@ -1,6 +1,6 @@
 <script>
     import { goto } from '@sapper/app';
-    import { writable } from 'svelte/store';
+    import { get, writable } from 'svelte/store';
 
     import { menuIds } from '../../config/menus';
 
@@ -26,6 +26,7 @@
 	import {
         project,
         userId,
+        targetPost,
     } from '../../models/appModel';
 
 	import {
@@ -36,7 +37,11 @@
 
 	import {
         postToggleLiked,
-	} from '../../actions/postActions';
+    } from '../../actions/postActions';
+
+    import {
+        getPost,
+    } from '../../models/postsModel';
 
     export let post;
 
@@ -130,7 +135,14 @@
 
     function showPostOptions(event) {
         event && event.stopPropagation();
-		showMenu(menuIds.POST_OPTIONS);
+
+        const postModel = getPost(postId);
+        if (postModel) {
+            const post = get(postModel);
+            $targetPost = post;
+
+            showMenu(menuIds.POST_OPTIONS);
+        }
     }
 </script>
 

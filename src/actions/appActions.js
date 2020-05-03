@@ -277,8 +277,11 @@ export function loadPost(targetPostId, options) {
 
     postsAnchorToBottom.set(options && options.anchorToBottom);
 
-    gotoRoute('posts/' + targetPostId );
-    resetScrollRegionPosition('thread');
+    const path = get(curPath);
+    if (!path || !path.match(/posts\/.+\/edit/)) {
+        gotoRoute('posts/' + targetPostId );
+        resetScrollRegionPosition('thread');
+    }
 }
 
 function setPost(targetPostId) {
@@ -500,8 +503,9 @@ export function loadCurrentChannel() {
 }
 
 export function editCurrentPost() {
-    if (get(postId)) {
-        // editPost(postId);
+    const curTargetPost = get(targetPost);
+    if (curTargetPost) {
+        editPost(curTargetPost.id);
     }
 }
 
@@ -521,6 +525,10 @@ export function newThreadPost() {
     postType.set('threadPost');
 
     goto('posts/new');
+}
+
+export function editPost(postId) {
+    goto('posts/' + postId + '/edit');
 }
 
 

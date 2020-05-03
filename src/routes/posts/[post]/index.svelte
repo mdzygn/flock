@@ -1,20 +1,20 @@
 <script>
-	import locale from '../../locale';
+	import locale from '../../../locale';
 
 	import { writable } from 'svelte/store';
 
-	import ScrollView from '../../components/ScrollView.svelte';
-	import Proxy from '../../components/Proxy.svelte';
-    import Hotspot from '../../components/Hotspot.svelte';
+	import ScrollView from '../../../components/ScrollView.svelte';
+	import Proxy from '../../../components/Proxy.svelte';
+    import Hotspot from '../../../components/Hotspot.svelte';
 
-	import ThreadPost from '../_components/ThreadPost.svelte';
+	import ThreadPost from '../../_components/ThreadPost.svelte';
 
-	import NewPostButton from '../_components/NewPostButton.svelte';
+	import NewPostButton from '../../_components/NewPostButton.svelte';
 
-	import ContentLoader from '../_components/ContentLoader.svelte';
-	import PostItem from '../_components/PostItem.svelte';
+	import ContentLoader from '../../_components/ContentLoader.svelte';
+	import PostItem from '../../_components/PostItem.svelte';
 
-	import { loadProfile } from '../../actions/appActions';
+	import { loadProfile } from '../../../actions/appActions';
 
 	import {
 		postId,
@@ -24,29 +24,29 @@
 		userId,
 		project,
 		isUserLoaded,
-	} from '../../models/appModel';
+	} from '../../../models/appModel';
 
 	import {
 		loadCurrentChannel,
 		loadCurrentPost,
 		checkLoggedIn,
 		newThreadPost,
-	} from '../../actions/appActions';
+	} from '../../../actions/appActions';
 
 	import {
 		loadUsersOfItem,
 		loadUsersOfItemModels,
-	} from '../../models/usersModel';
+	} from '../../../models/usersModel';
 
 	import {
 		getPost,
 		getPosts,
 		loadingPosts,
-	} from '../../models/postsModel';
+	} from '../../../models/postsModel';
 
 	import {
 		loadingProjects,
-	} from '../../models/projectsModel';
+	} from '../../../models/projectsModel';
 
 	// $: userLoading = (!($user && $user.loaded) && $userId);
 

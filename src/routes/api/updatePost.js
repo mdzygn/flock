@@ -21,12 +21,11 @@ export async function post(req, res, next) {
 			const setPostDetailsSchema = {
                 title: true,
                 message: true,
-
-				edited: true,
 			};
 
 			details = filterItemDetails(details, setPostDetailsSchema);
 
+			details.edited = true;
 			details.lastActiveAt = (new Date()).getTime();
 			details.editedAt = details.lastActiveAt;
 			details.modifiedAt = details.lastActiveAt;

@@ -91,6 +91,9 @@ const locale = {
 		NOT_FOUND: 'post not found',
 		NO_POSTS: 'this post has no comments',
 	},
+	POST: {
+		EDITED: 'edited'
+	},
 	PROJECT: {
 		NOT_FOUND: 'project not found',
 		GET_STARTED: 'get the conversations started',

@@ -3,6 +3,9 @@
 
     import { menuIds } from '../../config/menus';
 
+    import config from '../../config';
+    import locale from '../../locale';
+
     import Button from '../../components/Button.svelte';
 
     import Proxy from '../../components/Proxy.svelte';
@@ -22,7 +25,7 @@
 
 	// import NewPostButton from '../_components/NewPostButton.svelte';
 
-    import { parseHTML, getDateString } from '../../utils';
+    import { parseHTML, getDateString, getDateAgeString, secondsDiff } from '../../utils';
 
     import {
         project,
@@ -63,6 +66,11 @@
     $: username = ($user && $user.username && '@' + $user.username) || '';
 
     $: canEdit = ($post && $post.userId && $post.userId === $userId) || false;
+
+    $: edited = ($post && $post.edited && secondsDiff($post.createdAt, $post.editedAt) > config.SHOW_EDITED_MIN_TIME) || false;
+    $: editedDate =  ($post && $post.edited && $post.editedAt && getDateString($post.editedAt)) || '';
+
+    // $: console.log('thread diff', secondsDiff($post.createdAt, $post.editedAt));
 
     $: title = ($post && $post.title) || '';
     $: message = ($post && $post.message) || '';
@@ -123,7 +131,7 @@
     </div>
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" />
     <div class="postContent">
-        <div class="date">{@html dateString}</div>
+        <div class="date">{@html dateString}{#if edited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}</div>
         {#if title}
             <div class="title">{@html titleHTML}</div>
         {/if}
@@ -258,6 +266,17 @@
         padding-bottom: 2px;
 
         user-select: text;
+    }
+
+    .edited {
+        display: inline-block;
+        margin-left: 4px;
+        font-size: 1.1rem;
+        color: #b9b9b9;
+        background-color: #f7f5f5;
+        padding: 1px 4px;
+        border-radius: 3px;
+        user-select: none;
     }
 
     .title {

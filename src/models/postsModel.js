@@ -1,14 +1,17 @@
 import api from '../api';
 
+import config from '../config';
+
 import { writable, get } from 'svelte/store';
 
-import { generateId, objectsMatch } from '../utils';
+import { generateId, secondsDiff } from '../utils';
 
 import loadingRequestUtil from '../utils/loadingRequestUtil';
 
 import {
     user,
 	userId,
+	savingPost,
 } from '../models/appModel';
 
 import PostModel from '../models/postModel';
@@ -66,21 +69,25 @@ function mergePosts(newPosts) {
 
 		// curPosts.length = 0; // TODO: temp clear posts
 
+		const curSavingPost = get(savingPost);
+
 		let curPost, newPostData, postId, newPost;
 		for (var postI = 0; postI < newPosts.length; postI++) {
 			newPostData = newPosts[postI];
 			postId = newPostData.id;
-			curPost = curPosts.find(match => get(match).id === postId);
-			if (!curPost) {
-				curPost = PostModel(newPostData);
-				// curPosts.push(curPost);
-				curPosts.unshift(curPost);
-				// console.log('add post: ', curPost, newPostData);
-			} else {
-				// console.log('update existing post: ', curPost, newPostData);
-				newPost = get(curPost);
-				newPost = Object.assign(newPost, newPostData);
-				curPost.set(newPost);
+			if (postId !== curSavingPost) {
+				curPost = curPosts.find(match => get(match).id === postId);
+				if (!curPost) {
+					curPost = PostModel(newPostData);
+					// curPosts.push(curPost);
+					curPosts.unshift(curPost);
+					// console.log('add post: ', curPost, newPostData);
+				} else {
+					// console.log('update existing post: ', curPost, newPostData);
+					newPost = get(curPost);
+					newPost = Object.assign(newPost, newPostData);
+					curPost.set(newPost);
+				}
 			}
 		}
 		// console.log('update posts: ', curPosts);
@@ -199,12 +206,17 @@ export function addPost(postDetails) {
 }
 
 export function updatePost(post, postDetails) {
+	const curTime = (new Date()).getTime();
+	if (secondsDiff(post.createdAt, curTime) > config.SHOW_EDITED_MIN_TIME) {
+		postDetails.edited = true;
+	}
+
+	savingPost.set(post.id); // need to keep saving post so doesn't override on load
 	api.updatePost({id: post.id, details: postDetails});
 
 	Object.assign(post, postDetails);
 
 	post.lastActiveAt = (new Date()).getTime();
-	post.edited = true;
 	post.editedAt = post.lastActiveAt;
 	post.modifiedAt = post.lastActiveAt;
 }

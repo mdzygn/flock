@@ -79,6 +79,8 @@ export const targetProject = writable(null);
 export const targetUser = writable(null);
 export const targetPost = writable(null);
 
+export const savingPost = writable(false);
+
 export const newMessage = appModel.newMessage;
 
 export const viewMode = appModel.viewMode;

@@ -2,6 +2,9 @@
     import { goto } from '@sapper/app';
     import { get, writable } from 'svelte/store';
 
+    import config from '../../config';
+    import locale from '../../locale';
+
     import { menuIds } from '../../config/menus';
 
     import Button from '../../components/Button.svelte';
@@ -19,7 +22,7 @@
     import ReplyIcon from "../../assets/icons/reply_small.png";
 	import OptionsMenuIcon from "../../assets/icons/menu.png";
 
-    import { parseHTML, getUnbrokenText, getDateString, getDateAge, getDateAgeString } from '../../utils';
+    import { parseHTML, getUnbrokenText, getDateString, getDateAge, getDateAgeString, secondsDiff } from '../../utils';
 
     import { getUser } from '../../models/usersModel';
 
@@ -82,6 +85,11 @@
     $: showReplyIcon = (type === 'thread') && !repliesCount;
 
     $: showOptionsButton = canEdit && (type !== 'thread');
+
+    $: edited = ($post && $post.edited && secondsDiff($post.createdAt, $post.editedAt) > config.SHOW_EDITED_MIN_TIME) || false;
+    $: editedDate =  ($post && $post.edited && $post.editedAt && getDateString($post.editedAt)) || '';
+
+    // $: console.log('post diff', secondsDiff($post.createdAt, $post.editedAt));
 
     $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
     $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
@@ -180,6 +188,7 @@
         <div class="userName" class:selectable="{textSelectable}">
             <span div="userNameLabel" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userNameString}</span>
             {#if dateString}<span class="date">{#if userName} - {/if}{dateString}</span>{/if}
+            {#if edited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}
         </div>
         {#if showTitle && title}
             <div class="title">{@html titleHTML}</div>
@@ -248,6 +257,16 @@
 
     .date {
         color: #bbbbbb;
+    }
+
+    .edited {
+        display: inline-block;
+        font-size: 1.1rem;
+        color: #b9b9b9;
+        background-color: #f7f5f5;
+        padding: 1px 4px;
+        border-radius: 3px;
+        user-select: none;
     }
 
     .title {

@@ -181,6 +181,13 @@ export function getDateAgeString(date, options) {
     return ageString;
 }
 
+export function secondsDiff(date1, date2) {
+    if (date1 && date2) {
+        return (date2 - date1) / 1000;
+    }
+    return 0;
+}
+
 export function getDateString(date, format) {
     if (!date) { return null; }
     if (!format) {

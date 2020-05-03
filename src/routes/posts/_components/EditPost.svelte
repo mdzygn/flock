@@ -144,6 +144,9 @@
                 <div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
                 <ImageSelectionBox bind:image />
             </div> -->
+			{#if !editPost}
+				<div class="fieldNote">{@html locale.NEW_THREAD.EDIT_NOTE}</div>
+			{/if}
             <div class="actions">
                 {#if !editPost}
                     <Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{NextArrowIcon}">{locale.NEW_THREAD.CONFIRM}</Button>
@@ -176,7 +179,8 @@
 	}
 
 	.messageField {
-    	padding-bottom: 10px;
+		padding-bottom: 0;
+    	/* padding-bottom: 10px; */
     	/* padding-bottom: 18px; */
 	}
 
@@ -261,4 +265,14 @@
     	padding-left: 20px;
     	margin-top: -1px;
     }
+
+	.fieldNote {
+    	font-size: 1.1rem;
+    	color: #aaaaaa;
+
+		/* margin-top: -5px; */
+		padding-top: 5px;
+		padding-left: 27px;
+		margin-bottom: -10px;
+	}
 </style>

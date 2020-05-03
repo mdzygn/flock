@@ -315,3 +315,19 @@ export function objectsMatch(objectA, objectB) {
     return JSON.stringify(objectA) === JSON.stringify(objectB);
     // Object.entries(k1).toString() === Object.entries(k2).toString();
 }
+
+export function strCompare(stringA, stringB) {
+    if (stringA && stringB) {
+        return lineBreakUniform(stringA) === lineBreakUniform(stringB);
+    } else {
+        return stringA === stringB;
+    }
+}
+
+export function lineBreakUniform(string) {
+    if (string) {
+        return string.replace(/\r\n/g, '\n');
+    } else {
+        return string;
+    }
+}

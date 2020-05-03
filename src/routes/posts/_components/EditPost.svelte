@@ -6,6 +6,8 @@
 	import {
 		testInputDefocus,
 		getUnformattedText,
+		getFormattedText,
+		strCompare,
 	} from '../../../utils';
 
 	import Proxy from '../../../components/Proxy.svelte';
@@ -85,6 +87,8 @@
 				if ($post) {
 					title = ($post && $post.title) || '';
 					message = ($post && $post.message) || '';
+
+					message = getFormattedText(message);
 
 					origTitle = title;
 					origMessage = message;
@@ -167,7 +171,7 @@
 			};
 			switch ($postType) {
 				case 'thread':
-					postDetails.title =title;
+					postDetails.title = title;
 					break;
 				case 'threadPost':
 					postDetails.threadId = $postId;
@@ -185,9 +189,13 @@
     function saveCurrentPost() {
 		if (editPost) {
             const postDetails = {
-                title,
-                message,
+                message: getUnformattedText(message),
             };
+			switch ($post.type) {
+				case 'thread':
+					postDetails.title = title;
+					break;
+			}
 
 			const result = savePost(postDetails);
 			if (result) {
@@ -207,12 +215,13 @@
 			const draftPost = getDraftPost(curPostType, draftId, editPost);
 			if (draftPost && $post) {
 				changesSaved = (
-					title !== origTitle ||
-					message !== origMessage
+					!strCompare(title, origTitle) ||
+					!strCompare(message, origMessage)
 				);
 			} else {
 				changesSaved = false;
 			}
+			console.log('changesSaved', changesSaved);
 		}
 	}
 

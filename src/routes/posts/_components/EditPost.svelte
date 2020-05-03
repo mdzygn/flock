@@ -116,12 +116,12 @@
 			if (editPost) {
 				if ($post) {
 					if (curDraftPost || (
-						title !== $post.title ||
-						message !== $post.message
+						!strCompare(title, origTitle) ||
+						!strCompare(message, origMessage)
 					)) {
 						if (
-							title === $post.title &&
-							message === $post.message
+							strCompare(title, origTitle) &&
+							strCompare(message, origMessage)
 						) {
 							clearDraftPost(curPostType, draftId, editPost);
 						} else {

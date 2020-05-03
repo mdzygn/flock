@@ -3,8 +3,13 @@ import config from '../config';
 import { writable } from 'svelte/store';
 import { get } from 'svelte/store';
 
+import EventEmitter from 'eventemitter3';
+
 import { createModel } from '../utils/createModel';
 // import { init } from 'svelte/internal';
+
+const AppModel = new EventEmitter();
+// export default AppModel;
 
 const appModel = createModel({
     projectId: null,
@@ -39,7 +44,7 @@ const appModel = createModel({
     projectsSearchString: '',
     projectsArchiveSearchString: '',
     discoverSearchString: '',
-}, {persist: true}, 'appState');
+}, {persist: true}, 'appState', AppModel);
 
 export const curPath = writable(null);
 
@@ -208,6 +213,11 @@ export function getHeaderImage(imageUrl, thumb) {
 		}
 	}
 	return null;
+}
+
+export function goHome() {
+    discoverSearchString.set('');
+    AppModel.emit('home');
 }
 
 export default appModel;

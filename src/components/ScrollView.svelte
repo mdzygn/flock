@@ -34,7 +34,7 @@
         minScrollContentHeight = (scrollRegion && scrollRegion.offsetHeight && scrollRegion.offsetHeight + headerHideAmount) || 0;
     }
 
-    let scrollRegion;
+    export let scrollRegion = null;
     let curScrollHeaderPosition = 0;
     let scrollHeaderOffset = 0;
     let scrollHeader;

@@ -15,7 +15,7 @@
 	import ProjectItem from './../../_components/ProjectItem.svelte';
 	import ContentLoader from './../../_components/ContentLoader.svelte';
 
-	import {
+	import AppModel, {
 		viewMode,
 		locationMode,
 		resetScrollRegionPosition,
@@ -31,6 +31,9 @@
 
 	import { loadProject } from '../../../actions/appActions';
 
+
+	AppModel.on('home', onHome);
+
 	let discoveryProjects = writable([]);
 	let filteredDiscoveryProjects = writable([]);
 
@@ -38,6 +41,13 @@
 
 	$: { $filteredDiscoveryProjects = getFilteredProjects($discoveryProjects, { searchString: $discoverSearchString }) }
 
+	let scrollRegion;
+
+	function onHome() {
+		if (scrollRegion) {
+        	scrollRegion.scrollTo(0, 0);
+		}
+	}
 
 	function toggleViewMode() {
 		$viewMode = ($viewMode === 'explore') ? 'discover' : 'explore';
@@ -53,7 +63,7 @@
 </script>
 
 <div class="pageContent">
-	<ScrollView id="discover" headerStartHidden="{!$showBetaFeatures}" headerResetOnShow="{true}">
+	<ScrollView id="discover" bind:scrollRegion="{scrollRegion}" headerStartHidden="{!$showBetaFeatures}" headerResetOnShow="{true}">
 		<!-- <Feed type="discover" linkToProjects="{true}" count="{5}" offset="{proxyContentOffset}"/> -->
 
 		{#if !$showBetaFeatures && !$discoverSearchString}

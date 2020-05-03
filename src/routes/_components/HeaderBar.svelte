@@ -26,6 +26,7 @@
         lastPreProjectPath,
         getIsCurrentUser,
         showBetaFeatures,
+        goHome,
     } from '../../models/appModel';
 
     import {
@@ -148,7 +149,7 @@
 <div class="headerBar" class:hasSuperHeader="{hasSuperHeader}">
     {#if segment === undefined || (segment === 'discover' && !$showBetaFeatures)}
         {#if $showBetaFeatures || segment === 'discover'}
-            <div class="logo">
+            <div class="logo" class:button="{true}" on:click="{goHome}">
                 <img src='assets/logo.png' alt="Flock">
             </div>
         {/if}

@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 import { DEBUG } from '../config';
 
-export function createModel(props, options, modelId) {
+export function createModel(props, options, modelId, baseModel) {
     const persist = options && options.persist;
 
     let localStorage = null;
@@ -10,7 +10,7 @@ export function createModel(props, options, modelId) {
         localStorage = typeof window !== 'undefined' ? window.localStorage : null;
     }
 
-    const model = {};
+    const model = baseModel || {};
 
     const _modelValues = loadState();
 

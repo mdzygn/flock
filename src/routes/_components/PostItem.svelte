@@ -81,7 +81,7 @@
     $: showRepliesIcon = (type === 'thread') && repliesCount;
     $: showReplyIcon = (type === 'thread') && !repliesCount;
 
-    $: showOptionsButton = canEdit;
+    $: showOptionsButton = canEdit && (type !== 'thread');
 
     $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
     $: messageHTML = displayBreaks ? message : getUnbrokenText(message);

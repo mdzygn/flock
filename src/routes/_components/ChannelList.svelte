@@ -92,7 +92,7 @@
         <ContentPanel title="Channels" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
             {#if (!hasActiveChannels || isNew) && viewAllChannels && !isArchived}
                 {#if isTeamMember}
-                    <div class="getTheConversationStarted getTheConversationStartedOwner">{locale.PROJECT.GET_STARTED}</div>
+                    <div class="getTheConversationStarted getStartedOwner" class:getStartedOwnerOffset="{canEdit && $showBetaFeatures}">{locale.PROJECT.GET_STARTED}</div>
                 {:else}
                     <div class="getTheConversationStarted">{locale.PROJECT.FOLLOWER_GET_STARTED}</div>
                 {/if}
@@ -169,10 +169,14 @@
         padding-top: 10px;
     }
 
-    .getTheConversationStartedOwner {
+    .getStartedOwner {
         /* right: 41px; */
         font-weight: 700;
 		color: #DF3C3C;
+    }
+
+    .getStartedOwnerOffset {
+        right: 56px;
     }
 
 	.channelList :global(.contentPanel .panelTitle) {

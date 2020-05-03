@@ -4,6 +4,7 @@ export const menuIds = {
     PROFILE_OWNER_MENU: 'PROFILE_OWNER_MENU',
     PROFILE_MENU: 'PROFILE_MENU',
     MAIN_OPTIONS: 'MAIN_OPTIONS',
+    POST_OPTIONS: 'POST_OPTIONS',
 }
 
 import { get } from 'svelte/store';
@@ -27,6 +28,7 @@ import {
     loadProject,
     copyProjectLink,
     copyProfileLink,
+    editCurrentPost,
 } from '../actions/appActions';
 
 import {
@@ -92,12 +94,13 @@ export const menus = {
                 condition: () => { const p = get(project); return p && p.following },
                 action: () => { const p = get(project); p && p.id && projectToggleFollowing(p.id) },
             },
-            // {
-            //     label: () => { const p = get(project); return (p && !p.reported) ? 'Report Project' : 'Project Reported' },
-            //     disabled: () => { const p = get(project); return p && p.reported },
-            //     action: () => { const p = get(project); p && p.id && reportProject(p.id) },
-            //     disabled: true,
-            // },
+            {
+                label: () => { const p = get(project); return (p && !p.reported) ? 'Report Project' : 'Project Reported' },
+                disabled: () => { const p = get(project); return p && p.reported },
+                action: () => { const p = get(project); p && p.id && reportProject(p.id) },
+                visible: () => { return get(showBetaFeatures) },
+                disabled: true,
+            },
         ],
     },
     PROFILE_OWNER_MENU: {
@@ -156,6 +159,24 @@ export const menus = {
             //     label: 'Feedback',
             //     action: () => { loadProject('hPS9cRq2') },
             // },
+        ],
+    },
+    POST_OPTIONS: {
+        menuItems: [
+            {
+                label: 'Edit Post',
+                action: editCurrentPost,
+            },
+            {
+                label: 'Remove Post',
+                visible: () => { return get(showBetaFeatures) },
+                disabled: true,
+            },
+            {
+                label: 'Report Post',
+                visible: () => { return get(showBetaFeatures) },
+                disabled: true,
+            },
         ],
     },
 }

@@ -88,6 +88,9 @@ import {
     getIsProjectTeamMember,
 
     dontAllowOverlayClose,
+    goHome,
+
+    showBetaFeatures,
 } from '../models/appModel';
 import { tick } from 'svelte';
 
@@ -181,6 +184,23 @@ onUsersUpdated(() => {
 });
 
 export function setNavSection(section) {
+    const path = get(curPath);
+    if ((!section.segment && (path === '/' || path === '/home')) || '/' + section.segment === path) {
+        switch (section.segment) {
+            case undefined:
+                goHome();
+                return;
+            case 'discover':
+                if (!get(showBetaFeatures)) {
+                    goHome();
+                    return;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     switch (section.segment) {
         case 'projects':
             displayingAllMyProjects.set(false);
@@ -476,6 +496,12 @@ export function loadCurrentProject() {
 export function loadCurrentChannel() {
     if (get(channelId) && !get(channel) && !get(loadingChannels)) {
         loadChannels( { id: get(channelId) } );
+    }
+}
+
+export function editCurrentPost() {
+    if (get(postId)) {
+        // editPost(postId);
     }
 }
 

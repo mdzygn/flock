@@ -66,7 +66,8 @@
 	<ScrollView id="discover" bind:scrollRegion="{scrollRegion}" headerStartHidden="{!$showBetaFeatures}" headerResetOnShow="{true}">
 		<!-- <Feed type="discover" linkToProjects="{true}" count="{5}" offset="{proxyContentOffset}"/> -->
 
-		{#if !$showBetaFeatures && !$discoverSearchString}
+		{#if !$discoverSearchString}
+			<!-- !$showBetaFeatures &&  -->
 			<HomeIntro />
 		{/if}
 

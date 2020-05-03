@@ -149,7 +149,7 @@
 <div class="headerBar" class:hasSuperHeader="{hasSuperHeader}">
     {#if segment === undefined || (segment === 'discover' && !$showBetaFeatures)}
         {#if $showBetaFeatures || segment === 'discover'}
-            <div class="logo" class:button="{true}" on:click="{goHome}">
+            <div class="logo" class:button="{!$showBetaFeatures}" on:click="{!$showBetaFeatures ? goHome : null}">
                 <img src='assets/logo.png' alt="Flock">
             </div>
         {/if}

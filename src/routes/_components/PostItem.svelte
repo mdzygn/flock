@@ -2,6 +2,8 @@
     import { goto } from '@sapper/app';
     import { writable } from 'svelte/store';
 
+    import { menuIds } from '../../config/menus';
+
     import Button from '../../components/Button.svelte';
     // import Counter from '../_components/Counter.svelte';
 
@@ -15,6 +17,7 @@
     import LikeSelectedIcon from "../../assets/icons/post_like_selected.png";
     import CommentIcon from "../../assets/icons/comment_small.png";
     import ReplyIcon from "../../assets/icons/reply_small.png";
+	import OptionsMenuIcon from "../../assets/icons/menu.png";
 
     import { parseHTML, getUnbrokenText, getDateString, getDateAge, getDateAgeString } from '../../utils';
 
@@ -22,11 +25,13 @@
 
 	import {
         project,
+        userId,
     } from '../../models/appModel';
 
 	import {
         loadProfile,
         loadPost,
+        showMenu,
     } from '../../actions/appActions';
 
 	import {
@@ -45,15 +50,17 @@
 
     $: postId = ($post && $post.id) || null;
 
-    $: userId = ($post && $post.userId) || null;
-    $: { user = getUser(userId) };
+    $: postUserId = ($post && $post.userId) || null;
+    $: { user = getUser(postUserId) };
     $: userLoaded = ($user && $user.name) || false;
     $: userName = ($user && $user.name) || '';
     $: userNameString = userName || ''; // '&nbsp;';
 
     $: title = ($post && $post.title) || null;
     $: message = ($post && $post.message) || null;
-	$: liked = ($post && $post.liked) || false;
+    $: liked = ($post && $post.liked) || false;
+
+    $: canEdit = ($post && $post.userId && $post.userId === $userId) || false;
 
     $: showTitle = (type === 'thread');
     $: canLinkThrough = (type === 'thread');
@@ -68,6 +75,8 @@
 
     $: showRepliesIcon = (type === 'thread') && repliesCount;
     $: showReplyIcon = (type === 'thread') && !repliesCount;
+
+    $: showOptionsButton = canEdit;
 
     $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
     $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
@@ -102,7 +111,7 @@
 
     function viewUserProfile(event) {
         if (userLoaded) {
-            loadProfile(userId);
+            loadProfile(postUserId);
         }
         event && event.stopPropagation();
     }
@@ -115,30 +124,45 @@
     }
 
 	function toggleLiked(event) {
-        postToggleLiked(postId);
         event && event.stopPropagation();
-	}
+        postToggleLiked(postId);
+    }
+
+    function showPostOptions(event) {
+        event && event.stopPropagation();
+		showMenu(menuIds.POST_OPTIONS);
+    }
 </script>
 
-<div class="postItem" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}" class:showReplyIcon="{showReplyIcon}" class:showRepliesIcon="{showRepliesIcon}">
+<div class="postItem" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}"
+    class:showReplyIcon="{showReplyIcon}"
+    class:showRepliesIcon="{showRepliesIcon}"
+    class:showOptionsButton="{showOptionsButton}">
     <!-- <Avatar  -->
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" />
-    {#if !isArchived}
-        <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}">
-            <!-- <div class="likeIcon" style="background-image: url({LikeIcon})"/> -->
-            <div class="count">{likeCount}</div>
-            <!-- <Counter count="{likeCount}" /> -->
-        </Button>
-    {/if}
-    {#if showRepliesIcon}
-        <Button className="commentButton">
-            <div class="commentIcon" style="background-image: url({CommentIcon})"/>
-            <Counter count="{repliesCount}" />
-        </Button>
-    {:else if !isArchived}
-        {#if showReplyIcon}
-            <div class="replyIcon" style="background-image: url({ReplyIcon})"/>
+    <div class="buttonGroup" class:buttonGroupOffset="{showOptionsButton}">
+        {#if !isArchived}
+            <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}">
+                <!-- <div class="likeIcon" style="background-image: url({LikeIcon})"/> -->
+                <div class="count">{likeCount}</div>
+                <!-- <Counter count="{likeCount}" /> -->
+            </Button>
         {/if}
+        {#if showRepliesIcon}
+            <Button className="commentButton">
+                <div class="commentIcon" style="background-image: url({CommentIcon})"/>
+                <Counter count="{repliesCount}" />
+            </Button>
+        {:else if !isArchived}
+            {#if showReplyIcon}
+                <div class="replyIcon" style="background-image: url({ReplyIcon})"/>
+            {/if}
+        {/if}
+    </div>
+    {#if showOptionsButton}
+        <Button className="optionsButton" onClick="{showPostOptions}">
+            <div class="optionsIcon" style="background-image: url({OptionsMenuIcon})"/>
+        </Button>
     {/if}
     <div class="info">
         <div class="userName" class:selectable="{textSelectable}">
@@ -196,6 +220,12 @@
     }
     .showRepliesIcon .userName {
         padding-right: 78px;
+    }
+    .showReplyIcon.showOptionsButton .userName {
+        padding-right: 82px;
+    }
+    .showRepliesIcon.showOptionsButton .userName {
+        padding-right: 96px;
     }
     /* .userName.showReplyIcon {
         padding-right: 20px;
@@ -276,10 +306,33 @@
     }
     .commentIcon {
         position: absolute;
-
-        background-size: cover;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
         width: 17px;
         height: 17px;
+    }
+
+    .buttonGroup.buttonGroupOffset {
+        position: absolute;
+        right: 18px;
+    }
+
+    .postItem :global(.optionsButton) {
+        position: absolute;
+        right: 0px;
+        top: 6px;
+        width: 26px;
+        height: 38px;
+    }
+    .optionsIcon {
+        position: absolute;
+        top: 8px;
+        width: 19px;
+        height: 20px;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
     }
 
     .postItem :global(.counterContainer) {

@@ -9,6 +9,7 @@
     import {
         getIsProjectTeamMember,
         user,
+        showBetaFeatures,
     } from '../../models/appModel';
 
     export let project = null;
@@ -21,7 +22,7 @@
 	$: skills = (project && project.skills && getSplitItems(project.skills)) || null;
     $: isTeamMember = $user && getIsProjectTeamMember(project);
 
-	$: canEdit = false; // (isTeamMember && !project.archived) || false;
+	$: canEdit = (isTeamMember && !project.archived) || false;
 
     $: areMoreItems = skills && displayLimit && skills.length > displayLimit;
 
@@ -35,7 +36,7 @@
 
 {#if skills && skills.length}
     <div class="content">
-        <ContentPanel title="Seeking Skills:" showEdit="{canEdit}" showMoreAction="{areMoreItems ? displayAllSkills : false}">
+        <ContentPanel title="Seeking Skills:" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems ? displayAllSkills : false}">
             <TagSet tags="{skills}" displayLimit="{displayLimit}" />
         </ContentPanel>
     </div>

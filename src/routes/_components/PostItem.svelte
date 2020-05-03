@@ -301,12 +301,15 @@
 
     .postItem :global(.likeButton) {
         position: absolute;
-        right: -5px;
+        right: -4px;
         top: 8px;
         width: 30px;
         margin-right: 9px;
         height: 20px;
         padding: 6px;
+    }
+    .postItem.showOptionsButton :global(.likeButton) {
+        right: -2px;
     }
     .postItem :global(.likeButton .icon) {
         margin-top: -3px;
@@ -351,15 +354,15 @@
 
     .postItem :global(.optionsButton) {
         position: absolute;
-        right: 0px;
+        right: -1px;
         top: 6px;
-        width: 26px;
+        width: 33px;
         height: 38px;
     }
     .optionsIcon {
         position: absolute;
         top: 8px;
-        width: 19px;
+        width: 26px;
         height: 20px;
         background-size: contain;
         background-position: center;

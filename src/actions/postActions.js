@@ -29,7 +29,7 @@ function checkUpdatePost(targetPost) {
 export function createPost(postDetails) {
     if (!checkLoggedIn()) { return; }
 
-    addPost(postDetails);
+    const result = addPost(postDetails);
 
     switch (postDetails.type) {
         case 'thread':
@@ -39,14 +39,16 @@ export function createPost(postDetails) {
             loadPost(postDetails.threadId, { anchorToBottom: true });
             break;
     }
+    return result;
 }
 
 export function savePost(postDetails) {
     if (!checkLoggedIn()) { return; }
 
     const curPost = get(post);
+    let result = null;
     if (curPost) {
-        updatePost(curPost, postDetails);
+        result = updatePost(curPost, postDetails);
         post.set(curPost);
 
         if (curPost.type === 'thread') {
@@ -56,6 +58,7 @@ export function savePost(postDetails) {
         }
         resetScrollRegionPosition('thread');
     }
+    return result;
 }
 
 export function postToggleLiked(postId) {

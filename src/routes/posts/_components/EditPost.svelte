@@ -25,7 +25,10 @@
         postId,
         post,
         project,
-        curPath,
+		curPath,
+		saveDraftPost,
+		getDraftPost,
+		clearDraftPost,
 	} from '../../../models/appModel';
 
 	import {
@@ -47,11 +50,21 @@
 
     loadCurrentChannel();
 
-    $: editPost = ($curPath && $curPath.match(/posts\/.+\/edit/)) || false;
+	let editPost = false;
+	let editPostInitialized = false;
+	$: {
+		if (!editPostInitialized && $curPath) {
+			editPostInitialized = true;
+
+			editPost = ($curPath && !!$curPath.match(/posts\/.+\/edit/)) || false;
+		}
+	}
 
     $: nextEnabled = title || message;
 
-    $: curPostType = (editPost && $post) ? $post.type : $postType;
+	$: curPostType = (editPost && $post) ? $post.type : $postType;
+
+	$: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : $postId)) || null;
 
 	$: showTitleField = (curPostType === 'thread');
 
@@ -61,16 +74,72 @@
         editPost ? locale.EDIT_THREAD_POST.PAGE_TITLE : locale.NEW_THREAD_POST.PAGE_TITLE
     );
 
-    let editPostInitialized = false;
+    let postContentInitialized = false;
 
     $: {
-        if (editPost && $post && !editPostInitialized) {
-            editPostInitialized = true;
+		if (!postContentInitialized) {
+			if (editPost) {
+				if ($post) {
+					title = ($post && $post.title) || '';
+					message = ($post && $post.message) || '';
+					getPostDraftContent();
+					postContentInitialized = true;
+				}
+			} else {
+				if (draftId) {
+					getPostDraftContent();
+					postContentInitialized = true;
+				}
+			}
+		}
+	}
 
-            title = ($post && $post.title) || '';
-            message = ($post && $post.message) || '';
-        }
-    }
+	$: {
+		// if (title || message) {
+		if (draftId) {
+			const draftPost = {
+				title,
+				message,
+			};
+			const curDraftPost = getDraftPost(curPostType, draftId, editPost);
+			if (editPost) {
+				if ($post) {
+					if (curDraftPost || (
+						title !== $post.title ||
+						message !== $post.message
+					)) {
+						if (
+							title === $post.title &&
+							message === $post.message
+						) {
+							clearDraftPost(curPostType, draftId, editPost);
+						} else {
+							saveDraftPost(curPostType, draftId, editPost, draftPost);
+						}
+					}
+				}
+			} else {
+				if (curDraftPost || title || message) {
+					if (!(title || message)) {
+						clearDraftPost(curPostType, draftId, editPost);
+					} else {
+						saveDraftPost(curPostType, draftId, editPost, draftPost);
+					}
+				}
+			}
+		}
+	}
+
+	function getPostDraftContent() {
+		if (draftId) {
+			const draftPost = getDraftPost(curPostType, draftId, editPost);
+			if (draftPost) {
+				title = draftPost.title || '';
+				message = draftPost.message || '';
+			}
+		}
+		return null;
+	}
 
     onMount(async () => {
 		await tick();
@@ -97,7 +166,12 @@
 					postDetails.threadId = $postId;
 					break;
 			}
-			createPost(postDetails);
+			createPost(postDetails).then((result) => {
+				console.log('create post result', result);
+				if (result && result.success) {
+					clearDraftPost(curPostType, draftId, editPost);
+				}
+			});
 		}
     }
 
@@ -108,7 +182,15 @@
                 message,
             };
 
-            savePost(postDetails);
+			const result = savePost(postDetails);
+			if (result) {
+				result.then((result) => {
+					console.log('save post result', result);
+					if (result && result.success) {
+						clearDraftPost(curPostType, draftId, editPost);
+					}
+				});
+			}
         }
     }
 

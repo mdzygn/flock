@@ -189,10 +189,11 @@ export function addPost(postDetails) {
 
 	// console.log('newPost', newPost);
 
-	api.addPost({details: newPost}).then(result => {
+	const result = api.addPost({details: newPost}).then(result => {
 		if (!result || result.error || result.invalid) {
 			console.error(result);
 		}
+		return result;
 		// newPost._id = result.insertedId;
 	});
 
@@ -202,7 +203,7 @@ export function addPost(postDetails) {
 
 	filterCurrentPosts();
 
-	return newPostModel;
+	return result; // newPostModel;
 }
 
 export function updatePost(post, postDetails) {
@@ -212,13 +213,15 @@ export function updatePost(post, postDetails) {
 	}
 
 	savingPost.set(post.id); // need to keep saving post so doesn't override on load
-	api.updatePost({id: post.id, details: postDetails});
+	const result = api.updatePost({id: post.id, details: postDetails});
 
 	Object.assign(post, postDetails);
 
 	post.lastActiveAt = (new Date()).getTime();
 	post.editedAt = post.lastActiveAt;
 	post.modifiedAt = post.lastActiveAt;
+
+	return result;
 }
 
 export function setLikePost(targetPost, like) {

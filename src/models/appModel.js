@@ -41,6 +41,8 @@ const appModel = createModel({
 
     postsAnchorToBottom: false,
 
+    draftPosts: {},
+
     projectsSearchString: '',
     projectsArchiveSearchString: '',
     discoverSearchString: '',
@@ -56,6 +58,8 @@ export const postId = appModel.postId;
 export const conversationId = appModel.conversationId;
 export const profileId = appModel.profileId;
 export const userId = appModel.userId;
+
+const draftPosts = appModel.draftPosts;
 
 export const unsavedChanges = writable(false);
 
@@ -220,6 +224,85 @@ export function getHeaderImage(imageUrl, thumb) {
 export function goHome() {
     discoverSearchString.set('');
     AppModel.emit('home');
+}
+
+
+export function saveDraftPost(curPostType, draftId, editPost, draftPost) {
+    const curPost = getDraftPost(curPostType, draftId, editPost, true);
+
+    console.log('saveDraftPost', curPostType, draftId, editPost, JSON.parse(JSON.stringify(curPost)));
+
+    curPost.id = draftId;
+
+    Object.assign(curPost, draftPost);
+
+    const curDraftPosts = get(draftPosts);
+    draftPosts.set(curDraftPosts);
+
+    console.log('draftPosts', curDraftPosts);
+
+    return curPost;
+}
+
+export function getDraftPost(curPostType, draftId, editPost, create, remove) {
+    console.log('getDraftPost', curPostType, draftId, editPost);
+
+    const curDraftPosts = get(draftPosts);
+    if (!curDraftPosts) {
+        curDraftPosts = {};
+    }
+
+    let postArray = null;
+    if (editPost) {
+        postArray = curDraftPosts.posts;
+        if (!postArray && create) {
+            postArray = curDraftPosts.posts = [];
+        }
+    } else {
+        switch (curPostType) {
+            case 'thread':
+                postArray = curDraftPosts.channels;
+                if (!postArray && create) {
+                    postArray = curDraftPosts.channels = [];
+                }
+                break;
+            default:
+                postArray = curDraftPosts.threads;
+                if (!postArray && create) {
+                    postArray = curDraftPosts.threads = [];
+                }
+                break;
+        }
+    }
+
+    let curDraft = null;
+    if (postArray) {
+        console.log('getDraftPost', [...postArray]);
+
+        curDraft = postArray.find(match => match.id === draftId);
+        if (remove) {
+            postArray.splice(postArray.indexOf(curDraft), 1);
+            console.log('clear getDraftPost', [...postArray]);
+
+            draftPosts.set(get(draftPosts));
+            console.log('draftPosts', curDraftPosts);
+
+            return;
+        } else {
+            if (!curDraft && create) {
+                curDraft = {};
+                postArray.push(curDraft);
+            }
+        }
+    }
+
+    return curDraft;
+}
+
+export function clearDraftPost(curPostType, draftId, editPost) {
+    console.log('clearDraftPost', curPostType, draftId, editPost);
+
+    getDraftPost(curPostType, draftId, editPost, false, true);
 }
 
 export default appModel;

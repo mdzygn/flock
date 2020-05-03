@@ -125,7 +125,7 @@ const locale = {
 		TITLE_TIP: '(optional)',
 		MESSAGE: 'message',
 		CONFIRM: 'Post',
-		EDIT_NOTE: 'you can edit your post later if you need to',
+		EDIT_NOTE: 'your draft will be saved here<br/>you can also edit later after posting',
 	},
 	NEW_THREAD_POST: {
 		PAGE_TITLE: 'Reply',

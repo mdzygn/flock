@@ -67,8 +67,8 @@
 
     $: canEdit = ($post && $post.userId && $post.userId === $userId) || false;
 
-    $: edited = ($post && $post.edited && secondsDiff($post.createdAt, $post.editedAt) > config.SHOW_EDITED_MIN_TIME) || false;
-    $: editedDate =  ($post && $post.edited && $post.editedAt && getDateString($post.editedAt)) || '';
+    $: showEdited = ($post && $post.edited && secondsDiff($post.createdAt, $post.editedAt) > config.SHOW_EDITED_MIN_TIME) || false;
+    $: editedDate = (showEdited && $post.editedAt && getDateString($post.editedAt)) || '';
 
     // $: console.log('thread diff', secondsDiff($post.createdAt, $post.editedAt));
 
@@ -131,7 +131,7 @@
     </div>
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" />
     <div class="postContent">
-        <div class="date">{@html dateString}{#if edited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}</div>
+        <div class="date">{@html dateString}{#if showEdited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}</div>
         {#if title}
             <div class="title">{@html titleHTML}</div>
         {/if}

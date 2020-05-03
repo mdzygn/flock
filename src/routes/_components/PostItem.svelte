@@ -86,8 +86,8 @@
 
     $: showOptionsButton = canEdit && (type !== 'thread');
 
-    $: edited = ($post && $post.edited && secondsDiff($post.createdAt, $post.editedAt) > config.SHOW_EDITED_MIN_TIME) || false;
-    $: editedDate =  ($post && $post.edited && $post.editedAt && getDateString($post.editedAt)) || '';
+    $: showEdited = ((type !== 'thread') && ($post && $post.edited && secondsDiff($post.createdAt, $post.editedAt) > config.SHOW_EDITED_MIN_TIME)) || false;
+    $: editedDate = (showEdited && $post.editedAt && getDateString($post.editedAt)) || '';
 
     // $: console.log('post diff', secondsDiff($post.createdAt, $post.editedAt));
 
@@ -188,7 +188,7 @@
         <div class="userName" class:selectable="{textSelectable}">
             <span div="userNameLabel" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userNameString}</span>
             {#if dateString}<span class="date">{#if userName} - {/if}{dateString}</span>{/if}
-            {#if edited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}
+            {#if showEdited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}
         </div>
         {#if showTitle && title}
             <div class="title">{@html titleHTML}</div>

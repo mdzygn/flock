@@ -126,6 +126,13 @@ const locale = {
 	NEW_THREAD_POST: {
 		PAGE_TITLE: 'Reply',
 	},
+	EDIT_THREAD: {
+		PAGE_TITLE: 'Edit Post',
+		CONFIRM: 'Save',
+	},
+	EDIT_THREAD_POST: {
+		PAGE_TITLE: 'Edit Reply',
+	},
 	CHANNEL_DESCRIPTIONS: {
 		ANNOUNCEMENTS: 'Project announcements and news from the team',
 		// About and FAQs - About the world creation platform and Frequently Asked Questions

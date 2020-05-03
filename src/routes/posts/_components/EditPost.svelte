@@ -15,14 +15,17 @@
 	import ImageSelectionBox from '../../_components/ImageSelectionBox.svelte';
 
     import NextArrowIcon from "../../../assets/icons/next_arrow.png";
+	import SaveIcon from "../../../assets/icons/save.png";
 
 	import {
 		channel,
 		channelId,
 		projectId,
 		postType,
-		postId,
-		project,
+        postId,
+        post,
+        project,
+        curPath,
 	} from '../../../models/appModel';
 
 	import {
@@ -41,13 +44,32 @@
 	let titleField;
 	let messageField;
 
-	loadCurrentChannel();
+    loadCurrentChannel();
 
-	$: nextEnabled = title || message;
+    $: editPost = ($curPath && $curPath.match(/posts\/.+\/edit/)) || false;
 
-	$: showTitleField = ($postType === 'thread');
+    $: nextEnabled = title || message;
 
-	$: pageTitle = ($postType === 'thread') ? locale.NEW_THREAD.PAGE_TITLE : locale.NEW_THREAD_POST.PAGE_TITLE;
+    $: curPostType = (editPost && $post) ? $post.type : $postType;
+
+	$: showTitleField = (curPostType === 'thread');
+
+	$: pageTitle = (curPostType === 'thread') ? (
+        editPost ? locale.EDIT_THREAD.PAGE_TITLE : locale.NEW_THREAD.PAGE_TITLE
+    ) : (
+        editPost ? locale.EDIT_THREAD_POST.PAGE_TITLE : locale.NEW_THREAD_POST.PAGE_TITLE
+    );
+
+    let editPostInitialized = false;
+
+    $: {
+        if (editPost && $post && !editPostInitialized) {
+            editPostInitialized = true;
+
+            title = ($post && $post.title) || '';
+            message = ($post && $post.message) || '';
+        }
+    }
 
     onMount(async () => {
 		await tick();
@@ -59,7 +81,7 @@
     });
 
 	function createNewPost() {
-		if ($postType) {
+		if (!editPost && $postType) {
 			const postDetails = {
 				message: getUnformattedText(message),
 				type: $postType,
@@ -76,40 +98,56 @@
 			}
 			createPost(postDetails);
 		}
-	}
+    }
+
+    function savePost() {
+		if (editPost) {
+
+        }
+    }
 
 	function testSubmit() {
 		if (nextEnabled) {
-			createNewPost();
+            if (editPost) {
+                savePost();
+            } else {
+                createNewPost();
+            }
 		}
 	}
 </script>
 
-<div class="editPostContent">
-    <!-- <Proxy image="create_project" className="proxyOverlay" /> -->
-    <div class="panelContent">
-        <div class="pageTitle">{pageTitle}</div>
-        {#if showTitleField}
-            <div class="field">
-                <div class="label">{locale.NEW_THREAD.TITLE}<span class="tip">{@html locale.NEW_THREAD.TITLE_TIP}</span></div>
-                <!-- <input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField})}" /> -->
-                <textarea class="titleField" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField, action: testSubmit, actionOnCtrl: true})}" />
+{#if !editPost || $post }
+    <div class="editPostContent">
+        <!-- <Proxy image="create_project" className="proxyOverlay" /> -->
+        <div class="panelContent">
+            <div class="pageTitle">{pageTitle}</div>
+            {#if showTitleField}
+                <div class="field">
+                    <div class="label">{locale.NEW_THREAD.TITLE}<span class="tip">{@html locale.NEW_THREAD.TITLE_TIP}</span></div>
+                    <!-- <input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField})}" /> -->
+                    <textarea class="titleField" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField, action: testSubmit, actionOnCtrl: true})}" />
+                </div>
+            {/if}
+            <div class="field messageField">
+                <div class="label">{locale.NEW_THREAD.MESSAGE}</div>
+                <textarea bind:value="{message}" bind:this="{messageField}" on:keypress="{e => testInputDefocus(e, {action: testSubmit, actionOnCtrl: true})}" />
+                <!-- on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" -->
             </div>
-        {/if}
-        <div class="field messageField">
-            <div class="label">{locale.NEW_THREAD.MESSAGE}</div>
-            <textarea bind:value="{message}" bind:this="{messageField}" on:keypress="{e => testInputDefocus(e, {action: testSubmit, actionOnCtrl: true})}" />
-            <!-- on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" -->
-        </div>
-        <!-- <div class="field headerImageField">
-            <div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
-            <ImageSelectionBox bind:image />
-        </div> -->
-        <div class="actions">
-            <Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{NextArrowIcon}">{locale.NEW_THREAD.CONFIRM}</Button>
+            <!-- <div class="field headerImageField">
+                <div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
+                <ImageSelectionBox bind:image />
+            </div> -->
+            <div class="actions">
+                {#if !editPost}
+                    <Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{NextArrowIcon}">{locale.NEW_THREAD.CONFIRM}</Button>
+                {:else}
+                    <Button className="nextButton" disabled="{!nextEnabled}" onClick="{savePost}" icon="{SaveIcon}">{locale.EDIT_THREAD.CONFIRM}</Button>
+                {/if}
+            </div>
         </div>
     </div>
-</div>
+{/if}
 
 <style>
 	.panelContent {

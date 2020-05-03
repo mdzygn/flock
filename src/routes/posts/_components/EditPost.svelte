@@ -33,7 +33,8 @@
 	} from '../../../actions/appActions';
 
 	import {
-		createPost,
+        createPost,
+        savePost,
 	} from '../../../actions/postActions';
 
 	import { loadChannels } from '../../../models/channelsModel';
@@ -100,16 +101,21 @@
 		}
     }
 
-    function savePost() {
+    function saveCurrentPost() {
 		if (editPost) {
+            const postDetails = {
+                title,
+                message,
+            };
 
+            savePost(postDetails);
         }
     }
 
 	function testSubmit() {
 		if (nextEnabled) {
             if (editPost) {
-                savePost();
+                saveCurrentPost();
             } else {
                 createNewPost();
             }
@@ -142,7 +148,7 @@
                 {#if !editPost}
                     <Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{NextArrowIcon}">{locale.NEW_THREAD.CONFIRM}</Button>
                 {:else}
-                    <Button className="nextButton" disabled="{!nextEnabled}" onClick="{savePost}" icon="{SaveIcon}">{locale.EDIT_THREAD.CONFIRM}</Button>
+                    <Button className="nextButton" disabled="{!nextEnabled}" onClick="{saveCurrentPost}" icon="{SaveIcon}">{locale.EDIT_THREAD.CONFIRM}</Button>
                 {/if}
             </div>
         </div>

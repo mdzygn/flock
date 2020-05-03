@@ -198,6 +198,17 @@ export function addPost(postDetails) {
 	return newPostModel;
 }
 
+export function updatePost(post, postDetails) {
+	api.updatePost({id: post.id, details: postDetails});
+
+	Object.assign(post, postDetails);
+
+	post.lastActiveAt = (new Date()).getTime();
+	post.edited = true;
+	post.editedAt = post.lastActiveAt;
+	post.modifiedAt = post.lastActiveAt;
+}
+
 export function setLikePost(targetPost, like) {
 	if (like) {
 		api.likePost({userId: get(userId), postId: targetPost.id});

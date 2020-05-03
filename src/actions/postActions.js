@@ -1,4 +1,5 @@
 import { get } from 'svelte/store';
+import { goto } from '@sapper/app';
 
 import {
     checkLoggedIn,
@@ -8,12 +9,14 @@ import {
 
 import {
     post,
+    resetScrollRegionPosition,
 } from '../models/appModel';
 
 import {
     addPost,
     setLikePost,
     getPost,
+    updatePost,
 } from '../models/postsModel';
 
 function checkUpdatePost(targetPost) {
@@ -35,6 +38,23 @@ export function createPost(postDetails) {
         case 'threadPost':
             loadPost(postDetails.threadId, { anchorToBottom: true });
             break;
+    }
+}
+
+export function savePost(postDetails) {
+    if (!checkLoggedIn()) { return; }
+
+    const curPost = get(post);
+    if (curPost) {
+        updatePost(curPost, postDetails);
+        post.set(curPost);
+
+        if (curPost.type === 'thread') {
+            goto('posts/' + curPost.id);
+        } else {
+            goto('posts/' + curPost.threadId);
+        }
+        resetScrollRegionPosition('thread');
     }
 }
 

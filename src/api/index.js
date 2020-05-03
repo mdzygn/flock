@@ -254,6 +254,18 @@ function addPost(options) {
 	});
 }
 
+// options = { details: {} }
+function updatePost(options) {
+	options = addCredentials(options);
+	return send('updatePost', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - updatePost: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 // options = { details: { userId: id, postId: id } }
 function likePost(options) {
 	options = addCredentials(options);
@@ -315,6 +327,7 @@ const api = {
 
 	getPosts,
 	addPost,
+	updatePost,
 
 	likePost,
 	unlikePost,

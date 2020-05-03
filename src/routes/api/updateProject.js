@@ -31,9 +31,9 @@ export async function post(req, res, next) {
 				public: true,
 				archived: true,
 
-				createdAt: true,
-				lastActiveAt: true,
-				modifiedAt: true,
+				// createdAt: true,
+				// lastActiveAt: true,
+				// modifiedAt: true,
 
 				likeCount: true,
 				followCount: true,
@@ -46,7 +46,7 @@ export async function post(req, res, next) {
 				links: true,
 				team: true,
 				posts: true,
-				ownerId: true,
+				// ownerId: true,
 			};
 
 			details = filterItemDetails(details, setProjectDetailsSchema);

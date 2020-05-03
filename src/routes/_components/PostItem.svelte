@@ -282,7 +282,7 @@
 
     .postItem :global(.likeButton) {
         position: absolute;
-        right: -2px;
+        right: -5px;
         top: 8px;
         width: 30px;
         margin-right: 9px;
@@ -293,10 +293,10 @@
         margin-top: -3px;
     }
     .postItem.showReplyIcon :global(.likeButton) {
-        right: 31px;
+        right: 30px;
     }
     .postItem.showRepliesIcon :global(.likeButton) {
-        right: 46px;
+        right: 44px;
     }
 
     .count {
@@ -327,7 +327,7 @@
 
     .buttonGroup.buttonGroupOffset {
         position: absolute;
-        right: 18px;
+        right: 16px;
     }
 
     .postItem :global(.optionsButton) {

@@ -48,6 +48,9 @@
 	let titleField;
 	let messageField;
 
+	let origTitle = '';
+	let origMessage = '';
+
     loadCurrentChannel();
 
 	let editPost = false;
@@ -82,6 +85,10 @@
 				if ($post) {
 					title = ($post && $post.title) || '';
 					message = ($post && $post.message) || '';
+
+					origTitle = title;
+					origMessage = message;
+
 					getPostDraftContent();
 					postContentInitialized = true;
 				}
@@ -192,7 +199,31 @@
 				});
 			}
         }
-    }
+	}
+
+	let changesSaved = false;
+	$: {
+		if (editPost && draftId) {
+			const draftPost = getDraftPost(curPostType, draftId, editPost);
+			if (draftPost && $post) {
+				changesSaved = (
+					title !== origTitle ||
+					message !== origMessage
+				);
+			} else {
+				changesSaved = false;
+			}
+		}
+	}
+
+	function resetChanges() {
+		if (editPost && changesSaved && draftId) {
+			title = origTitle;
+			message = origMessage;
+
+			clearDraftPost(curPostType, draftId, editPost);
+		}
+	}
 
 	function testSubmit() {
 		if (nextEnabled) {
@@ -228,6 +259,12 @@
             </div> -->
 			{#if !editPost}
 				<div class="fieldNote">{@html locale.NEW_THREAD.EDIT_NOTE}</div>
+			{:else}
+				<div class="fieldNote">{@html locale.NEW_THREAD.EDITING_NOTE}
+					{#if changesSaved}
+						<div><a href="javascript:void(0)" on:click="{resetChanges}">{locale.NEW_THREAD.REST_ACTION}</a>{locale.NEW_THREAD.REST_NOTE}</div>
+					{/if}
+				</div>
 			{/if}
             <div class="actions">
                 {#if !editPost}
@@ -324,10 +361,14 @@
 	} */
 
 	.actions {
+		pointer-events: none;
 		position: relative;
 		height: 60px;
 		/* margin-top: 10px; */
 	}
+	.actions :global(.button) {
+		pointer-events: initial;
+    }
 
 	.editPostContent :global(.nextButton) {
         position: absolute;
@@ -349,12 +390,13 @@
     }
 
 	.fieldNote {
+		position: absolute;
     	font-size: 1.1rem;
     	color: #aaaaaa;
 
 		/* margin-top: -5px; */
 		padding-top: 5px;
 		padding-left: 27px;
-		margin-bottom: -10px;
+		/* margin-bottom: -10px; */
 	}
 </style>

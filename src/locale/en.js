@@ -126,6 +126,9 @@ const locale = {
 		MESSAGE: 'message',
 		CONFIRM: 'Post',
 		EDIT_NOTE: 'your draft will be saved here<br/>you can also edit later after posting',
+		EDITING_NOTE: 'the draft of your edits will be saved here',
+		REST_ACTION: 'Reset',
+		REST_NOTE: ' your changes',
 	},
 	NEW_THREAD_POST: {
 		PAGE_TITLE: 'Reply',

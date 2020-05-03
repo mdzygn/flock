@@ -230,7 +230,7 @@ export function goHome() {
 export function saveDraftPost(curPostType, draftId, editPost, draftPost) {
     const curPost = getDraftPost(curPostType, draftId, editPost, true);
 
-    console.log('saveDraftPost', curPostType, draftId, editPost, JSON.parse(JSON.stringify(curPost)));
+    // console.log('saveDraftPost', curPostType, draftId, editPost, JSON.parse(JSON.stringify(curPost)));
 
     curPost.id = draftId;
 
@@ -239,13 +239,13 @@ export function saveDraftPost(curPostType, draftId, editPost, draftPost) {
     const curDraftPosts = get(draftPosts);
     draftPosts.set(curDraftPosts);
 
-    console.log('draftPosts', curDraftPosts);
+    // ^^ console.log('draftPosts', curDraftPosts);
 
     return curPost;
 }
 
 export function getDraftPost(curPostType, draftId, editPost, create, remove) {
-    console.log('getDraftPost', curPostType, draftId, editPost);
+    // console.log('getDraftPost', curPostType, draftId, editPost);
 
     const curDraftPosts = get(draftPosts);
     if (!curDraftPosts) {
@@ -277,15 +277,15 @@ export function getDraftPost(curPostType, draftId, editPost, create, remove) {
 
     let curDraft = null;
     if (postArray) {
-        console.log('getDraftPost', [...postArray]);
+        // console.log('getDraftPost', [...postArray]);
 
         curDraft = postArray.find(match => match.id === draftId);
         if (remove) {
             postArray.splice(postArray.indexOf(curDraft), 1);
-            console.log('clear getDraftPost', [...postArray]);
+            // console.log('clear getDraftPost', [...postArray]);
 
             draftPosts.set(get(draftPosts));
-            console.log('draftPosts', curDraftPosts);
+            // ^^ console.log('draftPosts', curDraftPosts);
 
             return;
         } else {
@@ -300,7 +300,7 @@ export function getDraftPost(curPostType, draftId, editPost, create, remove) {
 }
 
 export function clearDraftPost(curPostType, draftId, editPost) {
-    console.log('clearDraftPost', curPostType, draftId, editPost);
+    // console.log('clearDraftPost', curPostType, draftId, editPost);
 
     getDraftPost(curPostType, draftId, editPost, false, true);
 }

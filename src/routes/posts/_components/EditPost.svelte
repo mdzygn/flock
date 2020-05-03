@@ -130,7 +130,7 @@
             <div class="pageTitle">{pageTitle}</div>
             {#if showTitleField}
                 <div class="field">
-                    <div class="label">{locale.NEW_THREAD.TITLE}<span class="tip">{@html locale.NEW_THREAD.TITLE_TIP}</span></div>
+                    <div class="label">{locale.NEW_THREAD.TITLE}{#if !editPost}<span class="tip">{@html locale.NEW_THREAD.TITLE_TIP}</span>{/if}</div>
                     <!-- <input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField})}" /> -->
                     <textarea class="titleField" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField, action: testSubmit, actionOnCtrl: true})}" />
                 </div>

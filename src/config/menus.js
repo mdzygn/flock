@@ -172,11 +172,11 @@ export const menus = {
                 visible: () => { return get(showBetaFeatures) },
                 disabled: true,
             },
-            {
-                label: 'Report Post',
-                visible: () => { return get(showBetaFeatures) },
-                disabled: true,
-            },
+            // {
+            //     label: 'Report Post',
+            //     visible: () => { return get(showBetaFeatures) },
+            //     disabled: true,
+            // },
         ],
     },
 }

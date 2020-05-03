@@ -1,5 +1,9 @@
 <script>
-    import { writable } from 'svelte/store';
+    import { get, writable } from 'svelte/store';
+
+    import { menuIds } from '../../config/menus';
+
+    import Button from '../../components/Button.svelte';
 
     import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
@@ -13,6 +17,7 @@
     import LikeIcon from "../../assets/icons/like.png";
     import LikeSelectedIcon from "../../assets/icons/like_selected.png";
     import ReplyIcon from "../../assets/icons/reply.png";
+	import OptionsMenuIcon from "../../assets/icons/menu.png";
 
 
 	// import NewPostButton from '../_components/NewPostButton.svelte';
@@ -21,6 +26,8 @@
 
     import {
         project,
+        userId,
+        targetPost,
     } from '../../models/appModel';
 
     import {
@@ -28,11 +35,16 @@
         checkLoggedIn,
         newThreadPost,
         showSharePostDialog,
+        showMenu,
     } from '../../actions/appActions';
 
 	import {
 		postToggleLiked,
-	} from '../../actions/postActions';
+    } from '../../actions/postActions';
+
+    import {
+        getPost,
+    } from '../../models/postsModel';
 
 
     import { getUser } from '../../models/usersModel';
@@ -43,12 +55,14 @@
 
 	$: isArchived = ($project && $project.archived) || false;
 
-    $: userId = ($post && $post.userId) || null;
+    $: postUserId = ($post && $post.userId) || null;
     $: postId = ($post && $post.id) || null;
-    $: { user = getUser(userId) };
+    $: { user = getUser(postUserId) };
     $: userLoaded = ($user && $user.name) || false;
     $: userName = ($user && $user.name) || '&nbsp;';
     $: username = ($user && $user.username && '@' + $user.username) || '';
+
+    $: canEdit = ($post && $post.userId && $post.userId === $userId) || false;
 
     $: title = ($post && $post.title) || '';
     $: message = ($post && $post.message) || '';
@@ -63,7 +77,7 @@
 
     function viewUserProfile() {
         if (userLoaded) {
-            loadProfile(userId);
+            loadProfile(postUserId);
         }
     }
 
@@ -74,7 +88,17 @@
 
 	function shareItem() {
 		showSharePostDialog(postId);
-	}
+    }
+
+    function showPostOptions() {
+        const postModel = getPost(postId);
+        if (postModel) {
+            const post = get(postModel);
+            $targetPost = post;
+
+            showMenu(menuIds.POST_OPTIONS);
+        }
+    }
 </script>
 
 <div class="threadPost">
@@ -88,6 +112,10 @@
         </Proxy>
         <Proxy image="thread_actions" className="proxyThreadActions" />
     </div> -->
+
+    {#if canEdit}
+        <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showPostOptions}"></Button>
+    {/if}
 
     <div class="info" on:click="{userLoaded ? viewUserProfile : null}">
         <div class="userName" class:button="{userLoaded}">{@html userName}</div>
@@ -166,6 +194,21 @@
 		margin-top: 5px;
         background-color: #ffffff;
     }
+
+    .threadPost :global(.optionsButton) {
+		position: absolute;
+
+    	top: 25px;
+        right: 2px;
+
+        width: 32px;
+		height: 26px;
+        padding: 8px 3px;
+	}
+    .threadPost :global(.optionsButton .icon) {
+        margin-left: 11px;
+        transform: scale(0.45, 0.45);
+	}
 
     .button {
         cursor: pointer;

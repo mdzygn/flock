@@ -203,7 +203,7 @@
     }
 </script>
 
-<div class="postItem" class:hasThumb="{!!thumbImageSrc}" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}"
+<div class="postItem" class:hasThumb="{!!thumbImageSrc}" class:button="{canLinkThrough}" class:onlyImageShown="{showFullImage && !title && !message}" on:click="{canLinkThrough ? loadCurrentPost : null}"
     class:showReplyIcon="{showReplyIcon}"
     class:showRepliesIcon="{showRepliesIcon}"
     class:showOptionsButton="{showOptionsButton}">
@@ -275,6 +275,12 @@
         top: 16px;
         height: 40px;
         width: 40px;
+    }
+    .postItem.onlyImageShown :global(.avatarIcon) {
+        top: 10px;
+        left: 19px;
+        height: 30px;
+        width: 30px;
     }
     .userName {
         padding-top: 15px;

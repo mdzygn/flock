@@ -34,6 +34,8 @@
     export let itemId;
     export let itemIndex = '';
 
+    export let containMode = false;
+
     export let className = '';
 
     let carouselShown = true;
@@ -131,7 +133,7 @@
 
 <div class="imageSelectionBox {className}" class:opened="{carouselShown}">
     {#if imageSrc}
-        <div class="imageSelectionBoxImage" style="background-image: url({imageSrc})" class:carouselShown="{carouselShown}" on:click="{toggleCarousel}" alt="project header image" />
+        <div class="imageSelectionBoxImage" class:containMode="{containMode}" style="background-image: url({imageSrc})" class:carouselShown="{carouselShown}" on:click="{toggleCarousel}" alt="project header image" />
         {#if carouselShown}
             <Button className="selectCancelButton" icon="{CancelIcon}" />
         {:else if fileIsUploading}
@@ -212,6 +214,10 @@
         background-position: center;
 
         cursor: pointer;
+    }
+    .imageSelectionBoxImage.containMode {
+		background-size: contain;
+		background-repeat: no-repeat;
     }
 
     .carouselContainer {

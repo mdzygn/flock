@@ -1,5 +1,6 @@
 <script>
     import { get, writable } from 'svelte/store';
+    import { tick } from 'svelte';
 
     import { menuIds } from '../../config/menus';
 
@@ -22,6 +23,8 @@
     import ReplyIcon from "../../assets/icons/reply.png";
 	import OptionsMenuIcon from "../../assets/icons/menu.png";
 
+    import PlaceholderImage from "../../assets/images/postPlaceholder.png";
+
 
 	// import NewPostButton from '../_components/NewPostButton.svelte';
 
@@ -31,6 +34,7 @@
         project,
         userId,
         targetPost,
+		getHeaderImage,
     } from '../../models/appModel';
 
     import {
@@ -74,12 +78,28 @@
 
     $: title = ($post && $post.title) || '';
     $: message = ($post && $post.message) || '';
+    $: image = ($post && $post.image) || '';
     $: createdAt = ($post && $post.createdAt) || '';
 
     $: dateString = (createdAt && getDateString(createdAt, 'ddd d MMM') + ' at ' + getDateString(createdAt, 'h:mmtt')) || '&nbsp;';
 
     $: titleHTML = parseHTML(title);
     $: messageHTML = parseHTML(message);
+
+    let currentImageSrc = PlaceholderImage;
+    $: {
+        image;
+
+        (async () => {
+            await tick();
+            currentImageSrc = PlaceholderImage;
+
+            await tick();
+            setTimeout(() => { // ensure allowing placeholder to resize - tick doesn't seem to be enough
+                currentImageSrc = getHeaderImage(image);
+            }, 0);
+        })();
+    }
 
     const date = ''; //'5 Jan at 4:23pm';
 
@@ -139,6 +159,9 @@
             <div class="message">{@html messageHTML}</div>
         {/if}
     </div>
+    {#if image}
+        <img class="postImage" src="{currentImageSrc}" alt="post image" />
+    {/if}
 
     <!-- <Proxy image="thread_actions" className="proxyThreadActions proxyOverlay" /> -->
 
@@ -255,8 +278,10 @@
 
     .postContent {
         padding-top: 95px;
-        padding-left: 26px;
-        padding-right: 40px;
+        padding-left: 23px;
+        padding-right: 23px;
+        /* padding-left: 26px;
+        padding-right: 40px; */
         padding-bottom: 22px;
     }
 
@@ -302,6 +327,11 @@
 
         user-select: text;
     }
+
+	.postImage {
+		width: 100%;
+        background-color: #dedede;
+	}
 
     .threadPost :global(.actionBar ) {
         position: relative;

@@ -26,6 +26,7 @@ export async function post(req, res, next) {
 
 			title: true,
 			message: true,
+			image: true,
 		};
 
 		details = filterItemDetails(details, postDetails);

@@ -21,6 +21,7 @@ export async function post(req, res, next) {
 			const setPostDetailsSchema = {
                 title: true,
                 message: true,
+				image: true,
 			};
 
 			details = filterItemDetails(details, setPostDetailsSchema);

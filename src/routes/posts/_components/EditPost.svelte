@@ -18,6 +18,8 @@
 
     import NextArrowIcon from "../../../assets/icons/next_arrow.png";
 	import SaveIcon from "../../../assets/icons/save.png";
+	import AddImageIcon from "../../../assets/icons/add_small.png";
+	import RemoveImageIcon from "../../../assets/icons/clear.png";
 
 	import {
 		channel,
@@ -42,16 +44,27 @@
         savePost,
 	} from '../../../actions/postActions';
 
+	import {
+        getNewPostId,
+	} from '../../../models/postsModel';
+
 	import { loadChannels } from '../../../models/channelsModel';
 
 	let title = '';
 	let message = '';
+	let image = null;
 
 	let titleField;
 	let messageField;
 
 	let origTitle = '';
 	let origMessage = '';
+	let origImage = null;
+
+	let addingImage = false;
+	let imageIsUploading = false;
+
+	let newPostId = getNewPostId();
 
     loadCurrentChannel();
 
@@ -65,6 +78,8 @@
 		}
 	}
 
+	$: curPostId = editPost ? $postId : newPostId;
+
     $: nextEnabled = title || message;
 
 	$: curPostType = (editPost && $post) ? $post.type : $postType;
@@ -72,6 +87,8 @@
 	$: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : $postId)) || null;
 
 	$: showTitleField = (curPostType === 'thread');
+
+	$: showImageOption = (curPostType === 'thread');
 
 	$: pageTitle = (curPostType === 'thread') ? (
         editPost ? locale.EDIT_THREAD.PAGE_TITLE : locale.NEW_THREAD.PAGE_TITLE
@@ -87,11 +104,13 @@
 				if ($post) {
 					title = ($post && $post.title) || '';
 					message = ($post && $post.message) || '';
+					image = ($post && $post.image) || '';
 
 					message = getFormattedText(message);
 
 					origTitle = title;
 					origMessage = message;
+					origImage = image;
 
 					getPostDraftContent();
 					postContentInitialized = true;
@@ -111,17 +130,23 @@
 			const draftPost = {
 				title,
 				message,
+				image,
 			};
+			if (!editPost) {
+				draftPost.itemId = newPostId;
+			}
 			const curDraftPost = getDraftPost(curPostType, draftId, editPost);
 			if (editPost) {
 				if ($post) {
 					if (curDraftPost || (
 						!strCompare(title, origTitle) ||
-						!strCompare(message, origMessage)
+						!strCompare(message, origMessage) ||
+						image !== origImage
 					)) {
 						if (
 							strCompare(title, origTitle) &&
-							strCompare(message, origMessage)
+							strCompare(message, origMessage) &&
+							image === origImage
 						) {
 							clearDraftPost(curPostType, draftId, editPost);
 						} else {
@@ -130,8 +155,8 @@
 					}
 				}
 			} else {
-				if (curDraftPost || title || message) {
-					if (!(title || message)) {
+				if (curDraftPost || title || message || image) {
+					if (!(title || message || image)) {
 						clearDraftPost(curPostType, draftId, editPost);
 					} else {
 						saveDraftPost(curPostType, draftId, editPost, draftPost);
@@ -141,12 +166,19 @@
 		}
 	}
 
-	function getPostDraftContent() {
+	async function getPostDraftContent() {
 		if (draftId) {
 			const draftPost = getDraftPost(curPostType, draftId, editPost);
 			if (draftPost) {
+				await tick();
+
 				title = draftPost.title || '';
 				message = draftPost.message || '';
+				image = draftPost.image || null;
+
+				if (draftPost.itemId) {
+					newPostId = draftPost.itemId;
+				}
 			}
 		}
 		return null;
@@ -164,7 +196,9 @@
 	function createNewPost() {
 		if (!editPost && $postType) {
 			const postDetails = {
+				id: newPostId,
 				message: getUnformattedText(message),
+				image,
 				type: $postType,
 				channelId: $channel && $channel.id,
 				projectId: $channel && $channel.projectId,
@@ -178,7 +212,7 @@
 					break;
 			}
 			createPost(postDetails).then((result) => {
-				console.log('create post result', result);
+				// console.log('create post result', result);
 				if (result && result.success) {
 					clearDraftPost(curPostType, draftId, editPost);
 				}
@@ -196,11 +230,14 @@
 					postDetails.title = title;
 					break;
 			}
+			if (image !== origImage) {
+				postDetails.image = image;
+			}
 
 			const result = savePost(postDetails);
 			if (result) {
 				result.then((result) => {
-					console.log('save post result', result);
+					// console.log('save post result', result);
 					if (result && result.success) {
 						clearDraftPost(curPostType, draftId, editPost);
 					}
@@ -243,6 +280,15 @@
             }
 		}
 	}
+
+	function addImage() {
+		addingImage = true;
+	}
+
+	function removeImage() {
+		addingImage = false;
+		image = null;
+	}
 </script>
 
 {#if !editPost || $post }
@@ -262,10 +308,22 @@
                 <textarea bind:value="{message}" bind:this="{messageField}" on:keypress="{e => testInputDefocus(e, {action: testSubmit, actionOnCtrl: true})}" />
                 <!-- on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" -->
             </div>
-            <!-- <div class="field headerImageField">
-                <div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
-                <ImageSelectionBox bind:image />
-            </div> -->
+
+			{#if showImageOption}
+				{#if image || addingImage}
+					<div class="imageField">
+						<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
+					</div>
+					<div class="field headerImageField">
+						<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" uploadType="post" itemId="{curPostId}" />
+					</div>
+				{:else}
+					<div class="imageField">
+						<Button className="addImage" icon="{AddImageIcon}" onClick="{addImage}">{locale.NEW_THREAD.ADD_IMAGE}</Button>
+					</div>
+				{/if}
+			{/if}
+
 			{#if !editPost}
 				<div class="fieldNote">{@html locale.NEW_THREAD.EDIT_NOTE}</div>
 			{:else}
@@ -355,20 +413,6 @@
 		/* height: 52px; */
 	}
 
-	/* .headerImageField {
-    	padding: 0;
-	}
-
-	.headerImageLabel {
-    	padding-left: 25px;
-    	padding-right: 21px;
-	}
-
-	.headerImageField :global(.imageSelectionBox) {
-		height: 220px;
-    	margin-top: 10px;
-	} */
-
 	.actions {
 		pointer-events: none;
 		position: relative;
@@ -408,4 +452,44 @@
 		padding-left: 27px;
 		/* margin-bottom: -10px; */
 	}
+
+	.imageField {
+		position: relative;
+		height: 40px;
+	}
+	.editPostContent :global(.detailImageSelector) {
+		margin-top: 20px;
+	}
+
+	.headerImageField {
+    	padding: 0;
+		padding-bottom: 10px;
+    	margin-top: -15px;
+	}
+
+	.headerImageField :global(.imageSelectionBox) {
+    	margin-top: 10px;
+	}
+
+	.editPostContent :global(.addImage) {
+		position: absolute;
+    	top: -4px;
+		right: 5px;
+
+		padding: 10px;
+		padding-right: 45px;
+		padding-left: 13px;
+
+		font-size: 1.2rem;
+		font-weight: 700;
+    }
+    .editPostContent :global(.addImage .icon) {
+    	padding-left: 14px;
+		margin-top: -1px;
+    }
+    .editPostContent :global(.addImage.removeImage .icon) {
+		transform: scale(0.4, 0.4);
+		opacity: 0.6;
+    	padding-left: 24px;
+    }
 </style>

@@ -129,6 +129,8 @@ const locale = {
 		EDITING_NOTE: 'your draft edits will be saved here',
 		REST_ACTION: 'Reset',
 		REST_NOTE: ' your changes',
+		ADD_IMAGE: 'add image',
+		REMOVE_IMAGE: 'remove image',
 	},
 	NEW_THREAD_POST: {
 		PAGE_TITLE: 'Reply',

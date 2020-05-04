@@ -161,16 +161,17 @@ export function getPost(postId) {
 }
 
 export function addPost(postDetails) {
-    let postId, trialIndex;
-	do { postId = generateId(); } while (getPost(postId) && trialIndex < 99);
-	if (trialIndex === 99) { return null; }
+    // let postId, trialIndex;
+	// do { postId = generateId(); } while (getPost(postId) && trialIndex < 99);
+	// if (trialIndex === 99) { return null; }
 
 	const newPostModel = PostModel();
 	const newPost = get(newPostModel);
 
 	const ownerId = get(userId);
 
-	newPost.id = postId;
+	// newPost.id = postId;
+	newPost.id = postDetails.id;
 
 	newPost.type = postDetails.type;
 
@@ -180,6 +181,10 @@ export function addPost(postDetails) {
 
 	newPost.title = postDetails.title || '';
 	newPost.message = postDetails.message || '';
+
+	if (postDetails.image) {
+		newPost.image = postDetails.image;
+	}
 
 	newPost.userId = ownerId;
 
@@ -239,4 +244,11 @@ export function setLikePost(targetPost, like) {
 		curUserDetails.likesCount = curUserDetails.likesCount + (like ? 1 : -1);
 		user.set(curUserDetails);
 	}
+}
+
+export function getNewPostId() {
+    let postId, trialIndex;
+	do { postId = generateId(); } while (getPost(postId) && trialIndex < 99);
+	if (trialIndex === 99) { return null; }
+	return postId;
 }

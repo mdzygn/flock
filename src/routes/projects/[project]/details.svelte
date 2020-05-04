@@ -16,6 +16,7 @@
 	import ImageSelectionBox from '../../_components/ImageSelectionBox.svelte';
 
 	import AddImageIcon from "../../../assets/icons/add_small.png";
+	import RemoveImageIcon from "../../../assets/icons/clear.png";
     import CancelIcon from "../../../assets/icons/cancel.png";
 	import SaveIcon from "../../../assets/icons/save.png";
 
@@ -259,7 +260,7 @@
 
 			{#if detailImage1 || addingDetailImage[0]}
 				<div class="imageField">
-					<Button className="addImage" onClick="{() => removeImage(0) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
+					<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{() => removeImage(0) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 				</div>
 				<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage1}" bind:fileIsUploading="{detail1ImageIsUploading}" itemIndex="1" uploadType="projectDetail" itemId="{$projectId}" />
 			{:else}
@@ -474,7 +475,11 @@
     	padding-left: 14px;
 		margin-top: -1px;
     }
-
+    .content :global(.addImage.removeImage .icon) {
+		transform: scale(0.4, 0.4);
+		opacity: 0.6;
+    	padding-left: 24px;
+    }
 
 	.actions {
 		position: relative;

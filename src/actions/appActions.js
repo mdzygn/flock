@@ -2,6 +2,7 @@ import api from '../api';
 
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
+import { tick } from 'svelte';
 
 import { copyToClipboard } from '../utils';
 
@@ -92,7 +93,6 @@ import {
 
     showBetaFeatures,
 } from '../models/appModel';
-import { tick } from 'svelte';
 
 export function loadProject(targetProjectId, options) {
     const path = get(curPath);

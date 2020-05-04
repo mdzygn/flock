@@ -54,6 +54,8 @@
 
     export let type = 'thread';
 
+    let showFullImage = false;
+
     // export let type = 'thread';
 
     let user = writable([]);
@@ -179,6 +181,10 @@
             showMenu(menuIds.POST_OPTIONS);
         }
     }
+
+    function toggleFullImage() {
+        showFullImage = !showFullImage;
+    }
 </script>
 
 <div class="postItem" class:hasThumb="{!!thumbImageSrc}" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}"
@@ -228,7 +234,7 @@
         {/if}
     </div>
     {#if image}
-        <div class="postImageContainer">
+        <div class="postImageContainer button" on:click="{toggleFullImage}" class:showFullImage="{showFullImage}">
             <img class="postImage" src="{imageSrc}" alt="{title || 'post image'}" />
         </div>
     {/if}
@@ -358,6 +364,10 @@
         padding-bottom: 4px;
         margin-top: -4px;
 	}
+    .postImageContainer.showFullImage {
+        padding-left: 0;
+        padding-right: 0;
+    }
 	.postImage {
 		width: 100%;
         background-color: #dedede;

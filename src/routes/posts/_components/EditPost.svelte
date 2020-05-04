@@ -80,7 +80,7 @@
 
 	$: curPostId = editPost ? $postId : newPostId;
 
-    $: nextEnabled = title || message;
+    $: nextEnabled = (title || message) && !imageIsUploading;
 
 	$: curPostType = (editPost && $post) ? $post.type : $postType;
 

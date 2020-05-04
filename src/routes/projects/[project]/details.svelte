@@ -43,7 +43,8 @@
 	let remainingChars;
 	$: charCountLow = (remainingChars !== '') && remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
 
-	$: saveEnabled = !editingProject || (title && description && !imageIsUploading);
+	$: saveEnabled = (!$editingProject || (title && description)) && !imageIsUploading;
+	// $: saveEnabled = (!editingProject || (title && description)) && !imageIsUploading;
 
 	let detail1 = '';
 	let detail2 = '';

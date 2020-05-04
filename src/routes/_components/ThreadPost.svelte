@@ -331,6 +331,7 @@
 	.postImage {
 		width: 100%;
         background-color: #dedede;
+        margin-bottom: 8px;
 	}
 
     .threadPost :global(.actionBar ) {

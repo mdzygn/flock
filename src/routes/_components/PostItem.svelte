@@ -30,6 +30,7 @@
         project,
         userId,
         targetPost,
+		getHeaderImage,
     } from '../../models/appModel';
 
 	import {
@@ -66,6 +67,10 @@
 
     $: title = ($post && $post.title) || null;
     $: message = ($post && $post.message) || null;
+    $: image = ($post && $post.image) || null;
+
+    $: thumbImage = image && getHeaderImage(image, true);
+
     $: liked = ($post && $post.liked) || false;
 
     $: canEdit = ($post && $post.userId && $post.userId === $userId) || false;
@@ -154,7 +159,7 @@
     }
 </script>
 
-<div class="postItem" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}"
+<div class="postItem" class:hasThumb="{!!thumbImage}" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}"
     class:showReplyIcon="{showReplyIcon}"
     class:showRepliesIcon="{showRepliesIcon}"
     class:showOptionsButton="{showOptionsButton}">
@@ -184,12 +189,15 @@
             <div class="optionsIcon" style="background-image: url({OptionsMenuIcon})"/>
         </Button>
     {/if}
+    {#if thumbImage}
+        <img class="thumb" src="{thumbImage}" alt="{title || 'thumbnail'}" />
+    {/if}
+    <div class="userName" class:selectable="{textSelectable}">
+        <span div="userNameLabel" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userNameString}</span>
+        {#if dateString}<span class="date">{#if userName} - {/if}{dateString}</span>{/if}
+        {#if showEdited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}
+    </div>
     <div class="info">
-        <div class="userName" class:selectable="{textSelectable}">
-            <span div="userNameLabel" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userNameString}</span>
-            {#if dateString}<span class="date">{#if userName} - {/if}{dateString}</span>{/if}
-            {#if showEdited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}
-        </div>
         {#if showTitle && title}
             <div class="title">{@html titleHTML}</div>
         {/if}
@@ -219,10 +227,31 @@
         height: 40px;
         width: 40px;
     }
-    .info {
-        padding: 15px;
+    .userName {
+        padding-top: 15px;
         padding-left: 66px;
         padding-right: 20px;
+    }
+    .info {
+        /* padding: 15px; */
+        padding-bottom: 15px;
+        padding-left: 66px;
+        padding-right: 20px;
+    }
+
+    .hasThumb .info {
+        padding-left: 117px;
+    }
+
+    .thumb {
+        position: absolute;
+        left: 65px;
+        top: 39px;
+
+        width: 42px;
+        height: 42px;
+        object-fit: cover;
+        border: 1px solid #D9D9D9;
     }
 
     .userName {

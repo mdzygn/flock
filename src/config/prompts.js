@@ -319,6 +319,15 @@ const prompts = {
             },
         ],
     },
+    INVALID_IMAGE_TYPE_JPG_PNG: {
+        title: 'Sorry',
+        message: 'Image must be a<br/>jpeg or png file',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
 }
 
 export default prompts;

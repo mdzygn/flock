@@ -30,18 +30,22 @@ function uploadImage(options) {
         if (event && event.target && event.target.files && event.target.files.length) {
             var file = event.target.files[0];
 
-            onUploading();
+            if (imageSettings.type && file.type.includes('gif') && !imageSettings.type.includes('gif')) {
+                onError({invalidType: true});
+            } else {
+                onUploading();
 
-            const imageTools = new ImageTools();
-            imageTools.resize(file, imageSettings).then(async (imageFile) => {
-                onImageLoaded(imageFile);
+                const imageTools = new ImageTools();
+                imageTools.resize(file, imageSettings).then(async (imageFile) => {
+                    onImageLoaded(imageFile);
 
-                imageTools.resize(file, thumbSettings).then(async (thumbFile) => {
-                    getSignedRequest(imageFile, thumbFile);
+                    imageTools.resize(file, thumbSettings).then(async (thumbFile) => {
+                        getSignedRequest(imageFile, thumbFile);
+                    });
                 });
-            });
 
-            document.body.removeChild(uploadInput);
+                document.body.removeChild(uploadInput);
+            }
         }
     }
 

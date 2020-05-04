@@ -2,6 +2,7 @@
     import { tick } from 'svelte';
 
     import locale from '../../locale';
+    import promptIds from '../../config/promptIds';
 
     import config from '../../config';
 
@@ -23,6 +24,8 @@
     // import imageLibrary from '../../data/library/images/_general.json';
 
     import { getHeaderImage } from '../../models/appModel';
+    import { showPrompt } from '../../actions/appActions';
+
 
     const libraryImages = shuffle(imageLibrary);
 
@@ -35,6 +38,8 @@
     export let itemIndex = '';
 
     export let containMode = false;
+
+    export let imageType = 'image/jpeg';
 
     export let className = '';
 
@@ -101,12 +106,12 @@
             imageSettings: {
                 maxWidth: config.UPLOAD_MAX_WIDTH,
                 maxHeight: config.UPLOAD_MAX_HEIGHT,
-                type: 'image/jpeg',
+                type: imageType,
             },
             thumbSettings: {
                 maxWidth: config.UPLOAD_THUMB_MAX_WIDTH,
                 maxHeight: config.UPLOAD_THUMB_MAX_HEIGHT,
-                type: 'image/jpeg',
+                type: imageType,
             },
 
             onUploading: () => {
@@ -125,7 +130,12 @@
                 image = null;
                 fileIsUploading = false;
                 showCarousel();
-                console.error('Could not request image upload');
+
+                if (error && error.invalidType) {
+                    showPrompt(promptIds.INVALID_IMAGE_TYPE_JPG_PNG);
+                } else {
+                    console.error('Could not request image upload');
+                }
             },
         });
     }

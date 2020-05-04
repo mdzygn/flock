@@ -87,7 +87,7 @@
     $: messageHTML = parseHTML(message);
 
     let currentImageSrc = PlaceholderImage;
-    $: {
+    $: { // load placeholder to set image size
         image;
 
         (async () => {

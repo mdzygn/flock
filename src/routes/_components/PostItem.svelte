@@ -1,6 +1,7 @@
 <script>
     import { goto } from '@sapper/app';
     import { get, writable } from 'svelte/store';
+    import { tick } from 'svelte';
 
     import config from '../../config';
     import locale from '../../locale';
@@ -20,7 +21,9 @@
     import LikeSelectedIcon from "../../assets/icons/post_like_selected.png";
     import CommentIcon from "../../assets/icons/comment_small.png";
     import ReplyIcon from "../../assets/icons/reply_small.png";
-	import OptionsMenuIcon from "../../assets/icons/menu.png";
+    import OptionsMenuIcon from "../../assets/icons/menu.png";
+
+    import PlaceholderImage from "../../assets/images/postPlaceholder.png";
 
     import { parseHTML, getUnbrokenText, getDateString, getDateAge, getDateAgeString, secondsDiff } from '../../utils';
 
@@ -71,8 +74,24 @@
 
     $: useThumbImage = (type === 'thread');
 
-    $: imageSrc = image && !useThumbImage && getHeaderImage(image);
+    // $: imageSrc = image && !useThumbImage && getHeaderImage(image);
     $: thumbImageSrc = image && useThumbImage && getHeaderImage(image, true);
+
+    let imageSrc = PlaceholderImage;
+    $: { // load placeholder to set image size
+        image;
+        if (image && !useThumbImage) {
+            (async () => {
+                await tick();
+                imageSrc = PlaceholderImage;
+
+                await tick();
+                setTimeout(() => { // ensure allowing placeholder to resize - tick doesn't seem to be enough
+                    imageSrc = getHeaderImage(image);
+                }, 0);
+            })();
+        }
+    }
 
     $: liked = ($post && $post.liked) || false;
 

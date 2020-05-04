@@ -103,7 +103,7 @@
 
             var testImage = new Image();
             testImage.onload = () => {
-                if (testImage.width >= window.innerWidth) {
+                if (testImage.width >= window.innerWidth || testImage.height >= window.innerWidth * 0.9) {
                     canMaximizeImage = true;
                 }
             };

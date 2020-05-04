@@ -69,7 +69,10 @@
     $: message = ($post && $post.message) || null;
     $: image = ($post && $post.image) || null;
 
-    $: thumbImage = image && getHeaderImage(image, true);
+    $: useThumbImage = (type === 'thread');
+
+    $: imageSrc = image && !useThumbImage && getHeaderImage(image);
+    $: thumbImageSrc = image && useThumbImage && getHeaderImage(image, true);
 
     $: liked = ($post && $post.liked) || false;
 
@@ -159,7 +162,7 @@
     }
 </script>
 
-<div class="postItem" class:hasThumb="{!!thumbImage}" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}"
+<div class="postItem" class:hasThumb="{!!thumbImageSrc}" class:button="{canLinkThrough}" on:click="{canLinkThrough ? loadCurrentPost : null}"
     class:showReplyIcon="{showReplyIcon}"
     class:showRepliesIcon="{showRepliesIcon}"
     class:showOptionsButton="{showOptionsButton}">
@@ -189,8 +192,8 @@
             <div class="optionsIcon" style="background-image: url({OptionsMenuIcon})"/>
         </Button>
     {/if}
-    {#if thumbImage}
-        <img class="thumb" src="{thumbImage}" alt="{title || 'thumbnail'}" />
+    {#if thumbImageSrc}
+        <img class="thumb" src="{thumbImageSrc}" alt="{title || 'thumbnail'}" />
     {/if}
     <div class="userName" class:selectable="{textSelectable}">
         <span div="userNameLabel" class:button="{linkUserName && userLoaded}" on:click="{linkUserName && userLoaded ? viewUserProfile : null}">{@html userNameString}</span>
@@ -205,6 +208,11 @@
             <div class="message" class:selectable="{textSelectable}" class:messageLimited="{messageLimited}">{@html  messageHTML}</div>
         {/if}
     </div>
+    {#if image}
+        <div class="postImageContainer">
+            <img class="postImage" src="{imageSrc}" alt="{title || 'post image'}" />
+        </div>
+    {/if}
 </div>
 
 <style>
@@ -324,6 +332,18 @@
     .selectable {
         user-select: text;
     }
+
+	.postImageContainer {
+        padding-left: 66px;
+        padding-right: 43px;
+        padding-bottom: 4px;
+        margin-top: -4px;
+	}
+	.postImage {
+		width: 100%;
+        background-color: #dedede;
+        margin-bottom: 8px;
+	}
 
     /* .message.compressedMargin {
         padding-right: 32px;

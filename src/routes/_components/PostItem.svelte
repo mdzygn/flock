@@ -361,7 +361,7 @@
 	.postImageContainer {
         padding-left: 66px;
         padding-right: 43px;
-        padding-bottom: 4px;
+        padding-bottom: 6px;
         margin-top: -4px;
 	}
     .postImageContainer.showFullImage {

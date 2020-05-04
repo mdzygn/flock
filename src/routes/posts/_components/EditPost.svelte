@@ -253,7 +253,8 @@
 			if (draftPost && $post) {
 				changesSaved = (
 					!strCompare(title, origTitle) ||
-					!strCompare(message, origMessage)
+					!strCompare(message, origMessage) ||
+					image !== origImage
 				);
 			} else {
 				changesSaved = false;
@@ -266,6 +267,7 @@
 		if (editPost && changesSaved && draftId) {
 			title = origTitle;
 			message = origMessage;
+			image = origImage;
 
 			clearDraftPost(curPostType, draftId, editPost);
 		}

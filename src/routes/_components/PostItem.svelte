@@ -249,7 +249,7 @@
             <div class="message" class:selectable="{textSelectable}" class:messageLimited="{messageLimited}">{@html  messageHTML}</div>
         {/if}
     </div>
-    {#if image}
+    {#if image && !useThumbImage}
         <div class="postImageContainer" class:button="{canMaximizeImage}" on:click="{canMaximizeImage ? toggleFullImage : null}" class:showFullImage="{showFullImage}">
             <img class="postImage" src="{imageSrc}" alt="{title || 'post image'}" />
         </div>
@@ -386,7 +386,11 @@
     }
 	.postImage {
         max-width: 100%;
+        max-height: 80vw;
         margin-bottom: 8px;
+	}
+	.postImageContainer.showFullImage .postImage {
+        max-height: initial;
 	}
 
     /* .message.compressedMargin {

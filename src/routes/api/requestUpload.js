@@ -1,7 +1,7 @@
 import { response, errorResponse } from '../../server/mongo.js';
 
 const aws = require('aws-sdk');
-// const path = require('path');
+const path = require('path');
 
 aws.config.region = 'us-west-2';
 // aws.config.accessKeyId = process.env.AWS_CONTENT_ACCESS_KEY_ID;
@@ -10,8 +10,8 @@ aws.config.region = 'us-west-2';
 
 const S3_BUCKET = process.env.S3_CONTENT_BUCKET;
 
-const fileType= 'image/jpeg';
-const fileExtension = '.jpg';
+// const fileType= 'image/jpeg';
+// const fileExtension = '.jpg';
 
 export async function post(req, res, next) {
 	const s3 = new aws.S3();
@@ -25,8 +25,12 @@ export async function post(req, res, next) {
 	const itemId = options.itemId;
 	const itemIndex = options.itemIndex;
 
+	const fileName = options.fileName;
+	const fileType = options.fileType;
+
 	// const fileName = req.query['file-name'];
 	// const fileType = req.query['file-type'];
+
 	// const uploadType = req.query['upload-type'];
 	// const itemId = req.query['item-id'];
 	// const itemIndex = req.query['item-index'];
@@ -63,10 +67,11 @@ export async function post(req, res, next) {
 		errorResponse(res, {}, {errorMsg: 'invalid upload-type'});
 	}
 
-	// const extension = path.extname(fileName);
+	const extension = path.extname(fileName);
+	// const extension = fileExtension;
 
 	newItemThumbFilename = newItemFilename + '-thumb';
-	newItemFilename += fileExtension; // extension;
+	newItemFilename += extension;
 
 	const s3Params = {
 		Bucket: S3_BUCKET,
@@ -78,7 +83,7 @@ export async function post(req, res, next) {
 	let s3ThumbParams;
 
 	if (newItemThumbFilename) {
-		newItemThumbFilename += fileExtension; // extension;
+		newItemThumbFilename += extension; // extension;
 
 		s3ThumbParams = {
 			Bucket: S3_BUCKET,

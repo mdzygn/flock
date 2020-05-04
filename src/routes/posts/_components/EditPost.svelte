@@ -317,7 +317,7 @@
 						<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
 					</div>
 					<div class="field headerImageField">
-						<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" uploadType="post" itemId="{curPostId}" />
+						<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" imageType="{null}" uploadType="post" itemId="{curPostId}" />
 					</div>
 				{:else}
 					<div class="imageField">

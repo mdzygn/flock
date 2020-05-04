@@ -59,6 +59,8 @@ function uploadImage(options) {
             uploadType,
             itemId,
             itemIndex,
+            fileName: imageFile.name,
+            fileType: imageFile.type,
         };
 
         api.requestUpload(options).then((response) => {

@@ -89,6 +89,7 @@
 	$: showTitleField = (curPostType === 'thread');
 
 	$: imageType = (curPostType === 'thread') ? 'image/jpeg' : null;
+	$: useLibrary = (curPostType === 'thread') ? true : false;
 
 	$: showImageOption = true; // (curPostType === 'thread');
 
@@ -319,7 +320,7 @@
 						<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
 					</div>
 					<div class="field headerImageField">
-						<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" imageType="{imageType}" uploadType="post" itemId="{curPostId}" />
+						<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" />
 					</div>
 				{:else}
 					<div class="imageField">

@@ -40,6 +40,7 @@
     export let containMode = false;
 
     export let imageType = 'image/jpeg';
+    export let useLibrary = true;
 
     export let className = '';
 
@@ -141,7 +142,7 @@
     }
 </script>
 
-<div class="imageSelectionBox {className}" class:opened="{carouselShown}">
+<div class="imageSelectionBox {className}" class:opened="{carouselShown && useLibrary}" class:noLibrary="{!useLibrary}">
     {#if imageSrc}
         <div class="imageSelectionBoxImage" class:containMode="{containMode}" style="background-image: url({imageSrc})" class:carouselShown="{carouselShown}" on:click="{toggleCarousel}" alt="project header image" />
         {#if carouselShown}
@@ -150,21 +151,23 @@
             <div class="uploadingIndicator">uploading image...</div>
         {/if}
     {/if}
-    <div class="carouselContainer" class:hidden="{!carouselShown}">
-        <SearchBar bind:searchString={imageLibrarySearchString} />
-        <ImageCarousel
-            images="{libraryImages}"
-            imageBasePath="{config.SITE_CONTENT_URL + config.headerImageLibraryThumbFolder}"
-            imageExtension="{config.headerImageExtension}"
-            bind:image="{image}"
-            searchString="{imageLibrarySearchString}"
-            {contextSearchString}
-            on:select="{selectImage}" />
-        <Button className="uploadButton" onClick="{uploadHeaderImage}">
-            <div class="uploadButtonIcon" style="background-image: url({UploadImageIcon})"/>
-            <div class="buttonLabel">{locale.GENERAL.UPLOAD_IMAGE}</div>
-        </Button>
-    </div>
+        <div class="carouselContainer" class:hidden="{!carouselShown}">
+            {#if useLibrary}
+                <SearchBar bind:searchString={imageLibrarySearchString} />
+                <ImageCarousel
+                    images="{libraryImages}"
+                    imageBasePath="{config.SITE_CONTENT_URL + config.headerImageLibraryThumbFolder}"
+                    imageExtension="{config.headerImageExtension}"
+                    bind:image="{image}"
+                    searchString="{imageLibrarySearchString}"
+                    {contextSearchString}
+                    on:select="{selectImage}" />
+            {/if}
+            <Button className="uploadButton" onClick="{uploadHeaderImage}">
+                <div class="uploadButtonIcon" style="background-image: url({UploadImageIcon})"/>
+                <div class="buttonLabel">{locale.GENERAL.UPLOAD_IMAGE}</div>
+            </Button>
+        </div>
 </div>
 
 <style>
@@ -291,6 +294,10 @@
         box-sizing: border-box;
 
         pointer-events: all;
+    }
+    .imageSelectionBox.noLibrary :global(.uploadButton) {
+        top: 50%;
+        margin-top: -37.5px;
     }
     .imageSelectionBox :global(.uploadButton .buttonContent) {
         width: 100%;

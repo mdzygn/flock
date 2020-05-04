@@ -95,6 +95,22 @@
         }
     }
 
+    let canMaximizeImage = false;
+    let initializedCanMaximizeImage = false;
+    $: {
+        if (image && imageSrc && imageSrc !== PlaceholderImage) {
+            initializedCanMaximizeImage = true;
+
+            var testImage = new Image();
+            testImage.onload = () => {
+                if (testImage.width >= window.innerWidth) {
+                    canMaximizeImage = true;
+                }
+            };
+            testImage.src = imageSrc;
+        }
+    }
+
     $: liked = ($post && $post.liked) || false;
 
     $: canEdit = ($post && $post.userId && $post.userId === $userId) || false;
@@ -234,7 +250,7 @@
         {/if}
     </div>
     {#if image}
-        <div class="postImageContainer button" on:click="{toggleFullImage}" class:showFullImage="{showFullImage}">
+        <div class="postImageContainer" class:button="{canMaximizeImage}" on:click="{canMaximizeImage ? toggleFullImage : null}" class:showFullImage="{showFullImage}">
             <img class="postImage" src="{imageSrc}" alt="{title || 'post image'}" />
         </div>
     {/if}

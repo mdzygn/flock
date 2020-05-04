@@ -59,7 +59,6 @@ function uploadImage(options) {
             uploadType,
             itemId,
             itemIndex,
-            fileName: imageFile.name,
             fileType: imageFile.type,
         };
 

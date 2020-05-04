@@ -369,8 +369,7 @@
         padding-right: 0;
     }
 	.postImage {
-		width: 100%;
-        background-color: #dedede;
+        max-width: 100%;
         margin-bottom: 8px;
 	}
 

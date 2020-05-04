@@ -11,7 +11,6 @@ aws.config.region = 'us-west-2';
 const S3_BUCKET = process.env.S3_CONTENT_BUCKET;
 
 // const fileType= 'image/jpeg';
-// const fileExtension = '.jpg';
 
 export async function post(req, res, next) {
 	const s3 = new aws.S3();
@@ -25,8 +24,23 @@ export async function post(req, res, next) {
 	const itemId = options.itemId;
 	const itemIndex = options.itemIndex;
 
-	const fileName = options.fileName;
 	const fileType = options.fileType;
+
+	let fileExtension;
+	switch (fileType) {
+		case 'image/jpeg':
+			fileExtension = '.jpg';
+			break;
+		case 'image/gif':
+			fileExtension = '.gif';
+			break;
+		case 'image/png':
+			fileExtension = '.png';
+			break;
+		default:
+			errorResponse(res, {}, {errorMsg: 'invalid file-type'});
+			return;
+	}
 
 	// const fileName = req.query['file-name'];
 	// const fileType = req.query['file-type'];
@@ -45,11 +59,15 @@ export async function post(req, res, next) {
 	let newItemFilename = itemId;
 	let newItemThumbFilename = null;
 
+	let allowedFileType = null;
+
 	if (uploadType === 'projectHeader') {
+		allowedFileType = 'image/jpeg';
 		folder = 'projects/';
 		newItemFilename += '-header';
 		// newItemThumbFilename = newItemFilename + '-thumb';
 	} else if (uploadType === 'projectDetail') {
+		allowedFileType = 'image/jpeg';
 		folder = 'projects/';
 		newItemFilename += '-detail-' + itemIndex;
 	} else if (uploadType === 'userProfile') {
@@ -57,6 +75,7 @@ export async function post(req, res, next) {
 		newItemFilename += '-profile';
 		// newItemThumbFilename = newItemFilename + '-thumb';
 	} else if (uploadType === 'userCover') {
+		allowedFileType = 'image/jpeg';
 		folder = 'users/';
 		newItemFilename += '-cover';
 	} else if (uploadType === 'post') {
@@ -65,10 +84,16 @@ export async function post(req, res, next) {
 		folder = 'messages/';
 	} else {
 		errorResponse(res, {}, {errorMsg: 'invalid upload-type'});
+		return;
 	}
 
-	const extension = path.extname(fileName);
-	// const extension = fileExtension;
+	if (allowedFileType && fileType !== allowedFileType) {
+		errorResponse(res, {}, {errorMsg: 'invalid file-type'});
+		return;
+	}
+
+	// const extension = path.extname(fileName);
+	const extension = fileExtension;
 
 	newItemThumbFilename = newItemFilename + '-thumb';
 	newItemFilename += extension;
@@ -100,6 +125,7 @@ export async function post(req, res, next) {
 		if (err) {
 			console.log('putObject error', err);
 			errorResponse(res, {}, {errorMsg: 'image putObject error'});
+			return;
 		}
 
 		const returnData = {
@@ -112,6 +138,7 @@ export async function post(req, res, next) {
 				if (err) {
 					console.log('putObject error', err);
 					errorResponse(res, {}, {errorMsg: 'image thumb putObject error'});
+					return;
 				}
 
 				returnData.thumbSignedRequest = data,

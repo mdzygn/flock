@@ -241,6 +241,7 @@
 
     .hasThumb .info {
         padding-left: 117px;
+        min-height: 42px;
     }
 
     .thumb {

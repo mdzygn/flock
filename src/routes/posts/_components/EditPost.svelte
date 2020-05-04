@@ -88,7 +88,7 @@
 
 	$: showTitleField = (curPostType === 'thread');
 
-	$: showImageOption = (curPostType === 'thread');
+	$: showImageOption = true; // (curPostType === 'thread');
 
 	$: pageTitle = (curPostType === 'thread') ? (
         editPost ? locale.EDIT_THREAD.PAGE_TITLE : locale.NEW_THREAD.PAGE_TITLE

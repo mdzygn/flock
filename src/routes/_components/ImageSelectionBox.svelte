@@ -61,6 +61,20 @@
         }
     }
 
+    let autoUploadTriggered = false;
+    $: {
+        if (!useLibrary) {
+            if (carouselShown) {
+                if (!autoUploadTriggered) {
+                    autoUploadTriggered = true;
+                    uploadHeaderImage();
+                }
+            } else {
+                autoUploadTriggered = false;
+            }
+        }
+    }
+
     let imageSrc = null;
     $: {
         if (!fileIsUploading && typeof image === 'string') {

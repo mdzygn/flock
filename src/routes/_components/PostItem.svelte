@@ -277,7 +277,7 @@
         width: 40px;
     }
     .postItem.onlyImageShown :global(.avatarIcon) {
-        top: 10px;
+        top: 11px;
         left: 19px;
         height: 30px;
         width: 30px;

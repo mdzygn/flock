@@ -47,9 +47,13 @@ function uploadImage(options) {
                         } else {
                             onImageLoaded(imageFile);
 
-                            imageTools.resize(file, thumbSettings).then(async (thumbFile) => {
-                                getSignedRequest(imageFile, thumbFile);
-                            });
+                            if (!file.type.includes('gif')) { // create thumbs for gifs
+                                imageTools.resize(file, thumbSettings).then(async (thumbFile) => {
+                                    getSignedRequest(imageFile, thumbFile);
+                                });
+                            } else {
+                                getSignedRequest(imageFile);
+                            }
                         }
                     } else {
                         onError({invalidType: true});

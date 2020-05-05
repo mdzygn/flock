@@ -296,7 +296,7 @@ function requestUpload(options) {
 	options = addCredentials(options);
 	return send('requestUpload', options).then(result => {
 		if (DEBUG && result && result.error) {
-			console.error('API Error - unlikePost: ', result);
+			console.error('API Error - requestUpload: ', result);
 		}
 		return result;
 		// return Promise.reject(error); // TODO: prevent followups being called

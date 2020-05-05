@@ -67,7 +67,7 @@ export async function post(req, res, next) {
 		newItemFilename += '-header';
 		// newItemThumbFilename = newItemFilename + '-thumb';
 	} else if (uploadType === 'projectDetail') {
-		allowedFileType = 'image/jpeg';
+		// allowedFileType = 'image/jpeg';
 		folder = 'projects/';
 		newItemFilename += '-detail-' + itemIndex;
 	} else if (uploadType === 'userProfile') {

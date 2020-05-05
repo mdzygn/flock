@@ -123,7 +123,10 @@
 			if (typeof window !== 'undefined') {
 				window.setTimeout(() => {
 					scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
-				}, 300);
+				}, 250);
+				window.setTimeout(() => {
+					scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+				}, 500);
 			}
 
 			scrollRegion.scrollTo(0, scrollRegion.scrollHeight);

@@ -224,7 +224,8 @@ export function updatePost(post, postDetails) {
 
 	savingPostId.set(post.id); // need to keep saving post so doesn't override on load
 	savingPost.set(true);
-	const result = api.updatePost({id: post.id, details: postDetails}).then(() => {
+	const result = api.updatePost({id: post.id, details: postDetails});
+	result.then(() => {
 		savingPost.set(false);
 		return result;
 	});

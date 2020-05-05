@@ -140,7 +140,7 @@
 	</ScrollView>
 
 	{#if showAddPost}
-		<EditPost />
+		<EditPost inlineComponent="{true}"/>
 	{/if}
 </div>
 
@@ -183,43 +183,5 @@
 
     .content :global(.showAddPost) {
     	bottom: 40px;
-	}
-
-    .content :global(.editPostContent) {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ffffff;
-		box-shadow: 0 -2px 5px 0 rgba(0,0,0,0.15);
-    }
-    .content :global(.editPostContent .panelContent) {
-    	padding-top: 10px;
-    	padding-bottom: 0;
-    }
-    .content :global(.editPostContent .pageTitle) {
-		padding-bottom: 2px;
-		font-size: 1.3rem;
-    }
-    .content :global(.editPostContent .messageField .label) {
-		display: none;
-    }
-    .content :global(.editPostContent .addImage) {
-		right: initial;
-		padding-left: 16px;
-    }
-    .content :global(.editPostContent .imageField) {
-		height: 0;
-    }
-    .content :global(.editPostContent .fieldNote) {
-		line-height: 1.3rem;
-		padding-left: 50px;
-    	padding-top: 2px;
-    }
-    .content :global(.editPostContent .actions) {
-		height: 42px;
-	}
-    .content :global(.editPostContent .nextButton) {
-    	top: -7px;
 	}
 </style>

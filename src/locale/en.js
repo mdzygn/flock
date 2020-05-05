@@ -139,6 +139,10 @@ const locale = {
 		PAGE_TITLE: 'Edit Post',
 		CONFIRM: 'Save',
 	},
+	REPLY_THREAD: {
+		PAGE_TITLE: 'Reply',
+		CONFIRM: 'Reply',
+	},
 	EDIT_THREAD_POST: {
 		PAGE_TITLE: 'Edit Reply',
 	},

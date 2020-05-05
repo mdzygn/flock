@@ -20,6 +20,8 @@
 	import SaveIcon from "../../../assets/icons/save.png";
 	import AddImageIcon from "../../../assets/icons/add_small.png";
 	import RemoveImageIcon from "../../../assets/icons/clear.png";
+    import SendMessageIcon from "../../../assets/icons/send.png";
+	import UploadImageIcon from "../../../assets/icons/upload_image.png";
 
 	import {
 		channel,
@@ -49,6 +51,8 @@
 	} from '../../../models/postsModel';
 
 	import { loadChannels } from '../../../models/channelsModel';
+
+	export let inlineComponent = false;
 
 	let title = '';
 	let message = '';
@@ -96,7 +100,11 @@
 	$: pageTitle = (curPostType === 'thread') ? (
         editPost ? locale.EDIT_THREAD.PAGE_TITLE : locale.NEW_THREAD.PAGE_TITLE
     ) : (
-        editPost ? locale.EDIT_THREAD_POST.PAGE_TITLE : locale.NEW_THREAD_POST.PAGE_TITLE
+		(inlineComponent) ? (
+			locale.REPLY_THREAD.PAGE_TITLE
+		) : (
+			editPost ? locale.EDIT_THREAD_POST.PAGE_TITLE : locale.NEW_THREAD_POST.PAGE_TITLE
+		)
     );
 
     let postContentInitialized = false;
@@ -297,7 +305,7 @@
 </script>
 
 {#if !editPost || $post }
-    <div class="editPostContent">
+    <div class="editPostContent" class:inlineComponent="{inlineComponent}">
         <!-- <Proxy image="create_project" className="proxyOverlay" /> -->
         <div class="panelContent">
             <div class="pageTitle">{pageTitle}</div>
@@ -315,17 +323,33 @@
             </div>
 
 			{#if showImageOption}
-				{#if image || addingImage}
-					<div class="imageField">
-						<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
-					</div>
-					<div class="field headerImageField">
-						<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" />
-					</div>
+				{#if inlineComponent}
+					{#if image || addingImage}
+						<div class="imageField removeImageField">
+							<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
+						</div>
+						<div class="field headerImageField">
+							<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" />
+						</div>
+					{:else}
+						<div class="imageField">
+							<Button className="addImage" icon="{UploadImageIcon}" onClick="{addImage}"></Button>
+						</div>
+					{/if}
+					<!-- <ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" /> -->
 				{:else}
-					<div class="imageField">
-						<Button className="addImage" icon="{AddImageIcon}" onClick="{addImage}">{locale.NEW_THREAD.ADD_IMAGE}</Button>
-					</div>
+					{#if image || addingImage}
+						<div class="imageField">
+							<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
+						</div>
+						<div class="field headerImageField">
+							<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" />
+						</div>
+					{:else}
+						<div class="imageField">
+							<Button className="addImage" icon="{AddImageIcon}" onClick="{addImage}">{locale.NEW_THREAD.ADD_IMAGE}</Button>
+						</div>
+					{/if}
 				{/if}
 			{/if}
 
@@ -340,8 +364,12 @@
 			{/if}
             <div class="actions">
                 {#if !editPost}
-                    <Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{NextArrowIcon}">{locale.NEW_THREAD.CONFIRM}</Button>
-                {:else}
+					{#if inlineComponent}
+                    	<Button className="nextButton" disabled="{!nextEnabled}" onClick="{saveCurrentPost}" icon="{SendMessageIcon}">{locale.REPLY_THREAD.CONFIRM}</Button>
+					{:else}
+                    	<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{NextArrowIcon}">{locale.NEW_THREAD.CONFIRM}</Button>
+					{/if}
+				{:else}
                     <Button className="nextButton" disabled="{!nextEnabled}" onClick="{saveCurrentPost}" icon="{SaveIcon}">{locale.EDIT_THREAD.CONFIRM}</Button>
                 {/if}
             </div>
@@ -497,4 +525,81 @@
 		opacity: 0.6;
     	padding-left: 24px;
     }
+
+
+    .inlineComponent {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ffffff;
+		box-shadow: 0 -2px 5px 0 rgba(0,0,0,0.15);
+    }
+    .inlineComponent :global(.panelContent) {
+    	padding-top: 10px;
+    	padding-bottom: 0;
+    }
+    .inlineComponent :global(.pageTitle) {
+		padding-bottom: 2px;
+		font-size: 1.3rem;
+    }
+    .inlineComponent :global(.messageField .label) {
+		display: none;
+    }
+    .inlineComponent :global(.addImage) {
+		right: initial;
+		padding-left: 16px;
+    }
+    .inlineComponent :global(.imageField) {
+		height: 0;
+    }
+    .inlineComponent :global(.removeImageField) {
+    	height: 30px;
+    }
+    .inlineComponent :global(.removeImageField .addImage) {
+    	right: -5px;
+    	top: -9px;
+    }
+    .inlineComponent :global(.fieldNote) {
+		line-height: 1.3rem;
+		padding-left: 58px;
+    	padding-top: 1px;
+		pointer-events: none;
+    }
+    .inlineComponent :global(.actions) {
+		height: 42px;
+	}
+    .inlineComponent :global(.addImage .icon) {
+		padding-left: 0;
+		transform: scale(0.375, 0.375);
+    }
+    .inlineComponent :global(.nextButton) {
+    	top: -5px;
+    	font-size: 1.2rem;
+	}
+    .inlineComponent :global(.nextButton .icon) {
+		padding-left: 18px;
+		margin-top: -2px;
+	}
+    .inlineComponent :global(.imageSelectionBox) {
+    	padding-top: 35%;
+	}
+    /* .inlineComponent :global(.headerImageField) {
+    	position: absolute;
+		width: 40px;
+		height: 40px;
+		padding: 0;
+
+    	margin-left: 16px;
+
+		border: 1px solid #cccccc;
+	}
+    .inlineComponent :global(.imageSelectionBox) {
+		margin-top: 0;
+		padding: 0;
+		height: 100%;
+	}
+    .inlineComponent :global(.carouselContainer) {
+		display: none;
+	} */
 </style>

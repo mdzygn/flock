@@ -573,11 +573,14 @@
 		padding-bottom: 4px;
 		font-size: 1.3rem;
     }
+    .inlineComponent :global(.messageField) {
+		padding-bottom: 2px;
+    }
     .inlineComponent :global(.messageField .label) {
 		display: none;
     }
     .inlineComponent :global(textarea) {
-    	height: 70px;
+    	height: 90px;
     }
     .inlineComponent :global(.addImage) {
 		right: initial;
@@ -607,7 +610,7 @@
     } */
     .inlineComponent :global(.fieldNote) {
 		line-height: 1.3rem;
-		padding-left: 58px;
+		padding-left: 62px;
     	padding-top: 1px;
 		pointer-events: none;
     }
@@ -615,14 +618,14 @@
 		display: none;
     }
     .inlineComponent :global(.actions) {
-		height: 42px;
+		height: 44px;
 	}
     .inlineComponent :global(.addImage .icon) {
 		padding-left: 0;
 		transform: scale(0.375, 0.375);
     }
     .inlineComponent :global(.nextButton) {
-    	top: -4px;
+    	top: -5px;
     	font-size: 1.2rem;
 	}
     .inlineComponent :global(.nextButton .icon) {

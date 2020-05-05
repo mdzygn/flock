@@ -119,6 +119,13 @@
 	async function scrollToBottom() {
 		if (scrollRegion) {
 			await tick();
+
+			if (typeof window !== 'undefined') {
+				window.setTimeout(() => {
+					scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+				}, 300);
+			}
+
 			scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
 		}
 	}

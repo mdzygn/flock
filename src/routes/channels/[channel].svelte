@@ -155,7 +155,7 @@
 		box-shadow: 0 2px 3px 0 rgba(0,0,0,0.12);
 	}
 
-	.content :global(.contentLoader) {
+	.postsContainer :global(.contentLoader) {
     	background-color: #f2f2f2;
         font-size: 1.3rem;
         line-height: 2.2rem;

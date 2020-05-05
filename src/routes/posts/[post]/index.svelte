@@ -120,7 +120,7 @@
 		if (scrollRegion) {
 			await tick();
 
-			if (typeof window !== 'undefined') {
+			if (typeof window !== 'undefined') { // ensure keyboard has appeared
 				window.setTimeout(() => {
 					scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
 				}, 250);
@@ -209,7 +209,7 @@
 		margin-top: 10px;
 	} */
 
-	.content :global(.contentLoader) {
+	.postsContainer :global(.contentLoader) {
     	background-color: #f2f2f2;
         font-size: 1.3rem;
         line-height: 2.2rem;

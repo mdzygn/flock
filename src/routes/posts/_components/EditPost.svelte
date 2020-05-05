@@ -566,11 +566,11 @@
 		box-shadow: 0 -2px 5px 0 rgba(0,0,0,0.15);
     }
     .inlineComponent :global(.panelContent) {
-    	padding-top: 10px;
+    	padding-top: 12px;
     	padding-bottom: 0;
     }
     .inlineComponent :global(.pageTitle) {
-		padding-bottom: 2px;
+		padding-bottom: 4px;
 		font-size: 1.3rem;
     }
     .inlineComponent :global(.messageField .label) {
@@ -622,7 +622,7 @@
 		transform: scale(0.375, 0.375);
     }
     .inlineComponent :global(.nextButton) {
-    	top: -6px;
+    	top: -4px;
     	font-size: 1.2rem;
 	}
     .inlineComponent :global(.nextButton .icon) {
@@ -640,10 +640,10 @@
 		top: 0;
 		right: 0;
 		width: 50px;
-		height: 32px;
+		height: 35px;
 	}
     .inlineComponent :global(.collapsePanel .icon) {
-		margin-top: 3px;
+		margin-top: 5px;
 		margin-left: 10px;
 	}
     /* .inlineComponent :global(.headerImageField) {

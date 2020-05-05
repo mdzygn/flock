@@ -56,6 +56,8 @@
 
 	export let inlineComponent = false;
 
+	export let element = null;
+
 	let title = '';
 	let message = '';
 	let image = null;
@@ -107,7 +109,14 @@
 		) : (
 			editPost ? locale.EDIT_THREAD_POST.PAGE_TITLE : locale.NEW_THREAD_POST.PAGE_TITLE
 		)
-    );
+	);
+
+	$: imageShown = showImageOption && (image || addingImage);
+
+	$: {
+		imageShown;
+		resize();
+	}
 
     let postContentInitialized = false;
 
@@ -230,6 +239,7 @@
 					clearDraftPost(curPostType, draftId, editPost);
 				}
 			});
+			hide();
 		}
     }
 
@@ -256,6 +266,7 @@
 					}
 				});
 			}
+			hide();
         }
 	}
 
@@ -306,14 +317,22 @@
 	}
 
 	function hide() {
-        dispatch('hide');
+		if (inlineComponent) {
+			dispatch('hide');
+		}
+	}
+
+	function resize() {
+		if (inlineComponent) {
+			dispatch('resize');
+		}
 	}
 </script>
 
 {#if !editPost || $post }
-    <div class="editPostContent" class:inlineComponent="{inlineComponent}">
+    <div class="editPostContent" bind:this="{element}" class:inlineComponent="{inlineComponent}">
         <!-- <Proxy image="create_project" className="proxyOverlay" /> -->
-        <div class="panelContent" class:showImage="{showImageOption && (image || addingImage)}">
+        <div class="panelContent" class:showImage="{imageShown}">
 			{#if inlineComponent}
 				<Button className="collapsePanel" icon="{CollapseIcon}" onClick="{hide}" />
 			{/if}
@@ -374,7 +393,7 @@
             <div class="actions">
                 {#if !editPost}
 					{#if inlineComponent}
-                    	<Button className="nextButton" disabled="{!nextEnabled}" onClick="{saveCurrentPost}" icon="{SendMessageIcon}">{locale.REPLY_THREAD.CONFIRM}</Button>
+                    	<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{SendMessageIcon}">{locale.REPLY_THREAD.CONFIRM}</Button>
 					{:else}
                     	<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{NextArrowIcon}">{locale.NEW_THREAD.CONFIRM}</Button>
 					{/if}
@@ -554,6 +573,9 @@
     }
     .inlineComponent :global(.messageField .label) {
 		display: none;
+    }
+    .inlineComponent :global(textarea) {
+    	height: 70px;
     }
     .inlineComponent :global(.addImage) {
 		right: initial;

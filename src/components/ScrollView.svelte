@@ -12,6 +12,8 @@
     export let hideHeaderShadowAtTop = false
     export let headerHiddenOffset = 0;
     export let hideShadowMargin = 1;
+    export let bottomOffset = 0;
+    export let disabledMinHeight = false;
 
     export let className = '';
 
@@ -20,6 +22,8 @@
     $: {
         regionProps = getScrollRegionProperties(id);
     }
+
+    $: minHeightStyle = (minScrollContentHeight && !disabledMinHeight) ? 'min-height: ' + minScrollContentHeight + 'px' : '';
 
     let hasScrollHeader = ($$props.$$slots && $$props.$$slots.scrollHeader) || false;
 
@@ -203,9 +207,9 @@
 
 
 {#if hasScrollHeader}
-    <div class="content {className}">
+    <div class="content {className}" style="bottom: {bottomOffset}px">
         <div class="scrollView" bind:this="{scrollRegion}" style="padding-top: {scrollHeaderHeight}px">
-            <div class="scrollContent" style="min-height: {minScrollContentHeight}px">
+            <div class="scrollContent" style="{minHeightStyle}">
                 <slot></slot>
             </div>
         </div>
@@ -214,8 +218,8 @@
         </div>
     </div>
 {:else}
-    <div class="scrollView {className}" bind:this="{scrollRegion}">
-        <div class="scrollContent" style="min-height: {minScrollContentHeight}px">
+    <div class="scrollView {className}" bind:this="{scrollRegion}" style="bottom: {bottomOffset}px">
+        <div class="scrollContent" style="{minHeightStyle}">
             <slot></slot>
         </div>
     </div>

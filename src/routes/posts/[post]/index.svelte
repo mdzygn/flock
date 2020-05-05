@@ -1,6 +1,7 @@
 <script>
 	import locale from '../../../locale';
 
+	import { tick } from 'svelte';
 	import { writable } from 'svelte/store';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
@@ -89,14 +90,46 @@
 	function hideReplyPanel() {
 		showAddPost = false;
 	}
+
+	$: {
+		showAddPost;
+		onReplyPanelResized();
+	}
+
+	let scrollRegion = null;
+
+	let replyRegionHeight = 0;
+	let replyRegion = null;
+
+	async function onReplyPanelResized() {
+		await tick();
+
+		if (showAddPost) {
+			replyRegionHeight = (replyRegion && replyRegion.offsetHeight) || 0;
+		} else {
+			replyRegionHeight = 0;
+		}
+		// console.log('replyRegionHeight', replyRegionHeight);
+
+		if (replyRegionHeight !== 0) {
+			scrollToBottom();
+		}
+	}
+
+	async function scrollToBottom() {
+		if (scrollRegion) {
+			await tick();
+			scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+		}
+	}
 </script>
 
 <svelte:head>
 	<title>{projectTitleString}Flock</title>
 </svelte:head>
 
-<div class="content">
-	<ScrollView id="thread" anchorToBottom="{$postsAnchorToBottom}" className="{showAddPost ? 'showAddPost' : ''}">
+<div class="content" class:showAddPost="{showAddPost}">
+	<ScrollView id="thread" bind:scrollRegion="{scrollRegion}" anchorToBottom="{$postsAnchorToBottom}" bottomOffset="{replyRegionHeight}" disabledMinHeight="{showAddPost}">
 		{#if ($loadingPosts && (!$post || $post.id !== $postId)) || !isUserLoaded($user, $userId) || (!$project && $loadingProjects) }
 			<ContentLoader label="{locale.LOADING.THREAD}" />
 		{:else if !$post || !$post.id}
@@ -135,7 +168,7 @@
 							{/if}
 						{/each}
 					</div>
-					{#if $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
+					{#if !showAddPost && $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
 						<NewPostButton onClick="{reply}" type="reply" />
 					{/if}
 				</div>
@@ -144,7 +177,7 @@
 	</ScrollView>
 
 	{#if showAddPost}
-		<EditPost inlineComponent="{true}" on:hide="{hideReplyPanel}" />
+		<EditPost inlineComponent="{true}" bind:element="{replyRegion}" on:hide="{hideReplyPanel}" on:resize="{onReplyPanelResized}" />
 	{/if}
 </div>
 
@@ -175,6 +208,12 @@
 	.contentContainer {
     	margin-bottom: 100px;
 	}
+	.showAddPost .contentContainer {
+    	margin-bottom: 10px;
+	}
+	/* .showAddPost .scrollContent {
+    	min-height: initial !important;
+	} */
 
 	.postsContainer {
 		margin-top: 10px;
@@ -185,7 +224,7 @@
 		border-bottom: 2px solid #EEEEEE;
 	}
 
-    .content :global(.showAddPost) {
+    /* .content :global(.showAddPost) {
     	bottom: 40px;
-	}
+	} */
 </style>

@@ -12,6 +12,7 @@ import {
     user,
 	userId,
 	savingPost,
+	savingPostId,
 } from '../models/appModel';
 
 import PostModel from '../models/postModel';
@@ -69,13 +70,13 @@ function mergePosts(newPosts) {
 
 		// curPosts.length = 0; // TODO: temp clear posts
 
-		const curSavingPost = get(savingPost);
+		const curSavingPostId = get(savingPostId);
 
 		let curPost, newPostData, postId, newPost;
 		for (var postI = 0; postI < newPosts.length; postI++) {
 			newPostData = newPosts[postI];
 			postId = newPostData.id;
-			if (postId !== curSavingPost) {
+			if (postId !== curSavingPostId) {
 				curPost = curPosts.find(match => get(match).id === postId);
 				if (!curPost) {
 					curPost = PostModel(newPostData);
@@ -194,10 +195,14 @@ export function addPost(postDetails) {
 
 	// console.log('newPost', newPost);
 
+	savingPostId.set(newPost.id); // need to keep saving post so doesn't override on load
+	savingPost.set(true);
+
 	const result = api.addPost({details: newPost}).then(result => {
 		if (!result || result.error || result.invalid) {
 			console.error(result);
 		}
+		savingPost.set(false);
 		return result;
 		// newPost._id = result.insertedId;
 	});
@@ -217,8 +222,12 @@ export function updatePost(post, postDetails) {
 		postDetails.edited = true;
 	}
 
-	savingPost.set(post.id); // need to keep saving post so doesn't override on load
-	const result = api.updatePost({id: post.id, details: postDetails});
+	savingPostId.set(post.id); // need to keep saving post so doesn't override on load
+	savingPost.set(true);
+	const result = api.updatePost({id: post.id, details: postDetails}).then(() => {
+		savingPost.set(false);
+		return result;
+	});
 
 	Object.assign(post, postDetails);
 

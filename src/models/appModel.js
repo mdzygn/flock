@@ -84,6 +84,7 @@ export const targetUser = writable(null);
 export const targetPost = writable(null);
 
 export const savingPost = writable(false);
+export const savingPostId = writable(null);
 
 export const newMessage = appModel.newMessage;
 

@@ -37,6 +37,7 @@
 		saveDraftPost,
 		getDraftPost,
 		clearDraftPost,
+		savingPost,
 	} from '../../../models/appModel';
 
 	import {
@@ -189,7 +190,8 @@
 	}
 
 	async function getPostDraftContent() {
-		if (draftId) {
+		console.log('savingPost', $savingPost, getDraftPost(curPostType, draftId, editPost));
+		if (draftId && !$savingPost) {
 			const draftPost = getDraftPost(curPostType, draftId, editPost);
 			if (draftPost) {
 				await tick();

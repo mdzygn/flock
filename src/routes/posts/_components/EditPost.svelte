@@ -190,7 +190,7 @@
 	}
 
 	async function getPostDraftContent() {
-		console.log('savingPost', $savingPost, getDraftPost(curPostType, draftId, editPost));
+		// console.log('savingPost', $savingPost, getDraftPost(curPostType, draftId, editPost));
 		if (draftId && !$savingPost) {
 			const draftPost = getDraftPost(curPostType, draftId, editPost);
 			if (draftPost) {

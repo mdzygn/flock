@@ -159,7 +159,7 @@
 
 							{#if $loadingPosts && (!$posts || !$posts.length) }
 								<ContentLoader label="{locale.LOADING.THREAD_ITEMS}" />
-							{:else}
+							{:else if !showAddPost}
 								<ContentLoader>{locale.THREAD.NO_POSTS}<br/>
 									{#if !isArchived}
 										be the first to <a href="javascript:void(0)" on:click="{reply}">Leave a Reply</a>

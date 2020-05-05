@@ -2,6 +2,8 @@ import ImageTools from '../libs/ImageTools';
 
 import api from '../api';
 
+import config from '../config';
+
 function uploadImage(options) {
     const {
         uploadType,
@@ -37,15 +39,24 @@ function uploadImage(options) {
 
                 const imageTools = new ImageTools();
                 imageTools.resize(file, imageSettings).then(async (imageFile) => {
-                    onImageLoaded(imageFile);
+                    const maxSize = config.MAX_IMAGE_UPLOAD_SIZE[imageFile.type];
+                    // console.log('resized type: ' + imageFile.type + ' size: ' + (imageFile.size/1000000) + ' maxSize: ' + maxSize);
+                    if (maxSize) {
+                        if (imageFile.size && (imageFile.size/1000000) > maxSize) {
+                            onError({imageFileSizeTooLarge: true, maxSize: maxSize, type: file.type});
+                        } else {
+                            onImageLoaded(imageFile);
 
-                    imageTools.resize(file, thumbSettings).then(async (thumbFile) => {
-                        getSignedRequest(imageFile, thumbFile);
-                    });
+                            imageTools.resize(file, thumbSettings).then(async (thumbFile) => {
+                                getSignedRequest(imageFile, thumbFile);
+                            });
+                        }
+                    } else {
+                        onError({invalidType: true});
+                    }
                 });
-
-                document.body.removeChild(uploadInput);
             }
+            document.body.removeChild(uploadInput);
         }
     }
 

@@ -144,10 +144,15 @@
             onError: (error) => {
                 image = null;
                 fileIsUploading = false;
-                showCarousel();
+
+                if (useLibrary) {
+                    showCarousel();
+                }
 
                 if (error && error.invalidType) {
                     showPrompt(promptIds.INVALID_IMAGE_TYPE_JPG_PNG);
+                } else if (error && error.imageFileSizeTooLarge) {
+                    showPrompt(promptIds.INVALID_IMAGE_FILESIZE_TOO_LARGE);
                 } else {
                     console.error('Could not request image upload');
                 }

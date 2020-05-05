@@ -328,6 +328,15 @@ const prompts = {
             },
         ],
     },
+    INVALID_IMAGE_FILESIZE_TOO_LARGE: {
+        title: 'Sorry',
+        message: 'Image filesize is too large',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
 }
 
 export default prompts;

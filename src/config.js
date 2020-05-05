@@ -57,6 +57,12 @@ export const SPLASH_TIMEOUT = 3;
 export const FLOCK_PROJECT = 'hPS9cRq2';
 export const MAX_FLOCK_PROJECT_INDEX = 4;
 
+export const MAX_IMAGE_UPLOAD_SIZE = {
+    'image/gif': 8,
+    'image/png': 3,
+    'image/jpeg': 2,
+};
+
 export default {
     DEBUG,
 
@@ -116,4 +122,6 @@ export default {
     MAX_FLOCK_PROJECT_INDEX,
 
     SHOW_EDITED_MIN_TIME,
+
+    MAX_IMAGE_UPLOAD_SIZE,
 };

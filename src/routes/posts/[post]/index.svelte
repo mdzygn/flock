@@ -14,9 +14,11 @@
 	import ContentLoader from '../../_components/ContentLoader.svelte';
 	import PostItem from '../../_components/PostItem.svelte';
 
+	import EditPost from '../../posts/_components/EditPost.svelte';
+
 	import { loadProfile } from '../../../actions/appActions';
 
-	import {
+	import AppModel, {
 		postId,
 		post,
 		postsAnchorToBottom,
@@ -50,10 +52,14 @@
 
 	// $: userLoading = (!($user && $user.loaded) && $userId);
 
+	let showAddPost = false;
+
 	const DISPLAY_BOTTOM_LINK_POST_COUNT = 3;
 
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 	$: isArchived = ($project && $project.archived) || false;
+
+	AppModel.on('newThreadPost', onNewThreadPost);
 
 	loadCurrentChannel();
 	loadCurrentPost();
@@ -74,59 +80,69 @@
     function reply() {
 		if (!checkLoggedIn()) { return; }
 		newThreadPost();
-    }
+	}
+
+	function onNewThreadPost() {
+		showAddPost = true;
+	}
 </script>
 
 <svelte:head>
 	<title>{projectTitleString}Flock</title>
 </svelte:head>
 
-<ScrollView id="thread" anchorToBottom="{$postsAnchorToBottom}">
-	{#if ($loadingPosts && (!$post || $post.id !== $postId)) || !isUserLoaded($user, $userId) || (!$project && $loadingProjects) }
-		<ContentLoader label="{locale.LOADING.THREAD}" />
-	{:else if !$post || !$post.id}
-		<ContentLoader label="{locale.THREAD.NOT_FOUND}" />
-	{:else}
-		<!-- <div slot="scrollHeader">
-			<ThreadPost {post} />
-		</div> -->
+<div class="content">
+	<ScrollView id="thread" anchorToBottom="{$postsAnchorToBottom}" className="{showAddPost ? 'showAddPost' : ''}">
+		{#if ($loadingPosts && (!$post || $post.id !== $postId)) || !isUserLoaded($user, $userId) || (!$project && $loadingProjects) }
+			<ContentLoader label="{locale.LOADING.THREAD}" />
+		{:else if !$post || !$post.id}
+			<ContentLoader label="{locale.THREAD.NOT_FOUND}" />
+		{:else}
+			<!-- <div slot="scrollHeader">
+				<ThreadPost {post} />
+			</div> -->
 
-		<div class="content">
-			<ThreadPost {post} />
-			<!-- <Proxy image="thread_posts" className="proxyOverlay">
-				<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
-					left: 7px;
-					top: 8px;
-					width: 49px;
-					height: 1013px;" />
-			</Proxy> -->
-			<!-- <NewPostButton type="thread_reply" /> -->
+			<div class="scrollContent">
+				<ThreadPost {post} />
+				<!-- <Proxy image="thread_posts" className="proxyOverlay">
+					<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
+						left: 7px;
+						top: 8px;
+						width: 49px;
+						height: 1013px;" />
+				</Proxy> -->
+				<!-- <NewPostButton type="thread_reply" /> -->
 
-			<div class="contentContainer">
-				<!-- <Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadPost('sm2ld9p2')}" /> -->
-				<div class="postsContainer">
-					{#each $posts as post}
-						<PostItem {post} type="threadPost" />
-					{:else}
-
-						{#if $loadingPosts && (!$posts || !$posts.length) }
-							<ContentLoader label="{locale.LOADING.THREAD_ITEMS}" />
+				<div class="contentContainer">
+					<!-- <Proxy image="channel_posts" className="channelPosts proxyOverlay" onClick="{e => loadPost('sm2ld9p2')}" /> -->
+					<div class="postsContainer">
+						{#each $posts as post}
+							<PostItem {post} type="threadPost" />
 						{:else}
-							<ContentLoader>{locale.THREAD.NO_POSTS}<br/>
-								{#if !isArchived}
-									be the first to <a href="javascript:void(0)" on:click="{reply}">Leave a Reply</a>
-								{/if}
-							</ContentLoader>
-						{/if}
-					{/each}
+
+							{#if $loadingPosts && (!$posts || !$posts.length) }
+								<ContentLoader label="{locale.LOADING.THREAD_ITEMS}" />
+							{:else}
+								<ContentLoader>{locale.THREAD.NO_POSTS}<br/>
+									{#if !isArchived}
+										be the first to <a href="javascript:void(0)" on:click="{reply}">Leave a Reply</a>
+									{/if}
+								</ContentLoader>
+							{/if}
+						{/each}
+					</div>
+					{#if $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
+						<NewPostButton onClick="{reply}" type="reply" />
+					{/if}
 				</div>
-				{#if $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
-					<NewPostButton onClick="{reply}" type="reply" />
-				{/if}
 			</div>
-		</div>
+		{/if}
+	</ScrollView>
+
+	{#if showAddPost}
+		<EditPost />
 	{/if}
-</ScrollView>
+</div>
 
 <style>
 	.content :global(.proxyOverlay) {
@@ -163,5 +179,47 @@
 	.content .postsContainer :global(.postItem) {
     	margin-bottom: 0;
 		border-bottom: 2px solid #EEEEEE;
+	}
+
+    .content :global(.showAddPost) {
+    	bottom: 40px;
+	}
+
+    .content :global(.editPostContent) {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ffffff;
+		box-shadow: 0 -2px 5px 0 rgba(0,0,0,0.15);
+    }
+    .content :global(.editPostContent .panelContent) {
+    	padding-top: 10px;
+    	padding-bottom: 0;
+    }
+    .content :global(.editPostContent .pageTitle) {
+		padding-bottom: 2px;
+		font-size: 1.3rem;
+    }
+    .content :global(.editPostContent .messageField .label) {
+		display: none;
+    }
+    .content :global(.editPostContent .addImage) {
+		right: initial;
+		padding-left: 16px;
+    }
+    .content :global(.editPostContent .imageField) {
+		height: 0;
+    }
+    .content :global(.editPostContent .fieldNote) {
+		line-height: 1.3rem;
+		padding-left: 50px;
+    	padding-top: 2px;
+    }
+    .content :global(.editPostContent .actions) {
+		height: 42px;
+	}
+    .content :global(.editPostContent .nextButton) {
+    	top: -7px;
 	}
 </style>

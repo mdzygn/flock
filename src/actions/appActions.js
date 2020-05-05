@@ -92,6 +92,8 @@ import {
     goHome,
 
     showBetaFeatures,
+
+    triggerNewThreadPost,
 } from '../models/appModel';
 
 export function loadProject(targetProjectId, options) {
@@ -523,8 +525,8 @@ export function newThread() {
 
 export function newThreadPost() {
     postType.set('threadPost');
-
-    goto('posts/new');
+    triggerNewThreadPost();
+    // goto('posts/new');
 }
 
 export function editPost(postId) {

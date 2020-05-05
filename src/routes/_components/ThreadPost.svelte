@@ -35,6 +35,7 @@
         userId,
         targetPost,
 		getHeaderImage,
+        postType,
     } from '../../models/appModel';
 
     import {
@@ -110,8 +111,8 @@
     }
 
     function reply() {
-		if (!checkLoggedIn()) { return; }
-		newThreadPost();
+        if (!checkLoggedIn()) { return; }
+        newThreadPost();
     }
 
 	function shareItem() {

@@ -305,4 +305,8 @@ export function clearDraftPost(curPostType, draftId, editPost) {
     getDraftPost(curPostType, draftId, editPost, false, true);
 }
 
+export function triggerNewThreadPost() {
+    AppModel.emit('newThreadPost');
+}
+
 export default appModel;

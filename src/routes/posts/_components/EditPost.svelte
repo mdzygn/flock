@@ -1,7 +1,8 @@
 <script>
 	import locale from '../../../locale';
 
-	import { onMount, tick } from 'svelte';
+	import { onMount, tick, createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
 
 	import {
 		testInputDefocus,
@@ -22,6 +23,7 @@
 	import RemoveImageIcon from "../../../assets/icons/clear.png";
     import SendMessageIcon from "../../../assets/icons/send.png";
 	import UploadImageIcon from "../../../assets/icons/upload_image.png";
+	import CollapseIcon from "../../../assets/icons/collapse_down.png";
 
 	import {
 		channel,
@@ -302,12 +304,19 @@
 		addingImage = false;
 		image = null;
 	}
+
+	function hide() {
+        dispatch('hide');
+	}
 </script>
 
 {#if !editPost || $post }
     <div class="editPostContent" class:inlineComponent="{inlineComponent}">
         <!-- <Proxy image="create_project" className="proxyOverlay" /> -->
         <div class="panelContent" class:showImage="{showImageOption && (image || addingImage)}">
+			{#if inlineComponent}
+				<Button className="collapsePanel" icon="{CollapseIcon}" onClick="{hide}" />
+			{/if}
             <div class="pageTitle">{pageTitle}</div>
             {#if showTitleField}
                 <div class="field">
@@ -601,6 +610,17 @@
 	}
     .inlineComponent :global(.imageSelectionBox) {
     	padding-top: 35%;
+	}
+    .inlineComponent :global(.collapsePanel) {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 50px;
+		height: 32px;
+	}
+    .inlineComponent :global(.collapsePanel .icon) {
+		margin-top: 3px;
+		margin-left: 10px;
 	}
     /* .inlineComponent :global(.headerImageField) {
     	position: absolute;

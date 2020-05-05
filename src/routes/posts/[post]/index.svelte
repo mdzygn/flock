@@ -85,6 +85,10 @@
 	function onNewThreadPost() {
 		showAddPost = true;
 	}
+
+	function hideReplyPanel() {
+		showAddPost = false;
+	}
 </script>
 
 <svelte:head>
@@ -140,7 +144,7 @@
 	</ScrollView>
 
 	{#if showAddPost}
-		<EditPost inlineComponent="{true}"/>
+		<EditPost inlineComponent="{true}" on:hide="{hideReplyPanel}" />
 	{/if}
 </div>
 

@@ -307,7 +307,7 @@
 {#if !editPost || $post }
     <div class="editPostContent" class:inlineComponent="{inlineComponent}">
         <!-- <Proxy image="create_project" className="proxyOverlay" /> -->
-        <div class="panelContent">
+        <div class="panelContent" class:showImage="{showImageOption && (image || addingImage)}">
             <div class="pageTitle">{pageTitle}</div>
             {#if showTitleField}
                 <div class="field">
@@ -325,11 +325,11 @@
 			{#if showImageOption}
 				{#if inlineComponent}
 					{#if image || addingImage}
-						<div class="imageField removeImageField">
-							<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
-						</div>
 						<div class="field headerImageField">
 							<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" />
+						</div>
+						<div class="imageField removeImageField">
+							<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
 						</div>
 					{:else}
 						<div class="imageField">
@@ -553,18 +553,33 @@
     .inlineComponent :global(.imageField) {
 		height: 0;
     }
-    .inlineComponent :global(.removeImageField) {
+    .inlineComponent :global(.removeImage) {
+    	top: -5px;
+    	padding-right: 24px;
+    }
+    .inlineComponent :global(.removeImage .buttonContent) {
+    	padding-left: 28px;
+    }
+    .inlineComponent :global(.removeImage .iconContainer) {
+		position: absolute;
+    	left: 13px;
+		top: 20px;
+    }
+    /* .inlineComponent :global(.removeImageField) {
     	height: 30px;
     }
     .inlineComponent :global(.removeImageField .addImage) {
     	right: -5px;
     	top: -9px;
-    }
+    } */
     .inlineComponent :global(.fieldNote) {
 		line-height: 1.3rem;
 		padding-left: 58px;
     	padding-top: 1px;
 		pointer-events: none;
+    }
+    .inlineComponent .showImage :global(.fieldNote) {
+		display: none;
     }
     .inlineComponent :global(.actions) {
 		height: 42px;
@@ -574,12 +589,15 @@
 		transform: scale(0.375, 0.375);
     }
     .inlineComponent :global(.nextButton) {
-    	top: -5px;
+    	top: -6px;
     	font-size: 1.2rem;
 	}
     .inlineComponent :global(.nextButton .icon) {
 		padding-left: 18px;
 		margin-top: -2px;
+	}
+	.inlineComponent :global(.headerImageField) {
+		margin-top: -6px;
 	}
     .inlineComponent :global(.imageSelectionBox) {
     	padding-top: 35%;

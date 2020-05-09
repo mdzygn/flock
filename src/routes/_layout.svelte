@@ -64,8 +64,6 @@
 				$prevPath = $curPath;
 			}
 			$curPath = $page.path;
-
-			console.log('curPath', $curPath, 'prevPath', $prevPath);
 		}
 
 		checkParams($page.query);

@@ -112,14 +112,23 @@ async function createNotification(db, details, data, res, completedData) {
     }]
     projectMembers = ['YRVQ6vOE'];
 
-    // if getThreadTitle // get thread and set owner and threadTitle
+    if (getThreadTitle) {
+        const threadFilter = { id: details.threadId };
+        const threadResult = await db.collection('posts').findOne(threadFilter);
+
+        if (threadResult) {
+            threadTitle = threadResult.title;
+        } else {
+            errorResponse(res, completedData, {errorMsg: 'createNotification - thread post not found'});
+            return -1;
+        }
+    }
 
     if (getThreadTitle && !threadTitle) {
         getChannelTitle = true;
     }
 
-    // if getChannelTitle  // get channel and set channelTitle
-    if (getChannelTitle && details.channelId) {
+    if (getChannelTitle) {
         const channelFilter = { id: details.channelId };
         const channelResult = await db.collection('channels').findOne(channelFilter);
 
@@ -158,7 +167,7 @@ async function createNotification(db, details, data, res, completedData) {
                         if (threadTitle) {
                             curDetails.message = 'replied to "' + threadTitle + '"';
                         } else if (channelTitle) {
-                            curDetails.message = 'replied to a post in #' + channelTitle + '';
+                            curDetails.message = 'replied to a post to #' + channelTitle + '';
                         } else {
                             curDetails.message = 'replied to a post';
                         }
@@ -168,7 +177,7 @@ async function createNotification(db, details, data, res, completedData) {
                     }
                 } else if (curDetails.channelId) {
                     if (channelTitle) {
-                        curDetails.message = 'added a post in #' + channelTitle + '';
+                        curDetails.message = 'added a post to #' + channelTitle + '';
                     } else {
                         curDetails.message = 'added a post';
                     }

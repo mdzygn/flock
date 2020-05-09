@@ -1,6 +1,8 @@
 <script>
     import { get, writable } from 'svelte/store';
 
+    import locale from '../../locale';
+
     import AvatarIcon from './AvatarIcon.svelte';
 
     import { getDateAgeString } from '../../utils';
@@ -57,7 +59,7 @@
             {#if dateString}
                 <div class="detail">
                     {#if projectTitle}
-                        on <span class="projectTitle">{projectTitle}</span> -
+                        {locale.NOTIFICATION.PROJECT_PREFIX}<span class="projectTitle">{projectTitle}</span> -
                     {/if}
                 {dateString}</div>
             {/if}
@@ -106,11 +108,14 @@
         left: 96px;
         top: 16px;
         bottom: 0;
-        right: 60px;
+        right: 46px;
 
 		display: flex;
         align-items: center;
         /* padding-bottom: 3px; */
+    }
+    .detailInnerContent {
+        width: 100%;
     }
 
     .title {
@@ -123,6 +128,10 @@
         font-size: 1.3rem;
         line-height: 1.3rem;
         margin-top: 3px;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .detail {
@@ -130,6 +139,10 @@
         margin-top: 4px;
         color: #888888;
         line-height: 1.3rem;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .projectTitle {

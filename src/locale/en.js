@@ -168,6 +168,9 @@ const locale = {
 	},
 	NOTIFICATIONS: {
 		NO_NOTIFICATIONS: 'no recent activity',
+	},
+	NOTIFICATION: {
+		PROJECT_PREFIX: 'on ',
 	}
 }
 

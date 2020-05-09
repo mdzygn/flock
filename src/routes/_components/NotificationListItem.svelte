@@ -1,17 +1,17 @@
 <script>
+    import { get, writable } from 'svelte/store';
+
     import AvatarIcon from './AvatarIcon.svelte';
 
     import { getDateAgeString } from '../../utils';
 
-    import { getUser, createUserModel } from '../../models/usersModel';
+    import { getUser, getUserModelFromData } from '../../models/usersModel';
 
     export let notification;
 
     $: thumbImage = ''; // getProjectHeaderImage($notification, true);
 
     $: isUserAction = ($notification && $notification.isUserAction) || true;
-
-    $: user = (isUserAction && $notification && $notification.userId && getUser($notification.userId)) || null;
 
     $: title = ($notification && $notification.title) || '';
     $: message = ($notification && $notification.message) || ($notification && $notification.notPriority && '<i>(indirect)</i>') || '';
@@ -22,8 +22,8 @@
     $: dateString = (date && getDateAgeString(date)) || '';
 
     $: actor = ($notification && $notification.actors && $notification.actors.length && $notification.actors[0]) || null;
-    $: actorUser = (actor && createUserModel(actor)) || null;
-    $: actorName = (actor && actor.name) || '';
+    $: actorUser = (actor && date && getUserModelFromData(actor, date)) || writable(null);
+    $: actorName = ($actorUser && $actorUser.name) || (actor && actor.name) || '';
 
     $: titleString = title || actorName || '';
 

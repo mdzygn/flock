@@ -23,11 +23,13 @@ let users = writable([]);
 
 let usersUpdatedHandlers = [];
 
+let storedUserModels = [];
+
 // loadUsers();
 
-export function getUser(userId) {
+export function getUser(userId, dontCreate) {
 	let curUser = get(users).find(item => get(item).id === userId);
-	if (!curUser) {
+	if (!curUser && !dontCreate) {
 		curUser = UserModel( { id: userId } );
 
 		const curUsers = get(users);
@@ -130,8 +132,37 @@ export function getNewUser() {
 	return newUserModel;
 }
 
-export function createUserModel(userDetails) {
-	const newUserModel = UserModel(userDetails);
+export function getUserModelFromData(userDetails, updateDate) {
+	let newUserModel;
+	let curUserDetails;
+
+	if (userDetails.id) {
+		newUserModel = getUser(userDetails.id, true);
+	}
+	if (!newUserModel) {
+		newUserModel = storedUserModels[userDetails.id];
+		// console.log('use existing model ' + userDetails.id);
+		// if (get(newUserModel)) {
+		// 	console.log('date ' + get(newUserModel).lastUpdatedDate + ' < ' + updateDate);
+		// }
+
+		if (newUserModel && get(newUserModel).lastUpdatedDate < updateDate) {
+			// console.log('update model ' + get(newUserModel).lastUpdatedDate + ' > ' + updateDate);
+			curUserDetails = get(newUserModel);
+			curUserDetails.lastUpdatedDate;
+			Object.assign(curUserDetails, JSON.parse(JSON.stringify(userDetails)));
+			newUserModel.set(curUserDetails);
+		}
+	}
+	if (!newUserModel) {
+		curUserDetails = JSON.parse(JSON.stringify(userDetails));
+		curUserDetails.lastUpdatedDate = updateDate;
+		newUserModel = UserModel(curUserDetails);
+
+		// console.log('create model ', curUserDetails);
+
+		storedUserModels[userDetails.id] = newUserModel;
+	}
 	return newUserModel;
 }
 

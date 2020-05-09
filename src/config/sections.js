@@ -24,7 +24,7 @@ export const sections = [
 		segment: 'activity',
 		label: 'Activity',
 		main: true,
-		beta: true,
+		// beta: true,
 	},
 	{
 		segment: 'messages',

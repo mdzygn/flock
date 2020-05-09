@@ -50,15 +50,16 @@ async function createNotification(db, details, data, res, completedData) {
             if (details.threadId) {
                 getThreadTitle = true;
                 getThreadOwner = true;
+            } else {
+                getChannelTitle = true;
             }
             break;
     }
 
     let projectTitle = null; // set from project
     let threadTitle = null;
-    let channelTitle = 'Questions'; // set from channel
+    let channelTitle = null; // 'Questions'; // set from channel
 
-    // if getProject  // get project
     if (getProject) {
         const projectFilter = { id: details.projectId };
         const projectResult = await db.collection('projects').findOne(projectFilter);
@@ -71,7 +72,6 @@ async function createNotification(db, details, data, res, completedData) {
         }
     }
 
-    // if getActorDetails  // get actor details
     if (getActorDetails) {
         const actorIds = details.actors.map((actor) => actor.id);
         const usersFilter = { id: { $in: actorIds } };
@@ -112,15 +112,24 @@ async function createNotification(db, details, data, res, completedData) {
     }]
     projectMembers = ['YRVQ6vOE'];
 
-    // if getThread // get thread and set owner and threadTitle
+    // if getThreadTitle // get thread and set owner and threadTitle
 
     if (getThreadTitle && !threadTitle) {
         getChannelTitle = true;
     }
 
     // if getChannelTitle  // get channel and set channelTitle
+    if (getChannelTitle && details.channelId) {
+        const channelFilter = { id: details.channelId };
+        const channelResult = await db.collection('channels').findOne(channelFilter);
 
-
+        if (channelResult) {
+            channelTitle = channelResult.title;
+        } else {
+            errorResponse(res, completedData, {errorMsg: 'createNotification - channel not found'});
+            return -1;
+        }
+    }
 
     var allResults = [];
 

@@ -26,9 +26,9 @@ export async function post(req, res, next) {
 
 	const filter = {};
 	filter.userId = userId;
-	if (!DEBUG) {
-		filter.notPriority = {$ne: true};
-	}
+	// if (!DEBUG) {
+	// 	filter.notPriority = {$ne: true}; // need to return so can show notification areas
+	// }
 
     let notifications = await db.collection('notifications').find(filter).toArray();
 

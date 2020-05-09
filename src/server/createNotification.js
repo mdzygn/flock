@@ -14,11 +14,6 @@ async function createNotification(db, details, data, res, completedData) {
             return -1;
             // throw new Error('"type" parameter missing in call to createNotification', details);
         }
-        if (!details.projectId) {
-            errorResponse(res, completedData, {errorMsg: 'createNotification - "projectId" parameter missing'});
-            return -1;
-            // throw new Error('"projectId" parameter missing in call to createNotification', details);
-        }
         if (!details.actors) {
             errorResponse(res, completedData, {errorMsg: 'createNotification - "actors" parameter missing'});
             return -1;
@@ -31,9 +26,9 @@ async function createNotification(db, details, data, res, completedData) {
 
     // const postTitle = data && data.postTitle;
 
-    let getProject = false;
-    let getProjectMembers = false;
-    let getProjectFollowers = false;
+    let getProjectDetails = false;
+    let sendToProjectMembers = false;
+    let sendToProjectFollowers = false;
     let getActorDetails = false;
     let getThreadTitle = false;
     let getThreadOwner = false;
@@ -45,9 +40,10 @@ async function createNotification(db, details, data, res, completedData) {
     switch (details.type) {
         case NotificationTypes.POST_ADDED:
             details.isUserAction = true;
-            getProject = true;
-            getProjectMembers = true;
-            getProjectFollowers = true;
+            sendToProjectMembers = true;
+            sendToProjectFollowers = true;
+
+            getProjectDetails = true;
             getActorDetails = true;
             if (details.threadId) {
                 getThreadTitle = true;
@@ -69,8 +65,8 @@ async function createNotification(db, details, data, res, completedData) {
     //     actor.style =  // user style if no avatarImage set
     // });
 
-    // if getProjectMembers  // add to users and set projectMembers
-    // if getProjectFollowers  // add to users
+    // if sendToProjectMembers  // add to users and set projectMembers
+    // if sendToProjectFollowers  // add to users
     // add one for each member and follower of project
     // const users = [{
     //     id: 'YRVQ6vOE',
@@ -78,23 +74,52 @@ async function createNotification(db, details, data, res, completedData) {
     //     isTeamMember: true,
     // }]
 
+    if (getProjectDetails || sendToProjectMembers || sendToProjectFollowers) {
+        if (DEBUG) {
+            if (!details.projectId) {
+                errorResponse(res, completedData, {errorMsg: 'createNotification - "projectId" parameter missing'});
+                return -1;
+                // throw new Error('"projectId" parameter missing in call to createNotification', details);
+            }
+        }
+    }
+
     let targetUserIds = [];
     let projectMembers = [];
     // projectMembers = ['YRVQ6vOE'];
 
-    if (getProject) {
+    if (getProjectDetails || sendToProjectMembers) {
         const projectFilter = { id: details.projectId };
         const projectResult = await db.collection('projects').findOne(projectFilter);
 
         if (projectResult) {
-            projectTitle = projectResult.title;
-            projectMembers = projectResult.team;
+            if (getProjectDetails) {
+                projectTitle = projectResult.title;
+                projectMembers = projectResult.team;
+            }
 
-            targetUserIds = [...targetUserIds, ...projectMembers];
+            if (sendToProjectMembers) {
+                targetUserIds = [...targetUserIds, ...projectMembers];
+            }
         } else {
             errorResponse(res, completedData, {errorMsg: 'createNotification - project not found'});
             return -1;
         }
+    }
+
+    if (sendToProjectFollowers) {
+        const userProjectFilter = { "projectId": details.projectId };
+
+        const follows = await db.collection('follows').find(userProjectFilter).toArray();
+        const projectFollowers = follows.map((follow) => follow.userId);
+
+        projectFollowers.forEach((follower) => {
+            if (!targetUserIds.includes(follower)) {
+                targetUserIds.push(follower);
+            }
+        });
+
+        console.log('projectFollowers', projectFollowers);
     }
 
     let actorIds = [];
@@ -233,7 +258,8 @@ async function createNotification(db, details, data, res, completedData) {
 
     const result = await Promise.all(allResults).then((values) => {
         let failed = false;
-        let lastResult = null;
+
+        let lastResult = true;
         values.forEach((curResult, index) => {
             // console.log('result ' + index, curResult);
             if (!curResult) {

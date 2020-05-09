@@ -1,126 +1,74 @@
 [
-    {
-       "id":"",
-       "userId":"sl3p5oms",
-       "conversationId":"a4kcmsd3",
-       "message":"",
-       "media":null,
-       "createdAt":0,
-       "likes":[
-
-       ],
-       "seen":[
-
-       ]
-    },
-    {
-       "id":"",
-       "userId":"sl3p5oms",
-       "conversationId":"a4kcmsd3",
-       "message":"",
-       "media":null,
-       "createdAt":0,
-       "likes":[
-
-       ],
-       "seen":[
-
-       ]
-    },
-    {
-       "id":"",
-       "userId":"sl3p5oms",
-       "conversationId":"a4kcmsd3",
-       "message":"",
-       "media":null,
-       "createdAt":0,
-       "likes":[
-
-       ],
-       "seen":[
-          "sl3p5oms"
-       ]
-    },
-    {
-       "id":"",
-       "userId":"sl3p5oms",
-       "conversationId":"a4kcmsd3",
-       "projectId":"bl20a8lm",
-       "message":"",
-       "media":null,
-       "createdAt":0,
-       "likes":[
-
-       ],
-       "seen":[
-          "sl3p5oms"
-       ],
-       "a"[
-          {
-             "id":"",
-             "userId":"sl3p5oms",
-             "actors":[
-                "bl20a8lm"
-             ],
-             "message":"",
-             "createdAt":0,
-             "seen":false
-          },
-          {
-             "id":"",
-             "userId":"sl3p5oms",
-             "actors":[
-                "bl20a8lm"
-             ],
-             "message":"",
-             "createdAt":0,
-             "seen":false
-          },
-          {
-             "id":"",
-             "userId":"sl3p5oms",
-             "actors":[
-                "bl20a8lm"
-             ],
-             "message":"",
-             "createdAt":0,
-             "seen":true
-          },
-          {
-             "id":"",
-             "userId":"sl3p5oms",
-             "actors":[
-                "bl20a8lm"
-             ],
-             "message":"",
-             "createdAt":0,
-             "seen":true
-          },
-          {
-             "id":"",
-             "userId":"sl3p5oms",
-             "actors":[
-                "bl20a8lm"
-             ],
-             "message":"",
-             "createdAt":0,
-             "seen":true
-          }
-       ]
-    },
-    {
-       "id":"",
-       "userId":"sl3p5oms",
-       "conversationId":"a4kcmsd3",
-       "projectId":"bl20a8lm",
-       "message":"",
-       "media":null,
-       "createdAt":0,
-       "likes":[
-
-       ],
-       "seen":[
-          "sl3p5oms"
-       ]
-    }
+   {
+      "id":"",
+      "type":"postAdded",
+      "isUserAction": true,
+      "title":"",
+      "thumb":"",
+      "message":"",
+      "createdAt":0,
+      "seen": false,
+      "viewed": false,
+      "data": {
+        "id": "",
+        "userId":"sl3p5oms",
+        "projectId": "",
+        "channelId": "",
+        "threadId": ""
+      }
+   },
+   {
+      "id":"",
+      "type":"postAdded",
+      "isUserAction": true,
+      "title":"",
+      "thumb":"",
+      "message":"",
+      "createdAt":0,
+      "seen": false,
+      "viewed": false,
+      "data": {
+        "id": "",
+        "userId":"sl3p5oms",
+        "projectId": "",
+        "channelId": "",
+        "threadId": ""
+      }
+   },
+   {
+      "id":"",
+      "type":"postAdded",
+      "isUserAction": true,
+      "title":"",
+      "thumb":"",
+      "message":"",
+      "createdAt":0,
+      "seen": false,
+      "viewed": false,
+      "data": {
+        "id": "",
+        "userId":"sl3p5oms",
+        "projectId": "",
+        "channelId": "",
+        "threadId": ""
+      }
+   },
+   {
+      "id":"",
+      "type":"postAdded",
+      "isUserAction": true,
+      "title":"",
+      "thumb":"",
+      "message":"",
+      "createdAt":0,
+      "seen": false,
+      "viewed": false,
+      "data": {
+        "id": "",
+        "userId":"sl3p5oms",
+        "projectId": "",
+        "channelId": "",
+        "threadId": ""
+      }
+   }
  ]

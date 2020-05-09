@@ -130,6 +130,11 @@ export function getNewUser() {
 	return newUserModel;
 }
 
+export function createUserModel(userDetails) {
+	const newUserModel = UserModel(userDetails);
+	return newUserModel;
+}
+
 export function getUserClone(userModel) {
 	const newUser = get(userModel);
 

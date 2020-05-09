@@ -6,7 +6,7 @@
       "isUserAction": true,
       "title":"Lidia Marin",
       "message":"added a new project: Antarctic Trust",
-      "thumb":"",
+      "image":"",
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
@@ -20,7 +20,8 @@
       "postId": "",
       "threadId": "",
       "channelId": "",
-      "projectId": ""
+      "projectId": "s7djj2s2",
+      "projectTitle": "World Creator"
    },
    {
       "id":"davv5ysd",
@@ -29,7 +30,7 @@
       "isUserAction": true,
       "title":"Wyatt Morris",
       "message":"posted a link: \"Creative workflows for...\"",
-      "thumb":"",
+      "image":"",
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
@@ -43,7 +44,8 @@
       "postId": "",
       "threadId": "",
       "channelId": "",
-      "projectId": ""
+      "projectId": "s7djj2s2",
+      "projectTitle": "World Creator"
    },
    {
       "id":"bfj641sdf",
@@ -52,7 +54,7 @@
       "isUserAction": true,
       "title":"Sasha Ho",
       "message":"mentioned you: Thanks @Matt",
-      "thumb":"",
+      "image":"",
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
@@ -66,7 +68,8 @@
       "postId": "",
       "threadId": "",
       "channelId": "",
-      "projectId": ""
+      "projectId": "s7djj2s2",
+      "projectTitle": "World Creator"
    },
    {
       "id":"bfab6uy54",
@@ -75,7 +78,7 @@
       "isUserAction": true,
       "title":"Derrick Wells",
       "message":"posted in Game Development",
-      "thumb":"",
+      "image":"",
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
@@ -89,7 +92,8 @@
       "postId": "",
       "threadId": "",
       "channelId": "",
-      "projectId": ""
+      "projectId": "s7djj2s2",
+      "projectTitle": "World Creator"
    },
    {
       "id":"bf54gdag2",
@@ -98,7 +102,7 @@
       "isUserAction": true,
       "title":"Bonnie Riley",
       "message":"and 3 others replied your post",
-      "thumb":"",
+      "image":"",
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
@@ -112,7 +116,8 @@
       "postId": "",
       "threadId": "",
       "channelId": "",
-      "projectId": ""
+      "projectId": "s7djj2s2",
+      "projectTitle": "World Creator"
    }
 
    ,
@@ -123,7 +128,7 @@
       "isUserAction": true,
       "title":"Lidia Marin",
       "message":"added a new project: Antarctic Trust",
-      "thumb":"",
+      "image":"",
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
@@ -137,7 +142,8 @@
       "postId": "",
       "threadId": "",
       "channelId": "",
-      "projectId": ""
+      "projectId": "s7djj2s2",
+      "projectTitle": "World Creator"
    },
    {
       "id":"fghafg54",
@@ -146,7 +152,7 @@
       "isUserAction": true,
       "title":"Wyatt Morris",
       "message":"posted a link: \"Creative workflows for...\"",
-      "thumb":"",
+      "image":"",
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
@@ -160,7 +166,8 @@
       "postId": "",
       "threadId": "",
       "channelId": "",
-      "projectId": ""
+      "projectId": "s7djj2s2",
+      "projectTitle": "World Creator"
    },
    {
       "id":"gfg5y5jsw",
@@ -169,7 +176,7 @@
       "isUserAction": true,
       "title":"Sasha Ho",
       "message":"mentioned you: Thanks @Matt",
-      "thumb":"",
+      "image":"",
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
@@ -183,7 +190,8 @@
       "postId": "",
       "threadId": "",
       "channelId": "",
-      "projectId": ""
+      "projectId": "s7djj2s2",
+      "projectTitle": "World Creator"
    },
    {
       "id":"h4fdsf34",
@@ -192,7 +200,7 @@
       "isUserAction": true,
       "title":"Derrick Wells",
       "message":"posted in Game Development",
-      "thumb":"",
+      "image":"",
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
@@ -206,7 +214,8 @@
       "postId": "",
       "threadId": "",
       "channelId": "",
-      "projectId": ""
+      "projectId": "s7djj2s2",
+      "projectTitle": "World Creator"
    },
    {
       "id":"92n90dfs",
@@ -215,7 +224,7 @@
       "isUserAction": true,
       "title":"Bonnie Riley",
       "message":"and 3 others replied your post",
-      "thumb":"",
+      "image":"",
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
@@ -229,6 +238,7 @@
       "postId": "",
       "threadId": "",
       "channelId": "",
-      "projectId": ""
+      "projectId": "s7djj2s2",
+      "projectTitle": "World Creator"
    }
  ]

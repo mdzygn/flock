@@ -199,7 +199,8 @@ export function addPost(postDetails) {
 	savingPostId.set(newPost.id); // need to keep saving post so doesn't override on load
 	savingPost.set(true);
 
-	const result = api.addPost({details: newPost}).then(result => {
+	const result = api.addPost({details: newPost});
+	result.then(result => {
 		if (!result || result.error || result.invalid) {
 			console.error(result);
 		}

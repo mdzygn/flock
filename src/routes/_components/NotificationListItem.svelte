@@ -3,7 +3,7 @@
 
     import { getDateAgeString } from '../../utils';
 
-    import { getUser } from '../../models/usersModel';
+    import { getUser, createUserModel } from '../../models/usersModel';
 
     export let notification;
 
@@ -13,9 +13,19 @@
 
     $: user = (isUserAction && $notification && $notification.userId && getUser($notification.userId)) || null;
 
-    $: date = $notification && $notification.createdAt;
+    $: title = ($notification && $notification.title) || '';
+    $: message = ($notification && $notification.message) || ($notification && $notification.notPriority && '<i>(indirect)</i>') || '';
 
-    $: dateString = getDateAgeString(date);
+    $: projectTitle = $notification && $notification.projectTitle;
+
+    $: date = ($notification && $notification.createdAt) || null;
+    $: dateString = (date && getDateAgeString(date)) || '';
+
+    $: actor = ($notification && $notification.actors && $notification.actors.length && $notification.actors[0]) || null;
+    $: actorUser = (actor && createUserModel(actor)) || null;
+    $: actorName = (actor && actor.name) || '';
+
+    $: titleString = title || actorName || '';
 
 
     function loadItem() {
@@ -24,16 +34,20 @@
 
 <div class="notifcationListItem" on:click="{loadItem}">
     {#if isUserAction}
-        <AvatarIcon {user} useThumb="{true}" />
+        <AvatarIcon user="{actorUser}" useThumb="{true}" />
     {:else}
-        <img class="thumb" src="{thumbImage}" alt="{$notification.title}" />
+        <img class="thumb" src="{thumbImage}" alt="{titleString}" />
     {/if}
     <div class="detailContent">
         <div class="detailInnerContent">
-            <div class="title">{$notification.title}</div>
-            <div class="message">{$notification.message}</div>
+            <div class="title">{titleString}</div>
+            <div class="message">{@html message}</div>
             {#if dateString}
-                <div class="date">{dateString}</div>
+                <div class="detail">
+                    {#if projectTitle}
+                        on <span class="projectTitle">{projectTitle}</span> -
+                    {/if}
+                {dateString}</div>
             {/if}
         </div>
     </div>
@@ -99,11 +113,15 @@
         margin-top: 3px;
     }
 
-    .date {
+    .detail {
         font-size: 1.1rem;
         margin-top: 4px;
         color: #888888;
         line-height: 1.3rem;
+    }
+
+    .projectTitle {
+        font-weight: 700;
     }
 
     .info {

@@ -173,3 +173,10 @@ export async function loadUserItemProperties(items, options) {
         }
     }
 }
+
+export function catchMongoError(res, error) {
+    // console.log('mongo error', error);
+    const duplicateKey = error.errmsg && error.errmsg.includes('duplicate key');
+    // console.log('duplicateKey', duplicateKey);
+    errorResponse(res, {duplicateKey}, {errorMsg: duplicateKey ? 'duplicate id for new item' : 'mongo error', errorObject: error});
+}

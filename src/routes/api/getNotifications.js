@@ -1,9 +1,11 @@
+import { DEBUG } from '../../server/config';
+
 import {
 	init,
 	response,
 	errorResponse,
 	validateCredentials,
-} from '../../server/mongo.js';
+} from '../../server/mongo';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -23,9 +25,14 @@ export async function post(req, res, next) {
     }
 
 	const filter = {};
-    filter.userId = userId;
+	filter.userId = userId;
+	if (!DEBUG) {
+		filter.notPriority = {$ne: true};
+	}
 
     let notifications = await db.collection('notifications').find(filter).toArray();
+
+    // notifications.sort((a,b) => a.createdAt - b.createdAt ); // sort by reversed created time
 
 	// notifications = notifications.filter((notification) => {
 	// 	return !notification.disabled;

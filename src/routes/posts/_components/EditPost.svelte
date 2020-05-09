@@ -237,7 +237,7 @@
 			}
 			createPost(postDetails).then((result) => {
 				// console.log('create post result', result);
-				if (result && result.success) {
+				if (result && (result.success || result.addedPost || result.duplicateKey)) {
 					clearDraftPost(curPostType, draftId, editPost);
 				}
 			});
@@ -263,7 +263,7 @@
 			if (result) {
 				result.then((result) => {
 					// console.log('save post result', result);
-					if (result && result.success) {
+					if (result && (result.success || result.addedPost || result.duplicateKey)) {
 						clearDraftPost(curPostType, draftId, editPost);
 					}
 				});

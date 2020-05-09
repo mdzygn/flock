@@ -1,4 +1,9 @@
-import { init, validateCredentials, response, filterItemDetails } from '../../server/mongo.js';
+import config from '../../server/config';
+
+import { init, validateCredentials, response, errorResponse, filterItemDetails, catchMongoError } from '../../server/mongo';
+import createNotification from '../../server/createNotification';
+
+import NotificationTypes from '../../config/NotificationTypes';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -35,7 +40,15 @@ export async function post(req, res, next) {
 		details.modifiedAt = details.createdAt;
 		details.lastActiveAt = details.createdAt;
 
-		const result = await db.collection('posts').insertOne(details);
+		let result;
+
+		try {
+			result = await db.collection('posts').insertOne(details);
+		} catch (error) {
+			catchMongoError(res, error);
+			return;
+		}
+		const addedPost = !!result;
 
 		if (result) {
 			let updateParentCountResult;
@@ -61,20 +74,59 @@ export async function post(req, res, next) {
 					const projectUpdateResult = await db.collection('projects').updateOne({ id: details.projectId }, { $set: { lastActiveAt: details.lastActiveAt } });
 
 					if (projectUpdateResult) {
-						response(res, {success: true});
+						const postDetails = {
+							id: true,
+
+							userId: true,
+							channelId: true,
+							projectId: true,
+							threadId: true,
+
+							type: true,
+
+							title: true,
+							message: true,
+							image: true,
+						};
+
+						const notificationResult = await createNotification(db, {
+							type: NotificationTypes.POST_ADDED,
+							actors: [{id: details.userId}],
+
+							projectId: details.projectId,
+
+							postId: details.id,
+							threadId: details.threadId,
+							channelId: details.channelId,
+						}, {
+							postTitle: details.title,
+						}, res, {addedPost: true});
+						if (notificationResult === -1) {
+							return;
+						}
+
+						if (config.DEBUG) {
+							if (notificationResult) {
+								response(res, {success: true});
+							} else {
+								errorResponse(res, {addedPost: true}, {errorMsg: 'error creating addPost notification', result: notificationResult});
+							}
+						} else {
+							errorResponse(res, {addedPost: true});
+						}
 					} else {
-						response(res, {error: true});
+						errorResponse(res, {addedPost: true});
 					}
 				} else {
-					response(res, {error: true});
+					errorResponse(res, {addedPost: true});
 				}
 			} else {
-				response(res, {error: true});
+				errorResponse(res, {addedPost: true});
 			}
 		} else {
-			response(res, {error: true});
+			errorResponse(res, {});
 		}
 	} else {
-		response(res, {error: true});
+		errorResponse(res, {});
 	}
 }

@@ -3,7 +3,7 @@
 <script>
 	import { stores } from '@sapper/app';
 	const { page } = stores();
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 
 	import config from '../config';
 
@@ -100,9 +100,15 @@
 
 	let viewHeight;
 	let viewWidth;
+
+	let prevViewHeight = 0;
+	let curViewHeight = 0;
+
 	let initialHeightSet = false;
 	let initialHeight = false;
 	let keyboardShown = false;
+
+	let landscapeScrollMode = false;
 
 	$: {
 		if (!initialHeightSet) {
@@ -117,6 +123,51 @@
 		}
 	}
 
+	$: {
+		prevViewHeight = curViewHeight || viewHeight;
+		const newLandscapeScrollMode = viewHeight < config.MOBILE_DEVICE_MAX_HEIGHT;
+		curViewHeight = viewHeight;
+
+		if (newLandscapeScrollMode !== landscapeScrollMode) {
+			let curScrollView = document.getElementsByClassName('scrollView');
+			curScrollView = (curScrollView && curScrollView[0]) || null;
+
+			let curScrollPosition = 0;
+
+			if (curScrollView) {
+				if (landscapeScrollMode) {
+					curScrollPosition = document.documentElement.scrollTop;
+					// console.log('document.documentElement.scrollTop', document.documentElement.scrollTop);
+				} else {
+					curScrollPosition = curScrollView.scrollTop;
+					// console.log('curScrollView.scrollTop', curScrollView.scrollTop);
+				}
+				// console.log('origScrollPosition', curScrollPosition);
+				curScrollPosition += prevViewHeight/2;
+				// console.log('curScrollPosition', curScrollPosition, prevViewHeight/2);
+
+				landscapeScrollMode = newLandscapeScrollMode;
+
+				(async () => {
+					await tick();
+					if (curScrollView) {
+						curScrollPosition -= curViewHeight/2;
+						// console.log('output curScrollPosition', curScrollPosition, curViewHeight/2);
+						if (landscapeScrollMode) {
+							document.documentElement.scrollTop = curScrollPosition;
+							// console.log('new document.documentElement.scrollTop', document.documentElement.scrollTop);
+						} else {
+							curScrollView.scrollTop = curScrollPosition;
+							// console.log('new curScrollView.scrollTop', curScrollView.scrollTop);
+						}
+					}
+				})();
+			} else {
+				landscapeScrollMode = newLandscapeScrollMode;
+			}
+		}
+	}
+
 	$: showFeedBg = isDarkBgForPath(path);
 
 	let scrollRegion;
@@ -128,7 +179,7 @@
 		<DesktopWarning />
 		<Splash />
 		<Overlays />
-		<div class="pageContent" class:keyboardShown="{keyboardShown}">
+		<div class="pageContent" class:landscapeScrollMode="{landscapeScrollMode}" class:keyboardShown="{keyboardShown}">
 			<main>
 				<slot></slot>
 			</main>
@@ -144,6 +195,13 @@
 
 		width: 100%;
 		height: 100%;
+	}
+
+	.pageContent {
+		position: absolute;
+		top: 60px; /* header height */
+		bottom: 76px; /* nav height */
+		width: 100%;
 	}
 
 	@media (min-width: 480px) and (min-height: 480px) {
@@ -168,13 +226,6 @@
 		}
 	}
 
-	.pageContent {
-		position: absolute;
-		top: 60px; /* header height */
-		bottom: 76px; /* nav height */
-		width: 100%;
-	}
-
 	.pageContent.keyboardShown {
 		bottom: 0; /* collapse nav */
 	}
@@ -188,10 +239,31 @@
 			display: none;
 		}
 
+		/* appContent {
+			height: 120%;
+		} */
+
 		.pageContent {
 			top: 0;
 			bottom: 0;
+			/* position: relative; */
 		}
+		/* .pageContent :global(.content) {
+			position: relative;
+		}
+		.pageContent :global(.scrollView) {
+			position: relative;
+		} */
+	}
+
+	.pageContent.landscapeScrollMode {
+		position: relative;
+	}
+	.pageContent.landscapeScrollMode :global(.content) {
+		position: relative;
+	}
+	.pageContent.landscapeScrollMode :global(.scrollView) {
+		position: relative;
 	}
 
 	.showFeedBg {

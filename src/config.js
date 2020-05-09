@@ -20,6 +20,7 @@ export const headerImageExtension = '.jpg';
 export const CONTENT_IDENTIFIER_PATH = 'content/';
 
 export const MOBILE_DEVICE_MAX_WIDTH = 768;
+export const MOBILE_DEVICE_MAX_HEIGHT = 480;
 
 export const MAX_ID_LENGTH = 12;
 
@@ -86,6 +87,7 @@ export default {
     CONTENT_IDENTIFIER_PATH,
 
     MOBILE_DEVICE_MAX_WIDTH,
+    MOBILE_DEVICE_MAX_HEIGHT,
 
     MAX_ID_LENGTH,
 

@@ -7,6 +7,8 @@
 
     import { getDateAgeString } from '../../utils';
 
+    import { getNotificationMessage } from '../../utils/NotificationUtil';
+
     import { getUser, getUserModelFromData } from '../../models/usersModel';
 
     import { loadPost, loadChannel, loadProject } from '../../actions/appActions';
@@ -18,7 +20,8 @@
     $: isUserAction = ($notification && $notification.isUserAction) || true;
 
     $: title = ($notification && $notification.title) || '';
-    $: message = ($notification && $notification.message) || ($notification && $notification.notPriority && '<i>(indirect)</i>') || '';
+    // $: message = ($notification && $notification.message) || ($notification && $notification.notPriority && '<i>(indirect)</i>') || '';
+    $: message = ($notification && getNotificationMessage($notification)) || '';
 
     $: postId = ($notification && $notification.postId) || null;
     $: threadId = ($notification && $notification.threadId) || null;

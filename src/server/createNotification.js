@@ -72,7 +72,7 @@ async function createNotification(db, details, data, res, completedData) {
                     id: actor.id,
                     username: actor.username,
                     avatarImage: actor.avatarImage,
-                    name: actor.name,
+                    name: actor.name || actor.fullName,
                 };
                 if (!actor.avatarImage) {
                     newActor.style = actor.style;
@@ -177,7 +177,7 @@ async function createNotification(db, details, data, res, completedData) {
         let failed = false;
         let lastResult = null;
         values.forEach((curResult, index) => {
-            console.log('result ' + index, curResult);
+            // console.log('result ' + index, curResult);
             if (!curResult) {
                 failed = true;
             }

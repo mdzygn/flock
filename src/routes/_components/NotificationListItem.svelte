@@ -20,6 +20,7 @@
     $: title = ($notification && $notification.title) || '';
     $: message = ($notification && $notification.message) || ($notification && $notification.notPriority && '<i>(indirect)</i>') || '';
 
+    $: postId = ($notification && $notification.postId) || null;
     $: threadId = ($notification && $notification.threadId) || null;
     $: channelId = ($notification && $notification.channelId) || null;
     $: projectId = ($notification && $notification.projectId) || null;
@@ -38,6 +39,8 @@
     function loadItem() {
         if (threadId) {
             loadPost(threadId);
+        } else if (postId) {
+            loadPost(postId);
         } else if (channelId) {
             loadChannel(channelId);
         } else if (projectId) {

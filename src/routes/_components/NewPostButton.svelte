@@ -6,7 +6,7 @@
 
     import NewPostIcon from "../../assets/icons/create_post.png";
 
-    export let type = 'new_post';
+    // export let type = 'new_post';
 
     export let icon = NewPostIcon;
     export let label = locale.GENERAL.NEW_POST; // 'new post';

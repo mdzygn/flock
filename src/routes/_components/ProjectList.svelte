@@ -55,7 +55,7 @@
 
         <ContentPanel title="{title}" showMoreAction="{(areMoreItems || forceShowMoreShow) ? showMoreAction : false}" {hideShowMoreWithVisibility} {forceShowMoreShow} {showMoreLabel}>
 			{#if $loadingProjects && (!$projects || !$projects.length)}
-			    <ContentLoader label="{locale.LOADING.PROFILE_PROJECTS}" />
+			    <ContentLoader label="{locale.LOADING.PROJECT_ITEMS}" />
             {:else}
                 {#each $projects as project, index}
                     {#if !displayLimit || index < displayLimit}

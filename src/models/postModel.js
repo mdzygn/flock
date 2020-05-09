@@ -13,10 +13,6 @@ const PostModel = (postData) => {
         title: '',
         message: null,
 
-        // media: null,
-
-        projectId: '',
-
         createdAt: 0,
 
         likeCount: 0,

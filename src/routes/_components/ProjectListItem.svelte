@@ -98,10 +98,6 @@
 		align-items: center;
     }
 
-    .detailInnerContent {
-
-    }
-
     .title {
         font-size: 1.4rem;
         font-weight: 700;

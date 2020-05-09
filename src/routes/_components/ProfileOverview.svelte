@@ -177,7 +177,7 @@
                 <!-- {#if $showBetaFeatures} -->
                     <div class="footerActions">
                         <Location location="{userLocation}" hideWithVisibility="{isCurrentUser}" />
-                        {#if isCurrentUser}
+                        {#if isCurrentUser && $showBetaFeatures}
                             <Audience />
                         {/if}
                     </div>
@@ -465,7 +465,7 @@
 
     .footerActions :global(.audienceButton) {
 		position: absolute;
-		top: 0;
+        top: -3px;
         right: 8px;
 	}
 </style>

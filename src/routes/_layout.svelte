@@ -16,6 +16,7 @@
 	import Nav from './_components/Nav.svelte';
 	import Overlays from './_components/Overlays.svelte';
 
+	import DesktopWarning from './_components/DesktopWarning.svelte';
 	import Splash from './_components/Splash.svelte';
 
 	export let segment;
@@ -124,6 +125,7 @@
 <appContainer>
 	<GoogleAnalytics />
 	<appContent class:showFeedBg="{showFeedBg}">
+		<DesktopWarning />
 		<Splash />
 		<Overlays />
 		<div class="pageContent" class:keyboardShown="{keyboardShown}">

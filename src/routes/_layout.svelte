@@ -33,6 +33,7 @@
 
 	import {
 		curPath,
+		prevPath,
 
 		projectId,
 		conversationId,
@@ -58,6 +59,9 @@
 	$: {
 		const changedPath = ($curPath !== $page.path);
 
+		if ($prevPath !== $curPath) {
+			$prevPath = $curPath;
+		}
 		$curPath = $page.path;
 
 		checkParams($page.query);

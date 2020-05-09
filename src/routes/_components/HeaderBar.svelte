@@ -1,9 +1,10 @@
 <script>
+    import { get } from 'svelte/store';
+    import { goto } from '@sapper/app';
+
     import locale from '../../locale';
     import promptIds from '../../config/promptIds';
     import { menuIds } from '../../config/menus';
-
-    import { goto } from '@sapper/app';
 
     import config from '../../config';
 
@@ -14,6 +15,7 @@
     import { getSectionByPath, getIdForSection } from "../../models/sectionsModel";
 
     import {
+        prevPath,
         viewMode,
         projectId,
         channelId,
@@ -114,6 +116,8 @@
             goto('projects');
         } else if (curSection && curSection.useLastPreProjectPath && $lastPreProjectPath) {
             goto($lastPreProjectPath);
+        } else if (showBack && get(prevPath)) {
+            history.back();
         } else if (parentPath) {
             let match;
             if (match = parentPath.match(/\[project\]/)) {
@@ -122,9 +126,9 @@
                 parentPath = parentPath.substr(0, match.index) + $channelId + parentPath.substr(match.index + match[0].length);
             }
             goto(parentPath);
-        } else if (showBack) {
+        } /* else if (showBack) {
             history.back();
-        }
+        }*/
     }
 
     function loadMyProfile() {

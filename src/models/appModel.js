@@ -49,6 +49,7 @@ const appModel = createModel({
 }, {persist: true}, 'appState', AppModel);
 
 export const curPath = writable(null);
+export const prevPath = writable(null);
 
 export const lastPreProjectPath = writable(null);
 

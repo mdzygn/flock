@@ -5,6 +5,7 @@ import { generateId, errorResponse } from '../server/mongo';
 import NotificationTypes from '../config/NotificationTypes';
 
 const MAX_NOTIFICATION_TEXT_LENGTH = 24;
+const INCLUDE_ACTOR = false;
 
 async function createNotification(db, details, data, res, completedData) {
     if (DEBUG) {
@@ -39,7 +40,6 @@ async function createNotification(db, details, data, res, completedData) {
     let getChannelTitle = false;
 
     let threadOwnerId = null; // get thread owner
-    let projectMembers = [];
 
 
     switch (details.type) {
@@ -62,20 +62,44 @@ async function createNotification(db, details, data, res, completedData) {
     let threadTitle = null;
     let channelTitle = null; // 'Questions'; // set from channel
 
+    // details.actors.forEach((actor) => {
+    //     actor.username =
+    //     actor.name =
+    //     actor.avatarImage =
+    //     actor.style =  // user style if no avatarImage set
+    // });
+
+    // if getProjectMembers  // add to users and set projectMembers
+    // if getProjectFollowers  // add to users
+    // add one for each member and follower of project
+    // const users = [{
+    //     id: 'YRVQ6vOE',
+    //     thumb: 'Test User',
+    //     isTeamMember: true,
+    // }]
+
+    let targetUserIds = [];
+    let projectMembers = [];
+    // projectMembers = ['YRVQ6vOE'];
+
     if (getProject) {
         const projectFilter = { id: details.projectId };
         const projectResult = await db.collection('projects').findOne(projectFilter);
 
         if (projectResult) {
             projectTitle = projectResult.title;
+            projectMembers = projectResult.team;
+
+            targetUserIds = [...targetUserIds, ...projectMembers];
         } else {
             errorResponse(res, completedData, {errorMsg: 'createNotification - project not found'});
             return -1;
         }
     }
 
+    let actorIds = [];
     if (getActorDetails) {
-        const actorIds = details.actors.map((actor) => actor.id);
+        actorIds = details.actors.map((actor) => actor.id);
         const usersFilter = { id: { $in: actorIds } };
         const actorResults = await db.collection('users').find(usersFilter).toArray();
 
@@ -97,22 +121,6 @@ async function createNotification(db, details, data, res, completedData) {
             return -1;
         }
     }
-    // details.actors.forEach((actor) => {
-    //     actor.username =
-    //     actor.name =
-    //     actor.avatarImage =
-    //     actor.style =  // user style if no avatarImage set
-    // });
-
-    // if getProjectMembers  // add to users and set projectMembers
-    // if getProjectFollowers  // add to users
-    // add one for each member and follower of project
-    const users = [{
-        id: 'YRVQ6vOE',
-        thumb: 'Test User',
-        isTeamMember: true,
-    }]
-    projectMembers = ['YRVQ6vOE'];
 
     if (getThreadTitle) {
         const threadFilter = { id: details.threadId };
@@ -147,77 +155,80 @@ async function createNotification(db, details, data, res, completedData) {
 
     var allResults = [];
 
-    let curUser;
+    let curUserId;
     let curDetails;
     let isThreadOwner;
     let isProjectMember;
 
-    for (let userI = 0; userI < users.length; userI++) {
-        curUser = users[userI];
+    for (let userI = 0; userI < targetUserIds.length; userI++) {
+        curUserId = targetUserIds[userI];
 
-        curDetails = JSON.parse(JSON.stringify(details));
-        curDetails.userId = curUser.id;
+        // console.log(actorIds, curUserId);
+        if (!actorIds.includes(curUserId) || INCLUDE_ACTOR) {
+            curDetails = JSON.parse(JSON.stringify(details));
+            curDetails.userId = curUserId;
 
-        isProjectMember = projectMembers.includes(curUser.id);
+            isProjectMember = projectMembers.includes(curUserId);
 
-        curDetails.id = generateId(16);
+            curDetails.id = generateId(16);
 
-        // curDetails.message = null;
+            // curDetails.message = null;
 
-        switch (curDetails.type) {
-            case NotificationTypes.POST_ADDED:
-                if (curDetails.threadId) {
-                    isThreadOwner = (curUser.id === threadOwnerId);
-                    if (!isThreadOwner && !isProjectMember) {
-                        curDetails.notPriority = true;
-                        // continue; // skip if not thread owner or not member of project
+            switch (curDetails.type) {
+                case NotificationTypes.POST_ADDED:
+                    if (curDetails.threadId) {
+                        isThreadOwner = (curUserId === threadOwnerId);
+                        if (!isThreadOwner && !isProjectMember) {
+                            curDetails.notPriority = true;
+                            // continue; // skip if not thread owner or not member of project
+                        }
                     }
+                    // if (curDetails.threadId) {
+                    //     isThreadOwner = (curUserId === threadOwnerId);
+                    //     if (isThreadOwner || isProjectMember) {
+                    //         if (threadTitle) {
+                    //             curDetails.message = 'replied to "' + threadTitle + '"';
+                    //         } else if (channelTitle) {
+                    //             curDetails.message = 'replied to a post in #' + channelTitle + '';
+                    //         } else {
+                    //             curDetails.message = 'replied to a post';
+                    //         }
+                    //     } else {
+                    //         curDetails.notPriority = true;
+                    //         // continue; // skip if not thread owner or not member of project
+                    //     }
+                    // } else if (curDetails.channelId) {
+                    //     if (channelTitle) {
+                    //         curDetails.message = 'added a post to #' + channelTitle + '';
+                    //     } else {
+                    //         curDetails.message = 'added a post';
+                    //     }
+                    // } else {
+                    //     curDetails.message = 'posted an update';
+                    // }
+
+                    break;
+            }
+
+            if (!curDetails.notPriority) {
+                if (projectTitle) {
+                    curDetails.projectTitle = projectTitle;
                 }
-                // if (curDetails.threadId) {
-                //     isThreadOwner = (curUser.id === threadOwnerId);
-                //     if (isThreadOwner || isProjectMember) {
-                //         if (threadTitle) {
-                //             curDetails.message = 'replied to "' + threadTitle + '"';
-                //         } else if (channelTitle) {
-                //             curDetails.message = 'replied to a post in #' + channelTitle + '';
-                //         } else {
-                //             curDetails.message = 'replied to a post';
-                //         }
-                //     } else {
-                //         curDetails.notPriority = true;
-                //         // continue; // skip if not thread owner or not member of project
-                //     }
-                // } else if (curDetails.channelId) {
-                //     if (channelTitle) {
-                //         curDetails.message = 'added a post to #' + channelTitle + '';
-                //     } else {
-                //         curDetails.message = 'added a post';
-                //     }
-                // } else {
-                //     curDetails.message = 'posted an update';
-                // }
+                if (threadTitle) {
+                    curDetails.threadTitle = threadTitle;
+                }
+                if (channelTitle) {
+                    curDetails.channelTitle = channelTitle;
+                }
+            }
 
-                break;
+            // if (DEBUG && !curDetails.message && !curDetails.notPriority) {
+            //     throw new Error('no message set in createNotification', curDetails);
+            // }
+
+            const curResult = db.collection('notifications').insertOne(curDetails);
+            allResults.push(curResult);
         }
-
-        if (!curDetails.notPriority) {
-            if (projectTitle) {
-                curDetails.projectTitle = projectTitle;
-            }
-            if (threadTitle) {
-                curDetails.threadTitle = threadTitle;
-            }
-            if (channelTitle) {
-                curDetails.channelTitle = channelTitle;
-            }
-        }
-
-        // if (DEBUG && !curDetails.message && !curDetails.notPriority) {
-        //     throw new Error('no message set in createNotification', curDetails);
-        // }
-
-        const curResult = db.collection('notifications').insertOne(curDetails);
-        allResults.push(curResult);
     }
 
     const result = await Promise.all(allResults).then((values) => {

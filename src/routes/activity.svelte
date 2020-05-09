@@ -12,7 +12,7 @@
 </svelte:head>
 
 <div class="content">
-	<ScrollView>
+	<ScrollView id="activity">
 		<!-- <Proxy image="activity" className="proxyOverlay" /> -->
 
 		<NotificationList />

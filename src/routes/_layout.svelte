@@ -144,7 +144,7 @@
 		height: 100%;
 	}
 
-	@media (min-width: 480px) {
+	@media (min-width: 480px) and (min-height: 480px) {
 		appContainer {
 			position: absolute;
 			height: 100%;
@@ -175,6 +175,21 @@
 
 	.pageContent.keyboardShown {
 		bottom: 0; /* collapse nav */
+	}
+
+	@media (max-height: 480px) {
+		appContent :global(.headerBar) {
+			display: none;
+		}
+
+		appContent :global(nav) {
+			display: none;
+		}
+
+		.pageContent {
+			top: 0;
+			bottom: 0;
+		}
 	}
 
 	.showFeedBg {

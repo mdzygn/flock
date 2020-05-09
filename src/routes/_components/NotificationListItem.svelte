@@ -7,6 +7,8 @@
 
     import { getUser, getUserModelFromData } from '../../models/usersModel';
 
+    import { loadPost, loadChannel, loadProject } from '../../actions/appActions';
+
     export let notification;
 
     $: thumbImage = ''; // getProjectHeaderImage($notification, true);
@@ -15,6 +17,10 @@
 
     $: title = ($notification && $notification.title) || '';
     $: message = ($notification && $notification.message) || ($notification && $notification.notPriority && '<i>(indirect)</i>') || '';
+
+    $: threadId = ($notification && $notification.threadId) || null;
+    $: channelId = ($notification && $notification.channelId) || null;
+    $: projectId = ($notification && $notification.projectId) || null;
 
     $: projectTitle = $notification && $notification.projectTitle;
 
@@ -27,8 +33,14 @@
 
     $: titleString = title || actorName || '';
 
-
     function loadItem() {
+        if (threadId) {
+            loadPost(threadId);
+        } else if (channelId) {
+            loadChannel(channelId);
+        } else if (projectId) {
+            loadProject(projectId);
+        }
     }
 </script>
 

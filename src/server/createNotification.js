@@ -117,7 +117,7 @@ async function createNotification(db, details, data, res, completedData) {
         const threadResult = await db.collection('posts').findOne(threadFilter);
 
         if (threadResult) {
-            threadTitle = threadResult.title;
+            threadTitle = threadResult.title || threadResult.message;
         } else {
             errorResponse(res, completedData, {errorMsg: 'createNotification - thread post not found'});
             return -1;
@@ -167,7 +167,7 @@ async function createNotification(db, details, data, res, completedData) {
                         if (threadTitle) {
                             curDetails.message = 'replied to "' + threadTitle + '"';
                         } else if (channelTitle) {
-                            curDetails.message = 'replied to a post to #' + channelTitle + '';
+                            curDetails.message = 'replied to a post in #' + channelTitle + '';
                         } else {
                             curDetails.message = 'replied to a post';
                         }

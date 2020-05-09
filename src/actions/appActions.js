@@ -265,7 +265,7 @@ function setChannel(targetChannelId) {
     channel.set(curChannel);
 
     if (curChannel) {
-        if ((!get(projectId) || !get(project)) && curChannel.projectId) {
+        if ((!get(projectId) || !get(project) || get(projectId) !== curChannel.projectId) && curChannel.projectId) {
             loadProjectItem(curChannel.projectId);
         }
     }
@@ -293,10 +293,10 @@ function setPost(targetPostId) {
     post.set(curPost);
 
     if (curPost) {
-        if ((!get(channelId) || !get(channel)) && curPost.channelId) {
+        if ((!get(channelId) || !get(channel) || get(channelId) !== curPost.channelId) && curPost.channelId) {
             loadChannelItem(curPost.channelId);
         }
-        if ((!get(projectId) || !get(project)) && curPost.projectId) {
+        if ((!get(projectId) || !get(project) || get(projectId) !== curPost.projectId) && curPost.projectId) {
             loadProjectItem(curPost.projectId);
         }
     }

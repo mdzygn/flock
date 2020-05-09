@@ -54,11 +54,22 @@ async function createNotification(db, details, data, res, completedData) {
             break;
     }
 
-    let projectTitle = 'Test Project'; // set from project
+    let projectTitle = null; // set from project
     let threadTitle = null;
     let channelTitle = 'Questions'; // set from channel
 
     // if getProject  // get project
+    if (getProject) {
+        const projectFilter = { id: details.projectId };
+        const projectResult = await db.collection('projects').findOne(projectFilter);
+
+        if (projectResult) {
+            projectTitle = projectResult.title;
+        } else {
+            errorResponse(res, completedData, {errorMsg: 'createNotification - project not found'});
+            return -1;
+        }
+    }
 
     // if getActorDetails  // get actor details
     if (getActorDetails) {

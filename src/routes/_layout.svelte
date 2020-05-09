@@ -59,10 +59,14 @@
 	$: {
 		const changedPath = ($curPath !== $page.path);
 
-		if ($prevPath !== $curPath) {
-			$prevPath = $curPath;
+		if ($curPath !== $page.path) {
+			if ($prevPath !== $curPath) {
+				$prevPath = $curPath;
+			}
+			$curPath = $page.path;
+
+			console.log('curPath', $curPath, 'prevPath', $prevPath);
 		}
-		$curPath = $page.path;
 
 		checkParams($page.query);
 

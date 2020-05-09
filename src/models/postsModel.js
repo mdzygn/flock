@@ -99,8 +99,6 @@ function mergePosts(newPosts) {
 
 export function getPosts(options) {
 	if (options.threadId || options.channelId) {
-		curPostFilterOptions = options;
-
 		if (curPostFilterOptions && options && (
 			curPostFilterOptions.type !== options.type ||
 			curPostFilterOptions.channelId !== options.channelId ||
@@ -108,6 +106,9 @@ export function getPosts(options) {
 		)) {
 			clearFilteredPosts();
 		}
+
+		curPostFilterOptions = JSON.parse(JSON.stringify(options));
+
 		filterCurrentPosts();
 
 		loadPosts(curPostFilterOptions);

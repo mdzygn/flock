@@ -14,12 +14,25 @@
 
 	import { newProject } from '../../actions/appActions';
 
-	// import { loadingNotifications } from '../../models/notificationsModel';
-	const loadingNotifications = writable(false);
+    import {
+        userId,
+    } from '../../models/appModel';
 
-	// import { loadNotification } from '../../actions/appActions';
+	import { getNotifications, loadingNotifications } from '../../models/notificationsModel';
+	// const loadingNotifications = writable(false);
 
-    export let notifications;
+
+	// import noficationData from '../data/notifications.json';
+	// const notificationItems = JSON.parse(JSON.stringify(noficationData));
+	// const notificationItemModels = notificationItems.map((item) => {
+	// 	return writable(item);
+	// })
+    // const notifications = writable(notificationItemModels); // get from notificationsModel
+
+    // export let notifications;
+
+    let notifications = writable([]);
+	$: { notifications = getNotifications({ userId: $userId }) };
 
     export let className = '';
 </script>
@@ -56,7 +69,7 @@
         font-size: 1.2rem;
         line-height: 1.8rem;
         padding-top: 10px;
-        padding-bottom: 30px;
+        padding-bottom: 20px;
     }
 
     .notificationList :global(.contentLoader) {

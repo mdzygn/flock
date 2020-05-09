@@ -5,14 +5,6 @@
 	import { writable } from 'svelte/store';
 
 	import NotificationList from './_components/NotificationList.svelte';
-
-	import noficationData from '../data/notifications.json';
-	const notificationItems = JSON.parse(JSON.stringify(noficationData));
-	const notificationItemModels = notificationItems.map((item) => {
-		return writable(item);
-	})
-
-	const notifications = writable(notificationItemModels); // get from notificationsModel
 </script>
 
 <svelte:head>
@@ -23,7 +15,7 @@
 	<ScrollView>
 		<!-- <Proxy image="activity" className="proxyOverlay" /> -->
 
-		<NotificationList {notifications} />
+		<NotificationList />
 	</ScrollView>
 </div>
 

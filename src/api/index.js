@@ -303,6 +303,19 @@ function requestUpload(options) {
 	});
 }
 
+/*** Notifications ***/
+
+// options = { userId: id }
+function getNotifications(options) {
+	options = addCredentials(options);
+	return send('getNotifications', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - getNotifications: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
 
 
 const api = {
@@ -332,6 +345,7 @@ const api = {
 	likePost,
 	unlikePost,
 
+	getNotifications,
 
 	requestUpload,
 }

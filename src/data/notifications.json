@@ -1,6 +1,7 @@
 [
    {
-      "id":"",
+      "id":"bfab44gv5",
+      "userId":"YRVQ6vOE",
       "type":"postAdded",
       "isUserAction": true,
       "title":"Lidia Marin",
@@ -9,14 +10,21 @@
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
-      "userId":"sl3p5oms",
+      "actors": [
+         {
+            "id":"sl3p5oms",
+            "username":"sl3p5oms",
+            "name":"Lidia Marin"
+         }
+      ],
       "postId": "",
       "threadId": "",
       "channelId": "",
       "projectId": ""
    },
    {
-      "id":"",
+      "id":"davv5ysd",
+      "userId":"YRVQ6vOE",
       "type":"postAdded",
       "isUserAction": true,
       "title":"Wyatt Morris",
@@ -25,14 +33,21 @@
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
-      "userId":"sl3p5oms",
+      "actors": [
+         {
+            "id":"sl3p5oms",
+            "username":"sl3p5oms",
+            "name":"Wyatt Morris"
+         }
+      ],
       "postId": "",
       "threadId": "",
       "channelId": "",
       "projectId": ""
    },
    {
-      "id":"",
+      "id":"bfj641sdf",
+      "userId":"YRVQ6vOE",
       "type":"postAdded",
       "isUserAction": true,
       "title":"Sasha Ho",
@@ -41,14 +56,21 @@
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
-      "userId":"sl3p5oms",
+      "actors": [
+         {
+            "id":"sl3p5oms",
+            "username":"sl3p5oms",
+            "name":"Sasha Ho"
+         }
+      ],
       "postId": "",
       "threadId": "",
       "channelId": "",
       "projectId": ""
    },
    {
-      "id":"",
+      "id":"bfab6uy54",
+      "userId":"YRVQ6vOE",
       "type":"postAdded",
       "isUserAction": true,
       "title":"Derrick Wells",
@@ -57,14 +79,21 @@
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
-      "userId":"sl3p5oms",
+      "actors": [
+         {
+            "id":"sl3p5oms",
+            "username":"sl3p5oms",
+            "name":"Derrick Wells"
+         }
+      ],
       "postId": "",
       "threadId": "",
       "channelId": "",
       "projectId": ""
    },
    {
-      "id":"",
+      "id":"bf54gdag2",
+      "userId":"YRVQ6vOE",
       "type":"postAdded",
       "isUserAction": true,
       "title":"Bonnie Riley",
@@ -73,7 +102,13 @@
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
-      "userId":"sl3p5oms",
+      "actors": [
+         {
+            "id":"sl3p5oms",
+            "username":"sl3p5oms",
+            "name":"Bonnie Riley"
+         }
+      ],
       "postId": "",
       "threadId": "",
       "channelId": "",
@@ -82,7 +117,8 @@
 
    ,
    {
-      "id":"",
+      "id":"7jvds2t4t",
+      "userId":"YRVQ6vOE",
       "type":"postAdded",
       "isUserAction": true,
       "title":"Lidia Marin",
@@ -91,14 +127,21 @@
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
-      "userId":"sl3p5oms",
+      "actors": [
+         {
+            "id":"sl3p5oms",
+            "username":"sl3p5oms",
+            "name":"Lidia Marin"
+         }
+      ],
       "postId": "",
       "threadId": "",
       "channelId": "",
       "projectId": ""
    },
    {
-      "id":"",
+      "id":"fghafg54",
+      "userId":"YRVQ6vOE",
       "type":"postAdded",
       "isUserAction": true,
       "title":"Wyatt Morris",
@@ -107,14 +150,21 @@
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
-      "userId":"sl3p5oms",
+      "actors": [
+         {
+            "id":"sl3p5oms",
+            "username":"sl3p5oms",
+            "name":"Wyatt Morris"
+         }
+      ],
       "postId": "",
       "threadId": "",
       "channelId": "",
       "projectId": ""
    },
    {
-      "id":"",
+      "id":"gfg5y5jsw",
+      "userId":"YRVQ6vOE",
       "type":"postAdded",
       "isUserAction": true,
       "title":"Sasha Ho",
@@ -123,14 +173,21 @@
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
-      "userId":"sl3p5oms",
+      "actors": [
+         {
+            "id":"sl3p5oms",
+            "username":"sl3p5oms",
+            "name":"Sasha Ho"
+         }
+      ],
       "postId": "",
       "threadId": "",
       "channelId": "",
       "projectId": ""
    },
    {
-      "id":"",
+      "id":"h4fdsf34",
+      "userId":"YRVQ6vOE",
       "type":"postAdded",
       "isUserAction": true,
       "title":"Derrick Wells",
@@ -139,14 +196,21 @@
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
-      "userId":"sl3p5oms",
+      "actors": [
+         {
+            "id":"sl3p5oms",
+            "username":"sl3p5oms",
+            "name":"Derrick Wells"
+         }
+      ],
       "postId": "",
       "threadId": "",
       "channelId": "",
       "projectId": ""
    },
    {
-      "id":"",
+      "id":"92n90dfs",
+      "userId":"YRVQ6vOE",
       "type":"postAdded",
       "isUserAction": true,
       "title":"Bonnie Riley",
@@ -155,7 +219,13 @@
       "createdAt":1586248516546,
       "seen": false,
       "viewed": false,
-      "userId":"sl3p5oms",
+      "actors": [
+         {
+            "id":"sl3p5oms",
+            "username":"sl3p5oms",
+            "name":"Bonnie Riley"
+         }
+      ],
       "postId": "",
       "threadId": "",
       "channelId": "",

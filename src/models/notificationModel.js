@@ -3,6 +3,7 @@ import { writable } from 'svelte/store';
 const NotificationModel = (notificationData) => {
     let initData = {
         id: '',
+        userId: '',
 
         type: '',
         isUserAction: true,
@@ -16,9 +17,7 @@ const NotificationModel = (notificationData) => {
         seen: false,
         viewed: false,
 
-        userId: '',
-        username: '',
-        userDisplayName: '',
+        actors: [],
 
         postId: '',
         threadId: '',

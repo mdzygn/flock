@@ -165,6 +165,9 @@ const locale = {
 		INSPIRATION: 'Inspirational references and links',
 		RANDOM: 'Off-topic discussions and links',
 		SUGGESTIONS: 'Suggestions to improve the project community',
+	},
+	NOTIFICATIONS: {
+		NO_NOTIFICATIONS: 'no recent activity',
 	}
 }
 

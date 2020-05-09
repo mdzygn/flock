@@ -78,13 +78,13 @@
     .detailContent {
         position: absolute;
         left: 96px;
-        top: 0;
+        top: 16px;
         bottom: 0;
         right: 60px;
 
 		display: flex;
-        align-items: flex-end;
-        padding-bottom: 3px;
+        align-items: center;
+        /* padding-bottom: 3px; */
     }
 
     .title {

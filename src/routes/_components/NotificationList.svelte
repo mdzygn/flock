@@ -10,7 +10,9 @@
 
 	import ContentPanel from './../_components/ContentPanel.svelte';
     import NotificationListItem from './NotificationListItem.svelte';
-	import ContentLoader from './../_components/ContentLoader.svelte';
+    import ContentLoader from './../_components/ContentLoader.svelte';
+
+	import { newProject } from '../../actions/appActions';
 
 	// import { loadingNotifications } from '../../models/notificationsModel';
 	const loadingNotifications = writable(false);
@@ -22,21 +24,20 @@
     export let className = '';
 </script>
 
-{#if ($notifications && $notifications.length)}
-    <div class="notificationList {className}">
-        {#if $loadingNotifications && (!$notifications || !$notifications.length)}
-            <ContentLoader label="{locale.LOADING.NOTIFICATIONS}" />
+<div class="notificationList {className}">
+    {#if $loadingNotifications && (!$notifications || !$notifications.length)}
+        <ContentLoader label="{locale.LOADING.NOTIFICATIONS}" />
+    {:else}
+        {#each $notifications as notification}
+            <NotificationListItem {notification} />
         {:else}
-            {#each $notifications as notification}
-                <NotificationListItem {notification} />
-            {:else}
-                <div class="noNotifications">
-                    <slot>no notifications yet</slot>
-                </div>
-            {/each}
-        {/if}
-    </div>
-{/if}
+            <div class="noNotifications">
+                {locale.NOTIFICATIONS.NO_NOTIFICATIONS}<br/><br/>
+                <a href="discover">Discover</a> inspiring projects to follow<br/>or create a <a href="javascript:void(0)" on:click="{newProject}">New Project</a>
+            </div>
+        {/each}
+    {/if}
+</div>
 
 <style>
     .notificationList {
@@ -51,14 +52,15 @@
     }
 
     .noNotifications {
+        padding: 0 20px;
         font-size: 1.2rem;
+        line-height: 1.8rem;
         padding-top: 10px;
         padding-bottom: 30px;
-        line-height: 2.5rem;
     }
 
     .notificationList :global(.contentLoader) {
-        padding: 0;
+        padding: 0 20px;
         font-size: 1.2rem;
         padding-top: 10px;
         padding-bottom: 30px;

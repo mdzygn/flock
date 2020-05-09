@@ -14,6 +14,7 @@ const locale = {
 		SHOW_MORE: 'show more',
 		UPLOAD_IMAGE: 'upload',
 		SEARCH_PLACEHOLDER: 'search',
+		NEW_POST: 'new post',
 	},
 	HEADER: {
 		SIGN_IN: 'sign in',
@@ -90,6 +91,7 @@ const locale = {
 	THREAD: {
 		NOT_FOUND: 'post not found',
 		NO_POSTS: 'this post has no comments',
+		REPLY: 'reply',
 	},
 	POST: {
 		EDITED: 'edited'
@@ -101,6 +103,7 @@ const locale = {
 		CHANNELS_FOLLOW_LINK: 'Follow',
 		CHANNELS_FOLLOW: ' this project to view discussion channels and get involved.',
 		CHANNELS_FOLLOW_ALL: ' this project to view all discussion channels and get involved.',
+		POST_UPDATE: 'post update',
 	},
 	PROFILE: {
 		NOT_FOUND: 'profile not found',

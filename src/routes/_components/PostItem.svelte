@@ -389,6 +389,8 @@
     .postImageContainer.showFullImage {
         padding-left: 0;
         padding-right: 0;
+        display: flex;
+        justify-content: center;
     }
 	.postImage {
         max-width: 100%;

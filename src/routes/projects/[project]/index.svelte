@@ -280,7 +280,8 @@
 					<ChannelList project="{project}" />
 					{#if $showBetaFeatures}
 						{#if canEdit}
-							<NewPostButton type="project_post_update" />
+							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" />
+							 <!-- type="project_post_update" -->
 						{/if}
 					{/if}
 				{:else if $projectReturnView}
@@ -288,7 +289,7 @@
 					<ChannelList project="{project}" />
 					{#if $showBetaFeatures}
 						{#if canEdit}
-							<NewPostButton type="project_post_update" />
+							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" />
 						{/if}
 						<ProjectLinks project="{$project}" />
 					{/if}
@@ -301,7 +302,7 @@
 							<Proxy image="project_post_3" className="contentItem projectPost" />
 						</div>
 						{#if canEdit}
-							<NewPostButton type="project_post_update" />
+							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" />
 						{/if}
 					{/if}
 				{:else}

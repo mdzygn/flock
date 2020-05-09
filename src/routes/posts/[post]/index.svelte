@@ -15,6 +15,8 @@
 	import ContentLoader from '../../_components/ContentLoader.svelte';
 	import PostItem from '../../_components/PostItem.svelte';
 
+    import ReplyIcon from "../../../assets/icons/reply.png";
+
 	import EditPost from '../../posts/_components/EditPost.svelte';
 
 	import { loadProfile } from '../../../actions/appActions';
@@ -179,7 +181,8 @@
 						{/each}
 					</div>
 					{#if !showAddPost && $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
-						<NewPostButton onClick="{reply}" type="reply" />
+						<NewPostButton onClick="{reply}" icon="{ReplyIcon}" label="{locale.THREAD.REPLY}" />
+						<!-- type="reply" -->
 					{/if}
 				</div>
 			</div>

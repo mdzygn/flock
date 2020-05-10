@@ -14,7 +14,7 @@
 
     import { getSectionByPath, getIdForSection } from "../../models/sectionsModel";
 
-    import { getNotifications } from "../../models/notificationsModel";
+    // import { getNotifications } from "../../models/notificationsModel";
 
     import {
         prevPath,
@@ -46,7 +46,7 @@
     export let segment;
     export let path;
 
-	$: getNotifications({ userId: $userId, getUnviewed: true });
+	// $: getNotifications({ userId: $userId, getUnviewed: true });
 
     loadCurrentUser();
 

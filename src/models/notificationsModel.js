@@ -9,6 +9,8 @@ import loadingRequestUtil from '../utils/loadingRequestUtil';
 
 import NotificationModel from '../models/notificationModel';
 
+import { userId, usercode } from '../models/appModel';
+
 export let loadingNotifications = writable(false);
 
 let curNotificationFilterOptions = null;
@@ -18,6 +20,17 @@ let notificationsUpdatedHandlers = [];
 let notifications = writable([]);
 
 export let notificationUnviewedCount = writable(0);
+
+// $: getNotifications({ userId: $userId, getUnviewed: true });
+
+userId.subscribe(updateNotifications);
+usercode.subscribe(updateNotifications);
+
+function updateNotifications() {
+	if (get(userId) && get(usercode)) {
+		getNotifications({ userId: get(userId), getUnviewed: true });
+	}
+}
 
 notifications.subscribe(() => {
 	const unviewedNotifications = get(notifications).filter(notification => !get(notification).viewed && !get(notification).indirect);

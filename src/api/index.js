@@ -317,6 +317,18 @@ function getNotifications(options) {
 	});
 }
 
+// options = { userId: id, ids: [id] }
+function updateNotifications(options) {
+	options = addCredentials(options);
+	return send('updateNotifications', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - updateNotifications: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 
 const api = {
 	getProjects,
@@ -346,6 +358,7 @@ const api = {
 	unlikePost,
 
 	getNotifications,
+	updateNotifications,
 
 	requestUpload,
 }

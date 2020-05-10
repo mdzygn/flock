@@ -1,12 +1,10 @@
 import api from '../api';
 
+import config from '../config';
+
 import { writable, get } from 'svelte/store';
 
 import loadingRequestUtil from '../utils/loadingRequestUtil';
-
-import {
-	userId,
-} from '../models/appModel';
 
 import NotificationModel from '../models/notificationModel';
 
@@ -98,19 +96,32 @@ export function checkNotificationSeen(details) {
 		const postId = details.postId;
 		const notificationModels = get(notifications).filter(itemModel => {
 			const item = get(itemModel);
-			return (item.postId === postId) || (item.threadId === postId);
+			return !item.viewed && ((item.postId === postId) || (item.threadId === postId));
 		});
+
+		const notificationsViewed = [];
 
 		notificationModels.forEach((notificationModel) => {
 			const notification = get(notificationModel);
 			// console.log('notification before', JSON.parse(JSON.stringify(notification)));
 
 			if (!notification.viewed) {
+				notificationsViewed.push(notification.id);
 				notification.viewed = true;
 				notificationModel.set(notification);
 
 				// notifications.set(get(notifications));
 			}
 		});
+
+		if (notificationsViewed.length) {
+			// console.log('update notificationsViewed: ', notificationsViewed);
+			const result = api.updateNotifications({ids: notificationsViewed});
+			// if (config.DEBUG) {
+			// 	result.then((result) => {
+			// 		console.log('notifications updated: ', result);
+			// 	});
+			// }
+		}
 	}
 }

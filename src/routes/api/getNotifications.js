@@ -28,7 +28,7 @@ export async function post(req, res, next) {
 	filter.userId = userId;
 	// filter.indirect = {$ne: true}; // need to return so can show notification areas
 
-    let notifications = await db.collection('notifications').find(filter).toArray();
+    let notifications = await db.collection('notifications').find(filter).sort({ createdAt: 1 }).toArray();
 
     // notifications.sort((a,b) => a.createdAt - b.createdAt ); // sort by reversed created time
 

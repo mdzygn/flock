@@ -11,7 +11,6 @@ export async function post(req, res, next) {
 	}
 
 	const unfollow = options.unfollow;
-	console.log('followPost');
 
 	if (options.userId && options.postId) {
 		const details = {};
@@ -22,7 +21,6 @@ export async function post(req, res, next) {
 		if (unfollow) {
 			followUpdateResult = await db.collection('postFollows').deleteMany(details);
 		} else {
-			console.log('add post follow');
 			details.createdAt = (new Date()).getTime();
 			followUpdateResult = await db.collection('postFollows').insertOne(details);
 		}

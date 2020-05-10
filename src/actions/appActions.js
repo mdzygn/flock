@@ -272,7 +272,7 @@ function setChannel(targetChannelId) {
 }
 
 export function loadPost(targetPostId, options) {
-    loadPosts({ id: targetPostId });
+    loadPosts({ id: targetPostId, getFollowState: true });
 
     postId.set(targetPostId);
     setPost(targetPostId);

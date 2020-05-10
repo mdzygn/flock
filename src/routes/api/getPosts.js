@@ -20,6 +20,7 @@ export async function post(req, res, next) {
 	const id = options && options.id;
 	const channelId = options && options.channelId;
 	const threadId = options && options.threadId;
+	const getFollowState = options && options.getFollowState;
 
 	const filter = {};
 	if (type) {
@@ -53,13 +54,17 @@ export async function post(req, res, next) {
 	});
 
 	if (posts.length && userId) {
-		await loadUserItemProperties(posts, {
+		const postSettings = {
 			userId,
 			itemIdProp: 'postId',
 			collections: {
 				likes: 'postLikes',
 			},
-		});
+		}
+		if (getFollowState) {
+			postSettings.collections.follows ='postFollows';
+		}
+		await loadUserItemProperties(posts, postSettings);
 	}
 
 	// const posts = []; // to test returning no posts

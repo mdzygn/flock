@@ -41,13 +41,14 @@ export async function post(req, res, next) {
 
 	let notifications = await db.collection('notifications').find(filter).sort({ createdAt: 1 }).toArray();
 
+	let loadedTime = null;
 	if (notifications && notifications.length) {
 		const notificationIds = notifications.map((notification) => notification.id);
 		filter.id = { $in: notificationIds };
 
-		loadedAt = (new Date()).getTime();
+		loadedTime = (new Date()).getTime();
 		const newValues = {
-			loadedAt,
+			loadedAt: loadedTime,
 		};
 		const notificationUpdateResult = db.collection('notifications').updateMany(filter, { $set: newValues });
 	}
@@ -59,7 +60,11 @@ export async function post(req, res, next) {
 	// });
 
 	if (notifications) {
-		response(res, {notifications, loadedAt});
+		const result = {notifications};
+		if (loadedTime) {
+			result.loadedAt = loadedTime;
+		}
+		response(res, result);
 	} else {
 		response(res, {error: true});
 	}

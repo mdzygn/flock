@@ -61,7 +61,7 @@ export const MAX_FLOCK_PROJECT_INDEX = 4;
 export const ITEM_VIEWED_DELAY = 0.33;
 
 export const NOTIFICATION_POLL_DELAY_ACTIVITY = 5;
-export const NOTIFICATION_POLL_DELAY = 15;
+export const NOTIFICATION_POLL_DELAY = 20; // 15;
 
 export const MAX_IMAGE_UPLOAD_SIZE = {
     'image/gif': 8,

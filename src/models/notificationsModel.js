@@ -88,7 +88,9 @@ export function loadNotifications(options) {
 		loadingRequestUtil.setLoading('notifications', options, () => { loadingNotifications.set(true); });
 		api.getNotifications(options).then(result => {
 			if (!result.error) {
-				notificationsLoadedAt = result.loadedAt;
+				if (result.loadedAt) {
+					notificationsLoadedAt = result.loadedAt;
+				}
 				mergeNotifications(result.notifications);
 				loadingRequestUtil.clearLoading('notifications', options, () => { loadingNotifications.set(false); });
 			}

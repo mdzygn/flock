@@ -125,7 +125,7 @@
             const post = get(postModel);
             $targetPost = post;
 
-            showMenu(menuIds.POST_OPTIONS);
+            showMenu(menuIds.THREAD_POST_OPTIONS);
         }
     }
 </script>
@@ -142,9 +142,9 @@
         <Proxy image="thread_actions" className="proxyThreadActions" />
     </div> -->
 
-    {#if canEdit}
+    <!-- {#if canEdit} -->
         <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showPostOptions}"></Button>
-    {/if}
+    <!-- {/if} -->
 
     <div class="info" on:click="{userLoaded ? viewUserProfile : null}">
         <div class="userName" class:button="{userLoaded}">{@html userName}</div>

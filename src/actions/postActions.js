@@ -15,6 +15,7 @@ import {
 import {
     addPost,
     setLikePost,
+    setFollowPost,
     getPost,
     updatePost,
 } from '../models/postsModel';
@@ -69,6 +70,19 @@ export function postToggleLiked(postId) {
 
     if (targetPost) {
         setLikePost(targetPost, !targetPost.liked);
+        targetPostModel.set(targetPost);
+        checkUpdatePost(targetPost);
+    }
+}
+
+export function followPost(postId, unfollow) {
+    if (!checkLoggedIn()) { return; }
+
+    const targetPostModel = getPost(postId);
+    const targetPost = get(targetPostModel);
+    if (targetPost) {
+        setFollowPost(targetPost, unfollow);
+
         targetPostModel.set(targetPost);
         checkUpdatePost(targetPost);
     }

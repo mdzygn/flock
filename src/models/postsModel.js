@@ -258,6 +258,14 @@ export function setLikePost(targetPost, like) {
 	}
 }
 
+export function setFollowPost(targetPost, unfollow) {
+	api.followPost({userId: get(userId), postId: targetPost.id, unfollow});
+
+	targetPost.following = unfollow ? false : true;
+	targetPost.followCount = (targetPost.likeCount || 0) + (unfollow ? 1 : -1);
+	// targetPost.followTime = (new Date()).getTime();
+}
+
 export function getNewPostId() {
     let postId, trialIndex;
 	do { postId = generateId(); } while (getPost(postId) && trialIndex < 99);

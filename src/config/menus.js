@@ -5,6 +5,7 @@ export const menuIds = {
     PROFILE_MENU: 'PROFILE_MENU',
     MAIN_OPTIONS: 'MAIN_OPTIONS',
     POST_OPTIONS: 'POST_OPTIONS',
+    THREAD_POST_OPTIONS: 'THREAD_POST_OPTIONS',
 }
 
 import { get } from 'svelte/store';
@@ -14,6 +15,8 @@ import promptIds from '../config/promptIds';
 
 import {
     project,
+    post,
+    userId,
     viewedUser,
     showBetaFeatures,
 } from '../models/appModel';
@@ -41,6 +44,10 @@ import {
     requestConnection,
     reportUser,
 } from '../actions/userActions';
+
+import {
+    followPost,
+} from '../actions/postActions';
 
 
 export const menus = {
@@ -171,6 +178,43 @@ export const menus = {
                 label: 'Remove Post',
                 visible: () => { return get(showBetaFeatures) },
                 disabled: true,
+            },
+            // {
+            //     label: 'Report Post',
+            //     visible: () => { return get(showBetaFeatures) },
+            //     disabled: true,
+            // },
+        ],
+    },
+    THREAD_POST_OPTIONS: {
+        menuItems: [
+            {
+                label: 'Edit Post',
+                action: editCurrentPost,
+                visible: () => {
+                    const curPost = get(post);
+                    return (curPost && curPost.userId && curPost.userId === get(userId)) || false;
+                }
+            },
+            {
+                label: 'Remove Post',
+                visible: () => {
+                    if (!get(showBetaFeatures)) {
+                        return;
+                    }
+                    const curPost = get(post);
+                    return (curPost && curPost.userId && curPost.userId === get(userId)) || false;
+                    // return get(showBetaFeatures)
+                },
+                disabled: true,
+            },
+            {
+                label: () => { const curPost = get(post); return !curPost.following ? 'Follow Post' : 'Unfollow Post' },
+                action: () => { const curPost = get(post); !curPost.following ? followPost(curPost.id) : followPost(curPost.id, true) },
+                visible: () => {
+                    const curPost = get(post);
+                    return (curPost && curPost.userId && curPost.userId !== get(userId)) || false;
+                }
             },
             // {
             //     label: 'Report Post',

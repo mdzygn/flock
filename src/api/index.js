@@ -288,6 +288,17 @@ function unlikePost(options) {
 		// return Promise.reject(error); // TODO: prevent followups being called
 	});
 }
+// options = { details: { userId: id, postId: id, unfollow: boolean } }
+function followPost(options) {
+	options = addCredentials(options);
+	return send('followPost', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - followPost: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
 
 /*** Upload ***/
 
@@ -356,6 +367,7 @@ const api = {
 
 	likePost,
 	unlikePost,
+	followPost,
 
 	getNotifications,
 	updateNotifications,

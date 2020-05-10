@@ -32,6 +32,7 @@ async function createNotification(db, details, data, res, completedData) {
     let getActorDetails = false;
     let getThreadTitle = false;
     let sendToThreadOwner = false;
+    let sendToThreadFollowers = false;
     let getChannelTitle = false;
 
     let threadOwnerId = null; // get thread owner
@@ -47,6 +48,7 @@ async function createNotification(db, details, data, res, completedData) {
             getActorDetails = true;
             if (details.threadId) {
                 sendToThreadOwner = true;
+                sendToThreadFollowers = true;
 
                 getThreadTitle = true;
             } else {
@@ -84,7 +86,7 @@ async function createNotification(db, details, data, res, completedData) {
             }
         }
     }
-    if (sendToThreadOwner) {
+    if (sendToThreadOwner || sendToThreadFollowers) {
         if (DEBUG) {
             if (!details.threadId) {
                 errorResponse(res, completedData, {errorMsg: 'createNotification - "threadId" parameter missing'});
@@ -96,6 +98,7 @@ async function createNotification(db, details, data, res, completedData) {
 
     let targetUserIds = [];
     let projectMembers = [];
+    let threadFollowers = [];
     // projectMembers = ['YRVQ6vOE'];
 
     if (getProjectDetails || sendToProjectMembers) {
@@ -147,6 +150,27 @@ async function createNotification(db, details, data, res, completedData) {
             if (!targetUserIds.includes(threadOwnerId)) {
                 targetUserIds.push(threadOwnerId);
             }
+        } else {
+            errorResponse(res, completedData, {errorMsg: 'createNotification - thread not found'});
+            return -1;
+        }
+    }
+
+    if (sendToThreadFollowers) {
+        const userPostFilter = { "postId": details.threadId };
+
+        const threadFollowsResult = await db.collection('postFollows').find(userPostFilter).toArray();
+        if (threadFollowsResult) {
+            const curThreadFollowers = threadFollowsResult.map((follow) => follow.userId);
+
+            curThreadFollowers.forEach((follower) => {
+                threadFollowers.push(follower);
+                if (!targetUserIds.includes(follower)) {
+                    targetUserIds.push(follower);
+                }
+            });
+
+            // console.log('curThreadFollowers', curThreadFollowers);
         } else {
             errorResponse(res, completedData, {errorMsg: 'createNotification - thread not found'});
             return -1;
@@ -217,6 +241,7 @@ async function createNotification(db, details, data, res, completedData) {
     let curDetails;
     let isThreadOwner;
     let isProjectMember;
+    let isThreadFollower;
 
     for (let userI = 0; userI < targetUserIds.length; userI++) {
         curUserId = targetUserIds[userI];
@@ -227,6 +252,7 @@ async function createNotification(db, details, data, res, completedData) {
             curDetails.userId = curUserId;
 
             isProjectMember = projectMembers.includes(curUserId);
+            isThreadFollower = threadFollowers.includes(curUserId);
 
             curDetails.id = generateId(16);
 
@@ -236,7 +262,7 @@ async function createNotification(db, details, data, res, completedData) {
                 case NotificationTypes.POST_ADDED:
                     if (curDetails.threadId) {
                         isThreadOwner = (curUserId === threadOwnerId);
-                        if (!isThreadOwner && !isProjectMember) {
+                        if (!isThreadOwner && !isProjectMember && !isThreadFollower) {
                             curDetails.indirect = true;
                             // continue; // skip if not thread owner or not member of project
                         }

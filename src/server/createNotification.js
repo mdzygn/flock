@@ -31,7 +31,7 @@ async function createNotification(db, details, data, res, completedData) {
     let sendToProjectFollowers = false;
     let getActorDetails = false;
     let getThreadTitle = false;
-    let getThreadOwner = false;
+    let sendToThreadOwner = false;
     let getChannelTitle = false;
 
     let threadOwnerId = null; // get thread owner
@@ -46,8 +46,9 @@ async function createNotification(db, details, data, res, completedData) {
             getProjectDetails = true;
             getActorDetails = true;
             if (details.threadId) {
+                sendToThreadOwner = true;
+
                 getThreadTitle = true;
-                getThreadOwner = true;
             } else {
                 getChannelTitle = true;
             }
@@ -83,6 +84,15 @@ async function createNotification(db, details, data, res, completedData) {
             }
         }
     }
+    if (sendToThreadOwner) {
+        if (DEBUG) {
+            if (!details.threadId) {
+                errorResponse(res, completedData, {errorMsg: 'createNotification - "threadId" parameter missing'});
+                return -1;
+                // throw new Error('"projectId" parameter missing in call to createNotification', details);
+            }
+        }
+    }
 
     let targetUserIds = [];
     let projectMembers = [];
@@ -110,16 +120,37 @@ async function createNotification(db, details, data, res, completedData) {
     if (sendToProjectFollowers) {
         const userProjectFilter = { "projectId": details.projectId };
 
-        const follows = await db.collection('follows').find(userProjectFilter).toArray();
-        const projectFollowers = follows.map((follow) => follow.userId);
+        const followsResult = await db.collection('follows').find(userProjectFilter).toArray();
+        if (followsResult) {
+            const projectFollowers = followsResult.map((follow) => follow.userId);
 
-        projectFollowers.forEach((follower) => {
-            if (!targetUserIds.includes(follower)) {
-                targetUserIds.push(follower);
+            projectFollowers.forEach((follower) => {
+                if (!targetUserIds.includes(follower)) {
+                    targetUserIds.push(follower);
+                }
+            });
+
+            // console.log('projectFollowers', projectFollowers);
+        } else {
+            errorResponse(res, completedData, {errorMsg: 'createNotification - project not found'});
+            return -1;
+        }
+    }
+
+    if (sendToThreadOwner) {
+        const threadFilter = { id: details.threadId };
+        const threadResult = await db.collection('posts').findOne(threadFilter);
+
+        if (threadResult) {
+            threadOwnerId = threadResult.userId;
+
+            if (!targetUserIds.includes(threadOwnerId)) {
+                targetUserIds.push(threadOwnerId);
             }
-        });
-
-        console.log('projectFollowers', projectFollowers);
+        } else {
+            errorResponse(res, completedData, {errorMsg: 'createNotification - thread not found'});
+            return -1;
+        }
     }
 
     let actorIds = [];

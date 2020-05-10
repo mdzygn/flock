@@ -9,7 +9,7 @@ export function getNotificationMessage(notification) {
             case NotificationTypes.POST_ADDED:
                 if (notification.threadId) {
                     if (notification.threadTitle) {
-                        message = 'replied to "' + notification.threadTitle + '"';
+                        message = 'replied in "' + notification.threadTitle + '"';
                     } else if (notification.channelTitle) {
                         message = 'replied to a post in #' + notification.channelTitle + '';
                     } else {

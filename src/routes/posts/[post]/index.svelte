@@ -1,7 +1,8 @@
 <script>
 	import locale from '../../../locale';
+	import config from '../../../config';
 
-	import { tick, onMount } from 'svelte';
+	import { tick, onMount, onDestroy } from 'svelte';
 	import { writable } from 'svelte/store';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
@@ -137,8 +138,20 @@
 		}
 	}
 
+	let notificationTimeout;
+
 	onMount(() => {
-		checkNotificationSeen({postId: $postId});
+		if (typeof window !== 'undefined') {
+			notificationTimeout = window.setTimeout(() => {
+				checkNotificationSeen({postId: $postId});
+			}, config.ITEM_VIEWED_DELAY * 1000);
+		}
+	});
+
+	onDestroy(() => {
+		if (typeof window !== 'undefined') {
+			window.clearTimeout(notificationTimeout);
+		}
 	});
 </script>
 

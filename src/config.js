@@ -58,6 +58,8 @@ export const SPLASH_TIMEOUT = 3;
 export const FLOCK_PROJECT = 'hPS9cRq2';
 export const MAX_FLOCK_PROJECT_INDEX = 4;
 
+export const ITEM_VIEWED_DELAY = 0.5;
+
 export const MAX_IMAGE_UPLOAD_SIZE = {
     'image/gif': 8,
     'image/png': 3,
@@ -126,4 +128,6 @@ export default {
     SHOW_EDITED_MIN_TIME,
 
     MAX_IMAGE_UPLOAD_SIZE,
+
+    ITEM_VIEWED_DELAY,
 };

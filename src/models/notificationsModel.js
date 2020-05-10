@@ -2,10 +2,11 @@ import api from '../api';
 
 import config from '../config';
 
-import { onDestroy } from 'svelte';
+// import { onDestroy } from 'svelte';
 import { writable, get } from 'svelte/store';
 
 import loadingRequestUtil from '../utils/loadingRequestUtil';
+// import WindowFocusUtil from '../utils/WindowFocusUtil';
 
 import NotificationModel from '../models/notificationModel';
 
@@ -18,6 +19,8 @@ let curNotificationFilterOptions = null;
 let notificationsUpdatedHandlers = [];
 
 let pollStarted = false;
+let curPollNotificationTimeout = null;
+
 let notificationsLoadedAt = null;
 
 let notifications = writable([]);
@@ -28,6 +31,8 @@ export let notificationUnviewedCount = writable(0);
 
 userId.subscribe(updateNotifications);
 usercode.subscribe(updateNotifications);
+
+// WindowFocusUtil.focused.subscribe(onWindowFocusUpdated);
 
 function updateNotifications() {
 	if (get(userId) && get(usercode)) {
@@ -48,12 +53,36 @@ function pollNotification() {
 	if (typeof window !== 'undefined') {
 		const curPollDelay = isActivityPage() ? config.NOTIFICATION_POLL_DELAY_ACTIVITY : config.NOTIFICATION_POLL_DELAY;
 
-		window.setTimeout(() => {
-			updateNotifications();
+		curPollNotificationTimeout = window.setTimeout(() => {
+			// if (document.hasFocus()) {
+			if (document.visibilityState === 'visible') {
+				// console.log('poll');
+				updateNotifications();
+			}
 			pollNotification();
 		}, curPollDelay * 1000);
 	}
 }
+
+// function onWindowFocusUpdated() {
+// 	if (typeof window !== 'undefined') {
+// 		if (get(WindowFocusUtil.focused)) {
+// 			console.log('ready start polling');
+// 			if (pollStarted) {
+// 				console.log('start polling');
+// 				pollNotification();
+// 			}
+// 		} else {
+// 			console.log('stop polling: ', curPollNotificationTimeout);
+// 			if (curPollNotificationTimeout !== null) {
+// 				window.clearTimeout(curPollNotificationTimeout);
+// 				console.log('clear timeout: ', curPollNotificationTimeout);
+// 				curPollNotificationTimeout = null;
+// 			}
+// 		}
+// 	}
+// }
+
 
 function isActivityPage() {
 	const path = get(curPath);

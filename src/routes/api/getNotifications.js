@@ -18,6 +18,7 @@ export async function post(req, res, next) {
     }
 
 	const userId = options && options.userId;
+	const getUnviewed = options && options.getUnviewed;
 
 	if (!userId) {
 		errorResponse(res, {}, {errorMsg: 'userId not set'});
@@ -26,6 +27,11 @@ export async function post(req, res, next) {
 
 	const filter = {};
 	filter.userId = userId;
+
+	if (getUnviewed) {
+		filter.viewed = {$ne: true};
+	}
+
 	// filter.indirect = {$ne: true}; // need to return so can show notification areas
 
     let notifications = await db.collection('notifications').find(filter).sort({ createdAt: 1 }).toArray();

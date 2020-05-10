@@ -70,6 +70,8 @@ function mergeNotifications(newNotifications) {
             }
 		}
 
+		curNotifications.sort((a,b) => get(b).createdAt - get(a).createdAt ); // sort by reversed created time
+
 		notifications.set(curNotifications);
 	}
 }

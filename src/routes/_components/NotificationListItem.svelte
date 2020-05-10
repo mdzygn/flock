@@ -27,6 +27,10 @@
     $: channelId = ($notification && $notification.channelId) || null;
     $: projectId = ($notification && $notification.projectId) || null;
 
+    $: viewed = ($notification && $notification.viewed) || false;
+
+    // $: console.log('$notification', $notification);
+
     $: projectTitle = $notification && $notification.projectTitle;
 
     $: date = ($notification && $notification.createdAt) || null;
@@ -71,10 +75,9 @@
         </div>
     </div>
     <div class="info">
-        <div class="unseenIcon" />
-        <!-- {#if $showBetaFeatures}
-            <Counter visible="{$notification.unreadCount}" count="{$notification.unreadCount}" hasNew="{true}" />
-        {/if} -->
+        {#if !viewed}
+            <div class="unseenIcon" />
+        {/if}
     </div>
 </div>
 

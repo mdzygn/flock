@@ -89,6 +89,28 @@ function clearFilteredNotifications() {
 	notifications.set(curNotifications);
 }
 
-export function getNotification(notificationId) {
-	return get(notifications).find(item => get(item).id === notificationId);
+// export function getNotification(notificationId) {
+// 	return get(notifications).find(item => get(item).id === notificationId);
+// }
+
+export function checkNotificationSeen(details) {
+	if (details.postId) {
+		const postId = details.postId;
+		const notificationModels = get(notifications).filter(itemModel => {
+			const item = get(itemModel);
+			return (item.postId === postId) || (item.threadId === postId);
+		});
+
+		notificationModels.forEach((notificationModel) => {
+			const notification = get(notificationModel);
+			// console.log('notification before', JSON.parse(JSON.stringify(notification)));
+
+			if (!notification.viewed) {
+				notification.viewed = true;
+				notificationModel.set(notification);
+
+				// notifications.set(get(notifications));
+			}
+		});
+	}
 }

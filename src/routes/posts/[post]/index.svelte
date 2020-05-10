@@ -1,7 +1,7 @@
 <script>
 	import locale from '../../../locale';
 
-	import { tick } from 'svelte';
+	import { tick, onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
@@ -20,6 +20,8 @@
 	import EditPost from '../../posts/_components/EditPost.svelte';
 
 	import { loadProfile } from '../../../actions/appActions';
+
+	import { checkNotificationSeen } from '../../../models/notificationsModel';
 
 	import AppModel, {
 		postId,
@@ -134,6 +136,10 @@
 			scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
 		}
 	}
+
+	onMount(() => {
+		checkNotificationSeen({postId: $postId});
+	});
 </script>
 
 <svelte:head>

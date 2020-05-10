@@ -7,7 +7,7 @@ import {
     loadPost,
 } from '../actions/appActions';
 
-import {
+import AppModel, {
     post,
     resetScrollRegionPosition,
 } from '../models/appModel';
@@ -19,6 +19,8 @@ import {
     getPost,
     updatePost,
 } from '../models/postsModel';
+
+AppModel.on('followPost', followPost);
 
 function checkUpdatePost(targetPost) {
     const curPost = get(post);

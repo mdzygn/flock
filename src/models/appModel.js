@@ -311,4 +311,8 @@ export function triggerNewThreadPost() {
     AppModel.emit('newThreadPost');
 }
 
+export function triggerFollowPost(postId) {
+    AppModel.emit('followPost', postId);
+}
+
 export default appModel;

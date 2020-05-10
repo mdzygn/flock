@@ -13,6 +13,7 @@ import {
 	userId,
 	savingPost,
 	savingPostId,
+	triggerFollowPost,
 } from '../models/appModel';
 
 import PostModel from '../models/postModel';
@@ -214,6 +215,10 @@ export function addPost(postDetails) {
 	posts.set(curPosts);
 
 	filterCurrentPosts();
+
+	if (postDetails.threadId) {
+		triggerFollowPost(postDetails.threadId);
+	}
 
 	return result; // newPostModel;
 }

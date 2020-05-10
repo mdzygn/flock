@@ -42,7 +42,7 @@
         <ContentLoader label="{locale.LOADING.NOTIFICATIONS}" />
     {:else}
         {#each $notifications as notification}
-            {#if !get(notification).notPriority }
+            {#if !get(notification).indirect && !get(notification).notPriority } <!-- TODO: remove notPriority -->
                 <NotificationListItem {notification} />
             {/if}
         {:else}

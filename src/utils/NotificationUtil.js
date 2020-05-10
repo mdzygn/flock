@@ -2,7 +2,7 @@ import NotificationTypes from '../config/NotificationTypes';
 
 export function getNotificationMessage(notification) {
     let message = null;
-    if (notification.notPriority) {
+    if (notification.indirect || notification.notPriority) { // TODO: remove notPriority
         message = '<i>(indirect)</i>';
     } else {
         switch (notification.type) {

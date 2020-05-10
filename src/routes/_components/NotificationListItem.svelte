@@ -20,7 +20,6 @@
     $: isUserAction = ($notification && $notification.isUserAction) || true;
 
     $: title = ($notification && $notification.title) || '';
-    // $: message = ($notification && $notification.message) || ($notification && $notification.notPriority && '<i>(indirect)</i>') || '';
     $: message = ($notification && getNotificationMessage($notification)) || '';
 
     $: postId = ($notification && $notification.postId) || null;

@@ -153,6 +153,8 @@ async function createNotification(db, details, data, res, completedData) {
         }
     }
 
+    const origActorsList = JSON.parse(JSON.stringify(details.actors));;
+
     let actorIds = [];
     if (getActorDetails) {
         actorIds = details.actors.map((actor) => actor.id);
@@ -235,7 +237,7 @@ async function createNotification(db, details, data, res, completedData) {
                     if (curDetails.threadId) {
                         isThreadOwner = (curUserId === threadOwnerId);
                         if (!isThreadOwner && !isProjectMember) {
-                            curDetails.notPriority = true;
+                            curDetails.indirect = true;
                             // continue; // skip if not thread owner or not member of project
                         }
                     }
@@ -250,7 +252,7 @@ async function createNotification(db, details, data, res, completedData) {
                     //             curDetails.message = 'replied to a post';
                     //         }
                     //     } else {
-                    //         curDetails.notPriority = true;
+                    //         curDetails.indirect = true;
                     //         // continue; // skip if not thread owner or not member of project
                     //     }
                     // } else if (curDetails.channelId) {
@@ -266,7 +268,7 @@ async function createNotification(db, details, data, res, completedData) {
                     break;
             }
 
-            if (!curDetails.notPriority) {
+            if (!curDetails.indirect) {
                 if (projectTitle) {
                     curDetails.projectTitle = projectTitle;
                 }
@@ -276,9 +278,11 @@ async function createNotification(db, details, data, res, completedData) {
                 if (channelTitle) {
                     curDetails.channelTitle = channelTitle;
                 }
+            } else {
+                curDetails.actors = origActorsList;
             }
 
-            // if (DEBUG && !curDetails.message && !curDetails.notPriority) {
+            // if (DEBUG && !curDetails.message && !curDetails.indirect) {
             //     throw new Error('no message set in createNotification', curDetails);
             // }
 

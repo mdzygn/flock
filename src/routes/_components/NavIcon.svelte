@@ -1,4 +1,6 @@
 <script>
+    import { writable } from 'svelte/store';
+
     import NavHomeIcon from "../../assets/icons/nav_home.png";
     import NavDiscoverIcon from "../../assets/icons/nav_discover.png";
     import NavFollowingIcon from "../../assets/icons/nav_following.png";
@@ -17,6 +19,8 @@
 
     export let iconId = 'home';
 
+    export let notificationModel = writable(null);
+
     let icons = {
         'home': {icon: NavHomeIcon, activeIcon: NavHomeActiveIcon},
         'discover': {icon: $showBetaFeatures ? NavDiscoverIcon : NavHomeIcon, activeIcon: $showBetaFeatures ? NavDiscoverActiveIcon : NavHomeActiveIcon},
@@ -33,15 +37,34 @@
     export let label = false;
 </script>
 
-{#if active}
-    <img src='{iconActiveSrc}' alt='{label}' />
-{:else}
-    <img src='{iconSrc}' alt='{label}' />
-{/if}
+<div class="navIcon">
+    {#if active}
+        <img src='{iconActiveSrc}' alt='{label}' />
+    {:else}
+        <img src='{iconSrc}' alt='{label}' />
+    {/if}
+    {#if $notificationModel && $notificationModel.unviewedCount > 0}
+        <div class="notificationDot" />
+    {/if}
+</div>
 
 <style>
     img {
         width: 46px;
         height: 46px;
+    }
+
+    .navIcon {
+        position: relative;
+    }
+
+    .notificationDot {
+        position: absolute;
+        top: 10px;
+        left: 22px;
+        width: 10px;
+        height: 10px;
+        background-color: #DF3C3C;
+        border-radius: 999px;
     }
 </style>

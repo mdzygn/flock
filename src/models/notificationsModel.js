@@ -16,6 +16,8 @@ let notificationsUpdatedHandlers = [];
 
 let notifications = writable([]);
 
+// export let notificationUnviewedCount = writable(0);
+
 // import notificationsData from '../data/notifications.json';
 // const notificationItems = JSON.parse(JSON.stringify(notificationsData));
 // mergeNotifications(notificationItems);

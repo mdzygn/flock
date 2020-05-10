@@ -89,7 +89,7 @@
 
 <style>
 	.overlayContainer {
-		position: fixed;
+		position: absolute;
 		width: 100%;
 		height: 100%;
 		z-index: 100;
@@ -97,6 +97,11 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+	@media (max-height: 480px) {
+		.overlayContainer {
+			position: fixed;
+		}
 	}
 
 	.overlayContainer :global(.overlayMenu) {

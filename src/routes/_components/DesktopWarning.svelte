@@ -23,7 +23,7 @@
         bottom: 0;
         position: absolute;
         text-align: center;
-        padding-bottom: 12px;
+        padding-bottom: 10px;
         font-size: 1.3rem;
         color: #999999;
     }

@@ -236,7 +236,24 @@
 		bottom: 0; /* collapse nav */
 	}
 
+	main {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+    	/* line-height: 0; */
+	}
+
 	@media (max-height: 480px) {
+		appContent {
+			height: initial;
+			min-height: 100%;
+		}
+
+		main {
+			position: relative;
+			height: initial;
+		}
+
 		appContent :global(.headerBar) {
 			display: none;
 		}
@@ -274,14 +291,6 @@
 
 	.showFeedBg {
 		background-color: #DDDDDD;
-	}
-
-	main {
-		position: absolute;
-		height: 100%;
-		width: 100%;
-
-    	/* line-height: 0; */
 	}
 
 </style>

@@ -9,7 +9,7 @@ import loadingRequestUtil from '../utils/loadingRequestUtil';
 
 import NotificationModel from '../models/notificationModel';
 
-import { userId, usercode } from '../models/appModel';
+import { userId, usercode, curPath } from '../models/appModel';
 
 export let loadingNotifications = writable(false);
 
@@ -30,6 +30,24 @@ function updateNotifications() {
 	if (get(userId) && get(usercode)) {
 		getNotifications({ userId: get(userId), getUnviewed: true });
 	}
+}
+
+pollNotification();
+
+function pollNotification() {
+	if (typeof window !== 'undefined') {
+		const curPollDelay = isActivityPage() ? config.NOTIFICATION_POLL_DELAY_ACTIVITY : config.NOTIFICATION_POLL_DELAY;
+
+		window.setTimeout(() => {
+			updateNotifications();
+			pollNotification();
+		}, curPollDelay * 1000);
+	}
+}
+
+function isActivityPage() {
+	const path = get(curPath);
+	return !!(path && path.match(/activity/));
 }
 
 notifications.subscribe(() => {
@@ -56,6 +74,7 @@ notifications.subscribe(() => {
 
 export function loadNotifications(options) {
 	if (!loadingRequestUtil.isLoading('notifications', options)) {
+		// console.log('loadNotifications', options);
 		loadingRequestUtil.setLoading('notifications', options, () => { loadingNotifications.set(true); });
 		api.getNotifications(options).then(result => {
 			mergeNotifications(result);

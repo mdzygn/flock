@@ -43,7 +43,7 @@
     {:else}
         <img src='{iconSrc}' alt='{label}' />
     {/if}
-    {#if $notificationModel && $notificationModel.unviewedCount > 0}
+    {#if $notificationModel && $notificationModel > 0}
         <div class="notificationDot" />
     {/if}
 </div>

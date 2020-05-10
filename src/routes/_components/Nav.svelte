@@ -7,6 +7,8 @@
 
 	import { project, getIsProjectTeamMember, showBetaFeatures, user } from '../../models/appModel';
 
+	import { notificationUnviewedCount } from '../../models/notificationsModel';
+
 	import { setNavSection } from '../../actions/appActions';
 
 	export let segment;
@@ -17,7 +19,7 @@
 	let mainSections = getMainSections();
 
 	let notificationModels = {
-		'activity': writable({unviewedCount: 3}),
+		'activity': notificationUnviewedCount,
 	};
 
 	export let keyboardShown = false;

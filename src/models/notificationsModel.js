@@ -16,7 +16,13 @@ let notificationsUpdatedHandlers = [];
 
 let notifications = writable([]);
 
-// export let notificationUnviewedCount = writable(0);
+export let notificationUnviewedCount = writable(0);
+
+notifications.subscribe(() => {
+	const unviewedNotifications = get(notifications).filter(notification => !get(notification).viewed && !get(notification).indirect);
+	notificationUnviewedCount.set(unviewedNotifications.length);
+	// console.log('notificationUnviewedCount', get(notificationUnviewedCount));
+});
 
 // import notificationsData from '../data/notifications.json';
 // const notificationItems = JSON.parse(JSON.stringify(notificationsData));
@@ -112,7 +118,7 @@ export function checkNotificationSeen(details) {
 				notification.viewed = true;
 				notificationModel.set(notification);
 
-				// notifications.set(get(notifications));
+				notifications.set(get(notifications));
 			}
 		});
 

@@ -22,7 +22,7 @@
 
 	import { loadProfile } from '../../../actions/appActions';
 
-	import { checkNotificationSeen } from '../../../models/notificationsModel';
+	import { setNotificationSeenTimeout, clearNotificationSeenTimeout } from '../../../models/notificationsModel';
 
 	import AppModel, {
 		postId,
@@ -138,20 +138,12 @@
 		}
 	}
 
-	let notificationTimeout;
-
+	let notificationSeenTimeout;
 	onMount(() => {
-		if (typeof window !== 'undefined') {
-			notificationTimeout = window.setTimeout(() => {
-				checkNotificationSeen({postId: $postId});
-			}, config.ITEM_VIEWED_DELAY * 1000);
-		}
+		notificationSeenTimeout = setNotificationSeenTimeout({postId: $postId});
 	});
-
 	onDestroy(() => {
-		if (typeof window !== 'undefined') {
-			window.clearTimeout(notificationTimeout);
-		}
+		clearNotificationSeenTimeout(notificationSeenTimeout);
 	});
 </script>
 

@@ -2,6 +2,7 @@ import api from '../api';
 
 import config from '../config';
 
+import { onDestroy } from 'svelte';
 import { writable, get } from 'svelte/store';
 
 import loadingRequestUtil from '../utils/loadingRequestUtil';
@@ -131,5 +132,26 @@ export function checkNotificationSeen(details) {
 			// 	});
 			// }
 		}
+	}
+}
+
+export function setNotificationSeenTimeout(details) {
+	let notificationSeenTimeout = null;
+	if (typeof window !== 'undefined') {
+		notificationSeenTimeout = window.setTimeout(() => {
+			checkNotificationSeen(details);
+		}, config.ITEM_VIEWED_DELAY * 1000);
+	}
+
+	// onDestroy(() => { // doesn't work here?
+	// 	clearNotificationSeenTimeout(notificationSeenTimeout);
+	// });
+
+	return notificationSeenTimeout;
+}
+
+export function clearNotificationSeenTimeout(notificationSeenTimeout) {
+	if (notificationSeenTimeout && typeof window !== 'undefined') {
+		window.clearTimeout(notificationSeenTimeout);
 	}
 }

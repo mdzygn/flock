@@ -22,6 +22,8 @@
     import LikeSelectedIcon from "../../assets/icons/like_selected.png";
     import ReplyIcon from "../../assets/icons/reply.png";
 	import OptionsMenuIcon from "../../assets/icons/menu.png";
+    import FollowIcon from "../../assets/icons/follow.png";
+    import FollowSelectedIcon from "../../assets/icons/follow_selected.png";
 
     import PlaceholderImage from "../../assets/images/postPlaceholder.png";
 
@@ -47,7 +49,8 @@
     } from '../../actions/appActions';
 
 	import {
-		postToggleLiked,
+        postToggleLiked,
+        followPost,
     } from '../../actions/postActions';
 
     import {
@@ -62,6 +65,7 @@
     let user = writable([]);
 
 	$: isArchived = ($project && $project.archived) || false;
+    $: following = ($post && $post.following) || false;
 
     $: postUserId = ($post && $post.userId) || null;
     $: postId = ($post && $post.id) || null;
@@ -128,6 +132,10 @@
             showMenu(menuIds.THREAD_POST_OPTIONS);
         }
     }
+
+    function toggleFollowPost() {
+        followPost(postId, following);
+    }
 </script>
 
 <div class="threadPost">
@@ -142,9 +150,10 @@
         <Proxy image="thread_actions" className="proxyThreadActions" />
     </div> -->
 
-    <!-- {#if canEdit} -->
-        <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showPostOptions}"></Button>
-    <!-- {/if} -->
+    <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showPostOptions}"></Button>
+    {#if !canEdit}
+        <Button className="followButton" onClick="{toggleFollowPost}" icon="{following ? FollowSelectedIcon : FollowIcon}" />
+    {/if}
 
     <div class="info" on:click="{userLoaded ? viewUserProfile : null}">
         <div class="userName" class:button="{userLoaded}">{@html userName}</div>
@@ -240,6 +249,19 @@
     .threadPost :global(.optionsButton .icon) {
         margin-left: 11px;
         transform: scale(0.45, 0.45);
+	}
+
+    .threadPost :global(.followButton) {
+        position: absolute;
+        top: 30px;
+        right: 33px;
+        width: 24px;
+        height: 26px;
+        padding: 3px 3px;
+	}
+    .threadPost :global(.followButton .icon) {
+        margin-left: 2px;
+        transform: scale(0.36, 0.36);
 	}
 
     .button {

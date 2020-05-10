@@ -15,7 +15,7 @@ export async function post(req, res, next) {
 
 	if (userId && ids) {
         const notificationsFilter = {
-            viewed: {$ne: true},
+            viewed: { $ne: true },
             userId,
             id: { $in: ids },
 		};

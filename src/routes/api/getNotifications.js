@@ -19,6 +19,7 @@ export async function post(req, res, next) {
 
 	const userId = options && options.userId;
 	const getUnviewed = options && options.getUnviewed;
+	let loadedAt = options && options.loadedAt;
 
 	if (!userId) {
 		errorResponse(res, {}, {errorMsg: 'userId not set'});
@@ -31,10 +32,25 @@ export async function post(req, res, next) {
 	if (getUnviewed) {
 		filter.viewed = {$ne: true};
 	}
+	if (loadedAt) {
+		filter.loadedAt = {"$exists": false};
+		// filter.loadedAt = { "$or" : [  {"$exists": false}, {$gt: loadedAt} ] };
+	}
 
 	// filter.indirect = {$ne: true}; // need to return so can show notification areas
 
-    let notifications = await db.collection('notifications').find(filter).sort({ createdAt: 1 }).toArray();
+	let notifications = await db.collection('notifications').find(filter).sort({ createdAt: 1 }).toArray();
+
+	if (notifications && notifications.length) {
+		const notificationIds = notifications.map((notification) => notification.id);
+		filter.id = { $in: notificationIds };
+
+		loadedAt = (new Date()).getTime();
+		const newValues = {
+			loadedAt,
+		};
+		const notificationUpdateResult = db.collection('notifications').updateMany(filter, { $set: newValues });
+	}
 
     // notifications.sort((a,b) => a.createdAt - b.createdAt ); // sort by reversed created time
 
@@ -43,7 +59,7 @@ export async function post(req, res, next) {
 	// });
 
 	if (notifications) {
-		response(res, notifications);
+		response(res, {notifications, loadedAt});
 	} else {
 		response(res, {error: true});
 	}

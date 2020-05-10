@@ -17,6 +17,9 @@ let curNotificationFilterOptions = null;
 
 let notificationsUpdatedHandlers = [];
 
+let pollStarted = false;
+let notificationsLoadedAt = null;
+
 let notifications = writable([]);
 
 export let notificationUnviewedCount = writable(0);
@@ -28,11 +31,18 @@ usercode.subscribe(updateNotifications);
 
 function updateNotifications() {
 	if (get(userId) && get(usercode)) {
-		getNotifications({ userId: get(userId), getUnviewed: true });
+		const details = { userId: get(userId), getUnviewed: true };
+		if (notificationsLoadedAt) {
+			details.loadedAt = notificationsLoadedAt;
+		}
+		getNotifications(details);
+
+		if (!pollStarted) {
+			pollStarted = true;
+			pollNotification();
+		}
 	}
 }
-
-pollNotification();
 
 function pollNotification() {
 	if (typeof window !== 'undefined') {
@@ -77,13 +87,18 @@ export function loadNotifications(options) {
 		// console.log('loadNotifications', options);
 		loadingRequestUtil.setLoading('notifications', options, () => { loadingNotifications.set(true); });
 		api.getNotifications(options).then(result => {
-			mergeNotifications(result);
-			loadingRequestUtil.clearLoading('notifications', options, () => { loadingNotifications.set(false); });
+			if (!result.error) {
+				notificationsLoadedAt = result.loadedAt;
+				mergeNotifications(result.notifications);
+				loadingRequestUtil.clearLoading('notifications', options, () => { loadingNotifications.set(false); });
+			}
 		});
 	}
 }
 
 function mergeNotifications(newNotifications) {
+	// console.log('newNotifications', newNotifications);
+
 	if (newNotifications && newNotifications.length) {
 		const curNotifications = get(notifications);
 

@@ -3,7 +3,7 @@
 
     import config from '../../config';
 
-	import { writable } from 'svelte/store';
+	import { get, writable } from 'svelte/store';
 
     import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
@@ -42,7 +42,9 @@
         <ContentLoader label="{locale.LOADING.NOTIFICATIONS}" />
     {:else}
         {#each $notifications as notification}
-            <NotificationListItem {notification} />
+            {#if !get(notification).notPriority }
+                <NotificationListItem {notification} />
+            {/if}
         {:else}
             <div class="noNotifications">
                 {locale.NOTIFICATIONS.NO_NOTIFICATIONS}<br/><br/>

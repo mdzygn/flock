@@ -65,6 +65,14 @@
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 	$: isArchived = ($project && $project.archived) || false;
 
+	$: postsLoading = ($loadingPosts && (!$post || $post.id !== $postId)) || !isUserLoaded($user, $userId) || (!$project && $loadingProjects);
+
+	// $: {
+	// 	if ($postsAnchorToBottom && scrollRegion && postsLoading && $post) {
+	// 		scrollToBottom();
+	// 	}
+	// }
+
 	AppModel.on('newThreadPost', onNewThreadPost);
 
 	loadCurrentChannel();
@@ -156,7 +164,7 @@
 
 <div class="content" class:showAddPost="{showAddPost}">
 	<ScrollView id="thread" bind:scrollRegion="{scrollRegion}" anchorToBottom="{$postsAnchorToBottom}" bottomOffset="{replyRegionHeight}" disabledMinHeight="{showAddPost}">
-		{#if ($loadingPosts && (!$post || $post.id !== $postId)) || !isUserLoaded($user, $userId) || (!$project && $loadingProjects) }
+		{#if postsLoading }
 			<ContentLoader label="{locale.LOADING.THREAD}" />
 		{:else if !$post || !$post.id}
 			<ContentLoader label="{locale.THREAD.NOT_FOUND}" />

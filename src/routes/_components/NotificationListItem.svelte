@@ -44,7 +44,7 @@
 
     function loadItem() {
         if (threadId) {
-            loadPost(threadId);
+            loadPost(threadId, { anchorToBottom: true });
         } else if (postId) {
             loadPost(postId);
         } else if (channelId) {

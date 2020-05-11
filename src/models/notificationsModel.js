@@ -243,6 +243,13 @@ export function getUnviewedThreadNotificationCount(threadId) {
 
 	return curThreadNotificationCount;
 }
+export function getThreadUnviewed(threadId) {
+	const unviewedNotification = get(notifications).find(notification => {
+		const curNotification = get(notification);
+		return (!curNotification.viewed && curNotification.type === NotificationTypes.POST_ADDED && curNotification.postId === threadId);
+	});
+	return !!unviewedNotification;
+}
 
 function clearFilteredNotifications() {
 	const curNotifications = get(notifications);

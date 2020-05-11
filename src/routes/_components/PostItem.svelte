@@ -52,6 +52,7 @@
 
     import {
         getUnviewedThreadNotificationCount,
+        getThreadUnviewed,
     } from '../../models/notificationsModel';
 
     export let post;
@@ -183,7 +184,10 @@
 
     function loadCurrentPost() {
         if (postId) {
-            loadPost(postId);
+            const onlyHasUnreadReplies = !!($unviewedCount && !getThreadUnviewed(postId));
+            // console.log(onlyHasUnreadReplies, $unviewedCount, getThreadUnviewed(postId));
+            loadPost(postId, { anchorToBottom: onlyHasUnreadReplies });
+            // loadPost(postId);
             // goto('posts/' + postId);
         }
     }

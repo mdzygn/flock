@@ -65,13 +65,23 @@
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 	$: isArchived = ($project && $project.archived) || false;
 
-	$: postsLoading = ($loadingPosts && (!$post || $post.id !== $postId)) || !isUserLoaded($user, $userId) || (!$project && $loadingProjects);
+	$: threadLoading = ($loadingPosts && (!$post || $post.id !== $postId)) || !isUserLoaded($user, $userId) || (!$project && $loadingProjects);
 
-	// $: {
-	// 	if ($postsAnchorToBottom && scrollRegion && postsLoading && $post) {
-	// 		scrollToBottom();
-	// 	}
-	// }
+	$: isLoadingPosts = ($loadingPosts && (!$posts || !$posts.length));
+
+	$: {
+		if ($postsAnchorToBottom && scrollRegion && !isLoadingPosts && $posts) {
+			(async () => {
+				await tick();
+				scrollToBottom();
+
+				// window.setTimeout(()=> {
+				// 	console.log('$postsAnchorToBottom', $postsAnchorToBottom);
+				// 	scrollToBottom();
+				// }, 100);
+			})();
+		}
+	}
 
 	AppModel.on('newThreadPost', onNewThreadPost);
 
@@ -135,14 +145,20 @@
 
 			if (typeof window !== 'undefined') { // ensure keyboard has appeared
 				window.setTimeout(() => {
-					scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+					if (scrollRegion) {
+						scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+					}
 				}, 250);
 				window.setTimeout(() => {
-					scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+					if (scrollRegion) {
+						scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+					}
 				}, 500);
 			}
 
-			scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+			if (scrollRegion) {
+				scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+			}
 		}
 	}
 
@@ -164,7 +180,7 @@
 
 <div class="content" class:showAddPost="{showAddPost}">
 	<ScrollView id="thread" bind:scrollRegion="{scrollRegion}" anchorToBottom="{$postsAnchorToBottom}" bottomOffset="{replyRegionHeight}" disabledMinHeight="{showAddPost}">
-		{#if postsLoading }
+		{#if threadLoading }
 			<ContentLoader label="{locale.LOADING.THREAD}" />
 		{:else if !$post || !$post.id}
 			<ContentLoader label="{locale.THREAD.NOT_FOUND}" />
@@ -191,7 +207,7 @@
 							<PostItem {post} type="threadPost" />
 						{:else}
 
-							{#if $loadingPosts && (!$posts || !$posts.length) }
+							{#if isLoadingPosts }
 								<ContentLoader label="{locale.LOADING.THREAD_ITEMS}" />
 							{:else if !showAddPost}
 								<ContentLoader>{locale.THREAD.NO_POSTS}<br/>

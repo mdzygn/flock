@@ -16,6 +16,10 @@
 	} from '../../models/channelsModel';
 
 	import {
+		getUnviewedChannelNotificationCount,
+	} from '../../models/notificationsModel';
+
+	import {
 		loadChannel,
 	} from '../../actions/appActions';
 
@@ -23,7 +27,9 @@
 
     $: channelTitle = ($channel && $channel.title) || '';
     $: channelId = ($channel && $channel.id) || null;
+
     $: messageCount = ($channel && $channel.postCount) || 0;
+    $: unviewedCount = ($channel && getUnviewedChannelNotificationCount($channel.id)) || writable(0);
 
     $: isTeamMember = $user && getIsProjectTeamMember($project);
 
@@ -42,8 +48,8 @@
 <div class="channelListItem" class:noPosts="{!messageCount}">
     <Button className="channelListItemButton" onClick="{loadCurrentChannel}"># {channelTitle}
         <div class="buttonIcon" style="background-image: url({ArrowIcon})"/>
-        {#if messageCount}
-            <Counter count="{messageCount}" />
+        {#if $unviewedCount || messageCount}
+            <Counter count="{$unviewedCount || messageCount}" hasNew="{$unviewedCount}" />
         {:else if isTeamMember && isPrimaryChannel && !isArchived}
 			<Button className="addFirstPostCTA" icon="{AddDetailsIcon}">add first post</Button>
         {/if}
@@ -78,6 +84,9 @@
     }
     .channelListItem :global(.channelListItemButton .counter) {
     	margin-left: 42px;
+    }
+    .channelListItem :global(.channelListItemButton .counter.default) {
+        background-color: initial;
     }
 
     .buttonIcon {

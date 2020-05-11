@@ -6,7 +6,7 @@
 
 {#if visible}
     <div class="counterContainer">
-        <div class="counter" class:hasNew="{hasNew}">{count}</div>
+        <div class="counter" class:hasNew="{hasNew}" class:default="{!hasNew}">{count}</div>
     </div>
 {/if}
 

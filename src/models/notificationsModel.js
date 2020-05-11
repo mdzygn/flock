@@ -21,6 +21,7 @@ let curNotificationFilterOptions = null;
 let notificationsUpdatedHandlers = [];
 
 let projectNotificationCounts = [];
+let channelNotificationCounts = [];
 
 let pollStarted = false;
 let curPollNotificationTimeout = null;
@@ -203,6 +204,24 @@ export function getUnviewedProjectNotificationCount(projectId) {
 	}
 
 	return curProjectNotificationCount;
+}
+
+export function getUnviewedChannelNotificationCount(channelId) {
+	let curChannelNotificationCount = channelNotificationCounts[channelId];
+
+	if (!curChannelNotificationCount) {
+		curChannelNotificationCount = writable(0);
+		notifications.subscribe(() => {
+			const unviewedNotifications = get(notifications).filter(notification => {
+				const curNotification = get(notification);
+				return (!curNotification.viewed && curNotification.type === NotificationTypes.POST_ADDED && curNotification.channelId === channelId);
+			});
+			curChannelNotificationCount.set(unviewedNotifications.length);
+		});
+		channelNotificationCounts[channelId] = curChannelNotificationCount;
+	}
+
+	return curChannelNotificationCount;
 }
 
 function clearFilteredNotifications() {

@@ -146,6 +146,8 @@
     $: repliesCount = ($post && $post.postCount) || 0;
     $: unviewedCount = ($post && getUnviewedThreadNotificationCount($post.id)) || writable(0);
 
+    $: showUnseenIcon = (type === 'thread') && (!repliesCount && $unviewedCount);
+
     $: date = $post && showLastActiveTime ? $post.lastActiveAt : $post.createdAt;
 
     let dateString = '';
@@ -211,7 +213,8 @@
 <div class="postItem" class:hasThumb="{!!thumbImageSrc}" class:button="{canLinkThrough}" class:onlyImageShown="{showFullImage && !title && !message}" on:click="{canLinkThrough ? loadCurrentPost : null}"
     class:showReplyIcon="{showReplyIcon}"
     class:showRepliesIcon="{showRepliesIcon}"
-    class:showOptionsButton="{showOptionsButton}">
+    class:showOptionsButton="{showOptionsButton}"
+    class:showUnseenIcon="{showUnseenIcon}">
     <!-- <Avatar  -->
     <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" />
     <div class="buttonGroup" class:buttonGroupOffset="{showOptionsButton}">
@@ -230,6 +233,9 @@
         {:else if !isArchived}
             {#if showReplyIcon}
                 <div class="replyIcon" style="background-image: url({ReplyIcon})"/>
+            {/if}
+            {#if showUnseenIcon}
+                <div class="unseenIcon" />
             {/if}
         {/if}
     </div>
@@ -429,7 +435,7 @@
         right: 30px;
     }
     .postItem.showRepliesIcon :global(.likeButton) {
-        right: 38px;
+        right: 40px;
     }
 
     .count {
@@ -512,5 +518,24 @@
         background-size: cover;
         width: 22px;
         height: 22px;
+    }
+
+    .postItem.showUnseenIcon .replyIcon {
+        display: none;
+        /* right: 29px; */
+    }
+    .postItem.showUnseenIcon :global(.likeButton) {
+        right: 16px;
+        /* right: 38px; */
+    }
+
+    .unseenIcon {
+        position: absolute;
+        top: 18px;
+        right: 13px;
+        width: 12px;
+        height: 12px;
+        background-color: #DF3C3C;
+        border-radius: 999px;
     }
 </style>

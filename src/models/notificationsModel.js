@@ -233,9 +233,10 @@ export function getUnviewedThreadNotificationCount(threadId) {
 		notifications.subscribe(() => {
 			const unviewedNotifications = get(notifications).filter(notification => {
 				const curNotification = get(notification);
-				return (!curNotification.viewed && curNotification.type === NotificationTypes.POST_ADDED && curNotification.threadId === threadId);
+				return (!curNotification.viewed && curNotification.type === NotificationTypes.POST_ADDED && (curNotification.postId === threadId || curNotification.threadId === threadId));
 			});
 			curThreadNotificationCount.set(unviewedNotifications.length);
+			console.log('threadId', threadId, unviewedNotifications.length);
 		});
 		threadNotificationCounts[threadId] = curThreadNotificationCount;
 	}

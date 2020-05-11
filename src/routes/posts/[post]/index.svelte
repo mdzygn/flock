@@ -138,12 +138,15 @@
 		}
 	}
 
-	let notificationSeenTimeout;
+	let postSeenTimeout;
+	let threadSeenTimeout;
 	onMount(() => {
-		notificationSeenTimeout = setNotificationSeenTimeout({postId: $postId});
+		postSeenTimeout = setNotificationSeenTimeout({postId: $postId});
+		threadSeenTimeout = setNotificationSeenTimeout({threadId: $postId}, config.REPLY_VIEWED_DELAY);
 	});
 	onDestroy(() => {
-		clearNotificationSeenTimeout(notificationSeenTimeout);
+		clearNotificationSeenTimeout(postSeenTimeout);
+		clearNotificationSeenTimeout(threadSeenTimeout);
 	});
 </script>
 

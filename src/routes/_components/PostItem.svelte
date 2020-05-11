@@ -146,7 +146,7 @@
     $: repliesCount = ($post && $post.postCount) || 0;
     $: unviewedCount = ($post && getUnviewedThreadNotificationCount($post.id)) || writable(0);
 
-    $: showUnseenIcon = (type === 'thread') && (!repliesCount && $unviewedCount);
+    $: showUnseenIcon = (!repliesCount && $unviewedCount); // (type === 'thread') &&
 
     $: date = $post && showLastActiveTime ? $post.lastActiveAt : $post.createdAt;
 
@@ -525,14 +525,16 @@
         /* right: 29px; */
     }
     .postItem.showUnseenIcon :global(.likeButton) {
-        right: 16px;
+        right: -4px;
+        /* right: 16px; */
         /* right: 38px; */
     }
 
     .unseenIcon {
         position: absolute;
         top: 18px;
-        right: 13px;
+        right: 54px;
+        /* right: 13px; */
         width: 12px;
         height: 12px;
         background-color: #DF3C3C;

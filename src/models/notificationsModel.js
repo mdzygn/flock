@@ -255,11 +255,12 @@ function clearFilteredNotifications() {
 // }
 
 export function checkNotificationSeen(details) {
-	if (details.postId) {
+	if (details.postId || details.threadId) {
 		const postId = details.postId;
+		const threadId = details.threadId;
 		const notificationModels = get(notifications).filter(itemModel => {
 			const item = get(itemModel);
-			return !item.viewed && ((item.postId === postId) || (item.threadId === postId));
+			return !item.viewed && ((item.postId === postId) || (item.threadId === threadId));
 		});
 
 		const notificationsViewed = [];
@@ -289,12 +290,12 @@ export function checkNotificationSeen(details) {
 	}
 }
 
-export function setNotificationSeenTimeout(details) {
+export function setNotificationSeenTimeout(details, delay) {
 	let notificationSeenTimeout = null;
 	if (typeof window !== 'undefined') {
 		notificationSeenTimeout = window.setTimeout(() => {
 			checkNotificationSeen(details);
-		}, config.ITEM_VIEWED_DELAY * 1000);
+		}, (delay || config.ITEM_VIEWED_DELAY) * 1000);
 	}
 
 	// onDestroy(() => { // doesn't work here?

@@ -59,6 +59,7 @@ export const FLOCK_PROJECT = 'hPS9cRq2';
 export const MAX_FLOCK_PROJECT_INDEX = 4;
 
 export const ITEM_VIEWED_DELAY = 0.33;
+export const REPLY_VIEWED_DELAY = 2;
 
 export const NOTIFICATION_POLL_DELAY_ACTIVITY = 5; // 1; // 5;
 export const NOTIFICATION_POLL_DELAY = 20; // 3; // 20; // 15;
@@ -133,6 +134,7 @@ export default {
     MAX_IMAGE_UPLOAD_SIZE,
 
     ITEM_VIEWED_DELAY,
+    REPLY_VIEWED_DELAY,
 
     NOTIFICATION_POLL_DELAY_ACTIVITY,
     NOTIFICATION_POLL_DELAY,

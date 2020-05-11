@@ -35,9 +35,11 @@
     import {
         project,
         userId,
+        user,
         targetPost,
 		getHeaderImage,
         postType,
+        getIsProjectTeamMember,
     } from '../../models/appModel';
 
     import {
@@ -62,19 +64,23 @@
 
     export let post;
 
-    let user = writable([]);
+    let postUser = writable([]);
 
 	$: isArchived = ($project && $project.archived) || false;
+    $: isTeamMember = $user && $project && getIsProjectTeamMember($project);
+
     $: following = ($post && $post.following) || false;
 
     $: postUserId = ($post && $post.userId) || null;
     $: postId = ($post && $post.id) || null;
-    $: { user = getUser(postUserId) };
-    $: userLoaded = ($user && $user.name) || false;
-    $: userName = ($user && $user.name) || '&nbsp;';
-    $: username = ($user && $user.username && '@' + $user.username) || '';
+    $: { postUser = getUser(postUserId) };
+    $: userLoaded = ($postUser && $postUser.name) || false;
+    $: userName = ($postUser && $postUser.name) || '&nbsp;';
+    $: username = ($postUser && $postUser.username && '@' + $postUser.username) || '';
 
     $: canEdit = ($post && $post.userId && $post.userId === $userId) || false;
+
+    $: showFollowOption = !canEdit && !isTeamMember;
 
     $: showEdited = ($post && $post.edited && secondsDiff($post.createdAt, $post.editedAt) > config.SHOW_EDITED_MIN_TIME) || false;
     $: editedDate = (showEdited && $post.editedAt && getDateString($post.editedAt)) || '';
@@ -150,8 +156,10 @@
         <Proxy image="thread_actions" className="proxyThreadActions" />
     </div> -->
 
-    <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showPostOptions}"></Button>
-    {#if !canEdit}
+    {#if canEdit || showFollowOption}
+        <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showPostOptions}"></Button>
+    {/if}
+    {#if showFollowOption}
         <Button className="followButton" onClick="{toggleFollowPost}" icon="{following ? FollowSelectedIcon : FollowIcon}" />
     {/if}
 
@@ -159,7 +167,7 @@
         <div class="userName" class:button="{userLoaded}">{@html userName}</div>
         <div class="username" class:button="{userLoaded}">{username}</div>
     </div>
-    <AvatarIcon {user} onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" />
+    <AvatarIcon user="{postUser}" onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" />
     <div class="postContent">
         <div class="date">{@html dateString}{#if showEdited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}</div>
         {#if title}

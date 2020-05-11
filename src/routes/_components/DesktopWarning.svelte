@@ -2,7 +2,7 @@
 </script>
 
 <div class="desktopWarningContainer">
-    <div class="message">best viewed on mobile</div>
+    <div class="message">designed for mobile</div>
 </div>
 
 <style>

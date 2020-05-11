@@ -19,6 +19,7 @@ import {
     userId,
     viewedUser,
     showBetaFeatures,
+    getIsProjectTeamMember,
 } from '../models/appModel';
 
 import {
@@ -193,7 +194,10 @@ export const menus = {
                 action: editCurrentPost,
                 visible: () => {
                     const curPost = get(post);
-                    return (curPost && curPost.userId && curPost.userId === get(userId)) || false;
+                    const canEditPost = (curPost && curPost.userId && curPost.userId === get(userId)) || false;
+                    return canEditPost;
+                    // const curPost = get(post);
+                    // return (curPost && curPost.userId && curPost.userId === get(userId)) || false;
                 }
             },
             {
@@ -203,7 +207,10 @@ export const menus = {
                         return;
                     }
                     const curPost = get(post);
-                    return (curPost && curPost.userId && curPost.userId === get(userId)) || false;
+                    const canEditPost = (curPost && curPost.userId && curPost.userId === get(userId)) || false;
+                    return canEditPost;
+                    // const curPost = get(post);
+                    // return (curPost && curPost.userId && curPost.userId === get(userId)) || false;
                     // return get(showBetaFeatures)
                 },
                 disabled: true,
@@ -213,7 +220,11 @@ export const menus = {
                 action: () => { const curPost = get(post); !curPost.following ? followPost(curPost.id) : followPost(curPost.id, true) },
                 visible: () => {
                     const curPost = get(post);
-                    return (curPost && curPost.userId && curPost.userId !== get(userId)) || false;
+                    const curProject = get(project);
+                    const isTeamMember = (curProject && getIsProjectTeamMember(curProject)) || false;
+                    const canEditPost = (curPost && curPost.userId && curPost.userId === get(userId)) || false;
+                    return !canEditPost && !isTeamMember;
+                    // return (curPost && curPost.userId && curPost.userId !== get(userId)) || false;
                 }
             },
             // {

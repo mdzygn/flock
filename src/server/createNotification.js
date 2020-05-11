@@ -252,7 +252,6 @@ async function createNotification(db, details, data, res, completedData) {
             curDetails.userId = curUserId;
 
             isProjectMember = projectMembers.includes(curUserId);
-            isThreadFollower = threadFollowers.includes(curUserId);
 
             curDetails.id = generateId(16);
 
@@ -262,9 +261,16 @@ async function createNotification(db, details, data, res, completedData) {
                 case NotificationTypes.POST_ADDED:
                     if (curDetails.threadId) {
                         isThreadOwner = (curUserId === threadOwnerId);
+                        isThreadFollower = threadFollowers.includes(curUserId);
+
                         if (!isThreadOwner && !isProjectMember && !isThreadFollower) {
                             curDetails.indirect = true;
-                            // continue; // skip if not thread owner or not member of project
+                            // continue; // skip if not thread owner or not member of project?
+                        }
+                    } else if (curDetails.channelId) {
+                        if (!isProjectMember) {
+                            curDetails.indirect = true;
+                            // continue; // skip if not thread owner or not member of project?
                         }
                     }
                     // if (curDetails.threadId) {

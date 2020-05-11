@@ -254,7 +254,7 @@ async function createNotification(db, details, data, res, completedData) {
             const isProjectMember = projectMembers.includes(curUserId);
             const isProjectFollower = projectFollowers.includes(curUserId);
 
-            console.log('projectFollowers', projectFollowers, curUserId)
+            // console.log('projectFollowers', projectFollowers, curUserId)
 
             if (isProjectMember) {
                 curDetails.isProjectMember = true;

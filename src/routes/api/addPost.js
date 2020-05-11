@@ -71,7 +71,7 @@ export async function post(req, res, next) {
 				const userUpdateResult = await db.collection('users').updateOne({ id: details.userId }, { $inc: { postsCount: 1 } });
 
 				if (userUpdateResult) {
-					const projectUpdateResult = await db.collection('projects').updateOne({ id: details.projectId }, { $set: { lastActiveAt: details.lastActiveAt } });
+					const projectUpdateResult = await db.collection('projects').updateOne({ id: details.projectId }, { $set: { lastActiveAt: details.lastActiveAt }, $inc: { postsCount: 1 } });
 
 					if (projectUpdateResult) {
 						const postDetails = {

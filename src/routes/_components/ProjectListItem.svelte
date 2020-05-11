@@ -46,6 +46,7 @@
     $: detail = dateString;
 
     $: isPrivate = ($project && !$project.public) || false;
+    // $: postCount = ($project && $project.postsCount) || 0;
 
     function loadCurrentProject() {
         loadProject($project.id);
@@ -67,8 +68,9 @@
             {#if showPrivateIcon && isPrivate}
                 <div class="privateIcon" style="background-image: url({PrivateIcon})"></div>
             {/if}
-            {#if showUpdateCounter && $projectUnviewedCount}
-                <Counter count="{$projectUnviewedCount}" hasNew="{true}" />
+            {#if showUpdateCounter && ($projectUnviewedCount)}
+                <!--  || postCount -->
+                <Counter count="{$projectUnviewedCount}" hasNew="{$projectUnviewedCount}" />
             {/if}
             <div class="followingIcon" style="background-image: url({FollowingSmallIcon})"></div>
         </div>

@@ -83,9 +83,11 @@ export function followPost(postId, unfollow) {
     const targetPostModel = getPost(postId);
     const targetPost = get(targetPostModel);
     if (targetPost) {
-        setFollowPost(targetPost, unfollow);
+        const updated = setFollowPost(targetPost, unfollow);
 
-        targetPostModel.set(targetPost);
-        checkUpdatePost(targetPost);
+        if (updated) {
+            targetPostModel.set(targetPost);
+            checkUpdatePost(targetPost);
+        }
     }
 }

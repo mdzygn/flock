@@ -11,9 +11,11 @@ import loadingRequestUtil from '../utils/loadingRequestUtil';
 import {
     user,
 	userId,
+	project,
 	savingPost,
 	savingPostId,
 	triggerFollowPost,
+    getIsProjectTeamMember,
 } from '../models/appModel';
 
 import PostModel from '../models/postModel';
@@ -264,11 +266,18 @@ export function setLikePost(targetPost, like) {
 }
 
 export function setFollowPost(targetPost, unfollow) {
-	api.followPost({userId: get(userId), postId: targetPost.id, unfollow});
+	const follow = unfollow ? false : true;
 
-	targetPost.following = unfollow ? false : true;
-	targetPost.followCount = (targetPost.likeCount || 0) + (unfollow ? 1 : -1);
-	// targetPost.followTime = (new Date()).getTime();
+	if (targetPost.following !== follow && targetPost.userId !== get(userId) && !getIsProjectTeamMember(get(project))) {
+		api.followPost({userId: get(userId), postId: targetPost.id, unfollow});
+
+		targetPost.following = follow;
+		targetPost.followCount = (targetPost.likeCount || 0) + (unfollow ? 1 : -1);
+		// targetPost.followTime = (new Date()).getTime();
+
+		return true;
+	}
+	return false;
 }
 
 export function getNewPostId() {

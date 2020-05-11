@@ -22,6 +22,7 @@ let notificationsUpdatedHandlers = [];
 
 let projectNotificationCounts = [];
 let channelNotificationCounts = [];
+let threadNotificationCounts = [];
 
 let pollStarted = false;
 let curPollNotificationTimeout = null;
@@ -222,6 +223,24 @@ export function getUnviewedChannelNotificationCount(channelId) {
 	}
 
 	return curChannelNotificationCount;
+}
+
+export function getUnviewedThreadNotificationCount(threadId) {
+	let curThreadNotificationCount = threadNotificationCounts[threadId];
+
+	if (!curThreadNotificationCount) {
+		curThreadNotificationCount = writable(0);
+		notifications.subscribe(() => {
+			const unviewedNotifications = get(notifications).filter(notification => {
+				const curNotification = get(notification);
+				return (!curNotification.viewed && curNotification.type === NotificationTypes.POST_ADDED && curNotification.threadId === threadId);
+			});
+			curThreadNotificationCount.set(unviewedNotifications.length);
+		});
+		threadNotificationCounts[threadId] = curThreadNotificationCount;
+	}
+
+	return curThreadNotificationCount;
 }
 
 function clearFilteredNotifications() {

@@ -50,6 +50,10 @@
         getPost,
     } from '../../models/postsModel';
 
+    import {
+        getUnviewedThreadNotificationCount,
+    } from '../../models/notificationsModel';
+
     export let post;
 
     export let type = 'thread';
@@ -140,6 +144,7 @@
     $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
 
     $: repliesCount = ($post && $post.postCount) || 0;
+    $: unviewedCount = ($post && getUnviewedThreadNotificationCount($post.id)) || writable(0);
 
     $: date = $post && showLastActiveTime ? $post.lastActiveAt : $post.createdAt;
 
@@ -220,7 +225,7 @@
         {#if showRepliesIcon}
             <Button className="commentButton">
                 <div class="commentIcon" style="background-image: url({CommentIcon})"/>
-                <Counter count="{repliesCount}" />
+                <Counter count="{$unviewedCount || repliesCount}" hasNew="{$unviewedCount}" />
             </Button>
         {:else if !isArchived}
             {#if showReplyIcon}
@@ -424,7 +429,7 @@
         right: 30px;
     }
     .postItem.showRepliesIcon :global(.likeButton) {
-        right: 44px;
+        right: 38px;
     }
 
     .count {
@@ -441,7 +446,7 @@
 
     .postItem :global(.commentButton) {
         position: absolute;
-        right: 54px;
+        right: 48px;
         top: 16px;
     }
     .commentIcon {
@@ -485,6 +490,9 @@
         width: 18px;
         font-size: 1rem;
         font-weight: 700;
+    }
+    .postItem :global(.counter.default) {
+        background-color: initial;
     }
     /*.postItem :global(.counter) {
         border-radius: initial;

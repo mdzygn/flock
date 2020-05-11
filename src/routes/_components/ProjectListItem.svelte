@@ -1,9 +1,13 @@
 <script>
+    import { writable } from 'svelte/store';
+
     import Counter from './Counter.svelte';
 
     import { getDateAgeString, getDateAge, getDateString } from '../../utils';
 
     import { getProjectHeaderImage } from '../../models/projectsModel';
+
+    import { getUnviewedProjectNotificationCount } from '../../models/notificationsModel';
 
     import { loadProject } from '../../actions/appActions';
 
@@ -25,6 +29,8 @@
 
     $: date = $project && (showLastActive ? $project.lastActiveAt : $project.createdAt);
     // $: detail = (showLastActive ? $project.lastActiveInfo : $project.createdInfo) || '';
+
+    $: projectUnviewedCount = ($project && getUnviewedProjectNotificationCount($project.id)) || writable(0);
 
     let dateString = '';
     $: {
@@ -61,8 +67,8 @@
             {#if showPrivateIcon && isPrivate}
                 <div class="privateIcon" style="background-image: url({PrivateIcon})"></div>
             {/if}
-            {#if $showBetaFeatures && showUpdateCounter}
-                <Counter visible="{$project.unreadCount}" count="{$project.unreadCount}" hasNew="{true}" />
+            {#if showUpdateCounter && $projectUnviewedCount}
+                <Counter count="{$projectUnviewedCount}" hasNew="{true}" />
             {/if}
             <div class="followingIcon" style="background-image: url({FollowingSmallIcon})"></div>
         </div>

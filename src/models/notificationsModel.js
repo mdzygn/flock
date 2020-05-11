@@ -12,11 +12,15 @@ import NotificationModel from '../models/notificationModel';
 
 import { userId, usercode, curPath } from '../models/appModel';
 
+import NotificationTypes from '../config/NotificationTypes';
+
 export let loadingNotifications = writable(false);
 
 let curNotificationFilterOptions = null;
 
 let notificationsUpdatedHandlers = [];
+
+let projectNotificationCounts = [];
 
 let pollStarted = false;
 let curPollNotificationTimeout = null;
@@ -96,9 +100,9 @@ notifications.subscribe(() => {
 	// console.log('notificationUnviewedCount', get(notificationUnviewedCount));
 
 	const unviewedProjectNotifications = get(notifications).filter(notification => {
-		if (!get(notification).viewed) {
-			console.log('unviewed notification: ', get(notification));
-		}
+		// if (!get(notification).viewed) {
+		// 	console.log('unviewed notification: ', get(notification));
+		// }
 		return !get(notification).viewed && (get(notification).isProjectFollower || get(notification).isProjectMember);
 	});
 	projectsUnviewedCount.set(unviewedProjectNotifications.length);
@@ -178,6 +182,27 @@ export function getNotifications(options) {
     }
 
 	return notifications;
+}
+
+export function getUnviewedProjectNotificationCount(projectId) {
+	let curProjectNotificationCount = projectNotificationCounts[projectId];
+
+	if (!curProjectNotificationCount) {
+		// console.log('create count model');
+		curProjectNotificationCount = writable(0);
+		notifications.subscribe(() => {
+			const unviewedNotifications = get(notifications).filter(notification => {
+				const curNotification = get(notification);
+				return (!curNotification.viewed && curNotification.type === NotificationTypes.POST_ADDED && curNotification.projectId === projectId);
+			});
+			curProjectNotificationCount.set(unviewedNotifications.length);
+
+			// console.log('project ' + projectId + ' notification count: ' + unviewedNotifications.length);
+		});
+		projectNotificationCounts[projectId] = curProjectNotificationCount;
+	}
+
+	return curProjectNotificationCount;
 }
 
 function clearFilteredNotifications() {

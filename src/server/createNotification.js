@@ -98,6 +98,7 @@ async function createNotification(db, details, data, res, completedData) {
 
     let targetUserIds = [];
     let projectMembers = [];
+    let projectFollowers = [];
     let threadFollowers = [];
     // projectMembers = ['YRVQ6vOE'];
 
@@ -125,7 +126,7 @@ async function createNotification(db, details, data, res, completedData) {
 
         const followsResult = await db.collection('follows').find(userProjectFilter).toArray();
         if (followsResult) {
-            const projectFollowers = followsResult.map((follow) => follow.userId);
+            projectFollowers = followsResult.map((follow) => follow.userId);
 
             projectFollowers.forEach((follower) => {
                 if (!targetUserIds.includes(follower)) {
@@ -133,7 +134,7 @@ async function createNotification(db, details, data, res, completedData) {
                 }
             });
 
-            // console.log('projectFollowers', projectFollowers);
+            // console.log('curProjectFollowers', curProjectFollowers);
         } else {
             errorResponse(res, completedData, {errorMsg: 'createNotification - project not found'});
             return -1;
@@ -161,10 +162,9 @@ async function createNotification(db, details, data, res, completedData) {
 
         const threadFollowsResult = await db.collection('postFollows').find(userPostFilter).toArray();
         if (threadFollowsResult) {
-            const curThreadFollowers = threadFollowsResult.map((follow) => follow.userId);
+            threadFollowers = threadFollowsResult.map((follow) => follow.userId);
 
-            curThreadFollowers.forEach((follower) => {
-                threadFollowers.push(follower);
+            threadFollowers.forEach((follower) => {
                 if (!targetUserIds.includes(follower)) {
                     targetUserIds.push(follower);
                 }
@@ -251,7 +251,17 @@ async function createNotification(db, details, data, res, completedData) {
             curDetails = JSON.parse(JSON.stringify(details));
             curDetails.userId = curUserId;
 
-            isProjectMember = projectMembers.includes(curUserId);
+            const isProjectMember = projectMembers.includes(curUserId);
+            const isProjectFollower = projectFollowers.includes(curUserId);
+
+            console.log('projectFollowers', projectFollowers, curUserId)
+
+            if (isProjectMember) {
+                curDetails.isProjectMember = true;
+            }
+            if (isProjectFollower) {
+                curDetails.isProjectFollower = true;
+            }
 
             curDetails.id = generateId(16);
 

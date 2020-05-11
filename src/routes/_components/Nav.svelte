@@ -7,7 +7,7 @@
 
 	import { project, getIsProjectTeamMember, showBetaFeatures, user } from '../../models/appModel';
 
-	import { notificationUnviewedCount } from '../../models/notificationsModel';
+	import { projectsUnviewedCount, notificationUnviewedCount } from '../../models/notificationsModel';
 
 	import { setNavSection } from '../../actions/appActions';
 
@@ -20,6 +20,7 @@
 
 	let notificationModels = {
 		'activity': notificationUnviewedCount,
+		'projects': projectsUnviewedCount,
 	};
 
 	export let keyboardShown = false;

@@ -26,6 +26,7 @@ let notificationsLoadedAt = null;
 let notifications = writable([]);
 
 export let notificationUnviewedCount = writable(0);
+export let projectsUnviewedCount = writable(0);
 
 // $: getNotifications({ userId: $userId, getUnviewed: true });
 
@@ -93,6 +94,15 @@ notifications.subscribe(() => {
 	const unviewedNotifications = get(notifications).filter(notification => !get(notification).viewed && !get(notification).indirect);
 	notificationUnviewedCount.set(unviewedNotifications.length);
 	// console.log('notificationUnviewedCount', get(notificationUnviewedCount));
+
+	const unviewedProjectNotifications = get(notifications).filter(notification => {
+		if (!get(notification).viewed) {
+			console.log('unviewed notification: ', get(notification));
+		}
+		return !get(notification).viewed && (get(notification).isProjectFollower || get(notification).isProjectMember);
+	});
+	projectsUnviewedCount.set(unviewedProjectNotifications.length);
+
 });
 
 // import notificationsData from '../data/notifications.json';

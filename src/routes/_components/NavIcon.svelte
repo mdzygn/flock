@@ -44,7 +44,7 @@
         <img src='{iconSrc}' alt='{label}' />
     {/if}
     {#if $notificationModel && $notificationModel > 0}
-        <div class="notificationDot" />
+        <div class="notificationDot navIcon-{iconId}" />
     {/if}
 </div>
 
@@ -66,5 +66,9 @@
         height: 10px;
         background-color: #DF3C3C;
         border-radius: 999px;
+    }
+
+    .navIcon :global(.notificationDot.navIcon-following) {
+        left: 24px;
     }
 </style>

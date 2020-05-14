@@ -148,6 +148,10 @@ export function getConversations(options) {
 	return conversations;
 }
 
+export function getConversation(conversationId) {
+	return get(conversations).find(item => get(item).id === conversationId);
+}
+
 function clearFilteredConversations() {
 	const curConversations = get(conversations);
 	curConversations.length = 0;
@@ -221,7 +225,6 @@ export function getConversationUser(conversation) {
 
 export function getConversationUserById(conversation, userId) {
 	let curUser = null;
-	return curUser;
 
 	if (conversation.users) {
 		curUser = conversation.users.find(userItem => userItem.id === userId);

@@ -77,6 +77,7 @@ messages.subscribe(() => {
 
 export function loadMessages(options) {
     const messageItems = JSON.parse(JSON.stringify(messagesTestData));
+    messageItems.reverse();
     mergeMessages(messageItems);
 
 	// if (!loadingRequestUtil.isLoading('messages', options)) {

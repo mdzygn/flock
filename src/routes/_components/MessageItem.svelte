@@ -31,13 +31,11 @@
     $: date = ($message && $message.createdAt) || null;
     $: dateString = (date && ' - ' + getDateAgeString(date)) || '';
 
-    $: actor = ($message && getConversationUserById($conversation, $message.userId)) || null;
+    $: actor = ($message && $conversation && getConversationUserById($conversation, $message.userId)) || null;
     $: actorUser = (actor && date && getUserModelFromData(actor, date)) || writable(null);
     $: actorName = ($actorUser && $actorUser.name) || (actor && actor.name) || '';
 
     $: isSelf = (actor && actor.id === $userId);
-
-    $: console.log('actor', actor);
 
     $: titleString = actorName || '';
 </script>
@@ -90,6 +88,8 @@
         /* padding-bottom: 3px; */
     }
     .detailInnerContent {
+        display: inline-block;
+
         border: 1px solid #ACACAC;
 
         border-radius: 15px;
@@ -100,7 +100,9 @@
     }
 
     .messageListItem :global(.detailContent.isSelf)  {
-
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 18px;
     }
     .messageListItem :global(.detailContent.isSelf .detailInnerContent)  {
         background-color: #DDDDDD;

@@ -18,6 +18,7 @@ export async function post(req, res, next) {
     }
 
 	const userId = options && options.userId;
+	const conversationId = options && options.id;
 	const getUnviewed = options && options.getUnviewed;
 	let loadedAt = options && options.loadedAt;
 
@@ -28,6 +29,10 @@ export async function post(req, res, next) {
 
 	const filter = {};
 	filter.userIds = userId; // userId contained in userIds
+
+	if (conversationId) {
+		filter.id = conversationId;
+	}
 
 	// if (getUnviewed) {
 	// 	filter.viewed = {$ne: true};

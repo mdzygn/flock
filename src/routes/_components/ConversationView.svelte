@@ -12,13 +12,27 @@
     import MessageItem from './MessageItem.svelte';
     import ContentLoader from './../_components/ContentLoader.svelte';
 
-	import { newProject } from '../../actions/appActions';
+	import {
+        newProject,
+        loadCurrentConversation,
+    } from '../../actions/appActions';
 
     import {
         userId,
+        conversationId,
+        conversation,
     } from '../../models/appModel';
 
-	import { getMessages, loadingMessages } from '../../models/messagesModel';
+    import {
+        loadingConversations,
+    } from '../../models/conversationsModel';
+
+    import { getMessages, loadingMessages } from '../../models/messagesModel';
+
+    $: isLoadingMessages = $loadingMessages && (!$messages || !$messages.length);
+    $: isLoadingConversation = $loadingConversations && (!$conversation || ($conversation.id !== $conversationId));
+
+	loadCurrentConversation();
 
     let messages = writable([]);
     $: { messages = getMessages({ userId: $userId }) };
@@ -27,7 +41,7 @@
 </script>
 
 <div class="messageList {className}">
-    {#if $loadingMessages && (!$messages || !$messages.length)}
+    {#if isLoadingMessages || isLoadingConversation}
         <ContentLoader label="{locale.LOADING.MESSAGES}" />
     {:else}
         {#each $messages as message}

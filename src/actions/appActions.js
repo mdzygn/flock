@@ -6,7 +6,7 @@ import { tick } from 'svelte';
 
 import { copyToClipboard } from '../utils';
 
-import conversations from '../data/conversations.json';
+// import conversations from '../data/conversations.json';
 
 import promptIds from '../config/promptIds';
 
@@ -39,6 +39,13 @@ import {
     onPostsUpdated,
     loadingPosts,
 } from '../models/postsModel';
+
+import {
+    loadConversations,
+    onConversationsUpdated,
+    getConversation,
+    loadingConversations,
+} from '../models/conversationsModel';
 
 import {
     curPath,
@@ -145,6 +152,12 @@ onPostsUpdated(() => {
     if (!get(post) && get(postId)) {
         const targetPostId = get(postId);
         setPost(targetPostId);
+    }
+});
+onConversationsUpdated(() => {
+    if (!get(conversation) && get(conversationId)) {
+        const targetConversationId = get(conversationId);
+        setConversation(targetConversationId);
     }
 });
 
@@ -316,15 +329,31 @@ export function loadProfile(targetProfileId, options) {
 }
 
 export function loadConversation(targetConversationId) {
-    if (!checkLoggedIn()) { return; }
+    // if (!checkLoggedIn()) { return; }
+
+    loadConversations({ id: targetConversationId });
 
     conversationId.set(targetConversationId);
+    setConversation(targetConversationId);
 
-    const curConversation = conversations.find(item => item.id === targetConversationId);
-    conversation.set(curConversation);
+    // const curConversation = conversations.find(item => item.id === targetConversationId);
+    // conversation.set(curConversation);
 
     gotoRoute('messages/' + targetConversationId);
     resetScrollRegionPosition('conversation');
+}
+
+function setConversation(targetConversationId) {
+    const curConversationModel = getConversation(targetConversationId);
+    const curConversation = get(curConversationModel);
+
+    conversation.set(curConversation);
+
+    if (curConversation) {
+        if (curConversation.projectId && (!get(projectId) || !get(project) || get(projectId) !== curConversation.projectId)) {
+            loadProjectItem(curConversation.projectId);
+        }
+    }
 }
 
 export function messageUser(userId) {
@@ -516,6 +545,12 @@ export function editCurrentPost() {
 export function loadCurrentPost() {
     if (get(postId) && !get(post) && !get(loadingPosts)) {
         loadPosts( { id: get(postId) } );
+    }
+}
+
+export function loadCurrentConversation() {
+    if (get(conversationId) && !get(conversation) && !get(loadingConversations)) {
+        loadConversations( { id: get(conversationId) } );
     }
 }
 

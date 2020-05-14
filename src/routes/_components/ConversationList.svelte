@@ -28,7 +28,7 @@
 
 <div class="conversationList {className}">
     {#if $loadingConversations && (!$conversations || !$conversations.length)}
-        <ContentLoader label="{locale.LOADING.NOTIFICATIONS}" />
+        <ContentLoader label="{locale.LOADING.CONVERSATIONS}" />
     {:else}
         {#each $conversations as conversation}
             <ConversationListItem {conversation} />

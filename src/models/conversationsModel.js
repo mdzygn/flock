@@ -25,7 +25,7 @@ let conversationsLoadedAt = null;
 
 let conversations = writable([]);
 
-export let conversationUnviewedCount = writable(0);
+export let conversationsUnviewedCount = writable(0);
 
 userId.subscribe(updateConversations);
 usercode.subscribe(updateConversations);
@@ -66,8 +66,12 @@ function isMessagesPage() {
 }
 
 conversations.subscribe(() => {
-	const unviewedConversations = get(conversations).filter(conversation => !get(conversation).viewed);
-	conversationUnviewedCount.set(unviewedConversations.length);
+	const unviewedConversations = get(conversations).filter(conversation => {
+		const curConversation = get(conversation);
+		const userConversationInfo = getUserConversationInfo(curConversation);
+		return userConversationInfo ? !userConversationInfo.viewed : false;
+	});
+	conversationsUnviewedCount.set(unviewedConversations.length);
 });
 
 export function onConversationsUpdated(handler) {
@@ -83,22 +87,22 @@ conversations.subscribe(() => {
 });
 
 export function loadConversations(options) {
-    const conversationItems = JSON.parse(JSON.stringify(conversationsTestData));
-    mergeConversations(conversationItems);
+    // const conversationItems = JSON.parse(JSON.stringify(conversationsTestData));
+    // mergeConversations(conversationItems);
 
-	// if (!loadingRequestUtil.isLoading('conversations', options)) {
-	// 	// console.log('loadConversations', options);
-	// 	loadingRequestUtil.setLoading('conversations', options, () => { loadingConversations.set(true); });
-	// 	api.getConversations(options).then(result => {
-	// 		if (!result.error) {
-	// 			if (result.loadedAt) {
-	// 				conversationsLoadedAt = result.loadedAt;
-	// 			}
-	// 			mergeConversations(result.conversations);
-	// 			loadingRequestUtil.clearLoading('conversations', options, () => { loadingConversations.set(false); });
-	// 		}
-	// 	});
-	// }
+	if (!loadingRequestUtil.isLoading('conversations', options)) {
+		// console.log('loadConversations', options);
+		loadingRequestUtil.setLoading('conversations', options, () => { loadingConversations.set(true); });
+		api.getConversations(options).then(result => {
+			if (!result.error) {
+				if (result.loadedAt) {
+					conversationsLoadedAt = result.loadedAt;
+				}
+				mergeConversations(result.conversations);
+				loadingRequestUtil.clearLoading('conversations', options, () => { loadingConversations.set(false); });
+			}
+		});
+	}
 }
 
 function mergeConversations(newConversations) {
@@ -209,10 +213,16 @@ export function clearConversationSeenTimeout(conversationSeenTimeout) {
 
 export function getConversationUser(conversation) {
 	let curUser = null;
-
 	if (conversation.users) {
 		curUser = conversation.users.find(userItem => userItem.id !== get(userId));
 	}
+	return curUser;
+}
 
+export function getUserConversationInfo(conversation) {
+	let curUser = null;
+	if (conversation.users) {
+		curUser = conversation.users.find(userItem => userItem.id === get(userId));
+	}
 	return curUser;
 }

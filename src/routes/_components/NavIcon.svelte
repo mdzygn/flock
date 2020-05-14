@@ -71,4 +71,7 @@
     .navIcon :global(.notificationDot.navIcon-following) {
         left: 24px;
     }
+    .navIcon :global(.notificationDot.navIcon-messages) {
+        left: 30px;
+    }
 </style>

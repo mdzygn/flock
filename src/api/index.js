@@ -316,7 +316,7 @@ function requestUpload(options) {
 
 /*** Notifications ***/
 
-// options = { userId: id }
+// options = { userId: id, getUnviewed: boolean, loadedAt: date }
 function getNotifications(options) {
 	options = addCredentials(options);
 	return send('getNotifications', options).then(result => {
@@ -334,6 +334,33 @@ function updateNotifications(options) {
 	return send('updateNotifications', options).then(result => {
 		if (DEBUG && result && result.error) {
 			console.error('API Error - updateNotifications: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
+
+/*** Conversations ***/
+
+// options = { userId: id, getUnviewed: boolean, loadedAt: date }
+function getConversations(options) {
+	options = addCredentials(options);
+	return send('getConversations', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - getConversations: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
+// options = { userId: id, ids: [id] }
+function updateConversations(options) {
+	options = addCredentials(options);
+	return send('updateConversations', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - updateConversations: ', result);
 		}
 		return result;
 		// return Promise.reject(error); // TODO: prevent followups being called
@@ -371,6 +398,9 @@ const api = {
 
 	getNotifications,
 	updateNotifications,
+
+	getConversations,
+	updateConversations,
 
 	requestUpload,
 }

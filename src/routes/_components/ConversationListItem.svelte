@@ -10,7 +10,7 @@
 
     import { getUser, getUserModelFromData } from '../../models/usersModel';
 
-    import { getConversationUser } from '../../models/conversationsModel';
+    import { getConversationUser, getUserConversationInfo } from '../../models/conversationsModel';
 
     import { loadPost, loadChannel, loadProject } from '../../actions/appActions';
 
@@ -25,12 +25,13 @@
     $: title = ($conversation && $conversation.title) || '';
     $: message = ($conversation && $conversation.lastMessageText && getEllipsisText($conversation.lastMessageText, config.CONVERSATION_MAX_PREVIEW_LENGTH)) || '';
 
-    $: postId = ($conversation && $conversation.postId) || null;
-    $: threadId = ($conversation && $conversation.threadId) || null;
-    $: channelId = ($conversation && $conversation.channelId) || null;
+    $: conversationId = ($conversation && $conversation.conversationId) || null;
     $: projectId = ($conversation && $conversation.projectId) || null;
 
-    $: viewed = ($conversation && $conversation.viewed) || false;
+    $: userConversationInfo = getUserConversationInfo($conversation);
+    $: viewed = userConversationInfo ? userConversationInfo.viewed : true;
+
+    $: console.log('userConversationInfo', userConversationInfo);
 
     // $: projectTitle = $conversation && $conversation.projectTitle;
 
@@ -48,14 +49,8 @@
     $: titleString = title || actorName || '';
 
     function loadItem() {
-        if (threadId) {
-            loadPost(threadId, { anchorToBottom: true });
-        } else if (postId) {
-            loadPost(postId);
-        } else if (channelId) {
-            loadChannel(channelId);
-        } else if (projectId) {
-            loadProject(projectId);
+        if (conversationId) {
+            loadConversation(conversationId);
         }
     }
 </script>
@@ -70,13 +65,6 @@
         <div class="detailInnerContent">
             <div class="title">{titleString}</div>
             <div class="message">{@html message}<span class="dateString">{dateString}</span></div>
-            <!-- {#if dateString}
-                <div class="detail">
-                    {#if projectTitle}
-                        {locale.NOTIFICATION.PROJECT_PREFIX}<span class="projectTitle">{projectTitle}</span> -
-                    {/if}
-                {dateString}</div>
-            {/if} -->
         </div>
     </div>
     <div class="info">

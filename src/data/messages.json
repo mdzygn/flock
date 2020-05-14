@@ -3,41 +3,31 @@
        "id":"",
        "userId":"sl3p5oms",
        "conversationId":"a4kcmsd3",
-       "message":"",
-       "media":null,
-       "createdAt":0,
-       "likes":[
-
-       ],
-       "seen":[
-
-       ]
+       "message":"Ligula ullamcorper malesuada libero.",
+       "image":null,
+       "createdAt":1589188185960,
+       "likes":[],
+       "viewed":[]
+    },
+    {
+       "id":"",
+       "userId":"YRVQ6vOE",
+       "conversationId":"a4kcmsd3",
+       "message":"Eu ultrices vitae auctor eu augue, non quam lacus.",
+       "image":null,
+       "createdAt":1589188185960,
+       "likes":[],
+       "viewed":[]
     },
     {
        "id":"",
        "userId":"sl3p5oms",
        "conversationId":"a4kcmsd3",
-       "message":"",
-       "media":null,
+       "message":"Tempus quam pellentesque.",
+       "image":null,
        "createdAt":0,
-       "likes":[
-
-       ],
-       "seen":[
-
-       ]
-    },
-    {
-       "id":"",
-       "userId":"sl3p5oms",
-       "conversationId":"a4kcmsd3",
-       "message":"",
-       "media":null,
-       "createdAt":0,
-       "likes":[
-
-       ],
-       "seen":[
+       "likes":[],
+       "viewed":[
           "sl3p5oms"
        ]
     },
@@ -45,14 +35,35 @@
        "id":"",
        "userId":"sl3p5oms",
        "conversationId":"a4kcmsd3",
-       "projectId":"bl20a8lm",
-       "message":"",
-       "media":null,
+       "message":"In egestas erat imperdiet sed euismod. Urna nunc id cursus metus aliquam. Vel elit scelerisque mauris pellentesque pulvinar pellentesque.",
+       "image":null,
        "createdAt":0,
-       "likes":[
-
-       ],
-       "seen":[
+       "likes":[],
+       "viewed":[
+          "sl3p5oms"
+       ]
+    },
+    {
+       "id":"",
+       "userId":"YRVQ6vOE",
+       "conversationId":"a4kcmsd3",
+       "message":"Egestas sed sed risus pretium.",
+       "image":null,
+       "createdAt":0,
+       "likes":[],
+       "viewed":[
+          "sl3p5oms"
+       ]
+    },
+    {
+       "id":"",
+       "userId":"YRVQ6vOE",
+       "conversationId":"a4kcmsd3",
+       "message":"Netus et malesuada fames ac turpis egestas sed tempus. Nullam non nisi est sit amet facilisis magna etiam tempor.",
+       "image":null,
+       "createdAt":0,
+       "likes":[],
+       "viewed":[
           "sl3p5oms"
        ]
     },
@@ -60,14 +71,11 @@
        "id":"",
        "userId":"sl3p5oms",
        "conversationId":"a4kcmsd3",
-       "projectId":"bl20a8lm",
-       "message":"",
-       "media":null,
+       "message":"Quis viverra nibh!",
+       "image":null,
        "createdAt":0,
-       "likes":[
-
-       ],
-       "seen":[
+       "likes":[],
+       "viewed":[
           "sl3p5oms"
        ]
     }

@@ -12,6 +12,7 @@ const PostModel = (postData) => {
 
         title: '',
         message: null,
+        // image: null,
 
         createdAt: 0,
 

@@ -20,8 +20,8 @@
 </div>
 
 <style>
-	.content :global(.proxyOverlay) {
+	/* .content :global(.proxyOverlay) {
         position: absolute;
         opacity: 0.5;
-	}
+	} */
 </style>

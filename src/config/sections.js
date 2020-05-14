@@ -30,7 +30,6 @@ export const sections = [
 		segment: 'messages',
 		label: 'Messages',
 		main: true,
-		beta: true,
 	},
 
 	{

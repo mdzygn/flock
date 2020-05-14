@@ -2,28 +2,106 @@
 	{
 	   "id":"a4kcmsd3",
 	   "createdAt":0,
-	   "userId":"sl3p5oms",
-	   "user":{
-		  "firstName":"Mia"
-	   }
+	   "lastMessageAt":0,
+	   "lastSenderId": "YRVQ6vOE",
+	   "lastMessageText": "",
+	   "userIds": ["YRVQ6vOE", "sl3p5oms"],
+	   "users":[
+			{
+				"id": "YRVQ6vOE",
+				"username": "matt",
+				"avatarImage": "content/users/YRVQ6vOE-profile.jpg?c=1954819",
+				"name": "Matt Halford",
+				"loadedAt": 1589188185960,
+				"viewedAt": 1589188183114,
+				"viewed": true
+			},
+			{
+				"id": "9122vLem",
+				"username": "matt2",
+				"avatarImage": null,
+				"name": "Matto",
+				"style": {
+					"profileTop": "#80e8a5",
+					"profileBottom": "#66886c",
+					"coverTop": "#fbc7ae",
+					"coverBottom": "#b37866"
+				},
+				"loadedAt": 1589188185960,
+				"viewedAt": 1589188183114,
+				"viewed": true
+			}
+	   ]
 	},
 	{
-	   "id":"r70dp2bf",
-	   "isNew":true,
+	   "id":"a4kcmsd3",
 	   "createdAt":0,
-	   "userId":"sl3p5oms",
-	   "user":{
-		  "firstName":"Mia"
-	   }
+	   "lastMessageAt":0,
+	   "lastSenderId": "YRVQ6vOE",
+	   "lastMessageText": "",
+	   "userIds": ["YRVQ6vOE", "sl3p5oms"],
+	   "users":[
+			{
+				"id": "YRVQ6vOE",
+				"username": "matt",
+				"avatarImage": "content/users/YRVQ6vOE-profile.jpg?c=1954819",
+				"name": "Matt Halford",
+				"loadedAt": 1589188185960,
+				"viewedAt": 1589188183114,
+				"viewed": true
+			},
+			{
+				"id": "9122vLem",
+				"username": "matt2",
+				"avatarImage": null,
+				"name": "Matto",
+				"style": {
+					"profileTop": "#80e8a5",
+					"profileBottom": "#66886c",
+					"coverTop": "#fbc7ae",
+					"coverBottom": "#b37866"
+				},
+				"loadedAt": 1589188185960,
+				"viewedAt": 1589188183114,
+				"viewed": true
+			}
+	   ]
 	},
 	{
-	   "id":"s0g1la34",
+	   "id":"a4kcmsd3",
+	   "createdAt":0,
 	   "isGroup":true,
-	   "createdAt":0,
-	   "userId":"sl3p5oms",
 	   "projectId":"s7djj2s2",
-	   "project":{
-		  "name":"World Creator"
-	   }
+	   "projectTitle":"World Creator",
+	   "lastMessageAt":0,
+	   "lastSenderId": "YRVQ6vOE",
+	   "lastMessageText": "",
+	   "userIds": ["YRVQ6vOE", "sl3p5oms"],
+	   "users":[
+			{
+				"id": "YRVQ6vOE",
+				"username": "matt",
+				"avatarImage": "content/users/YRVQ6vOE-profile.jpg?c=1954819",
+				"name": "Matt Halford",
+				"loadedAt": 1589188185960,
+				"viewedAt": 1589188183114,
+				"viewed": true
+			},
+			{
+				"id": "9122vLem",
+				"username": "matt2",
+				"avatarImage": null,
+				"name": "Matto",
+				"style": {
+					"profileTop": "#80e8a5",
+					"profileBottom": "#66886c",
+					"coverTop": "#fbc7ae",
+					"coverBottom": "#b37866"
+				},
+				"loadedAt": 1589188185960,
+				"viewedAt": 1589188183114,
+				"viewed": true
+			}
+	   ]
 	}
  ]

@@ -9,7 +9,7 @@
     import Hotspot from '../../components/Hotspot.svelte';
 
 	import ContentPanel from './../_components/ContentPanel.svelte';
-    import NotificationListItem from './NotificationListItem.svelte';
+    import ConversationListItem from './ConversationListItem.svelte';
     import ContentLoader from './../_components/ContentLoader.svelte';
 
 	import { newProject } from '../../actions/appActions';
@@ -43,7 +43,7 @@
     {:else}
         {#each $notifications as notification}
             {#if !get(notification).indirect && !get(notification).notPriority } <!-- TODO: remove notPriority -->
-                <NotificationListItem {notification} />
+                <ConversationListItem {notification} />
             {/if}
         {:else}
             <div class="noNotifications">
@@ -56,6 +56,7 @@
 
 <style>
     .notificationList {
+        /* padding-top: 44px; */
         padding-top: 10px;
         padding-bottom: 40px;
         /* padding-top: 310px; */

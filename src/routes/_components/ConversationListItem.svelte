@@ -1,13 +1,16 @@
 <script>
     import { get, writable } from 'svelte/store';
 
+    import config from '../../config';
     import locale from '../../locale';
 
     import AvatarIcon from './AvatarIcon.svelte';
 
-    import { getDateAgeString } from '../../utils';
+    import { getDateAgeString, getEllipsisText } from '../../utils';
 
     import { getUser, getUserModelFromData } from '../../models/usersModel';
+
+    import { getConversationUser } from '../../models/conversationsModel';
 
     import { loadPost, loadChannel, loadProject } from '../../actions/appActions';
 
@@ -20,7 +23,7 @@
     $: isUserAction = ($conversation && $conversation.isUserAction) || true;
 
     $: title = ($conversation && $conversation.title) || '';
-    $: message = ($conversation && $conversation.lastMessageText) || '';
+    $: message = ($conversation && $conversation.lastMessageText && getEllipsisText($conversation.lastMessageText, config.CONVERSATION_MAX_PREVIEW_LENGTH)) || '';
 
     $: postId = ($conversation && $conversation.postId) || null;
     $: threadId = ($conversation && $conversation.threadId) || null;
@@ -29,16 +32,18 @@
 
     $: viewed = ($conversation && $conversation.viewed) || false;
 
-    // $: console.log('$conversation', $conversation);
-
     // $: projectTitle = $conversation && $conversation.projectTitle;
 
     $: date = ($conversation && $conversation.createdAt) || null;
     $: dateString = (date && ' - ' + getDateAgeString(date)) || '';
 
-    $: actor = ($conversation && $conversation.actors && $conversation.actors.length && $conversation.actors[0]) || null;
+    $: actor = ($conversation && getConversationUser($conversation)) || null;
     $: actorUser = (actor && date && getUserModelFromData(actor, date)) || writable(null);
     $: actorName = ($actorUser && $actorUser.name) || (actor && actor.name) || '';
+
+    // $: console.log('$conversation', $conversation);
+    // $: console.log('message', message);
+    // $: console.log('actor', actor);
 
     $: titleString = title || actorName || '';
 
@@ -64,7 +69,7 @@
     <div class="detailContent">
         <div class="detailInnerContent">
             <div class="title">{titleString}</div>
-            <div class="message">{@html message}{dateString}</div>
+            <div class="message">{@html message}<span class="dateString">{dateString}</span></div>
             <!-- {#if dateString}
                 <div class="detail">
                     {#if projectTitle}
@@ -140,6 +145,20 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+
+    /* .messageString {
+        display: inline-block;
+        max-width: 172px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    } */
+
+    .dateString {
+        color: #999999;
+
+        /* display: inline-block; */
     }
 
     .info {

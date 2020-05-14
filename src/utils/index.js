@@ -331,3 +331,10 @@ export function lineBreakUniform(string) {
         return string;
     }
 }
+
+export function getEllipsisText(string, maxLength) {
+    if (string.length > maxLength) {
+        string = string.substring(0, maxLength) + '&hellip;';
+    }
+    return string;
+}

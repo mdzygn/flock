@@ -67,6 +67,8 @@ export const NOTIFICATION_POLL_DELAY = 20; // 3; // 20; // 15;
 export const CONVERSATION_POLL_DELAY_ACTIVITY = 2;
 export const CONVERSATION_POLL_DELAY = 8;
 
+export const CONVERSATION_MAX_PREVIEW_LENGTH = 32;
+
 export const MAX_IMAGE_UPLOAD_SIZE = {
     'image/gif': 8,
     'image/png': 3,
@@ -144,4 +146,6 @@ export default {
 
     CONVERSATION_POLL_DELAY_ACTIVITY,
     CONVERSATION_POLL_DELAY,
+
+    CONVERSATION_MAX_PREVIEW_LENGTH,
 };

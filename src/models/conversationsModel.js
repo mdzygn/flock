@@ -206,3 +206,13 @@ export function clearConversationSeenTimeout(conversationSeenTimeout) {
 		window.clearTimeout(conversationSeenTimeout);
 	}
 }
+
+export function getConversationUser(conversation) {
+	let curUser = null;
+
+	if (conversation.users) {
+		curUser = conversation.users.find(userItem => userItem.id !== get(userId));
+	}
+
+	return curUser;
+}

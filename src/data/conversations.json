@@ -1,10 +1,10 @@
 [
 	{
 	   "id":"a4kcmsd3",
-	   "createdAt":0,
-	   "lastMessageAt":0,
+	   "createdAt":1589188185960,
+	   "lastMessageAt":1589188185960,
 	   "lastSenderId": "YRVQ6vOE",
-	   "lastMessageText": "",
+	   "lastMessageText": "This is a test message, this is a test message",
 	   "userIds": ["YRVQ6vOE", "sl3p5oms"],
 	   "users":[
 			{
@@ -19,7 +19,7 @@
 			{
 				"id": "9122vLem",
 				"username": "matt2",
-				"avatarImage": null,
+				"avatarImage": "content/users/YRVQ6vOE-profile.jpg?c=1954819",
 				"name": "Matto",
 				"style": {
 					"profileTop": "#80e8a5",
@@ -35,10 +35,10 @@
 	},
 	{
 	   "id":"4fds3dsf32",
-	   "createdAt":0,
-	   "lastMessageAt":0,
+	   "createdAt":1589188185960,
+	   "lastMessageAt":1589188185960,
 	   "lastSenderId": "YRVQ6vOE",
-	   "lastMessageText": "",
+	   "lastMessageText": "This is a test message",
 	   "userIds": ["YRVQ6vOE", "sl3p5oms"],
 	   "users":[
 			{
@@ -53,7 +53,7 @@
 			{
 				"id": "9122vLem",
 				"username": "matt2",
-				"avatarImage": null,
+				"avatarImage": "content/users/YRVQ6vOE-profile.jpg?c=1954819",
 				"name": "Matto",
 				"style": {
 					"profileTop": "#80e8a5",
@@ -69,13 +69,13 @@
 	},
 	{
 	   "id":"63641gd23",
-	   "createdAt":0,
 	   "isGroup":true,
 	   "projectId":"s7djj2s2",
 	   "projectTitle":"World Creator",
-	   "lastMessageAt":0,
+	   "createdAt":1589188185960,
+	   "lastMessageAt":1589188185960,
 	   "lastSenderId": "YRVQ6vOE",
-	   "lastMessageText": "",
+	   "lastMessageText": "This is a test message",
 	   "userIds": ["YRVQ6vOE", "sl3p5oms"],
 	   "users":[
 			{
@@ -90,7 +90,7 @@
 			{
 				"id": "9122vLem",
 				"username": "matt2",
-				"avatarImage": null,
+				"avatarImage": "content/users/YRVQ6vOE-profile.jpg?c=1954819",
 				"name": "Matto",
 				"style": {
 					"profileTop": "#80e8a5",

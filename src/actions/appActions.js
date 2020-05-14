@@ -41,9 +41,9 @@ import {
 } from '../models/postsModel';
 
 import {
+    getConversation,
     loadConversations,
     onConversationsUpdated,
-    getConversation,
     loadingConversations,
 } from '../models/conversationsModel';
 

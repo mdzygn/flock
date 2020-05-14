@@ -29,11 +29,13 @@
     // $: viewed = userConversationInfo ? userConversationInfo.viewed : true;
 
     $: date = ($message && $message.createdAt) || null;
-    $: dateString = (date && ' - ' + getDateAgeString(date)) || '';
+    // $: dateString = (date && ' - ' + getDateAgeString(date)) || '';
 
     $: actor = ($message && $conversation && getConversationUserById($conversation, $message.userId)) || null;
     $: actorUser = (actor && date && getUserModelFromData(actor, date)) || writable(null);
     $: actorName = ($actorUser && $actorUser.name) || (actor && actor.name) || '';
+
+    // $: console.log('actorUser', $actorUser);
 
     $: isSelf = (actor && actor.id === $userId);
 
@@ -110,7 +112,7 @@
     }
 
     .message {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         line-height: 1.3rem;
         /* margin-top: 7px; */
 

@@ -1,10 +1,14 @@
 <script>
     import { get, writable } from 'svelte/store';
 
+    import Button from '../../components/Button.svelte';
+
     import config from '../../config';
     import locale from '../../locale';
 
     import AvatarIcon from './AvatarIcon.svelte';
+
+    import LikeSelectedIcon from "../../assets/icons/post_like_selected.png";
 
     import { getDateString, getEllipsisText } from '../../utils';
 
@@ -39,12 +43,16 @@
 
     $: isSelf = (actor && actor.id === $userId);
 
-    $: hasLikes = ($message && $message.likes) || false;
+    $: hasLikes = ($message && $message.likes && $message.likes.length) || false;
     $: hideAvatarImage = ($message && $message.hideAvatarImage) || false;
     $: displayDate = ($message && $message.displayDate) || false;
     $: userBreak = ($message && $message.userBreak) || false;
 
     $: titleString = actorName || '';
+
+    function toggleLiked() {
+
+    }
 </script>
 
 <div class="messageListItem">
@@ -61,6 +69,9 @@
             <div class="detailInnerContent">
                 <div class="message">{@html messageText}</div>
             </div>
+            {#if hasLikes}
+                <Button className="likeButton" icon="{LikeSelectedIcon}" />
+            {/if}
         </div>
         <!-- <div class="info">
             {#if !viewed}
@@ -104,8 +115,10 @@
     }
 
     .detailContent {
-        /* position: absolute; */
+        display: flex;
         margin-left: 66px;
+
+        /* position: absolute; */
         /* margin-right: 110px; */
 
         /* top: 14px;
@@ -131,7 +144,8 @@
 
     .messageListItem :global(.messageContent.isSelf .detailContent)  {
         display: flex;
-        justify-content: flex-end;
+        /* justify-content: flex-end; */
+        flex-direction: row-reverse;
         margin-right: 18px;
     }
     .messageListItem :global(.messageContent.isSelf .detailInnerContent)  {
@@ -150,4 +164,21 @@
         right: 0;
         top: 13px;
     } */
+
+    .messageListItem :global(.likeButton) {
+		/* position: absolute;
+		top: 4px;
+		left: 10px; */
+
+        margin-top: 3px;
+        margin-left: 3px;
+        margin-right: 3px;
+
+		width: 28px;
+		height: 26px;
+    }
+    .messageListItem :global(.likeButton .icon) {
+        padding-left: 10px;
+        transform: scale(0.45, 0.45);
+    }
 </style>

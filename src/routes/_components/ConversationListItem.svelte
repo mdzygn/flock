@@ -7,20 +7,20 @@
 
     import { getDateAgeString } from '../../utils';
 
-    import { getNotificationMessage } from '../../utils/NotificationUtil';
-
     import { getUser, getUserModelFromData } from '../../models/usersModel';
 
     import { loadPost, loadChannel, loadProject } from '../../actions/appActions';
 
     export let conversation;
 
+    // $: console.log('conversation', $conversation);
+
     $: thumbImage = ''; // getProjectHeaderImage($conversation, true);
 
     $: isUserAction = ($conversation && $conversation.isUserAction) || true;
 
     $: title = ($conversation && $conversation.title) || '';
-    $: message = ($conversation && getNotificationMessage($conversation)) || '';
+    $: message = ($conversation && $conversation.lastMessageText) || '';
 
     $: postId = ($conversation && $conversation.postId) || null;
     $: threadId = ($conversation && $conversation.threadId) || null;
@@ -55,7 +55,7 @@
     }
 </script>
 
-<div class="notifcationListItem" on:click="{loadItem}">
+<div class="conversationListItem" on:click="{loadItem}">
     {#if isUserAction}
         <AvatarIcon user="{actorUser}" useThumb="{true}" />
     {:else}
@@ -82,7 +82,7 @@
 </div>
 
 <style>
-    .notifcationListItem {
+    .conversationListItem {
         position: relative;
 
         padding: 5px 0;
@@ -103,7 +103,7 @@
         border: 1px solid #D9D9D9;
     }
 
-    .notifcationListItem :global(.avatarIcon) {
+    .conversationListItem :global(.avatarIcon) {
         position: absolute;
         top: 14px;
         left: 21px;

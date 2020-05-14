@@ -18,22 +18,20 @@
         userId,
     } from '../../models/appModel';
 
-	import { getNotifications, loadingNotifications } from '../../models/notificationsModel';
+	import { getConversations, loadingConversations } from '../../models/conversationsModel';
 
     let conversations = writable([]);
-	$: { conversations = getNotifications({ userId: $userId }) };
+    $: { conversations = getConversations({ userId: $userId }) };
 
     export let className = '';
 </script>
 
 <div class="conversationList {className}">
-    {#if $loadingNotifications && (!$conversations || !$conversations.length)}
+    {#if $loadingConversations && (!$conversations || !$conversations.length)}
         <ContentLoader label="{locale.LOADING.NOTIFICATIONS}" />
     {:else}
         {#each $conversations as conversation}
-            {#if !get(conversation).indirect && !get(conversation).notPriority } <!-- TODO: remove notPriority -->
-                <ConversationListItem {conversation} />
-            {/if}
+            <ConversationListItem {conversation} />
         {:else}
             <div class="noConversations">
                 {locale.CONVERSATIONS.NO_CONVERSATIONS}<br/><br/>

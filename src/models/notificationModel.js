@@ -14,7 +14,7 @@ const NotificationModel = (notificationData) => {
 
         createdAt: 0,
 
-        seen: false,
+        // seen: false,
         viewed: false,
 
         actors: [],
@@ -26,21 +26,6 @@ const NotificationModel = (notificationData) => {
         projectId: '',
         projectName: '',
     };
-
-    // "id":"",
-    // "type":"postAdded",
-    // "isUserAction": true,
-    // "title":"",
-    // "thumb":"",
-    // "message":"",
-    // "createdAt":0,
-    // "seen": false,
-    // "viewed": false,
-    // "userId":"sl3p5oms",
-    // "postId": "",
-    // "threadId": "",
-    // "channelId": "",
-    // "projectId": ""
 
     if (notificationData) {
         initData = Object.assign(initData, notificationData);

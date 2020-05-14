@@ -14,6 +14,8 @@
 
     import { loadPost, loadChannel, loadProject } from '../../actions/appActions';
 
+	import { loadConversation } from '../../actions/appActions';
+
     export let conversation;
 
     // $: console.log('conversation', $conversation);
@@ -25,7 +27,7 @@
     $: title = ($conversation && $conversation.title) || '';
     $: message = ($conversation && $conversation.lastMessageText && getEllipsisText($conversation.lastMessageText, config.CONVERSATION_MAX_PREVIEW_LENGTH)) || '';
 
-    $: conversationId = ($conversation && $conversation.conversationId) || null;
+    $: conversationId = ($conversation && $conversation.id) || null;
     $: projectId = ($conversation && $conversation.projectId) || null;
 
     $: userConversationInfo = getUserConversationInfo($conversation);

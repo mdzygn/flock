@@ -85,6 +85,7 @@ const locale = {
 		THREAD_ITEMS: 'loading comments...',
 		NOTIFICATIONS: 'loading activity...',
 		CONVERSATIONS: 'loading messages...',
+		MESSAGES: 'loading messages...',
 	},
 	CHANNEL: {
 		NOT_FOUND: 'channel not found',
@@ -175,6 +176,9 @@ const locale = {
 	},
 	CONVERSATIONS: {
 		NO_CONVERSATIONS: 'no conversations yet',
+	},
+	CONVERSATION: {
+		NO_MESSAGES: 'no messages',
 	},
 }
 

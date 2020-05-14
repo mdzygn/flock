@@ -20,10 +20,6 @@
 
     // $: console.log('conversation', $conversation);
 
-    $: thumbImage = ''; // getProjectHeaderImage($conversation, true);
-
-    $: isUserAction = ($conversation && $conversation.isUserAction) || true;
-
     $: title = ($conversation && $conversation.title) || '';
     $: message = ($conversation && $conversation.lastMessageText && getEllipsisText($conversation.lastMessageText, config.CONVERSATION_MAX_PREVIEW_LENGTH)) || '';
 
@@ -42,10 +38,6 @@
     $: actorUser = (actor && date && getUserModelFromData(actor, date)) || writable(null);
     $: actorName = ($actorUser && $actorUser.name) || (actor && actor.name) || '';
 
-    // $: console.log('$conversation', $conversation);
-    // $: console.log('message', message);
-    // $: console.log('actor', actor);
-
     $: titleString = title || actorName || '';
 
     function loadItem() {
@@ -56,11 +48,7 @@
 </script>
 
 <div class="conversationListItem" on:click="{loadItem}">
-    {#if isUserAction}
-        <AvatarIcon user="{actorUser}" useThumb="{true}" />
-    {:else}
-        <img class="thumb" src="{thumbImage}" alt="{titleString}" />
-    {/if}
+    <AvatarIcon user="{actorUser}" useThumb="{true}" />
     <div class="detailContent">
         <div class="detailInnerContent">
             <div class="title">{titleString}</div>
@@ -85,7 +73,7 @@
         cursor: pointer;
     }
 
-    .thumb {
+    /* .thumb {
         position: absolute;
         top: 14px;
         left: 21px;
@@ -94,7 +82,7 @@
         object-fit: cover;
 
         border: 1px solid #D9D9D9;
-    }
+    } */
 
     .conversationListItem :global(.avatarIcon) {
         position: absolute;

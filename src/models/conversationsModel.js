@@ -219,6 +219,16 @@ export function getConversationUser(conversation) {
 	return curUser;
 }
 
+export function getConversationUserById(conversation, userId) {
+	let curUser = null;
+	return curUser;
+
+	if (conversation.users) {
+		curUser = conversation.users.find(userItem => userItem.id === userId);
+	}
+	return curUser;
+}
+
 export function getUserConversationInfo(conversation) {
 	let curUser = null;
 	if (conversation.users) {

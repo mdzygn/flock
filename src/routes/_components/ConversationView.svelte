@@ -9,7 +9,7 @@
     import Hotspot from '../../components/Hotspot.svelte';
 
 	import ContentPanel from './../_components/ContentPanel.svelte';
-    import ConversationListItem from './ConversationListItem.svelte';
+    import MessageItem from './MessageItem.svelte';
     import ContentLoader from './../_components/ContentLoader.svelte';
 
 	import { newProject } from '../../actions/appActions';
@@ -18,43 +18,43 @@
         userId,
     } from '../../models/appModel';
 
-	import { getConversations, loadingConversations } from '../../models/conversationsModel';
+	import { getMessages, loadingMessages } from '../../models/messagesModel';
 
-    let conversations = writable([]);
-    $: { conversations = getConversations({ userId: $userId }) };
+    let messages = writable([]);
+    $: { messages = getMessages({ userId: $userId }) };
 
     export let className = '';
 </script>
 
-<div class="conversationList {className}">
-    {#if $loadingConversations && (!$conversations || !$conversations.length)}
-        <ContentLoader label="{locale.LOADING.CONVERSATIONS}" />
+<div class="messageList {className}">
+    {#if $loadingMessages && (!$messages || !$messages.length)}
+        <ContentLoader label="{locale.LOADING.MESSAGES}" />
     {:else}
-        {#each $conversations as conversation}
-            <ConversationListItem {conversation} />
+        {#each $messages as message}
+            <MessageItem {message} />
         {:else}
-            <div class="noConversations">
-                {locale.CONVERSATIONS.NO_CONVERSATIONS}<br/><br/>
-                <a href="discover">Discover</a> inspiring projects to get involved with<br/>or create a <a href="javascript:void(0)" on:click="{newProject}">New Project</a>
+            <div class="noMessages">
+                {locale.CONVERSATION.NO_MESSAGES}
             </div>
         {/each}
     {/if}
 </div>
 
 <style>
-    .conversationList {
+    .messageList {
+        padding-top: 37px;
+        /* padding-top: 10px; */
         /* padding-top: 44px; */
-        padding-top: 10px;
         padding-bottom: 40px;
         /* padding-top: 310px; */
     }
 
-    .conversationList :global(.panelContent) {
+    .messageList :global(.panelContent) {
         margin-top: -6px;
         margin-bottom: -6px;
     }
 
-    .noConversations {
+    .noMessages {
         padding: 0 20px;
         font-size: 1.2rem;
         line-height: 1.8rem;
@@ -62,7 +62,7 @@
         padding-bottom: 20px;
     }
 
-    .conversationList :global(.contentLoader) {
+    .messageList :global(.contentLoader) {
         padding: 0 20px;
         font-size: 1.2rem;
         padding-top: 10px;

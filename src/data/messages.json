@@ -6,6 +6,7 @@
        "message":"Ligula ullamcorper malesuada libero.",
        "image":null,
        "createdAt":1589188185960,
+       "displayDate":true,
        "likes":[],
        "viewed":[]
     },
@@ -16,6 +17,7 @@
        "message":"Eu ultrices vitae auctor eu augue, non quam lacus.",
        "image":null,
        "createdAt":1589188185960,
+       "userBreak":true,
        "likes":[],
        "viewed":[]
     },
@@ -26,6 +28,7 @@
        "message":"Tempus quam pellentesque.",
        "image":null,
        "createdAt":1589188185960,
+       "userBreak":true,
        "likes":[],
        "viewed":[
           "9122vLem"
@@ -33,11 +36,39 @@
     },
     {
        "id":"j657fef2t4",
-       "userId":"9122vLem",
+       "userId":"YRVQ6vOE",
        "conversationId":"a4kcmsd3",
-       "message":"In egestas erat imperdiet sed euismod. Urna nunc id cursus metus aliquam. Vel elit scelerisque mauris pellentesque pulvinar pellentesque.",
+       "message":"Eu ultrices vitae auctor eu augue. Non quam lacus suspendisse faucibus interdum posuere.",
        "image":null,
        "createdAt":1589188185960,
+       "displayDate":true,
+       "userBreak":true,
+       "likes":[],
+       "viewed":[
+          "9122vLem"
+       ]
+    },
+    {
+       "id":"jh5y53g5g",
+       "userId":"9122vLem",
+       "conversationId":"a4kcmsd3",
+       "message":"Ullamcorper sit amet risus.",
+       "image":null,
+       "createdAt":1589188185960,
+       "userBreak":true,
+       "likes":[],
+       "viewed":[
+          "9122vLem"
+       ]
+    },
+    {
+       "id":"h64h4hff23",
+       "userId":"9122vLem",
+       "conversationId":"a4kcmsd3",
+       "message":"In egestas erat imperdiet sed euismod. Urna nunc id cursus metus aliquam. Vel elit scelerisque mauris pellentesque pulvinar pellentesque. ",
+       "image":null,
+       "createdAt":1589188185960,
+       "hideAvatarImage": true,
        "likes":["YRVQ6vOE"],
        "viewed":[
           "9122vLem"
@@ -50,7 +81,9 @@
        "message":"Egestas sed sed risus pretium.",
        "image":null,
        "createdAt":1589188185960,
-       "likes":["9122vLem"],
+       "userBreak":true,
+       "displayDate":true,
+       "likes":[],
        "viewed":[
           "9122vLem"
        ]
@@ -62,6 +95,7 @@
        "message":"Netus et malesuada fames ac turpis egestas sed tempus. Nullam non nisi est sit amet facilisis magna etiam tempor.",
        "image":null,
        "createdAt":1589188185960,
+       "hideAvatarImage": true,
        "likes":[],
        "viewed":[
           "9122vLem"
@@ -71,9 +105,50 @@
        "id":"trg34yi787",
        "userId":"9122vLem",
        "conversationId":"a4kcmsd3",
+       "message":"Elit sed vulputate mi.",
+       "image":null,
+       "createdAt":1589188185960,
+       "userBreak":true,
+       "likes":[],
+       "viewed":[
+          "9122vLem"
+       ]
+    },
+    {
+       "id":"6u3653f443t",
+       "userId":"YRVQ6vOE",
+       "conversationId":"a4kcmsd3",
+       "message":"Pellentesque nec.",
+       "image":null,
+       "createdAt":1589188185960,
+       "userBreak":true,
+       "likes":[],
+       "viewed":[
+          "9122vLem"
+       ]
+    },
+    {
+       "id":"6u53g542542g54",
+       "userId":"YRVQ6vOE",
+       "conversationId":"a4kcmsd3",
+       "message":"Tempor orci eu lobortis.",
+       "image":null,
+       "createdAt":1589188185960,
+       "displayDate":true,
+       "hideAvatarImage": true,
+       "likes":["9122vLem"],
+       "viewed":[
+          "9122vLem"
+       ]
+    },
+    {
+       "id":"h6ht54sl2",
+       "userId":"9122vLem",
+       "conversationId":"a4kcmsd3",
        "message":"Quis viverra nibh!",
        "image":null,
        "createdAt":1589188185960,
+       "userBreak":true,
        "likes":[],
        "viewed":[
           "9122vLem"

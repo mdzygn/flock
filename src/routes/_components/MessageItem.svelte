@@ -6,7 +6,7 @@
 
     import AvatarIcon from './AvatarIcon.svelte';
 
-    import { getDateAgeString, getEllipsisText } from '../../utils';
+    import { getDateString, getEllipsisText } from '../../utils';
 
     import { getUser, getUserModelFromData } from '../../models/usersModel';
 
@@ -29,7 +29,7 @@
     // $: viewed = userConversationInfo ? userConversationInfo.viewed : true;
 
     $: date = ($message && $message.createdAt) || null;
-    // $: dateString = (date && ' - ' + getDateAgeString(date)) || '';
+    $: dateString = (date && getDateString(date)) || '';
 
     $: actor = ($message && $conversation && getConversationUserById($conversation, $message.userId)) || null;
     $: actorUser = (actor && date && getUserModelFromData(actor, date)) || writable(null);
@@ -39,23 +39,35 @@
 
     $: isSelf = (actor && actor.id === $userId);
 
+    $: hasLikes = ($message && $message.likes) || false;
+    $: hideAvatarImage = ($message && $message.hideAvatarImage) || false;
+    $: displayDate = ($message && $message.displayDate) || false;
+    $: userBreak = ($message && $message.userBreak) || false;
+
     $: titleString = actorName || '';
 </script>
 
 <div class="messageListItem">
-    {#if !isSelf}
-        <AvatarIcon user="{actorUser}" useThumb="{true}" />
+    {#if displayDate}
+        <div class="dateHeader">{dateString}</div>
     {/if}
-    <div class="detailContent" class:isSelf="{isSelf}">
-        <div class="detailInnerContent">
-            <div class="message">{@html messageText}</div>
-        </div>
-    </div>
-    <!-- <div class="info">
-        {#if !viewed}
-            <div class="unseenIcon" />
+    <div class="messageContent"
+        class:userBreak="{userBreak}"
+        class:isSelf="{isSelf}">
+        {#if !isSelf && !hideAvatarImage}
+            <AvatarIcon user="{actorUser}" useThumb="{true}" />
         {/if}
-    </div> -->
+        <div class="detailContent">
+            <div class="detailInnerContent">
+                <div class="message">{@html messageText}</div>
+            </div>
+        </div>
+        <!-- <div class="info">
+            {#if !viewed}
+                <div class="unseenIcon" />
+            {/if}
+        </div> -->
+    </div>
 </div>
 
 <style>
@@ -69,10 +81,26 @@
 
     .messageListItem :global(.avatarIcon) {
         position: absolute;
-        top: -1px;
+        top: -4px;
         left: 13px;
         width: 40px;
         height: 40px;
+    }
+
+    .messageContent {
+        position: relative;
+    }
+
+    .messageListItem :global(.messageContent.userBreak) {
+        margin-top: 7px;
+    }
+
+    .dateHeader {
+        font-size: 1.1rem;
+        text-align: center;
+        color: #AAAAAA;
+        margin-top: 12px;
+        margin-bottom: 12px;
     }
 
     .detailContent {
@@ -101,12 +129,12 @@
         /* width: 100%; */
     }
 
-    .messageListItem :global(.detailContent.isSelf)  {
+    .messageListItem :global(.messageContent.isSelf .detailContent)  {
         display: flex;
         justify-content: flex-end;
         margin-right: 18px;
     }
-    .messageListItem :global(.detailContent.isSelf .detailInnerContent)  {
+    .messageListItem :global(.messageContent.isSelf .detailInnerContent)  {
         background-color: #DDDDDD;
         border-color: #DDDDDD;
     }
@@ -115,8 +143,6 @@
         font-size: 1.3rem;
         line-height: 1.3rem;
         /* margin-top: 7px; */
-
-
     }
 
     /* .info {

@@ -31,8 +31,6 @@
     $: userConversationInfo = getUserConversationInfo($conversation);
     $: viewed = userConversationInfo ? userConversationInfo.viewed : true;
 
-    $: console.log('userConversationInfo', userConversationInfo);
-
     // $: projectTitle = $conversation && $conversation.projectTitle;
 
     $: date = ($conversation && $conversation.createdAt) || null;

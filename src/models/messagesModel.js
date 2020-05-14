@@ -116,7 +116,8 @@ function mergeMessages(newMessages) {
             }
 		}
 
-		curMessages.sort((a,b) => get(b).createdAt - get(a).createdAt ); // sort by reversed created time
+		curMessages.sort((a,b) => get(a).createdAt - get(b).createdAt );
+		// curMessages.sort((a,b) => get(b).createdAt - get(a).createdAt ); // sort by reversed created time
 
 		messages.set(curMessages);
 	}

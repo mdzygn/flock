@@ -10,7 +10,7 @@
 
     import LikeSelectedIcon from "../../assets/icons/post_like_selected.png";
 
-    import { getDateString, getEllipsisText } from '../../utils';
+    import { getDateAge, getDateString, getEllipsisText } from '../../utils';
 
     import { getUser, getUserModelFromData } from '../../models/usersModel';
 
@@ -33,7 +33,20 @@
     // $: viewed = userConversationInfo ? userConversationInfo.viewed : true;
 
     $: date = ($message && $message.createdAt) || null;
-    $: dateString = (date && getDateString(date)) || '';
+    // $: dateString = (date && getDateString(date)) || '';
+    let dateString = '';
+    $: {
+        if (date) {
+            const dateAge = getDateAge(date);
+            if (dateAge.days < 0.66) {
+                dateString = getDateString(date, 'h:mmtt');
+            } else if (dateAge.weeks < 1) {
+                dateString = getDateString(date, 'dddd') + ' at ' + getDateString(date, 'h:mmtt');
+            } else {
+                dateString = getDateString(date, 'd MMM') + ' at ' + getDateString(date, 'h:mmtt');
+            }
+        }
+    }
 
     $: actor = ($message && $conversation && getConversationUserById($conversation, $message.userId)) || null;
     $: actorUser = (actor && date && getUserModelFromData(actor, date)) || writable(null);
@@ -137,7 +150,7 @@
 
         border-radius: 15px;
         padding: 8px 12px;
-        max-width: 35vw;
+        max-width: 62%;
 
         /* width: 100%; */
     }

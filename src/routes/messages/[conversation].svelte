@@ -20,7 +20,7 @@
 
 <div class="messagesView">
 	<ScrollView anchorToBottom="{true}" id="conversation">
-		<div class="proxyOverlay">
+		<!-- <div class="proxyOverlay">
 			{#if isNewConversation}
 				<div class="content">
 					<Proxy image="message_new_message_profile" className="profileInfo" />
@@ -28,14 +28,12 @@
 			{:else}
 				<Proxy image="{proxyMessageViewImage}">
 					{#if viewingGroupConversation}
-						<!-- Profiles -->
 						<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
 							left: 6px;
 							top: 25px;
 							width: 50px;
 							height: 307px;" />
 					{:else}
-						<!-- Profiles -->
 						<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
 							left: 6px;
 							top: 25px;
@@ -44,7 +42,7 @@
 					{/if}
 				</Proxy>
 			{/if}
-		</div>
+		</div> -->
 
 		<ConversationView />
 	</ScrollView>
@@ -55,10 +53,10 @@
 </div>
 
 <style>
-	.messagesView :global(.proxyOverlay) {
+	/* .messagesView :global(.proxyOverlay) {
         position: absolute;
         opacity: 0.5;
-	}
+	} */
 
 	.messagesView {
 		position: absolute;

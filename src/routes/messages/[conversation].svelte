@@ -6,6 +6,8 @@
 	import { conversation } from '../../models/appModel';
 	import { loadProfile } from '../../actions/appActions';
 
+	import ConversationView from '../_components/ConversationView.svelte';
+
 	$: viewingGroupConversation = ($conversation && $conversation.isGroup) || false;
 	$: isNewConversation = ($conversation && $conversation.isNew) || false;
 
@@ -18,29 +20,33 @@
 
 <div class="messagesView">
 	<ScrollView anchorToBottom="{true}" id="conversation">
-		{#if isNewConversation}
-			<div class="content">
-				<Proxy image="message_new_message_profile" className="profileInfo" />
-			</div>
-		{:else}
-			<Proxy image="{proxyMessageViewImage}">
-				{#if viewingGroupConversation}
-					<!-- Profiles -->
-					<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
-						left: 6px;
-						top: 25px;
-						width: 50px;
-						height: 307px;" />
-				{:else}
-					<!-- Profiles -->
-					<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
-						left: 6px;
-						top: 25px;
-						width: 50px;
-						height: 691px;" />
-				{/if}
-			</Proxy>
-		{/if}
+		<div class="proxyOverlay">
+			{#if isNewConversation}
+				<div class="content">
+					<Proxy image="message_new_message_profile" className="profileInfo" />
+				</div>
+			{:else}
+				<Proxy image="{proxyMessageViewImage}">
+					{#if viewingGroupConversation}
+						<!-- Profiles -->
+						<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
+							left: 6px;
+							top: 25px;
+							width: 50px;
+							height: 307px;" />
+					{:else}
+						<!-- Profiles -->
+						<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
+							left: 6px;
+							top: 25px;
+							width: 50px;
+							height: 691px;" />
+					{/if}
+				</Proxy>
+			{/if}
+		</div>
+
+		<ConversationView />
 	</ScrollView>
 </div>
 
@@ -49,6 +55,11 @@
 </div>
 
 <style>
+	.messagesView :global(.proxyOverlay) {
+        position: absolute;
+        opacity: 0.5;
+	}
+
 	.messagesView {
 		position: absolute;
 		top: 0;

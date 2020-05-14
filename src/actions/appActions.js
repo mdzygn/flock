@@ -480,7 +480,9 @@ export async function logOut(dontDisplayMessage) {
 
 export function checkLoggedIn() {
     if (!get(user)) {
-        showPrompt(promptIds.SIGN_UP);
+        if (!get(userId)) {
+            showPrompt(promptIds.SIGN_UP);
+        }
 
         return false;
     }

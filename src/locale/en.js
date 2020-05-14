@@ -171,7 +171,10 @@ const locale = {
 	},
 	NOTIFICATION: {
 		PROJECT_PREFIX: 'on ',
-	}
+	},
+	CONVERSATIONS: {
+		NO_CONVERSATIONS: 'no conversations yet',
+	},
 }
 
 export default locale;

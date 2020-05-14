@@ -13,30 +13,30 @@
 
     import { loadPost, loadChannel, loadProject } from '../../actions/appActions';
 
-    export let notification;
+    export let conversation;
 
-    $: thumbImage = ''; // getProjectHeaderImage($notification, true);
+    $: thumbImage = ''; // getProjectHeaderImage($conversation, true);
 
-    $: isUserAction = ($notification && $notification.isUserAction) || true;
+    $: isUserAction = ($conversation && $conversation.isUserAction) || true;
 
-    $: title = ($notification && $notification.title) || '';
-    $: message = ($notification && getNotificationMessage($notification)) || '';
+    $: title = ($conversation && $conversation.title) || '';
+    $: message = ($conversation && getNotificationMessage($conversation)) || '';
 
-    $: postId = ($notification && $notification.postId) || null;
-    $: threadId = ($notification && $notification.threadId) || null;
-    $: channelId = ($notification && $notification.channelId) || null;
-    $: projectId = ($notification && $notification.projectId) || null;
+    $: postId = ($conversation && $conversation.postId) || null;
+    $: threadId = ($conversation && $conversation.threadId) || null;
+    $: channelId = ($conversation && $conversation.channelId) || null;
+    $: projectId = ($conversation && $conversation.projectId) || null;
 
-    $: viewed = ($notification && $notification.viewed) || false;
+    $: viewed = ($conversation && $conversation.viewed) || false;
 
-    // $: console.log('$notification', $notification);
+    // $: console.log('$conversation', $conversation);
 
-    $: projectTitle = $notification && $notification.projectTitle;
+    // $: projectTitle = $conversation && $conversation.projectTitle;
 
-    $: date = ($notification && $notification.createdAt) || null;
+    $: date = ($conversation && $conversation.createdAt) || null;
     $: dateString = (date && ' - ' + getDateAgeString(date)) || '';
 
-    $: actor = ($notification && $notification.actors && $notification.actors.length && $notification.actors[0]) || null;
+    $: actor = ($conversation && $conversation.actors && $conversation.actors.length && $conversation.actors[0]) || null;
     $: actorUser = (actor && date && getUserModelFromData(actor, date)) || writable(null);
     $: actorName = ($actorUser && $actorUser.name) || (actor && actor.name) || '';
 
@@ -140,21 +140,6 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
-
-    .detail {
-        font-size: 1.1rem;
-        margin-top: 4px;
-        color: #888888;
-        line-height: 1.3rem;
-
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .projectTitle {
-        font-weight: 700;
     }
 
     .info {

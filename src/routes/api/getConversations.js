@@ -33,6 +33,11 @@ export async function post(req, res, next) {
 	if (conversationId) {
 		filter.id = conversationId;
 	}
+	if (loadedAt) {
+		filter.lastMessageAt = {$gt: loadedAt};
+		// filter.loadedAt = {"$exists": false};
+		// filter.loadedAt = { "$or" : [  {"$exists": false}, {$gt: loadedAt} ] };
+	}
 
 	// if (getUnviewed) {
 	// 	filter.viewed = {$ne: true};
@@ -49,7 +54,8 @@ export async function post(req, res, next) {
 
 	let conversations = await db.collection('conversations').find(filter).sort(sort).toArray();
 
-	let loadedTime = null;
+	let loadedTime;
+
 	if (conversations && conversations.length) {
 		const conversationIds = conversations.map((conversation) => conversation.id);
 		filter.id = { $in: conversationIds };

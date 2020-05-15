@@ -35,11 +35,11 @@ export async function post(req, res, next) {
 		details.createdAt = (new Date()).getTime();
 		details.modifiedAt = details.createdAt;
 
-        if (!details.userId)
+        if (!details.userId) {
             errorResponse(res, {}, {errorMsg: 'no userId specified with message'});
             return;
         }
-        if (!details.conversationId)
+        if (!details.conversationId) {
             errorResponse(res, {}, {errorMsg: 'no conversationId specified with message'});
             return;
         }

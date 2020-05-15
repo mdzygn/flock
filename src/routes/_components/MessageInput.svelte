@@ -50,7 +50,7 @@
 
 			createMessage(messageDetails).then((result) => {
 				if (result && (result.success || result.addedMessage || result.duplicateKey)) {
-                    console.log('clear draft message');
+                    console.log('clear draft message', draftId);
 					// clearDraftPost('message', draftId);
 				}
 			});

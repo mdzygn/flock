@@ -19,6 +19,7 @@
     import {
         userId,
         conversation,
+        dateDebugOffset,
     } from '../../models/appModel';
 
     import { loadPost, loadChannel, loadProject } from '../../actions/appActions';
@@ -39,9 +40,26 @@
     let dateString = '';
     $: {
         if (date) {
+            // dateDebugOffset.set(60 * 60 * 1000 * (12 + 24 + 8) + (4) * (60) * 1000);
+            // date = (new Date()).getTime() - $dateDebugOffset;
+            // console.log('date', date, getDateString(date));
+
             const dateAge = getDateAge(date);
-            if (dateAge.days < 0.66) {
-                dateString = getDateString(date, 'h:mmtt');
+
+            const DAY_MILLISECONDS = 24*60*60*1000;
+            let todaysDate = (new Date()).setHours(0,0,0,0) / DAY_MILLISECONDS;
+            let curDate = (new Date(date)).setHours(0,0,0,0) / DAY_MILLISECONDS;
+            let dateDiff = todaysDate - curDate;
+            // console.log('dateDiff', dateDiff);
+
+            // if (dateAge.days < 1) {
+            if (dateDiff < 1) {
+                dateString = 'Today at ' + getDateString(date, 'h:mmtt');
+            } else if (dateDiff < 2) {
+                dateString = 'Yesterday at ' + getDateString(date, 'h:mmtt');
+            // } else {
+            //     dateString = getDateString(date, 'dddd') + ' at ' + getDateString(date, 'h:mmtt');
+            // }
             } else if (dateAge.weeks < 1) {
                 dateString = getDateString(date, 'dddd') + ' at ' + getDateString(date, 'h:mmtt');
             } else {

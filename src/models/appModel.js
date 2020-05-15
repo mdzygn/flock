@@ -121,6 +121,8 @@ export const setAccountFormValidated = writable(false);
 export const dontAllowOverlayClose = writable(false);
 export const newUsername = writable(null);
 
+export const dateDebugOffset = writable(3600 * 1000);
+
 initApp();
 
 function initApp() {

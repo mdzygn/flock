@@ -29,7 +29,9 @@ export function testInputDefocus(event, options) {
     const keyCode = event.keyCode;
     if ((keyCode === 13 || keyCode == 10) && event.target && event.target.blur) { //&& isActionKeyAllowed) {
         if (options && options.action && (!actionOnCtrl || event.ctrlKey)) {
-            event.target.blur();
+            if (!options.preventBlur) {
+                event.target.blur();
+            }
             options.action();
         } else if (options && options.target) {
             event.target.blur();

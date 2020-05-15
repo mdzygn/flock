@@ -2,6 +2,8 @@ import api from '../api';
 
 import config from '../config';
 
+import EventEmitter from 'eventemitter3';
+
 import { writable, get } from 'svelte/store';
 
 import { generateId } from '../utils';
@@ -15,6 +17,9 @@ import { userId } from '../models/appModel';
 // import messagesTestData from '../data/messages.json';
 
 export let loadingMessages = writable(false);
+
+const MessagesModel = new EventEmitter();
+export default MessagesModel;
 
 let curMessageFilterOptions = null;
 
@@ -191,8 +196,12 @@ export function addMessage(messageDetails) {
 	});
 
 	const curMessages = get(messages);
-	curMessages.unshift(newMessageModel);
+	newMessage.lastMessage = curMessages.length ? curMessages[curMessages.length - 1] : null;
+
+	curMessages.push(newMessageModel);
 	messages.set(curMessages);
+
+	MessagesModel.emit('messagedAdded');
 
 	return result;
 }

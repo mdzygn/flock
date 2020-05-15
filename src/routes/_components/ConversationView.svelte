@@ -23,7 +23,8 @@
 <style>
     .messageList {
         width: 100%;
-        padding-bottom: 40px;
+        padding-bottom: 20px;
+        /* padding-bottom: 40px; */
         /* padding-top: 9px; */
         /* padding-top: 10px; */
         /* padding-top: 44px; */

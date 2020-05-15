@@ -1,4 +1,5 @@
 <script>
+	import { tick } from 'svelte';
 	import { writable } from 'svelte/store';
 
     import locale from '../../locale';
@@ -25,7 +26,7 @@
         loadingConversations,
     } from '../../models/conversationsModel';
 
-	import { getMessages, loadingMessages } from '../../models/messagesModel';
+	import MessagesModel, { getMessages, loadingMessages } from '../../models/messagesModel';
 
 	import {
         loadCurrentConversation,
@@ -43,6 +44,20 @@
 	$: isNewConversation = ($conversation && $conversation.isNew) || false;
 
 	$: proxyMessageViewImage = viewingGroupConversation ? 'messages_group_view': 'message_view';
+
+	let scrollRegion;
+
+	MessagesModel.on('messagedAdded', scrollToBottom);
+
+	async function scrollToBottom() {
+		if (scrollRegion) {
+			await tick();
+
+			if (scrollRegion) {
+				scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+			}
+		}
+	}
 </script>
 
 <svelte:head>
@@ -58,7 +73,7 @@
             {locale.CONVERSATION.NO_MESSAGES}
         </div> -->
     {:else}
-		<ScrollView anchorToBottom="{true}" id="conversation">
+		<ScrollView bind:scrollRegion="{scrollRegion}" anchorToBottom="{true}" id="conversation">
 			<!-- <div class="proxyOverlay">
 				{#if isNewConversation}
 					<div class="content">

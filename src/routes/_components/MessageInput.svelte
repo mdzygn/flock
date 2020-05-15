@@ -35,7 +35,7 @@
 
 	function createNewMessage() {
 		if (submitEnabled) {
-            console.log('createNewMessage', message);
+            // console.log('createNewMessage', message);
 
 			const messageDetails = {
 				id: newMessageId,
@@ -46,11 +46,14 @@
                 messageDetails.image = image;
             }
 
+            message = '';
+            newMessageId = getNewMessageId();
+
             const draftId = $conversationId;
 
 			createMessage(messageDetails).then((result) => {
 				if (result && (result.success || result.addedMessage || result.duplicateKey)) {
-                    console.log('clear draft message', draftId);
+                    // console.log('clear draft message', draftId);
 					// clearDraftPost('message', draftId);
 				}
 			});
@@ -75,7 +78,7 @@
         <Button className="sendButton" disabled="{!submitEnabled}" onClick="{submit}" icon="{SendMessageIcon}" />
         <Button className="imageButton" disabled="{true}" onClick="{uploadImage}" icon="{ImageIcon}" />
         <div class="field">
-            <input type="text" id="message" bind:value="{message}" bind:this="{messageField}" on:keypress="{(e) => testInputDefocus(e, {action: submit})}" />
+            <input type="text" id="message" bind:value="{message}" bind:this="{messageField}" on:keypress="{(e) => testInputDefocus(e, {action: submit, preventBlur: true})}" />
         </div>
     </div>
 </div>

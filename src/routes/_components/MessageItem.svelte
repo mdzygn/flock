@@ -59,12 +59,14 @@
     $: isSelf = (actor && actor.id === $userId);
 
     $: userBreak = ($lastMessage && $message.userId !== $lastMessage.userId) || false;
+    $: hideAvatarImage = ($lastMessage && $message.userId == $lastMessage.userId) || false;
 
     // $: console.log('userBreak', userBreak, 'userId', $message.userId, 'last userId', $lastMessage && $lastMessage.userId);
 
     $: hasLikes = ($message && $message.likes && $message.likes.length) || false;
-    $: hideAvatarImage = ($message && $message.hideAvatarImage) || false;
+
     $: displayDate = ($message && $message.displayDate) || false;
+    // $: hideAvatarImage = ($message && $message.hideAvatarImage) || false;
     // $: userBreak = ($message && $message.userBreak) || false;
 
     $: titleString = actorName || '';

@@ -6,18 +6,60 @@
     import ImageIcon from "../../assets/icons/image.png";
     import SendMessageIcon from "../../assets/icons/send.png";
 
-    import { testInputDefocus } from '../../utils';
+    import {
+        testInputDefocus,
+		getUnformattedText,
+		getFormattedText,
+    } from '../../utils';
+
+    import {
+        conversationId,
+    } from '../../models/appModel';
+
+    import {
+        getNewMessageId
+    } from '../../models/messagesModel';
+
+    import {
+        createMessage
+    } from '../../actions/messageActions';
 
     export let message = '';
     export let image = null;
 
+	let newMessageId = getNewPostId();
+
     let messageField;
 
-    $: submitEnabled = !!(message || image);
+    $: submitEnabled = $conversationId && !!(message || image);
+
+	function createNewMessage() {
+		if (submitEnabled) {
+            console.log('createNewMessage', message);
+
+			const messageDetails = {
+				id: newMessageId,
+				conversationId: $conversationId,
+				message: getUnformattedText(message),
+            };
+            if (image) {
+                messageDetails.image = image;
+            }
+
+            const draftId = $conversationId;
+
+			createMessage(messageDetails).then((result) => {
+				if (result && (result.success || result.addedMessage || result.duplicateKey)) {
+                    console.log('clear draft message');
+					// clearDraftPost('message', draftId);
+				}
+			});
+		}
+    }
 
     function submit() {
         if (submitEnabled) {
-            console.log('submit', message);
+            createNewMessage();
         }
     }
 

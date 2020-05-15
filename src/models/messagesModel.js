@@ -8,9 +8,9 @@ import loadingRequestUtil from '../utils/loadingRequestUtil';
 
 import MessageModel from '../models/messageModel';
 
-import { userId, usercode, curPath } from '../models/appModel';
+import { userId } from '../models/appModel';
 
-import messagesTestData from '../data/messages.json';
+// import messagesTestData from '../data/messages.json';
 
 export let loadingMessages = writable(false);
 
@@ -150,4 +150,50 @@ function clearFilteredMessages() {
 	const curMessages = get(messages);
 	curMessages.length = 0;
 	messages.set(curMessages);
+}
+
+export function addMessage(messageDetails) {
+	const newMessageModel = MessageModel();
+	const newMessage = get(newMessageModel);
+
+	const ownerId = get(userId);
+
+	newMessage.id = messageDetails.id;
+
+	newMessage.userId = ownerId;
+
+	newMessage.conversationId = messageDetails.conversationId;
+
+	newMessage.message = messageDetails.message || '';
+	if (messageDetails.image) {
+		newMessage.image = messageDetails.image;
+	}
+
+	newMessage.createdAt = (new Date()).getTime(); // use for initial sort values
+	newMessage.modifiedAt = newMessage.createdAt;
+
+	// savingMessageId.set(newMessage.id); // need to keep saving message so doesn't override on load
+	// savingMessage.set(true);
+
+	const result = api.addMessage({details: newMessage});
+	result.then(result => {
+		if (!result || result.error || result.invalid) {
+			console.error(result);
+		}
+		// savingMessage.set(false);
+		return result;
+	});
+
+	const curMessages = get(messages);
+	curMessages.unshift(newMessageModel);
+	messages.set(curMessages);
+
+	return result;
+}
+
+export function getNewMessageId() {
+    let messageId, trialIndex;
+	do { messageId = generateId(); } while (getMessage(messageId) && trialIndex < 99);
+	if (trialIndex === 99) { return null; }
+	return messageId;
 }

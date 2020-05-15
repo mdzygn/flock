@@ -80,7 +80,7 @@ export async function post(req, res, next) {
                 errorResponse(res, {addedMessage: true}, {errorMsg: 'error updating conversation'});
             }
 		} else {
-			errorResponse(res, {} {errorMsg: 'error adding message'});
+			errorResponse(res, {}, {errorMsg: 'error adding message'});
 		}
 	} else {
 		errorResponse(res, {}, {errorMsg: 'message or image not provided'});

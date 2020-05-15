@@ -14,12 +14,11 @@
 				"name": "Matt Halford",
 				"loadedAt": 1589188185960,
 				"viewedAt": 1589188183114,
-				"viewed": true
+				"viewed": false
 			},
 			{
 				"id": "9122vLem",
 				"username": "matt2",
-				"avatarImage": "content/users/YRVQ6vOE-profile.jpg?c=1954819",
 				"name": "Matto",
 				"style": {
 					"profileTop": "#80e8a5",
@@ -53,7 +52,6 @@
 			{
 				"id": "9122vLem",
 				"username": "matt2",
-				"avatarImage": "content/users/YRVQ6vOE-profile.jpg?c=1954819",
 				"name": "Matto",
 				"style": {
 					"profileTop": "#80e8a5",
@@ -90,7 +88,6 @@
 			{
 				"id": "9122vLem",
 				"username": "matt2",
-				"avatarImage": "content/users/YRVQ6vOE-profile.jpg?c=1954819",
 				"name": "Matto",
 				"style": {
 					"profileTop": "#80e8a5",

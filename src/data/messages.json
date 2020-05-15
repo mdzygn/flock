@@ -6,7 +6,6 @@
        "message":"Ligula ullamcorper malesuada libero.",
        "image":null,
        "createdAt":1586763611781,
-       "displayDate":true,
        "likes":[],
        "viewed":[]
     },
@@ -17,7 +16,6 @@
        "message":"Eu ultrices vitae auctor eu augue, non quam lacus.",
        "image":null,
        "createdAt":1586763611781,
-       "userBreak":true,
        "likes":[],
        "viewed":[]
     },
@@ -28,7 +26,6 @@
        "message":"Tempus quam pellentesque.",
        "image":null,
        "createdAt":1586763611781,
-       "userBreak":true,
        "likes":[],
        "viewed":[
           "9122vLem"
@@ -41,8 +38,6 @@
        "message":"Eu ultrices vitae auctor eu augue. Non quam lacus suspendisse faucibus interdum posuere.",
        "image":null,
        "createdAt":1587973211781,
-       "displayDate":true,
-       "userBreak":true,
        "likes":[],
        "viewed":[
           "9122vLem"
@@ -55,7 +50,6 @@
        "message":"Ullamcorper sit amet risus.",
        "image":null,
        "createdAt":1587973211781,
-       "userBreak":true,
        "likes":[],
        "viewed":[
           "9122vLem"
@@ -68,7 +62,6 @@
        "message":"In egestas erat imperdiet sed euismod. Urna nunc id cursus metus aliquam. Vel elit scelerisque mauris pellentesque pulvinar pellentesque. ",
        "image":null,
        "createdAt":1587973211781,
-       "hideAvatarImage": true,
        "likes":["YRVQ6vOE"],
        "viewed":[
           "9122vLem"
@@ -81,8 +74,6 @@
        "message":"Egestas sed sed risus pretium.",
        "image":null,
        "createdAt":1589182811781,
-       "userBreak":true,
-       "displayDate":true,
        "likes":[],
        "viewed":[
           "9122vLem"
@@ -95,7 +86,6 @@
        "message":"Netus et malesuada fames ac turpis egestas sed tempus. Nullam non nisi est sit amet facilisis magna etiam tempor.",
        "image":null,
        "createdAt":1589182811781,
-       "hideAvatarImage": true,
        "likes":["9122vLem"],
        "viewed":[
           "9122vLem"
@@ -108,7 +98,6 @@
        "message":"Elit sed vulputate mi.",
        "image":null,
        "createdAt":1589182811781,
-       "userBreak":true,
        "likes":[],
        "viewed":[
           "9122vLem"
@@ -121,7 +110,6 @@
        "message":"Pellentesque nec.",
        "image":null,
        "createdAt":1589182811781,
-       "userBreak":true,
        "likes":[],
        "viewed":[
           "9122vLem"
@@ -134,8 +122,6 @@
        "message":"Tempor orci eu lobortis.",
        "image":null,
        "createdAt":1589442011781,
-       "displayDate":true,
-       "hideAvatarImage": true,
        "likes":["9122vLem"],
        "viewed":[
           "9122vLem"
@@ -148,7 +134,6 @@
        "message":"Quis viverra nibh!",
        "image":null,
        "createdAt":1589442011781,
-       "userBreak":true,
        "likes":[],
        "viewed":[
           "9122vLem"

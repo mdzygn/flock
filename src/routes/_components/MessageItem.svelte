@@ -22,7 +22,12 @@
         dateDebugOffset,
     } from '../../models/appModel';
 
-    import { loadPost, loadChannel, loadProject } from '../../actions/appActions';
+    import {
+        loadPost,
+        loadChannel,
+        loadProject,
+        loadProfile,
+    } from '../../actions/appActions';
 
     export let message;
 
@@ -64,6 +69,13 @@
     function toggleLiked() {
 
     }
+
+    $: userLoaded = ($actorUser && $actorUser.name) || false;
+    function viewUserProfile() {
+        if (userLoaded) {
+            loadProfile($actorUser.id);
+        }
+    }
 </script>
 
 <div class="messageListItem">
@@ -74,7 +86,7 @@
         class:userBreak="{userBreak}"
         class:isSelf="{isSelf}">
         {#if !isSelf && !hideAvatarImage}
-            <AvatarIcon user="{actorUser}" useThumb="{true}" />
+            <AvatarIcon user="{actorUser}" onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" />
         {/if}
         <div class="detailContent">
             <div class="detailInnerContent">
@@ -98,7 +110,7 @@
 
         padding: 3px 0;
 
-        cursor: pointer;
+        /* cursor: pointer; */
     }
 
     .messageListItem :global(.avatarIcon) {

@@ -78,7 +78,7 @@
         <Button className="sendButton" disabled="{!submitEnabled}" onClick="{submit}" icon="{SendMessageIcon}" />
         <Button className="imageButton" disabled="{true}" onClick="{uploadImage}" icon="{ImageIcon}" />
         <div class="field">
-            <input type="text" id="message" bind:value="{message}" bind:this="{messageField}" on:keypress="{(e) => testInputDefocus(e, {action: submit, preventBlur: true})}" />
+            <input type="text" bind:value="{message}" bind:this="{messageField}" on:keypress="{(e) => testInputDefocus(e, {action: submit, preventBlur: true})}" />
         </div>
     </div>
 </div>

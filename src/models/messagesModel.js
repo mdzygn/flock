@@ -12,7 +12,10 @@ import loadingRequestUtil from '../utils/loadingRequestUtil';
 
 import MessageModel from '../models/messageModel';
 
-import { userId } from '../models/appModel';
+import {
+	userId,
+	conversation,
+} from '../models/appModel';
 
 // import messagesTestData from '../data/messages.json';
 
@@ -200,6 +203,14 @@ export function addMessage(messageDetails) {
 
 	curMessages.push(newMessageModel);
 	messages.set(curMessages);
+
+	const curConversation = get(conversation);
+	if (curConversation && curConversation.id === newMessage.conversationId) {
+		curConversation.lastMessageText = (newMessage.message && newMessage.message.substring(0, config.CONVERSATION_MAX_PREVIEW_LENGTH)) || '';
+		curConversation.lastMessageAt = newMessage.createdAt;
+		curConversation.lastSenderId = newMessage.userId;
+		conversation.set(curConversation);
+	}
 
 	MessagesModel.emit('messagedAdded');
 

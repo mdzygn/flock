@@ -21,7 +21,7 @@
     // $: console.log('conversation', $conversation);
 
     $: title = ($conversation && $conversation.title) || '';
-    $: message = ($conversation && $conversation.lastMessageText && getEllipsisText($conversation.lastMessageText, config.CONVERSATION_MAX_PREVIEW_LENGTH)) || '';
+    $: message = $conversation ? (($conversation.lastMessageText && getEllipsisText($conversation.lastMessageText, config.CONVERSATION_MAX_PREVIEW_LENGTH)) || '(image)') : '';
 
     $: conversationId = ($conversation && $conversation.id) || null;
     $: projectId = ($conversation && $conversation.projectId) || null;

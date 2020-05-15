@@ -14,7 +14,7 @@
 
     import { getUser, getUserModelFromData } from '../../models/usersModel';
 
-    import { getConversationUser, getUserConversationInfo, getConversationUserById } from '../../models/conversationsModel';
+    import { getConversationUserById } from '../../models/conversationsModel';
 
     import {
         userId,

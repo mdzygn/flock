@@ -10,7 +10,7 @@
 
     import { getUser, getUserModelFromData } from '../../models/usersModel';
 
-    import { getConversationUser, getUserConversationInfo } from '../../models/conversationsModel';
+    import { getConversationOtherUser, getUserConversationInfo } from '../../models/conversationsModel';
 
     import { loadPost, loadChannel, loadProject } from '../../actions/appActions';
 
@@ -34,7 +34,7 @@
     $: date = ($conversation && $conversation.lastMessageAt) || null;
     $: dateString = (date && ' - ' + getDateAgeString(date)) || '';
 
-    $: actor = ($conversation && getConversationUser($conversation)) || null;
+    $: actor = ($conversation && getConversationOtherUser($conversation)) || null;
     $: actorUser = (actor && date && getUserModelFromData(actor, date)) || writable(null);
     $: actorName = ($actorUser && $actorUser.name) || (actor && actor.name) || '';
 

@@ -33,6 +33,10 @@
         goHome,
     } from '../../models/appModel';
 
+    import  {
+        getConversationOtherUser,
+    } from '../../models/conversationsModel';
+
     import {
         loadProfile,
         showMenu,
@@ -87,11 +91,15 @@
             } else {
                 sectionLabel = $viewedUser.name;
             }
-        } else if (/\/messages\/.+/.test(path) && $conversation && ($conversation.user || $conversation.project)) {
+        } else if (/\/messages\/.+/.test(path) && $conversation && (($conversation.project && $project) || ($conversation.users && $conversation.users.length))) { // $conversation.user
             if ($conversation.project && $project) { // // temporary
                 sectionLabel = $project.title;
             } else {
-                sectionLabel = $conversation.user ? $conversation.user.firstName : $conversation.project.name;
+                const curUserItem = getConversationOtherUser($conversation);
+                if (curUserItem && curUserItem.name) {
+                    sectionLabel = curUserItem.name;
+                }
+                // sectionLabel = $conversation.user ? $conversation.user.firstName : $conversation.project.name;
             }
         } else {
             sectionLabel = curSection ? curSection.label : '';

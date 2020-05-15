@@ -216,7 +216,7 @@ export function clearConversationSeenTimeout(conversationSeenTimeout) {
 	}
 }
 
-export function getConversationUser(conversation) {
+export function getConversationOtherUser(conversation) {
 	let curUser = null;
 	if (conversation.users) {
 		curUser = conversation.users.find(userItem => userItem.id !== get(userId));

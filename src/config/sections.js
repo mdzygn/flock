@@ -167,7 +167,7 @@ export const sections = [
 	{
 		path: '/messages/.+',
 		id: 'message_view',
-		label: 'Conversation', // 'Mia',
+		label: '', // 'Conversation', // 'Mia',
 		showBack: true,
 		parentPath: 'messages',
 	},

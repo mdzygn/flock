@@ -229,7 +229,7 @@ export function getConversationUserById(conversation, userId) {
 	if (conversation.users) {
 		curUser = conversation.users.find(userItem => userItem.id === userId);
 	}
-	console.log('userId', userId, 'curUser', curUser);
+	// console.log('userId', userId, 'curUser', curUser);
 	return curUser;
 }
 

@@ -70,7 +70,7 @@
     	bottom: 0;
 	}
 
-	.content {
+	/* .content {
 		display: flex;
 		justify-content: center;
 	}
@@ -79,5 +79,5 @@
 		position: absolute;
 		top: 60px;
 		width: 217px;
-	}
+	} */
 </style>

@@ -2,6 +2,7 @@
 	import { tick, onMount, onDestroy } from 'svelte';
 	import { writable } from 'svelte/store';
 
+    import config from '../../config';
     import locale from '../../locale';
 
 	import ScrollView from '../../components/ScrollView.svelte';
@@ -69,8 +70,10 @@
 		await tick();
 		// console.log('conversationUpdated new messages loaded');
 
-		if (scrollRegion) {
+		if (scrollRegion && scrollRegion.scrollTop + scrollRegion.offsetHeight > scrollRegion.scrollHeight - config.MIN_AUTO_SCROLL_BOTTOM_DIST) {
 			scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+			// await tick();
+			// console.log('scrollRegion.scrollTop', scrollRegion.scrollTop, 'scrollRegion.scrollHeight', scrollRegion.scrollHeight);
 		}
 	}
 

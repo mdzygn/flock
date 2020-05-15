@@ -61,18 +61,24 @@ export async function post(req, res, next) {
             }
 
             const updateConversationFilter = {
-                id: details.conversationId,
+				id: details.conversationId,
+				"users.id": details.userId,
             };
             const updateConversationProps = {
                 lastMessageAt: details.createdAt,
                 lastSenderId: details.userId,
-                lastMessageText,
+				lastMessageText,
+				"users.$.loadedAt" : details.createdAt,
+				"users.$.viewedAt" : details.createdAt,
             };
 
             // update current user viewed, lastViewedAt and loadedAt times
             // update other users viewed, lastViewedAt and loadedAt times
 
-            let updateConversationResult = await db.collection('conversations').updateOne(updateConversationFilter, {$set: updateConversationProps});
+			let updateConversationResult = await db.collection('conversations').updateOne(updateConversationFilter, {$set: updateConversationProps});
+
+			// db.bar.update({user_id : 123456 , "items.item_name" : "my_item_two" }, {$inc : {"items.$.price" : 1} }, false, true);
+			// db.bar.update({user_id : 123456 }, {$addToSet : {"items" : {'item_name' : "my_item_two" , 'price' : 1 }} }, false, true);
 
 			if (updateConversationResult) {
                 response(res, {success: true});

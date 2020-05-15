@@ -35,8 +35,12 @@
 
 	loadCurrentConversation();
 
+	let lastMessagesCount = 0;
+
     export let messages = writable([]);
-	$: { messages = $conversationId && getMessages({ conversationId: $conversationId }, messagesLoaded) };
+	$: {
+		messages = ($conversationId && getMessages({ conversationId: $conversationId }, messagesLoaded)) || messages;
+	};
 
     $: isLoadingMessages = $loadingMessages && (!$messages || !$messages.length);
     $: isLoadingConversation = $loadingConversations && (!$conversation || ($conversation.id !== $conversationId));
@@ -45,6 +49,8 @@
 	$: isNewConversation = ($conversation && $conversation.isNew) || false;
 
 	$: proxyMessageViewImage = viewingGroupConversation ? 'messages_group_view': 'message_view';
+
+	let showMessagesAdded = false;
 
 	let scrollRegion;
 
@@ -66,14 +72,40 @@
 		}
 	}
 
-	async function messagesLoaded(result) {
-		await tick();
-		// console.log('conversationUpdated new messages loaded');
+	async function checkMessagesUpdated() {
+		if (scrollRegion) {
+			if ($messages.length > lastMessagesCount) {
+				if (scrollRegion.scrollTop + scrollRegion.offsetHeight > scrollRegion.scrollHeight - config.MIN_AUTO_SCROLL_BOTTOM_DIST) {
+					await tick();
+					scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+				} else {
+					showMessagesAdded = true;
+				}
+			}
+		}
+		lastMessagesCount = $messages.length;
+	}
 
-		if (scrollRegion && scrollRegion.scrollTop + scrollRegion.offsetHeight > scrollRegion.scrollHeight - config.MIN_AUTO_SCROLL_BOTTOM_DIST) {
-			scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
-			// await tick();
-			// console.log('scrollRegion.scrollTop', scrollRegion.scrollTop, 'scrollRegion.scrollHeight', scrollRegion.scrollHeight);
+	async function messagesLoaded(result) {
+		checkMessagesUpdated();
+
+		// await tick();
+		// // console.log('conversationUpdated new messages loaded');
+
+		// if (scrollRegion) {
+		// 	if (scrollRegion.scrollTop + scrollRegion.offsetHeight > scrollRegion.scrollHeight - config.MIN_AUTO_SCROLL_BOTTOM_DIST) {
+		// 		scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+		// 		// await tick();
+		// 		// console.log('scrollRegion.scrollTop', scrollRegion.scrollTop, 'scrollRegion.scrollHeight', scrollRegion.scrollHeight);
+		// 	}/* else {
+		// 		showMessagesAdded = true;
+		// 	}*/
+		// }
+	}
+
+	function onScroll() {
+		if (showMessagesAdded && scrollRegion.scrollTop + scrollRegion.offsetHeight > scrollRegion.scrollHeight - config.MIN_HIDE_MESSAGES_BOTTOM_DIST) {
+			showMessagesAdded = false;
 		}
 	}
 
@@ -92,46 +124,53 @@
 	<title>Flock</title>
 </svelte:head>
 
-<div class="messagesView">
-    {#if isLoadingMessages || isLoadingConversation}
-        <ContentLoader label="{locale.LOADING.MESSAGES}" />
-    {:else if !$messages || !$messages.length}
-        <ContentLoader label="{locale.CONVERSATION.NO_MESSAGES}" />
-        <!-- <div class="noMessages">
-            {locale.CONVERSATION.NO_MESSAGES}
-        </div> -->
-    {:else}
-		<ScrollView bind:scrollRegion="{scrollRegion}" anchorToBottom="{true}" id="conversation">
-			<!-- <div class="proxyOverlay">
-				{#if isNewConversation}
-					<div class="content">
-						<Proxy image="message_new_message_profile" className="profileInfo" />
-					</div>
-				{:else}
-					<Proxy image="{proxyMessageViewImage}">
-						{#if viewingGroupConversation}
-							<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
-								left: 6px;
-								top: 25px;
-								width: 50px;
-								height: 307px;" />
-						{:else}
-							<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
-								left: 6px;
-								top: 25px;
-								width: 50px;
-								height: 691px;" />
-						{/if}
-					</Proxy>
-				{/if}
+<div class="content">
+	<div class="messagesView">
+		{#if isLoadingMessages || isLoadingConversation}
+			<ContentLoader label="{locale.LOADING.MESSAGES}" />
+		{:else if !$messages || !$messages.length}
+			<ContentLoader label="{locale.CONVERSATION.NO_MESSAGES}" />
+			<!-- <div class="noMessages">
+				{locale.CONVERSATION.NO_MESSAGES}
 			</div> -->
+		{:else}
+			<ScrollView bind:scrollRegion="{scrollRegion}" onScroll="{onScroll}" anchorToBottom="{true}" id="conversation">
+				<!-- <div class="proxyOverlay">
+					{#if isNewConversation}
+						<div class="content">
+							<Proxy image="message_new_message_profile" className="profileInfo" />
+						</div>
+					{:else}
+						<Proxy image="{proxyMessageViewImage}">
+							{#if viewingGroupConversation}
+								<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
+									left: 6px;
+									top: 25px;
+									width: 50px;
+									height: 307px;" />
+							{:else}
+								<Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
+									left: 6px;
+									top: 25px;
+									width: 50px;
+									height: 691px;" />
+							{/if}
+						</Proxy>
+					{/if}
+				</div> -->
 
-			<ConversationView {messages} />
-		</ScrollView>
-	{/if}
+				<ConversationView {messages} />
+			</ScrollView>
+		{/if}
+
+		{#if showMessagesAdded}
+			<div class="messagesAddedIndicatorContainer">
+				<div class="messagesAddedIndicator button" on:click="{scrollToBottom}">{locale.CONVERSATION.MESSAGES_ADDED}</div>
+			</div>
+		{/if}
+	</div>
+	<MessageInput />
 </div>
-
-<MessageInput />
 
 <style>
 	.messagesView {
@@ -143,6 +182,27 @@
 	.messagesView :global(.scrollContent) {
 		display: flex;
 		align-items: flex-end;
+	}
+
+	.button {
+		cursor: pointer;
+	}
+
+	.messagesAddedIndicatorContainer {
+		position: absolute;
+    	width: 100%;
+    	bottom: 2px;
+		display: flex;
+		justify-content: center;
+	}
+
+	.messagesAddedIndicator {
+		font-size: 1.3rem;
+
+		color: #ffffff;
+        background-color: #DF3C3C;
+		border-radius: 999px;
+    	padding: 3px 10px;
 	}
 
     /* .noMessages {

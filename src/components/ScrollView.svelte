@@ -14,6 +14,7 @@
     export let hideShadowMargin = 1;
     export let bottomOffset = 0;
     export let disabledMinHeight = false;
+    export let onScroll = null;
 
     export let className = '';
 
@@ -65,6 +66,10 @@
             scrollHeaderOffset = curScrollHeaderPosition - regionProps.scrollTop;
 
             // console.log('curScrollHeaderPosition: ' + curScrollHeaderPosition + ', scrollHeaderOffset: ' + scrollHeaderOffset);
+        }
+
+        if (onScroll) {
+            onScroll();
         }
     }
 

@@ -179,6 +179,7 @@ const locale = {
 	},
 	CONVERSATION: {
 		NO_MESSAGES: 'no messages',
+		MESSAGES_ADDED: 'new messages added',
 	},
 }
 

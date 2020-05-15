@@ -42,7 +42,27 @@ export async function post(req, res, next) {
         if (!details.conversationId) {
             errorResponse(res, {}, {errorMsg: 'no conversationId specified with message'});
             return;
-        }
+		}
+
+		const curUser = await db.collection('users').findOne({ id: details.userId });
+		if (!curUser) {
+            errorResponse(res, {}, {errorMsg: 'user not found'});
+            return;
+		}
+
+		const curConversation = await db.collection('conversations').findOne({ id: details.conversationId });
+		if (!curConversation) {
+            errorResponse(res, {}, {errorMsg: 'conversation not found'});
+            return;
+		}
+		if (!curConversation.userIds.includes(details.userId)) {
+            errorResponse(res, {}, {errorMsg: 'conversation doesn\'t include user'});
+            return;
+		}
+		if (!curConversation.users.find((item) => item.id === details.userId)) {
+            errorResponse(res, {}, {errorMsg: 'conversation doesn\'t include user data'});
+            return;
+		}
 
 		let addMessageResult;
 
@@ -70,10 +90,10 @@ export async function post(req, res, next) {
 				lastMessageText,
 				"users.$.loadedAt" : details.createdAt,
 				"users.$.viewedAt" : details.createdAt,
+				"users.$.username" : curUser.username,
+				"users.$.avatarImage" : curUser.avatarImage,
+				"users.$.name" : curUser.name || curUser.fullName,
             };
-
-            // update current user viewed, lastViewedAt and loadedAt times
-            // update other users viewed, lastViewedAt and loadedAt times
 
 			let updateConversationResult = await db.collection('conversations').updateOne(updateConversationFilter, {$set: updateConversationProps});
 

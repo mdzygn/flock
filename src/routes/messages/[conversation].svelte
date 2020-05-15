@@ -1,5 +1,6 @@
 <script>
 	import ScrollView from '../../components/ScrollView.svelte';
+
 	import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
 
@@ -7,6 +8,7 @@
 	import { loadProfile } from '../../actions/appActions';
 
 	import ConversationView from '../_components/ConversationView.svelte';
+	import MessageInput from '../_components/MessageInput.svelte';
 
 	$: viewingGroupConversation = ($conversation && $conversation.isGroup) || false;
 	$: isNewConversation = ($conversation && $conversation.isNew) || false;
@@ -48,27 +50,20 @@
 	</ScrollView>
 </div>
 
-<div class="messageInput">
-	<Proxy image="message_input" />
-</div>
+<MessageInput />
 
 <style>
+	.messagesView {
+		position: absolute;
+		top: 0;
+		bottom: 54px;
+		width: 100%;
+	}
+
 	/* .messagesView :global(.proxyOverlay) {
         position: absolute;
         opacity: 0.5;
 	} */
-
-	.messagesView {
-		position: absolute;
-		top: 0;
-		bottom: 48px;
-		width: 100%;
-	}
-
-	.messageInput {
-		position: absolute;
-    	bottom: 0;
-	}
 
 	/* .content {
 		display: flex;

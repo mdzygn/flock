@@ -1,5 +1,5 @@
 <script>
-	import { tick } from 'svelte';
+	import { tick, onMount, onDestroy } from 'svelte';
 	import { writable } from 'svelte/store';
 
     import locale from '../../locale';
@@ -22,7 +22,7 @@
         conversation,
 	} from '../../models/appModel';
 
-    import {
+    import ConversationsModel, {
         loadingConversations,
     } from '../../models/conversationsModel';
 
@@ -35,7 +35,7 @@
 	loadCurrentConversation();
 
     export let messages = writable([]);
-	$: { messages = $conversationId && getMessages({ conversationId: $conversationId }) };
+	$: { messages = $conversationId && getMessages({ conversationId: $conversationId }, messagesLoaded) };
 
     $: isLoadingMessages = $loadingMessages && (!$messages || !$messages.length);
     $: isLoadingConversation = $loadingConversations && (!$conversation || ($conversation.id !== $conversationId));
@@ -47,8 +47,6 @@
 
 	let scrollRegion;
 
-	MessagesModel.on('messagedAdded', scrollToBottom);
-
 	async function scrollToBottom() {
 		if (scrollRegion) {
 			await tick();
@@ -58,6 +56,33 @@
 			}
 		}
 	}
+
+	function conversationUpdated() {
+		// console.log('conversationUpdated');
+
+		if ($conversationId) {
+			messages = getMessages({ conversationId: $conversationId }, messagesLoaded);
+		}
+	}
+
+	async function messagesLoaded(result) {
+		await tick();
+		// console.log('conversationUpdated new messages loaded');
+
+		if (scrollRegion) {
+			scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
+		}
+	}
+
+	onMount(() => {
+		MessagesModel.on('messagedAdded', scrollToBottom);
+		ConversationsModel.on('conversationUpdated', conversationUpdated);
+	})
+
+	onDestroy(() => {
+		MessagesModel.off('messagedAdded', scrollToBottom);
+		ConversationsModel.off('conversationUpdated', conversationUpdated);
+	})
 </script>
 
 <svelte:head>

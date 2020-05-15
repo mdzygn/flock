@@ -85,7 +85,7 @@ messages.subscribe(() => {
 	});
 });
 
-export function loadMessages(options) {
+export function loadMessages(options, callback) {
     // const messageItems = JSON.parse(JSON.stringify(messagesTestData));
     // messageItems.reverse();
     // mergeMessages(messageItems);
@@ -100,6 +100,9 @@ export function loadMessages(options) {
 				// }
 				mergeMessages(result.messages);
 				loadingRequestUtil.clearLoading('messages', options, () => { loadingMessages.set(false); });
+			}
+			if (callback) {
+				callback(result);
 			}
 		});
 	}
@@ -140,7 +143,7 @@ function mergeMessages(newMessages) {
 	}
 }
 
-export function getMessages(options) {
+export function getMessages(options, callback) {
     if (curMessageFilterOptions && options && (
         curMessageFilterOptions.conversationId !== options.conversationId
     )) {
@@ -150,7 +153,7 @@ export function getMessages(options) {
     curMessageFilterOptions = JSON.parse(JSON.stringify(options));
 
     if (curMessageFilterOptions.conversationId) {
-        loadMessages(curMessageFilterOptions);
+        loadMessages(curMessageFilterOptions, callback);
     }
 
 	return messages;

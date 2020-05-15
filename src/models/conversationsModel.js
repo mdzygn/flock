@@ -2,13 +2,20 @@ import api from '../api';
 
 import config from '../config';
 
+import EventEmitter from 'eventemitter3';
+
 import { writable, get } from 'svelte/store';
 
 import loadingRequestUtil from '../utils/loadingRequestUtil';
 
 import ConversationModel from '../models/conversationModel';
 
-import { userId, usercode, curPath } from '../models/appModel';
+import {
+	userId,
+	usercode,
+	curPath,
+	conversationId,
+} from '../models/appModel';
 
 import conversationsTestData from '../data/conversations.json';
 
@@ -24,6 +31,9 @@ let curPollConversationTimeout = null;
 let conversationsLoadedAt = null;
 
 let conversations = writable([]);
+
+const ConversationsModel = new EventEmitter();
+export default ConversationsModel;
 
 export let conversationsUnviewedCount = writable(0);
 
@@ -63,6 +73,11 @@ function pollConversation() {
 function isMessagesPage() {
 	const path = get(curPath);
 	return !!(path && path.match(/messages/));
+}
+
+function isConversationPage() {
+	const path = get(curPath);
+	return !!(path && path.match(/messages\/.+/));
 }
 
 conversations.subscribe(() => {
@@ -111,11 +126,11 @@ function mergeConversations(newConversations) {
 	if (newConversations && newConversations.length) {
 		const curConversations = get(conversations);
 
-		let curConversation, newConversationData, conversationId, newConversation;
+		let curConversation, newConversationData, curConversationId, newConversation;
 		for (var conversationI = 0; conversationI < newConversations.length; conversationI++) {
 			newConversationData = newConversations[conversationI];
-			conversationId = newConversationData.id;
-            curConversation = curConversations.find(match => get(match).id === conversationId);
+			curConversationId = newConversationData.id;
+            curConversation = curConversations.find(match => get(match).id === curConversationId);
             if (!curConversation) {
                 curConversation = ConversationModel(newConversationData);
                 curConversations.unshift(curConversation);
@@ -123,7 +138,11 @@ function mergeConversations(newConversations) {
                 newConversation = get(curConversation);
                 newConversation = Object.assign(newConversation, newConversationData);
                 curConversation.set(newConversation);
-            }
+			}
+
+			if (curConversationId === get(conversationId) && isConversationPage()) {
+				ConversationsModel.emit('conversationUpdated');
+			}
 		}
 
 		curConversations.sort((a,b) => get(b).lastMessageAt - get(a).lastMessageAt ); // sort by reversed created time

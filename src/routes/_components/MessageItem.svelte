@@ -10,7 +10,7 @@
 
     import LikeSelectedIcon from "../../assets/icons/post_like_selected.png";
 
-    import { getDateAge, getDateString, getEllipsisText } from '../../utils';
+    import { getDateAge, getDateString, secondsDiff, getEllipsisText } from '../../utils';
 
     import { getUser, getUserModelFromData } from '../../models/usersModel';
 
@@ -60,12 +60,14 @@
 
     $: userBreak = ($lastMessage && $message.userId !== $lastMessage.userId) || false;
     $: hideAvatarImage = ($lastMessage && $message.userId == $lastMessage.userId) || false;
+    $: displayDate = ($message && (!$lastMessage || secondsDiff($lastMessage.createdAt, $message.createdAt) > config.DATE_SHOWN_MESSAGE_DATE_DIFF)) || false;
 
+    // $: console.log('displayDate', displayDate, 'secondsDiff', $message && $lastMessage && secondsDiff($message.createdAt, $lastMessage.createdAt));
     // $: console.log('userBreak', userBreak, 'userId', $message.userId, 'last userId', $lastMessage && $lastMessage.userId);
 
     $: hasLikes = ($message && $message.likes && $message.likes.length) || false;
 
-    $: displayDate = ($message && $message.displayDate) || false;
+    // $: displayDate = ($message && $message.displayDate) || false;
     // $: hideAvatarImage = ($message && $message.hideAvatarImage) || false;
     // $: userBreak = ($message && $message.userBreak) || false;
 

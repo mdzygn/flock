@@ -126,7 +126,8 @@ function mergeConversations(newConversations) {
             }
 		}
 
-		curConversations.sort((a,b) => get(b).createdAt - get(a).createdAt ); // sort by reversed created time
+		curConversations.sort((a,b) => get(b).lastMessageAt - get(a).lastMessageAt ); // sort by reversed created time
+		// curConversations.sort((a,b) => get(b).createdAt - get(a).createdAt ); // sort by reversed created time
 
 		conversations.set(curConversations);
 	}

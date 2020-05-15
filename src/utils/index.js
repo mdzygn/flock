@@ -281,6 +281,35 @@ function formatDate(date, format, utc) {
     return format;
 };
 
+export function getMessageTime(date) {
+    let dateString = '';
+    if (date) {
+        // dateDebugOffset.set(60 * 60 * 1000 * (12 + 24 + 8) + (4) * (60) * 1000);
+        // date = (new Date()).getTime() - $dateDebugOffset;
+        // console.log('date', date, getDateString(date));
+
+        const dateAge = getDateAge(date);
+
+        const DAY_MILLISECONDS = 24*60*60*1000;
+        let todaysDate = (new Date()).setHours(0,0,0,0) / DAY_MILLISECONDS;
+        let curDate = (new Date(date)).setHours(0,0,0,0) / DAY_MILLISECONDS;
+        let dateDiff = todaysDate - curDate;
+        // console.log('dateDiff', dateDiff);
+
+        // if (dateAge.days < 1) {
+        if (dateDiff < 1) {
+            dateString = 'Today at ' + getDateString(date, 'h:mmtt');
+        } else if (dateDiff < 2) {
+            dateString = 'Yesterday at ' + getDateString(date, 'h:mmtt');
+        } else if (dateAge.weeks < 1) {
+            dateString = getDateString(date, 'dddd') + ' at ' + getDateString(date, 'h:mmtt');
+        } else {
+            dateString = getDateString(date, 'd MMM') + ' at ' + getDateString(date, 'h:mmtt');
+        }
+    }
+    return dateString;
+}
+
 export function validateEmail(email) {
     return email && email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]{2,}\.[A-Z]{2,8}$/i);
 }

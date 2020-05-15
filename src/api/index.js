@@ -381,6 +381,18 @@ function getMessages(options) {
 	});
 }
 
+// options = { id: id, userId: id, conversationId: id  }
+function addMessage(options) {
+	options = addCredentials(options);
+	return send('addMessage', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - addMessage: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 
 const api = {
 	getProjects,
@@ -417,6 +429,7 @@ const api = {
 	updateConversations,
 
 	getMessages,
+	addMessage,
 
 	requestUpload,
 }

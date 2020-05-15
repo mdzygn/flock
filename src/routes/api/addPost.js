@@ -48,7 +48,6 @@ export async function post(req, res, next) {
 			catchMongoError(res, error);
 			return;
 		}
-		const addedPost = !!result;
 
 		if (result) {
 			let updateParentCountResult;

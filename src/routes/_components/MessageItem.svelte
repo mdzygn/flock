@@ -25,6 +25,8 @@
 
     export let message;
 
+    $: lastMessage = ($message && $message.lastMessage) || writable(null);
+
     $: messageText = ($message && $message.message) || '';
 
     $: messageId = ($message && $message.id) || null;
@@ -56,10 +58,14 @@
 
     $: isSelf = (actor && actor.id === $userId);
 
+    $: userBreak = ($lastMessage && $message.userId !== $lastMessage.userId) || false;
+
+    // $: console.log('userBreak', userBreak, 'userId', $message.userId, 'last userId', $lastMessage && $lastMessage.userId);
+
     $: hasLikes = ($message && $message.likes && $message.likes.length) || false;
     $: hideAvatarImage = ($message && $message.hideAvatarImage) || false;
     $: displayDate = ($message && $message.displayDate) || false;
-    $: userBreak = ($message && $message.userBreak) || false;
+    // $: userBreak = ($message && $message.userBreak) || false;
 
     $: titleString = actorName || '';
 

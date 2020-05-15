@@ -4,6 +4,8 @@ import config from '../config';
 
 import { writable, get } from 'svelte/store';
 
+import { generateId } from '../utils';
+
 import loadingRequestUtil from '../utils/loadingRequestUtil';
 
 import MessageModel from '../models/messageModel';
@@ -144,6 +146,10 @@ export function getMessages(options) {
     }
 
 	return messages;
+}
+
+export function getMessage(messageId) {
+	return get(messages).find(item => get(item).id === messageId);
 }
 
 function clearFilteredMessages() {

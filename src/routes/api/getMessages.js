@@ -10,8 +10,6 @@ import {
 export async function post(req, res, next) {
     const { db } = await init();
 
-    console.log('getMessages');
-
     const options = req.body;
 
 	if (!await validateCredentials(db, options)) {

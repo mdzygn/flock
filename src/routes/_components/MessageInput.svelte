@@ -27,7 +27,7 @@
     export let message = '';
     export let image = null;
 
-	let newMessageId = getNewPostId();
+	let newMessageId = getNewMessageId();
 
     let messageField;
 

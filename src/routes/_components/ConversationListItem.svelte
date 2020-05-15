@@ -31,7 +31,7 @@
 
     // $: projectTitle = $conversation && $conversation.projectTitle;
 
-    $: date = ($conversation && $conversation.createdAt) || null;
+    $: date = ($conversation && $conversation.lastMessageAt) || null;
     $: dateString = (date && ' - ' + getDateAgeString(date)) || '';
 
     $: actor = ($conversation && getConversationUser($conversation)) || null;

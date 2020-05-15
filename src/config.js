@@ -64,7 +64,7 @@ export const REPLY_VIEWED_DELAY = 2;
 export const NOTIFICATION_POLL_DELAY_ACTIVITY = 5; // 1; // 5;
 export const NOTIFICATION_POLL_DELAY = 20; // 3; // 20; // 15;
 
-export const CONVERSATION_POLL_DELAY_ACTIVITY = 2;
+export const CONVERSATION_POLL_DELAY_ACTIVITY = 4; // 2;
 export const CONVERSATION_POLL_DELAY = 8;
 
 export const CONVERSATION_MAX_PREVIEW_LENGTH = 32;

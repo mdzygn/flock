@@ -34,7 +34,7 @@
 	loadCurrentConversation();
 
     export let messages = writable([]);
-    $: { messages = getMessages({ userId: $userId }) };
+	$: { messages = $conversationId && getMessages({ conversationId: $conversationId }) };
 
     $: isLoadingMessages = $loadingMessages && (!$messages || !$messages.length);
     $: isLoadingConversation = $loadingConversations && (!$conversation || ($conversation.id !== $conversationId));

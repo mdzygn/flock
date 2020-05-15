@@ -76,23 +76,23 @@ messages.subscribe(() => {
 });
 
 export function loadMessages(options) {
-    const messageItems = JSON.parse(JSON.stringify(messagesTestData));
-    messageItems.reverse();
-    mergeMessages(messageItems);
+    // const messageItems = JSON.parse(JSON.stringify(messagesTestData));
+    // messageItems.reverse();
+    // mergeMessages(messageItems);
 
-	// if (!loadingRequestUtil.isLoading('messages', options)) {
-	// 	// console.log('loadMessages', options);
-	// 	loadingRequestUtil.setLoading('messages', options, () => { loadingMessages.set(true); });
-	// 	api.getMessages(options).then(result => {
-	// 		if (!result.error) {
-	//			// if (result.loadedAt) {
-	//			// 	messagesLoadedAt = result.loadedAt;
-	//			// }
-	// 			mergeMessages(result.messages);
-	// 			loadingRequestUtil.clearLoading('messages', options, () => { loadingMessages.set(false); });
-	// 		}
-	// 	});
-	// }
+	if (!loadingRequestUtil.isLoading('messages', options)) {
+		// console.log('loadMessages', options);
+		loadingRequestUtil.setLoading('messages', options, () => { loadingMessages.set(true); });
+		api.getMessages(options).then(result => {
+			if (!result.error) {
+				// if (result.loadedAt) {
+				// 	messagesLoadedAt = result.loadedAt;
+				// }
+				mergeMessages(result.messages);
+				loadingRequestUtil.clearLoading('messages', options, () => { loadingMessages.set(false); });
+			}
+		});
+	}
 }
 
 function mergeMessages(newMessages) {
@@ -132,14 +132,14 @@ function mergeMessages(newMessages) {
 
 export function getMessages(options) {
     if (curMessageFilterOptions && options && (
-        curMessageFilterOptions.userId !== options.userId
+        curMessageFilterOptions.conversationId !== options.conversationId
     )) {
         clearFilteredMessages();
     }
 
     curMessageFilterOptions = JSON.parse(JSON.stringify(options));
 
-    if (curMessageFilterOptions.userId) {
+    if (curMessageFilterOptions.conversationId) {
         loadMessages(curMessageFilterOptions);
     }
 

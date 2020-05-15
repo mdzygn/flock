@@ -39,7 +39,11 @@ export async function post(req, res, next) {
 
 	// filter.indirect = {$ne: true}; // need to return so can show notification areas
 
-	let notifications = await db.collection('notifications').find(filter).sort({ createdAt: 1 }).toArray();
+	const sort = {
+		createdAt: 1
+	};
+
+	let notifications = await db.collection('notifications').find(filter).sort(sort).toArray();
 
 	let loadedTime = null;
 	if (notifications && notifications.length) {

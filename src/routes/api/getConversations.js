@@ -40,9 +40,14 @@ export async function post(req, res, next) {
 	// if (loadedAt) {
 	// 	filter.loadedAt = {"$exists": false};
 	// 	// filter.loadedAt = { "$or" : [  {"$exists": false}, {$gt: loadedAt} ] };
-    // }
+	// }
 
-	let conversations = await db.collection('conversations').find(filter).sort({ createdAt: 1 }).toArray();
+	const sort = {
+		lastMessageAt: 1
+		// createdAt: 1
+	};
+
+	let conversations = await db.collection('conversations').find(filter).sort(sort).toArray();
 
 	let loadedTime = null;
 	if (conversations && conversations.length) {
@@ -52,7 +57,9 @@ export async function post(req, res, next) {
 		loadedTime = (new Date()).getTime();
 		const newValues = {
 			loadedAt: loadedTime,
-        };
+		};
+
+		// update loaded at time only for current user
 		// const conversationUpdateResult = db.collection('conversations').updateMany(filter, { $set: newValues });
 	}
 

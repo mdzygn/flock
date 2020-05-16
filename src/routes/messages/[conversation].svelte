@@ -49,11 +49,9 @@
 	$: isLoadingConversation = $loadingConversations && (!$conversation || ($conversation.id !== $conversationId));
 	$: isLoadingContent = (isLoadingMessages || isLoadingConversation) && !$newConversation;
 
-	$: showMessageInput = !isLoadingContent && ($conversation || $newConversation);
+	$: showMessageInput = !isLoadingContent && $userId && ($conversation || $newConversation);
 
-	$: {
-		console.log('isLoadingContent', isLoadingContent, 'messages', isLoadingMessages, 'conv', '$conversation', $conversation, 'conv.id', $conversation && $conversation.id, '$conversationId', $conversationId);
-	}
+	// $: { console.log('isLoadingContent', isLoadingContent, 'messages', isLoadingMessages, 'conv', '$conversation', $conversation, 'conv.id', $conversation && $conversation.id, '$conversationId', $conversationId); }
 
 	// $: console.log('isLoadingConversation', isLoadingConversation, '$conversation', $conversation);
 
@@ -165,7 +163,7 @@
 		{#if isLoadingContent}
 			<ContentLoader label="{locale.LOADING.MESSAGES}" />
 		{:else if (!$messages || !$messages.length) && !$newConversation}
-			<ContentLoader label="{locale.CONVERSATION.NO_MESSAGES}" />length: {$messages && $messages.length}
+			<ContentLoader label="{locale.CONVERSATION.NO_MESSAGES}" />
 			<!-- <div class="noMessages">
 				{locale.CONVERSATION.NO_MESSAGES}
 			</div> -->

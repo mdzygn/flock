@@ -14,6 +14,7 @@ import MessageModel from '../models/messageModel';
 
 import {
 	userId,
+	usercode,
 	conversation,
 } from '../models/appModel';
 
@@ -35,23 +36,27 @@ let messagesUpdatedHandlers = [];
 
 let messages = writable(null); // []);
 
-// userId.subscribe(updateMessages);
-// usercode.subscribe(updateMessages);
+userId.subscribe(updateMessages);
+usercode.subscribe(updateMessages);
 
-// function updateMessages() {
-// 	if (get(userId) && get(usercode)) {
-// 		const details = { userId: get(userId), getUnviewed: true };
-// 		if (messagesLoadedAt) {
-// 			details.loadedAt = messagesLoadedAt;
-// 		}
-// 		getMessages(details);
+function updateMessages() {
+	clearFilteredMessages();
+	// if (!get(userId) || !get(usercode)) {
+	// 	clearFilteredMessages();
+	// }
+	// if (get(userId) && get(usercode)) {
+	// 	const details = { userId: get(userId), getUnviewed: true };
+	// 	if (messagesLoadedAt) {
+	// 		details.loadedAt = messagesLoadedAt;
+	// 	}
+	// 	getMessages(details);
 
-// 		if (!pollStarted) {
-// 			pollStarted = true;
-// 			pollMessage();
-// 		}
-// 	}
-// }
+	// 	if (!pollStarted) {
+	// 		pollStarted = true;
+	// 		pollMessage();
+	// 	}
+	// }
+}
 
 // function pollMessage() {
 // 	if (typeof window !== 'undefined') {

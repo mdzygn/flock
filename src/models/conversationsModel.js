@@ -38,23 +38,29 @@ export default ConversationsModel;
 
 export let conversationsUnviewedCount = writable(0);
 
-// userId.subscribe(updateConversations);
-// usercode.subscribe(updateConversations);
+userId.subscribe(updateConversations);
+usercode.subscribe(updateConversations);
 
-// function updateConversations() {
-// 	if (get(userId) && get(usercode)) {
-// 		const details = { userId: get(userId), getUnviewed: true };
-// 		if (conversationsLoadedAt) {
-// 			details.loadedAt = conversationsLoadedAt;
-// 		}
-// 		getConversations(details);
+function updateConversations(isPoll) {
+	if (get(userId) && get(usercode)) {
+		if (!isPoll) {
+			clearFilteredConversations();
+		}
 
-// 		if (!pollStarted) {
-// 			pollStarted = true;
-// 			pollConversation();
-// 		}
-// 	}
-// }
+		const details = { userId: get(userId), getUnviewed: true };
+		if (conversationsLoadedAt) {
+			details.loadedAt = conversationsLoadedAt;
+		}
+		getConversations(details);
+
+		if (!pollStarted) {
+			pollStarted = true;
+			pollConversation();
+		}
+	} else {
+		mergeConversations([]);
+	}
+}
 
 function pollConversation() {
 	if (typeof window !== 'undefined') {
@@ -64,7 +70,7 @@ function pollConversation() {
 			// if (document.hasFocus()) {
 			if (document.visibilityState === 'visible') {
 				// console.log('poll');
-				updateConversations();
+				updateConversations(true);
 			}
 			pollConversation();
 		}, curPollDelay * 1000);
@@ -183,10 +189,11 @@ export function getConversation(conversationId) {
 }
 
 function clearFilteredConversations() {
-	const curConversations = get(conversations);
-	if (curConversations) {
-		curConversations.length = 0;
-	}
+	// const curConversations = get(conversations);
+	// if (curConversations) {
+	// 	curConversations.length = 0;
+	// }
+	const curConversations = null;
 	conversations.set(curConversations);
 }
 

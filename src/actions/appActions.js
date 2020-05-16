@@ -106,6 +106,7 @@ import {
 
     newConversation,
     newConversationUserIds,
+    conversationGroupId,
 } from '../models/appModel';
 
 export function loadProject(targetProjectId, options) {
@@ -363,7 +364,8 @@ function targetConversationLoaded(result) {
         if (result.conversations && result.conversations.length) {
             const conversation = result.conversations[0];
             if (conversation.id) {
-                loadConversation(conversation.id);
+                mergeConversations([conversation]);
+                loadConversation(conversation.id, true);
             }
         } else {
             newConversation.set(true);
@@ -371,12 +373,16 @@ function targetConversationLoaded(result) {
     }
 };
 
-export function loadConversation(targetConversationId) {
+export function loadConversation(targetConversationId, isRedirectedId) {
     // if (!checkLoggedIn()) { return; }
 
     newConversation.set(false);
 
     // console.log('loadConversation', targetConversationId);
+
+    if (!isRedirectedId) {
+        conversationGroupId.set(targetConversationId);
+    }
 
     const conversationUserId = getUserConversationId(targetConversationId);
     if (conversationUserId) {
@@ -408,7 +414,9 @@ export function loadConversation(targetConversationId) {
     // const curConversation = conversations.find(item => item.id === targetConversationId);
     // conversation.set(curConversation);
 
-    gotoRoute('messages/' + targetConversationId);
+    if (!isRedirectedId) {
+        gotoRoute('messages/' + targetConversationId);
+    }
     resetScrollRegionPosition('conversation');
 }
 

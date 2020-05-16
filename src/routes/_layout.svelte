@@ -37,6 +37,7 @@
 
 		projectId,
 		conversationId,
+		conversationGroupId,
 		profileId,
 		channelId,
 		postId,
@@ -72,7 +73,7 @@
 			const params = $page.params;
 			if (params) {
 				if (params.conversation) {
-					if ($conversationId !== params.conversation || !$conversation) { // TODO: avoid repeat loading if item undefined?
+					if (($conversationId !== params.conversation && params.conversation !== $conversationGroupId) || !$conversation) { // TODO: avoid repeat loading if item undefined?
 						loadConversation(params.conversation);
 					}
 				}

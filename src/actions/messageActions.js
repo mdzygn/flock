@@ -25,7 +25,7 @@ export function createMessage(messageDetails) {
                 addAndSetConversation(result.conversation);
             }
             if (result.conversationId) {
-                loadConversation(result.conversationId);
+                loadConversation(result.conversationId, true);
             }
         }
     });

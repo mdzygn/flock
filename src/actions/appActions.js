@@ -331,7 +331,11 @@ export function loadProfile(targetProfileId, options) {
 export function loadConversation(targetConversationId) {
     // if (!checkLoggedIn()) { return; }
 
-    loadConversations({ id: targetConversationId });
+    const curConversation = get(conversation);
+    if (!curConversation || curConversation.id !== targetConversationId) {
+        // console.log('loadConversations');
+        loadConversations({ id: targetConversationId });
+    }
 
     conversationId.set(targetConversationId);
     setConversation(targetConversationId);

@@ -181,12 +181,16 @@ function clearFilteredConversations() {
 export function checkConversationSeen(details) {
 	if (details.conversationId) {
 		const curConversationModel = getConversation(details.conversationId);
-		if (!curConversationModel.viewed) {
+		if (curConversationModel) {
 			const curConversation = get(curConversationModel);
-			curConversation.viewed = true;
-			curConversationModel.set(curConversation);
+			if (!curConversation.viewed) {
+				curConversation.viewed = true;
+				curConversationModel.set(curConversation);
 
-			const result = api.updateConversation({id: details.conversationId});
+				conversations.set(get(conversations));
+
+				const result = api.updateConversation({id: details.conversationId});
+			}
 		}
 	}
 }

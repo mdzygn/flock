@@ -103,12 +103,16 @@ export async function post(req, res, next) {
 			const users = userResults.map((curUser) => {
 				const userItem = {
 					id: curUser.id,
-					loadedAt: details.createdAt,
-					viewedAt: details.createdAt,
+					loadedAt: 0,
+					viewedAt: 0,
 					username: curUser.username,
 					avatarImage: curUser.avatarImage,
 					name: curUser.name || curUser.fullName,
 				};
+				if (curUser.id === details.userId) {
+					userItem.loadedAt = details.createdAt;
+					userItem.viewedAt = details.viewedAt;
+				}
 				if (!curUser.avatarImage) {
 					userItem.style = curUser.style;
 				}

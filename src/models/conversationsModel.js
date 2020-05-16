@@ -38,23 +38,23 @@ export default ConversationsModel;
 
 export let conversationsUnviewedCount = writable(0);
 
-userId.subscribe(updateConversations);
-usercode.subscribe(updateConversations);
+// userId.subscribe(updateConversations);
+// usercode.subscribe(updateConversations);
 
-function updateConversations() {
-	if (get(userId) && get(usercode)) {
-		const details = { userId: get(userId), getUnviewed: true };
-		if (conversationsLoadedAt) {
-			details.loadedAt = conversationsLoadedAt;
-		}
-		getConversations(details);
+// function updateConversations() {
+// 	if (get(userId) && get(usercode)) {
+// 		const details = { userId: get(userId), getUnviewed: true };
+// 		if (conversationsLoadedAt) {
+// 			details.loadedAt = conversationsLoadedAt;
+// 		}
+// 		getConversations(details);
 
-		if (!pollStarted) {
-			pollStarted = true;
-			pollConversation();
-		}
-	}
-}
+// 		if (!pollStarted) {
+// 			pollStarted = true;
+// 			pollConversation();
+// 		}
+// 	}
+// }
 
 function pollConversation() {
 	if (typeof window !== 'undefined') {
@@ -126,7 +126,7 @@ export function loadConversations(options, callback) {
 	}
 }
 
-function mergeConversations(newConversations) {
+export function mergeConversations(newConversations) {
 	// console.log('newConversations', newConversations);
 
 	const origConversations = get(conversations);
@@ -255,8 +255,8 @@ export function getUserConversationInfo(conversation) {
 	return curUser;
 }
 
-export function getConversationUsersId(targetUserId) {
-	const userIds = [get(userId), 'n' + targetUserId];
+export function getConversationUsersId(targetUserIds) {
+	const userIds = [get(userId), ...targetUserIds];
 	userIds.sort(); // .sort((a,b) => strCompare(a, b));
 	const usersId = userIds.join('-');
 	return usersId;

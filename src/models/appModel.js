@@ -48,6 +48,7 @@ const appModel = createModel({
     discoverSearchString: '',
 
     newConversation: false,
+    newConversationUserIds: [],
 
 }, {persist: true}, 'appState', AppModel);
 
@@ -125,6 +126,7 @@ export const dontAllowOverlayClose = writable(false);
 export const newUsername = writable(null);
 
 export const newConversation = appModel.newConversation;
+export const newConversationUserIds = appModel.newConversationUserIds;
 
 export const dateDebugOffset = writable(3600 * 1000);
 

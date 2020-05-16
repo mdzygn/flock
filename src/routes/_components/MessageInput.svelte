@@ -14,6 +14,8 @@
 
     import {
         conversationId,
+        newConversation,
+        newConversationUserIds,
     } from '../../models/appModel';
 
     import {
@@ -31,7 +33,7 @@
 
     let messageField;
 
-    $: submitEnabled = $conversationId && !!(message || image);
+    $: submitEnabled = ($conversationId || $newConversation) && !!(message || image);
 
 	function createNewMessage() {
 		if (submitEnabled) {
@@ -39,17 +41,25 @@
 
 			const messageDetails = {
 				id: newMessageId,
-				conversationId: $conversationId,
 				message: getUnformattedText(message),
             };
+            if ($conversationId && !$newConversation) {
+                messageDetails.conversationId = $conversationId;
+            }
             if (image) {
                 messageDetails.image = image;
+            }
+            if ($newConversation) {
+                messageDetails.newConversation = true;
+                messageDetails.targetUserIds = $newConversationUserIds;
             }
 
             message = '';
             newMessageId = getNewMessageId();
 
             const draftId = $conversationId;
+
+            // console.log('createNewMessage', messageDetails);
 
 			createMessage(messageDetails).then((result) => {
 				if (result && (result.success || result.addedMessage || result.duplicateKey)) {

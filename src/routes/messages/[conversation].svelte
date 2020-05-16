@@ -49,6 +49,10 @@
 	$: isLoadingConversation = $loadingConversations && (!$conversation || ($conversation.id !== $conversationId));
 	$: isLoadingContent = (isLoadingMessages || isLoadingConversation) && !$newConversation;
 
+	// $: {
+	// 	console.log('isLoadingContent', isLoadingContent, 'messages', isLoadingMessages, 'conv', '$conversation', $conversation, 'conv.id', $conversation && $conversation.id, '$conversationId', $conversationId);
+	// }
+
 	// $: console.log('isLoadingConversation', isLoadingConversation, '$conversation', $conversation);
 
 	$: viewingGroupConversation = ($conversation && $conversation.isGroup) || false;
@@ -169,9 +173,7 @@
 					<div class="content">
 						<Proxy image="message_new_message_profile" className="profileInfo" />
 					</div>
-				{/if}
-
-				{#if $messages}
+				{:else if $messages}
 					<ConversationView {messages} />
 				{/if}
 

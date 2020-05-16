@@ -46,6 +46,7 @@ import {
     onConversationsUpdated,
     loadingConversations,
     getConversationUsersId,
+    mergeConversations,
 } from '../models/conversationsModel';
 
 import {
@@ -104,6 +105,7 @@ import {
     triggerNewThreadPost,
 
     newConversation,
+    newConversationUserIds,
 } from '../models/appModel';
 
 export function loadProject(targetProjectId, options) {
@@ -287,6 +289,13 @@ function setChannel(targetChannelId) {
     }
 }
 
+export function addAndSetConversation(conversation) {
+    if (conversation && conversation.id) {
+        mergeConversations([conversation]);
+        setConversation(conversation.id);
+    }
+}
+
 export function loadPost(targetPostId, options) {
     loadPosts({ id: targetPostId, getFollowState: true });
 
@@ -373,7 +382,10 @@ export function loadConversation(targetConversationId) {
     if (conversationUserId) {
         clearConversation();
 
-        const usersId = getConversationUsersId(conversationUserId);
+        const targetUserIds = [conversationUserId];
+        newConversationUserIds.set(targetUserIds);
+
+        const usersId = getConversationUsersId(targetUserIds);
         loadConversations({ usersId }, targetConversationLoaded);
         return;
     }
@@ -419,6 +431,7 @@ function setConversation(targetConversationId) {
     const curConversationModel = getConversation(targetConversationId);
     const curConversation = get(curConversationModel);
 
+    // console.log('setConversation', conversation, targetConversationId);
     conversation.set(curConversation);
 
     if (curConversation) {

@@ -2,6 +2,8 @@
 
 import {
     checkLoggedIn,
+    loadConversation,
+    addAndSetConversation,
 } from '../actions/appActions';
 
 import {
@@ -15,6 +17,18 @@ export function createMessage(messageDetails) {
     if (!checkLoggedIn()) { return; }
 
     const result = addMessage(messageDetails);
+    result.then((result) => {
+        if (result && !result.error) {
+            // console.log('createMessage newConversationId', result.conversationId, 'result.conversation', result.conversation);
+
+            if (result.conversation) {
+                addAndSetConversation(result.conversation);
+            }
+            if (result.conversationId) {
+                loadConversation(result.conversationId);
+            }
+        }
+    });
 
     return result;
 }

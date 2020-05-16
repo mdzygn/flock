@@ -189,6 +189,9 @@ export function addMessage(messageDetails) {
 
 	newMessage.conversationId = messageDetails.conversationId;
 
+	newMessage.newConversation = messageDetails.newConversation;
+	newMessage.targetUserIds = messageDetails.targetUserIds;
+
 	newMessage.message = messageDetails.message || '';
 	if (messageDetails.image) {
 		newMessage.image = messageDetails.image;
@@ -199,6 +202,8 @@ export function addMessage(messageDetails) {
 
 	// savingMessageId.set(newMessage.id); // need to keep saving message so doesn't override on load
 	// savingMessage.set(true);
+
+	// console.log('addMessage', newMessage);
 
 	const result = api.addMessage({details: newMessage});
 	result.then(result => {

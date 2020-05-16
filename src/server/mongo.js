@@ -70,6 +70,13 @@ export function generateId(length) {
     });
 }
 
+export function getConversationUsersId(userIds) {
+	const newUserIds = [...userIds];
+	newUserIds.sort();
+	const usersId = newUserIds.join('-');
+	return usersId;
+}
+
 export async function filterItemsByProjectAccess(items, userId, validLogin) {
 	const projectIds = getItemIds(items, 'projectId');
 	// const projectIds = [];

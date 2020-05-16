@@ -15,6 +15,7 @@ import {
 	usercode,
 	curPath,
 	conversationId,
+	conversation,
 } from '../models/appModel';
 
 import conversationsTestData from '../data/conversations.json';
@@ -49,7 +50,7 @@ function updateConversations(options) {
 		}
 
 		const details = { userId: get(userId), getUnviewed: true };
-		if (conversationsLoadedAt) {
+		if (isPoll && conversationsLoadedAt) {
 			details.loadedAt = conversationsLoadedAt;
 		}
 		getConversations(details);
@@ -195,6 +196,9 @@ function clearFilteredConversations() {
 	// if (curConversations) {
 	// 	curConversations.length = 0;
 	// }
+	if (get(conversation)) {
+		conversation.set(null);
+	}
 	const curConversations = null;
 	conversations.set(curConversations);
 }

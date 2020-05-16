@@ -41,10 +41,11 @@ usercode.subscribe(updateNotifications);
 
 // WindowFocusUtil.focused.subscribe(onWindowFocusUpdated);
 
-function updateNotifications() {
+function updateNotifications(options) {
+	const isPoll = (options && options.isPoll) || false;
 	if (get(userId) && get(usercode)) {
 		const details = { userId: get(userId), getUnviewed: true };
-		if (notificationsLoadedAt) {
+		if (isPoll && notificationsLoadedAt) {
 			details.loadedAt = notificationsLoadedAt;
 		}
 		getNotifications(details);

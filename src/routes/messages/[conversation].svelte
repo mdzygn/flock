@@ -51,7 +51,7 @@
 
 	$: showMessageInput = !isLoadingContent && $userId && ($conversation || $newConversation);
 
-	// $: { console.log('isLoadingContent', isLoadingContent, 'messages', isLoadingMessages, 'conv', '$conversation', $conversation, 'conv.id', $conversation && $conversation.id, '$conversationId', $conversationId); }
+	// $: { console.log('isLoadingContent', isLoadingContent, 'messages', isLoadingMessages, '$conversation', $conversation, 'conv.id', $conversation && $conversation.id, '$conversationId', $conversationId); }
 
 	// $: console.log('isLoadingConversation', isLoadingConversation, '$conversation', $conversation);
 

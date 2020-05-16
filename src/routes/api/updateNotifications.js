@@ -14,6 +14,8 @@ export async function post(req, res, next) {
     const ids = options && options.ids;
 
 	if (userId && ids) {
+		const viewedAtTime = (new Date()).getTime();
+
         const notificationsFilter = {
             viewed: { $ne: true },
             userId,
@@ -21,7 +23,7 @@ export async function post(req, res, next) {
 		};
 		const newValues = {
 			viewed: true,
-			viewedAt: (new Date()).getTime(),
+			viewedAt: viewedAtTime,
 		};
 
 		const notificationUpdateResult = await db.collection('notifications').updateMany(notificationsFilter, { $set: newValues });
@@ -31,6 +33,6 @@ export async function post(req, res, next) {
 			errorResponse(res, {}, {errorMsg: 'can\'t update notification(s)', errorObject: notificationUpdateResult});
 		}
 	} else {
-		errorResponse(res, {}, {errorMsg: 'userId or ids not defined'});
+		errorResponse(res, {}, {errorMsg: 'userId or notification ids not defined'});
 	}
 }

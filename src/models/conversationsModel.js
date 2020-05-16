@@ -179,37 +179,14 @@ function clearFilteredConversations() {
 }
 
 export function checkConversationSeen(details) {
-	if (details.postId || details.threadId) {
-		const postId = details.postId;
-		const threadId = details.threadId;
-		const conversationModels = get(conversations).filter(itemModel => {
-			const item = get(itemModel);
-			return !item.viewed && ((item.postId === postId) || (item.threadId === threadId));
-		});
+	if (details.conversationId) {
+		const curConversationModel = getConversation(details.conversationId);
+		if (!curConversationModel.viewed) {
+			const curConversation = get(curConversationModel);
+			curConversation.viewed = true;
+			curConversationModel.set(curConversation);
 
-		const conversationsViewed = [];
-
-		conversationModels.forEach((conversationModel) => {
-			const conversation = get(conversationModel);
-			// console.log('conversation before', JSON.parse(JSON.stringify(conversation)));
-
-			if (!conversation.viewed) {
-				conversationsViewed.push(conversation.id);
-				conversation.viewed = true;
-				conversationModel.set(conversation);
-
-				conversations.set(get(conversations));
-			}
-		});
-
-		if (conversationsViewed.length) {
-			// console.log('update conversationsViewed: ', conversationsViewed);
-			const result = api.updateConversations({ids: conversationsViewed});
-			// if (config.DEBUG) {
-			// 	result.then((result) => {
-			// 		console.log('conversations updated: ', result);
-			// 	});
-			// }
+			const result = api.updateConversation({id: details.conversationId});
 		}
 	}
 }

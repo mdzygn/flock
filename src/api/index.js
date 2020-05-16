@@ -355,12 +355,12 @@ function getConversations(options) {
 	});
 }
 
-// options = { userId: id, ids: [id] }
-function updateConversations(options) {
+// options = { conversationId: id, userId: id }
+function updateConversation(options) {
 	options = addCredentials(options);
-	return send('updateConversations', options).then(result => {
+	return send('updateConversation', options).then(result => {
 		if (DEBUG && result && result.error) {
-			console.error('API Error - updateConversations: ', result);
+			console.error('API Error - updateConversation: ', result);
 		}
 		return result;
 		// return Promise.reject(error); // TODO: prevent followups being called
@@ -426,7 +426,7 @@ const api = {
 	updateNotifications,
 
 	getConversations,
-	updateConversations,
+	updateConversation,
 
 	getMessages,
 	addMessage,

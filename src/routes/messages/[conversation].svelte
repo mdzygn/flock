@@ -24,7 +24,9 @@
 	} from '../../models/appModel';
 
     import ConversationsModel, {
-        loadingConversations,
+		loadingConversations,
+		setConversationSeenTimeout,
+		clearConversationSeenTimeout,
     } from '../../models/conversationsModel';
 
 	import MessagesModel, { getMessages, loadingMessages } from '../../models/messagesModel';
@@ -109,14 +111,19 @@
 		}
 	}
 
+	let conversationSeenTimeout;
 	onMount(() => {
 		MessagesModel.on('messagedAdded', scrollToBottom);
 		ConversationsModel.on('conversationUpdated', conversationUpdated);
+
+		conversationSeenTimeout = setConversationSeenTimeout({conversationId: $conversationId});
 	})
 
 	onDestroy(() => {
 		MessagesModel.off('messagedAdded', scrollToBottom);
 		ConversationsModel.off('conversationUpdated', conversationUpdated);
+
+		clearConversationSeenTimeout(conversationSeenTimeout);
 	})
 </script>
 

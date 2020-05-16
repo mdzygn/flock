@@ -170,7 +170,7 @@ export async function post(req, res, next) {
 		// db.bar.update({user_id : 123456 , "items.item_name" : "my_item_two" }, {$inc : {"items.$.price" : 1} }, false, true);
 		// db.bar.update({user_id : 123456 }, {$addToSet : {"items" : {'item_name' : "my_item_two" , 'price' : 1 }} }, false, true);
 
-		console.log('newConversation', newConversation, 'newConversationId', newConversationId);
+		// console.log('newConversation', newConversation, 'newConversationId', newConversationId);
 
 		const returnResult = {success: true};
 		if (newConversationId) {

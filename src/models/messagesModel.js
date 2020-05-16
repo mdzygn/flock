@@ -170,10 +170,11 @@ export function getMessage(messageId) {
 }
 
 function clearFilteredMessages() {
-	const curMessages = get(messages);
-	if (curMessages) {
-		curMessages.length = 0;
-	}
+	// const curMessages = get(messages);
+	// if (curMessages) {
+	// 	curMessages.length = 0;
+	// }
+	const curMessages = null;
 	messages.set(curMessages);
 }
 

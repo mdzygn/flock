@@ -58,19 +58,27 @@ export async function post(req, res, next) {
 
 	if (conversations && conversations.length) {
 		const conversationIds = conversations.map((conversation) => conversation.id);
+
 		filter.id = { $in: conversationIds };
+		filter["users.id"] = userId,
 
 		loadedTime = (new Date()).getTime();
 		const newValues = {
-			loadedAt: loadedTime,
+			"users.$.loadedAt" : loadedTime,
 		};
 
 		// update loaded at time only for current user
-		// const conversationUpdateResult = db.collection('conversations').updateMany(filter, { $set: newValues });
+		const conversationUpdateResult = db.collection('conversations').updateMany(filter, { $set: newValues });
 	}
 
     // conversations.sort((a,b) => a.createdAt - b.createdAt ); // sort by reversed created time
 
+	let curUser;
+	conversations.forEach((conversation) => {
+		curUser = conversation.users.find((user) => user.id === userId);
+		conversation.viewed = curUser ? curUser.viewedAt >= conversation.lastMessageAt : true;
+		// console.log(conversation.lastMessageText + ', ' + curUser.id + ', ' + conversation.viewed + ', ' + curUser.viewedAt + ' < ' + conversation.lastMessageAt);
+	});
 	// conversations = conversations.filter((conversation) => {
 	// 	return !conversation.disabled;
 	// });
@@ -82,6 +90,6 @@ export async function post(req, res, next) {
 		}
 		response(res, result);
 	} else {
-		response(res, {error: true});
+		errorResponse(res, {}, {errorMsg: 'error loading conversations'});
 	}
 }

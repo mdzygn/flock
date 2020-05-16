@@ -26,8 +26,10 @@
     $: conversationId = ($conversation && $conversation.id) || null;
     $: projectId = ($conversation && $conversation.projectId) || null;
 
-    $: userConversationInfo = getUserConversationInfo($conversation);
-    $: viewed = userConversationInfo ? userConversationInfo.viewed : true;
+    $: viewed = $conversation ? $conversation.viewed : true;
+
+    // $: userConversationInfo = getUserConversationInfo($conversation);
+    // $: viewed = userConversationInfo ? userConversationInfo.viewed : true;
 
     // $: projectTitle = $conversation && $conversation.projectTitle;
 

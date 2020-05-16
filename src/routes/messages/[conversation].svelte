@@ -39,12 +39,12 @@
 
 	let lastMessagesCount = 0;
 
-    export let messages = writable([]);
+    export let messages = writable(null); // []);
 	$: {
 		messages = ($conversationId && getMessages({ conversationId: $conversationId }, messagesLoaded)) || messages;
 	};
 
-    $: isLoadingMessages = $loadingMessages && (!$messages || !$messages.length);
+    $: isLoadingMessages = $loadingMessages && !$messages; // (!$messages || !$messages.length);
     $: isLoadingConversation = $loadingConversations && (!$conversation || ($conversation.id !== $conversationId));
 
 	$: viewingGroupConversation = ($conversation && $conversation.isGroup) || false;
@@ -76,7 +76,7 @@
 
 	async function checkMessagesUpdated() {
 		if (scrollRegion) {
-			if ($messages.length > lastMessagesCount) {
+			if ($messages && $messages.length > lastMessagesCount) {
 				if (scrollRegion.scrollTop + scrollRegion.offsetHeight > scrollRegion.scrollHeight - config.MIN_AUTO_SCROLL_BOTTOM_DIST) {
 					await tick();
 					scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
@@ -85,7 +85,7 @@
 				}
 			}
 		}
-		lastMessagesCount = $messages.length;
+		lastMessagesCount = $messages ? $messages.length : 0;
 	}
 
 	async function messagesLoaded(result) {

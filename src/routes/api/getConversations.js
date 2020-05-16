@@ -12,6 +12,11 @@ export async function post(req, res, next) {
 
     const options = req.body;
 
+	if (!options.userId) {
+		response(res, {conversations: []});
+		return
+	}
+
 	if (!await validateCredentials(db, options)) {
 		errorResponse(res, {invalid: true}, {errorMsg: 'invalid credentials'});
 		return;

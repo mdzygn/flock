@@ -10,7 +10,12 @@ import {
 export async function post(req, res, next) {
     const { db } = await init();
 
-    const options = req.body;
+	const options = req.body;
+
+	if (!options.userId) {
+		response(res, {messages: []});
+		return
+	}
 
 	if (!await validateCredentials(db, options)) {
 		errorResponse(res, {invalid: true}, {errorMsg: 'invalid credentials'});

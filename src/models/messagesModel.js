@@ -33,7 +33,7 @@ let messagesUpdatedHandlers = [];
 
 // let messagesLoadedAt = null;
 
-let messages = writable([]);
+let messages = writable(null); // []);
 
 // userId.subscribe(updateMessages);
 // usercode.subscribe(updateMessages);
@@ -112,7 +112,7 @@ function mergeMessages(newMessages) {
 	// console.log('newMessages', newMessages);
 
 	if (newMessages && newMessages.length) {
-		const curMessages = get(messages);
+		const curMessages = get(messages) || [];
 
 		let curMessage, newMessageData, messageId, newMessage;
 		for (var messageI = 0; messageI < newMessages.length; messageI++) {
@@ -160,12 +160,15 @@ export function getMessages(options, callback) {
 }
 
 export function getMessage(messageId) {
-	return get(messages).find(item => get(item).id === messageId);
+	const curMessages = get(messages);
+	return curMessages && curMessages.find(item => get(item).id === messageId);
 }
 
 function clearFilteredMessages() {
 	const curMessages = get(messages);
-	curMessages.length = 0;
+	if (curMessages) {
+		curMessages.length = 0;
+	}
 	messages.set(curMessages);
 }
 
@@ -201,7 +204,7 @@ export function addMessage(messageDetails) {
 		return result;
 	});
 
-	const curMessages = get(messages);
+	const curMessages = get(messages) || [];
 	newMessage.lastMessage = curMessages.length ? curMessages[curMessages.length - 1] : null;
 
 	curMessages.push(newMessageModel);

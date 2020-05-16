@@ -72,27 +72,27 @@
 			const params = $page.params;
 			if (params) {
 				if (params.conversation) {
-					if ($conversationId !== params.conversation || !$conversation) {
+					if ($conversationId !== params.conversation || !$conversation) { // TODO: avoid repeat loading if item undefined?
 						loadConversation(params.conversation);
 					}
 				}
 				if (params.profile) {
-					if ($profileId !== params.profile || !$viewedUser) {
+					if ($profileId !== params.profile || !$viewedUser) { // TODO: avoid repeat loading if item undefined?
 						loadProfile(params.profile);
 					}
 				}
 				if (params.project) {
-					if ($projectId !== params.project || !$project) {
+					if ($projectId !== params.project || !$project) { // TODO: avoid repeat loading if item undefined?
 						loadProject(params.project);
 					}
 				}
 				if (params.channel) {
-					if ($channelId !== params.channel || !$channel) {
+					if ($channelId !== params.channel || !$channel) { // TODO: avoid repeat loading if item undefined?
 						loadChannel(params.channel);
 					}
 				}
 				if (params.post) {
-					if ($postId !== params.post || !$post) {
+					if ($postId !== params.post || !$post) { // TODO: avoid repeat loading if item undefined?
 						loadPost(params.post);
 					}
 				}

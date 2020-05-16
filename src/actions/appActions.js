@@ -45,6 +45,7 @@ import {
     loadConversations,
     onConversationsUpdated,
     loadingConversations,
+    getConversationUsersId,
 } from '../models/conversationsModel';
 
 import {
@@ -329,8 +330,55 @@ export function loadProfile(targetProfileId, options) {
     resetScrollRegionPosition('profile');
 }
 
+function getUserConversationId(targetConversationId) {
+    let userId = null;
+    if (targetConversationId.indexOf('u-') === 0) {
+        userId = targetConversationId.substr(2);
+    }
+    return userId;
+}
+
+function getProjectConversationId(targetConversationId) {
+    let projectId = null;
+    if (targetConversationId.indexOf('p-') === 0) {
+        projectId = targetConversationId.substr(2);
+    }
+    return projectId;
+}
+
+function targetConversationLoaded(result) {
+    console.log('conversationLoaded', result);
+    if (result && !result.error) {
+        if (result.conversations && result.conversations.length) {
+            const conversation = result.conversations[0];
+            if (conversation.id) {
+                loadConversation(conversation.id);
+            }
+        } else {
+            // newConversation.set(true);
+        }
+    }
+};
+
 export function loadConversation(targetConversationId) {
     // if (!checkLoggedIn()) { return; }
+
+    console.log('loadConversation', targetConversationId);
+
+    const conversationUserId = getUserConversationId(targetConversationId);
+    if (conversationUserId) {
+        clearConversation();
+
+        const usersId = getConversationUsersId(conversationUserId);
+        loadConversations({ usersId }, targetConversationLoaded);
+        return;
+    }
+
+    const conversationProjectId = getProjectConversationId(targetConversationId);
+    if (conversationProjectId) {
+        loadConversations({ projectId: conversationProjectId }, targetConversationLoaded);
+        return;
+    }
 
     const curConversation = get(conversation);
     if (!curConversation || curConversation.id !== targetConversationId) {
@@ -345,6 +393,21 @@ export function loadConversation(targetConversationId) {
     // conversation.set(curConversation);
 
     gotoRoute('messages/' + targetConversationId);
+    resetScrollRegionPosition('conversation');
+}
+
+function clearConversation() {
+    conversationId.set(null);
+    conversation.set(null);
+}
+
+export function loadConversationByUser(userId) {
+    gotoRoute('messages/u-' + userId);
+    resetScrollRegionPosition('conversation');
+}
+
+export function loadConversationByProject(projectId) {
+    gotoRoute('messages/p-' + projectId);
     resetScrollRegionPosition('conversation');
 }
 
@@ -364,12 +427,13 @@ function setConversation(targetConversationId) {
 export function messageUser(userId) {
     if (!checkLoggedIn()) { return; }
 
-    loadConversation('r70dp2bf');
+    loadConversationByUser(userId);
+    // loadConversation('r70dp2bf');
 }
 
 function gotoRoute(newPath) {
     // console.log(getPagePath()+ ' !== /' + newPath + ' : ' + (getPagePath() !== '/' + newPath));
-    if (getPagePath() !== '/' + newPath && typeof window !== 'undefined') { //  && !/\/projects\/.*\/details/.test(get(curPath)) //  && !/\/channels\/.*\/post/.test(get(curPath))
+    if (getPagePath() !== '/' + newPath.split(' ').join('%20') && typeof window !== 'undefined') { //  && !/\/projects\/.*\/details/.test(get(curPath)) //  && !/\/channels\/.*\/post/.test(get(curPath))
         goto(newPath);
         return true;
     }

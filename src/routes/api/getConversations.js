@@ -24,11 +24,17 @@ export async function post(req, res, next) {
 
 	const userId = options && options.userId;
 	const conversationId = options && options.id;
+	const usersId = options && options.usersId;
+
 	const getUnviewed = options && options.getUnviewed;
 	let loadedAt = options && options.loadedAt;
 
 	if (!userId) {
 		errorResponse(res, {}, {errorMsg: 'userId not set'});
+		return;
+	}
+	if (!userId && !conversationId && !usersId) {
+		errorResponse(res, {}, {errorMsg: 'conversationId or usersId not set'});
 		return;
     }
 
@@ -37,6 +43,9 @@ export async function post(req, res, next) {
 
 	if (conversationId) {
 		filter.id = conversationId;
+	}
+	if (usersId) {
+		filter.usersId = usersId;
 	}
 	if (loadedAt) {
 		filter.lastMessageAt = {$gt: loadedAt};

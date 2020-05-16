@@ -61,7 +61,7 @@
 
 	import {
 		// loadChannel,
-		loadConversation,
+		loadConversationByProject,
 		editProjectDetails,
 		showProjectInfo,
 		hideProjectInfo,
@@ -244,7 +244,7 @@
 									<Button className="addProjectDetailsButton" onClick="{editProjectDetails}" icon="{AddDetailsIcon}">add project details</Button>
 								{/if}
 								{#if !isTeamMember}
-									<Button disabled="{!$showBetaFeatures}" className="sendMessageButton" onClick="{e => loadConversation('s0g1la34')}" icon="{SendMessageIcon}">message</Button>
+									<Button disabled="{!$showBetaFeatures}" className="sendMessageButton" onClick="{e => loadConversationByProject($projectId)}" icon="{SendMessageIcon}">message</Button>
 								{:else if isNew && !isPublic}
 									{#if !isArchived}
 										<Button className="makePublicButton isButton" onClick="{showTogglePublicDialog}">make public</Button>

@@ -18,6 +18,7 @@ import {
 } from '../models/appModel';
 
 import conversationsTestData from '../data/conversations.json';
+import { strCompare } from '../utils';
 
 export let loadingConversations = writable(false);
 
@@ -103,7 +104,7 @@ conversations.subscribe(() => {
 	});
 });
 
-export function loadConversations(options) {
+export function loadConversations(options, callback) {
     // const conversationItems = JSON.parse(JSON.stringify(conversationsTestData));
     // mergeConversations(conversationItems);
 
@@ -117,6 +118,9 @@ export function loadConversations(options) {
 				}
 				mergeConversations(result.conversations);
 				loadingRequestUtil.clearLoading('conversations', options, () => { loadingConversations.set(false); });
+			}
+			if (callback) {
+				callback(result);
 			}
 		});
 	}
@@ -249,4 +253,11 @@ export function getUserConversationInfo(conversation) {
 		curUser = conversation.users.find(userItem => userItem.id === get(userId));
 	}
 	return curUser;
+}
+
+export function getConversationUsersId(targetUserId) {
+	const userIds = [get(userId), 'n' + targetUserId];
+	userIds.sort(); // .sort((a,b) => strCompare(a, b));
+	const usersId = userIds.join('-');
+	return usersId;
 }

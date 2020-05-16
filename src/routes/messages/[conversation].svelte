@@ -117,7 +117,7 @@
 	let conversationSeenTimeout = null;
 
 	$: {
-		if (!conversationSeenTimeout && $conversation && mounted) {
+		if (!conversationSeenTimeout && $conversation && mounted && $messages && $messages.length) {
 			conversationSeenTimeout = setConversationSeenTimeout({conversationId: $conversationId});
 		}
 	}

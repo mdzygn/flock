@@ -83,8 +83,9 @@ function isConversationPage() {
 conversations.subscribe(() => {
 	const unviewedConversations = get(conversations).filter(conversation => {
 		const curConversation = get(conversation);
-		const userConversationInfo = getUserConversationInfo(curConversation);
-		return userConversationInfo ? !userConversationInfo.viewed : false;
+		return curConversation ? !curConversation.viewed : false;
+		// const userConversationInfo = getUserConversationInfo(curConversation);
+		// return userConversationInfo ? !userConversationInfo.viewed : false;
 	});
 	conversationsUnviewedCount.set(unviewedConversations.length);
 });
@@ -183,7 +184,7 @@ export function checkConversationSeen(details) {
 		const curConversationModel = getConversation(details.conversationId);
 		if (curConversationModel) {
 			const curConversation = get(curConversationModel);
-			console.log('curConversation.viewed', curConversation.viewed);
+			// console.log('curConversation.viewed', curConversation.viewed);
 			if (!curConversation.viewed) {
 				curConversation.viewed = true;
 				curConversationModel.set(curConversation);

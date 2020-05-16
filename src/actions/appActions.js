@@ -318,9 +318,10 @@ function setPost(targetPostId) {
 export function loadProfile(targetProfileId, options) {
     profileId.set(targetProfileId);
 
-    const curUserModel = getUser(targetProfileId);
-    const curUser = get(curUserModel);
-    viewedUser.set(curUser);
+    setViewedUser(targetProfileId);
+    // const curUserModel = getUser(targetProfileId);
+    // const curUser = get(curUserModel);
+    // viewedUser.set(curUser);
 
     if (gotoRoute('profile/' + targetProfileId)) {
         profileDisplayingAllProjects.set(false);

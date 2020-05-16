@@ -20,7 +20,8 @@
     import {
         userId,
         conversationId,
-        conversation,
+		conversation,
+		newConversation,
 	} from '../../models/appModel';
 
     import ConversationsModel, {
@@ -46,6 +47,7 @@
 
     $: isLoadingMessages = $loadingMessages && !$messages; // (!$messages || !$messages.length);
 	$: isLoadingConversation = $loadingConversations && (!$conversation || ($conversation.id !== $conversationId));
+	$: isLoadingContent = (isLoadingMessages || isLoadingConversation) && !$newConversation;
 
 	// $: console.log('isLoadingConversation', isLoadingConversation, '$conversation', $conversation);
 
@@ -154,15 +156,25 @@
 
 <div class="content">
 	<div class="messagesView">
-		{#if isLoadingMessages || isLoadingConversation}
+		{#if isLoadingContent}
 			<ContentLoader label="{locale.LOADING.MESSAGES}" />
-		{:else if !$messages || !$messages.length}
+		{:else if (!$messages || !$messages.length) && !$newConversation}
 			<ContentLoader label="{locale.CONVERSATION.NO_MESSAGES}" />
 			<!-- <div class="noMessages">
 				{locale.CONVERSATION.NO_MESSAGES}
 			</div> -->
 		{:else}
 			<ScrollView bind:scrollRegion="{scrollRegion}" onScroll="{onScroll}" anchorToBottom="{true}" id="conversation">
+				{#if $newConversation}
+					<div class="content">
+						<Proxy image="message_new_message_profile" className="profileInfo" />
+					</div>
+				{/if}
+
+				{#if $messages}
+					<ConversationView {messages} />
+				{/if}
+
 				<!-- <div class="proxyOverlay">
 					{#if isNewConversation}
 						<div class="content">
@@ -186,8 +198,6 @@
 						</Proxy>
 					{/if}
 				</div> -->
-
-				<ConversationView {messages} />
 			</ScrollView>
 		{/if}
 
@@ -197,7 +207,10 @@
 			</div>
 		{/if}
 	</div>
-	<MessageInput />
+
+	{#if !isLoadingContent}
+		<MessageInput />
+	{/if}
 </div>
 
 <style>
@@ -246,7 +259,8 @@
         opacity: 0.5;
 	} */
 
-	/* .content {
+	.content {
+    	width: 100%;
 		display: flex;
 		justify-content: center;
 	}
@@ -255,5 +269,5 @@
 		position: absolute;
 		top: 60px;
 		width: 217px;
-	} */
+	}
 </style>

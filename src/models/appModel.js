@@ -46,6 +46,9 @@ const appModel = createModel({
     projectsSearchString: '',
     projectsArchiveSearchString: '',
     discoverSearchString: '',
+
+    newConversation: false,
+
 }, {persist: true}, 'appState', AppModel);
 
 export const curPath = writable(null);
@@ -120,6 +123,8 @@ export const setAccountFormValidated = writable(false);
 
 export const dontAllowOverlayClose = writable(false);
 export const newUsername = writable(null);
+
+export const newConversation = appModel.newConversation;
 
 export const dateDebugOffset = writable(3600 * 1000);
 

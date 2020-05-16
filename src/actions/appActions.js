@@ -102,6 +102,8 @@ import {
     showBetaFeatures,
 
     triggerNewThreadPost,
+
+    newConversation,
 } from '../models/appModel';
 
 export function loadProject(targetProjectId, options) {
@@ -347,7 +349,7 @@ function getProjectConversationId(targetConversationId) {
 }
 
 function targetConversationLoaded(result) {
-    console.log('conversationLoaded', result);
+    // console.log('conversationLoaded', result);
     if (result && !result.error) {
         if (result.conversations && result.conversations.length) {
             const conversation = result.conversations[0];
@@ -355,7 +357,7 @@ function targetConversationLoaded(result) {
                 loadConversation(conversation.id);
             }
         } else {
-            // newConversation.set(true);
+            newConversation.set(true);
         }
     }
 };
@@ -363,7 +365,9 @@ function targetConversationLoaded(result) {
 export function loadConversation(targetConversationId) {
     // if (!checkLoggedIn()) { return; }
 
-    console.log('loadConversation', targetConversationId);
+    newConversation.set(false);
+
+    // console.log('loadConversation', targetConversationId);
 
     const conversationUserId = getUserConversationId(targetConversationId);
     if (conversationUserId) {

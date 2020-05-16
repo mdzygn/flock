@@ -49,6 +49,8 @@
 	$: isLoadingConversation = $loadingConversations && (!$conversation || ($conversation.id !== $conversationId));
 	$: isLoadingContent = (isLoadingMessages || isLoadingConversation) && !$newConversation;
 
+	$: showMessageInput = !isLoadingContent && ($conversation || $newConversation);
+
 	// $: {
 	// 	console.log('isLoadingContent', isLoadingContent, 'messages', isLoadingMessages, 'conv', '$conversation', $conversation, 'conv.id', $conversation && $conversation.id, '$conversationId', $conversationId);
 	// }
@@ -56,7 +58,7 @@
 	// $: console.log('isLoadingConversation', isLoadingConversation, '$conversation', $conversation);
 
 	$: viewingGroupConversation = ($conversation && $conversation.isGroup) || false;
-	$: isNewConversation = ($conversation && $conversation.isNew) || false;
+	// $: isNewConversation = ($conversation && $conversation.isNew) || false;
 
 	$: proxyMessageViewImage = viewingGroupConversation ? 'messages_group_view': 'message_view';
 
@@ -210,7 +212,7 @@
 		{/if}
 	</div>
 
-	{#if !isLoadingContent}
+	{#if showMessageInput}
 		<MessageInput />
 	{/if}
 </div>

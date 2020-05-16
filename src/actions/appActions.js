@@ -367,7 +367,7 @@ function targetConversationLoaded(result) {
                 mergeConversations([conversation]);
                 loadConversation(conversation.id, true);
             }
-        } else {
+        } else if (get(userId)) {
             newConversation.set(true);
         }
     }

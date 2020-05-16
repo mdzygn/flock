@@ -36,10 +36,10 @@ let messagesUpdatedHandlers = [];
 
 let messages = writable(null); // []);
 
-userId.subscribe(updateMessages);
-usercode.subscribe(updateMessages);
+userId.subscribe(onUserChange);
+usercode.subscribe(onUserChange);
 
-function updateMessages() {
+function onUserChange() {
 	clearFilteredMessages();
 	// if (!get(userId) || !get(usercode)) {
 	// 	clearFilteredMessages();

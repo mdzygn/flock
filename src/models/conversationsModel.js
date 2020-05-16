@@ -41,7 +41,8 @@ export let conversationsUnviewedCount = writable(0);
 userId.subscribe(updateConversations);
 usercode.subscribe(updateConversations);
 
-function updateConversations(isPoll) {
+function updateConversations(options) {
+	const isPoll = (options && options.isPoll) || false;
 	if (get(userId) && get(usercode)) {
 		if (!isPoll) {
 			clearFilteredConversations();
@@ -58,6 +59,7 @@ function updateConversations(isPoll) {
 			pollConversation();
 		}
 	} else {
+		clearFilteredConversations();
 		mergeConversations([]);
 	}
 }
@@ -70,7 +72,7 @@ function pollConversation() {
 			// if (document.hasFocus()) {
 			if (document.visibilityState === 'visible') {
 				// console.log('poll');
-				updateConversations(true);
+				updateConversations({isPoll: true});
 			}
 			pollConversation();
 		}, curPollDelay * 1000);

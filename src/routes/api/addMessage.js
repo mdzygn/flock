@@ -59,7 +59,8 @@ export async function post(req, res, next) {
             errorResponse(res, {}, {errorMsg: 'conversation doesn\'t include user'});
             return;
 		}
-		if (!curConversation.users.find((item) => item.id === details.userId)) {
+		const curConversationUserItem = curConversation.users.find((item) => item.id === details.userId);
+		if (!curConversationUserItem) {
             errorResponse(res, {}, {errorMsg: 'conversation doesn\'t include user data'});
             return;
 		}
@@ -78,7 +79,7 @@ export async function post(req, res, next) {
 
             if (lastMessageText && lastMessageText.length > MAX_PREVIEW_TEXT_LENGTH) {
                 lastMessageText = lastMessageText.substring(0, MAX_PREVIEW_TEXT_LENGTH);
-            }
+			}
 
             const updateConversationFilter = {
 				id: details.conversationId,
@@ -93,7 +94,12 @@ export async function post(req, res, next) {
 				"users.$.username" : curUser.username,
 				"users.$.avatarImage" : curUser.avatarImage,
 				"users.$.name" : curUser.name || curUser.fullName,
-            };
+			};
+			if (!curUser.avatarImage) {
+				updateConversationProps["users.$.style"] = curUser.style;
+			} else if (curConversationUserItem.style) {
+				updateConversationProps["users.$.style"] = null;
+			}
 
 			let updateConversationResult = await db.collection('conversations').updateOne(updateConversationFilter, {$set: updateConversationProps});
 

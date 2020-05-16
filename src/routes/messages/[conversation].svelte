@@ -45,7 +45,9 @@
 	};
 
     $: isLoadingMessages = $loadingMessages && !$messages; // (!$messages || !$messages.length);
-    $: isLoadingConversation = $loadingConversations && (!$conversation || ($conversation.id !== $conversationId));
+	$: isLoadingConversation = $loadingConversations && (!$conversation || ($conversation.id !== $conversationId));
+
+	$: console.log('isLoadingConversation', isLoadingConversation, '$conversation', $conversation);
 
 	$: viewingGroupConversation = ($conversation && $conversation.isGroup) || false;
 	$: isNewConversation = ($conversation && $conversation.isNew) || false;

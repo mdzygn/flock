@@ -529,13 +529,13 @@ export function loadCurrentUser() {
     }
 }
 export function loadCurrentProject() {
-    if (get(projectId) && !get(project) && !get(loadingProjects)) {
+    if (get(projectId) && !get(project) && !get(loadingProjects)) { // TODO: not to check if loading here?
         loadProjects( { id: get(projectId) } );
     }
 }
 
 export function loadCurrentChannel() {
-    if (get(channelId) && !get(channel) && !get(loadingChannels)) {
+    if (get(channelId) && !get(channel) && !get(loadingChannels)) { // TODO: not to check if loading here?
         loadChannels( { id: get(channelId) } );
     }
 }
@@ -548,13 +548,13 @@ export function editCurrentPost() {
 }
 
 export function loadCurrentPost() {
-    if (get(postId) && !get(post) && !get(loadingPosts)) {
+    if (get(postId) && !get(post) && !get(loadingPosts)) { // TODO: not to check if loading here?
         loadPosts( { id: get(postId) } );
     }
 }
 
 export function loadCurrentConversation() {
-    if (get(conversationId) && !get(conversation) && !get(loadingConversations)) {
+    if (get(conversationId) && !get(conversation)) { // && !get(loadingConversations)) {
         loadConversations( { id: get(conversationId) } );
     }
 }

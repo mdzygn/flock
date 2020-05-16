@@ -30,7 +30,7 @@ let curPollConversationTimeout = null;
 
 let conversationsLoadedAt = null;
 
-let conversations = writable([]);
+let conversations = writable(null);
 
 const ConversationsModel = new EventEmitter();
 export default ConversationsModel;
@@ -81,7 +81,8 @@ function isConversationPage() {
 }
 
 conversations.subscribe(() => {
-	const unviewedConversations = get(conversations).filter(conversation => {
+	const curConversations = get(conversations) || [];
+	const unviewedConversations = curConversations.filter(conversation => {
 		const curConversation = get(conversation);
 		return curConversation ? !curConversation.viewed : false;
 		// const userConversationInfo = getUserConversationInfo(curConversation);
@@ -124,9 +125,10 @@ export function loadConversations(options) {
 function mergeConversations(newConversations) {
 	// console.log('newConversations', newConversations);
 
-	if (newConversations && newConversations.length) {
-		const curConversations = get(conversations);
+	const origConversations = get(conversations);
+	const curConversations = origConversations || [];
 
+	if (newConversations && newConversations.length) {
 		let curConversation, newConversationData, curConversationId, newConversation;
 		for (var conversationI = 0; conversationI < newConversations.length; conversationI++) {
 			newConversationData = newConversations[conversationI];
@@ -151,6 +153,10 @@ function mergeConversations(newConversations) {
 
 		conversations.set(curConversations);
 	}
+
+	if (!origConversations) {
+		conversations.set(curConversations);
+	}
 }
 
 export function getConversations(options) {
@@ -170,12 +176,15 @@ export function getConversations(options) {
 }
 
 export function getConversation(conversationId) {
-	return get(conversations).find(item => get(item).id === conversationId);
+	const curConversations = get(conversations);
+	return curConversations && curConversations.find(item => get(item).id === conversationId);
 }
 
 function clearFilteredConversations() {
 	const curConversations = get(conversations);
-	curConversations.length = 0;
+	if (curConversations) {
+		curConversations.length = 0;
+	}
 	conversations.set(curConversations);
 }
 

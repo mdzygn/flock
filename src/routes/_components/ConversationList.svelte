@@ -18,16 +18,19 @@
         userId,
     } from '../../models/appModel';
 
-	import { getConversations, loadingConversations } from '../../models/conversationsModel';
+    import { getConversations, loadingConversations } from '../../models/conversationsModel';
 
-    let conversations = writable([]);
+    $: isLoadingConversations = $loadingConversations && !$conversations;
+    // $: isLoadingConversations = $loadingConversations && (!$conversations || !$conversations.length);
+
+    let conversations = writable(null);
     $: { conversations = getConversations({ userId: $userId }) };
 
     export let className = '';
 </script>
 
 <div class="conversationList {className}">
-    {#if $loadingConversations && (!$conversations || !$conversations.length)}
+    {#if !$conversations || isLoadingConversations}
         <ContentLoader label="{locale.LOADING.CONVERSATIONS}" />
     {:else}
         {#each $conversations as conversation}

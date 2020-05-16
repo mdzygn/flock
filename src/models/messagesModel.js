@@ -100,6 +100,8 @@ export function loadMessages(options, callback) {
 				// }
 				mergeMessages(result.messages);
 				loadingRequestUtil.clearLoading('messages', options, () => { loadingMessages.set(false); });
+			} else {
+				mergeMessages([]);
 			}
 			if (callback) {
 				callback(result);
@@ -111,9 +113,10 @@ export function loadMessages(options, callback) {
 function mergeMessages(newMessages) {
 	// console.log('newMessages', newMessages);
 
-	if (newMessages && newMessages.length) {
-		const curMessages = get(messages) || [];
+	const origMessages = get(messages);
+	const curMessages = origMessages || [];
 
+	if (newMessages && newMessages.length) {
 		let curMessage, newMessageData, messageId, newMessage;
 		for (var messageI = 0; messageI < newMessages.length; messageI++) {
 			newMessageData = newMessages[messageI];
@@ -139,6 +142,8 @@ function mergeMessages(newMessages) {
 			lastMessage = messageModel;
 		});
 
+		messages.set(curMessages);
+	} else if (!origMessages) {
 		messages.set(curMessages);
 	}
 }

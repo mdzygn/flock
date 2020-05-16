@@ -524,7 +524,7 @@ export function checkLoggedIn() {
 }
 
 export function loadCurrentUser() {
-    if (get(userId) && !get(user) && !get(loadingUsers)) {
+    if (get(userId) && !get(user) && !get(loadingUsers)) { // TODO: not to check if loading here?
         loadUsers( { id: get(userId) } );
     }
 }

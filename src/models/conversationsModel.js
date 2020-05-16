@@ -152,9 +152,7 @@ function mergeConversations(newConversations) {
 		// curConversations.sort((a,b) => get(b).createdAt - get(a).createdAt ); // sort by reversed created time
 
 		conversations.set(curConversations);
-	}
-
-	if (!origConversations) {
+	} else if (!origConversations) {
 		conversations.set(curConversations);
 	}
 }

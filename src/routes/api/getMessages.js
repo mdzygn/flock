@@ -23,12 +23,23 @@ export async function post(req, res, next) {
     }
 
 	const conversationId = options && options.conversationId;
+	const userId = options && options.userId;
 	// let loadedAt = options && options.loadedAt;
 
 	if (!conversationId) {
 		errorResponse(res, {}, {errorMsg: 'conversationId not set'});
 		return;
-    }
+	}
+
+	const curConversation = await db.collection('conversations').findOne({ id: conversationId });
+	if (!curConversation) {
+		errorResponse(res, {}, {errorMsg: 'conversation not found'});
+		return;
+	}
+	if (!curConversation.userIds.includes(userId)) {
+		errorResponse(res, {}, {errorMsg: 'conversation doesn\'t include user'});
+		return;
+	}
 
 	const filter = {};
     filter.conversationId = conversationId;

@@ -183,6 +183,7 @@ export function checkConversationSeen(details) {
 		const curConversationModel = getConversation(details.conversationId);
 		if (curConversationModel) {
 			const curConversation = get(curConversationModel);
+			// console.log('curConversation.viewed', curConversation.viewed);
 			if (!curConversation.viewed) {
 				curConversation.viewed = true;
 				curConversationModel.set(curConversation);
@@ -200,7 +201,7 @@ export function setConversationSeenTimeout(details, delay) {
 	if (typeof window !== 'undefined') {
 		conversationSeenTimeout = window.setTimeout(() => {
 			checkConversationSeen(details);
-		}, (delay || config.ITEM_VIEWED_DELAY) * 1000);
+		}, (delay || config.CONVERSATIION_VIEWED_DELAY) * 1000);
 	}
 
 	// onDestroy(() => { // doesn't work here?

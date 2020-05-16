@@ -111,15 +111,27 @@
 		}
 	}
 
-	let conversationSeenTimeout;
+	let mounted = false;
+	let conversationSeenTimeout = null;
+
+	$: {
+		if (!conversationSeenTimeout && $conversation) {
+			conversationSeenTimeout = setConversationSeenTimeout({conversationId: $conversationId});
+		}
+	}
+
 	onMount(() => {
+		mounted = true;
+
 		MessagesModel.on('messagedAdded', scrollToBottom);
 		ConversationsModel.on('conversationUpdated', conversationUpdated);
 
-		conversationSeenTimeout = setConversationSeenTimeout({conversationId: $conversationId});
+		// conversationSeenTimeout = setConversationSeenTimeout({conversationId: $conversationId});
 	})
 
 	onDestroy(() => {
+		mounted = false;
+
 		MessagesModel.off('messagedAdded', scrollToBottom);
 		ConversationsModel.off('conversationUpdated', conversationUpdated);
 

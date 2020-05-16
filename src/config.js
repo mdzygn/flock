@@ -60,7 +60,7 @@ export const MAX_FLOCK_PROJECT_INDEX = 4;
 
 export const ITEM_VIEWED_DELAY = 0.33;
 export const REPLY_VIEWED_DELAY = 2;
-export const CONVERSATIION_VIEWED_DELAY = 0.75;
+export const CONVERSATIION_VIEWED_DELAY = 0.5;
 
 export const NOTIFICATION_POLL_DELAY_ACTIVITY = 5; // 1; // 5;
 export const NOTIFICATION_POLL_DELAY = 20; // 3; // 20; // 15;

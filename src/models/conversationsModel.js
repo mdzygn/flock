@@ -183,7 +183,7 @@ export function checkConversationSeen(details) {
 		const curConversationModel = getConversation(details.conversationId);
 		if (curConversationModel) {
 			const curConversation = get(curConversationModel);
-			// console.log('curConversation.viewed', curConversation.viewed);
+			console.log('curConversation.viewed', curConversation.viewed);
 			if (!curConversation.viewed) {
 				curConversation.viewed = true;
 				curConversationModel.set(curConversation);

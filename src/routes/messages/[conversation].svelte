@@ -91,6 +91,8 @@
 	async function messagesLoaded(result) {
 		checkMessagesUpdated();
 
+		clearConversationSeen();
+
 		// await tick();
 		// // console.log('conversationUpdated new messages loaded');
 
@@ -115,7 +117,7 @@
 	let conversationSeenTimeout = null;
 
 	$: {
-		if (!conversationSeenTimeout && $conversation) {
+		if (!conversationSeenTimeout && $conversation && mounted) {
 			conversationSeenTimeout = setConversationSeenTimeout({conversationId: $conversationId});
 		}
 	}
@@ -135,8 +137,13 @@
 		MessagesModel.off('messagedAdded', scrollToBottom);
 		ConversationsModel.off('conversationUpdated', conversationUpdated);
 
-		clearConversationSeenTimeout(conversationSeenTimeout);
+		clearConversationSeen();
 	})
+
+	function clearConversationSeen() {
+		clearConversationSeenTimeout(conversationSeenTimeout); // force new timeout
+		conversationSeenTimeout = null;
+	}
 </script>
 
 <svelte:head>

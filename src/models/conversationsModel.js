@@ -118,7 +118,9 @@ conversations.subscribe(() => {
 
 export function loadConversations(options, callback) {
     // const conversationItems = JSON.parse(JSON.stringify(conversationsTestData));
-    // mergeConversations(conversationItems);
+	// mergeConversations(conversationItems);
+
+	const isInitialLoad = !options.getUnviewed;
 
 	if (!loadingRequestUtil.isLoading('conversations', options)) {
 		// console.log('loadConversations', options);
@@ -128,7 +130,7 @@ export function loadConversations(options, callback) {
 				if (result.loadedAt) {
 					conversationsLoadedAt = result.loadedAt;
 				}
-				mergeConversations(result.conversations);
+				mergeConversations(result.conversations, isInitialLoad);
 				loadingRequestUtil.clearLoading('conversations', options, () => { loadingConversations.set(false); });
 			}
 			if (callback) {
@@ -138,7 +140,7 @@ export function loadConversations(options, callback) {
 	}
 }
 
-export function mergeConversations(newConversations) {
+export function mergeConversations(newConversations, isInitialLoad) {
 	// console.log('newConversations', newConversations);
 
 	const origConversations = get(conversations);
@@ -160,7 +162,7 @@ export function mergeConversations(newConversations) {
                 curConversation.set(newConversation);
 			}
 
-			if (curConversationId === get(conversationId) && isConversationPage()) {
+			if (!isInitialLoad && curConversationId === get(conversationId) && isConversationPage()) {
 				ConversationsModel.emit('conversationUpdated');
 			}
 		}

@@ -108,7 +108,7 @@
 	async function checkMessagesUpdated() {
 		if (scrollRegion) {
 			if ($messages && $messages.length > lastMessagesCount) {
-				console.log('message added')
+				// console.log('message added')
 				if (scrollRegion.scrollTop + scrollRegion.offsetHeight > scrollRegion.scrollHeight - config.MIN_AUTO_SCROLL_BOTTOM_DIST) {
 					await tick();
 					scrollRegion.scrollTo(0, scrollRegion.scrollHeight);

@@ -6,6 +6,8 @@ import { writable, get } from 'svelte/store';
 
 import { generateId } from '../utils';
 
+import loadingRequestUtil from '../utils/loadingRequestUtil';
+
 import {
 	userId,
 } from '../models/appModel';
@@ -39,11 +41,14 @@ onChannelsUpdated(channelsUpdated);
 // mergeChannels(channelItems);
 
 export function loadChannels(options) {
-	if (!get(loadingChannels)) {
-		loadingChannels.set(true);
+	if (!loadingRequestUtil.isLoading('channels', options)) {
+		loadingRequestUtil.setLoading('channels', options, () => { loadingChannels.set(true); });
+	// if (!get(loadingChannels)) {
+	// 	loadingChannels.set(true);
 		api.getChannels(options).then(result => {
 			mergeChannels(result);
-			loadingChannels.set(false);
+			// loadingChannels.set(false);
+			loadingRequestUtil.clearLoading('channels', options, () => { loadingChannels.set(false); });
 		});
 	}
 }

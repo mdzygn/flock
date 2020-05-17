@@ -26,21 +26,25 @@
     let conversations = writable(null);
     $: { conversations = getConversations({ userId: $userId }) };
 
+    // $: { console.log('conversations', $conversations, 'isLoadingConversations', isLoadingConversations) }
+
     export let className = '';
 </script>
 
 <div class="conversationList {className}">
-    {#if !$conversations || isLoadingConversations}
+    {#if (!$conversations && $userId) || isLoadingConversations}
         <ContentLoader label="{locale.LOADING.CONVERSATIONS}" />
     {:else}
-        {#each $conversations as conversation}
-            <ConversationListItem {conversation} />
+        {#if $conversations && $conversations.length}
+            {#each $conversations as conversation}
+                <ConversationListItem {conversation} />
+            {/each}
         {:else}
             <div class="noConversations">
                 {locale.CONVERSATIONS.NO_CONVERSATIONS}<br/><br/>
                 <a href="discover">Discover</a> inspiring projects to get involved with<br/>or create a <a href="javascript:void(0)" on:click="{newProject}">New Project</a>
             </div>
-        {/each}
+        {/if}
     {/if}
 </div>
 

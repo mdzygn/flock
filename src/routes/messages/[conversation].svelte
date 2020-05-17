@@ -23,7 +23,7 @@
         userId,
         conversationId,
 		conversation,
-		newConversation,
+		newConversation
 	} from '../../models/appModel';
 
     import ConversationsModel, {

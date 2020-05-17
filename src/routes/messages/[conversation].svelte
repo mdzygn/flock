@@ -58,7 +58,20 @@
 	}
 
 	function updateMessage() {
-		messages = ($conversation && getMessages({ conversationId: $conversationId }, messagesLoaded, $conversation.isNew)) || messages;
+		messages = ($conversation && getMessages({ conversationId: $conversationId }, null, $conversation.isNew)) || messages;
+		// messages = ($conversation && getMessages({ conversationId: $conversationId }, messagesLoaded, $conversation.isNew)) || messages;
+	}
+
+	// $: {
+	// 	$messages;
+	// 	checkMessagesUpdated();
+	// }
+
+	$: {
+		checkMessagesUpdated();
+		if (!conversationSeenTimeout && $conversation && mounted && $messages && $messages.length) {
+			conversationSeenTimeout = setConversationSeenTimeout({conversationId: $conversationId});
+		}
 	}
 
 	// $: console.log('messages', $messages);
@@ -95,35 +108,23 @@
 	async function checkMessagesUpdated() {
 		if (scrollRegion) {
 			if ($messages && $messages.length > lastMessagesCount) {
+				console.log('message added')
 				if (scrollRegion.scrollTop + scrollRegion.offsetHeight > scrollRegion.scrollHeight - config.MIN_AUTO_SCROLL_BOTTOM_DIST) {
 					await tick();
 					scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
 				} else {
 					showMessagesAdded = true;
 				}
+				clearConversationSeen();
 			}
 		}
 		lastMessagesCount = $messages ? $messages.length : 0;
 	}
 
-	async function messagesLoaded(result) {
-		checkMessagesUpdated();
-
-		clearConversationSeen();
-
-		// await tick();
-		// // console.log('conversationUpdated new messages loaded');
-
-		// if (scrollRegion) {
-		// 	if (scrollRegion.scrollTop + scrollRegion.offsetHeight > scrollRegion.scrollHeight - config.MIN_AUTO_SCROLL_BOTTOM_DIST) {
-		// 		scrollRegion.scrollTo(0, scrollRegion.scrollHeight);
-		// 		// await tick();
-		// 		// console.log('scrollRegion.scrollTop', scrollRegion.scrollTop, 'scrollRegion.scrollHeight', scrollRegion.scrollHeight);
-		// 	}/* else {
-		// 		showMessagesAdded = true;
-		// 	}*/
-		// }
-	}
+	// async function messagesLoaded(result) {
+	// 	checkMessagesUpdated();
+	// 	clearConversationSeen();
+	// }
 
 	function onScroll() {
 		if (showMessagesAdded && scrollRegion.scrollTop + scrollRegion.offsetHeight > scrollRegion.scrollHeight - config.MIN_HIDE_MESSAGES_BOTTOM_DIST) {
@@ -133,12 +134,6 @@
 
 	let mounted = false;
 	let conversationSeenTimeout = null;
-
-	$: {
-		if (!conversationSeenTimeout && $conversation && mounted && $messages && $messages.length) {
-			conversationSeenTimeout = setConversationSeenTimeout({conversationId: $conversationId});
-		}
-	}
 
 	onMount(() => {
 		mounted = true;

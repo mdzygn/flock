@@ -8,19 +8,31 @@
         viewedUser
     } from '../../models/appModel';
 
+    import {
+        loadProfile,
+    } from '../../actions/appActions';
+
     $: userDisplayName = ($viewedUser && $viewedUser.name) || '';
     $: username = ($viewedUser && $viewedUser.username && '@' + $viewedUser.username) || '';
     $: userLocation = ($viewedUser && $viewedUser.location) || '';
+
+    function loadViewedProfile() {
+        if ($viewedUser && $viewedUser.id) {
+            loadProfile($viewedUser.id); // , {owner: true});
+        }
+    }
 </script>
 
 <div class="conversationProfile">
     <div class="profileInfo">
         <!-- <Proxy image="message_new_message_profile" className="proxyOverlay" /> -->
 
-        <AvatarIcon user="{viewedUser}" useThumb="{true}" />
+        <div class="profileRegion button" on:click="{loadViewedProfile}">
+            <AvatarIcon user="{viewedUser}" useThumb="{true}" />
 
-        <div class="userDisplayName">{userDisplayName}</div>
-        <div class="username">{username}</div>
+            <div class="userDisplayName">{userDisplayName}</div>
+            <div class="username">{username}</div>
+        </div>
 
         {#if userLocation}
             <Location location="{userLocation}" />
@@ -33,6 +45,10 @@
 		position: absolute;
 		opacity: 0.5;
 	} */
+
+    .button {
+        cursor: pointer;
+    }
 
 	.conversationProfile {
     	width: 100%;
@@ -48,6 +64,12 @@
         align-items: center;
         flex-direction: column;
 	}
+
+    .profileRegion {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
 
     .conversationProfile :global(.avatarIcon) {
         margin-top: 17px;

@@ -54,6 +54,8 @@
 		checkParams,
 	} from '../models/appModel';
 
+	import MessagesModel from '../models/messagesModel'; // import to ensure checking for conversations
+
 	let mounted = false;
     onMount(() => {
 		mounted = true;

@@ -92,14 +92,6 @@
 		}
 	}
 
-	function conversationUpdated() {
-		// console.log('conversationUpdated');
-
-		if ($conversationId) {
-			messages = getMessages({ conversationId: $conversationId, getUnloaded: true }, messagesLoaded);
-		}
-	}
-
 	async function checkMessagesUpdated() {
 		if (scrollRegion) {
 			if ($messages && $messages.length > lastMessagesCount) {
@@ -152,7 +144,7 @@
 		mounted = true;
 
 		MessagesModel.on('messagedAdded', scrollToBottom);
-		ConversationsModel.on('conversationUpdated', conversationUpdated);
+		// ConversationsModel.on('conversationUpdated', conversationUpdated);
 
 		// conversationSeenTimeout = setConversationSeenTimeout({conversationId: $conversationId});
 	})
@@ -161,10 +153,18 @@
 		mounted = false;
 
 		MessagesModel.off('messagedAdded', scrollToBottom);
-		ConversationsModel.off('conversationUpdated', conversationUpdated);
+		// ConversationsModel.off('conversationUpdated', conversationUpdated);
 
 		clearConversationSeen();
 	})
+
+	// function conversationUpdated() {
+	// 	// console.log('conversationUpdated');
+
+	// 	if ($conversationId) {
+	// 		messages = getMessages({ conversationId: $conversationId, getUnloaded: true }, messagesLoaded);
+	// 	}
+	// }
 
 	function clearConversationSeen() {
 		clearConversationSeenTimeout(conversationSeenTimeout); // force new timeout

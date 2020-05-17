@@ -162,8 +162,8 @@ export function mergeConversations(newConversations, isInitialLoad) {
                 curConversation.set(newConversation);
 			}
 
-			if (!isInitialLoad && curConversationId === get(conversationId) && isConversationPage()) {
-				ConversationsModel.emit('conversationUpdated');
+			if (!isInitialLoad) { // && curConversationId === get(conversationId)) { // && isConversationPage()) {
+				ConversationsModel.emit('conversationUpdated', {conversationId: curConversationId});
 			}
 		}
 

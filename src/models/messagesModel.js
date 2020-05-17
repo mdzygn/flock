@@ -16,13 +16,16 @@ import {
 	userId,
 	usercode,
 	conversation,
+	conversationId,
 } from '../models/appModel';
 
-import {
+import ConversationsModel, {
 	addConversation,
 } from '../models/conversationsModel';
 
 // import messagesTestData from '../data/messages.json';
+
+ConversationsModel.on('conversationUpdated', conversationUpdated);
 
 export let loadingMessages = writable(false);
 
@@ -60,6 +63,15 @@ function onUserChange() {
 	// 		pollMessage();
 	// 	}
 	// }
+}
+
+function conversationUpdated(event) {
+	const loadedConversationId = event.conversationId;
+
+	// TODO: preload conversations into different messages
+	if (loadedConversationId === get(conversationId)) {
+		getMessages({ conversationId: loadedConversationId, getUnloaded: true });
+	}
 }
 
 // function pollMessage() {

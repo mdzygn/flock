@@ -7,6 +7,8 @@ import { writable, get } from 'svelte/store';
 
 import { generateId } from '../utils';
 
+import loadingRequestUtil from '../utils/loadingRequestUtil';
+
 import {
     showBetaFeatures,
 } from '../models/appModel';
@@ -55,11 +57,14 @@ onProjectsUpdated(projectsUpdated);
 // loadProjects();
 
 export function loadProjects(options) {
-	if (!get(loadingProjects)) {
-		loadingProjects.set(true);
+	if (!loadingRequestUtil.isLoading('projects', options)) {
+		loadingRequestUtil.setLoading('projects', options, () => { loadingProjects.set(true); });
+	// if (!get(loadingProjects)) {
+	// 	loadingProjects.set(true);
 		api.getProjects(options).then(result => {
 			mergeProjects(result);
-			loadingProjects.set(false);
+			// loadingProjects.set(false);
+			loadingRequestUtil.clearLoading('projects', options, () => { loadingProjects.set(false); });
 		});
 	}
 }

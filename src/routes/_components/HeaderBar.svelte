@@ -106,7 +106,7 @@
                 sectionLabel = $viewedUser.name;
             }
         } else if (/\/messages\/.+/.test(path) && ($newConversation || ($conversationGroupId && $viewedUser && $conversationGroupId + 'u-'+$viewedUser.id) || ($conversation && (($conversation.project && $project) || ($conversation.users && $conversation.users.length))))) { // $conversation.user
-            if ($conversation) {
+            if ($conversation && !$conversation.isNew) {
                 if ($conversation.project && $project) { // // temporary
                     sectionLabel = $project.title;
                 } else {

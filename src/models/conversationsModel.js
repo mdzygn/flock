@@ -154,7 +154,8 @@ export function mergeConversations(newConversations) {
                 curConversation = ConversationModel(newConversationData);
                 curConversations.unshift(curConversation);
             } else {
-                newConversation = get(curConversation);
+				newConversation = get(curConversation);
+				newConversation.isNew = false;
                 newConversation = Object.assign(newConversation, newConversationData);
                 curConversation.set(newConversation);
 			}
@@ -282,6 +283,8 @@ export function addConversation(details, messages) {
 
 	newConversationItem.createdAt = (new Date()).getTime(); // use for initial sort values
 	newConversationItem.lastMessageAt = newConversationItem.lastMessageAt;
+
+	newConversationItem.isNew = true;
 
 	const curConversations = get(conversations) || [];
 	curConversations.push(newConversationModel);

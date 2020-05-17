@@ -157,7 +157,7 @@ function mergeMessages(newMessages) {
 	}
 }
 
-export function getMessages(options, callback) {
+export function getMessages(options, callback, isNewConversation) {
     if (curMessageFilterOptions && options && (
         curMessageFilterOptions.conversationId !== options.conversationId
     )) {
@@ -166,7 +166,7 @@ export function getMessages(options, callback) {
 
     curMessageFilterOptions = JSON.parse(JSON.stringify(options));
 
-    if (curMessageFilterOptions.conversationId) {
+    if (curMessageFilterOptions.conversationId && !isNewConversation) {
         loadMessages(curMessageFilterOptions, callback);
     }
 

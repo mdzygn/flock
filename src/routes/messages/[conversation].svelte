@@ -45,7 +45,8 @@
     export let messages = writable(null); // []);
 	$: {
 		// console.log('$conversationId', $conversationId, $messages);
-		messages = ($conversationId && getMessages({ conversationId: $conversationId }, messagesLoaded)) || messages;
+		messages = ($conversation && getMessages({ conversationId: $conversationId }, messagesLoaded, $conversation.isNew)) || messages;
+		// messages = ($conversationId && getMessages({ conversationId: $conversationId }, messagesLoaded)) || messages;
 	};
 
 	// $: console.log('messages', $messages);

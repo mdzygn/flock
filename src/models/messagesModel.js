@@ -215,7 +215,7 @@ export function addMessage(messageDetails) {
 
 	// console.log('addMessage', newMessage);
 
-	console.log('newMessage', newMessage);
+	// console.log('newMessage', newMessage);
 
 	const result = api.addMessage({details: newMessage});
 	result.then(result => {

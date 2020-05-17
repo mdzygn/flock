@@ -44,8 +44,11 @@
 
     export let messages = writable(null); // []);
 	$: {
+		// console.log('$conversationId', $conversationId, $messages);
 		messages = ($conversationId && getMessages({ conversationId: $conversationId }, messagesLoaded)) || messages;
 	};
+
+	// $: console.log('messages', $messages);
 
     $: isLoadingMessages = $loadingMessages && !$messages; // (!$messages || !$messages.length);
 	$: isLoadingConversation = $loadingConversations && (!$conversation || ($conversation.id !== $conversationId));
@@ -53,7 +56,7 @@
 
 	$: showMessageInput = !isLoadingContent && $userId && ($conversation || $newConversation);
 
-	// $: { console.log('isLoadingContent', isLoadingContent, 'messages', isLoadingMessages, '$conversation', $conversation, 'conv.id', $conversation && $conversation.id, '$conversationId', $conversationId); }
+	// $: { console.log('isLoadingContent', isLoadingContent, 'isLoadingMessages', isLoadingMessages, 'isLoadingConversation', isLoadingConversation, 'conversation', !!$conversation, 'messages', !!$messages, 'conv.id', $conversation && $conversation.id, '$conversationId', $conversationId); } // , '$conversation', $conversation
 
 	// $: console.log('isLoadingConversation', isLoadingConversation, '$conversation', $conversation);
 

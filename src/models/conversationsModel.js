@@ -6,6 +6,8 @@ import EventEmitter from 'eventemitter3';
 
 import { writable, get } from 'svelte/store';
 
+import { generateId } from '../utils';
+
 import loadingRequestUtil from '../utils/loadingRequestUtil';
 
 import ConversationModel from '../models/conversationModel';
@@ -16,6 +18,7 @@ import {
 	curPath,
 	conversationId,
 	conversation,
+	newConversation,
 } from '../models/appModel';
 
 import conversationsTestData from '../data/conversations.json';
@@ -55,10 +58,10 @@ function updateConversations(options) {
 		}
 		getConversations(details);
 
-		if (!pollStarted) {
-			pollStarted = true;
-			pollConversation();
-		}
+		// if (!pollStarted) {
+		// 	pollStarted = true;
+		// 	pollConversation();
+		// }
 	} else {
 		clearFilteredConversations();
 		mergeConversations([]);
@@ -266,6 +269,34 @@ export function getUserConversationInfo(conversation) {
 		curUser = conversation.users.find(userItem => userItem.id === get(userId));
 	}
 	return curUser;
+}
+
+export function addConversation(details, messages) {
+	const newConversationModel = ConversationModel();
+	const newConversationItem = get(newConversationModel);
+
+	// const ownerId = get(userId);
+
+	newConversationItem.id = details.id;
+	// newConversationItem.targetUserIds = details.targetUserIds;
+
+	newConversationItem.createdAt = (new Date()).getTime(); // use for initial sort values
+	newConversationItem.lastMessageAt = newConversationItem.lastMessageAt;
+
+	const curConversations = get(conversations) || [];
+	curConversations.push(newConversationModel);
+	conversations.set(curConversations);
+
+	newConversation.set(false);
+
+	ConversationsModel.emit('conversationAdded', {conversationId: details.id});
+}
+
+export function getNewConversationId() {
+    let conversationId, trialIndex;
+	do { conversationId = generateId(12); } while (getConversation(conversationId) && trialIndex < 99);
+	if (trialIndex === 99) { return null; }
+	return conversationId;
 }
 
 export function getConversationUsersId(targetUserIds) {

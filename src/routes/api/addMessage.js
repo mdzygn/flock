@@ -89,7 +89,12 @@ export async function post(req, res, next) {
 		}
 
 		if (newConversation) {
-			newConversationId = generateId(10);
+			if (!details.conversationId) {
+				errorResponse(res, {}, {errorMsg: 'new conversationId not specified with message'});
+				return;
+			}
+			newConversationId = details.conversationId;
+			// newConversationId = generateId(10);
 
 			// TODO: populate
 			const userIds = [details.userId, ...targetUserIds];

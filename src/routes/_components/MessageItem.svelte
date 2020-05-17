@@ -49,7 +49,7 @@
 
     // $: console.log('actorUser', $actorUser);
 
-    $: isSelf = (actor && actor.id === $userId);
+    $: isSelf = actor ? actor.id === $userId : true;
 
     $: userBreak = ($lastMessage && $message.userId !== $lastMessage.userId) || false;
     $: hideAvatarImage = ($lastMessage && $message.userId == $lastMessage.userId) || false;

@@ -40,7 +40,7 @@ import {
     loadingPosts,
 } from '../models/postsModel';
 
-import {
+import ConversationsModel, {
     getConversation,
     loadConversations,
     onConversationsUpdated,
@@ -109,6 +109,8 @@ import {
     conversationGroupId,
 } from '../models/appModel';
 
+ConversationsModel.on('conversationAdded', onConversationAdded);
+
 export function loadProject(targetProjectId, options) {
     const path = get(curPath);
     if (!/\/projects\/.+/.test(path)) {
@@ -166,6 +168,11 @@ onConversationsUpdated(() => {
         setConversation(targetConversationId);
     }
 });
+
+function onConversationAdded(event) {
+    conversationId.set(event.conversationId);
+    setConversation(event.conversationId);
+}
 
 function setViewedUser(targetProfileId, dontResetConversationGroup) {
     const curUserModel = getUser(targetProfileId);

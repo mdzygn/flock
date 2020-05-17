@@ -282,7 +282,7 @@ export function setFollowPost(targetPost, unfollow) {
 
 export function getNewPostId() {
     let postId, trialIndex;
-	do { postId = generateId(); } while (getPost(postId) && trialIndex < 99);
+	do { postId = generateId(12); } while (getPost(postId) && trialIndex < 99);
 	if (trialIndex === 99) { return null; }
 	return postId;
 }

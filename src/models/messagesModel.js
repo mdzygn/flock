@@ -18,6 +18,10 @@ import {
 	conversation,
 } from '../models/appModel';
 
+import {
+	addConversation,
+} from '../models/conversationsModel';
+
 // import messagesTestData from '../data/messages.json';
 
 export let loadingMessages = writable(false);
@@ -211,6 +215,8 @@ export function addMessage(messageDetails) {
 
 	// console.log('addMessage', newMessage);
 
+	console.log('newMessage', newMessage);
+
 	const result = api.addMessage({details: newMessage});
 	result.then(result => {
 		if (!result || result.error || result.invalid) {
@@ -226,12 +232,16 @@ export function addMessage(messageDetails) {
 	curMessages.push(newMessageModel);
 	messages.set(curMessages);
 
-	const curConversation = get(conversation);
-	if (curConversation && curConversation.id === newMessage.conversationId) {
-		curConversation.lastMessageText = (newMessage.message && newMessage.message.substring(0, config.CONVERSATION_MAX_PREVIEW_LENGTH)) || '';
-		curConversation.lastMessageAt = newMessage.createdAt;
-		curConversation.lastSenderId = newMessage.userId;
-		conversation.set(curConversation);
+	if (messageDetails.newConversation) {
+		addConversation({id: messageDetails.conversationId});
+	} else {
+		const curConversation = get(conversation);
+		if (curConversation && curConversation.id === newMessage.conversationId) {
+			curConversation.lastMessageText = (newMessage.message && newMessage.message.substring(0, config.CONVERSATION_MAX_PREVIEW_LENGTH)) || '';
+			curConversation.lastMessageAt = newMessage.createdAt;
+			curConversation.lastSenderId = newMessage.userId;
+			conversation.set(curConversation);
+		}
 	}
 
 	MessagesModel.emit('messagedAdded');
@@ -241,7 +251,7 @@ export function addMessage(messageDetails) {
 
 export function getNewMessageId() {
     let messageId, trialIndex;
-	do { messageId = generateId(); } while (getMessage(messageId) && trialIndex < 99);
+	do { messageId = generateId(12); } while (getMessage(messageId) && trialIndex < 99);
 	if (trialIndex === 99) { return null; }
 	return messageId;
 }

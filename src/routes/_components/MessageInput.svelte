@@ -25,13 +25,19 @@
     } from '../../models/messagesModel';
 
     import {
+        getNewConversationId
+    } from '../../models/conversationsModel';
+
+    import {
         createMessage
     } from '../../actions/messageActions';
 
     export let message = '';
     export let image = null;
 
-	let newMessageId = getNewMessageId();
+    let newMessageId = getNewMessageId();
+
+    let newConversationId = getNewConversationId();
 
     let messageField;
 
@@ -54,6 +60,7 @@
             if ($newConversation) {
                 messageDetails.newConversation = true;
                 messageDetails.targetUserIds = $newConversationUserIds;
+                messageDetails.conversationId = newConversationId
             }
 
             message = '';
@@ -152,6 +159,7 @@
         width: 100%;
 
         padding: 6px 7px;
+        margin-top: -1px;
     }
 
 	.messageInput :global(.imageButton) {

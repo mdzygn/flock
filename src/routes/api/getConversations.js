@@ -47,6 +47,16 @@ export async function post(req, res, next) {
 	if (usersId) {
 		filter.usersId = usersId;
 	}
+	// if (getUnviewed) {
+	// 	filter['users.id'] = userId;
+	// 	filter['$expr'] = {$gt: ["$lastMessageAt", "$users.$.loadedAt"]};
+	// 	// filter['$expr'] = {$gt: ["$lastMessageAt", "$createdAt"]};
+	// 	// filter['$where'] = 'this.lastMessageAt > this.users.$.loadedAt';
+	// 	// filter['$where'] = 'this.users.$.loadedAt >= this.lastMessageAt';
+	// 	// filter.viewed = {$ne: true};
+	// 	// // filter['users.id']: details.userId,
+	// 	// filter['users.' + userId + '.loadedAt'] : details.createdAt,
+	// }
 	if (loadedAt) {
 		filter.lastMessageAt = {$gt: loadedAt};
 		// filter.loadedAt = {"$exists": false};
@@ -68,6 +78,17 @@ export async function post(req, res, next) {
 
 	let conversations = await db.collection('conversations').find(filter).sort(sort).toArray();
 
+
+	let curUser;
+	conversations = conversations.filter((conversation) => {
+		curUser = conversation.users.find((user) => user.id === userId);
+		conversation.viewed = curUser ? curUser.viewedAt >= conversation.lastMessageAt : true;
+		// console.log(conversation.lastMessageText + ', ' + curUser.id + ', ' + conversation.viewed + ', ' + curUser.viewedAt + ' < ' + conversation.lastMessageAt);
+
+		// TODO: optimize - only select unviewed in the first place if required
+		return getUnviewed ? !conversation.viewed : true;
+	});
+
 	let loadedTime;
 
 	if (conversations && conversations.length) {
@@ -87,12 +108,12 @@ export async function post(req, res, next) {
 
     // conversations.sort((a,b) => a.createdAt - b.createdAt ); // sort by reversed created time
 
-	let curUser;
-	conversations.forEach((conversation) => {
-		curUser = conversation.users.find((user) => user.id === userId);
-		conversation.viewed = curUser ? curUser.viewedAt >= conversation.lastMessageAt : true;
-		// console.log(conversation.lastMessageText + ', ' + curUser.id + ', ' + conversation.viewed + ', ' + curUser.viewedAt + ' < ' + conversation.lastMessageAt);
-	});
+	// let curUser;
+	// conversations.forEach((conversation) => {
+	// 	curUser = conversation.users.find((user) => user.id === userId);
+	// 	conversation.viewed = curUser ? curUser.viewedAt >= conversation.lastMessageAt : true;
+	// 	// console.log(conversation.lastMessageText + ', ' + curUser.id + ', ' + conversation.viewed + ', ' + curUser.viewedAt + ' < ' + conversation.lastMessageAt);
+	// });
 	// conversations = conversations.filter((conversation) => {
 	// 	return !conversation.disabled;
 	// });

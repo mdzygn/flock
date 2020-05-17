@@ -58,10 +58,10 @@ function updateConversations(options) {
 		}
 		getConversations(details);
 
-		// if (!pollStarted) {
-		// 	pollStarted = true;
-		// 	pollConversation();
-		// }
+		if (!pollStarted) {
+			pollStarted = true;
+			pollConversation();
+		}
 	} else {
 		clearFilteredConversations();
 		mergeConversations([]);

@@ -95,7 +95,7 @@ export async function post(req, res, next) {
 		const conversationIds = conversations.map((conversation) => conversation.id);
 
 		filter.id = { $in: conversationIds };
-		filter["users.id"] = userId,
+		filter["users.id"] = userId;
 
 		loadedTime = (new Date()).getTime();
 		const newValues = {

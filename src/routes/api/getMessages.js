@@ -50,6 +50,24 @@ export async function post(req, res, next) {
 
     let messages = await db.collection('messages').find(filter).sort(sort).toArray();
 
+	if (messages && messages.length) {
+		const messageSet = messages.filter((message) => message.userId !== userId);
+		const messageIds = messageSet.map((message) => message.id);
+
+		filter.id = { $in: messageIds };
+
+		// const newValues = {
+		// 	"users.$.loadedAt" : loadedTime,
+		// };
+		const updateAction = {
+			'$addToSet': { loaded: userId },
+		};
+
+		// update loaded at time only for current user
+		const messageUpdateResult = db.collection('messages').updateMany(filter, updateAction);
+	}
+
+
 	// let loadedTime = null;
 	// if (messages && messages.length) {
 	// 	const messageIds = messages.map((message) => message.id);

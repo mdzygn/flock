@@ -30,7 +30,9 @@
 
 	.locationIcon {
 		display: inline-block;
-		background-size: cover;
+		background-size: contain;
+		background-position: center;
+		background-repeat: no-repeat;
 		width: 11px;
 		height: 13px;
 		vertical-align: middle;

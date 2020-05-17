@@ -17,6 +17,8 @@
 	import ConversationView from '../_components/ConversationView.svelte';
 	import MessageInput from '../_components/MessageInput.svelte';
 
+	import ConversationProfile from '../_components/ConversationProfile.svelte';
+
     import {
         userId,
         conversationId,
@@ -170,9 +172,7 @@
 		{:else}
 			<ScrollView bind:scrollRegion="{scrollRegion}" onScroll="{onScroll}" anchorToBottom="{true}" id="conversation">
 				{#if $newConversation}
-					<div class="content">
-						<Proxy image="message_new_message_profile" className="profileInfo" />
-					</div>
+					<ConversationProfile />
 				{:else if $messages}
 					<ConversationView {messages} />
 				{/if}
@@ -260,16 +260,4 @@
         position: absolute;
         opacity: 0.5;
 	} */
-
-	.content {
-    	width: 100%;
-		display: flex;
-		justify-content: center;
-	}
-
-	.content :global(.profileInfo) {
-		position: absolute;
-		top: 60px;
-		width: 217px;
-	}
 </style>

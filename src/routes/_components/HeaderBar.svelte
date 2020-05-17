@@ -25,6 +25,7 @@
         channelId,
         project,
         channel,
+        conversationGroupId,
         conversation,
         viewedUser,
         newConversation,
@@ -104,12 +105,8 @@
             } else {
                 sectionLabel = $viewedUser.name;
             }
-        } else if (/\/messages\/.+/.test(path) && ($newConversation || ($conversation && (($conversation.project && $project) || ($conversation.users && $conversation.users.length))))) { // $conversation.user
-            if ($newConversation && $viewedUser) { // // temporary
-                sectionLabel = $viewedUser.name;
-                $profileUser = $viewedUser;
-                // console.log('viewedUser profileUser', $profileUser);
-            } else if ($conversation) {
+        } else if (/\/messages\/.+/.test(path) && ($newConversation || ($conversationGroupId && $viewedUser && $conversationGroupId + 'u-'+$viewedUser.id) || ($conversation && (($conversation.project && $project) || ($conversation.users && $conversation.users.length))))) { // $conversation.user
+            if ($conversation) {
                 if ($conversation.project && $project) { // // temporary
                     sectionLabel = $project.title;
                 } else {
@@ -121,6 +118,10 @@
                     }
                     // sectionLabel = $conversation.user ? $conversation.user.firstName : $conversation.project.name;
                 }
+            } else if ($viewedUser) { // $newConversation && // temporary
+                sectionLabel = $viewedUser.name;
+                $profileUser = $viewedUser;
+                // console.log('viewedUser profileUser', $profileUser);
             }
         } else {
             sectionLabel = curSection ? curSection.label : '';

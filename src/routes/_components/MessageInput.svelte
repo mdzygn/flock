@@ -1,4 +1,6 @@
 <script>
+    import { onMount, tick } from 'svelte'; // afterUpdate
+
     import Button from '../../components/Button.svelte';
 
     import Proxy from '../../components/Proxy.svelte';
@@ -79,6 +81,12 @@
     function uploadImage() {
 
     }
+
+    onMount(() => {
+        if (messageField) {
+            messageField.focus();
+        }
+    })
 </script>
 
 <div class="messageInput">

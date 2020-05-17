@@ -20,7 +20,8 @@
 	import ConversationProfile from '../_components/ConversationProfile.svelte';
 
     import {
-        userId,
+		userId,
+		usercode,
         conversationId,
 		conversation,
 		newConversation
@@ -44,10 +45,21 @@
 
     export let messages = writable(null); // []);
 	$: {
+		$conversation;
+		updateMessage();
+		// messages = ($conversation && getMessages({ conversationId: $conversationId }, messagesLoaded, $conversation.isNew)) || messages;
 		// console.log('$conversationId', $conversationId, $messages);
-		messages = ($conversation && getMessages({ conversationId: $conversationId }, messagesLoaded, $conversation.isNew)) || messages;
 		// messages = ($conversationId && getMessages({ conversationId: $conversationId }, messagesLoaded)) || messages;
 	};
+
+	$: {
+		$userId; $usercode;
+		loadCurrentConversation();
+	}
+
+	function updateMessage() {
+		messages = ($conversation && getMessages({ conversationId: $conversationId }, messagesLoaded, $conversation.isNew)) || messages;
+	}
 
 	// $: console.log('messages', $messages);
 
@@ -84,7 +96,7 @@
 		// console.log('conversationUpdated');
 
 		if ($conversationId) {
-			messages = getMessages({ conversationId: $conversationId }, messagesLoaded);
+			messages = getMessages({ conversationId: $conversationId, getUnloaded: true }, messagesLoaded);
 		}
 	}
 

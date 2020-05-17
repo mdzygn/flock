@@ -23,6 +23,7 @@ export async function post(req, res, next) {
     }
 
 	const conversationId = options && options.conversationId;
+	const getUnloaded = options && options.getUnloaded;
 	const userId = options && options.userId;
 	// let loadedAt = options && options.loadedAt;
 
@@ -42,7 +43,19 @@ export async function post(req, res, next) {
 	}
 
 	const filter = {};
-    filter.conversationId = conversationId;
+	filter.conversationId = conversationId;
+
+	// if (getUnloaded) {
+	// 	filter['loaded'] = {
+	// 		// "$not": {
+	// 			"$elemMatch": {
+	// 				key: userId,
+	// 			}
+	// 		// }
+	// 	};
+	// }
+
+	// console.log('filter', filter);
 
 	const sort = {
 		createdAt: 1

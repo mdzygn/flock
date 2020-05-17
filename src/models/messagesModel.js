@@ -70,8 +70,12 @@ function conversationUpdated(event) {
 
 	// TODO: preload conversations into different messages
 	if (loadedConversationId === get(conversationId)) {
-		getMessages({ conversationId: loadedConversationId, getUnloaded: true });
+		updateMessages();
 	}
+}
+
+function updateMessages() {
+	getMessages({ conversationId: get(conversationId), getUnloaded: true });
 }
 
 // function pollMessage() {
@@ -233,6 +237,9 @@ export function addMessage(messageDetails) {
 	result.then(result => {
 		if (!result || result.error || result.invalid) {
 			console.error(result);
+		} else {
+			updateMessages();
+			const result = api.updateConversation({id: get(conversationId)});
 		}
 		// savingMessage.set(false);
 		return result;

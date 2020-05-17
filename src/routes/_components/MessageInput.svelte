@@ -86,7 +86,7 @@
 
     <div class="fieldRegion">
         <Button className="sendButton" disabled="{!submitEnabled}" onClick="{submit}" icon="{SendMessageIcon}" />
-        <Button className="imageButton" disabled="{true}" onClick="{uploadImage}" icon="{ImageIcon}" />
+        <!-- <Button className="imageButton" disabled="{true}" onClick="{uploadImage}" icon="{ImageIcon}" /> -->
         <div class="field">
             <input type="text" bind:value="{message}" bind:this="{messageField}" on:keypress="{(e) => testInputDefocus(e, {action: submit, preventBlur: true})}" />
         </div>
@@ -127,7 +127,9 @@
         height: 100%;
         align-items: center;
 
-        padding-left: 40px;
+        padding-left: 10px;
+        /* padding-left: 40px; */
+
         padding-right: 36px;
     }
 

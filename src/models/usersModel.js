@@ -146,7 +146,7 @@ export function getUserModelFromData(userDetails, updateDate) {
 		// 	console.log('date ' + get(newUserModel).lastUpdatedDate + ' < ' + updateDate);
 		// }
 
-		if (newUserModel && get(newUserModel).lastUpdatedDate < updateDate) {
+		if (newUserModel && get(newUserModel) && get(newUserModel).lastUpdatedDate < updateDate) {
 			// console.log('update model ' + get(newUserModel).lastUpdatedDate + ' > ' + updateDate);
 			curUserDetails = get(newUserModel);
 			curUserDetails.lastUpdatedDate;
@@ -160,6 +160,7 @@ export function getUserModelFromData(userDetails, updateDate) {
 		newUserModel = UserModel(curUserDetails);
 
 		// console.log('create model ', curUserDetails);
+		// console.log('curUserDetails', get(newUserModel), curUserDetails);
 
 		storedUserModels[userDetails.id] = newUserModel;
 	}

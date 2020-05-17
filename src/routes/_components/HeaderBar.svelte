@@ -1,5 +1,5 @@
 <script>
-    import { get } from 'svelte/store';
+    import { get, writable } from 'svelte/store';
     import { goto } from '@sapper/app';
 
     import locale from '../../locale';
@@ -13,6 +13,8 @@
 	import OptionsMenuIcon from "../../assets/icons/menu.png";
 
     import { getSectionByPath, getIdForSection } from "../../models/sectionsModel";
+
+    import { getUserModelFromData } from '../../models/usersModel';
 
     // import { getNotifications } from "../../models/notificationsModel";
 
@@ -75,11 +77,21 @@
 
     $: hasCreated = $project && $project.hasCreated;
 
+    let profileUser = writable(null);
+    $: profileUsername = ($profileUser && $profileUser.username && '@' + $profileUser.username) || '';
+
+    // $: console.log('profileUser', $profileUser);
+
     let sectionLabel = '';
     let hasSuperHeader = false;
     let superHeaderLabel = '';
     let headerLinkUrl = '';
+
+
     $: {
+        $profileUser = null;
+        // console.log('reset profileUser', $profileUser);
+
         if (/\/projects\/.+/.test(path) && !/\/projects\/new/.test(path) && !/\/projects\/archive/.test(path) && $project) {
             sectionLabel = $project.title;
         } else if (/\/channels\/.+/.test(path) && $channel) {
@@ -95,6 +107,8 @@
         } else if (/\/messages\/.+/.test(path) && ($newConversation || ($conversation && (($conversation.project && $project) || ($conversation.users && $conversation.users.length))))) { // $conversation.user
             if ($newConversation && $viewedUser) { // // temporary
                 sectionLabel = $viewedUser.name;
+                $profileUser = $viewedUser;
+                // console.log('viewedUser profileUser', $profileUser);
             } else if ($conversation) {
                 if ($conversation.project && $project) { // // temporary
                     sectionLabel = $project.title;
@@ -102,6 +116,8 @@
                     const curUserItem = getConversationOtherUser($conversation);
                     if (curUserItem && curUserItem.name) {
                         sectionLabel = curUserItem.name;
+                        $profileUser = get(getUserModelFromData(curUserItem));
+                        // console.log('getUserModelFromData profileUser', $profileUser);
                     }
                     // sectionLabel = $conversation.user ? $conversation.user.firstName : $conversation.project.name;
                 }
@@ -154,6 +170,12 @@
         }
     }
 
+    function loadViewedProfile() {
+        if ($profileUser && $profileUser.id) {
+            loadProfile($profileUser.id); // , {owner: true});
+        }
+    }
+
     function signIn() {
 		showPrompt(promptIds.LOG_IN);
         // setUser(config.GENERAL_USER);
@@ -178,13 +200,27 @@
         {#if hasSuperHeader}
             <div class="superHeader" class:hasBack="{showBack || parentPath}"><a href="projects/{$projectId}">{superHeaderLabel}</a></div>
         {/if}
-        <div class="header" class:loggedOut="{!loggedIn}" class:hasBack="{showBack || parentPath}">
-            {#if headerLinkUrl}
-                <a href="{headerLinkUrl}">{sectionLabel}</a>
-            {:else}
-                {sectionLabel}
-            {/if}
-        </div>
+        {#if $profileUser}
+            <div class="profileHeader button" on:click="{loadViewedProfile}" class:hasBack="{showBack || parentPath}">
+                <AvatarIcon user="{profileUser}" useThumb="{true}" />
+                <div class="profileInfo">
+                    <div class="profileDisplayName">
+                        {sectionLabel}
+                    </div>
+                    <div class="profileUsername">
+                        {profileUsername}
+                    </div>
+                </div>
+            </div>
+        {:else}
+            <div class="header" class:loggedOut="{!loggedIn}" class:hasBack="{showBack || parentPath}">
+                {#if headerLinkUrl}
+                    <a href="{headerLinkUrl}">{sectionLabel}</a>
+                {:else}
+                    {sectionLabel}
+                {/if}
+            </div>
+        {/if}
         {#if showBack || parentPath}
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
         {/if}
@@ -277,6 +313,44 @@
         top: 11px;
         /* right: 11px; */
         right: 41px;
+    }
+
+    .profileHeader {
+        position: absolute;
+        top: 12px;
+
+        left: 20px;
+        right: 86px;
+    }
+
+    .profileHeader :global(.avatarIcon) {
+        position: absolute;
+    }
+
+    .profileHeader.hasBack {
+        left: 50px;
+    }
+
+    .profileInfo {
+        position: absolute;
+        left: 45px;
+    }
+
+    .profileInfo .profileDisplayName {
+        font-size: 1.6rem;
+        font-weight: 700;
+
+        margin-top: -1px;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    .profileUsername {
+        font-size: 1.2rem;
+        margin-top: -4px;
+
+        color: #999999;
     }
 
     .headerBar :global(.optionsButton) {

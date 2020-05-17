@@ -167,9 +167,13 @@ onConversationsUpdated(() => {
     }
 });
 
-function setViewedUser(targetProfileId) {
+function setViewedUser(targetProfileId, dontResetConversationGroup) {
     const curUserModel = getUser(targetProfileId);
     const curUser = get(curUserModel);
+
+    if (!dontResetConversationGroup) {
+        conversationGroupId.set(null); // ensure can reset viewed user when viewing conversation
+    }
 
     loadUsers({ id: targetProfileId });
     viewedUser.set(curUser);
@@ -390,6 +394,8 @@ export function loadConversation(targetConversationId, isRedirectedId) {
 
         const targetUserIds = [conversationUserId];
         newConversationUserIds.set(targetUserIds);
+
+        setViewedUser(conversationUserId, true);
 
         const usersId = getConversationUsersId(targetUserIds);
         loadConversations({ usersId }, targetConversationLoaded);

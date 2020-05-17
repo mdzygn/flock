@@ -47,6 +47,8 @@
 		project,
 		post,
 
+		newConversation,
+
 		channel,
 
 		checkParams,
@@ -57,7 +59,11 @@
 		mounted = true;
     });
 
-	$: {
+	// $: {
+
+	page.subscribe(onPagUpdated);
+
+	function onPagUpdated() {
 		const changedPath = ($curPath !== $page.path);
 
 		if ($curPath !== $page.path) {
@@ -73,7 +79,7 @@
 			const params = $page.params;
 			if (params) {
 				if (params.conversation) {
-					if (($conversationId !== params.conversation && params.conversation !== $conversationGroupId) || !$conversation) { // TODO: avoid repeat loading if item undefined?
+					if (($conversationId !== params.conversation && params.conversation !== $conversationGroupId) || !($conversation || $newConversation)) { // TODO: avoid repeat loading if item undefined?
 						loadConversation(params.conversation);
 					}
 				}
@@ -103,7 +109,7 @@
 				closeOverlay();
 			}
 		}
-	}
+	};
 
 	let viewHeight;
 	let viewWidth;

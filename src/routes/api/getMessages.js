@@ -45,17 +45,16 @@ export async function post(req, res, next) {
 	const filter = {};
 	filter.conversationId = conversationId;
 
-	// if (getUnloaded) {
-	// 	filter['loaded'] = {
-	// 		// "$not": {
-	// 			"$elemMatch": {
-	// 				key: userId,
-	// 			}
-	// 		// }
-	// 	};
-	// }
-
-	// console.log('filter', filter);
+	if (getUnloaded) {
+		filter.userId = { "$ne": userId };
+		filter['loaded'] = {
+			"$not": { $in: [userId] }
+				// "$elemMatch": {
+				// 	userId: true,
+				// }
+			// }
+		};
+	}
 
 	const sort = {
 		createdAt: 1

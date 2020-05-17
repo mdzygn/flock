@@ -240,7 +240,7 @@ export function addMessage(messageDetails) {
 			curConversation.lastMessageText = (newMessage.message && newMessage.message.substring(0, config.CONVERSATION_MAX_PREVIEW_LENGTH)) || '';
 			curConversation.lastMessageAt = newMessage.createdAt;
 			curConversation.lastSenderId = newMessage.userId;
-			conversation.set(curConversation);
+			// conversation.set(curConversation); // dont set as triggers message reloading
 		}
 	}
 

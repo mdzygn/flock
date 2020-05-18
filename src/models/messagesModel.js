@@ -23,6 +23,7 @@ import {
 import ConversationsModel, {
 	addConversation,
 	checkConversationSeen,
+	removeConversation,
 } from '../models/conversationsModel';
 
 // import messagesTestData from '../data/messages.json';
@@ -118,7 +119,7 @@ export function loadMessages(options, callback) {
     // mergeMessages(messageItems);
 
 	if (!loadingRequestUtil.isLoading('messages', options)) {
-		// console.log('loadMessages', options);
+		console.log('loadMessages', options);
 		loadingRequestUtil.setLoading('messages', options, () => { loadingMessages.set(true); });
 		api.getMessages(options).then(result => {
 			if (!result.error) {
@@ -243,13 +244,36 @@ export function addMessage(messageDetails) {
 			console.error(result);
 			savingConversationId.set(null);
 		} else {
-			updateMessages();
+			// updateMessages();
 			const result = api.updateConversation({id: get(conversationId)});
 			result.then((result) => {
 				savingConversationId.set(null);
 				return result;
 			})
 		}
+
+		let curConversationId;
+		if (result.conversationId) {
+			curConversationId = result.conversationId;
+			if (curConversationId !== get(conversationId)) {
+				const curConversation = get(conversation);
+				console.log('curConversation ', curConversation);
+				if (curConversation.isNew) {
+					removeConversation(curConversation.id);
+				}
+			}
+		} else {
+			curConversationId = get(conversationId);
+		}
+		console.log('curConversationId : ' + curConversationId, ' result.conversationId: ' + result.conversationId);
+
+		if (curConversationId) {
+			getMessages({ conversationId: curConversationId, getUnloaded: true }, onMessagesRetrieved);
+			function onMessagesRetrieved() {
+				checkConversationSeen({conversationId: get(conversationId)}, true);
+			}
+		}
+
 		// savingMessage.set(false);
 		return result;
 	});
@@ -270,11 +294,6 @@ export function addMessage(messageDetails) {
 			curConversation.lastSenderId = newMessage.userId;
 			// conversation.set(curConversation); // dont set as triggers message reloading
 		}
-	}
-
-	getMessages({ conversationId: get(conversationId), getUnloaded: true }, onMessagesRetrieved);
-	function onMessagesRetrieved() {
-		checkConversationSeen({conversationId: get(conversationId)}, true);
 	}
 
 	MessagesModel.emit('messagedAdded');

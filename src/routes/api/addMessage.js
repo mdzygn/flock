@@ -15,7 +15,7 @@ export async function post(req, res, next) {
 	}
 
 	let details = options.details;
-	const newConversation = details.newConversation;
+	let newConversation = details.newConversation;
 
 	// console.log('api addMessage', details);
 
@@ -62,11 +62,38 @@ export async function post(req, res, next) {
 		let curConversation = null;
 		let curConversationUserItem = null;
 
-		let newConversationId = null;
+		let conversationId = details.conversationId;
 		let addedConversation = null;
+		let loadedConversation = null;
+
+		let userIds = null;
+		let usersId = null;
+
+		if (newConversation) {
+			// TODO: populate
+			userIds = [details.userId, ...targetUserIds];
+			userIds.sort();
+			usersId = getConversationUsersId(userIds);
+
+			const filter = {};
+			filter.userIds = details.userId;
+			filter.usersId = usersId;
+
+			console.log('use existing?', filter);
+
+			let exisitingConversation = await db.collection('conversations').findOne(filter);
+			console.log('exisitingConversation:', exisitingConversation);
+			if (exisitingConversation) {
+				newConversation = false;
+
+				loadedConversation = exisitingConversation;
+				conversationId = exisitingConversation.id;
+				console.log('use existing conversation', exisitingConversation.id);
+			}
+		}
 
 		if (!newConversation) {
-			curConversation = await db.collection('conversations').findOne({ id: details.conversationId });
+			curConversation = await db.collection('conversations').findOne({ id: conversationId });
 			if (!curConversation) {
 				errorResponse(res, {}, {errorMsg: 'conversation not found'});
 				return;
@@ -93,12 +120,7 @@ export async function post(req, res, next) {
 				errorResponse(res, {}, {errorMsg: 'new conversationId not specified with message'});
 				return;
 			}
-			newConversationId = details.conversationId;
 			// newConversationId = generateId(10);
-
-			// TODO: populate
-			const userIds = [details.userId, ...targetUserIds];
-			const usersId = getConversationUsersId(userIds);
 
 			const usersFilter = {
 				id: { $in: userIds },
@@ -125,7 +147,7 @@ export async function post(req, res, next) {
 			});
 
 			const conversationDetails = {
-				id: newConversationId,
+				id: conversationId,
 				createdAt: details.createdAt,
 				lastMessageAt: details.createdAt,
 				lastSenderId: details.userId,
@@ -147,7 +169,7 @@ export async function post(req, res, next) {
 			}
 		} else {
 			const updateConversationFilter = {
-				id: details.conversationId,
+				id: conversationId,
 				"users.id": details.userId,
 			};
 			const updateConversationProps = {
@@ -178,12 +200,16 @@ export async function post(req, res, next) {
 		// console.log('newConversation', newConversation, 'newConversationId', newConversationId);
 
 		const returnResult = {success: true};
-		if (newConversationId) {
-			returnResult.conversationId = newConversationId;
+		if (newConversation) {
+			returnResult.newConversation = true;
 			returnResult.conversation = addedConversation;
-
-			details.conversationId = newConversationId;
+		} else if (loadedConversation) {
+			returnResult.newConversation = true;
+			returnResult.conversation = loadedConversation;
 		}
+
+		details.conversationId = conversationId;
+		returnResult.conversationId = conversationId;
 
 		let addMessageResult;
 		try {

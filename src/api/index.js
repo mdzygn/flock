@@ -348,7 +348,7 @@ function getConversations(options) {
 	options = addCredentials(options);
 	return send('getConversations', options).then(result => {
 		if (DEBUG && result && result.error) {
-			console.error('API Error - getConversations: ', result);
+			console.error('API Error - getConversations: ', result, options);
 		}
 		return result;
 		// return Promise.reject(error); // TODO: prevent followups being called
@@ -360,7 +360,7 @@ function updateConversation(options) {
 	options = addCredentials(options);
 	return send('updateConversation', options).then(result => {
 		if (DEBUG && result && result.error) {
-			console.error('API Error - updateConversation: ', result);
+			console.error('API Error - updateConversation: ', result, options);
 		}
 		return result;
 		// return Promise.reject(error); // TODO: prevent followups being called
@@ -374,7 +374,7 @@ function getMessages(options) {
 	options = addCredentials(options);
 	return send('getMessages', options).then(result => {
 		if (DEBUG && result && result.error) {
-			console.error('API Error - getMessages: ', result);
+			console.error('API Error - getMessages: ', result, options);
 		}
 		return result;
 		// return Promise.reject(error); // TODO: prevent followups being called
@@ -386,7 +386,7 @@ function addMessage(options) {
 	options = addCredentials(options);
 	return send('addMessage', options).then(result => {
 		if (DEBUG && result && result.error) {
-			console.error('API Error - addMessage: ', result);
+			console.error('API Error - addMessage: ', result, options);
 		}
 		return result;
 		// return Promise.reject(error); // TODO: prevent followups being called

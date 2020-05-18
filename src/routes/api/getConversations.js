@@ -43,8 +43,7 @@ export async function post(req, res, next) {
 
 	if (conversationId) {
 		filter.id = conversationId;
-	}
-	if (usersId) {
+	} else if (usersId) {
 		filter.usersId = usersId;
 	}
 	// if (getUnviewed) {

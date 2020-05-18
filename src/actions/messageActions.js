@@ -20,12 +20,15 @@ export function createMessage(messageDetails) {
     result.then((result) => {
         if (result && !result.error) {
             // console.log('createMessage newConversationId', result.conversationId, 'result.conversation', result.conversation);
+            console.log('newConversation', result.newConversation, 'result.conversationId', result.conversationId);
 
-            if (result.conversation) {
-                addAndSetConversation(result.conversation);
-            }
-            if (result.conversationId) {
-                loadConversation(result.conversationId, true);
+            if (result.newConversation) {
+                if (result.conversation) {
+                    addAndSetConversation(result.conversation);
+                }
+                if (result.conversationId) {
+                    loadConversation(result.conversationId, true);
+                }
             }
         }
     });

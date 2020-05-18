@@ -222,17 +222,19 @@ function clearFilteredConversations() {
 	conversations.set(curConversations);
 }
 
-export function checkConversationSeen(details) {
+export function checkConversationSeen(details, force) {
 	if (details.conversationId) {
 		const curConversationModel = getConversation(details.conversationId);
 		if (curConversationModel) {
 			const curConversation = get(curConversationModel);
 			// console.log('curConversation.viewed', curConversation.viewed);
-			if (!curConversation.viewed) {
+			if (!curConversation.viewed || force) {
 				curConversation.viewed = true;
 				curConversationModel.set(curConversation);
 
 				conversations.set(get(conversations));
+
+				console.log('checkConversationSeen');
 
 				const result = api.updateConversation({id: details.conversationId});
 			}

@@ -21,6 +21,7 @@ import {
 
 import ConversationsModel, {
 	addConversation,
+	checkConversationSeen,
 } from '../models/conversationsModel';
 
 // import messagesTestData from '../data/messages.json';
@@ -262,6 +263,9 @@ export function addMessage(messageDetails) {
 			// conversation.set(curConversation); // dont set as triggers message reloading
 		}
 	}
+
+	getMessages({ conversationId: get(conversationId), getUnloaded: true });
+	checkConversationSeen({conversationId: get(conversationId)}, true);
 
 	MessagesModel.emit('messagedAdded');
 

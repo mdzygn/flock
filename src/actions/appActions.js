@@ -422,7 +422,7 @@ export function loadConversation(targetConversationId, isRedirectedId, forceLoad
         // console.log('loadConversations');
         loadConversations({ id: targetConversationId }, (result) => {
             if (!result.error && forceLoad) {
-                setConversation(targetConversationId);
+                setConversation(targetConversationId); // set conversation after new thread force reload to ensure header updated
             }
             return result;
         });

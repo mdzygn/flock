@@ -64,15 +64,15 @@ export const CONVERSATIION_VIEWED_DELAY = 0.5;
 
 export const POLL_CHECK_DURATION = 1;
 
-export const ACTIVE_INTERACTION_DELAY = 30;
+export const ACTIVE_INTERACTION_DELAY = 60; // 30;
 
-export const NOTIFICATION_POLL_DELAY_FOCUSED = 3; // 5; // 1; // 5;
+export const NOTIFICATION_POLL_DELAY_FOCUSED = 4; // 5; // 1; // 5;
 export const NOTIFICATION_POLL_DELAY = 10; // 20; // 3; // 20; // 15;
-export const NOTIFICATION_POLL_DELAY_IDLE = 60;
+export const NOTIFICATION_POLL_DELAY_IDLE = 3 * 60;
 
 export const CONVERSATION_POLL_DELAY_FOCUSED = 2; // 4; // 2;
 export const CONVERSATION_POLL_DELAY = 5; // 8;
-export const CONVERSATION_POLL_DELAY_IDLE = 3 * 60;
+export const CONVERSATION_POLL_DELAY_IDLE = 60;
 
 export const CONVERSATION_MAX_PREVIEW_LENGTH = 32;
 

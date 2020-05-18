@@ -234,8 +234,6 @@ export function checkConversationSeen(details, force) {
 
 				conversations.set(get(conversations));
 
-				console.log('checkConversationSeen');
-
 				const result = api.updateConversation({id: details.conversationId});
 			}
 		}

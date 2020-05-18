@@ -20,6 +20,7 @@ import {
 	conversationId,
 	conversation,
 	newConversation,
+	savingConversationId,
 } from '../models/appModel';
 
 import PageInteractionUtil from '../utils/PageInteractionUtil';
@@ -164,19 +165,24 @@ export function mergeConversations(newConversations, isInitialLoad) {
 		for (var conversationI = 0; conversationI < newConversations.length; conversationI++) {
 			newConversationData = newConversations[conversationI];
 			curConversationId = newConversationData.id;
-            curConversation = curConversations.find(match => get(match).id === curConversationId);
-            if (!curConversation) {
-                curConversation = ConversationModel(newConversationData);
-                curConversations.unshift(curConversation);
-            } else {
-				newConversation = get(curConversation);
-				newConversation.isNew = false;
-                newConversation = Object.assign(newConversation, newConversationData);
-                curConversation.set(newConversation);
-			}
+			if (curConversationId !== get(savingConversationId)) {
+				curConversation = curConversations.find(match => get(match).id === curConversationId);
+				if (!curConversation) {
+					curConversation = ConversationModel(newConversationData);
+					curConversations.unshift(curConversation);
+				} else {
+					newConversation = get(curConversation);
+					console.log('lastMessageText', newConversation.lastMessageText);
+					newConversation.isNew = false;
+					newConversation = Object.assign(newConversation, newConversationData);
+					curConversation.set(newConversation);
+				}
 
-			if (!isInitialLoad) { // && curConversationId === get(conversationId)) { // && isConversationPage()) {
-				ConversationsModel.emit('conversationUpdated', {conversationId: curConversationId});
+				if (!isInitialLoad) { // && curConversationId === get(conversationId)) { // && isConversationPage()) {
+					ConversationsModel.emit('conversationUpdated', {conversationId: curConversationId});
+				}
+			} else {
+				console.log('is saving: ' + get(savingConversationId));
 			}
 		}
 

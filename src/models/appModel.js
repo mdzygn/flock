@@ -131,6 +131,8 @@ export const newConversation = appModel.newConversation;
 export const newConversationUserIds = appModel.newConversationUserIds;
 export const conversationGroupId = writable(null);
 
+export const savingConversationId = writable(null);
+
 export const dateDebugOffset = writable(3600 * 1000);
 
 initApp();

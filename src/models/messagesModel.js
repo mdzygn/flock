@@ -17,6 +17,7 @@ import {
 	usercode,
 	conversation,
 	conversationId,
+	savingConversationId,
 } from '../models/appModel';
 
 import ConversationsModel, {
@@ -234,13 +235,20 @@ export function addMessage(messageDetails) {
 
 	// console.log('newMessage', newMessage);
 
+	savingConversationId.set(messageDetails.conversationId);
+
 	const result = api.addMessage({details: newMessage});
 	result.then(result => {
 		if (!result || result.error || result.invalid) {
 			console.error(result);
+			savingConversationId.set(null);
 		} else {
 			updateMessages();
 			const result = api.updateConversation({id: get(conversationId)});
+			result.then((result) => {
+				savingConversationId.set(null);
+				return result;
+			})
 		}
 		// savingMessage.set(false);
 		return result;
@@ -264,8 +272,10 @@ export function addMessage(messageDetails) {
 		}
 	}
 
-	getMessages({ conversationId: get(conversationId), getUnloaded: true });
-	checkConversationSeen({conversationId: get(conversationId)}, true);
+	getMessages({ conversationId: get(conversationId), getUnloaded: true }, onMessagesRetrieved);
+	function onMessagesRetrieved() {
+		checkConversationSeen({conversationId: get(conversationId)}, true);
+	}
 
 	MessagesModel.emit('messagedAdded');
 

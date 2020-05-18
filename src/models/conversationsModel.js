@@ -310,13 +310,13 @@ export function getUserConversationInfo(conversation) {
 
 export function removeConversation(conversationId) {
 	let curConversation = getConversation(conversationId);
-	console.log('curConversation', curConversation);
+	// console.log('curConversation', curConversation);
 	if (curConversation) {
 		const curConversations = get(conversations) || [];
 		const conversationIndex = curConversations.indexOf(curConversation);
-		console.log('conversationIndex', conversationIndex);
+		// console.log('conversationIndex', conversationIndex);
 		if (conversationIndex !== -1) {
-			console.log('removeConversation', conversationId);
+			// console.log('removeConversation', conversationId);
 			curConversations.splice(conversationIndex, 1);
 			conversations.set(curConversations);
 		}

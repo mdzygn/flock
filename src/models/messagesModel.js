@@ -262,11 +262,11 @@ export function addMessage(messageDetails) {
 		}
 
 		let curConversationId;
-		if (result.conversationId) {
+		if (result.newConversation && result.conversationId) {
 			curConversationId = result.conversationId;
 			if (curConversationId !== get(conversationId)) {
 				const curConversation = get(conversation);
-				console.log('curConversation ', curConversation);
+				// console.log('remove conversatoin? ', get(conversationId), curConversation);
 				if (curConversation.isNew) {
 					removeConversation(curConversation.id);
 				}

@@ -386,7 +386,7 @@ function targetConversationLoaded(result) {
     }
 };
 
-export function loadConversation(targetConversationId, isRedirectedId) {
+export function loadConversation(targetConversationId, isRedirectedId, forceLoad) {
     // if (!checkLoggedIn()) { return; }
 
     newConversation.set(false);
@@ -418,9 +418,14 @@ export function loadConversation(targetConversationId, isRedirectedId) {
     }
 
     const curConversation = get(conversation);
-    if (!curConversation || curConversation.id !== targetConversationId) {
+    if (!curConversation || curConversation.id !== targetConversationId || forceLoad) {
         // console.log('loadConversations');
-        loadConversations({ id: targetConversationId });
+        loadConversations({ id: targetConversationId }, (result) => {
+            if (!result.error && forceLoad) {
+                setConversation(targetConversationId);
+            }
+            return result;
+        });
     }
 
     conversationId.set(targetConversationId);

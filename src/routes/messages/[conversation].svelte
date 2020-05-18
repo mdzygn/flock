@@ -1,3 +1,5 @@
+<svelte:window bind:innerHeight={viewHeight} bind:innerWidth={viewWidth} />
+
 <script>
 	import { tick, onMount, onDestroy } from 'svelte';
 	import { writable } from 'svelte/store';
@@ -97,6 +99,13 @@
 	let showMessagesAdded = false;
 
 	let scrollRegion;
+
+	let viewHeight, viewWidth;
+	$: {
+		if (viewHeight && viewWidth < config.MOBILE_DEVICE_MAX_WIDTH) { // if on mobile and height adjusted (keyboard shown)
+			scrollToBottom();
+		}
+	}
 
 	async function scrollToBottom() {
 		if (scrollRegion) {

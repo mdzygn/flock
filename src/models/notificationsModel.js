@@ -66,7 +66,7 @@ function updateNotifications(options) {
 
 function pollNotification() {
 	if (typeof window !== 'undefined') {
-		const curPollDelay = isActivityPage() ? config.NOTIFICATION_POLL_DELAY_ACTIVITY : config.NOTIFICATION_POLL_DELAY;
+		const curPollDelay = isActivityPage() ? config.NOTIFICATION_POLL_DELAY_FOCUSED : config.NOTIFICATION_POLL_DELAY;
 
 		curPollNotificationTimeout = window.setTimeout(() => {
 			// if (document.hasFocus()) {

@@ -80,7 +80,7 @@ function updateMessages() {
 
 // function pollMessage() {
 // 	if (typeof window !== 'undefined') {
-// 		const curPollDelay = isMessagesPage() ? config.CONVERSATION_POLL_DELAY_ACTIVITY : config.CONVERSATION_POLL_DELAY;
+// 		const curPollDelay = isMessagesPage() ? config.CONVERSATION_POLL_DELAY_FOCUSED : config.CONVERSATION_POLL_DELAY;
 
 // 		curPollMessageTimeout = window.setTimeout(() => {
 // 			// if (document.hasFocus()) {

@@ -71,16 +71,28 @@ function updateConversations(options) {
 	}
 }
 
+let lastPollTime = 0;
 function pollConversation() {
 	if (typeof window !== 'undefined') {
-		const curPollDelay = isMessagesPage() ? config.CONVERSATION_POLL_DELAY_ACTIVITY : config.CONVERSATION_POLL_DELAY;
+		// const curPollDelay = isMessagesPage() ? config.CONVERSATION_POLL_DELAY_FOCUSED : config.CONVERSATION_POLL_DELAY;
+		let curPollDelay = config.CONVERSATION_POLL_DELAY;
+		if (!PageInteractionUtil.isActive()) {
+			curPollDelay = config.CONVERSATION_POLL_DELAY_IDLE;
+		} else if (isMessagesPage()) {
+			curPollDelay = config.CONVERSATION_POLL_DELAY_FOCUSED;
+		}
 
 		curPollConversationTimeout = window.setTimeout(() => {
-			if (PageInteractionUtil.isActive() && get(user) && document.visibilityState === 'visible') {
+			const curTime = (new Date()).getTime();
+			const lastPollDuration = (curTime - lastPollTime) / 1000;
+			const canPoll = lastPollDuration >= curPollDelay;
+			console.log('canPoll', canPoll, curPollDelay, lastPollDuration);
+			if (canPoll && get(user) && document.visibilityState === 'visible') {
 				updateConversations({isPoll: true});
+				lastPollTime = curTime;
 			}
 			pollConversation();
-		}, curPollDelay * 1000);
+		}, config.POLL_CHECK_DURATION * 1000);
 	}
 }
 

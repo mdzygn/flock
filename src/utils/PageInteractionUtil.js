@@ -1,17 +1,17 @@
 // import { writable, get } from 'svelte/store';
 
+import config from '../config';
+
 // import EventEmitter from 'eventemitter3';
 
 const PageInteractionUtil = {}; // new EventEmitter();
 
-PageInteractionUtil.ACTIVE_MAX_TOUCH_DELAY = 30;
-
-PageInteractionUtil.lastInteractionTime = 0;
+PageInteractionUtil.lastInteractionTime = (new Date()).getTime();
 
 PageInteractionUtil.isActive = function() {
     const curTime = (new Date()).getTime();
     const lastActiveDuration = (curTime - PageInteractionUtil.lastInteractionTime) / 1000;
-    const active = lastActiveDuration < PageInteractionUtil.ACTIVE_MAX_TOUCH_DELAY;
+    const active = lastActiveDuration < config.ACTIVE_INTERACTION_DELAY;
     // console.log('active', active, 'lastActiveDuration', lastActiveDuration);
     return active;
 }

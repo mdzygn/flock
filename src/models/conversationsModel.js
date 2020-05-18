@@ -21,6 +21,7 @@ import {
 	conversation,
 	newConversation,
 	savingConversationId,
+	debugOutput,
 } from '../models/appModel';
 
 import PageInteractionUtil from '../utils/PageInteractionUtil';
@@ -89,7 +90,10 @@ function pollConversation() {
 			const lastPollDuration = (curTime - lastPollTime) / 1000;
 			const canPoll = lastPollDuration >= curPollDelay;
 			// console.log('canPoll', canPoll, curPollDelay, lastPollDuration);
-			if (canPoll && get(user) && document.visibilityState === 'visible') {
+
+			// debugOutput.set(get(debugOutput) + '<br/>' + canPoll + ', ' + get(user) + ', ' + document.visibilityState);
+
+			if (canPoll && get(user) && document.visibilityState !== 'hidden') {
 				updateConversations({isPoll: true});
 				lastPollTime = curTime;
 			}
@@ -152,11 +156,13 @@ export function loadConversations(options, callback) {
 				loadingConversations.set(true);
 			}
 		});
+		// debugOutput.set(get(debugOutput) + 'get conversation' + '<br/>');
 		api.getConversations(options).then(result => {
 			if (!result.error) {
 				if (result.loadedAt) {
 					conversationsLoadedAt = result.loadedAt;
 				}
+				//debugOutput.set(get(debugOutput) + 'result.conversations ' + result.conversations.length + ', ' + (result.conversations.length) + '<br/>');
 				mergeConversations(result.conversations, isInitialLoad);
 			}
 			if (conversationLoadingTimeout !== null && typeof window !== 'undefined') {
@@ -177,6 +183,8 @@ export function mergeConversations(newConversations, isInitialLoad) {
 	const origConversations = get(conversations);
 	const curConversations = origConversations || [];
 
+	// debugOutput.set(get(debugOutput) + '<br/>newConversations ' + newConversations && newConversations.length);
+
 	if (newConversations && newConversations.length) {
 		let curConversation, newConversationData, curConversationId, newConversation;
 		for (var conversationI = 0; conversationI < newConversations.length; conversationI++) {
@@ -193,12 +201,17 @@ export function mergeConversations(newConversations, isInitialLoad) {
 				} else {
 					newConversation = get(curConversation);
 					// console.log('lastMessageText', newConversation.lastMessageText);
+
 					newConversation.isNew = false;
 					newConversation = Object.assign(newConversation, newConversationData);
+
+					//debugOutput.set(get(debugOutput) + 'merge viewed: ' + newConversation.viewed + ' ' + newConversation.id + '<br/>');
+
 					curConversation.set(newConversation);
 				}
 
 				if (!isInitialLoad) { // && curConversationId === get(conversationId)) { // && isConversationPage()) {
+					// debugOutput.set(get(debugOutput) + '<br/>conversationUpdated ' + curConversationId);
 					ConversationsModel.emit('conversationUpdated', {conversationId: curConversationId});
 				}
 			}
@@ -220,7 +233,10 @@ export function getConversations(options) {
         clearFilteredConversations();
     }
 
-    curConversationFilterOptions = JSON.parse(JSON.stringify(options));
+	curConversationFilterOptions = JSON.parse(JSON.stringify(options));
+
+
+	// debugOutput.set(get(debugOutput) + 'getConversations' + JSON.stringify(curConversationFilterOptions) + '<br/>');
 
     if (curConversationFilterOptions.userId) {
         loadConversations(curConversationFilterOptions);
@@ -251,14 +267,19 @@ export function checkConversationSeen(details, force) {
 		const curConversationModel = getConversation(details.conversationId);
 		if (curConversationModel) {
 			const curConversation = get(curConversationModel);
+			//debugOutput.set(get(debugOutput) + 'viewed: ' + curConversation.viewed + ' ' + details.conversationId + ' ' + (curConversation.id === get(savingConversationId)) + '<br/>');
 			if (!curConversation.viewed || force) {
-				curConversation.viewed = true;
-				curConversationModel.set(curConversation);
+				if (curConversation.id !== get(savingConversationId)) {
+					curConversation.viewed = true;
+					curConversationModel.set(curConversation);
+					conversations.set(get(conversations));
 
-				conversations.set(get(conversations));
+					//debugOutput.set(get(debugOutput) + 'set viewed' + '<br/>');
 
-				// console.log('curConversation set seen', curConversation.id);
-				const result = api.updateConversation({id: details.conversationId});
+					// debugOutput.set(get(debugOutput) + '<br/>checkConversationSeen ' + Math.floor(Math.random() * 999) + ': ' + curConversation.id);
+					// console.log('curConversation set seen', curConversation.id);
+					const result = api.updateConversation({id: details.conversationId});
+				}
 			}
 		}
 	}

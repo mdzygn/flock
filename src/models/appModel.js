@@ -133,6 +133,8 @@ export const conversationGroupId = writable(null);
 
 export const savingConversationId = writable(null);
 
+export const debugOutput = writable('');
+
 export const dateDebugOffset = writable(3600 * 1000);
 
 initApp();

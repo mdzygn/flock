@@ -52,6 +52,8 @@
 		channel,
 
 		checkParams,
+
+		debugOutput,
 	} from '../models/appModel';
 
 	import MessagesModel from '../models/messagesModel'; // import to ensure checking for conversations
@@ -199,6 +201,9 @@
 		<Splash />
 		<Overlays />
 		<div class="pageContent" class:landscapeScrollMode="{landscapeScrollMode}" class:keyboardShown="{keyboardShown}">
+			{#if config.DEBUG && $debugOutput}
+				<div class="debugOutput">{@html $debugOutput}</div>
+			{/if}
 			<main>
 				<slot></slot>
 			</main>
@@ -304,6 +309,13 @@
 
 	.showFeedBg {
 		background-color: #DDDDDD;
+	}
+
+	.debugOutput {
+		position: absolute;
+		top: 5px;
+		left: 5px;
+		color: #ff0000;
 	}
 
 </style>

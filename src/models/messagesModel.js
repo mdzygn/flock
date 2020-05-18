@@ -23,6 +23,7 @@ import {
 	conversationId,
 	savingConversationId,
 	conversationGroupId,
+	debugOutput,
 } from '../models/appModel';
 
 import ConversationsModel, {
@@ -76,6 +77,8 @@ function onUserChange() {
 function conversationUpdated(event) {
 	const loadedConversationId = event.conversationId;
 
+	// debugOutput.set('conversationUpdated', loadedConversationId, get(conversationId));
+
 	// TODO: preload conversations into different messages
 	if (loadedConversationId === get(conversationId)) {
 		updateMessages();
@@ -126,7 +129,12 @@ export function loadMessages(options, callback) {
 	if (!loadingRequestUtil.isLoading('messages', options)) {
 		//-- console.log('loadMessages', options);
 		loadingRequestUtil.setLoading('messages', options, () => { loadingMessages.set(true); });
+
+		// debugOutput.set(get(debugOutput) + '<br/>' + 'loadMessages: ' + JSON.stringify(options));
+
 		api.getMessages(options).then(result => {
+			// debugOutput.set(get(debugOutput) + '<br/>message update ' + Math.floor(Math.random() * 999) + ': ' + JSON.stringify(result.messages.length) + ', ' + JSON.stringify(options));
+
 			if (!result.error) {
 				// if (result.loadedAt) {
 				// 	messagesLoadedAt = result.loadedAt;
@@ -189,6 +197,8 @@ export function getMessages(options, callback, isNewConversation) {
     }
 
     curMessageFilterOptions = JSON.parse(JSON.stringify(options));
+
+	// debugOutput.set('getMessages' + JSON.stringify(curMessageFilterOptions));
 
     if (curMessageFilterOptions.conversationId && !isNewConversation) {
         loadMessages(curMessageFilterOptions, callback);
@@ -259,6 +269,7 @@ export function addMessage(messageDetails) {
 			}
 		} else {
 			// updateMessages();
+
 			const result = api.updateConversation({id: get(conversationId)});
 			result.then((result) => {
 				savingConversationId.set(null);

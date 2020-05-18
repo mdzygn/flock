@@ -135,6 +135,8 @@
         color: #AAAAAA;
         margin-top: 12px;
         margin-bottom: 12px;
+
+        user-select: text;
     }
 
     .detailContent {
@@ -180,6 +182,8 @@
         font-size: 1.3rem;
         line-height: 1.3rem;
         /* margin-top: 7px; */
+
+        user-select: text;
     }
 
     /* .info {

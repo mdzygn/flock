@@ -265,7 +265,7 @@ export function addMessage(messageDetails) {
 		} else {
 			curConversationId = get(conversationId);
 		}
-		console.log('curConversationId : ' + curConversationId, ' result.conversationId: ' + result.conversationId);
+		//-- console.log('curConversationId : ' + curConversationId, ' result.conversationId: ' + result.conversationId);
 
 		if (curConversationId) {
 			getMessages({ conversationId: curConversationId, getUnloaded: true }, onMessagesRetrieved);

@@ -64,18 +64,28 @@ function updateNotifications(options) {
 	}
 }
 
+let lastPollTime = (new Date()).getTime();
 function pollNotification() {
 	if (typeof window !== 'undefined') {
-		const curPollDelay = isActivityPage() ? config.NOTIFICATION_POLL_DELAY_FOCUSED : config.NOTIFICATION_POLL_DELAY;
+		// const curPollDelay = isActivityPage() ? config.NOTIFICATION_POLL_DELAY_FOCUSED : config.NOTIFICATION_POLL_DELAY;
+		let curPollDelay = config.NOTIFICATION_POLL_DELAY;
+		if (!PageInteractionUtil.isActive()) {
+			curPollDelay = config.NOTIFICATION_POLL_DELAY_IDLE;
+		} else if (isActivityPage()) {
+			curPollDelay = config.NOTIFICATION_POLL_DELAY_FOCUSED;
+		}
 
 		curPollNotificationTimeout = window.setTimeout(() => {
-			// if (document.hasFocus()) {
-			if (PageInteractionUtil.isActive() && get(user) && document.visibilityState === 'visible') {
-				// console.log('poll');
+			const curTime = (new Date()).getTime();
+			const lastPollDuration = (curTime - lastPollTime) / 1000;
+			const canPoll = lastPollDuration >= curPollDelay;
+			// console.log('canPoll', canPoll, curPollDelay, lastPollDuration);
+			if (canPoll && get(user) && document.visibilityState === 'visible') {
 				updateNotifications();
+				lastPollTime = curTime;
 			}
 			pollNotification();
-		}, curPollDelay * 1000);
+		}, config.POLL_CHECK_DURATION * 1000);
 	}
 }
 

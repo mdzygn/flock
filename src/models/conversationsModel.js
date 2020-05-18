@@ -71,7 +71,7 @@ function updateConversations(options) {
 	}
 }
 
-let lastPollTime = 0;
+let lastPollTime = (new Date()).getTime();
 function pollConversation() {
 	if (typeof window !== 'undefined') {
 		// const curPollDelay = isMessagesPage() ? config.CONVERSATION_POLL_DELAY_FOCUSED : config.CONVERSATION_POLL_DELAY;
@@ -86,7 +86,7 @@ function pollConversation() {
 			const curTime = (new Date()).getTime();
 			const lastPollDuration = (curTime - lastPollTime) / 1000;
 			const canPoll = lastPollDuration >= curPollDelay;
-			console.log('canPoll', canPoll, curPollDelay, lastPollDuration);
+			// console.log('canPoll', canPoll, curPollDelay, lastPollDuration);
 			if (canPoll && get(user) && document.visibilityState === 'visible') {
 				updateConversations({isPoll: true});
 				lastPollTime = curTime;

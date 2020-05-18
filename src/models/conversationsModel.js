@@ -22,6 +22,8 @@ import {
 	newConversation,
 } from '../models/appModel';
 
+import PageInteractionUtil from '../utils/PageInteractionUtil';
+
 import conversationsTestData from '../data/conversations.json';
 import { strCompare } from '../utils';
 
@@ -74,7 +76,7 @@ function pollConversation() {
 		const curPollDelay = isMessagesPage() ? config.CONVERSATION_POLL_DELAY_ACTIVITY : config.CONVERSATION_POLL_DELAY;
 
 		curPollConversationTimeout = window.setTimeout(() => {
-			if (get(user) && document.visibilityState === 'visible') {
+			if (PageInteractionUtil.isActive() && get(user) && document.visibilityState === 'visible') {
 				updateConversations({isPoll: true});
 			}
 			pollConversation();

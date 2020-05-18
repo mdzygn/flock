@@ -10,7 +10,14 @@ import loadingRequestUtil from '../utils/loadingRequestUtil';
 
 import NotificationModel from '../models/notificationModel';
 
-import { user, userId, usercode, curPath } from '../models/appModel';
+import {
+	user,
+	userId,
+	usercode,
+	curPath,
+} from '../models/appModel';
+
+import PageInteractionUtil from '../utils/PageInteractionUtil';
 
 import NotificationTypes from '../config/NotificationTypes';
 
@@ -63,7 +70,7 @@ function pollNotification() {
 
 		curPollNotificationTimeout = window.setTimeout(() => {
 			// if (document.hasFocus()) {
-			if (get(user) && document.visibilityState === 'visible') {
+			if (PageInteractionUtil.isActive() && get(user) && document.visibilityState === 'visible') {
 				// console.log('poll');
 				updateNotifications();
 			}

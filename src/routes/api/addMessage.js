@@ -79,16 +79,16 @@ export async function post(req, res, next) {
 			filter.userIds = details.userId;
 			filter.usersId = usersId;
 
-			console.log('use existing?', filter);
+			// console.log('use existing?', filter);
 
 			let exisitingConversation = await db.collection('conversations').findOne(filter);
-			console.log('exisitingConversation:', exisitingConversation);
+			// console.log('exisitingConversation:', exisitingConversation);
 			if (exisitingConversation) {
 				newConversation = false;
 
 				loadedConversation = exisitingConversation;
 				conversationId = exisitingConversation.id;
-				console.log('use existing conversation', exisitingConversation.id);
+				// console.log('use existing conversation', exisitingConversation.id);
 			}
 		}
 

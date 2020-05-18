@@ -102,16 +102,20 @@ function isMessagesPage() {
 	return !!(path && path.match(/messages/));
 }
 
-// function isConversationPage() {
-// 	const path = get(curPath);
-// 	return !!(path && path.match(/messages\/.+/));
-// }
+function isConversationPage() {
+	const path = get(curPath);
+	return !!(path && path.match(/messages\/.+/));
+}
 
 conversations.subscribe(() => {
 	const curConversations = get(conversations) || [];
 	const unviewedConversations = curConversations.filter(conversation => {
 		const curConversation = get(conversation);
-		return curConversation ? !curConversation.viewed : false;
+		if (!isConversationPage() || curConversation.id !== get(conversationId)) { // don't show notification dot if on current conversation with notification (as messages auto load)
+			return curConversation ? !curConversation.viewed : false;
+		} else {
+			return false;
+		}
 		// const userConversationInfo = getUserConversationInfo(curConversation);
 		// return userConversationInfo ? !userConversationInfo.viewed : false;
 	});

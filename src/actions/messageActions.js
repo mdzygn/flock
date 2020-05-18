@@ -20,7 +20,7 @@ export function createMessage(messageDetails) {
     result.then((result) => {
         if (result && !result.error) {
             // console.log('createMessage newConversationId', result.conversationId, 'result.conversation', result.conversation);
-            console.log('newConversation', result.newConversation, 'result.conversationId', result.conversationId);
+            //-- console.log('newConversation', result.newConversation, 'result.conversationId', result.conversationId);
 
             if (result.newConversation) {
                 if (result.conversation) {

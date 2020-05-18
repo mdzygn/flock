@@ -106,7 +106,8 @@
             } else {
                 sectionLabel = $viewedUser.name;
             }
-        } else if (/\/messages\/.+/.test(path) && $user && ($newConversation || ($conversationGroupId && $viewedUser && $conversationGroupId + 'u-'+$viewedUser.id) || ($conversation && (($conversation.project && $project) || ($conversation.users && $conversation.users.length))))) { // $conversation.user
+        } else if (/\/messages\/.+/.test(path) && $user && ($newConversation || ($conversation && $conversation.isNew) || ($conversationGroupId && $viewedUser && $conversationGroupId + 'u-'+$viewedUser.id) || ($conversation && (($conversation.project && $project) || ($conversation.users && $conversation.users.length))))) { // $conversation.user
+            // console.log('header, ', $conversation, $conversation.isNew);
             if ($conversation && !$conversation.isNew) {
                 if ($conversation.project && $project) { // // temporary
                     sectionLabel = $project.title;

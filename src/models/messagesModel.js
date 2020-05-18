@@ -119,7 +119,7 @@ export function loadMessages(options, callback) {
     // mergeMessages(messageItems);
 
 	if (!loadingRequestUtil.isLoading('messages', options)) {
-		console.log('loadMessages', options);
+		//-- console.log('loadMessages', options);
 		loadingRequestUtil.setLoading('messages', options, () => { loadingMessages.set(true); });
 		api.getMessages(options).then(result => {
 			if (!result.error) {

@@ -198,6 +198,7 @@ export function checkParams(query) {
     }
 }
 
+// not correct on initial site load for moment
 export function isUserLoaded(user, userId) {
     return !userId || (user && user.loaded);
 }

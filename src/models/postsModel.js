@@ -205,7 +205,7 @@ export function addPost(postDetails) {
 	const result = api.addPost({details: newPost});
 	result.then(result => {
 		if (!result || result.error || result.invalid) {
-			console.error(result);
+			// console.error(result);
 		}
 		savingPost.set(false);
 		return result;

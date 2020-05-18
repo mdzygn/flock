@@ -13,11 +13,16 @@ import loadingRequestUtil from '../utils/loadingRequestUtil';
 import MessageModel from '../models/messageModel';
 
 import {
+	loadConversation,
+} from '../actions/appActions';
+
+import {
 	userId,
 	usercode,
 	conversation,
 	conversationId,
 	savingConversationId,
+	conversationGroupId,
 } from '../models/appModel';
 
 import ConversationsModel, {
@@ -241,8 +246,12 @@ export function addMessage(messageDetails) {
 	const result = api.addMessage({details: newMessage});
 	result.then(result => {
 		if (!result || result.error || result.invalid) {
-			console.error(result);
+			// console.error(result);
 			savingConversationId.set(null);
+
+			if (result.duplicateKey && result.action === 'addConversation' && get(conversationGroupId)) {
+				loadConversation(get(conversationGroupId)); // refresh conversation if existing conflict hit
+			}
 		} else {
 			// updateMessages();
 			const result = api.updateConversation({id: get(conversationId)});

@@ -81,7 +81,7 @@ export async function post(req, res, next) {
 
 			// console.log('use existing?', filter);
 
-			let exisitingConversation = await db.collection('conversations').findOne(filter);
+			let exisitingConversation = await db.collection('conversations').findOne(filter); // TODO: doesn't always work sometimes someone else does the same and it doesn't work
 			// console.log('exisitingConversation:', exisitingConversation);
 			if (exisitingConversation) {
 				newConversation = false;
@@ -160,7 +160,14 @@ export async function post(req, res, next) {
 
 			// console.log('newConversation', conversationDetails);
 
-			const addConversationResult = await db.collection('conversations').insertOne(conversationDetails);
+			let addConversationResult;
+			try {
+				addConversationResult = await db.collection('conversations').insertOne(conversationDetails);
+			} catch (error) {
+				catchMongoError(res, error, 'addConversation');
+				return;
+			}
+
 			if (!addConversationResult) {
 				errorResponse(res, {}, {errorMsg: 'conversation could not be added'});
 				return;
@@ -215,7 +222,7 @@ export async function post(req, res, next) {
 		try {
 			addMessageResult = await db.collection('messages').insertOne(details);
 		} catch (error) {
-			catchMongoError(res, error);
+			catchMongoError(res, error, 'addMessage');
 			return;
 		}
 

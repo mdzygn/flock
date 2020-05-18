@@ -181,9 +181,9 @@ export async function loadUserItemProperties(items, options) {
     }
 }
 
-export function catchMongoError(res, error) {
+export function catchMongoError(res, error, action) {
     // console.log('mongo error', error);
     const duplicateKey = error.errmsg && error.errmsg.includes('duplicate key');
     // console.log('duplicateKey', duplicateKey);
-    errorResponse(res, {duplicateKey}, {errorMsg: duplicateKey ? 'duplicate id for new item' : 'mongo error', errorObject: error});
+    errorResponse(res, {duplicateKey}, {errorMsg: duplicateKey ? 'duplicate id for new item' : 'mongo error', action, errorObject: error});
 }

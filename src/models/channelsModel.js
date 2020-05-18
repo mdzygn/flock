@@ -209,7 +209,7 @@ export function addChannel(channelDetails) {
 
 	api.addChannel({details: newChannel}).then(result => {
 		if (!result || result.error || result.invalid) {
-			console.error(result);
+			// console.error(result);
 		}
 		// newChannel._id = result.insertedId;
 	});

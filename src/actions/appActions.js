@@ -209,7 +209,7 @@ onUsersUpdated(() => {
     // if project object not found but project id set then update project model
     if (get(profileId) && (!get(viewedUser) || !get(viewedUser).loaded)) {
         const targetProfileId = get(profileId);
-        setViewedUser(targetProfileId);
+        setViewedUser(targetProfileId, true);
     }
     // if (get(userId) && (!get(user) || !get(user).loaded || get(user).id !== get(userId))) { // is already loaded, but still need to set user object
     if (get(userId)) { // force user object to update - to improve?

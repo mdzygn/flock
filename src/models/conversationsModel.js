@@ -335,6 +335,7 @@ export function addConversation(details) {
 	newConversationItem.createdAt = (new Date()).getTime(); // use for initial sort values
 	newConversationItem.lastMessageAt = newConversationItem.lastMessageAt;
 
+	newConversationItem.viewed = true;
 	newConversationItem.isNew = true;
 
 	const curConversations = get(conversations) || [];

@@ -172,7 +172,7 @@ export function mergeConversations(newConversations, isInitialLoad) {
 					curConversations.unshift(curConversation);
 				} else {
 					newConversation = get(curConversation);
-					console.log('lastMessageText', newConversation.lastMessageText);
+					// console.log('lastMessageText', newConversation.lastMessageText);
 					newConversation.isNew = false;
 					newConversation = Object.assign(newConversation, newConversationData);
 					curConversation.set(newConversation);
@@ -181,8 +181,6 @@ export function mergeConversations(newConversations, isInitialLoad) {
 				if (!isInitialLoad) { // && curConversationId === get(conversationId)) { // && isConversationPage()) {
 					ConversationsModel.emit('conversationUpdated', {conversationId: curConversationId});
 				}
-			} else {
-				console.log('is saving: ' + get(savingConversationId));
 			}
 		}
 

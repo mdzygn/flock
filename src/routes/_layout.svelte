@@ -61,11 +61,15 @@
 		mounted = true;
     });
 
-	// $: {
+	$: {
+		$page; mounted;
+		onPageUpdated();
+	}
 
-	page.subscribe(onPagUpdated);
+	// mounted.subscribe(onPageUpdated);
+	// page.subscribe(onPageUpdated);
 
-	function onPagUpdated() {
+	function onPageUpdated() {
 		const changedPath = ($curPath !== $page.path);
 
 		if ($curPath !== $page.path) {

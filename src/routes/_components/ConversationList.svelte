@@ -27,7 +27,7 @@
 
     import { getConversations, loadingConversations } from '../../models/conversationsModel';
 
-    $: isLoadingConversations = $loadingConversations && (!$conversations || !$conversations.length); // !$conversations;
+    $: isLoadingConversations = $loadingConversations && !$conversations;; // || !$conversations.length) // - don't check length as causes to flash
     // $: isLoadingConversations = $loadingConversations && (!$conversations || !$conversations.length);
 
     // $: console.log('isLoadingConversations', isLoadingConversations, 'loadingConversations', $loadingConversations);

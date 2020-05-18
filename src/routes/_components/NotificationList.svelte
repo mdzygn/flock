@@ -22,7 +22,9 @@
     } from '../../models/appModel';
 
 	import { getNotifications, loadingNotifications } from '../../models/notificationsModel';
-	// const loadingNotifications = writable(false);
+    // const loadingNotifications = writable(false);
+
+    $: isLoadingNotifications = $loadingNotifications && !$notifications; // (!$notifications || !$notifications.length); // - don't check length as causes to flash
 
 
 	// import noficationData from '../data/notifications.json';
@@ -41,7 +43,7 @@
 </script>
 
 <div class="notificationList {className}">
-    {#if $loadingNotifications && (!$notifications || !$notifications.length) || !isUserLoaded($user, $userId, $loggingIn)}
+    {#if isLoadingNotifications || !isUserLoaded($user, $userId, $loggingIn)}
         <ContentLoader label="{locale.LOADING.NOTIFICATIONS}" />
     {:else}
         {#each $notifications as notification}

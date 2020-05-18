@@ -33,11 +33,13 @@
 
     // $: { console.log('conversations', $conversations, 'isLoadingConversations', isLoadingConversations) }
 
+    // (!$conversations || !isUserLoaded($user, $userId) || isLoadingConversations)
+
     export let className = '';
 </script>
 
 <div class="conversationList {className}">
-    {#if (!$conversations || !isUserLoaded($user, $userId) || isLoadingConversations)}
+    {#if !isUserLoaded($user, $userId) || isLoadingConversations}
         <ContentLoader label="{locale.LOADING.CONVERSATIONS}" />
     {:else}
         {#if $conversations && $conversations.length}

@@ -100,13 +100,13 @@
             sectionLabel = '#'+$channel.title;
         } else if (/\/posts\/.+/.test(path) && $channel) {
             sectionLabel = '#'+$channel.title;
-        } else if (/\/profile\/.+/.test(path) && $viewedUser) {//$viewedUser && !$viewedUser.isCurrentUser) {
+        } else if (/\/profile\/.+/.test(path) && $user && $viewedUser) {//$viewedUser && !$viewedUser.isCurrentUser) {
             if (isCurrentUser) {
                 sectionLabel = 'My Profile';
             } else {
                 sectionLabel = $viewedUser.name;
             }
-        } else if (/\/messages\/.+/.test(path) && ($newConversation || ($conversationGroupId && $viewedUser && $conversationGroupId + 'u-'+$viewedUser.id) || ($conversation && (($conversation.project && $project) || ($conversation.users && $conversation.users.length))))) { // $conversation.user
+        } else if (/\/messages\/.+/.test(path) && $user && ($newConversation || ($conversationGroupId && $viewedUser && $conversationGroupId + 'u-'+$viewedUser.id) || ($conversation && (($conversation.project && $project) || ($conversation.users && $conversation.users.length))))) { // $conversation.user
             if ($conversation && !$conversation.isNew) {
                 if ($conversation.project && $project) { // // temporary
                     sectionLabel = $project.title;

@@ -13,6 +13,7 @@ import loadingRequestUtil from '../utils/loadingRequestUtil';
 import ConversationModel from '../models/conversationModel';
 
 import {
+	user,
 	userId,
 	usercode,
 	curPath,
@@ -73,9 +74,7 @@ function pollConversation() {
 		const curPollDelay = isMessagesPage() ? config.CONVERSATION_POLL_DELAY_ACTIVITY : config.CONVERSATION_POLL_DELAY;
 
 		curPollConversationTimeout = window.setTimeout(() => {
-			// if (document.hasFocus()) {
-			if (document.visibilityState === 'visible') {
-				// console.log('poll');
+			if (get(user) && document.visibilityState === 'visible') {
 				updateConversations({isPoll: true});
 			}
 			pollConversation();

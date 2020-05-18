@@ -67,11 +67,11 @@ export const POLL_CHECK_DURATION = 1;
 export const ACTIVE_INTERACTION_DELAY = 60; // 30;
 
 export const NOTIFICATION_POLL_DELAY_FOCUSED = 6; // 5; // 1; // 5;
-export const NOTIFICATION_POLL_DELAY = 12; // 20; // 3; // 20; // 15;
+export const NOTIFICATION_POLL_DELAY = 10; // 20; // 3; // 20; // 15;
 export const NOTIFICATION_POLL_DELAY_IDLE = 3 * 60;
 
 export const CONVERSATION_POLL_DELAY_FOCUSED = 3; // 4; // 2;
-export const CONVERSATION_POLL_DELAY = 9; // 8;
+export const CONVERSATION_POLL_DELAY = 5; // 8;
 export const CONVERSATION_POLL_DELAY_IDLE = 60;
 
 export const CONVERSATION_MAX_PREVIEW_LENGTH = 32;

@@ -127,10 +127,10 @@ export function loadMessages(options, callback) {
 				// 	messagesLoadedAt = result.loadedAt;
 				// }
 				mergeMessages(result.messages);
-				loadingRequestUtil.clearLoading('messages', options, () => { loadingMessages.set(false); });
 			} else {
 				mergeMessages([]);
 			}
+			loadingRequestUtil.clearLoading('messages', options, () => { loadingMessages.set(false); });
 			if (callback) {
 				callback(result);
 			}

@@ -155,8 +155,8 @@ export function loadNotifications(options) {
 					notificationsLoadedAt = result.loadedAt;
 				}
 				mergeNotifications(result.notifications);
-				loadingRequestUtil.clearLoading('notifications', options, () => { loadingNotifications.set(false); });
 			}
+			loadingRequestUtil.clearLoading('notifications', options, () => { loadingNotifications.set(false); });
 		});
 	}
 }

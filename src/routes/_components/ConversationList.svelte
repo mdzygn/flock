@@ -27,8 +27,10 @@
 
     import { getConversations, loadingConversations } from '../../models/conversationsModel';
 
-    $: isLoadingConversations = $loadingConversations && !$conversations;
+    $: isLoadingConversations = $loadingConversations && (!$conversations || !$conversations.length); // !$conversations;
     // $: isLoadingConversations = $loadingConversations && (!$conversations || !$conversations.length);
+
+    // $: console.log('isLoadingConversations', isLoadingConversations, 'loadingConversations', $loadingConversations);
 
     let conversations = writable(null);
     $: { conversations = getConversations({ userId: $userId }) };

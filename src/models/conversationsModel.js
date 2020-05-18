@@ -38,6 +38,7 @@ let pollStarted = false;
 let curPollConversationTimeout = null;
 
 let conversationsLoadedAt = null;
+let conversationLoadingTimeout = null;
 
 let conversations = writable(null);
 
@@ -142,15 +143,27 @@ export function loadConversations(options, callback) {
 
 	if (!loadingRequestUtil.isLoading('conversations', options)) {
 		// console.log('loadConversations', options);
-		loadingRequestUtil.setLoading('conversations', options, () => { loadingConversations.set(true); });
+		loadingRequestUtil.setLoading('conversations', options, () => {
+			if (typeof window !== 'undefined') { // delay timeout to ensure property updates correctly - TODO: shouldn't be needed
+				conversationLoadingTimeout = window.setTimeout(() => {
+					loadingConversations.set(true);
+				}, 0);
+			} else {
+				loadingConversations.set(true);
+			}
+		});
 		api.getConversations(options).then(result => {
 			if (!result.error) {
 				if (result.loadedAt) {
 					conversationsLoadedAt = result.loadedAt;
 				}
 				mergeConversations(result.conversations, isInitialLoad);
-				loadingRequestUtil.clearLoading('conversations', options, () => { loadingConversations.set(false); });
 			}
+			if (conversationLoadingTimeout !== null && typeof window !== 'undefined') {
+				window.clearTimeout(conversationLoadingTimeout);
+				conversationLoadingTimeout = null;
+			}
+			loadingRequestUtil.clearLoading('conversations', options, () => { loadingConversations.set(false); });
 			if (callback) {
 				callback(result);
 			}

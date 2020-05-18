@@ -87,10 +87,10 @@ function isMessagesPage() {
 	return !!(path && path.match(/messages/));
 }
 
-function isConversationPage() {
-	const path = get(curPath);
-	return !!(path && path.match(/messages\/.+/));
-}
+// function isConversationPage() {
+// 	const path = get(curPath);
+// 	return !!(path && path.match(/messages\/.+/));
+// }
 
 conversations.subscribe(() => {
 	const curConversations = get(conversations) || [];

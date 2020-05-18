@@ -50,6 +50,7 @@
 		userId,
 		isProjectLoaded,
 		isUserLoaded,
+		loggingIn,
 		getHeaderImage,
 	} from '../../../models/appModel';
 
@@ -150,7 +151,7 @@
 
 	$: {
 		if (!projectStateLoaded) {
-			if (isProjectLoaded($project, $projectId) && isUserLoaded($user, $userId)) {
+			if (isProjectLoaded($project, $projectId) && isUserLoaded($user, $userId, $loggingIn)) {
 				if (!isTeamMember && !following) {
 					forceProjectShowingInfo = true;
 				}
@@ -182,7 +183,7 @@
 </svelte:head>
 
 <div class="pageContent" class:archived="{isArchived}">
-	{#if ($loadingProjects && (!$project || $project.id !== $projectId )) || !isUserLoaded($user, $userId) || (!$project && $loadingProjects) }
+	{#if ($loadingProjects && (!$project || $project.id !== $projectId )) || !isUserLoaded($user, $userId, $loggingIn) || (!$project && $loadingProjects) }
 		<ContentLoader label="{locale.LOADING.PROJECT}" />
 	{:else if !$project || !$project.id}
 		<ContentLoader label="{locale.PROJECT.NOT_FOUND}" />

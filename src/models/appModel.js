@@ -66,6 +66,8 @@ export const userId = appModel.userId;
 
 const draftPosts = appModel.draftPosts;
 
+export const loggingIn = writable(false);
+
 export const unsavedChanges = writable(false);
 
 export const showBetaFeatures = appModel.showBetaFeatures;
@@ -199,8 +201,8 @@ export function checkParams(query) {
 }
 
 // not correct on initial site load for moment
-export function isUserLoaded(user, userId) {
-    return !userId || (user && user.loaded);
+export function isUserLoaded(user, userId, loggingIn) {
+    return !loggingIn && (!userId || (user && user.loaded));
 }
 
 export function isProjectLoaded(project, projectId) {

@@ -27,6 +27,7 @@
 		user,
 		userId,
 		isUserLoaded,
+		loggingIn,
 	} from '../../../models/appModel';
 
 	import { loadConversation, messageUser, showShareProfileDialog } from '../../../actions/appActions';
@@ -76,7 +77,7 @@
 	<title>Flock</title>
 </svelte:head>
 
-{#if ($loadingUsers && (!viewedUserLoaded || $viewedUser.id !== $profileId )) || !isUserLoaded($user, $userId) }
+{#if ($loadingUsers && (!viewedUserLoaded || $viewedUser.id !== $profileId )) || !isUserLoaded($user, $userId, $loggingIn) }
 	<ContentLoader label="{locale.LOADING.PROFILE}" />
 {:else if !viewedUserLoaded || !$viewedUser.id}
 	<ContentLoader label="{locale.PROFILE.NOT_FOUND}" />

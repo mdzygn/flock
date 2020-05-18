@@ -16,6 +16,9 @@
 
     import {
         userId,
+        user,
+        loggingIn,
+		isUserLoaded,
     } from '../../models/appModel';
 
 	import { getNotifications, loadingNotifications } from '../../models/notificationsModel';
@@ -38,7 +41,7 @@
 </script>
 
 <div class="notificationList {className}">
-    {#if $loadingNotifications && (!$notifications || !$notifications.length)}
+    {#if $loadingNotifications && (!$notifications || !$notifications.length) || !isUserLoaded($user, $userId, $loggingIn)}
         <ContentLoader label="{locale.LOADING.NOTIFICATIONS}" />
     {:else}
         {#each $notifications as notification}

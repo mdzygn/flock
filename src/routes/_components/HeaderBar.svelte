@@ -31,6 +31,7 @@
         newConversation,
         user,
         userId,
+        loggingIn,
         lastPreProjectPath,
         getIsCurrentUser,
         showBetaFeatures,
@@ -66,7 +67,7 @@
         // viewingOwnProfile: $viewedUser ? $viewedUser.isCurrentUser : false,
     };
 
-    $: loggedIn = !!$user;
+    $: loggedIn = !!$user || $loggingIn;
 
     $: curSection = getSectionByPath(path, appState);
     $: isProjectView = curSection ? curSection.isProjectView : false;
@@ -226,7 +227,7 @@
             <img class="backButton" src="{BackIcon}" alt="back" on:click|preventDefault="{goBack}" />
         {/if}
     {/if}
-    {#if $userId}
+    {#if loggedIn}
         <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showMainOptions}"></Button>
         <div class="avatarIcon" class:button="{!isMyProfile}" on:click="{loadMyProfile}">
             <AvatarIcon user="{user}" useThumb="{true}" />

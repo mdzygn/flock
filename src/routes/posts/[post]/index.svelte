@@ -32,6 +32,7 @@
 		userId,
 		project,
 		isUserLoaded,
+		loggingIn,
 	} from '../../../models/appModel';
 
 	import {
@@ -65,7 +66,7 @@
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 	$: isArchived = ($project && $project.archived) || false;
 
-	$: threadLoading = ($loadingPosts && (!$post || $post.id !== $postId)) || !isUserLoaded($user, $userId) || (!$project && $loadingProjects);
+	$: threadLoading = ($loadingPosts && (!$post || $post.id !== $postId)) || !isUserLoaded($user, $userId, $loggingIn) || (!$project && $loadingProjects);
 
 	$: isLoadingPosts = ($loadingPosts && (!$posts || !$posts.length));
 

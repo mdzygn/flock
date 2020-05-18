@@ -72,6 +72,8 @@ import {
     channel,
     post,
 
+    loggingIn,
+
     postType,
 
     targetProject,
@@ -575,6 +577,8 @@ export function showTogglePublicDialog() {
 export function login(details) {
     username.set(details.username);
 
+    loggingIn.set(true);
+
     api.login(details).then(result => {
         if (result && !result.invalid && !result.error) {
             const userInfo = result;
@@ -590,6 +594,7 @@ export function login(details) {
         } else {
             showPrompt(promptIds.LOG_IN_ERROR);
         }
+        loggingIn.set(false);
     });
 }
 

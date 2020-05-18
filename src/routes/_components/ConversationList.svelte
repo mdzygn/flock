@@ -17,11 +17,13 @@
     import {
         userId,
         user,
+        loggingIn,
 		isUserLoaded,
     } from '../../models/appModel';
 
     // $: loggedOut = isUserLoaded($user, $userId) && !$user && !$userId;
     // $: console.log('loggedOut', loggedOut, 'isUserLoaded', isUserLoaded($user, $userId), 'userId', $userId);
+    // $: console.log('isUserLoaded', isUserLoaded($user, $userId, $loggingIn));
 
     import { getConversations, loadingConversations } from '../../models/conversationsModel';
 
@@ -39,7 +41,7 @@
 </script>
 
 <div class="conversationList {className}">
-    {#if !isUserLoaded($user, $userId) || isLoadingConversations}
+    {#if isLoadingConversations || !isUserLoaded($user, $userId, $loggingIn)}
         <ContentLoader label="{locale.LOADING.CONVERSATIONS}" />
     {:else}
         {#if $conversations && $conversations.length}

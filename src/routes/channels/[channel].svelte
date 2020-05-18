@@ -19,6 +19,7 @@
 		user,
 		userId,
 		isUserLoaded,
+		loggingIn,
 	} from '../../models/appModel';
 
 	import {
@@ -84,7 +85,7 @@
 </svelte:head>
 
 <div class="pageContent">
-	{#if ($loadingChannels && (!$channel || $channel.id !== $channelId)) || !isUserLoaded($user, $userId) || (!$project && $loadingProjects) }
+	{#if ($loadingChannels && (!$channel || $channel.id !== $channelId)) || !isUserLoaded($user, $userId, $loggingIn) || (!$project && $loadingProjects) }
 		<ContentLoader label="{locale.LOADING.CHANNEL}" />
 	{:else if !$channel || !$channel.id}
 		<ContentLoader label="{locale.CHANNEL.NOT_FOUND}" />

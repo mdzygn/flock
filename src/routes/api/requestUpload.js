@@ -136,7 +136,7 @@ export async function post(req, res, next) {
 		if (newItemThumbFilename) {
 			s3.getSignedUrl('putObject', s3ThumbParams, (err, data) => {
 				if (err) {
-					console.log('putObject error', err);
+					console.error('putObject error', err);
 					errorResponse(res, {}, {errorMsg: 'image thumb putObject error'});
 					return;
 				}

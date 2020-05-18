@@ -185,7 +185,7 @@ export function mergeConversations(newConversations, isInitialLoad) {
 			if (curConversationId !== get(savingConversationId)) {
 				curConversation = curConversations.find(match => get(match).id === curConversationId);
 
-				console.log('mergeConversation', curConversationId, 'exists', !!curConversation);
+				// console.log('mergeConversation', curConversationId, 'exists', !!curConversation);
 
 				if (!curConversation) {
 					curConversation = ConversationModel(newConversationData);
@@ -257,7 +257,7 @@ export function checkConversationSeen(details, force) {
 
 				conversations.set(get(conversations));
 
-				console.log('curConversation set seen', curConversation.id);
+				// console.log('curConversation set seen', curConversation.id);
 				const result = api.updateConversation({id: details.conversationId});
 			}
 		}
@@ -319,7 +319,7 @@ export function removeConversation(conversationId) {
 		const conversationIndex = curConversations.indexOf(curConversation);
 		// console.log('conversationIndex', conversationIndex);
 		if (conversationIndex !== -1) {
-			console.log('removeConversation', conversationId);
+			// console.log('removeConversation', conversationId);
 			curConversations.splice(conversationIndex, 1);
 			conversations.set(curConversations);
 		}
@@ -335,7 +335,7 @@ export function addConversation(details) {
 	newConversationItem.id = details.id;
 	// newConversationItem.targetUserIds = details.targetUserIds;
 
-	console.log('addConversation', newConversationItem.id);
+	// console.log('addConversation', newConversationItem.id);
 
 	newConversationItem.createdAt = (new Date()).getTime(); // use for initial sort values
 	newConversationItem.lastMessageAt = newConversationItem.lastMessageAt;

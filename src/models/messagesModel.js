@@ -250,6 +250,11 @@ export function addMessage(messageDetails) {
 			savingConversationId.set(null);
 
 			if (result.duplicateKey && result.action === 'addConversation' && get(conversationGroupId)) {
+				const curConversation = get(conversation);
+				if (curConversation && curConversation.isNew) {
+					removeConversation(get(conversationId));
+				}
+
 				loadConversation(get(conversationGroupId)); // refresh conversation if existing conflict hit
 			}
 		} else {

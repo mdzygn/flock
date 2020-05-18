@@ -69,7 +69,10 @@
 
 	$: {
 		checkMessagesUpdated();
-		if (!conversationSeenTimeout && $conversation && mounted && $messages && $messages.length) {
+
+		// console.log('curConversation set seen?', $conversation, mounted, $messages, $messages && $messages.length);
+		if ($conversation && mounted && $messages && $messages.length) { // !conversationSeenTimeout &&
+			clearConversationSeenTimeout(conversationSeenTimeout);
 			conversationSeenTimeout = setConversationSeenTimeout({conversationId: $conversationId});
 		}
 	}

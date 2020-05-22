@@ -24,6 +24,7 @@ export async function post(req, res, next) {
 
 	const conversationId = options && options.conversationId;
 	const getUnloaded = options && options.getUnloaded;
+	const preload = options && options.preload;
 	const userId = options && options.userId;
 	// let loadedAt = options && options.loadedAt;
 
@@ -79,19 +80,22 @@ export async function post(req, res, next) {
 		const messageUpdateResult = db.collection('messages').updateMany(filter, updateAction);
 	}
 
-	const viewedAtTime = (new Date()).getTime();
+	let viewedAtTime = null;
+	if (!preload) {
+		viewedAtTime = (new Date()).getTime();
 
-	const conversationsFilter = {
-		id: conversationId,
-		"users.id": userId,
-	};
-	const newValues = {
-		"users.$.viewedAt" : viewedAtTime,
-	};
+		const conversationsFilter = {
+			id: conversationId,
+			"users.id": userId,
+		};
+		const newValues = {
+			"users.$.viewedAt" : viewedAtTime,
+		};
 
-	const conversationUpdateResult = await db.collection('conversations').updateMany(conversationsFilter, { $set: newValues });
-	if (!conversationUpdateResult) {
-		errorResponse(res, {}, {errorMsg: 'can\'t update conversation(s)', errorObject: conversationUpdateResult});
+		const conversationUpdateResult = await db.collection('conversations').updateMany(conversationsFilter, { $set: newValues });
+		if (!conversationUpdateResult) {
+			errorResponse(res, {}, {errorMsg: 'can\'t update conversation(s)', errorObject: conversationUpdateResult});
+		}
 	}
 
 	// let loadedTime = null;
@@ -113,7 +117,10 @@ export async function post(req, res, next) {
 	// });
 
 	if (messages) {
-		const result = {messages, viewedAt: viewedAtTime};
+		const result = {messages};
+		if (viewedAtTime) {
+			result.viewedAt = viewedAtTime;
+		}
 		// if (loadedTime) {
 		// 	result.loadedAt = loadedTime;
 		// }

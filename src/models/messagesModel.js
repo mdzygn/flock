@@ -87,7 +87,7 @@ function conversationUpdated(event) {
 }
 
 function updateMessages() {
-	getMessages({ conversationId: get(conversationId), getUnloaded: true });
+	getMessages({ conversationId: get(conversationId), getUnloaded: true, preload: true });
 }
 
 // function pollMessage() {
@@ -298,7 +298,7 @@ export function addMessage(messageDetails) {
 		//-- console.log('curConversationId : ' + curConversationId, ' result.conversationId: ' + result.conversationId);
 
 		if (curConversationId) {
-			getMessages({ conversationId: curConversationId, getUnloaded: true }, onMessagesRetrieved);
+			getMessages({ conversationId: curConversationId, getUnloaded: true }); // , onMessagesRetrieved);
 			// function onMessagesRetrieved() {
 			// 	checkConversationSeen({conversationId: get(conversationId)}, true);
 			// }

@@ -31,8 +31,8 @@
 
     import ConversationsModel, {
 		loadingConversations,
-		setConversationSeenTimeout,
-		clearConversationSeenTimeout,
+		// setConversationSeenTimeout,
+		// clearConversationSeenTimeout,
     } from '../../models/conversationsModel';
 
 	import MessagesModel, { getMessages, loadingMessages } from '../../models/messagesModel';
@@ -70,13 +70,14 @@
 	// }
 
 	$: {
+		$messages;
 		checkMessagesUpdated();
 
-		// console.log('curConversation set seen?', $conversation, mounted, $messages, $messages && $messages.length);
-		if ($conversation && mounted && $messages && $messages.length) { // !conversationSeenTimeout &&
-			clearConversationSeenTimeout(conversationSeenTimeout);
-			conversationSeenTimeout = setConversationSeenTimeout({conversationId: $conversationId});
-		}
+		// // console.log('curConversation set seen?', $conversation, mounted, $messages, $messages && $messages.length);
+		// if ($conversation && mounted && $messages && $messages.length) { // !conversationSeenTimeout &&
+		// 	clearConversationSeenTimeout(conversationSeenTimeout);
+		// 	conversationSeenTimeout = setConversationSeenTimeout({conversationId: $conversationId});
+		// }
 	}
 
 	// $: console.log('messages', $messages);
@@ -127,7 +128,7 @@
 				} else {
 					showMessagesAdded = true;
 				}
-				clearConversationSeen();
+				// clearConversationSeen();
 			}
 		}
 		lastMessagesCount = $messages ? $messages.length : 0;
@@ -162,8 +163,13 @@
 		MessagesModel.off('messagedAdded', scrollToBottom);
 		// ConversationsModel.off('conversationUpdated', conversationUpdated);
 
-		clearConversationSeen();
+		// clearConversationSeen();
 	})
+
+	// function clearConversationSeen() {
+	// 	clearConversationSeenTimeout(conversationSeenTimeout); // force new timeout
+	// 	conversationSeenTimeout = null;
+	// }
 
 	// function conversationUpdated() {
 	// 	// console.log('conversationUpdated');
@@ -172,11 +178,6 @@
 	// 		messages = getMessages({ conversationId: $conversationId, getUnloaded: true }, messagesLoaded);
 	// 	}
 	// }
-
-	function clearConversationSeen() {
-		clearConversationSeenTimeout(conversationSeenTimeout); // force new timeout
-		conversationSeenTimeout = null;
-	}
 </script>
 
 <svelte:head>

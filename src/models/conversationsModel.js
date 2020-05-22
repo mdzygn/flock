@@ -262,49 +262,49 @@ function clearFilteredConversations() {
 	conversations.set(curConversations);
 }
 
-export function checkConversationSeen(details, force) {
-	if (details.conversationId) {
-		const curConversationModel = getConversation(details.conversationId);
-		if (curConversationModel) {
-			const curConversation = get(curConversationModel);
-			//debugOutput.set(get(debugOutput) + 'viewed: ' + curConversation.viewed + ' ' + details.conversationId + ' ' + (curConversation.id === get(savingConversationId)) + '<br/>');
-			if (!curConversation.viewed || force) {
-				if (curConversation.id !== get(savingConversationId)) {
-					curConversation.viewed = true;
-					curConversationModel.set(curConversation);
-					conversations.set(get(conversations));
+// export function checkConversationSeen(details, force) {
+// 	if (details.conversationId) {
+// 		const curConversationModel = getConversation(details.conversationId);
+// 		if (curConversationModel) {
+// 			const curConversation = get(curConversationModel);
+// 			//debugOutput.set(get(debugOutput) + 'viewed: ' + curConversation.viewed + ' ' + details.conversationId + ' ' + (curConversation.id === get(savingConversationId)) + '<br/>');
+// 			if (!curConversation.viewed || force) {
+// 				if (curConversation.id !== get(savingConversationId)) {
+// 					curConversation.viewed = true;
+// 					curConversationModel.set(curConversation);
+// 					conversations.set(get(conversations));
 
-					//debugOutput.set(get(debugOutput) + 'set viewed' + '<br/>');
+// 					//debugOutput.set(get(debugOutput) + 'set viewed' + '<br/>');
 
-					// debugOutput.set(get(debugOutput) + '<br/>checkConversationSeen ' + Math.floor(Math.random() * 999) + ': ' + curConversation.id);
-					// console.log('curConversation set seen', curConversation.id);
-					const result = api.updateConversation({id: details.conversationId});
-				}
-			}
-		}
-	}
-}
+// 					// debugOutput.set(get(debugOutput) + '<br/>checkConversationSeen ' + Math.floor(Math.random() * 999) + ': ' + curConversation.id);
+// 					// console.log('curConversation set seen', curConversation.id);
+// 					const result = api.updateConversation({id: details.conversationId});
+// 				}
+// 			}
+// 		}
+// 	}
+// }
 
-export function setConversationSeenTimeout(details, delay) {
-	let conversationSeenTimeout = null;
-	if (typeof window !== 'undefined') {
-		conversationSeenTimeout = window.setTimeout(() => {
-			checkConversationSeen(details);
-		}, (delay || config.CONVERSATIION_VIEWED_DELAY) * 1000);
-	}
+// export function setConversationSeenTimeout(details, delay) {
+// 	let conversationSeenTimeout = null;
+// 	if (typeof window !== 'undefined') {
+// 		conversationSeenTimeout = window.setTimeout(() => {
+// 			checkConversationSeen(details);
+// 		}, (delay || config.CONVERSATIION_VIEWED_DELAY) * 1000);
+// 	}
 
-	// onDestroy(() => { // doesn't work here?
-	// 	clearConversationSeenTimeout(conversationSeenTimeout);
-	// });
+// 	// onDestroy(() => { // doesn't work here?
+// 	// 	clearConversationSeenTimeout(conversationSeenTimeout);
+// 	// });
 
-	return conversationSeenTimeout;
-}
+// 	return conversationSeenTimeout;
+// }
 
-export function clearConversationSeenTimeout(conversationSeenTimeout) {
-	if (conversationSeenTimeout && typeof window !== 'undefined') {
-		window.clearTimeout(conversationSeenTimeout);
-	}
-}
+// export function clearConversationSeenTimeout(conversationSeenTimeout) {
+// 	if (conversationSeenTimeout && typeof window !== 'undefined') {
+// 		window.clearTimeout(conversationSeenTimeout);
+// 	}
+// }
 
 export function getConversationOtherUser(conversation) {
 	let curUser = null;
@@ -371,6 +371,25 @@ export function addConversation(details) {
 	newConversation.set(false);
 
 	ConversationsModel.emit('conversationAdded', {conversationId: details.id});
+}
+
+export function updateConversationSeen(conversationId, details) {
+	const viewedAt = details.viewedAt;
+	console.log('updateConversationSeen', conversationId, 'viewedAt', viewedAt);
+	const conversationModel = getConversation(conversationId);
+	if (conversationModel) {
+		const curConversation = get(conversationModel);
+		if (curConversation) {
+			// curConversation.viewedAt = viewedAt; // is on user item so not relevant
+			curConversation.viewed = true;
+			conversationModel.set(curConversation);
+
+			const curConversations = get(conversations) || [];
+			conversations.set(curConversations);
+
+			console.log('updateConversationSeen');
+		}
+	}
 }
 
 export function getNewConversationId() {

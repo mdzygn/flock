@@ -79,6 +79,20 @@ export async function post(req, res, next) {
 		const messageUpdateResult = db.collection('messages').updateMany(filter, updateAction);
 	}
 
+	const viewedAtTime = (new Date()).getTime();
+
+	const conversationsFilter = {
+		id: conversationId,
+		"users.id": userId,
+	};
+	const newValues = {
+		"users.$.viewedAt" : viewedAtTime,
+	};
+
+	const conversationUpdateResult = await db.collection('conversations').updateMany(conversationsFilter, { $set: newValues });
+	if (!conversationUpdateResult) {
+		errorResponse(res, {}, {errorMsg: 'can\'t update conversation(s)', errorObject: conversationUpdateResult});
+	}
 
 	// let loadedTime = null;
 	// if (messages && messages.length) {
@@ -99,7 +113,7 @@ export async function post(req, res, next) {
 	// });
 
 	if (messages) {
-		const result = {messages};
+		const result = {messages, viewedAt: viewedAtTime};
 		// if (loadedTime) {
 		// 	result.loadedAt = loadedTime;
 		// }

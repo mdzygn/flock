@@ -28,8 +28,9 @@ import {
 
 import ConversationsModel, {
 	addConversation,
-	checkConversationSeen,
+	// checkConversationSeen,
 	removeConversation,
+	updateConversationSeen,
 } from '../models/conversationsModel';
 
 // import messagesTestData from '../data/messages.json';
@@ -146,6 +147,10 @@ export function loadMessages(options, callback) {
 			loadingRequestUtil.clearLoading('messages', options, () => { loadingMessages.set(false); });
 			if (callback) {
 				callback(result);
+			}
+
+			if (result.viewedAt) {
+				updateConversationSeen(options.conversationId, {viewedAt: result.viewedAt});
 			}
 		});
 	}
@@ -294,9 +299,9 @@ export function addMessage(messageDetails) {
 
 		if (curConversationId) {
 			getMessages({ conversationId: curConversationId, getUnloaded: true }, onMessagesRetrieved);
-			function onMessagesRetrieved() {
-				checkConversationSeen({conversationId: get(conversationId)}, true);
-			}
+			// function onMessagesRetrieved() {
+			// 	checkConversationSeen({conversationId: get(conversationId)}, true);
+			// }
 		}
 
 		// savingMessage.set(false);

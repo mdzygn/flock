@@ -218,6 +218,8 @@ export async function post(req, res, next) {
 		details.conversationId = conversationId;
 		returnResult.conversationId = conversationId;
 
+		returnResult.message = details;
+
 		let addMessageResult;
 		try {
 			addMessageResult = await db.collection('messages').insertOne(details);

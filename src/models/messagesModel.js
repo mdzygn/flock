@@ -188,6 +188,7 @@ function mergeMessages(newMessages) {
 			curMessage = get(messageModel);
 			curMessage.lastMessage = lastMessage;
 			lastMessage = messageModel;
+			console.log(curMessage.createdAt, curMessage);
 		});
 
 		messages.set(curMessages);
@@ -282,6 +283,10 @@ export function addMessage(messageDetails) {
 				savingConversationId.set(null);
 				return result;
 			})
+		}
+
+		if (result.message) {
+			mergeMessages([result.message]);
 		}
 
 		let curConversationId;

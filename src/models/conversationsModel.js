@@ -375,7 +375,7 @@ export function addConversation(details) {
 
 export function updateConversationSeen(conversationId, details) {
 	const viewedAt = details.viewedAt;
-	console.log('updateConversationSeen', conversationId, 'viewedAt', viewedAt);
+	// console.log('updateConversationSeen', conversationId, 'viewedAt', viewedAt);
 	const conversationModel = getConversation(conversationId);
 	if (conversationModel) {
 		const curConversation = get(conversationModel);
@@ -387,7 +387,7 @@ export function updateConversationSeen(conversationId, details) {
 			const curConversations = get(conversations) || [];
 			conversations.set(curConversations);
 
-			console.log('updateConversationSeen');
+			console.log('updateConversationSeen', viewedAt);
 		}
 	}
 }

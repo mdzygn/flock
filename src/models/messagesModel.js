@@ -269,7 +269,7 @@ export function addMessage(messageDetails) {
 	result.then(result => {
 		if (!result || result.error || result.invalid) {
 			// console.error(result);
-			savingConversationId.set(null);
+			// savingConversationId.set(null);
 
 			// this sholdn't get called as now getting existing conversation on backend if duplicateKey found
 			if (result.duplicateKey && result.action === 'addConversation' && get(conversationGroupId)) {
@@ -289,6 +289,7 @@ export function addMessage(messageDetails) {
 			// 	return result;
 			// })
 		}
+		savingConversationId.set(null);
 
 		if (result.message) {
 			mergeMessages([result.message]);

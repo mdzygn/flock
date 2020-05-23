@@ -214,6 +214,9 @@ export async function post(req, res, next) {
 				updateConversationProps["users.$.style"] = null;
 			}
 
+			console.log('add message: ' + conversationId + ' ' + lastMessageText + ', ' + details.userId + ', ' + updateConversationProps.lastMessageAt);
+
+
 			let updateConversationResult = await db.collection('conversations').updateOne(updateConversationFilter, {$set: updateConversationProps});
 			if (!updateConversationResult) {
 				errorResponse(res, {addedMessage: true}, {errorMsg: 'error updating conversation'});

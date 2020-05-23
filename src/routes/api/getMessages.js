@@ -76,6 +76,8 @@ export async function post(req, res, next) {
 			'$addToSet': { loaded: userId },
 		};
 
+		console.log('newMessages: ' + conversationId + ' ' + userId + ' ' + messages.length);
+
 		// update loaded at time only for current user
 		const messageUpdateResult = db.collection('messages').updateMany(filter, updateAction);
 	}
@@ -91,6 +93,8 @@ export async function post(req, res, next) {
 		const newValues = {
 			"users.$.viewedAt" : viewedAtTime,
 		};
+
+		console.log('getMessages ' + conversationId + ' ' + userId + ' viewedAtTime: ' + viewedAtTime);
 
 		const conversationUpdateResult = await db.collection('conversations').updateMany(conversationsFilter, { $set: newValues });
 		if (!conversationUpdateResult) {

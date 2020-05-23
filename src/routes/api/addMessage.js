@@ -139,7 +139,7 @@ export async function post(req, res, next) {
 				};
 				if (curUser.id === details.userId) {
 					userItem.loadedAt = details.createdAt;
-					userItem.viewedAt = details.viewedAt;
+					userItem.viewedAt = details.createdAt;
 				}
 				if (!curUser.avatarImage) {
 					userItem.style = curUser.style;

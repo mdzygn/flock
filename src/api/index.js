@@ -355,17 +355,17 @@ function getConversations(options) {
 	});
 }
 
-// options = { conversationId: id, userId: id }
-function updateConversation(options) {
-	options = addCredentials(options);
-	return send('updateConversation', options).then(result => {
-		if (DEBUG && result && result.error) {
-			console.error('API Error - updateConversation: ', result, options);
-		}
-		return result;
-		// return Promise.reject(error); // TODO: prevent followups being called
-	});
-}
+// // options = { conversationId: id, userId: id }
+// function updateConversation(options) {
+// 	options = addCredentials(options);
+// 	return send('updateConversation', options).then(result => {
+// 		if (DEBUG && result && result.error) {
+// 			console.error('API Error - updateConversation: ', result, options);
+// 		}
+// 		return result;
+// 		// return Promise.reject(error); // TODO: prevent followups being called
+// 	});
+// }
 
 /*** Messages ***/
 
@@ -426,7 +426,7 @@ const api = {
 	updateNotifications,
 
 	getConversations,
-	updateConversation,
+	// updateConversation,
 
 	getMessages,
 	addMessage,

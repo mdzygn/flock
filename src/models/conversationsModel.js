@@ -185,6 +185,8 @@ export function mergeConversations(newConversations, isInitialLoad) {
 
 	// debugOutput.set(get(debugOutput) + '<br/>newConversations ' + newConversations && newConversations.length);
 
+	console.log('mergeConversations ' + newConversations && newConversations.length);
+
 	if (newConversations && newConversations.length) {
 		let curConversation, newConversationData, curConversationId, newConversation;
 		for (var conversationI = 0; conversationI < newConversations.length; conversationI++) {
@@ -212,6 +214,7 @@ export function mergeConversations(newConversations, isInitialLoad) {
 
 				if (!isInitialLoad) { // && curConversationId === get(conversationId)) { // && isConversationPage()) {
 					// debugOutput.set(get(debugOutput) + '<br/>conversationUpdated ' + curConversationId);
+					console.log('conversation updated ' + curConversationId);
 					ConversationsModel.emit('conversationUpdated', {conversationId: curConversationId});
 				}
 			}
@@ -387,7 +390,7 @@ export function updateConversationSeen(conversationId, details) {
 			const curConversations = get(conversations) || [];
 			conversations.set(curConversations);
 
-			console.log('updateConversationSeen', viewedAt);
+			console.log('seen: ', viewedAt);
 		}
 	}
 }

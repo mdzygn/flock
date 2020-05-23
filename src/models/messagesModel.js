@@ -135,6 +135,8 @@ export function loadMessages(options, callback) {
 
 		// debugOutput.set(get(debugOutput) + '<br/>' + 'loadMessages: ' + JSON.stringify(options));
 
+		console.log('getMessages ' + options.conversationId + ' ' + Math.floor(Math.random() * 9999));
+
 		api.getMessages(options).then(result => {
 			// debugOutput.set(get(debugOutput) + '<br/>message update ' + Math.floor(Math.random() * 999) + ': ' + JSON.stringify(result.messages.length) + ', ' + JSON.stringify(options));
 
@@ -178,6 +180,7 @@ function mergeMessages(newMessages) {
                 newMessage = Object.assign(newMessage, newMessageData);
                 curMessage.set(newMessage);
             }
+			console.log('new: ' + newMessageData.message);
 		}
 
 		curMessages.sort((a,b) => get(a).createdAt - get(b).createdAt );
@@ -188,7 +191,8 @@ function mergeMessages(newMessages) {
 			curMessage = get(messageModel);
 			curMessage.lastMessage = lastMessage;
 			lastMessage = messageModel;
-			console.log(curMessage.createdAt, curMessage);
+			// console.log(curMessage.createdAt + ' ' + curMessage.message);
+			// console.log(curMessage.createdAt, curMessage);
 		});
 
 		messages.set(curMessages);
@@ -267,26 +271,23 @@ export function addMessage(messageDetails) {
 			// console.error(result);
 			savingConversationId.set(null);
 
+			// this sholdn't get called as now getting existing conversation on backend if duplicateKey found
 			if (result.duplicateKey && result.action === 'addConversation' && get(conversationGroupId)) {
 				const curConversation = get(conversation);
 				if (curConversation && curConversation.isNew) {
 					removeConversation(get(conversationId));
 				}
 
-				// console.log('duplicateId')
-				// messageDetails.conversationId = result.conversationId;
-				// addMessage(messageDetails);
-
 				loadConversation(get(conversationGroupId)); // refresh conversation if existing conflict hit
 			}
 		} else {
 			// updateMessages();
 
-			const result = api.updateConversation({id: get(conversationId)});
-			result.then((result) => {
-				savingConversationId.set(null);
-				return result;
-			})
+			// const result = api.updateConversation({id: get(conversationId)});
+			// result.then((result) => {
+			// 	savingConversationId.set(null);
+			// 	return result;
+			// })
 		}
 
 		if (result.message) {

@@ -31,6 +31,7 @@ import ConversationsModel, {
 	// checkConversationSeen,
 	removeConversation,
 	updateConversationSeen,
+	isConversationPage,
 } from '../models/conversationsModel';
 
 // import messagesTestData from '../data/messages.json';
@@ -82,12 +83,13 @@ function conversationUpdated(event) {
 
 	// TODO: preload conversations into different messages
 	if (loadedConversationId === get(conversationId)) {
-		updateMessages();
+		const preloading = !isConversationPage();
+		updateMessages(preloading);
 	}
 }
 
-function updateMessages() {
-	getMessages({ conversationId: get(conversationId), getUnloaded: true, preload: true });
+function updateMessages(preloading) {
+	getMessages({ conversationId: get(conversationId), getUnloaded: true, preload: preloading });
 }
 
 // function pollMessage() {

@@ -107,7 +107,7 @@ function isMessagesPage() {
 	return !!(path && path.match(/messages/));
 }
 
-function isConversationPage() {
+export function isConversationPage() {
 	const path = get(curPath);
 	return !!(path && path.match(/messages\/.+/));
 }

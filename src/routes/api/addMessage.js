@@ -69,19 +69,20 @@ export async function post(req, res, next) {
 		let userIds = null;
 		let usersId = null;
 
+		let existingConversationFilter = {};
+
 		if (newConversation) {
 			// TODO: populate
 			userIds = [details.userId, ...targetUserIds];
 			userIds.sort();
 			usersId = getConversationUsersId(userIds);
 
-			const filter = {};
-			filter.userIds = details.userId;
-			filter.usersId = usersId;
+			existingConversationFilter.userIds = details.userId;
+			existingConversationFilter.usersId = usersId;
 
-			// console.log('use existing?', filter);
+			// console.log('use existing?', existingConversationFilter);
 
-			let exisitingConversation = await db.collection('conversations').findOne(filter); // TODO: doesn't always work sometimes someone else does the same and it doesn't work
+			let exisitingConversation = await db.collection('conversations').findOne(existingConversationFilter); // TODO: doesn't always work sometimes someone else does the same and it doesn't work
 			// console.log('exisitingConversation:', exisitingConversation);
 			if (exisitingConversation) {
 				newConversation = false;
@@ -164,17 +165,35 @@ export async function post(req, res, next) {
 			try {
 				addConversationResult = await db.collection('conversations').insertOne(conversationDetails);
 			} catch (error) {
-				catchMongoError(res, error, 'addConversation');
-				return;
+				const duplicateKey = error.errmsg && error.errmsg.includes('duplicate key');
+				if (duplicateKey) { // TODO: this shouldn't happen ensure existing conversation check above can work
+					let exisitingConversation = await db.collection('conversations').findOne(existingConversationFilter);
+					if (exisitingConversation) {
+						newConversation = false;
+
+						loadedConversation = exisitingConversation;
+						conversationId = exisitingConversation.id;
+						// console.log('use existing conversation', exisitingConversation.id);
+					}
+				}
+
+				if (newConversation) {
+					catchMongoError(res, error, 'addConversation');
+					return;
+				}
 			}
 
-			if (!addConversationResult) {
-				errorResponse(res, {}, {errorMsg: 'conversation could not be added'});
-				return;
-			} else {
-				addedConversation = conversationDetails;
+			if (newConversation) {
+				if (!addConversationResult) {
+					errorResponse(res, {}, {errorMsg: 'conversation could not be added'});
+					return;
+				} else {
+					addedConversation = conversationDetails;
+				}
 			}
-		} else {
+		}
+
+		if (!newConversation) {
 			const updateConversationFilter = {
 				id: conversationId,
 				"users.id": details.userId,

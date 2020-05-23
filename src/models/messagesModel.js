@@ -273,6 +273,10 @@ export function addMessage(messageDetails) {
 					removeConversation(get(conversationId));
 				}
 
+				// console.log('duplicateId')
+				// messageDetails.conversationId = result.conversationId;
+				// addMessage(messageDetails);
+
 				loadConversation(get(conversationGroupId)); // refresh conversation if existing conflict hit
 			}
 		} else {

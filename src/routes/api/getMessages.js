@@ -8,7 +8,7 @@ import {
 } from '../../server/mongo';
 
 export async function post(req, res, next) {
-    const { db } = await init();
+    const { db, client } = await init();
 
 	const options = req.body;
 
@@ -43,12 +43,12 @@ export async function post(req, res, next) {
 		return;
 	}
 
-	const filter = {};
-	filter.conversationId = conversationId;
+	const getMessagesFilter = {};
+	getMessagesFilter.conversationId = conversationId;
 
 	if (getUnloaded) {
-		filter.userId = { "$ne": userId };
-		filter['loaded'] = {
+		getMessagesFilter.userId = { "$ne": userId };
+		getMessagesFilter['loaded'] = {
 			"$not": { $in: [userId] }
 				// "$elemMatch": {
 				// 	userId: true,
@@ -61,90 +61,110 @@ export async function post(req, res, next) {
 		createdAt: 1
 	};
 
-    let messages = await db.collection('messages').find(filter).sort(sort).toArray();
+	let messages = null;
 
-	if (messages && messages.length) {
-		const messageSet = messages.filter((message) => message.userId !== userId);
-		const messageIds = messageSet.map((message) => message.id);
-
-		filter.id = { $in: messageIds };
-
-		// const newValues = {
-		// 	"users.$.loadedAt" : loadedTime,
-		// };
-		const updateAction = {
-			'$addToSet': { loaded: userId },
-		};
-
-		console.log('newMessages: ' + conversationId + ' ' + userId + ' ' + messages.length);
-
-		// update loaded at time only for current user
-		const messageUpdateResult = db.collection('messages').updateMany(filter, updateAction);
-	}
+	let messageUpdateAction = null;
+	let messageUpdateFilter = null;
 
 	let viewedAtTime = null;
-	if (!preload) {
-		viewedAtTime = (new Date()).getTime();
 
-		const conversationsFilter = {
-			id: conversationId,
-			"users.id": userId,
-		};
-		const newValues = {
-			"users.$.viewedAt" : viewedAtTime,
-		};
+	// if (!preload) {
+	// 	viewedAtTime = (new Date()).getTime();
 
-		console.log('getMessages ' + conversationId + ' ' + userId + ' viewedAtTime: ' + viewedAtTime);
+	// 	const conversationsFilter = {
+	// 		id: conversationId,
+	// 		"users.id": userId,
+	// 	};
+	// 	const newValues = {
+	// 		"users.$.viewedAt" : viewedAtTime,
+	// 	};
 
-		const conversationUpdateResult = await db.collection('conversations').updateMany(conversationsFilter, { $set: newValues });
-		if (!conversationUpdateResult) {
-			errorResponse(res, {}, {errorMsg: 'can\'t update conversation(s)', errorObject: conversationUpdateResult});
-		}
-	}
+	// 	// console.log('getMessages ' + conversationId + ' ' + userId + ' viewedAtTime: ' + viewedAtTime);
 
-	// const session = client.startSession();
-	// const transactionOptions = {
-	// 	readPreference: 'primary',
-	// 	readConcern: { level: 'local' },
-	// 	writeConcern: { w: 'majority' }
-	// };
-
-	// try {
-	// 	const transactionResults = await session.withTransaction(async () => {
-	// 		const usersUpdateResults = await usersCollection.updateOne(
-	// 			{ email: userEmail },
-	// 			{ $addToSet: { reservations: reservation } },
-	// 			{ session });
-	// 		console.log(`${usersUpdateResults.matchedCount} document(s) found in the users collection with the email address ${userEmail}.`);
-	// 		console.log(`${usersUpdateResults.modifiedCount} document(s) was/were updated to include the reservation.`);
-
-	// 		const isListingReservedResults = await listingsAndReviewsCollection.findOne(
-	// 			{ name: nameOfListing, datesReserved: { $in: reservationDates } },
-	// 			{ session });
-	// 		if (isListingReservedResults) {
-	// 			await session.abortTransaction();
-	// 			console.error("This listing is already reserved for at least one of the given dates. The reservation could not be created.");
-	// 			console.error("Any operations that already occurred as part of this transaction will be rolled back.");
-	// 			return;
-	// 		}
-	// 		const listingsAndReviewsUpdateResults = await listingsAndReviewsCollection.updateOne(
-	// 			{ name: nameOfListing },
-	// 			{ $addToSet: { datesReserved: { $each: reservationDates } } },
-	// 			{ session });
-	// 		console.log(`${listingsAndReviewsUpdateResults.matchedCount} document(s) found in the listingsAndReviews collection with the name ${nameOfListing}.`);
-	// 		console.log(`${listingsAndReviewsUpdateResults.modifiedCount} document(s) was/were updated to include the reservation dates.`);
-	// 	}, transactionOptions);
-
-	// 	if (transactionResults) {
-	// 		console.log("The reservation was successfully created.");
-	// 	} else {
-	// 		console.log("The transaction was intentionally aborted.");
-	// 	}
-	// } catch(e){
-	// 	console.log("The transaction was aborted due to an unexpected error: " + e);
-	// } finally {
-	// 	await session.endSession();
+	// 	// const conversationUpdateResult = await db.collection('conversations').updateMany(conversationsFilter, { $set: newValues });
+	// 	// if (!conversationUpdateResult) {
+	// 	// 	errorResponse(res, {}, {errorMsg: 'can\'t update conversation(s)', errorObject: conversationUpdateResult});
+	// 	// }
 	// }
+
+	const session = client.startSession();
+	const transactionOptions = {
+		readPreference: 'primary',
+		readConcern: { level: 'local' },
+		writeConcern: { w: 'majority' }
+	};
+
+	try {
+		let abortError = null;
+
+		const transactionResults = await session.withTransaction(async () => {
+			if (!preload) {
+				viewedAtTime = (new Date()).getTime();
+			}
+			const id = Math.floor(Math.random() * 99999);
+
+			messages = await db.collection('messages').find(getMessagesFilter).sort(sort).toArray();
+			console.log('new messages: ' + conversationId + ' ' + userId + ' ' + messages.length + ' ' + id);
+
+			if (!messages) {
+				abortError = {errorMsg: 'error getting messages'};
+				await session.abortTransaction();
+				return;
+			}
+
+			if (messages && messages.length) {
+				const messageSet = messages.filter((message) => message.userId !== userId);
+				const messageIds = messageSet.map((message) => message.id);
+
+				messageUpdateFilter = JSON.parse(JSON.stringify(getMessagesFilter));
+				messageUpdateFilter.id = { $in: messageIds };
+
+				messageUpdateAction = {
+					'$addToSet': { loaded: userId },
+				};
+
+				console.log('update messages: ' + conversationId + ' ' + userId + ' ' + messages.length + ' ' + id);
+				const messageUpdateResult = await db.collection('messages').updateMany(messageUpdateFilter, messageUpdateAction);
+				if (!messageUpdateResult) {
+					abortError = {errorMsg: 'error updating message load states'};
+					await session.abortTransaction();
+					return;
+				}
+			}
+
+			if (!preload) {
+				const conversationsFilter = {
+					id: conversationId,
+					"users.id": userId,
+				};
+				const newValues = {
+					"users.$.viewedAt" : viewedAtTime,
+				};
+
+				console.log('getMessages ' + conversationId + ' ' + userId + ' viewedAtTime: ' + viewedAtTime + ' ' + id);
+
+				const conversationUpdateResult = await db.collection('conversations').updateMany(conversationsFilter, { $set: newValues });
+				if (!conversationUpdateResult) {
+					abortError = {errorMsg: 'error updating conversation viewed state'};
+					await session.abortTransaction();
+					return;
+				}
+			}
+
+		}, transactionOptions);
+
+		console.log('transactionResults', transactionResults)
+
+		if (!transactionResults) {
+			errorResponse(res, {}, abortError || {errorMsg: 'transaction aborted getting messages'});
+			return;
+		}
+	} catch (e) {
+		errorResponse(res, {}, {errorMsg: 'unexpected error getting messages', errorObject: e});
+		return;
+	} finally {
+		await session.endSession();
+	}
 
 	// let loadedTime = null;
 	// if (messages && messages.length) {

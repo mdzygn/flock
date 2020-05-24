@@ -44,6 +44,8 @@ export async function post(req, res, next) {
 		details.createdAt = (new Date()).getTime();
 		details.modifiedAt = details.createdAt;
 
+		const requestId = Math.floor(Math.random() * 99999);
+
         if (!details.userId) {
             errorResponse(res, {}, {errorMsg: 'no userId specified with message'});
             return;
@@ -193,12 +195,17 @@ export async function post(req, res, next) {
 			}
 		}
 
+		details.createdAt = (new Date()).getTime();
+		details.modifiedAt = details.createdAt;
+
+		const updateConversationFilter = {
+			id: conversationId,
+			"users.id": details.userId,
+		};
+		let updateConversationProps = null;
+
 		if (!newConversation) {
-			const updateConversationFilter = {
-				id: conversationId,
-				"users.id": details.userId,
-			};
-			const updateConversationProps = {
+			updateConversationProps = {
 				lastMessageAt: details.createdAt,
 				lastSenderId: details.userId,
 				lastMessageText,
@@ -214,13 +221,21 @@ export async function post(req, res, next) {
 				updateConversationProps["users.$.style"] = null;
 			}
 
-			console.log('add message: ' + conversationId + ' ' + lastMessageText + ', ' + details.userId + ', ' + updateConversationProps.lastMessageAt);
+			console.log('addMessage ' + requestId + ' update conversation ' + conversationId + ' ' + lastMessageText + ', ' + details.userId + ', ' + updateConversationProps.lastMessageAt);
 
+			db.collection('conversations').updateOne(updateConversationFilter, {$set: updateConversationProps});
 
-			let updateConversationResult = await db.collection('conversations').updateOne(updateConversationFilter, {$set: updateConversationProps});
-			if (!updateConversationResult) {
-				errorResponse(res, {addedMessage: true}, {errorMsg: 'error updating conversation'});
-			}
+			// let updateConversationResult = await db.collection('conversations').updateOne(updateConversationFilter, {$set: updateConversationProps});
+			// if (!updateConversationResult) {
+			// 	errorResponse(res, {addedMessage: true}, {errorMsg: 'error updating conversation'});
+			// }
+		} else {
+			updateConversationProps = {
+				lastMessageAt: details.createdAt,
+			};
+			console.log('addMessage ' + requestId + ' update conversation ' + conversationId + ' ' + lastMessageText + ', ' + details.userId + ', ' + updateConversationProps.lastMessageAt);
+
+			db.collection('conversations').updateOne(updateConversationFilter, {$set: updateConversationProps});
 		}
 
 		// db.bar.update({user_id : 123456 , "items.item_name" : "my_item_two" }, {$inc : {"items.$.price" : 1} }, false, true);
@@ -244,6 +259,8 @@ export async function post(req, res, next) {
 
 		let addMessageResult;
 		try {
+			console.log('addMessage ' + requestId + ' add message ' + + conversationId);
+
 			addMessageResult = await db.collection('messages').insertOne(details);
 		} catch (error) {
 			catchMongoError(res, error, 'addMessage');

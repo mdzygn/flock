@@ -38,72 +38,81 @@ export async function post(req, res, next) {
 		return;
     }
 
-	const filter = {};
-	filter.userIds = userId; // userId contained in userIds
+	const getConversationsFilter = {};
+	getConversationsFilter.userIds = userId; // userId contained in userIds
 
 	if (conversationId) {
-		filter.id = conversationId;
+		getConversationsFilter.id = conversationId;
 	} else if (usersId) {
-		filter.usersId = usersId;
+		getConversationsFilter.usersId = usersId;
 	}
 	// if (getUnviewed) {
-	// 	filter['users.id'] = userId;
-	// 	filter['$expr'] = {$gt: ["$lastMessageAt", "$users.$.loadedAt"]};
-	// 	// filter['$expr'] = {$gt: ["$lastMessageAt", "$createdAt"]};
-	// 	// filter['$where'] = 'this.lastMessageAt > this.users.$.loadedAt';
-	// 	// filter['$where'] = 'this.users.$.loadedAt >= this.lastMessageAt';
-	// 	// filter.viewed = {$ne: true};
-	// 	// // filter['users.id']: details.userId,
-	// 	// filter['users.' + userId + '.loadedAt'] : details.createdAt,
+	// 	getConversationsFilter['users.id'] = userId;
+	// 	getConversationsFilter['$expr'] = {$gt: ["$lastMessageAt", "$users.$.loadedAt"]};
+	// 	// getConversationsFilter['$expr'] = {$gt: ["$lastMessageAt", "$createdAt"]};
+	// 	// getConversationsFilter['$where'] = 'this.lastMessageAt > this.users.$.loadedAt';
+	// 	// getConversationsFilter['$where'] = 'this.users.$.loadedAt >= this.lastMessageAt';
+	// 	// getConversationsFilter.viewed = {$ne: true};
+	// 	// // getConversationsFilter['users.id']: details.userId,
+	// 	// getConversationsFilter['users.' + userId + '.loadedAt'] : details.createdAt,
 	// }
 	if (loadedAt) {
-		filter.lastMessageAt = {$gt: loadedAt};
-		// filter.loadedAt = {"$exists": false};
-		// filter.loadedAt = { "$or" : [  {"$exists": false}, {$gt: loadedAt} ] };
+		getConversationsFilter.lastMessageAt = {$gt: loadedAt};
+		// getConversationsFilter.loadedAt = {"$exists": false};
+		// getConversationsFilter.loadedAt = { "$or" : [  {"$exists": false}, {$gt: loadedAt} ] };
 	}
 
+	getConversationsFilter["users.id"] = userId;
+
 	// if (getUnviewed) {
-	// 	filter.viewed = {$ne: true};
+	// 	getConversationsFilter.viewed = {$ne: true};
 	// }
 	// if (loadedAt) {
-	// 	filter.loadedAt = {"$exists": false};
-	// 	// filter.loadedAt = { "$or" : [  {"$exists": false}, {$gt: loadedAt} ] };
+	// 	getConversationsFilter.loadedAt = {"$exists": false};
+	// 	// getConversationsFilter.loadedAt = { "$or" : [  {"$exists": false}, {$gt: loadedAt} ] };
 	// }
+
+	const requestId = Math.floor(Math.random() * 99999);
 
 	const sort = {
 		lastMessageAt: 1
 		// createdAt: 1
 	};
 
-	let conversations = await db.collection('conversations').find(filter).sort(sort).toArray();
-
-
-	let curUser;
-	conversations = conversations.filter((conversation) => {
-		curUser = conversation.users.find((user) => user.id === userId);
-		conversation.viewed = curUser ? curUser.viewedAt >= conversation.lastMessageAt : true;
-		console.log('conversation: ' + conversation.id + ' ' + conversation.lastMessageText + ', ' + curUser.id + ', ' + conversation.viewed + ', ' + curUser.viewedAt + ' >= ' + conversation.lastMessageAt);
-
-		// TODO: optimize - only select unviewed in the first place if required
-		return getUnviewed ? !conversation.viewed : true;
-	});
-
 	let loadedTime;
 
-	if (conversations && conversations.length) {
-		const conversationIds = conversations.map((conversation) => conversation.id);
+	// if (conversations && conversations.length) {
+	// 	const conversationIds = conversations.map((conversation) => conversation.id);
 
-		filter.id = { $in: conversationIds };
-		filter["users.id"] = userId;
+		// const getConversationsFilter = JSON.parse(JSON.stringify(getConversationsFilter));
+		const updateConversationsFilter = getConversationsFilter;
+
+		// updateConversationsFilter.id = { $in: conversationIds };
+		// updateConversationsFilter["users.id"] = userId;
 
 		loadedTime = (new Date()).getTime();
 		const newValues = {
 			"users.$.loadedAt" : loadedTime,
 		};
 
+		console.log('getConversations ' + requestId + ' ' + loadedTime);
+
 		// update loaded at time only for current user
-		const conversationUpdateResult = db.collection('conversations').updateMany(filter, { $set: newValues });
-	}
+		db.collection('conversations').updateMany(updateConversationsFilter, { $set: newValues });
+		// const conversationUpdateResult = db.collection('conversations').updateMany(getConversationsFilter, { $set: newValues });
+	// }
+
+	let conversations = await db.collection('conversations').find(getConversationsFilter).sort(sort).toArray();
+
+	let curUser;
+	conversations = conversations.filter((conversation) => {
+		curUser = conversation.users.find((user) => user.id === userId);
+		conversation.viewed = curUser ? curUser.viewedAt >= conversation.lastMessageAt : true;
+		console.log('getConversations ' + requestId + ' ' + conversation.id + ' ' + conversation.lastMessageText + ', ' + curUser.id + ', ' + conversation.viewed + ', ' + curUser.viewedAt + ' >= ' + conversation.lastMessageAt);
+
+		// TODO: optimize - only select unviewed in the first place if required
+		return getUnviewed ? !conversation.viewed : true;
+	});
 
     // conversations.sort((a,b) => a.createdAt - b.createdAt ); // sort by reversed created time
 

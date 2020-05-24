@@ -87,12 +87,12 @@ export async function post(req, res, next) {
 	// 	// }
 	// }
 
-	const session = client.startSession();
-	const transactionOptions = {
-		readPreference: 'primary',
-		readConcern: { level: 'local' },
-		writeConcern: { w: 'majority' }
-	};
+	// const session = client.startSession();
+	// const transactionOptions = {
+	// 	readPreference: 'primary',
+	// 	readConcern: { level: 'local' },
+	// 	writeConcern: { w: 'majority' }
+	// };
 
 	// try {
 	// 	let abortError = null;
@@ -114,7 +114,7 @@ export async function post(req, res, next) {
 				'$addToSet': { loaded: userId },
 			};
 
-			const id = Math.floor(Math.random() * 99999);
+			const requestId = Math.floor(Math.random() * 99999);
 			if (!preload) {
 				viewedAtTime = (new Date()).getTime();
 			}
@@ -134,7 +134,7 @@ export async function post(req, res, next) {
 				// 	'$addToSet': { loaded: userId },
 				// };
 
-				// console.log(id + ' update messages: ' + conversationId + ' ' + userId);
+				// console.log('getMessages ' + requestId + ' update messages: ' + conversationId + ' ' + userId);
 				// db.collection('messages').updateMany(messageUpdateFilter, messageUpdateAction, { session });
 
 				// console.log('update messages: ' + conversationId + ' ' + userId + ' ' + messages.length + ' ' + id);
@@ -147,9 +147,9 @@ export async function post(req, res, next) {
 			// }
 
 			if (!preload) {
-				console.log(id + ' getMessages ' + conversationId + ' ' + userId + ' viewedAtTime: ' + viewedAtTime);
+				console.log('getMessages ' + requestId + ' getMessages ' + conversationId + ' ' + userId + ' viewedAtTime: ' + viewedAtTime);
 
-				db.collection('conversations').updateMany(conversationsFilter, { $set: conversationUpdateValues }, { session });
+				db.collection('conversations').updateMany(conversationsFilter, { $set: conversationUpdateValues }); // , { session }
 				// const conversationUpdateResult = await db.collection('conversations').updateMany(conversationsFilter, { $set: conversationUpdateValues });
 				// if (!conversationUpdateResult) {
 				// 	abortError = {errorMsg: 'error updating conversation viewed state'};
@@ -158,11 +158,11 @@ export async function post(req, res, next) {
 				// }
 			}
 
-			console.log(id + ' get messages: ' + conversationId + ' ' + userId);
-			console.log(id + ' ' + (new Date()).getTime());
-			messages = await db.collection('messages').find(getMessagesFilter, { session }).sort(sort).toArray();
+			console.log('getMessages ' + requestId + ' get messages: ' + conversationId + ' ' + userId);
+			console.log('getMessages ' + requestId + ' ' + (new Date()).getTime());
+			messages = await db.collection('messages').find(getMessagesFilter).sort(sort).toArray(); // , { session }
 
-			console.log(id + ' new messages: ' + conversationId + ' ' + userId + ' count: ' + messages.length);
+			console.log('getMessages ' + requestId + ' new messages: ' + conversationId + ' ' + userId + ' count: ' + messages.length);
 
 			if (messages && messages.length) {
 				const messageSet = messages.filter((message) => message.userId !== userId);
@@ -171,8 +171,8 @@ export async function post(req, res, next) {
 				messageUpdateFilter = JSON.parse(JSON.stringify(getMessagesFilter));
 				messageUpdateFilter.id = { $in: messageIds };
 
-				console.log(id + ' update messages: ' + conversationId + ' ' + userId);
-				db.collection('messages').updateMany(messageUpdateFilter, messageUpdateAction, { session });
+				console.log('getMessages ' + requestId + ' update messages: ' + conversationId + ' ' + userId);
+				db.collection('messages').updateMany(messageUpdateFilter, messageUpdateAction); // , { session }
 			}
 
 			if (!messages) {

@@ -135,12 +135,12 @@ export function loadMessages(options, callback) {
 
 		// debugOutput.set(get(debugOutput) + '<br/>' + 'loadMessages: ' + JSON.stringify(options));
 
-		console.log('getMessages ' + options.conversationId + ' ' + Math.floor(Math.random() * 9999));
+		// console.log('getMessages ' + options.conversationId + ' ' + Math.floor(Math.random() * 9999));
 
 		api.getMessages(options).then(result => {
 			// debugOutput.set(get(debugOutput) + '<br/>message update ' + Math.floor(Math.random() * 999) + ': ' + JSON.stringify(result.messages.length) + ', ' + JSON.stringify(options));
 
-			console.log('messages loaded ' + options.conversationId + ' count: ' + (result.messages && result.messages.length));
+			// console.log('messages loaded ' + options.conversationId + ' count: ' + (result.messages && result.messages.length));
 
 			if (!result.error) {
 				// if (result.loadedAt) {
@@ -183,7 +183,7 @@ function mergeMessages(newMessages) {
                 newMessage = Object.assign(newMessage, newMessageData);
                 curMessage.set(newMessage);
             }
-			console.log('new: ' + newMessageData.message);
+			// console.log('new: ' + newMessageData.message);
 		}
 
 		curMessages.sort((a,b) => {

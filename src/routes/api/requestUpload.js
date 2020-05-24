@@ -123,7 +123,7 @@ export async function post(req, res, next) {
 
 	s3.getSignedUrl('putObject', s3Params, (err, data) => {
 		if (err) {
-			console.log('putObject error', err);
+			console.error('putObject error', err);
 			errorResponse(res, {}, {errorMsg: 'image putObject error'});
 			return;
 		}

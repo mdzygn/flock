@@ -109,6 +109,8 @@ import {
     newConversation,
     newConversationUserIds,
     conversationGroupId,
+
+    debugOutput,
 } from '../models/appModel';
 
 ConversationsModel.on('conversationAdded', onConversationAdded);
@@ -419,8 +421,10 @@ export function loadConversation(targetConversationId, isRedirectedId, forceLoad
 
     const curConversation = get(conversation);
     if (!curConversation || curConversation.id !== targetConversationId || forceLoad) {
+        debugOutput.set('loadConversation: ' + targetConversationId);
         // console.log('loadConversations');
         loadConversations({ id: targetConversationId }, (result) => {
+			debugOutput.set('loaded conversations ' + JSON.stringify(result));
             if (!result.error && forceLoad) {
                 setConversation(targetConversationId); // set conversation after new thread force reload to ensure header updated
             }

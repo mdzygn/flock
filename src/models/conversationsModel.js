@@ -337,7 +337,7 @@ export function getUserConversationInfo(conversation) {
 
 export function removeConversation(conversationId) {
 	let curConversation = getConversation(conversationId);
-	// console.log('curConversation', curConversation);
+	// console.log('removeConversation', curConversation);
 	if (curConversation) {
 		const curConversations = get(conversations) || [];
 		const conversationIndex = curConversations.indexOf(curConversation);

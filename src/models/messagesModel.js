@@ -79,7 +79,7 @@ function onUserChange() {
 function conversationUpdated(event) {
 	const loadedConversationId = event.conversationId;
 
-	debugOutput.set(get(debugOutput) + '<br/>conversationUpdated' + ' ' + loadedConversationId + ' ' + get(conversationId));
+	// debugOutput.set(get(debugOutput) + '<br/>conversationUpdated' + ' ' + loadedConversationId + ' ' + get(conversationId));
 
 	// TODO: preload conversations into different messages
 	if (loadedConversationId === get(conversationId)) {
@@ -129,7 +129,7 @@ export function loadMessages(options, callback) {
     // messageItems.reverse();
 	// mergeMessages(messageItems);
 
-	debugOutput.set(get(debugOutput) + '<br/>loadMessages ' + options.conversationId + ' loading: ' + loadingRequestUtil.isLoading('messages', options));
+	// debugOutput.set(get(debugOutput) + '<br/>loadMessages ' + options.conversationId + ' loading: ' + loadingRequestUtil.isLoading('messages', options));
 
 	if (!loadingRequestUtil.isLoading('messages', options)) {
 		//-- console.log('loadMessages', options);
@@ -144,7 +144,7 @@ export function loadMessages(options, callback) {
 
 			// console.log('messages loaded ' + options.conversationId + ' count: ' + (result.messages && result.messages.length));
 
-			debugOutput.set(get(debugOutput) + '<br/>messages loaded ' + options.conversationId + ' ' + (result.messages && result.messages.length));
+			// debugOutput.set(get(debugOutput) + '<br/>messages loaded ' + options.conversationId + ' ' + (result.messages && result.messages.length));
 
 			if (!result.error) {
 				// if (result.loadedAt) {

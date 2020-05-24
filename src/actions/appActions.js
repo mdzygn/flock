@@ -421,10 +421,10 @@ export function loadConversation(targetConversationId, isRedirectedId, forceLoad
 
     const curConversation = get(conversation);
     if (!curConversation || curConversation.id !== targetConversationId || forceLoad) {
-        debugOutput.set('loadConversation: ' + targetConversationId);
+        // debugOutput.set('loadConversation: ' + targetConversationId);
         // console.log('loadConversations');
         loadConversations({ id: targetConversationId }, (result) => {
-			debugOutput.set(get(debugOutput) + '<br/>loaded conversations ' + targetConversationId + ' ' + (result.conversations && result.conversations.length));
+			// debugOutput.set(get(debugOutput) + '<br/>loaded conversations ' + targetConversationId + ' ' + (result.conversations && result.conversations.length));
             if (!result.error && forceLoad) {
                 setConversation(targetConversationId); // set conversation after new thread force reload to ensure header updated
             }
@@ -466,7 +466,7 @@ function setConversation(targetConversationId) {
     // console.log('setConversation', conversation, targetConversationId);
     conversation.set(curConversation);
 
-    debugOutput.set(get(debugOutput) + '<br/>setConversation ' + targetConversationId + ' ' + curConversation);
+    // debugOutput.set(get(debugOutput) + '<br/>setConversation ' + targetConversationId + ' ' + curConversation);
 
     if (curConversation) {
         if (curConversation.projectId && (!get(projectId) || !get(project) || get(projectId) !== curConversation.projectId)) {

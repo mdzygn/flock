@@ -101,9 +101,11 @@
 
 	let scrollRegion;
 
+	let lastViewHeight = 0;
+
 	let viewHeight, viewWidth;
 	$: {
-		if (viewHeight && viewWidth < config.MOBILE_DEVICE_MAX_WIDTH) { // if on mobile and height adjusted (keyboard shown)
+		if (viewHeight && viewWidth < config.MOBILE_DEVICE_MAX_WIDTH && viewHeight < lastViewHeight) { // if on mobile and height adjusted (keyboard shown)
 			scrollToBottom();
 
 			(async () => {
@@ -111,6 +113,7 @@
 				scrollToBottom();
 			})();
 		}
+		lastViewHeight = viewHeight;
 	}
 
 	async function scrollToBottom() {

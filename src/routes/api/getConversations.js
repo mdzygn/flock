@@ -84,7 +84,7 @@ export async function post(req, res, next) {
 	let curUser;
 	conversations = conversations.filter((conversation) => {
 		curUser = conversation.users.find((user) => user.id === userId);
-		conversation.viewed = curUser ? curUser.viewedAt >= conversation.lastMessageAt : true;
+		conversation.viewed = curUser ? (conversation.lastSenderId === userId || curUser.viewedAt >= conversation.lastMessageAt) : true;
 		if (MESSAGE_SYNC_DEBUG) console.log('getConversations ' + requestId + ' ' + conversation.id + ' ' + conversation.lastMessageText + ', ' + curUser.id + ', ' + conversation.viewed + ', ' + curUser.viewedAt + ' >= ' + conversation.lastMessageAt);
 
 		// TODO: optimize - only select unviewed in the first place if required

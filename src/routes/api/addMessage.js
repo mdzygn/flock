@@ -259,7 +259,7 @@ export async function post(req, res, next) {
 
 		let addMessageResult;
 		try {
-			if (MESSAGE_SYNC_DEBUG) console.log('addMessage ' + requestId + ' add message ' + + conversationId);
+			if (MESSAGE_SYNC_DEBUG) console.log('addMessage ' + requestId + ' add message ' + conversationId);
 
 			addMessageResult = await db.collection('messages').insertOne(details);
 		} catch (error) {

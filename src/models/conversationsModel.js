@@ -390,7 +390,7 @@ export function updateConversationSeen(conversationId, details) {
 			const curConversations = get(conversations) || [];
 			conversations.set(curConversations);
 
-			console.log('seen: ', viewedAt);
+			console.log('updateConversationSeen: ', viewedAt);
 		}
 	}
 }

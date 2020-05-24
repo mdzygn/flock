@@ -9,6 +9,7 @@ let db = null;
 
 export async function init() {
     if (!client) {
+        console.log('MONGODB_URI', config.MONGODB_URI);
         client = await mongo.MongoClient.connect(config.MONGODB_URI, { useUnifiedTopology:true });
         db = client.db(config.MONGODB_DB);
     }

@@ -98,39 +98,36 @@ export async function post(req, res, next) {
 		let abortError = null;
 
 		const transactionResults = await session.withTransaction(async () => {
+			try {
+
 			if (!preload) {
 				viewedAtTime = (new Date()).getTime();
 			}
 			const id = Math.floor(Math.random() * 99999);
 
-			messages = await db.collection('messages').find(getMessagesFilter).sort(sort).toArray();
-			console.log('new messages: ' + conversationId + ' ' + userId + ' ' + messages.length + ' ' + id);
 
-			if (!messages) {
-				abortError = {errorMsg: 'error getting messages'};
-				await session.abortTransaction();
-				return;
-			}
-
-			if (messages && messages.length) {
-				const messageSet = messages.filter((message) => message.userId !== userId);
-				const messageIds = messageSet.map((message) => message.id);
+			// if (messages && messages.length) {
+				// 	const messageSet = messages.filter((message) => message.userId !== userId);
+				// 	const messageIds = messageSet.map((message) => message.id);
 
 				messageUpdateFilter = JSON.parse(JSON.stringify(getMessagesFilter));
-				messageUpdateFilter.id = { $in: messageIds };
+				// messageUpdateFilter.id = { $in: messageIds };
 
 				messageUpdateAction = {
 					'$addToSet': { loaded: userId },
 				};
 
-				console.log('update messages: ' + conversationId + ' ' + userId + ' ' + messages.length + ' ' + id);
-				const messageUpdateResult = await db.collection('messages').updateMany(messageUpdateFilter, messageUpdateAction);
-				if (!messageUpdateResult) {
-					abortError = {errorMsg: 'error updating message load states'};
-					await session.abortTransaction();
-					return;
-				}
-			}
+				console.log('update messages: ' + conversationId + ' ' + userId + ' ' + id);
+				db.collection('messages').updateMany(messageUpdateFilter, messageUpdateAction, { session });
+
+				// console.log('update messages: ' + conversationId + ' ' + userId + ' ' + messages.length + ' ' + id);
+				// const messageUpdateResult = await db.collection('messages').updateMany(messageUpdateFilter, messageUpdateAction);
+				// if (!messageUpdateResult) {
+				// 	abortError = {errorMsg: 'error updating message load states'};
+				// 	await session.abortTransaction();
+				// 	return;
+				// }
+			// }
 
 			if (!preload) {
 				const conversationsFilter = {
@@ -143,12 +140,28 @@ export async function post(req, res, next) {
 
 				console.log('getMessages ' + conversationId + ' ' + userId + ' viewedAtTime: ' + viewedAtTime + ' ' + id);
 
-				const conversationUpdateResult = await db.collection('conversations').updateMany(conversationsFilter, { $set: newValues });
-				if (!conversationUpdateResult) {
-					abortError = {errorMsg: 'error updating conversation viewed state'};
-					await session.abortTransaction();
-					return;
-				}
+				db.collection('conversations').updateMany(conversationsFilter, { $set: newValues }, { session });
+				// const conversationUpdateResult = await db.collection('conversations').updateMany(conversationsFilter, { $set: newValues });
+				// if (!conversationUpdateResult) {
+				// 	abortError = {errorMsg: 'error updating conversation viewed state'};
+				// 	await session.abortTransaction();
+				// 	return;
+				// }
+			}
+
+			console.log('get messages: ' + conversationId + ' ' + userId +  ' ' + id);
+			messages = await db.collection('messages').find(getMessagesFilter, { session }).sort(sort).toArray();
+			// console.log('new messages: ' + conversationId + ' ' + userId + ' ' + messages.length + ' ' + id);
+
+			if (!messages) {
+				abortError = {errorMsg: 'error getting messages'};
+				await session.abortTransaction();
+				return;
+			}
+
+			} catch (e) {
+				console.log('error', e);
+				return;
 			}
 
 		}, transactionOptions);

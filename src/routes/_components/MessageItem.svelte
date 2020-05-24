@@ -161,7 +161,8 @@
         border: 1px solid #ACACAC;
 
         border-radius: 15px;
-        padding: 8px 12px;
+        padding: 5px 12px 4px;
+        /* padding: 8px 12px; */
         max-width: 62%;
 
         /* width: 100%; */
@@ -180,7 +181,7 @@
 
     .message {
         font-size: 1.3rem;
-        line-height: 1.3rem;
+        line-height: 1.8rem;
         /* margin-top: 7px; */
 
         user-select: text;

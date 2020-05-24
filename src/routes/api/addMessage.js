@@ -112,8 +112,7 @@ export async function post(req, res, next) {
 			}
 		}
 
-		const lastMessageText = details.message;
-
+		let lastMessageText = details.message;
 		if (lastMessageText && lastMessageText.length > MAX_PREVIEW_TEXT_LENGTH) {
 			lastMessageText = lastMessageText.substring(0, MAX_PREVIEW_TEXT_LENGTH);
 		}

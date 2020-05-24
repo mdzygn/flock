@@ -7,6 +7,10 @@ import {
 } from '../actions/appActions';
 
 import {
+    debugOutput,
+} from '../models/appModel';
+
+import {
     addMessage,
     // setLikeMessage,
     // getMessage,
@@ -18,10 +22,12 @@ export function createMessage(messageDetails) {
 
     const result = addMessage(messageDetails);
     result.then((result) => {
+        debugOutput.set('result ' + result + ', ' + result.error);
         if (result && !result.error) {
             // console.log('createMessage newConversationId', result.conversationId, 'result.conversation', result.conversation);
             //-- console.log('newConversation', result.newConversation, 'result.conversationId', result.conversationId);
 
+			debugOutput.set('result.newConversation ' + result.newConversation + ' result.conversationId ' + result.conversationId);
             if (result.newConversation) {
                 if (result.conversation) {
                     addAndSetConversation(result.conversation);

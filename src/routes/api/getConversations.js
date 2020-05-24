@@ -1,4 +1,4 @@
-import { DEBUG } from '../../server/config';
+import { MESSAGE_SYNC_DEBUG } from '../../server/config';
 
 import {
 	init,
@@ -85,7 +85,7 @@ export async function post(req, res, next) {
 	conversations = conversations.filter((conversation) => {
 		curUser = conversation.users.find((user) => user.id === userId);
 		conversation.viewed = curUser ? curUser.viewedAt >= conversation.lastMessageAt : true;
-		console.log('getConversations ' + requestId + ' ' + conversation.id + ' ' + conversation.lastMessageText + ', ' + curUser.id + ', ' + conversation.viewed + ', ' + curUser.viewedAt + ' >= ' + conversation.lastMessageAt);
+		if (MESSAGE_SYNC_DEBUG) console.log('getConversations ' + requestId + ' ' + conversation.id + ' ' + conversation.lastMessageText + ', ' + curUser.id + ', ' + conversation.viewed + ', ' + curUser.viewedAt + ' >= ' + conversation.lastMessageAt);
 
 		// TODO: optimize - only select unviewed in the first place if required
 		return getUnviewed ? !conversation.viewed : true;
@@ -107,7 +107,7 @@ export async function post(req, res, next) {
 			"users.$.loadedAt" : loadedTime,
 		};
 
-		console.log('getConversations ' + requestId + ' ' + loadedTime);
+		if (MESSAGE_SYNC_DEBUG) console.log('getConversations ' + requestId + ' ' + loadedTime);
 
 		// update loaded at time only for current user
 		db.collection('conversations').updateMany(updateConversationsFilter, { $set: newValues });

@@ -1,4 +1,4 @@
-import config from '../../server/config';
+import { MESSAGE_SYNC_DEBUG } from '../../server/config';
 
 import { init, validateCredentials, response, errorResponse, filterItemDetails, catchMongoError, generateId, getConversationUsersId } from '../../server/mongo';
 
@@ -221,7 +221,7 @@ export async function post(req, res, next) {
 				updateConversationProps["users.$.style"] = null;
 			}
 
-			console.log('addMessage ' + requestId + ' update conversation ' + conversationId + ' ' + lastMessageText + ', ' + details.userId + ', ' + updateConversationProps.lastMessageAt);
+			if (MESSAGE_SYNC_DEBUG) console.log('addMessage ' + requestId + ' update conversation ' + conversationId + ' ' + lastMessageText + ', ' + details.userId + ', ' + updateConversationProps.lastMessageAt);
 
 			db.collection('conversations').updateOne(updateConversationFilter, {$set: updateConversationProps});
 
@@ -233,7 +233,7 @@ export async function post(req, res, next) {
 			updateConversationProps = {
 				lastMessageAt: details.createdAt,
 			};
-			console.log('addMessage ' + requestId + ' update conversation ' + conversationId + ' ' + lastMessageText + ', ' + details.userId + ', ' + updateConversationProps.lastMessageAt);
+			if (MESSAGE_SYNC_DEBUG) console.log('addMessage ' + requestId + ' update conversation ' + conversationId + ' ' + lastMessageText + ', ' + details.userId + ', ' + updateConversationProps.lastMessageAt);
 
 			db.collection('conversations').updateOne(updateConversationFilter, {$set: updateConversationProps});
 		}
@@ -259,7 +259,7 @@ export async function post(req, res, next) {
 
 		let addMessageResult;
 		try {
-			console.log('addMessage ' + requestId + ' add message ' + + conversationId);
+			if (MESSAGE_SYNC_DEBUG) console.log('addMessage ' + requestId + ' add message ' + + conversationId);
 
 			addMessageResult = await db.collection('messages').insertOne(details);
 		} catch (error) {

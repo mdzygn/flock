@@ -1,4 +1,4 @@
-import { DEBUG } from '../../server/config';
+import { MESSAGE_SYNC_DEBUG } from '../../server/config';
 
 import {
 	init,
@@ -147,7 +147,7 @@ export async function post(req, res, next) {
 			// }
 
 			if (!preload) {
-				console.log('getMessages ' + requestId + ' getMessages ' + conversationId + ' ' + userId + ' viewedAtTime: ' + viewedAtTime);
+				if (MESSAGE_SYNC_DEBUG) console.log('getMessages ' + requestId + ' getMessages ' + conversationId + ' ' + userId + ' viewedAtTime: ' + viewedAtTime);
 
 				db.collection('conversations').updateMany(conversationsFilter, { $set: conversationUpdateValues }); // , { session }
 				// const conversationUpdateResult = await db.collection('conversations').updateMany(conversationsFilter, { $set: conversationUpdateValues });
@@ -158,11 +158,10 @@ export async function post(req, res, next) {
 				// }
 			}
 
-			console.log('getMessages ' + requestId + ' get messages: ' + conversationId + ' ' + userId);
-			console.log('getMessages ' + requestId + ' ' + (new Date()).getTime());
+			if (MESSAGE_SYNC_DEBUG) console.log('getMessages ' + requestId + ' get messages: ' + conversationId + ' ' + userId + ' ' + (new Date()).getTime());
 			messages = await db.collection('messages').find(getMessagesFilter).sort(sort).toArray(); // , { session }
 
-			console.log('getMessages ' + requestId + ' new messages: ' + conversationId + ' ' + userId + ' count: ' + messages.length);
+			if (MESSAGE_SYNC_DEBUG) console.log('getMessages ' + requestId + ' new messages: ' + conversationId + ' ' + userId + ' count: ' + messages.length);
 
 			if (messages && messages.length) {
 				const messageSet = messages.filter((message) => message.userId !== userId);
@@ -171,7 +170,7 @@ export async function post(req, res, next) {
 				messageUpdateFilter = JSON.parse(JSON.stringify(getMessagesFilter));
 				messageUpdateFilter.id = { $in: messageIds };
 
-				console.log('getMessages ' + requestId + ' update messages: ' + conversationId + ' ' + userId);
+				if (MESSAGE_SYNC_DEBUG) console.log('getMessages ' + requestId + ' update messages: ' + conversationId + ' ' + userId);
 				db.collection('messages').updateMany(messageUpdateFilter, messageUpdateAction); // , { session }
 			}
 

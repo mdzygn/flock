@@ -62,7 +62,7 @@ export async function post(req, res, next) {
 		// getConversationsFilter.loadedAt = { "$or" : [  {"$exists": false}, {$gt: loadedAt} ] };
 	}
 
-	getConversationsFilter["users.id"] = userId;
+	// getConversationsFilter["users.id"] = userId;
 
 	// if (getUnviewed) {
 	// 	getConversationsFilter.viewed = {$ne: true};
@@ -79,29 +79,6 @@ export async function post(req, res, next) {
 		// createdAt: 1
 	};
 
-	let loadedTime;
-
-	// if (conversations && conversations.length) {
-	// 	const conversationIds = conversations.map((conversation) => conversation.id);
-
-		// const getConversationsFilter = JSON.parse(JSON.stringify(getConversationsFilter));
-		const updateConversationsFilter = getConversationsFilter;
-
-		// updateConversationsFilter.id = { $in: conversationIds };
-		// updateConversationsFilter["users.id"] = userId;
-
-		loadedTime = (new Date()).getTime();
-		const newValues = {
-			"users.$.loadedAt" : loadedTime,
-		};
-
-		console.log('getConversations ' + requestId + ' ' + loadedTime);
-
-		// update loaded at time only for current user
-		db.collection('conversations').updateMany(updateConversationsFilter, { $set: newValues });
-		// const conversationUpdateResult = db.collection('conversations').updateMany(getConversationsFilter, { $set: newValues });
-	// }
-
 	let conversations = await db.collection('conversations').find(getConversationsFilter).sort(sort).toArray();
 
 	let curUser;
@@ -113,6 +90,29 @@ export async function post(req, res, next) {
 		// TODO: optimize - only select unviewed in the first place if required
 		return getUnviewed ? !conversation.viewed : true;
 	});
+
+	let loadedTime;
+
+	if (conversations && conversations.length) {
+		const conversationIds = conversations.map((conversation) => conversation.id);
+
+		const updateConversationsFilter = JSON.parse(JSON.stringify(getConversationsFilter));
+		// const updateConversationsFilter = getConversationsFilter;
+
+		updateConversationsFilter.id = { $in: conversationIds };
+		updateConversationsFilter["users.id"] = userId;
+
+		loadedTime = (new Date()).getTime();
+		const newValues = {
+			"users.$.loadedAt" : loadedTime,
+		};
+
+		console.log('getConversations ' + requestId + ' ' + loadedTime);
+
+		// update loaded at time only for current user
+		db.collection('conversations').updateMany(updateConversationsFilter, { $set: newValues });
+		// const conversationUpdateResult = db.collection('conversations').updateMany(getConversationsFilter, { $set: newValues });
+	}
 
     // conversations.sort((a,b) => a.createdAt - b.createdAt ); // sort by reversed created time
 

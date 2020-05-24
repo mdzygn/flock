@@ -185,7 +185,7 @@
 </svelte:head>
 
 <div class="content">
-	<div class="messagesView">
+	<div class="messagesView" class:newConversation="{$newConversation}">
 		{#if isLoadingContent}
 			<ContentLoader label="{locale.LOADING.MESSAGES}" />
 		{:else if (!$messages || !$messages.length) && !$newConversation}
@@ -249,6 +249,10 @@
 	.messagesView :global(.scrollContent) {
 		display: flex;
 		align-items: flex-end;
+	}
+
+	.content :global(.newConversation .scrollContent) {
+    	min-height: initial !important;
 	}
 
 	.button {

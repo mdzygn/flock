@@ -31,6 +31,9 @@ export function testInputDefocus(event, options) {
         if (options && options.action && (!actionOnCtrl || event.ctrlKey)) {
             if (!options.preventBlur) {
                 event.target.blur();
+            } else {
+                event.target.focus(); // ensure focused
+                event.preventDefault();
             }
             options.action();
         } else if (options && options.target) {

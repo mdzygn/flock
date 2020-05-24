@@ -105,6 +105,11 @@
 	$: {
 		if (viewHeight && viewWidth < config.MOBILE_DEVICE_MAX_WIDTH) { // if on mobile and height adjusted (keyboard shown)
 			scrollToBottom();
+
+			(async () => {
+				await tick();
+				scrollToBottom();
+			})();
 		}
 	}
 

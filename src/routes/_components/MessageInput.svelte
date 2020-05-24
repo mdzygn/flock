@@ -82,6 +82,10 @@
     function submit() {
         if (submitEnabled) {
             createNewMessage();
+
+            if (messageField) {
+                messageField.focus();
+            }
         }
     }
 

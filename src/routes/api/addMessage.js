@@ -233,7 +233,7 @@ export async function post(req, res, next) {
 			updateConversationProps = {
 				lastMessageAt: details.createdAt,
 			};
-			if (MESSAGE_SYNC_DEBUG) console.log('addMessage ' + requestId + ' update conversation ' + conversationId + ' ' + lastMessageText + ', ' + details.userId + ', ' + updateConversationProps.lastMessageAt);
+			if (MESSAGE_SYNC_DEBUG) console.log('addMessage ' + requestId + ' update new conversation ' + conversationId + ' ' + lastMessageText + ', ' + details.userId + ', ' + updateConversationProps.lastMessageAt);
 
 			db.collection('conversations').updateOne(updateConversationFilter, {$set: updateConversationProps});
 		}

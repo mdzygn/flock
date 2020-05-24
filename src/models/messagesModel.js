@@ -179,13 +179,23 @@ function mergeMessages(newMessages) {
                 curMessages.unshift(curMessage);
             } else {
                 newMessage = get(curMessage);
+				newMessage.isNew = false;
                 newMessage = Object.assign(newMessage, newMessageData);
                 curMessage.set(newMessage);
             }
 			console.log('new: ' + newMessageData.message);
 		}
 
-		curMessages.sort((a,b) => get(a).createdAt - get(b).createdAt );
+		curMessages.sort((a,b) => {
+			if (get(a).isNew && !get(b).isNew) { // ensure new messages stay at bottom
+				return 1;
+			} else if (get(b).isNew && !get(a).isNew) {
+				return -1;
+			} else {
+				return get(a).createdAt - get(b).createdAt
+			}
+		});
+		// curMessages.sort((a,b) => get(a).createdAt - get(b).createdAt );
 		// curMessages.sort((a,b) => get(b).createdAt - get(a).createdAt ); // sort by reversed created time
 
 		let lastMessage = null;
@@ -257,6 +267,8 @@ export function addMessage(messageDetails) {
 
 	newMessage.createdAt = (new Date()).getTime(); // use for initial sort values
 	newMessage.modifiedAt = newMessage.createdAt;
+
+	newMessage.isNew = true;
 
 	// savingMessageId.set(newMessage.id); // need to keep saving message so doesn't override on load
 	// savingMessage.set(true);

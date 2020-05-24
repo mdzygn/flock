@@ -185,7 +185,7 @@ export function mergeConversations(newConversations, isInitialLoad) {
 
 	// debugOutput.set(get(debugOutput) + '<br/>newConversations ' + newConversations && newConversations.length);
 
-	console.log('mergeConversations ' + newConversations && newConversations.length);
+	console.log('mergeConversations count: ' + (newConversations && newConversations.length));
 
 	if (newConversations && newConversations.length) {
 		let curConversation, newConversationData, curConversationId, newConversation;

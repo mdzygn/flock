@@ -94,31 +94,48 @@ export async function post(req, res, next) {
 		writeConcern: { w: 'majority' }
 	};
 
-	try {
-		let abortError = null;
+	// try {
+	// 	let abortError = null;
 
-		const transactionResults = await session.withTransaction(async () => {
-			try {
+	// 	const transactionResults = await session.withTransaction(async () => {
+	// 		try {
 
+			const conversationsFilter = {
+				id: conversationId,
+				"users.id": userId,
+			};
+			const conversationUpdateValues = {};
+			// const conversationUpdateValues = {
+			// 	"users.$.viewedAt" : viewedAtTime,
+			// };
+
+			messageUpdateFilter = getMessagesFilter;
+			messageUpdateAction = {
+				'$addToSet': { loaded: userId },
+			};
+
+			const id = Math.floor(Math.random() * 99999);
 			if (!preload) {
 				viewedAtTime = (new Date()).getTime();
 			}
-			const id = Math.floor(Math.random() * 99999);
 
+			conversationUpdateValues["users.$.viewedAt"] = viewedAtTime;
 
 			// if (messages && messages.length) {
 				// 	const messageSet = messages.filter((message) => message.userId !== userId);
 				// 	const messageIds = messageSet.map((message) => message.id);
 
-				messageUpdateFilter = JSON.parse(JSON.stringify(getMessagesFilter));
+				// messageUpdateFilter = JSON.parse(JSON.stringify(getMessagesFilter));
 				// messageUpdateFilter.id = { $in: messageIds };
 
-				messageUpdateAction = {
-					'$addToSet': { loaded: userId },
-				};
+				// messageUpdateFilter = getMessagesFilter;
 
-				console.log('update messages: ' + conversationId + ' ' + userId + ' ' + id);
-				db.collection('messages').updateMany(messageUpdateFilter, messageUpdateAction, { session });
+				// messageUpdateAction = {
+				// 	'$addToSet': { loaded: userId },
+				// };
+
+				// console.log(id + ' update messages: ' + conversationId + ' ' + userId);
+				// db.collection('messages').updateMany(messageUpdateFilter, messageUpdateAction, { session });
 
 				// console.log('update messages: ' + conversationId + ' ' + userId + ' ' + messages.length + ' ' + id);
 				// const messageUpdateResult = await db.collection('messages').updateMany(messageUpdateFilter, messageUpdateAction);
@@ -130,18 +147,10 @@ export async function post(req, res, next) {
 			// }
 
 			if (!preload) {
-				const conversationsFilter = {
-					id: conversationId,
-					"users.id": userId,
-				};
-				const newValues = {
-					"users.$.viewedAt" : viewedAtTime,
-				};
+				console.log(id + ' getMessages ' + conversationId + ' ' + userId + ' viewedAtTime: ' + viewedAtTime);
 
-				console.log('getMessages ' + conversationId + ' ' + userId + ' viewedAtTime: ' + viewedAtTime + ' ' + id);
-
-				db.collection('conversations').updateMany(conversationsFilter, { $set: newValues }, { session });
-				// const conversationUpdateResult = await db.collection('conversations').updateMany(conversationsFilter, { $set: newValues });
+				db.collection('conversations').updateMany(conversationsFilter, { $set: conversationUpdateValues }, { session });
+				// const conversationUpdateResult = await db.collection('conversations').updateMany(conversationsFilter, { $set: conversationUpdateValues });
 				// if (!conversationUpdateResult) {
 				// 	abortError = {errorMsg: 'error updating conversation viewed state'};
 				// 	await session.abortTransaction();
@@ -149,35 +158,49 @@ export async function post(req, res, next) {
 				// }
 			}
 
-			console.log('get messages: ' + conversationId + ' ' + userId +  ' ' + id);
+			console.log(id + ' get messages: ' + conversationId + ' ' + userId);
+			console.log(id + ' ' + (new Date()).getTime());
 			messages = await db.collection('messages').find(getMessagesFilter, { session }).sort(sort).toArray();
-			// console.log('new messages: ' + conversationId + ' ' + userId + ' ' + messages.length + ' ' + id);
+
+			console.log(id + ' new messages: ' + conversationId + ' ' + userId + ' count: ' + messages.length);
+
+			if (messages && messages.length) {
+				const messageSet = messages.filter((message) => message.userId !== userId);
+				const messageIds = messageSet.map((message) => message.id);
+
+				messageUpdateFilter = JSON.parse(JSON.stringify(getMessagesFilter));
+				messageUpdateFilter.id = { $in: messageIds };
+
+				console.log(id + ' update messages: ' + conversationId + ' ' + userId);
+				db.collection('messages').updateMany(messageUpdateFilter, messageUpdateAction, { session });
+			}
 
 			if (!messages) {
-				abortError = {errorMsg: 'error getting messages'};
-				await session.abortTransaction();
+				// abortError = {errorMsg: 'error getting messages'};
+				errorResponse(res, {}, abortError || {errorMsg: 'error getting messages'});
+				// await session.abortTransaction();
 				return;
 			}
 
-			} catch (e) {
-				console.log('error', e);
-				return;
-			}
+			// } catch (e) {
+			// 	console.log('error', e);
+			// 	return;
+			// }
 
-		}, transactionOptions);
+	// 	}, transactionOptions);
 
-		console.log('transactionResults', transactionResults)
+	// 	console.log('transactionResults', transactionResults)
 
-		if (!transactionResults) {
-			errorResponse(res, {}, abortError || {errorMsg: 'transaction aborted getting messages'});
-			return;
-		}
-	} catch (e) {
-		errorResponse(res, {}, {errorMsg: 'unexpected error getting messages', errorObject: e});
-		return;
-	} finally {
-		await session.endSession();
-	}
+	// 	if (!transactionResults) {
+	// 		errorResponse(res, {}, abortError || {errorMsg: 'transaction aborted getting messages'});
+	// 		return;
+	// 	}
+	// } catch (e) {
+	// 	errorResponse(res, {}, {errorMsg: 'unexpected error getting messages', errorObject: e});
+	// 	return;
+	// } finally {
+	// 	await session.endSession();
+	// }
 
 	// let loadedTime = null;
 	// if (messages && messages.length) {

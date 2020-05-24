@@ -252,7 +252,7 @@
 	}
 
 	.content :global(.newConversation .scrollContent) {
-    	min-height: initial !important;
+    	min-height: initial !important; /* prevent scrolling view */
 	}
 
 	.button {

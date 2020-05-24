@@ -79,7 +79,7 @@ function onUserChange() {
 function conversationUpdated(event) {
 	const loadedConversationId = event.conversationId;
 
-	// debugOutput.set('conversationUpdated', loadedConversationId, get(conversationId));
+	debugOutput.set(get(debugOutput) + '<br/>conversationUpdated' + ' ' + loadedConversationId + ' ' + get(conversationId));
 
 	// TODO: preload conversations into different messages
 	if (loadedConversationId === get(conversationId)) {
@@ -127,7 +127,9 @@ messages.subscribe(() => {
 export function loadMessages(options, callback) {
     // const messageItems = JSON.parse(JSON.stringify(messagesTestData));
     // messageItems.reverse();
-    // mergeMessages(messageItems);
+	// mergeMessages(messageItems);
+
+	debugOutput.set(get(debugOutput) + '<br/>loadMessages ' + options.conversationId + ' loading: ' + loadingRequestUtil.isLoading('messages', options));
 
 	if (!loadingRequestUtil.isLoading('messages', options)) {
 		//-- console.log('loadMessages', options);
@@ -141,6 +143,8 @@ export function loadMessages(options, callback) {
 			// debugOutput.set(get(debugOutput) + '<br/>message update ' + Math.floor(Math.random() * 999) + ': ' + JSON.stringify(result.messages.length) + ', ' + JSON.stringify(options));
 
 			// console.log('messages loaded ' + options.conversationId + ' count: ' + (result.messages && result.messages.length));
+
+			debugOutput.set(get(debugOutput) + '<br/>messages loaded ' + options.conversationId + ' ' + (result.messages && result.messages.length));
 
 			if (!result.error) {
 				// if (result.loadedAt) {

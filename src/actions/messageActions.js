@@ -1,4 +1,4 @@
-// import { get } from 'svelte/store';
+import { get } from 'svelte/store';
 
 import {
     checkLoggedIn,
@@ -22,12 +22,12 @@ export function createMessage(messageDetails) {
 
     const result = addMessage(messageDetails);
     result.then((result) => {
-        debugOutput.set('result ' + result + ', ' + result.error);
+        debugOutput.set(get(debugOutput) + '<br/>addMessage ' + result.error);
         if (result && !result.error) {
             // console.log('createMessage newConversationId', result.conversationId, 'result.conversation', result.conversation);
             //-- console.log('newConversation', result.newConversation, 'result.conversationId', result.conversationId);
 
-			debugOutput.set('result.newConversation ' + result.newConversation + ' result.conversationId ' + result.conversationId);
+			debugOutput.set(get(debugOutput) + '<br/>newConversation ' + result.newConversation + ' conversationId ' + result.conversationId);
             if (result.newConversation) {
                 if (result.conversation) {
                     addAndSetConversation(result.conversation);

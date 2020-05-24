@@ -213,7 +213,7 @@ export function mergeConversations(newConversations, isInitialLoad) {
 				}
 
 				if (!isInitialLoad) { // && curConversationId === get(conversationId)) { // && isConversationPage()) {
-					// debugOutput.set(get(debugOutput) + '<br/>conversationUpdated ' + curConversationId);
+					debugOutput.set(get(debugOutput) + '<br/>conversationUpdated ' + curConversationId);
 					// console.log('conversation updated ' + curConversationId);
 					ConversationsModel.emit('conversationUpdated', {conversationId: curConversationId});
 				}

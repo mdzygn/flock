@@ -316,6 +316,8 @@
 		top: 5px;
 		left: 5px;
 		color: #ff0000;
+		user-select: text;
+		z-index: 999;
 	}
 
 </style>

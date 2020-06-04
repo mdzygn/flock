@@ -2,15 +2,77 @@
     import Button from '../../components/Button.svelte';
     // import TagSet from './TagSet.svelte';
 
+    import { onMount, tick } from 'svelte';
+
     export let filterString = '';
 
     let items = ['all', 'design', 'arts', 'tech', 'environment', 'social', 'apps', 'games', 'music', 'food', 'education', 'media', 'narrative'];
 
     function selectFilter(filterValue) {
+        // selectingItem = true;
+
+        // await tick();
+        // console.log('set value');
+
         if (filterValue === 'all') {
             filterString = '';
         } else {
             filterString = filterValue;
+        }
+
+        // await tick();
+        // console.log('stop set value');
+        // selectingItem = false;
+    }
+
+    $: {
+        filterString;
+        if (mounted) {
+            (async () => {
+                await tick();
+                scrollToSelectedItem();
+            })();
+        }
+    }
+
+    let scrollRegion;
+    let mounted = false;
+
+    // let selectingItem;
+
+    const SCROLL_FOCUS_MARGIN = 10;
+    const SCROLL_FOCUS_OFFSET = 40;
+
+    onMount(() => {
+        mounted = true;
+    });
+
+    function scrollToSelectedItem() {
+        // console.log('update value ' + selectingItem);
+        if (scrollRegion) { //  && !selectingItem
+            const selectedElementArray = scrollRegion.getElementsByClassName('selectedItem');
+            const selectedElement = selectedElementArray && selectedElementArray.length ? selectedElementArray[0] : null;
+            if (selectedElement) {
+                const selectedElementLeft = selectedElement.offsetLeft;
+                const selectedElementRight = selectedElement.offsetLeft + selectedElement.offsetWidth;
+                const scrollRegionWidth = scrollRegion.offsetWidth;
+                const scrollRegionLeft = scrollRegion.scrollLeft;
+                const scrollRegionRight = scrollRegion.scrollLeft + scrollRegionWidth;
+
+                // console.log('offset: ' + (selectedElement.offsetLeft + selectedElement.offsetWidth) + ' width: ' + scrollRegionWidth);
+                // console.log(selectedElementRight + ' > ' + (scrollRegion.scrollLeft + scrollRegionWidth - SCROLL_FOCUS_MARGIN));
+                // if (selectedElement.offsetLeft + selectedElement.offsetWidth > scrollRegionWidth) {
+                if (selectedElementRight < scrollRegionWidth - SCROLL_FOCUS_MARGIN) {
+                    // console.log('reset ' + selectedElementRight + ' < ' + (scrollRegionWidth - SCROLL_FOCUS_MARGIN));
+                    // console.log('set scroll ' + 0);
+                    scrollRegion.scrollTo(0, 0);
+                } else if (selectedElementRight > scrollRegionRight - SCROLL_FOCUS_MARGIN
+                || selectedElementLeft < scrollRegionLeft + SCROLL_FOCUS_MARGIN) {
+                    const offsetX = selectedElement.offsetLeft - SCROLL_FOCUS_OFFSET;
+                    // console.log('set scroll: ' + offsetX);
+                    scrollRegion.scrollTo(offsetX, 0);
+                }
+            }
         }
     }
 </script>
@@ -18,7 +80,7 @@
 <div class="filterBar">
     <!-- <TagSet tags="{items}" /> -->
 
-    <div class="filterScrollRegion">
+    <div class="filterScrollRegion" bind:this="{scrollRegion}">
         <div class="filterSet">
             {#each items as item, index}
                 <Button className="filterButton {(index ? item === filterString : filterString === '') ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item}</Button>

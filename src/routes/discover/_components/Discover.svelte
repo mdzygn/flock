@@ -5,6 +5,7 @@
 
 	import ScrollView from '../../../components/ScrollView.svelte';
 	import SearchBar from './../../_components/SearchBar.svelte';
+	import FilterBar from './../../_components/FilterBar.svelte';
 	import HomeIntro from './../../_components/HomeIntro.svelte';
 
 	import Proxy from '../../../components/Proxy.svelte';
@@ -36,6 +37,8 @@
 
 	let discoveryProjects = writable([]);
 	let filteredDiscoveryProjects = writable([]);
+
+	let filterString = '';
 
 	$: { discoveryProjects = getDiscoveryProjects(); }
 
@@ -105,13 +108,32 @@
 						height: 46px;" />
 				</Proxy>
 			{:else}
+				<!-- <Proxy image="{proxyFilterImage}" className="proxyOverlay">
+					<Hotspot onClick="{toggleViewMode}" style="
+						left: 7px;
+						top: 5px;
+						width: 38px;
+						height: 39px;" />
+
+					<Hotspot onClick="{toggleLocationMode}" style="
+						right: 10px;
+						top: 5px;
+						width: 232px;
+						height: 46px;" />
+				</Proxy> -->
 				<SearchBar bind:searchString={$discoverSearchString} />
+				<FilterBar bind:filterString={filterString} />
 			{/if}
 		</div>
 	</ScrollView>
 </div>
 
 <style>
+	.pageContent :global(.proxyOverlay) {
+		position: absolute;
+		opacity: 0.5;
+	}
+
 	.feed {
 		width: 100%;
 

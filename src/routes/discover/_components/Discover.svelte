@@ -47,9 +47,8 @@
 	$: { $filteredDiscoveryProjects = getFilteredProjects($discoveryProjects, { searchString: $discoverSearchString, filterString: $discoverFilterString }) }
 
 	$: {
-		if ($discoverFilterString) {
-			scrollToTop();
-		}
+		$discoverFilterString;
+		scrollToTop();
 	}
 
     onMount(() => {

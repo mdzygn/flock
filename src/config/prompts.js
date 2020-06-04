@@ -238,7 +238,7 @@ const prompts = {
         ],
     },
     SET_ACCOUNT: {
-        title: 'Account Details',
+        title: 'Set Account Details',
         menuItems: [
             {
                 label: 'Confirm',

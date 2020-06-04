@@ -11,10 +11,13 @@
     import MoreArrowIcon from "../../assets/icons/next_arrow.png";
     import DiscoverArrowIcon from "../../assets/icons/discover_arrow_icon.png";
 
+	import FilterBar from './../_components/FilterBar.svelte';
+
     import { loadProject } from '../../actions/appActions';
 
     import {
         user,
+		discoverFilterString,
     } from '../../models/appModel';
 
     import {
@@ -65,6 +68,8 @@
     <div class="discoverIndicatorContainer">
         <Button className="discoverIndicator" icon="{DiscoverArrowIcon}">{locale.HOME_INTRO.DISCOVER}</Button>
     </div>
+
+	<FilterBar bind:filterString={$discoverFilterString} />
 </div>
 
 <style>
@@ -78,6 +83,10 @@
         /* height: 520px; */
         background-color: #ffffff;
         padding-bottom: 2px;
+    }
+
+    .homeIntro :global(.filterButton) {
+        background-color: initial;
     }
 
     .button {
@@ -222,6 +231,10 @@
 		display: flex;
 		justify-content: center;
         margin-top: -3px;
+
+        /* padding-top: 5px;
+        padding-bottom: 10px; */
+        padding-bottom: 8px;
     }
 
     .homeIntro :global(.discoverIndicator) {

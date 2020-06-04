@@ -43,9 +43,19 @@
 
 	$: { $filteredDiscoveryProjects = getFilteredProjects($discoveryProjects, { searchString: $discoverSearchString, filterString: $discoverFilterString }) }
 
+	$: {
+		if ($discoverFilterString) {
+			scrollToTop();
+		}
+	}
+
 	let scrollRegion;
 
 	function onHome() {
+		scrollToTop();
+	}
+
+	function scrollToTop() {
 		if (scrollRegion) {
         	scrollRegion.scrollTo(0, 0);
 		}

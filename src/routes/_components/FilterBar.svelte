@@ -30,6 +30,8 @@
 <style>
     .filterBar {
         width: 100%;
+        background-color: #ffffff;
+        padding-bottom: 10px;
     }
 
     .filterScrollRegion {
@@ -60,7 +62,7 @@
         padding: 2px 10px;
 
         margin-right: 5px;
-        margin-bottom: 8px;
+        /* margin-bottom: 8px; */
 
         color: #0D0D0D;
     }

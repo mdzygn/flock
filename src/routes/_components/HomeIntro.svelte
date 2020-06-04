@@ -89,6 +89,13 @@
         background-color: initial;
     }
 
+    .homeIntro :global(.filterButton.selectedItem) {
+        padding: 0px 6px;
+        border-radius: 0;
+        border: none;
+        border-bottom: 2px solid #242424;
+    }
+
     .button {
         cursor: pointer;
     }

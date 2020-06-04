@@ -1,6 +1,8 @@
 <script>
 	import locale from '../../../locale';
 
+	import { onMount, tick } from 'svelte';
+
 	import { writable } from 'svelte/store';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
@@ -48,6 +50,15 @@
 			scrollToTop();
 		}
 	}
+
+    onMount(() => {
+		if ($discoverSearchString || $discoverFilterString) {
+            (async () => {
+                await tick();
+				scrollToTop();
+            })();
+		}
+    });
 
 	let scrollRegion;
 

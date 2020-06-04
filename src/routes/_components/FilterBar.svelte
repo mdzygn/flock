@@ -6,7 +6,7 @@
 
     export let filterString = '';
 
-    let items = ['all', 'design', 'arts', 'tech', 'environment', 'social', 'apps', 'games', 'music', 'media', 'narrative', 'education', 'food'];
+    let items = ['all', 'design', 'arts', 'tech', 'environment', 'community', 'apps', 'games', 'music', 'media', 'narrative', 'education', 'food'];
 
     function selectFilter(filterValue) {
         // selectingItem = true;

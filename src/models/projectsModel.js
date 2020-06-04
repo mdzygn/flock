@@ -197,18 +197,25 @@ export function getFilteredProjects(projects, options) { // filteredProjects
 }
 
 function projectSearchMatch(project, searchString, filterString) {
+	let filterMatched = true;
 	if (filterString) {
-		if (project.title && project.title.toLowerCase().includes(filterString)) return true;
-		if (project.description && project.description.toLowerCase().includes(filterString)) return true;
-		if (project.tags && project.tags.toLowerCase().includes(filterString)) return true;
+		filterMatched = false;
+		if (project.title && project.title.toLowerCase().includes(filterString)) filterMatched = true;
+		if (project.description && project.description.toLowerCase().includes(filterString)) filterMatched = true;
+		if (project.tags && project.tags.toLowerCase().includes(filterString)) filterMatched = true;
 	}
-	if (searchString) {
-		if (project.title && project.title.toLowerCase().includes(searchString)) return true;
-		if (project.description && project.description.toLowerCase().includes(searchString)) return true;
-		if (project.tags && project.tags.toLowerCase().includes(searchString)) return true;
-		if (project.location && project.location.toLowerCase().includes(searchString)) return true;
+	if (filterMatched) {
+		if (searchString) {
+			if (project.title && project.title.toLowerCase().includes(searchString)) return true;
+			if (project.description && project.description.toLowerCase().includes(searchString)) return true;
+			if (project.tags && project.tags.toLowerCase().includes(searchString)) return true;
+			if (project.location && project.location.toLowerCase().includes(searchString)) return true;
+		} else {
+			return true;
+		}
+	} else {
+		return false;
 	}
-	return false;
 }
 
 export function getMyProjects() {

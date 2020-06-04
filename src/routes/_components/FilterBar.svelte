@@ -2,9 +2,13 @@
     import Button from '../../components/Button.svelte';
     // import TagSet from './TagSet.svelte';
 
-    export let filterString = '';
+    export let filterString = 'all';
 
     let items = ['all', 'design', 'arts', 'tech', 'environment', 'social', 'apps', 'games', 'music', 'food', 'education', 'media', 'narrative'];
+
+    function selectFilter(filterValue) {
+        filterString = filterValue;
+    }
 </script>
 
 <div class="filterBar">
@@ -13,7 +17,7 @@
     <div class="filterScrollRegion">
         <div class="filterSet">
             {#each items as item, index}
-                <Button className="filterButton {index === 0 ? 'defaultItem' : ''}">{item}</Button>
+                <Button className="filterButton {item === filterString ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item}</Button>
             {/each}
         </div>
     </div>
@@ -50,17 +54,17 @@
         font-size: 1.5rem;
 
         margin-right: 5px;
-        padding: 2px 11px;
+        padding: 2px 12px;
         margin-bottom: 8px;
 
         color: #0D0D0D;
     }
 
-    .filterSet :global(.defaultItem) {
+    .filterSet :global(.selectedItem) {
         border: 2px solid #242424;
         background-color: initial;
 
-        padding: 0px 11px;
+        padding: 0px 10px;
     }
 
 

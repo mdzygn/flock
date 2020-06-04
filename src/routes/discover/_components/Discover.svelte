@@ -35,6 +35,7 @@
 
 	import { loadProject } from '../../../actions/appActions';
 
+	const DISCOVER_SCROLL_DOWN_AMOUNT = 200;
 
 	AppModel.on('home', onHome);
 
@@ -72,6 +73,12 @@
 		}
 	}
 
+	function onDiscoverScrollDown() {
+		if (scrollRegion) {
+        	scrollRegion.scrollTo(0, scrollRegion.scrollTop + DISCOVER_SCROLL_DOWN_AMOUNT);
+		}
+	}
+
 	function toggleViewMode() {
 		$viewMode = ($viewMode === 'explore') ? 'discover' : 'explore';
 	}
@@ -91,7 +98,7 @@
 
 		{#if !$discoverSearchString && !$discoverFilterString}
 			<!-- !$showBetaFeatures &&  -->
-			<HomeIntro />
+			<HomeIntro onDiscoverScrollDown="{onDiscoverScrollDown}" />
 		{/if}
 
 		<div class="feed">

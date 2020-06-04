@@ -24,6 +24,8 @@
         showPrompt,
     } from '../../actions/appActions';
 
+    export let onDiscoverScrollDown = null;
+
     $: loggedIn = !!$user;
 
     function signIn() {
@@ -66,7 +68,7 @@
     {/if}
 
     <div class="discoverIndicatorContainer">
-        <Button className="discoverIndicator" icon="{DiscoverArrowIcon}">{locale.HOME_INTRO.DISCOVER}</Button>
+        <Button className="discoverIndicator" icon="{DiscoverArrowIcon}" onClick="{onDiscoverScrollDown}">{locale.HOME_INTRO.DISCOVER}</Button>
     </div>
 
 	<FilterBar bind:filterString={$discoverFilterString} />

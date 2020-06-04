@@ -22,6 +22,7 @@
 		resetScrollRegionPosition,
 		showBetaFeatures,
 		discoverSearchString,
+		discoverFilterString,
 	} from '../../../models/appModel';
 
 	import {
@@ -38,11 +39,9 @@
 	let discoveryProjects = writable([]);
 	let filteredDiscoveryProjects = writable([]);
 
-	let filterString = '';
-
 	$: { discoveryProjects = getDiscoveryProjects(); }
 
-	$: { $filteredDiscoveryProjects = getFilteredProjects($discoveryProjects, { searchString: $discoverSearchString }) }
+	$: { $filteredDiscoveryProjects = getFilteredProjects($discoveryProjects, { searchString: $discoverSearchString, filterString: $discoverFilterString }) }
 
 	let scrollRegion;
 
@@ -69,7 +68,7 @@
 	<ScrollView id="discover" bind:scrollRegion="{scrollRegion}" headerStartHidden="{!$showBetaFeatures}" headerResetOnShow="{true}">
 		<!-- <Feed type="discover" linkToProjects="{true}" count="{5}" offset="{proxyContentOffset}"/> -->
 
-		{#if !$discoverSearchString}
+		{#if !$discoverSearchString && !$discoverFilterString}
 			<!-- !$showBetaFeatures &&  -->
 			<HomeIntro />
 		{/if}
@@ -81,7 +80,13 @@
 				{#each $filteredDiscoveryProjects as project}
 					<ProjectItem {project} />
 				{:else}
-					{#if $discoverSearchString}
+					{#if $discoverFilterString}
+						{#if $discoverSearchString}
+							<slot><ContentLoader label="No projects in &quot;{$discoverFilterString}&quot; matching &quot;{$discoverSearchString}&quot;" /></slot>
+						{:else}
+							<slot><ContentLoader label="No projects in &quot;{$discoverFilterString}&quot;" /></slot>
+						{/if}
+					{:else if $discoverSearchString}
 						<slot><ContentLoader label="No projects matching &quot;{$discoverSearchString}&quot;" /></slot>
 					{:else}
 						<ContentLoader label="{locale.DISCOVER.NO_PROJECTS}" />
@@ -122,7 +127,7 @@
 						height: 46px;" />
 				</Proxy> -->
 				<SearchBar bind:searchString={$discoverSearchString} />
-				<FilterBar bind:filterString={filterString} />
+				<FilterBar bind:filterString={$discoverFilterString} />
 			{/if}
 		</div>
 	</ScrollView>

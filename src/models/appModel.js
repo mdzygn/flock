@@ -46,6 +46,7 @@ const appModel = createModel({
     projectsSearchString: '',
     projectsArchiveSearchString: '',
     discoverSearchString: '',
+    discoverFilterString: '',
 
     newConversation: false,
     newConversationUserIds: [],
@@ -116,6 +117,7 @@ export const editingProject = appModel.editingProject;
 export const projectsSearchString = appModel.projectsSearchString;
 export const projectsArchiveSearchString = appModel.projectsArchiveSearchString;
 export const discoverSearchString = appModel.discoverSearchString;
+export const discoverFilterString = appModel.discoverFilterString;
 
 export const displayingAllMyProjects = appModel.displayingAllMyProjects;
 export const displayingAllFollowingProjects = appModel.displayingAllFollowingProjects;
@@ -242,6 +244,7 @@ export function getHeaderImage(imageUrl, thumb) {
 
 export function goHome() {
     discoverSearchString.set('');
+    discoverFilterString.set('');
     AppModel.emit('home');
 }
 

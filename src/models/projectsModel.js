@@ -165,6 +165,14 @@ export function getFilteredProjects(projects, options) { // filteredProjects
 		searchString = searchString.toLowerCase();
 	}
 
+	let filterString = (options && options.filterString) || null;
+	if (filterString) {
+		filterString = filterString.toLowerCase();
+		if (filterString.indexOf('s') === filterString.length - 1) {
+			filterString = filterString.substring(0, filterString.length - 1);
+		}
+	}
+
 	let limit = (options && options.limit) || 0;
 
 	const newFilteredProjects = [];
@@ -174,7 +182,7 @@ export function getFilteredProjects(projects, options) { // filteredProjects
 	for (let index = 0; index < projects.length; index++) {
 		project = projects[index];
 		curProject = get(project);
-		if (curProject && (!searchString || projectSearchMatch(curProject, searchString))) {
+		if (curProject && ((!searchString && !filterString) || projectSearchMatch(curProject, searchString, filterString))) {
 			newFilteredProjects.push(project);
 
 			filteredCount++;
@@ -188,11 +196,18 @@ export function getFilteredProjects(projects, options) { // filteredProjects
 	// filteredProjects.set(newFilteredProjects);
 }
 
-function projectSearchMatch(project, searchString) {
-	if (project.title && project.title.toLowerCase().includes(searchString)) return true;
-	if (project.description && project.description.toLowerCase().includes(searchString)) return true;
-	if (project.location && project.location.toLowerCase().includes(searchString)) return true;
-	if (project.tags && project.tags.toLowerCase().includes(searchString)) return true;
+function projectSearchMatch(project, searchString, filterString) {
+	if (filterString) {
+		if (project.title && project.title.toLowerCase().includes(filterString)) return true;
+		if (project.description && project.description.toLowerCase().includes(filterString)) return true;
+		if (project.tags && project.tags.toLowerCase().includes(filterString)) return true;
+	}
+	if (searchString) {
+		if (project.title && project.title.toLowerCase().includes(searchString)) return true;
+		if (project.description && project.description.toLowerCase().includes(searchString)) return true;
+		if (project.tags && project.tags.toLowerCase().includes(searchString)) return true;
+		if (project.location && project.location.toLowerCase().includes(searchString)) return true;
+	}
 	return false;
 }
 

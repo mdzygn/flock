@@ -31,6 +31,7 @@
 	let descriptionField;
 
 	let remainingChars;
+	let charsOver;
 	$: charCountLow = (remainingChars !== '') && remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
 
 	let contextSearchString = '';
@@ -47,7 +48,7 @@
 
     // $: titleField && titleField.focus();
 
-	$: nextEnabled = title && description && image && !headerImageIsUploading;
+	$: nextEnabled = title && description && !charsOver && image && !headerImageIsUploading;
 
 	function createNewProject() {
 		if (nextEnabled) {
@@ -89,8 +90,8 @@
 			</div>
 			<div class="field descriptionField">
 				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
-				<div class="fieldCharCount" class:charCountLow="{charCountLow}">{remainingChars}{charCountLow ? ' characters remaining' : ''}</div>
-				<LimitedTextfield bind:value="{description}" bind:field="{descriptionField}" bind:remainingChars="{remainingChars}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" />
+				<div class="fieldCharCount" class:charCountLow="{charCountLow}">{charsOver ? charsOver : remainingChars}{charsOver ? ' characters over': (charCountLow ? ' characters remaining' : '')}</div>
+				<LimitedTextfield bind:value="{description}" bind:field="{descriptionField}" bind:remainingChars="{remainingChars}" bind:charsOver="{charsOver}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" />
 				<div class="fieldNote">{@html locale.NEW_PROJECT.DESCRIPTION_NOTE}</div>
 			</div>
 			<div class="field headerImageField">
@@ -203,6 +204,9 @@
     	margin-top: 4px;
 
 		resize: none;
+	}
+	.content :global(textarea.charsOver) {
+		color: #DF3C3C;
 	}
 
 	.headerImageField {

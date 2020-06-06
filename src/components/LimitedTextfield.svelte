@@ -4,19 +4,23 @@
 
     export let value = '';
     export let field = null;
-    export let maxlength;
+	export let maxlength;
+
+    export let allowOverflow = true;
 
     export let remainingChars = '';
+    export let charsOver = '';
 
 	$: { remainingChars = Math.max(0, maxlength - value.length) };
+	$: { charsOver = Math.max(0, value.length - maxlength) };
 
 	$: {
-		if (value.length > maxlength) {
+		if (!allowOverflow && value.length > maxlength) {
 			value = value.substr(0, maxlength);
 		}
 	}
 	$: {
-        if (field) {
+        if (!allowOverflow && field) {
             field.addEventListener('keypress', e => checkFieldLimit(e));
         }
 	}
@@ -28,7 +32,10 @@
 	}
 </script>
 
-<textarea bind:value="{value}" bind:this="{field}" {maxlength} on:keypress on:keypress />
+<textarea bind:value="{value}" class:charsOver="{allowOverflow && charsOver}" bind:this="{field}" maxlength="{maxlength && !allowOverflow ? maxlength : ''}" on:keypress on:keypress />
 
 <style>
+	.charsOver {
+		color: #DF3C3C;
+	}
 </style>

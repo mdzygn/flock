@@ -81,10 +81,11 @@
 	let mounted = false;
 
 	let editPost = false;
-	let curInitializedPath = false;
-	$: {
-		if ($curPath && $curPath !== curInitializedPath && mounted) {
-			curInitializedPath = $curPath;
+	let editPostInitialized = false;
+
+	function updateEditPostState() {
+		if (!editPostInitialized) {
+			editPostInitialized = true;
 
 			editPost = ($curPath && !!$curPath.match(/posts\/.+\/edit/)) || false;
 			postContentInitialized = false;
@@ -126,7 +127,7 @@
     let postContentInitialized = false;
 
     $: {
-		if (!postContentInitialized) {
+		if (!postContentInitialized && editPostInitialized && mounted) {
 			if (editPost) {
 				if ($post) {
 					title = ($post && $post.title) || '';
@@ -153,7 +154,7 @@
 
 	$: {
 		// if (title || message) {
-		if (draftId) {
+		if (draftId && editPostInitialized && mounted) {
 			const draftPost = {
 				title,
 				message,
@@ -220,6 +221,7 @@
 		} else {
 			messageField && messageField.focus();
 		}
+		curPath.subscribe(updateEditPostState);
     });
 
 	function createNewPost() {
@@ -279,7 +281,7 @@
 
 	let changesSaved = false;
 	$: {
-		if (editPost && draftId) {
+		if (editPost && draftId && editPostInitialized && mounted) {
 			const draftPost = getDraftPost(curPostType, draftId, editPost);
 			if (draftPost && $post) {
 				changesSaved = (

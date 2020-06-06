@@ -35,8 +35,8 @@ export async function post(req, res, next) {
 				// lastActiveAt: true,
 				// modifiedAt: true,
 
-				likeCount: true,
-				followCount: true,
+				// likeCount: true,
+				// followCount: true,
 
 				isNew: true,
 

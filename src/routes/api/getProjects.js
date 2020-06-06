@@ -1,4 +1,4 @@
-import { init, response, validateCredentials, getItemIds, loadUserItemProperties } from '../../server/mongo.js';
+import { init, response, validateCredentials, getProjectLikeFollowCounts, loadUserItemProperties } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -27,6 +27,8 @@ export async function post(req, res, next) {
 				project.skills = project.skills.join(', ');
 			}
 		});
+
+		await getProjectLikeFollowCounts(projects);
 
 		await loadUserItemProperties(projects, {
 			userId,

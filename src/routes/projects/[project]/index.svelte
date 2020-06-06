@@ -340,10 +340,12 @@
 									targetItem = "{$project}"
 									targetItemId = "{$projectId}"
 
-									countProperty= "likeCount"
+									countProperty = "likeCount"
+									displayZeroCountValue = "{true}"
 
 									buttonContentStyle = "padding-right: 56px;"
 									iconStyle = "padding-bottom: 4px; margin-top: 1px;"
+									countStyle = "left: 40px"
 								/>
 							</div>
 							<div slot="buttonMiddle">
@@ -355,10 +357,12 @@
 									targetItem = "{$project}"
 									targetItemId = "{$projectId}"
 
-									countProperty= "followCount"
+									countProperty = "followCount"
+									displayZeroCountValue = "{true}"
 
 									buttonContentStyle = "padding-right: 56px;"
 									iconStyle = "padding-bottom: 4px"
+									countStyle = "left: 40px"
 								/>
 									<!-- action = "{showProjectFollowers}" -->
 							</div>

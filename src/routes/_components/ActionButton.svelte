@@ -19,10 +19,13 @@
 	export let style = null;
 	export let buttonContentStyle = null;
 	export let iconStyle = null;
+	export let countStyle = null;
+
+	export let displayZeroCountValue = false;
 
 	$: isSelected = targetItem && targetItem[targetItemProperty];
 
-	$: count = (targetItem && countProperty && targetItem[countProperty]) || '';
+	$: count = (targetItem && countProperty && targetItem[countProperty]) || (displayZeroCountValue ? 0 : '');
 </script>
 
 <div class="actionButton">
@@ -36,8 +39,8 @@
 	>
 		{#if selectedLabel}
 			<span style="visibility: {isSelected ? 'hidden' : 'visible'}">{label}</span><div class="selectedLabelContainer"><span class="selectedLabel" style="visibility: {isSelected ? 'visible' : 'hidden'}">{selectedLabel}</span></div>{:else}
-		{label}{/if}{#if countProperty && count && targetItem}<div class="countContainer">
-				<div class="count">{count}</div>
+		{label}{/if}{#if countProperty && targetItem}<div class="countContainer">
+				<div class="count" style="{countStyle}">{count}</div>
 			</div>
 		{/if}
 	</Button>

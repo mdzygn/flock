@@ -138,6 +138,8 @@ export async function loadUserItemProperties(items, options) {
     const itemIdProp = options && options.itemIdProp;
     const collections = options && options.collections;
 
+    // TODO: optimize
+
     if (itemIdProp && collections) {
         if (itemIds.length) {
             const userProjectFilter = { "userId": userId };
@@ -179,6 +181,46 @@ export async function loadUserItemProperties(items, options) {
                 }
             }
         }
+    }
+}
+
+export async function getProjectLikeFollowCounts(projects) {
+    // const projectIds = getItemIds(projects, 'id');
+    // console.log('projectIds', projects.length, projectIds);
+
+    // create aggregate queries to tally number of likes and follows for each project
+
+    const aggregateCountFacet = {};
+    const aggregateCountProject = {};
+    const aggregateCountQuery = [
+        { "$facet": aggregateCountFacet },
+        { "$project": aggregateCountProject }
+    ];
+
+    let project;
+    for (var projectI = 0; projectI < projects.length; projectI++) {
+        project = projects[projectI];
+
+        aggregateCountFacet[project.id] = [
+            { "$match" : { "projectId": project.id}},
+            { "$count": "totalCount" },
+        ];
+        aggregateCountProject[project.id] = { "$arrayElemAt": ["$" + project.id + ".totalCount", 0] }
+    }
+
+    const projectLikesCounts = await await db.collection('likes').aggregate(aggregateCountQuery).toArray();
+    const projectFollowsCounts = await await db.collection('follows').aggregate(aggregateCountQuery).toArray();
+
+    // console.log('aggregateLikesQuery', JSON.stringify(aggregateLikesQuery, 2));
+    // console.log('projectLikesCounts', projectLikesCounts);
+
+    for (var projectI = 0; projectI < projects.length; projectI++) {
+        project = projects[projectI];
+
+        // console.log(project.id, project.followCount, projectLikesCounts[0][project.id] || 0, project.likeCount, projectFollowsCounts[0][project.id] || 0);
+
+        project.likeCount = projectLikesCounts[0][project.id] || 0;
+        project.followCount = projectFollowsCounts[0][project.id] || 0;
     }
 }
 

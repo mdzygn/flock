@@ -34,8 +34,8 @@ export async function post(req, res, next) {
 			lastActiveAt: true,
 			modifiedAt: true,
 
-			likeCount: true,
-			followCount: true,
+			// likeCount: true,
+			// followCount: true,
 
 			isNew: true,
 
@@ -48,6 +48,9 @@ export async function post(req, res, next) {
 		};
 
 		details = filterItemDetails(details, projectDetails);
+
+		details.likeCount = 0;
+		details.followCount = 0;
 
 		details.createdAt = (new Date()).getTime();
 		details.modifiedAt = details.createdAt;

@@ -137,9 +137,9 @@
 	.overlayPrompt :global(.overlayMenuItem) {
         border-top: 1px solid #D4D4D4;
 	}
-	.overlayPrompt :global(.overlayMenuItem .button) {
+	/* .overlayPrompt :global(.overlayMenuItem .button) {
         padding: 13px 30px;
-	}
+	} */
 
 	.overlayPrompt :global(.closeButton) {
         position: absolute;

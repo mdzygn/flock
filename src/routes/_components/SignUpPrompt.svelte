@@ -90,8 +90,10 @@
     }
 
     .signUpPrompt :global(.avatarIcon) {
-        width: 98px;
-        height: 98px;
+        width: 80px;
+        height: 80px;
+        /* width: 98px;
+        height: 98px; */
 
         border: 4px solid #ffffff;
         box-sizing: content-box;

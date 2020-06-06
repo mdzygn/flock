@@ -235,6 +235,12 @@ const prompts = {
                 disabled: () => !get(signUpFormValidated),
                 default: true,
             },
+            {
+                className: 'textPanel',
+                prefixText: 'or ',
+                label: 'Log In',
+                action: () => { showPrompt(promptIds.LOG_IN); },
+            },
         ],
     },
     SET_ACCOUNT: {

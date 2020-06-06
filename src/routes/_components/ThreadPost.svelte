@@ -349,6 +349,9 @@
         overflow: hidden;
         text-overflow: ellipsis; */
     }
+    .title :global(a) {
+        user-select: text;
+    }
 
     .message {
         font-size: 1.5rem;
@@ -356,6 +359,9 @@
         color: #333333;
         padding-top: 8px;
 
+        user-select: text;
+    }
+    .message :global(a) {
         user-select: text;
     }
 

@@ -10,7 +10,7 @@
 
     import LikeSelectedIcon from "../../assets/icons/post_like_selected.png";
 
-    import { getMessageTime, secondsDiff, getEllipsisText } from '../../utils';
+    import { getDisplayText, getMessageTime, secondsDiff, getEllipsisText } from '../../utils';
 
     import { getUser, getUserModelFromData } from '../../models/usersModel';
 
@@ -33,7 +33,7 @@
 
     $: lastMessage = ($message && $message.lastMessage) || writable(null);
 
-    $: messageText = ($message && $message.message) || '';
+    $: messageText = ($message && $message.message && getDisplayText($message.message)) || '';
 
     $: messageId = ($message && $message.id) || null;
 
@@ -184,6 +184,9 @@
         line-height: 1.8rem;
         /* margin-top: 7px; */
 
+        user-select: text;
+    }
+    .message :global(a) {
         user-select: text;
     }
 

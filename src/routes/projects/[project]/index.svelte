@@ -522,6 +522,9 @@
 
 		user-select: text;
 	}
+    .projectInfoDetail :global(a) {
+        user-select: text;
+    }
 	.projectInfoDetail.noImage {
 		padding-top: 0;
 	}
@@ -682,6 +685,9 @@
 
 		user-select: text;
 	}
+    .description :global(a) {
+        user-select: text;
+    }
 
 	.button {
 		cursor: pointer;

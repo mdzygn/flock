@@ -315,6 +315,9 @@
 
 		color: #555555;
 	}
+    .description :global(a) {
+        user-select: text;
+    }
 
     .content :global(.addDetailsButton) {
 		display: table;

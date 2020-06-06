@@ -28,7 +28,9 @@ export function getHTMLFormattedText(text) {
 }
 
 export function getLinkFormattedText(text) {
-    const urlLinkRegex = /(<a href=")?(?:https?:\/\/)?(?:(?:www)[-A-Za-z0-9+&@#\/%?=~_|$!:.,;]+\.)+[-A-Za-z0-9+&@#\/%?=~_|$!]+/ig;
+    const urlLinkRegex = /(<a href=")?(?:https?:\/\/|www)(?:[-A-Za-z0-9+&@#\/%?=~_|$!:.,;]+\.)+[-A-Za-z0-9+&@#\/%?=~_|$!]+/ig;
+    // const urlLinkRegex = /(<a href=")?(?:https?:\/\/)?(?:(?:www)[-A-Za-z0-9+&@#\/%?=~_|$!:.,;]+\.)+[-A-Za-z0-9+&@#\/%?=~_|$!]+/ig;
+    // const urlLinkRegex = /(<a href=")?(?:https?:\/\/)?(?:[-A-Za-z0-9+&@#\/%?=~_|$!:.,;]+\.)+[-A-Za-z0-9+&@#\/%?=~_|$!]{2,8}/ig;
     text = text.replace(urlLinkRegex, function ( fullMatch, aTagMatch ) {
         if(/^https?:\/\/.+/i.test(fullMatch)) {
             return aTagMatch ? fullMatch : '<a href="'+fullMatch+'" target="_blank" onClick="event && event.stopPropagation()">'+fullMatch+'</a>';
@@ -46,10 +48,18 @@ export function getLinkFormattedText(text) {
     return text;
 }
 
+export function stripLinks(text) {
+    text = text.replace(/<\/?a(?:(?= )[^>]*)?>/ig, '');
+    return text;
+}
+
 export function getDisplayText(text, options) {
     text = getHTMLFormattedText(text);
     if (!options || !options.disallowLinks) {
         text = getLinkFormattedText(text);
+    }
+    if (options && options.disallowLinks) {
+        text = stripLinks(text);
     }
     return text;
 }

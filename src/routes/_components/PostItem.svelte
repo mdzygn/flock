@@ -395,6 +395,9 @@
     .selectable {
         user-select: text;
     }
+    .selectable :global(a) {
+        user-select: text;
+    }
 
 	.postImageContainer {
         padding-left: 66px;

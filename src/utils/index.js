@@ -24,7 +24,7 @@ export function getUnbrokenText(text) {
 }
 
 export function getLinkFormattedText(text) {
-    const urlLinkRegex = /(<a href=")?(?:https?:\/\/|www)(?:[-A-Za-z0-9+&@#\/%?=~_|$!:.,;]+\.)+[-A-Za-z0-9+&@#\/%?=_$]+/ig;
+    const urlLinkRegex = /(<a href=")?(?:https?:\/\/|www)(?:[-A-Za-z0-9+&@#\/%?=~_|$!:.,;]+\.)+[-A-Za-z0-9+&@#\/%=_$]+/ig;
     // const urlLinkRegex = /(<a href=")?(?:https?:\/\/)?(?:(?:www)[-A-Za-z0-9+&@#\/%?=~_|$!:.,;]+\.)+[-A-Za-z0-9+&@#\/%?=~_|$!]+/ig;
     // const urlLinkRegex = /(<a href=")?(?:https?:\/\/)?(?:[-A-Za-z0-9+&@#\/%?=~_|$!:.,;]+\.)+[-A-Za-z0-9+&@#\/%?=~_|$!]{2,8}/ig;
     text = text.replace(urlLinkRegex, function ( fullMatch, aTagMatch ) {

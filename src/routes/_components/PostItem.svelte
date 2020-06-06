@@ -267,7 +267,7 @@
     </div>
     {#if image && !useThumbImage}
         <div class="postImageContainer" class:button="{canMaximizeImage}" on:click="{canMaximizeImage ? toggleFullImage : null}" class:showFullImage="{showFullImage}">
-            <img class="postImage" src="{imageSrc}" alt="{title || 'post image'}" />
+            <img class="postImage" src="{imageSrc}" alt="{title || 'post'}" />
         </div>
     {/if}
 </div>

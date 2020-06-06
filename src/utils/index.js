@@ -31,16 +31,16 @@ export function getLinkFormattedText(text) {
     const urlLinkRegex = /(<a href=")?(?:https?:\/\/)?(?:(?:www)[-A-Za-z0-9+&@#\/%?=~_|$!:.,;]+\.)+[-A-Za-z0-9+&@#\/%?=~_|$!]+/ig;
     text = text.replace(urlLinkRegex, function ( fullMatch, aTagMatch ) {
         if(/^https?:\/\/.+/i.test(fullMatch)) {
-            return aTagMatch ? fullMatch : '<a href="'+fullMatch+'" target="_blank">'+fullMatch+'</a>';
+            return aTagMatch ? fullMatch : '<a href="'+fullMatch+'" target="_blank" onClick="event && event.stopPropagation()">'+fullMatch+'</a>';
         } else {
-            return aTagMatch ? fullMatch : '<a href="http://'+fullMatch+'" target="_blank">'+fullMatch+'</a>';
+            return aTagMatch ? fullMatch : '<a href="http://'+fullMatch+'" target="_blank" onClick="event && event.stopPropagation()">'+fullMatch+'</a>';
         }
     });
 
     const mailLinkRegex = /(<a href="(?:mailto:)?)?[\w.]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,8})+/ig;
     // const mailLinkRegex = /(<a href=")?(?:mailto:)?[\w.]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,8})+/ig;
     text = text.replace(mailLinkRegex, function ( fullMatch, aTagMatch ) {
-        return aTagMatch ? fullMatch : '<a href="mailto:'+fullMatch+'">'+fullMatch+'</a>';
+        return aTagMatch ? fullMatch : '<a href="mailto:'+fullMatch+'" onClick="event && event.stopPropagation()">'+fullMatch+'</a>';
     });
 
     return text;

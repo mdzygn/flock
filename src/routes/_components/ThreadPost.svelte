@@ -178,7 +178,7 @@
         {/if}
     </div>
     {#if image}
-        <img class="postImage" src="{currentImageSrc}" alt="post image" />
+        <img class="postImage" src="{currentImageSrc}" alt="post" />
     {/if}
 
     <!-- <Proxy image="thread_actions" className="proxyThreadActions proxyOverlay" /> -->

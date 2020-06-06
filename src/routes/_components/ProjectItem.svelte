@@ -29,6 +29,9 @@
     $: projectId = ($project && $project.id) || null;
     $: projectOwnerId = ($project && $project.ownerId) || null;
 
+    // TODO: change to is member
+    $: isProjectOwner = projectOwnerId && projectOwnerId === $userId;
+
     $: projectSlug = ($project && $project.slug) || null;
 
     $: headerImage = getProjectHeaderImage($project);
@@ -37,7 +40,7 @@
     $: projectDescription = ($project && $project.description) || '';
 </script>
 
-<div class="projectItem">
+<div class="projectItem" class:ownerProjectItem="{isProjectOwner}">
     <!-- <Proxy image="discover1" className="proxyImage" /> -->
     <div class="headerImage" style="background-image: url({headerImage})" alt="project image" on:click="{e => loadProject(projectId, { showInfo: true })}" />
     <div class="contentContainer" on:click="{e => loadProject(projectId, { showInfo: true })}">
@@ -47,7 +50,10 @@
             <div class="description">{projectDescription}</div>
         </div>
     </div>
-    {#if projectOwnerId === $userId}
+    {#if !isProjectOwner}
+        <ActionBar targetItemId="{projectId}" targetItem="{$project}" />
+    {/if}
+    <!-- {#if isProjectOwner}
         <ActionBar targetItemId="{projectId}" targetItem="{$project}">
             <div slot="buttonLeft">
                 <ActionButton
@@ -63,7 +69,6 @@
                     buttonContentStyle = "padding-right: 56px;"
                     iconStyle = "padding-bottom: 4px; margin-top: 1px;"
                 />
-                    <!-- action = "{showProjectFollowers}" -->
             </div>
             <div slot="buttonMiddle">
                 <ActionButton
@@ -83,7 +88,7 @@
         </ActionBar>
     {:else}
         <ActionBar targetItemId="{projectId}" targetItem="{$project}" />
-    {/if}
+    {/if} -->
 </div>
 
 <style>
@@ -102,6 +107,10 @@
         margin-top: 7px;
         padding-left: 23px;
         /* padding-left: 18px; */
+    }
+
+    .projectItem.ownerProjectItem .contentContainer {
+        padding-bottom: 18px;
     }
 
     .contentContainer :global(.readMoreButton) {

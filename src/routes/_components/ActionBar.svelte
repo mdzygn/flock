@@ -43,8 +43,8 @@
 				targetItemId = "{targetItemId}"
 				action = "{projectToggleLiked}"
 				targetItemProperty = "liked"
-				countProperty = "likeCount"
 			/>
+				<!-- countProperty = "likeCount" -->
 		</slot>
 	</div>
 	<div class="actionContainerButton actionButtonMiddle">
@@ -60,11 +60,11 @@
 				targetItemId = "{targetItemId}"
 				action = "{projectToggleFollowing}"
 				targetItemProperty = "following"
-				countProperty= "followCount"
 
 				buttonContentStyle = "padding-right: 48px;"
 				iconStyle = "padding-bottom: 4px"
 			/>
+				<!-- countProperty= "followCount" -->
 		</slot>
 	</div>
 	<div class="actionContainerButton actionButtonRight">

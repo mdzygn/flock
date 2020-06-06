@@ -6,7 +6,7 @@
 	import config from '../../../config';
 	import locale from '../../../locale';
 
-	import { trim, testInputDefocus, getFormattedText, getUnformattedText } from '../../../utils';
+	import { trim, testInputDefocus, getFormattedText } from '../../../utils';
 
     import UploadUtil from '../../../utils/UploadUtil';
 

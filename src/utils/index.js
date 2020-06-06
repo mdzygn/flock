@@ -15,9 +15,9 @@ export function getFormattedText(text) {
     return text ? text.replace(/<br\/>/g, '\r\n') : text;
 }
 
-export function getUnformattedText(text) {
-    return text ? text.replace(/\r?\n/g, '<br/>') : text;
-}
+// export function getUnformattedText(text) {
+//     return text ? text.replace(/\r?\n/g, '<br/>') : text;
+// }
 
 export function getUnbrokenText(text) {
     return text ? text.replace(/<br\/>/g, '&nbsp;&nbsp;') : text;

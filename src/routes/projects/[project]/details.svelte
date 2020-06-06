@@ -5,7 +5,7 @@
 	import config from '../../../config';
 	import locale from '../../../locale';
 
-	import { trim, testInputDefocus, getFormattedText, getUnformattedText } from '../../../utils';
+	import { trim, testInputDefocus, getFormattedText } from '../../../utils';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
 	import Proxy from '../../../components/Proxy.svelte';
@@ -153,7 +153,6 @@
 		for (let detailI = 0; detailI < 4; detailI++) {
 			details[detailI] = details[detailI] || {};
 			details[detailI].detail = trim(sourceDetails[detailI]);
-			// details[detailI].detail = getUnformattedText(sourceDetails[detailI]);
 			details[detailI].image = sourceDetailsImages[detailI];
 		}
 

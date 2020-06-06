@@ -10,7 +10,7 @@
 
     import {
         testInputDefocus,
-		getUnformattedText,
+		// getUnformattedText,
         getFormattedText,
         trim,
     } from '../../utils';

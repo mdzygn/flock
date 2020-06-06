@@ -6,7 +6,7 @@
 
 	import {
 		testInputDefocus,
-		getUnformattedText,
+		// getUnformattedText,
 		getFormattedText,
 		strCompare,
 		trim,

@@ -9,6 +9,7 @@ export async function post(req, res, next) {
 
 	const userId = (options && options.userId) || null;
 	const projectId = options && options.id;
+	const getCounts = options && options.getCounts;
 
 	const projectsFilter = {};
 	if (projectId) {
@@ -26,9 +27,15 @@ export async function post(req, res, next) {
 			if (project.skills && project.skills instanceof Array) { // TODO: remove convertion once all converted
 				project.skills = project.skills.join(', ');
 			}
+			project.likeCount = 0;
+			project.followCount = 0;
 		});
 
-		await getProjectLikeFollowCounts(projects);
+		if (getCounts) {
+			await getProjectLikeFollowCounts(projects);
+		} else if (projectId && projects.find(project => project.id === projectId)) {
+			await getProjectLikeFollowCounts([{id: projectId}]);
+		}
 
 		await loadUserItemProperties(projects, {
 			userId,

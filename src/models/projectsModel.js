@@ -24,6 +24,7 @@ import {
 	userId,
 	project,
 	getHeaderImage,
+	showProjectCounts,
 } from '../models/appModel';
 
 import ProjectModel from '../models/projectModel';
@@ -61,6 +62,10 @@ export function loadProjects(options) {
 		loadingRequestUtil.setLoading('projects', options, () => { loadingProjects.set(true); });
 	// if (!get(loadingProjects)) {
 	// 	loadingProjects.set(true);
+		if (get(showProjectCounts)) {
+			if (!options) options = {};
+			options.getCounts = true;
+		}
 		api.getProjects(options).then(result => {
 			mergeProjects(result);
 			// loadingProjects.set(false);

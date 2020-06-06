@@ -59,7 +59,7 @@
 </script>
 
 {#if $curMenu || $curPrompt}
-	<div class="overlayContainer">
+	<div class="overlayContainer"><div class="overlayContent">
 		<div class="overlayBg" class:button="{canClose}" on:click="{close}" />
 		{#if $curMenu}
 			<OverlayMenu menuId="{$curMenu}" />
@@ -100,7 +100,7 @@
 				<OverlayPrompt promptId="{$curPrompt}" />
 			{/if}
 		{/if}
-	</div>
+	</div></div>
 {/if}
 
 <style>
@@ -109,10 +109,6 @@
 		width: 100%;
 		height: 100%;
 		z-index: 100;
-
-		display: flex;
-		align-items: center;
-		justify-content: center;
 	}
 	@media (max-height: 480px) {
 		.overlayContainer {
@@ -120,11 +116,22 @@
 		}
 	}
 
+	.overlayContent {
+		position: relative;
+		width: 100%;
+		min-height: 100%;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
 	.overlayContainer :global(.overlayMenu) {
 		z-index: 101;
 	}
 	.overlayContainer :global(.overlayPrompt) {
 		z-index: 102;
+    	margin: 20px 0;
 	}
 
 	.overlayBg {

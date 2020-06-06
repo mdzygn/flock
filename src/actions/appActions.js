@@ -110,6 +110,8 @@ import {
     newConversationUserIds,
     conversationGroupId,
 
+    signInRequired,
+
     debugOutput,
 } from '../models/appModel';
 
@@ -523,6 +525,11 @@ export function showMenu(menuId, options) {
 export function showPrompt(promptId, options) {
     if (get(curPrompt) !== promptId) {
         dontAllowOverlayClose.set(options && options.allowClose === false);
+        switch (promptId) {
+            case promptIds.SIGN_UP:
+                signInRequired.set(options && options.signInRequired);
+                break;
+        }
 
         hideMenu();
         if (!promptId) { console.error('Prompt undefined: ' + promptId); }
@@ -634,7 +641,7 @@ export async function logOut(dontDisplayMessage) {
 export function checkLoggedIn() {
     if (!get(user)) {
         if (!get(userId)) {
-            showPrompt(promptIds.SIGN_UP);
+            showPrompt(promptIds.SIGN_UP, {signInRequired: true});
         }
 
         return false;

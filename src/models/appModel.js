@@ -71,6 +71,8 @@ export const loggingIn = writable(false);
 
 export const unsavedChanges = writable(false);
 
+export const signInRequired = writable(false);
+
 export const showBetaFeatures = appModel.showBetaFeatures;
 
 export const project = writable(null);

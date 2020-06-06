@@ -10,6 +10,7 @@ import {
     signUpFormValidated,
     setAccountFormValidated,
     logInFormValidated,
+    signInRequired,
 } from '../models/appModel';
 
 import {
@@ -240,6 +241,7 @@ const prompts = {
                 prefixText: 'or ',
                 label: 'Log In',
                 action: () => { showPrompt(promptIds.LOG_IN); },
+                visible: () => { return get(signInRequired) },
             },
         ],
     },

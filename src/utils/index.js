@@ -417,3 +417,11 @@ export function getEllipsisText(string, maxLength) {
     }
     return string;
 }
+
+export function trim(text) {
+    if (text && typeof text === 'string') {
+        return text.trim();
+    } else {
+        return '';
+    }
+}

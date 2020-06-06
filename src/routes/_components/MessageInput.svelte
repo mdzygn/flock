@@ -11,7 +11,8 @@
     import {
         testInputDefocus,
 		getUnformattedText,
-		getFormattedText,
+        getFormattedText,
+        trim,
     } from '../../utils';
 
     import {
@@ -41,7 +42,7 @@
 
     let messageField;
 
-    $: submitEnabled = ($conversationId || $newConversation) && !!(message || image);
+    $: submitEnabled = ($conversationId || $newConversation) && !!(trim(message) || image);
 
 	function createNewMessage() {
 		if (submitEnabled) {
@@ -49,7 +50,7 @@
 
 			const messageDetails = {
 				id: newMessageId,
-				message: message,
+				message: trim(message),
 				// message: getUnformattedText(message),
             };
             if ($conversationId && !$newConversation) {

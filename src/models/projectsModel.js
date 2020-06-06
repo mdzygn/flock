@@ -438,6 +438,9 @@ export function addProject(projectDetails) {
 	newProject.isNew = true;
 	newProject.hasCreated = true;
 
+	newProject.followCount = 0;
+	newProject.likeCount = 0;
+
 	// newProject.followCount++;
 	// newProject.likeCount++;
 

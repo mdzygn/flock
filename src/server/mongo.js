@@ -214,7 +214,7 @@ export async function getProjectLikeFollowCounts(projects) {
     // console.log('aggregateLikesQuery', JSON.stringify(aggregateLikesQuery, 2));
     // console.log('projectLikesCounts', projectLikesCounts);
 
-    console.log('update like and follow counts');
+    // console.log('update like and follow counts');
 
     for (var projectI = 0; projectI < projects.length; projectI++) {
         project = projects[projectI];
@@ -222,7 +222,7 @@ export async function getProjectLikeFollowCounts(projects) {
         project.likeCount = projectLikesCounts[0][project.id] || 0;
         project.followCount = projectFollowsCounts[0][project.id] || 0;
 
-        console.log(project.id, project.prevLikeCount, project.followCount, project.prevFollowCount, project.likeCount);
+        // console.log(project.id, project.prevLikeCount, project.followCount, project.prevFollowCount, project.likeCount);
     }
 }
 

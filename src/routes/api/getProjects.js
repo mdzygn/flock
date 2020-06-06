@@ -27,11 +27,11 @@ export async function post(req, res, next) {
 			if (project.skills && project.skills instanceof Array) { // TODO: remove convertion once all converted
 				project.skills = project.skills.join(', ');
 			}
-			project.prevLikeCount = project.likeCount;
-			project.prevFollowCount = project.followCount;
+			// project.prevLikeCount = project.likeCount;
+			// project.prevFollowCount = project.followCount;
 
-			project.likeCount = 0;
-			project.followCount = 0;
+			delete project.likeCount;
+			delete project.followCount;
 		});
 
 		if (getCounts) {

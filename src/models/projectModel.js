@@ -19,8 +19,8 @@ const ProjectModel = (projectData) => {
 
         modifiedAt: 0,
 
-        likeCount: 0,
-        followCount: 0,
+        // likeCount: 0,
+        // followCount: 0,
 
         location: null,
 

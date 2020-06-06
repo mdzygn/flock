@@ -25,7 +25,8 @@
 
 	$: isSelected = targetItem && targetItem[targetItemProperty];
 
-	$: count = (targetItem && countProperty && targetItem[countProperty]) || (displayZeroCountValue ? 0 : '');
+	$: countValue = (targetItem && countProperty && targetItem[countProperty]);
+	$: count = countValue ? countValue : ((displayZeroCountValue && countValue !== undefined) ? 0 : '');
 </script>
 
 <div class="actionButton">

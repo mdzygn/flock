@@ -117,8 +117,8 @@ const locale = {
 		EMAIL: 'Email',
 	},
 	SET_ACCOUNT: {
-		USERNAME: 'username',
-		PASS: 'password',
+		USERNAME: 'set username',
+		PASS: 'set password',
 		PASS_REPEAT: 'confirm password',
 	},
 	LOG_IN: {

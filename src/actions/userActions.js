@@ -145,6 +145,8 @@ export function setAccountDetails(userDetails) {
         const curUserId = userDetails.id;
         delete userDetails.id;
 
+        userDetails.username = trim(userDetails.username);
+
         const curUserModel = getUser(curUserId);
         if (curUserModel) {
             const localUserDetails = Object.assign({}, userDetails);

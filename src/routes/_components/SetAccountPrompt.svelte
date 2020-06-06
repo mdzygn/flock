@@ -5,7 +5,7 @@
 	import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    import { testInputDefocus, formatAsId, validateUserName, delayedTimeout } from '../../utils';
+    import { trim, testInputDefocus, formatAsId, validateUserName, delayedTimeout } from '../../utils';
 
     import {
         setAccountFormValidated,
@@ -39,7 +39,7 @@
 		// username = username.replace(/[^a-zA-Z0-9._]/gi, '');
     }
 
-    $: usernameValidated = validateUserName(username);
+    $: usernameValidated = validateUserName(trim(username));
     $: usernameTooShort = username.length < config.USER_NAME_MIN_LENGTH;
     $: usernameTooLong = username.length > config.USER_NAME_MAX_LENGTH;
 
@@ -75,9 +75,9 @@
         usernameFlagTooLong = false;
 
         delayedTimeout('username', () => {
-            usernameFlagInvalid = username && !usernameValidated;
-            usernameFlagTooShort = username && usernameTooShort;
-            usernameFlagTooLong = username && usernameTooLong;
+            usernameFlagInvalid = trim(username) && !usernameValidated;
+            usernameFlagTooShort = trim(username) && usernameTooShort;
+            usernameFlagTooLong = trim(username) && usernameTooLong;
         }, config.INVALID_FIELD_DELAY);
     }
 

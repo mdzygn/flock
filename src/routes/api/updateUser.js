@@ -24,7 +24,8 @@ export async function post(req, res, next) {
     if (curUser) {
         if (options.setAccount) {
             details.username = details.username.toLowerCase();
-            const usernameValid = details.username.length >= 4 && details.username.length <= 16 && details.username.match(/^(?!.*\.\.)(?!.*__)(?!.*\._)(?!.*_\.)(?!.*\.$)(?!\..*$)[a-z0-9._]+$/); // lowercase only
+            // reference USER_NAME_MIN_LENGTH, USER_NAME_MAX_LENGTH
+            const usernameValid = details.username.length >= 3 && details.username.length <= 16 && details.username.match(/^(?!.*\.\.)(?!.*__)(?!.*\._)(?!.*_\.)(?!.*\.$)(?!\..*$)[a-z0-9._]+$/); // lowercase only
             // const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-z0-9._]+(?<![_.])$/); // lowercase only
             // const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i);
             if (!usernameValid) {

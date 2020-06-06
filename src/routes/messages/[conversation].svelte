@@ -251,7 +251,7 @@
 	.messagesView {
 		position: absolute;
 		top: 0;
-		bottom: 54px;
+		bottom: 56px;
 		width: 100%;
 	}
 	.messagesView :global(.scrollContent) {

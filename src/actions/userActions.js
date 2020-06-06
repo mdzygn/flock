@@ -6,7 +6,7 @@ import { get } from 'svelte/store';
 import { goto } from '@sapper/app';
 // import { DEBUG } from '../config';
 
-import { generateId } from '../utils';
+import { trim, generateId } from '../utils';
 
 import promptIds from '../config/promptIds';
 
@@ -84,6 +84,9 @@ function addUser(newUserModel) {
 
     const newUserDetails = Object.assign({}, newUser);
     newUserDetails.username = '';
+
+    newUserDetails.firstName = trim(newUserDetails.firstName);
+    newUserDetails.lastName = trim(newUserDetails.lastName);
 
 
     const localUserDetails = Object.assign({}, newUser);

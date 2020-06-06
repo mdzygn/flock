@@ -109,7 +109,8 @@
         /* padding-top: 35.5%; */
         /* height: 200px; */
         /* padding-top: 59%; */
-        background-image: url('../assets/intro_image.jpg');
+        background-image: url('https://flock-hub.s3-us-west-2.amazonaws.com/static/intro_image.jpg');
+        /* background-image: url('../assets/intro_image.jpg'); */
         background-size: cover;
         background-position: center;
     }

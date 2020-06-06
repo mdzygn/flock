@@ -1,7 +1,7 @@
 const locale = {
 	HOME_INTRO: {
 		TITLE: 'Welcome to Flock',
-		HEADER_TEXT: 'Share, discover and contribute to inspirational projects around the world.',
+		HEADER_TEXT: 'Share, discover and collaborate on inspirational projects around the world.',
 		INTRO_TEXT: 'Your platform for building communities and teams around creative and innovative projects.',
 		// HEADER_TEXT: 'Discover and share creative and innovative projects to bring them to life.',
 		// INTRO_TEXT: 'Build you community and find your team by sharing your projects, allowing others to follow, support and start getting involved to make your dreams a reality!',

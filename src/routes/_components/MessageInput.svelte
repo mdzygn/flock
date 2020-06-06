@@ -49,7 +49,8 @@
 
 			const messageDetails = {
 				id: newMessageId,
-				message: getUnformattedText(message),
+				message: message,
+				// message: getUnformattedText(message),
             };
             if ($conversationId && !$newConversation) {
                 messageDetails.conversationId = $conversationId;

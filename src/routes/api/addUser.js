@@ -41,7 +41,7 @@ export async function post(req, res, next) {
 
 		// console.log('filtered user details', details);
 
-		details.email = details.email.trim();
+		details.email = details.email.toLowerCase().trim();
 
 		const exisitingEmail = await db.collection('users').findOne({ email: { $regex : new RegExp('^' + details.email + '$', 'i') }  });
 		if (exisitingEmail) {

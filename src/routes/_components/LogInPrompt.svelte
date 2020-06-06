@@ -6,7 +6,7 @@
 	import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    import { testInputDefocus } from '../../utils';
+    import { trim, testInputDefocus } from '../../utils';
 
     import {
         logInFormValidated,
@@ -30,7 +30,7 @@
         }
     }
 
-    $: $logInFormValidated = !!($details.username && $details.pass);
+    $: $logInFormValidated = !!(trim($details.username) && $details.pass);
 
     $: {
         $logInFormValidated;

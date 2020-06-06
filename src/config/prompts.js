@@ -293,7 +293,7 @@ const prompts = {
     },
     LOG_IN_ERROR: {
         title: 'Sign In',
-        message: 'Invalid username<br />or password',
+        message: 'Invalid email/username<br />or password',
         menuItems: [
             {
                 label: 'Ok',

@@ -4,7 +4,7 @@ import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 import { tick } from 'svelte';
 
-import { copyToClipboard } from '../utils';
+import { trim, copyToClipboard } from '../utils';
 
 // import conversations from '../data/conversations.json';
 
@@ -586,6 +586,7 @@ export function showTogglePublicDialog() {
 }
 
 export function login(details) {
+    details.username = trim(details.username);
     username.set(details.username);
 
     loggingIn.set(true);

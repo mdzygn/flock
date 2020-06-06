@@ -122,7 +122,7 @@ const locale = {
 		PASS_REPEAT: 'confirm password',
 	},
 	LOG_IN: {
-		USERNAME: 'username',
+		USERNAME: 'username or email',
 		PASS: 'password',
 	},
 	NEW_THREAD: {

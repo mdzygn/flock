@@ -7,11 +7,16 @@ export async function post(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
-	const username = options.username;
+	let username = options.username;
 	const pass = options.pass; // TODO check pass
 
+	username = username.toLowerCase().trim();
+
 	if (username) {
-		const user = await db.collection('users').findOne({ username: username });
+		let user = await db.collection('users').findOne({ username: username });
+		if (!user) {
+			user = await db.collection('users').findOne({ email: username });
+		}
 
 		if (user) {
 			let passValid = false;

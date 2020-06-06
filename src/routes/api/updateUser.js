@@ -23,7 +23,8 @@ export async function post(req, res, next) {
     const curUser = await db.collection('users').findOne({ id: userId });
     if (curUser) {
         if (options.setAccount) {
-            details.username = details.username.toLowerCase();
+            details.username = details.username.toLowerCase().trim();
+
             // reference USER_NAME_MIN_LENGTH, USER_NAME_MAX_LENGTH
             const usernameValid = details.username.length >= 3 && details.username.length <= 16 && details.username.match(/^(?!.*\.\.)(?!.*__)(?!.*\._)(?!.*_\.)(?!.*\.$)(?!\..*$)[a-z0-9._]+$/); // lowercase only
             // const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-z0-9._]+(?<![_.])$/); // lowercase only
@@ -36,7 +37,7 @@ export async function post(req, res, next) {
             if (!curUser.pass) {
                 const exisitingUser = await db.collection('users').findOne({ username: { $regex : new RegExp('^' + details.username + '$', 'i') } });
                 if (exisitingUser && exisitingUser.id !== userId) {
-                    errorResponse(res, {errorType: 'username_exists'}, {errorMsg: 'username exists'});
+                    errorResponse(res, {invalid: true, errorType: 'username_exists'}, {errorMsg: 'username exists'});
                     // response(res, {invalid: true, errorType: 'username_exists'});
                 } else {
                     const pass = details.pass;

@@ -4,6 +4,7 @@
 	import LogInPrompt from './LogInPrompt.svelte';
 	import SignUpPrompt from './SignUpPrompt.svelte';
 	import SetAccountPrompt from './SetAccountPrompt.svelte';
+	import ForgotPasswordPrompt from './ForgotPasswordPrompt.svelte';
 
 	import { curMenu, curPrompt, dontAllowOverlayClose } from '../../models/appModel';
 
@@ -39,6 +40,13 @@
 	function setAccountSubmit() {
 		closeOverlay();
 		setAccountDetails(userDetails);
+	}
+
+	let forgotPasswordEmail;
+	let forgotPasswordUpdateMenuItems;
+	function forgotPasswordSubmit() {
+		closeOverlay();
+		// setAccountDetails(userDetails);
 	}
 
 	$: canClose = ((menu && menu.allowClose !== false) || (prompt && prompt.allowClose !== false)) && !$dontAllowOverlayClose;
@@ -78,6 +86,14 @@
 						bind:userDetails="{userDetails}"
 						on:confirm="{setAccountSubmit}"
 						on:change="{setAccountUpdateMenuItems}"
+					/>
+				</OverlayPrompt>
+			{:else if $curPrompt === promptIds.FORGOT_PASSWORD }
+				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{forgotPasswordSubmit}" bind:updateMenuItems="{forgotPasswordUpdateMenuItems}">
+					<ForgotPasswordPrompt
+						bind:email="{forgotPasswordEmail}"
+						on:confirm="{forgotPasswordSubmit}"
+						on:change="{forgotPasswordUpdateMenuItems}"
 					/>
 				</OverlayPrompt>
 			{:else}

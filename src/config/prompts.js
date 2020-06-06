@@ -10,6 +10,7 @@ import {
     signUpFormValidated,
     setAccountFormValidated,
     logInFormValidated,
+    forgotPasswordFormValidated,
     signInRequired,
 } from '../models/appModel';
 
@@ -245,6 +246,22 @@ const prompts = {
             },
         ],
     },
+    FORGOT_PASSWORD: {
+        title: 'Reset Password',
+        showClose: true,
+        menuItems: [
+            {
+                label: 'Send Reset Email',
+                disabled: () => !get(forgotPasswordFormValidated),
+                default: true,
+            },
+            // {
+            //     className: 'textPanel',
+            //     prefixText: 'or ',
+            //     label: 'Email Support',
+            // },
+        ],
+    },
     SET_ACCOUNT: {
         title: 'Set Account Details',
         menuItems: [
@@ -300,7 +317,7 @@ const prompts = {
             {
                 className: 'textPanel demphasisText',
                 label: 'Forgot Password',
-                // action: () => { showPrompt(promptIds.LOG_IN); },
+                action: () => { showPrompt(promptIds.FORGOT_PASSWORD); },
             },
         ],
     },

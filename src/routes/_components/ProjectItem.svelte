@@ -14,7 +14,7 @@
 
     import Proxy from '../../components/Proxy.svelte';
 
-    import { showProjectCounts, userId } from '../../models/appModel'; // getProject
+    import { showProjectCounts, user, getIsProjectTeamMember } from '../../models/appModel'; // getProject
     import { getProjectHeaderImage } from '../../models/projectsModel'; // getProject
     import { loadProject } from '../../actions/appActions';
 
@@ -27,10 +27,11 @@
     export let project;
 
     $: projectId = ($project && $project.id) || null;
-    $: projectOwnerId = ($project && $project.ownerId) || null;
+    // $: projectOwnerId = ($project && $project.ownerId) || null;
 
     // TODO: change to is member
-    $: isProjectOwner = projectOwnerId && projectOwnerId === $userId;
+    // $: isProjectOwner = projectOwnerId && projectOwnerId === $userId;
+    $: isTeamMember = $user && $project && getIsProjectTeamMember($project);
 
     $: projectSlug = ($project && $project.slug) || null;
 
@@ -40,7 +41,7 @@
     $: projectDescription = ($project && $project.description) || '';
 </script>
 
-<div class="projectItem" class:ownerProjectItem="{isProjectOwner}">
+<div class="projectItem" class:ownerProjectItem="{isTeamMember}">
     <!-- <Proxy image="discover1" className="proxyImage" /> -->
     <div class="headerImage" style="background-image: url({headerImage})" alt="project image" on:click="{e => loadProject(projectId, { showInfo: true })}" />
     <div class="contentContainer" on:click="{e => loadProject(projectId, { showInfo: true })}">
@@ -50,7 +51,7 @@
             <div class="description">{projectDescription}</div>
         </div>
     </div>
-    {#if !isProjectOwner}
+    {#if !isTeamMember}
         <ActionBar targetItemId="{projectId}" targetItem="{$project}" />
     {:else if $showProjectCounts}
         <ActionBar targetItemId="{projectId}" targetItem="{$project}">
@@ -86,7 +87,7 @@
             </div>
         </ActionBar>
     {/if}
-    <!-- {#if isProjectOwner}
+    <!-- {#if isTeamMember}
         <ActionBar targetItemId="{projectId}" targetItem="{$project}">
             <div slot="buttonLeft">
                 <ActionButton

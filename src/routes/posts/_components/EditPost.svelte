@@ -76,15 +76,18 @@
 
 	let newPostId = getNewPostId();
 
-    loadCurrentChannel();
+	loadCurrentChannel();
+
+	let mounted = false;
 
 	let editPost = false;
-	let editPostInitialized = false;
+	let curInitializedPath = false;
 	$: {
-		if (!editPostInitialized && $curPath) {
-			editPostInitialized = true;
+		if ($curPath && $curPath !== curInitializedPath && mounted) {
+			curInitializedPath = $curPath;
 
 			editPost = ($curPath && !!$curPath.match(/posts\/.+\/edit/)) || false;
+			postContentInitialized = false;
 		}
 	}
 
@@ -210,6 +213,7 @@
 	}
 
     onMount(async () => {
+		mounted = true;
 		await tick();
 		if (showTitleField) {
 			titleField && titleField.focus();

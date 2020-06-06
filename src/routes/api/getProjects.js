@@ -9,7 +9,7 @@ export async function post(req, res, next) {
 
 	const userId = (options && options.userId) || null;
 	const projectId = options && options.id;
-	const getCounts = options && options.getCounts;
+	const getCounts = options && options.getCounts; // TODO: to remove
 
 	const projectsFilter = {};
 	if (projectId) {
@@ -27,14 +27,20 @@ export async function post(req, res, next) {
 			if (project.skills && project.skills instanceof Array) { // TODO: remove convertion once all converted
 				project.skills = project.skills.join(', ');
 			}
+			project.prevLikeCount = project.likeCount;
+			project.prevFollowCount = project.followCount;
+
 			project.likeCount = 0;
 			project.followCount = 0;
 		});
 
 		if (getCounts) {
 			await getProjectLikeFollowCounts(projects);
-		} else if (projectId && projects.find(project => project.id === projectId)) {
-			await getProjectLikeFollowCounts([{id: projectId}]);
+		} else if (projectId) {
+			const existingProject = projects.find(project => project.id === projectId);
+			if (existingProject && existingProject.team && existingProject.team.includes(userId)) {
+				await getProjectLikeFollowCounts([existingProject]);
+			}
 		}
 
 		await loadUserItemProperties(projects, {

@@ -219,10 +219,10 @@ export async function getProjectLikeFollowCounts(projects) {
     for (var projectI = 0; projectI < projects.length; projectI++) {
         project = projects[projectI];
 
-        console.log(project.id, project.followCount, projectLikesCounts[0][project.id] || 0, project.likeCount, projectFollowsCounts[0][project.id] || 0);
-
         project.likeCount = projectLikesCounts[0][project.id] || 0;
         project.followCount = projectFollowsCounts[0][project.id] || 0;
+
+        console.log(project.id, project.prevLikeCount, project.followCount, project.prevFollowCount, project.likeCount);
     }
 }
 

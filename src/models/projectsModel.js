@@ -22,6 +22,7 @@ import {
 	getIsProjectTeamMember,
 	user,
 	userId,
+	projectId,
 	project,
 	getHeaderImage,
 	showProjectCounts,
@@ -100,12 +101,13 @@ projects.subscribe(() => {
 function mergeProjects(newProjects) {
 	if (newProjects && newProjects.length) {
 		const curProjects = get(projects);
+		const currentProjectId = get(projectId);
 
-		let curProject, newProjectData, projectId, newProject;
+		let curProject, newProjectData, curProjectId, newProject;
 		for (var projectI = 0; projectI < newProjects.length; projectI++) {
 			newProjectData = newProjects[projectI];
-			projectId = newProjectData.id;
-			curProject = curProjects.find(match => get(match).id === projectId);
+			curProjectId = newProjectData.id;
+			curProject = curProjects.find(match => get(match).id === curProjectId);
 			if (!curProject) {
 				curProject = ProjectModel(newProjectData);
 				curProjects.unshift(curProject);
@@ -115,6 +117,9 @@ function mergeProjects(newProjects) {
 				newProject = get(curProject);
 				newProject = Object.assign(newProject, newProjectData);
 				curProject.set(newProject);
+			}
+			if (currentProjectId && curProjectId === currentProjectId) {
+				project.set(newProject);
 			}
 		}
 		// console.log('update projects: ', curProjects);

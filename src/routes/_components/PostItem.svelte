@@ -25,7 +25,7 @@
 
     import PlaceholderImage from "../../assets/images/postPlaceholder.png";
 
-    import { getDisplayText, getUnbrokenText, getDateString, getDateAge, getDateAgeString, secondsDiff } from '../../utils';
+    import { getDisplayText, getDateString, getDateAge, getDateAgeString, secondsDiff } from '../../utils';
 
     import { getUser } from '../../models/usersModel';
 
@@ -76,7 +76,7 @@
     $: userNameString = userName || ''; // '&nbsp;';
 
     $: title = ($post && $post.title) || null;
-    $: message = ($post && $post.message && getDisplayText($post.message, {disallowLinks})) || null;
+    $: message = ($post && $post.message) || null;
     $: image = ($post && $post.image) || null;
 
     $: useThumbImage = (type === 'thread');
@@ -123,7 +123,8 @@
     $: showTitle = (type === 'thread');
     $: canLinkThrough = (type === 'thread');
     $: linkUserName = (type === 'threadPost');
-    $: displayBreaks = (type !== 'thread');
+    // $: displayBreaks = (type !== 'thread');
+    $: collapseBreaks = (type === 'thread');
     $: disallowLinks = (type === 'thread');
     $: showLastActiveTime = (type === 'thread');
     $: textSelectable = (type !== 'thread');
@@ -142,8 +143,11 @@
 
     // $: console.log('post diff', secondsDiff($post.createdAt, $post.editedAt));
 
-    $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
-    $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
+    // $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
+    // $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
+
+    $: titleHTML = getDisplayText(title, {disallowLinks, collapseBreaks});
+    $: messageHTML = getDisplayText(message, {disallowLinks, collapseBreaks});
 
     $: repliesCount = ($post && $post.postCount) || 0;
     $: unviewedCount = ($post && getUnviewedThreadNotificationCount($post.id)) || writable(0);

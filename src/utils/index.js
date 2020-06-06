@@ -16,15 +16,11 @@ export function getFormattedText(text) {
 }
 
 export function getUnformattedText(text) {
-    return getHTMLFormattedText(text);
+    return text ? text.replace(/\r?\n/g, '<br/>') : text;
 }
 
 export function getUnbrokenText(text) {
     return text ? text.replace(/<br\/>/g, '&nbsp;&nbsp;') : text;
-}
-
-export function getHTMLFormattedText(text) {
-    return text ? text.replace(/\r?\n/g, '<br/>') : text;
 }
 
 export function getLinkFormattedText(text) {
@@ -54,12 +50,18 @@ export function stripLinks(text) {
 }
 
 export function getDisplayText(text, options) {
-    text = getHTMLFormattedText(text);
-    if (!options || !options.disallowLinks) {
-        text = getLinkFormattedText(text);
-    }
-    if (options && options.disallowLinks) {
-        text = stripLinks(text);
+    if (text) {
+        if (!options || !options.disallowLinks) {
+            text = getLinkFormattedText(text);
+        }
+        if (options && options.disallowLinks) {
+            text = stripLinks(text);
+        }
+        if (options && options.collapseBreaks) {
+            text = text.replace(/<br\/>/g, '&nbsp;&nbsp;');
+        } else {
+            text = text.replace(/\r?\n/g, '<br/>');
+        }
     }
     return text;
 }

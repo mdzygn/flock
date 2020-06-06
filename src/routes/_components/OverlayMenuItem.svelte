@@ -25,8 +25,7 @@
 
 {#if visible}
     <div class="overlayMenuItem"><div class="{className}">
-        {prefixText}
-        <Button {onClick} {disabled} className="{isDefault ? 'default' : ''}">{label}</Button>
+        <Button {onClick} {disabled} className="{isDefault ? 'default' : ''}">{prefixText}<span class="buttonLabel">{label}</span></Button>
     </div></div>
 {/if}
 
@@ -51,29 +50,21 @@
         font-weight: 700;
     }
 
-	.overlayMenuItem :global(.textPanel), .overlayMenuItem :global(.textPanel .button) {
-        font-size: 1.3rem;
-	}
-	.overlayMenuItem :global(.textPanel) {
-        display: block;
-        padding: 10px 17px;
-        box-sizing: initial;
-	}
 	.overlayMenuItem :global(.textPanel .button) {
-        display: inline;
+        font-size: 1.2rem;
         padding: 0 4px;
-        font-size: 1.3rem;
+        padding: 10px 17px;
 	}
-	.overlayMenuItem :global(.textPanel .buttonContent) {
-        display: inline;
-        /* text-decoration: underline; */
+	.overlayMenuItem :global(.textPanel .buttonLabel) {
+        padding: 0 2px;
         font-weight: bold;
         color: #333333;
 	}
 	.overlayMenuItem :global(.textPanel .button.activeButton:hover) {
         background-color: initial;
 	}
-	.overlayMenuItem :global(.textPanel .button.activeButton:hover .buttonContent) {
+	.overlayMenuItem :global(.textPanel .button.activeButton:hover .buttonLabel) {
         color: #666666;
+        text-decoration: underline;
 	}
 </style>

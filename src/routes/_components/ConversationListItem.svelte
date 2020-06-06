@@ -12,6 +12,8 @@
 
     import { getConversationOtherUser, getUserConversationInfo } from '../../models/conversationsModel';
 
+    import { userId } from '../../models/appModel';
+
     import { loadPost, loadChannel, loadProject } from '../../actions/appActions';
 
 	import { loadConversation } from '../../actions/appActions';
@@ -21,9 +23,13 @@
     // $: console.log('conversation', $conversation);
 
     $: title = ($conversation && $conversation.title) || '';
+
+    $: lastSenderId = ($conversation && $conversation.lastSenderId) || null;
+
     $: lastMessageText = ($conversation && $conversation.lastMessageText) || '';
     $: lastMessageFormatted = lastMessageText && getDisplayText(lastMessageText, {disallowLinks: true, collapseBreaks: true});
-    $: lastMessageTruncated = lastMessageFormatted && getEllipsisText(lastMessageFormatted, config.CONVERSATION_MAX_PREVIEW_LENGTH);
+    $: lastMessagePrefixed = lastMessageFormatted && (lastSenderId === $userId ? 'you: ' + lastMessageFormatted : lastMessageFormatted);
+    $: lastMessageTruncated = lastMessagePrefixed && getEllipsisText(lastMessagePrefixed, config.CONVERSATION_MAX_PREVIEW_LENGTH);
     $: messagePreview = lastMessageTruncated || '(image)'; // TODO: use if image present to display this
 
     // $: message = $conversation ? (($conversation.lastMessageText && getEllipsisText($conversation.lastMessageText, config.CONVERSATION_MAX_PREVIEW_LENGTH)) || '(image)') : '';

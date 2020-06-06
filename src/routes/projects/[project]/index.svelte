@@ -256,12 +256,12 @@
 									</Button>
 								{/if}
 								{#if (!$projectReturnView || showInfo) && !isTeamMember}
-									<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><div class="countContainer">
+									<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><!--<div class="countContainer">
 										<div class="count">{likeCount}</div>
-									</div></Button>
-									<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<div class="countContainer">
+									</div>--></Button>
+									<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<!-- <div class="countContainer">
 										<div class="count">{followCount}</div>
-									</div></Button>
+									</div>--></Button>
 								{/if}
 							</div>
 							{#if (!$projectReturnView || showInfo) && projectLocation}

@@ -49,7 +49,7 @@ export const PROFILE_UPLOAD_THUMB_MAX_WIDTH = 128;
 export const PROFILE_UPLOAD_THUMB_MAX_HEIGHT = 128;
 
 export const MAX_PROJECT_PREVIEW_COUNT = 3;
-export const MAX_SKILL_TAG_COUNT = 8;
+export const MAX_SKILL_TAG_COUNT = 10; // 8;
 
 export const SHOW_EDITED_MIN_TIME = 2 * 60;
 

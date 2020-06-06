@@ -9,6 +9,7 @@
 		getUnformattedText,
 		getFormattedText,
 		strCompare,
+		trim,
 	} from '../../../utils';
 
 	import Proxy from '../../../components/Proxy.svelte';
@@ -89,7 +90,7 @@
 
 	$: curPostId = editPost ? $postId : newPostId;
 
-    $: nextEnabled = (title || message || (image && curPostType !== 'thread')) && !imageIsUploading;
+    $: nextEnabled = (trim(title) || trim(message) || (image && curPostType !== 'thread')) && !imageIsUploading;
 
 	$: curPostType = (editPost && $post) ? $post.type : $postType;
 
@@ -221,7 +222,7 @@
 		if (!editPost && $postType) {
 			const postDetails = {
 				id: newPostId,
-				message: getUnformattedText(message),
+				message: trim(message),
 				image,
 				type: $postType,
 				channelId: $channel && $channel.id,
@@ -229,7 +230,7 @@
 			};
 			switch ($postType) {
 				case 'thread':
-					postDetails.title = title;
+					postDetails.title = trim(title);
 					break;
 				case 'threadPost':
 					postDetails.threadId = $postId;
@@ -248,11 +249,11 @@
     function saveCurrentPost() {
 		if (editPost) {
             const postDetails = {
-                message: getUnformattedText(message),
+                message: trim(message),
             };
 			switch ($post.type) {
 				case 'thread':
-					postDetails.title = title;
+					postDetails.title = trim(title);
 					break;
 			}
 			if (image !== origImage) {

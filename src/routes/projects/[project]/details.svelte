@@ -5,7 +5,7 @@
 	import config from '../../../config';
 	import locale from '../../../locale';
 
-	import { testInputDefocus, getFormattedText, getUnformattedText } from '../../../utils';
+	import { trim, testInputDefocus, getFormattedText, getUnformattedText } from '../../../utils';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
 	import Proxy from '../../../components/Proxy.svelte';
@@ -45,7 +45,7 @@
 	let descriptionCharsOver;
 	$: charCountLow = (remainingChars !== '') && remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
 
-	$: saveEnabled = (!$editingProject || (title && description && !descriptionCharsOver)) && !imageIsUploading;
+	$: saveEnabled = (!$editingProject || (trim(title) && trim(description) && !descriptionCharsOver)) && !imageIsUploading;
 	// $: saveEnabled = (!editingProject || (title && description)) && !imageIsUploading;
 
 	let detail1 = '';
@@ -152,7 +152,8 @@
 
 		for (let detailI = 0; detailI < 4; detailI++) {
 			details[detailI] = details[detailI] || {};
-			details[detailI].detail = getUnformattedText(sourceDetails[detailI]);
+			details[detailI].detail = trim(sourceDetails[detailI]);
+			// details[detailI].detail = getUnformattedText(sourceDetails[detailI]);
 			details[detailI].image = sourceDetailsImages[detailI];
 		}
 
@@ -162,12 +163,12 @@
 
 		if ($editingProject) {
 			Object.assign(projectDetails, {
-				title,
-				description,
+				title: trim(title),
+				description: trim(description),
 				headerImage: image,
-				tags,
-				skills,
-				location,
+				tags: trim(tags),
+				skills: trim(skills),
+				location: trim(location),
 			});
 		}
 

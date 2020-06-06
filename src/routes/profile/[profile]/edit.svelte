@@ -6,7 +6,7 @@
 	import config from '../../../config';
 	import locale from '../../../locale';
 
-	import { testInputDefocus, getFormattedText, getUnformattedText } from '../../../utils';
+	import { trim, testInputDefocus, getFormattedText, getUnformattedText } from '../../../utils';
 
     import UploadUtil from '../../../utils/UploadUtil';
 
@@ -47,7 +47,7 @@
 	let remainingChars;
 	$: charCountLow = (remainingChars !== '') && remainingChars < config.PROFILE_DESCRIPTION_CHARS_LOW;
 
-	$: saveEnabled = !!(name && !profileImageIsUploading && !headerImageIsUploading);
+	$: saveEnabled = !!(trim(name) && !profileImageIsUploading && !headerImageIsUploading);
 
 	let bioInput;
 	let skillsInput;
@@ -56,8 +56,8 @@
 	function save() {
 		if (saveEnabled) {
 			const profileDetails = {
-				name,
-				bio: getUnformattedText(bio),
+				name: trim(name),
+				bio: trim(bio),
 				avatarImage: $curUserProps.avatarImage || null,
 				coverImage: image,
 				skills,

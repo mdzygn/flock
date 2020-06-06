@@ -3,7 +3,7 @@
 
 	import config from '../../config';
 
-	import { testInputDefocus, delayedTimeout } from '../../utils';
+	import { trim, testInputDefocus, delayedTimeout } from '../../utils';
 
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
@@ -48,13 +48,13 @@
 
     // $: titleField && titleField.focus();
 
-	$: nextEnabled = title && description && !descriptionCharsOver && image && !headerImageIsUploading;
+	$: nextEnabled = trim(title) && trim(description) && !descriptionCharsOver && image && !headerImageIsUploading;
 
 	function createNewProject() {
 		if (nextEnabled) {
 			const projectDetails = {
-				title,
-				description,
+				title: trim(title),
+				description: trim(description),
 				headerImage: image,
 				id: projectId,
 			};

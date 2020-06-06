@@ -28,6 +28,7 @@
 	let image = ($project && $project.headerImage) || '';
 	let tags = ($project && $project.tags) || '';
 	let skills = ($project && $project.skills) || '';
+	// let skills = ($project && $project.skills && (typeof $project.skills === 'string' ? $project.skills : $project.skills.join(', '))) || '';
 	let location = ($project && $project.location) || '';
 
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';

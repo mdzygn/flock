@@ -22,6 +22,12 @@ export async function post(req, res, next) {
 	});
 
 	if (projects.length && userId) {
+		projects.forEach((project) => {
+			if (project.skills && project.skills instanceof Array) { // TODO: remove convertion once all converted
+				project.skills = project.skills.join(', ');
+			}
+		});
+
 		await loadUserItemProperties(projects, {
 			userId,
 			itemIdProp: 'projectId',

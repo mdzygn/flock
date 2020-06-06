@@ -160,6 +160,7 @@
     .header {
         font-size: 2.2rem;
         padding-top: 3px;
+        padding-right: 105px;
     }
 
     .description {

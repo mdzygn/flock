@@ -617,7 +617,8 @@
     .projectActions :global(.likeButton ) {
 		position: absolute;
 		top: 4px;
-		right: 180px;
+    	right: 140px;
+		/* right: 180px; */
 		width: 28px;
 		height: 26px;
 		padding: 8px;
@@ -626,7 +627,8 @@
     .projectActions :global(.followButton) {
 		position: absolute;
 		top: 8px;
-		right: 48px;
+    	right: 24px;
+		/* right: 48px; */
 		padding: 6px 41px 6px 18px;
 
 		font-size: 1.5rem;

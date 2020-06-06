@@ -14,7 +14,7 @@
 
     import Proxy from '../../components/Proxy.svelte';
 
-    import { userId } from '../../models/appModel'; // getProject
+    import { showProjectCounts, userId } from '../../models/appModel'; // getProject
     import { getProjectHeaderImage } from '../../models/projectsModel'; // getProject
     import { loadProject } from '../../actions/appActions';
 
@@ -52,6 +52,39 @@
     </div>
     {#if !isProjectOwner}
         <ActionBar targetItemId="{projectId}" targetItem="{$project}" />
+    {:else if $showProjectCounts}
+        <ActionBar targetItemId="{projectId}" targetItem="{$project}">
+            <div slot="buttonLeft">
+                <ActionButton
+                    label = "likes"
+
+                    icon = "{LikesIcon}"
+
+                    targetItem = "{$project}"
+                    targetItemId = "{projectId}"
+
+                    countProperty= "likeCount"
+
+                    buttonContentStyle = "padding-right: 56px;"
+                    iconStyle = "padding-bottom: 4px; margin-top: 1px;"
+                />
+            </div>
+            <div slot="buttonMiddle">
+                <ActionButton
+                    label = "followers"
+
+                    icon = "{FollowerIcon}"
+
+                    targetItem = "{$project}"
+                    targetItemId = "{projectId}"
+
+                    countProperty= "followCount"
+
+                    buttonContentStyle = "padding-right: 56px;"
+                    iconStyle = "padding-bottom: 4px"
+                />
+            </div>
+        </ActionBar>
     {/if}
     <!-- {#if isProjectOwner}
         <ActionBar targetItemId="{projectId}" targetItem="{$project}">

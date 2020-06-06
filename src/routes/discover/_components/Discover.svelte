@@ -170,6 +170,8 @@
 		width: 100%;
 
 		padding-top: 5px;
+
+		min-height: 400px;
 	}
 
 	/* .feed :global(.proxy) {

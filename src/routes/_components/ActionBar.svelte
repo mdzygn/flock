@@ -10,6 +10,10 @@
     import ShareIcon from "../../assets/icons/share.png";
 
 	import {
+		showProjectCounts
+	} from '../../models/appModel';
+
+	import {
 		showShareProjectDialog
 	} from '../../actions/appActions';
 
@@ -43,6 +47,8 @@
 				targetItemId = "{targetItemId}"
 				action = "{projectToggleLiked}"
 				targetItemProperty = "liked"
+
+				countProperty= "{$showProjectCounts ? 'likeCount' : ''}"
 			/>
 				<!-- countProperty = "likeCount" -->
 		</slot>
@@ -63,6 +69,8 @@
 
 				buttonContentStyle = "padding-right: 48px;"
 				iconStyle = "padding-bottom: 4px"
+
+				countProperty= "{$showProjectCounts ? 'followCount' : ''}"
 			/>
 				<!-- countProperty= "followCount" -->
 		</slot>

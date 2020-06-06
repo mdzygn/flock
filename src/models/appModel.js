@@ -29,6 +29,7 @@ const appModel = createModel({
     exploreZoomed: false,
 
     showBetaFeatures: false,
+    showProjectCounts: false,
 
     profileDisplayingAllProjects: false,
 
@@ -74,6 +75,7 @@ export const unsavedChanges = writable(false);
 export const signInRequired = writable(false);
 
 export const showBetaFeatures = appModel.showBetaFeatures;
+export const showProjectCounts = appModel.showProjectCounts;
 
 export const project = writable(null);
 export const conversation = writable(null);
@@ -207,6 +209,8 @@ export function checkParams(query) {
     } else if (query.xbeta !== undefined) {
         showBetaFeatures.set(false);
     }
+
+    showProjectCounts.set((query.counts !== undefined));
 }
 
 // not correct on initial site load for moment

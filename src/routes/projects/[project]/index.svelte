@@ -703,7 +703,7 @@
         margin-right: -20px;
 	}
 
-	.countContainer {
+	/* .countContainer {
 		vertical-align: bottom;
 		display: inline-block;
 		position: relative;
@@ -718,7 +718,7 @@
 		font-weight: 700;
 
 		color: #777777;
-	}
+	} */
 
     .projectActions :global(.followButton.isButton .count) {
     	left: 49px;

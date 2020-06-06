@@ -58,6 +58,7 @@ export function getDisplayText(text, options) {
             text = stripLinks(text);
         }
         if (options && options.collapseBreaks) {
+            text = text.replace(/\r?\n/g, '&nbsp;&nbsp;');
             text = text.replace(/<br\/>/g, '&nbsp;&nbsp;');
         } else {
             text = text.replace(/\r?\n/g, '<br/>');

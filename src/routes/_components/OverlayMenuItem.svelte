@@ -67,4 +67,9 @@
         color: #666666;
         text-decoration: underline;
 	}
+
+	.overlayMenuItem :global(.textPanel.demphasisText .buttonLabel) {
+        font-weight: initial;
+        color: #888888;
+    }
 </style>

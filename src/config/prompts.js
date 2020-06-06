@@ -297,6 +297,11 @@ const prompts = {
                 disabled: () => !get(logInFormValidated),
                 default: true,
             },
+            {
+                className: 'textPanel demphasisText',
+                label: 'Forgot Password',
+                // action: () => { showPrompt(promptIds.LOG_IN); },
+            },
         ],
     },
     LOG_IN_ERROR: {

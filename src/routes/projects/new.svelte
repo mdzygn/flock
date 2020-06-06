@@ -31,7 +31,7 @@
 	let descriptionField;
 
 	let remainingChars;
-	let charsOver;
+	let descriptionCharsOver;
 	$: charCountLow = (remainingChars !== '') && remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
 
 	let contextSearchString = '';
@@ -48,7 +48,7 @@
 
     // $: titleField && titleField.focus();
 
-	$: nextEnabled = title && description && !charsOver && image && !headerImageIsUploading;
+	$: nextEnabled = title && description && !descriptionCharsOver && image && !headerImageIsUploading;
 
 	function createNewProject() {
 		if (nextEnabled) {
@@ -90,8 +90,8 @@
 			</div>
 			<div class="field descriptionField">
 				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
-				<div class="fieldCharCount" class:charCountLow="{charCountLow}">{charsOver ? charsOver : remainingChars}{charsOver ? ' characters over': (charCountLow ? ' characters remaining' : '')}</div>
-				<LimitedTextfield bind:value="{description}" bind:field="{descriptionField}" bind:remainingChars="{remainingChars}" bind:charsOver="{charsOver}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" />
+				<div class="fieldCharCount" class:charCountLow="{charCountLow}" class:charCountOver="{descriptionCharsOver}">{descriptionCharsOver ? descriptionCharsOver : remainingChars}{descriptionCharsOver ? ' characters over': (charCountLow ? ' characters remaining' : '')}</div>
+				<LimitedTextfield bind:value="{description}" bind:field="{descriptionField}" bind:remainingChars="{remainingChars}" bind:charsOver="{descriptionCharsOver}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" />
 				<div class="fieldNote">{@html locale.NEW_PROJECT.DESCRIPTION_NOTE}</div>
 			</div>
 			<div class="field headerImageField">
@@ -150,6 +150,10 @@
 	}
 	.charCountLow {
 		color: #DF3C3C;
+	}
+	.charCountOver {
+		color: #DF3C3C;
+		font-weight: bold;
 	}
 
 	.fieldNote {

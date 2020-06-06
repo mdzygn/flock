@@ -42,9 +42,10 @@
 	$: imageIsUploading = headerImageIsUploading || detail1ImageIsUploading || detail2ImageIsUploading || detail3ImageIsUploading || detail4ImageIsUploading;
 
 	let remainingChars;
+	let descriptionCharsOver;
 	$: charCountLow = (remainingChars !== '') && remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
 
-	$: saveEnabled = (!$editingProject || (title && description)) && !imageIsUploading;
+	$: saveEnabled = (!$editingProject || (title && description && !descriptionCharsOver)) && !imageIsUploading;
 	// $: saveEnabled = (!editingProject || (title && description)) && !imageIsUploading;
 
 	let detail1 = '';
@@ -238,8 +239,8 @@
 				<div class="field descriptionField">
 					<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
 					<!-- <textarea bind:value="{description}" bind:this="{descriptionInput}" on:keypress="{testInputDefocus}" /> -->
-					<div class="fieldCharCount" class:charCountLow="{charCountLow}">{remainingChars}{charCountLow ? ' characters remaining' : ''}</div>
-					<LimitedTextfield bind:value="{description}" bind:field="{descriptionInput}" bind:remainingChars="{remainingChars}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{testInputDefocus}" />
+					<div class="fieldCharCount" class:charCountLow="{charCountLow}" class:charCountOver="{descriptionCharsOver}">{descriptionCharsOver ? descriptionCharsOver : remainingChars}{descriptionCharsOver ? ' characters over': (charCountLow ? ' characters remaining' : '')}</div>
+					<LimitedTextfield bind:value="{description}" bind:field="{descriptionInput}" bind:remainingChars="{remainingChars}" bind:charsOver="{descriptionCharsOver}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{testInputDefocus}" />
 				</div>
 				<div class="field headerImageField">
 					<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
@@ -388,6 +389,10 @@
 	.charCountLow {
 		color: #DF3C3C;
 	}
+	.charCountOver {
+		color: #DF3C3C;
+		font-weight: bold;
+	}
 
 	.tip {
     	padding-left: 13px;
@@ -436,6 +441,9 @@
     	margin-top: 4px;
 
 		resize: none;
+	}
+	.content :global(textarea.charsOver) {
+		color: #DF3C3C;
 	}
 
 	.headerImageField {

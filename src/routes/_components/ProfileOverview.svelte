@@ -1,7 +1,7 @@
 <script>
     import { menuIds } from '../../config/menus';
 
-    import { parseHTML } from '../../utils';
+    import { getDisplayText } from '../../utils';
 
     import Button from '../../components/Button.svelte';
 
@@ -58,7 +58,7 @@
     $: userBio = ($viewedUser && $viewedUser.bio) || '';
     $: userLocation = ($viewedUser && $viewedUser.location) || '';
 
-    $: userBioHTML = parseHTML(userBio);
+    $: userBioHTML = getDisplayText(userBio);
 
     $: postsCount = ($viewedUser && $viewedUser.postsCount) || 0;
     $: likesCount = ($viewedUser && $viewedUser.likesCount) || 0;

@@ -2,7 +2,7 @@
 	import locale from '../../../locale';
 	import config from '../../../config';
 	import { menuIds } from '../../../config/menus';
-	import { parseHTML } from '../../../utils';
+	import { getDisplayText } from '../../../utils';
 
 	import { onMount } from 'svelte';
 
@@ -135,7 +135,7 @@
 	$: projectDescription = ($project && $project.description) || '';
 	$: projectLocation = ($project && $project.location) || '';
 
-    $: projectDescriptionHTML = parseHTML(projectDescription);
+    $: projectDescriptionHTML = getDisplayText(projectDescription);
 
 	$: projectDetails = ($project && $project.details) || null;
 
@@ -231,7 +231,7 @@
 										{/if}
 										<!-- <Proxy image="project_info_content_3" className="proxyOverlay" /> -->
 										{#if projectDetailItem.detail}
-											<div class="projectInfoDetail" class:noImage="{!projectDetailItem.image}">{@html parseHTML(projectDetailItem.detail)}</div>
+											<div class="projectInfoDetail" class:noImage="{!projectDetailItem.image}">{@html getDisplayText(projectDetailItem.detail)}</div>
 										{/if}
 									{/if}
 								{/each}

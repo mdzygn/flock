@@ -16,12 +16,69 @@ export function getFormattedText(text) {
 }
 
 export function getUnformattedText(text) {
-    return text ? text.replace(/\r?\n/g, '<br/>') : text;
+    return getHTMLFormattedText(text);
 }
 
 export function getUnbrokenText(text) {
     return text ? text.replace(/<br\/>/g, '&nbsp;&nbsp;') : text;
 }
+
+export function getHTMLFormattedText(text) {
+    return text ? text.replace(/\r?\n/g, '<br/>') : text;
+}
+
+export function getLinkFormattedText(text) {
+    const urlLinkRegex = /(<a href=")?(?:https?:\/\/)?(?:(?:www)[-A-Za-z0-9+&@#\/%?=~_|$!:.,;]+\.)+[-A-Za-z0-9+&@#\/%?=~_|$!]+/ig;
+    text = text.replace(urlLinkRegex, function ( fullMatch, aTagMatch ) {
+        if(/^https?:\/\/.+/i.test(fullMatch)) {
+            return aTagMatch ? fullMatch : '<a href="'+fullMatch+'" target="_blank">'+fullMatch+'</a>';
+        } else {
+            return aTagMatch ? fullMatch : '<a href="http://'+fullMatch+'" target="_blank">'+fullMatch+'</a>';
+        }
+    });
+
+    const mailLinkRegex = /(<a href="(?:mailto:)?)?[\w.]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,8})+/ig;
+    // const mailLinkRegex = /(<a href=")?(?:mailto:)?[\w.]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,8})+/ig;
+    text = text.replace(mailLinkRegex, function ( fullMatch, aTagMatch ) {
+        return aTagMatch ? fullMatch : '<a href="mailto:'+fullMatch+'">'+fullMatch+'</a>';
+    });
+
+    return text;
+}
+
+export function getDisplayText(text, options) {
+    text = getHTMLFormattedText(text);
+    if (!options || !options.disallowLinks) {
+        text = getLinkFormattedText(text);
+    }
+    return text;
+}
+
+
+// export function parseHTML(string) {
+//     if (string) {
+//         string = linkify(string);
+//     }
+//     return string;
+// }
+
+// export function linkify(string) {
+//     // http://, https://, ftp://
+//     var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
+
+//     // www. sans http:// or https://
+//     var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+
+//     // Email addresses
+//     var emailAddressPattern = /[\w.]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+/gim;
+
+//     return string
+//         .replace(urlPattern, '<a href="$&" target="_blank" onClick="event && event.stopPropagation()">$&</a>')
+//         .replace(pseudoUrlPattern, '$1<a href="http://$2" target="_blank" onClick="event && event.stopPropagation()">$2</a>')
+//         .replace(emailAddressPattern, '<a href="mailto:$&" onClick="event && event.stopPropagation()">$&</a>');
+
+//     // /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm,
+// };
 
 export function testInputDefocus(event, options) {
     const actionOnCtrl = options && options.actionOnCtrl;
@@ -91,31 +148,6 @@ export function shuffle(array) {
 
     return newArray;
 }
-
-export function parseHTML(string) {
-    if (string) {
-        string = linkify(string);
-    }
-    return string;
-}
-
-export function linkify(string) {
-    // http://, https://, ftp://
-    var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
-
-    // www. sans http:// or https://
-    var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-
-    // Email addresses
-    var emailAddressPattern = /[\w.]+@[a-zA-Z_-]+?(?:\.[a-zA-Z]{2,6})+/gim;
-
-    return string
-        .replace(urlPattern, '<a href="$&" target="_blank" onClick="event && event.stopPropagation()">$&</a>')
-        .replace(pseudoUrlPattern, '$1<a href="http://$2" target="_blank" onClick="event && event.stopPropagation()">$2</a>')
-        .replace(emailAddressPattern, '<a href="mailto:$&" onClick="event && event.stopPropagation()">$&</a>');
-
-    // /(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm,
-};
 
 export function getDateAge(date) {
     const dateAge = {};

@@ -25,7 +25,7 @@
 
     import PlaceholderImage from "../../assets/images/postPlaceholder.png";
 
-    import { parseHTML, getUnbrokenText, getDateString, getDateAge, getDateAgeString, secondsDiff } from '../../utils';
+    import { getDisplayText, getUnbrokenText, getDateString, getDateAge, getDateAgeString, secondsDiff } from '../../utils';
 
     import { getUser } from '../../models/usersModel';
 
@@ -76,7 +76,7 @@
     $: userNameString = userName || ''; // '&nbsp;';
 
     $: title = ($post && $post.title) || null;
-    $: message = ($post && $post.message) || null;
+    $: message = ($post && $post.message && getDisplayText($post.message, {disallowLinks})) || null;
     $: image = ($post && $post.image) || null;
 
     $: useThumbImage = (type === 'thread');
@@ -124,6 +124,7 @@
     $: canLinkThrough = (type === 'thread');
     $: linkUserName = (type === 'threadPost');
     $: displayBreaks = (type !== 'thread');
+    $: disallowLinks = (type === 'thread');
     $: showLastActiveTime = (type === 'thread');
     $: textSelectable = (type !== 'thread');
     $: messageLimited = (type === 'thread');

@@ -30,7 +30,7 @@
 
 	// import NewPostButton from '../_components/NewPostButton.svelte';
 
-    import { parseHTML, getDateString, getDateAgeString, secondsDiff } from '../../utils';
+    import { getDisplayText, getDateString, getDateAgeString, secondsDiff } from '../../utils';
 
     import {
         project,
@@ -94,8 +94,8 @@
 
     $: dateString = (createdAt && getDateString(createdAt, 'ddd d MMM') + ' at ' + getDateString(createdAt, 'h:mmtt')) || '&nbsp;';
 
-    $: titleHTML = parseHTML(title);
-    $: messageHTML = parseHTML(message);
+    $: titleHTML = getDisplayText(title);
+    $: messageHTML = getDisplayText(message);
 
     let currentImageSrc = PlaceholderImage;
     $: { // load placeholder to set image size

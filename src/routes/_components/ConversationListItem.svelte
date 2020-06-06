@@ -6,7 +6,7 @@
 
     import AvatarIcon from './AvatarIcon.svelte';
 
-    import { getDateAgeString, getEllipsisText } from '../../utils';
+    import { getDisplayText, getDateAgeString, getEllipsisText } from '../../utils';
 
     import { getUser, getUserModelFromData } from '../../models/usersModel';
 
@@ -21,7 +21,12 @@
     // $: console.log('conversation', $conversation);
 
     $: title = ($conversation && $conversation.title) || '';
-    $: message = $conversation ? (($conversation.lastMessageText && getEllipsisText($conversation.lastMessageText, config.CONVERSATION_MAX_PREVIEW_LENGTH)) || '(image)') : '';
+    $: lastMessageText = ($conversation && $conversation.lastMessageText) || '';
+    $: lastMessageFormatted = lastMessageText && getDisplayText(lastMessageText, {disallowLinks: true, collapseBreaks: true});
+    $: lastMessageTruncated = lastMessageFormatted && getEllipsisText(lastMessageFormatted, config.CONVERSATION_MAX_PREVIEW_LENGTH);
+    $: messagePreview = lastMessageTruncated || '(image)'; // TODO: use if image present to display this
+
+    // $: message = $conversation ? (($conversation.lastMessageText && getEllipsisText($conversation.lastMessageText, config.CONVERSATION_MAX_PREVIEW_LENGTH)) || '(image)') : '';
 
     $: conversationId = ($conversation && $conversation.id) || null;
     $: projectId = ($conversation && $conversation.projectId) || null;
@@ -54,7 +59,7 @@
     <div class="detailContent">
         <div class="detailInnerContent">
             <div class="title">{titleString}</div>
-            <div class="message">{@html message}<span class="dateString">{dateString}</span></div>
+            <div class="message">{@html messagePreview}<span class="dateString">{dateString}</span></div>
         </div>
     </div>
     <div class="info">

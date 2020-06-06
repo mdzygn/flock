@@ -107,7 +107,6 @@
     function resizeMessageField() {
         (async () => {
             await tick();
-            console.log('resize');
             if (messageField && messageField.style && typeof window !== 'undefined' && window.getComputedStyle) {
                 messageField.style.height = 'inherit';
 
@@ -265,7 +264,7 @@
         width: 100%;
 	}
 	.messageInput :global(.sendButton .icon) {
-        /* margin-top: -1px; */
+        margin-top: -1px;
         /* margin-top: 6px; */
         transform: scale(0.475, 0.475);
 	}

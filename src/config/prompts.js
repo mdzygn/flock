@@ -314,11 +314,11 @@ const prompts = {
                 disabled: () => !get(logInFormValidated),
                 default: true,
             },
-            {
-                className: 'textPanel demphasisText',
-                label: 'Forgot Password',
-                action: () => { showPrompt(promptIds.FORGOT_PASSWORD); },
-            },
+            // {
+            //     className: 'textPanel demphasisText',
+            //     label: 'Forgot Password',
+            //     action: () => { showPrompt(promptIds.FORGOT_PASSWORD); },
+            // },
         ],
     },
     LOG_IN_ERROR: {

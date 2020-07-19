@@ -19,6 +19,7 @@
 	import RemoveImageIcon from "../../../assets/icons/clear.png";
     import CancelIcon from "../../../assets/icons/cancel.png";
 	import SaveIcon from "../../../assets/icons/save.png";
+    import NextArrowIcon from "../../../assets/icons/next_arrow.png";
 
 	import { project, projectId, editingProjectMode, showBetaFeatures } from '../../../models/appModel';
 	import { saveProjectDetails } from '../../../actions/projectActions';
@@ -177,7 +178,7 @@
 			});
 		}
 
-		saveProjectDetails(projectDetails, {editProjectDetails: ($editingProjectMode === 'details2'), showProjectInfo: ($editingProjectMode === 'addDetails')});
+		saveProjectDetails(projectDetails, {editProjectDetails: ($editingProjectMode === 'details2'), showProjectInfo: ($editingProjectMode === 'addDetails' || $editingProjectMode === 'details3')});
 	}
 
 	function addImage(index) {
@@ -232,7 +233,7 @@
 		</Proxy> -->
 
 		<div class="panelContent">
-			{#if ($editingProjectMode !== 'details2')}
+			{#if ($editingProjectMode === 'edit' || $editingProjectMode === 'addDetails')}
 				<div class="actions topActions">
 					<Button className="saveButton" onClick="{save}" icon="{SaveIcon}" disabled="{!saveEnabled}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
 				</div>
@@ -350,10 +351,17 @@
 			{/if}
 
 			<div class="actions">
-				{#if ($editingProjectMode !== 'details2')}
+				{#if ($editingProjectMode === 'edit' || $editingProjectMode === 'addDetails')}
 					<Button className="cancelButton" onClick="{cancel}" icon="{CancelIcon}">{locale.EDIT_PROJECT_DETAILS.CANCEL}</Button>
 				{/if}
-				<Button className="saveButton" onClick="{save}" icon="{SaveIcon}" disabled="{!saveEnabled}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
+
+				{#if ($editingProjectMode === 'details2')}
+					<Button className="saveButton" onClick="{save}" disabled="{!saveEnabled}" icon="{NextArrowIcon}">{locale.NEW_PROJECT.DETAILS_2_CONFIRM}</Button>
+				{:else if ( $editingProjectMode === 'details3')}
+					<Button className="saveButton" onClick="{save}" disabled="{!saveEnabled}" icon="{SaveIcon}">{locale.NEW_PROJECT.DETAILS_3_CONFIRM}</Button>
+				{:else}
+					<Button className="saveButton" onClick="{save}" disabled="{!saveEnabled}" icon="{SaveIcon}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
+				{/if}
 			</div>
 		</div>
 	</div>

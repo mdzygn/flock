@@ -134,7 +134,7 @@ export function saveProjectDetails(projectDetails, options) {
         project.set(curProject);
 
         if (options && options.editProjectDetails) {
-            editProjectDetails({editingProjectMode: 'addDetails'});
+            editProjectDetails({editingProjectMode: 'details3'});
         } else {
             goto('projects/' + curProject.id);
             if (options && options.showProjectInfo) {

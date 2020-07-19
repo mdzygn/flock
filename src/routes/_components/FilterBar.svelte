@@ -21,30 +21,30 @@
         // await tick();
         // console.log('set value');
 
-        console.log('before filterString', filterString);
+        // console.log('before filterString', filterString);
 
         if (filterValue === 'all') {
             filterString = '';
         } else {
             if (allowMultiSelect) {
-                const isActiveRegex = new RegExp('\\b' + filterValue + '\\b(, )?');
-                const isActiveMatch = filterString.match(isActiveRegex);
-                if (isActiveMatch) {
-                    console.log('isActiveMatch', isActiveMatch);
-                    filterString = filterString.substr(0, isActiveMatch.index) + filterString.substr(isActiveMatch.index + isActiveMatch[0].length);
+                let curFilterItems = filterString.trim().split(', ');
+
+                const curItemIndex = curFilterItems.indexOf(filterValue);
+                // console.log('curItemIndex', curItemIndex);
+                if (curItemIndex !== -1) {
+                    curFilterItems.splice(curItemIndex, 1);
                 } else {
-                    if (filterString.trim()) {
-                        filterString = filterString + ', ' + filterValue;
-                    } else {
-                        filterString = filterValue;
-                    }
+                    curFilterItems.push(filterValue);
                 }
+                curFilterItems = curFilterItems.filter(item => item);
+
+                filterString = curFilterItems.join(', ').trim();
             } else {
                 filterString = filterValue;
             }
         }
 
-        console.log('after filterString', filterString);
+        // console.log('after filterString', filterString);
 
         // await tick();
         // console.log('stop set value');
@@ -149,6 +149,7 @@
     .filterBar.isCategorySelector .filterSet {
         white-space: normal;
         padding: 0;
+        padding-left: 6px;
         padding-top: 4px;
         padding-right: 6px;
     }

@@ -272,9 +272,14 @@
 					{/if}
 
 					<div id="categories" class="field descriptionField">
-						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.CATEGORIES}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.CATEGORIES_TIP}</span></div>
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.CATEGORIES}
+							{#if categoriesInvalid}
+								<span class="errorLabel">please select at least one category</span>
+							{:else}
+								<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.CATEGORIES_TIP}</span>
+							{/if}
+						</div>
 						<FilterBar bind:filterString={categories} isCategorySelector="{true}" />
-						{#if categoriesInvalid}<div class="errorLabel">please select at least one category</div>{/if}
 					</div>
 					<div class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
@@ -574,10 +579,13 @@
     }
 
     .errorLabel {
-    	padding-left: 7px;
+    	padding-left: 13px;
+		font-weight: initial;
+
+    	/* padding-left: 7px;
 		padding-bottom: 12px;
 		padding-top: 2px;
-		margin-bottom: -18px;
+		margin-bottom: -18px; */
 
         /* position: absolute;
         right: 20px; */

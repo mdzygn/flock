@@ -271,6 +271,10 @@
 						</div>
 					{/if}
 
+					<div class="field">
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.LOCATION_TIP}</span></div>
+						<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput1})}" />
+					</div>
 					<div id="categories" class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.CATEGORIES}
 							{#if categoriesInvalid}
@@ -284,10 +288,6 @@
 					<div class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
 						<textarea bind:value="{tags}" bind:this="{tagsInput}" />
-					</div>
-					<div class="field">
-						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.LOCATION_TIP}</span></div>
-						<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput1})}" />
 					</div>
 					<div class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.SKILLS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.SKILLS_TIP}</span></div>

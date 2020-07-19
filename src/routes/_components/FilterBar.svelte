@@ -13,17 +13,38 @@
 
     $: items = isCategorySelector ? [...itemSet, 'other'] : ['all', ...itemSet];
 
+    $: allowMultiSelect = isCategorySelector;
+
     function selectFilter(filterValue) {
         // selectingItem = true;
 
         // await tick();
         // console.log('set value');
 
+        console.log('before filterString', filterString);
+
         if (filterValue === 'all') {
             filterString = '';
         } else {
-            filterString = filterValue;
+            if (allowMultiSelect) {
+                const isActiveRegex = new RegExp('\\b' + filterValue + '\\b(, )?');
+                const isActiveMatch = filterString.match(isActiveRegex);
+                if (isActiveMatch) {
+                    console.log('isActiveMatch', isActiveMatch);
+                    filterString = filterString.substr(0, isActiveMatch.index) + filterString.substr(isActiveMatch.index + isActiveMatch[0].length);
+                } else {
+                    if (filterString.trim()) {
+                        filterString = filterString + ', ' + filterValue;
+                    } else {
+                        filterString = filterValue;
+                    }
+                }
+            } else {
+                filterString = filterValue;
+            }
         }
+
+        console.log('after filterString', filterString);
 
         // await tick();
         // console.log('stop set value');
@@ -88,7 +109,7 @@
     <div class="filterScrollRegion" bind:this="{scrollRegion}">
         <div class="filterSet">
             {#each items as item, index}
-                <Button className="filterButton {((index || isCategorySelector) ? item === filterString : filterString === '') ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item}</Button>
+                <Button className="filterButton {((index || isCategorySelector) ? filterString.match(new RegExp('\\b' + item + '\\b')) : filterString === '') ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item}</Button>
             {/each}
         </div>
     </div>

@@ -33,7 +33,7 @@
                     let curFilterItems = filterString.trim().split(', ');
 
                     if (deselectOtherOnCategory) {
-                        if (filterValue === 'other' || filterString === 'other') {
+                        if ((filterValue === 'other' || filterString === 'other') && (filterValue !== filterString)) {
                             curFilterItems = [];
                         }
                     }

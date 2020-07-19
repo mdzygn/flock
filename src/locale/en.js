@@ -44,7 +44,7 @@ const locale = {
 		CATEGORIES: 'categories',
 		CATEGORIES_TIP: 'project categories, select at least one',
 		TAGS: 'tags',
-		TAGS_TIP: 'project keywords / categories, separated by commas',
+		TAGS_TIP: 'project keywords, separated by commas',
 		SKILLS: 'seeking skills',
 		SKILLS_TIP: 'talents and roles wanted, separated by commas',
 		// TAGS_TIP: 'add at least 5 keywords/terms/categories for this project, separated by commas',

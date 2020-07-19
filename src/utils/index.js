@@ -426,3 +426,16 @@ export function trim(text) {
         return '';
     }
 }
+
+export function gotoAnchor(anchorId) {
+    if (typeof window !== 'undefined') {
+        let newLocation = window.location.href;
+        const hashLocation = newLocation.indexOf('#')
+        if (hashLocation !== -1) {
+            newLocation = newLocation.substr(0, hashLocation);
+        }
+        newLocation = newLocation + '#' + anchorId;
+
+        window.location.href = newLocation;
+    }
+}

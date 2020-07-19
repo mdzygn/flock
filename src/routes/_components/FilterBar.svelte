@@ -159,7 +159,7 @@
     .filterBar.isCategorySelector .filterSet {
         white-space: normal;
         padding: 0;
-        padding-left: 6px;
+        /* padding-left: 6px; */
         padding-top: 4px;
         padding-right: 6px;
     }

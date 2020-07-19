@@ -3,6 +3,7 @@
 	import { goto } from '@sapper/app';
 
 	import config from '../../../config';
+	import { gotoAnchor } from '../../../utils';
 	import locale from '../../../locale';
 
 	import { trim, testInputDefocus, getFormattedText } from '../../../utils';
@@ -35,6 +36,8 @@
 	let location = ($project && $project.location) || '';
 
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
+
+    let categoriesInvalid = false;
 
 	let headerImageIsUploading;
 	let detail1ImageIsUploading;
@@ -128,6 +131,12 @@
 
 	function save() {
 		if (!saveEnabled) {
+			return;
+		}
+
+		if (!categories.trim()) {
+			categoriesInvalid = true;
+			gotoAnchor('categories');
 			return;
 		}
 
@@ -262,9 +271,10 @@
 						</div>
 					{/if}
 
-					<div class="field descriptionField">
+					<div id="categories" class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.CATEGORIES}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.CATEGORIES_TIP}</span></div>
 						<FilterBar bind:filterString={categories} isCategorySelector="{true}" />
+						{#if categoriesInvalid}<div class="errorLabel">please select at least one category</div>{/if}
 					</div>
 					<div class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
@@ -561,5 +571,19 @@
     .content :global(.cancelButton .icon) {
     	padding-left: 12px;
     	margin-top: -1px;
+    }
+
+    .errorLabel {
+    	padding-left: 7px;
+		padding-bottom: 12px;
+		padding-top: 2px;
+		margin-bottom: -14px;
+
+        /* position: absolute;
+        right: 20px; */
+
+        font-size: 1.2rem;
+
+        color: #DF3C3C;
     }
 </style>

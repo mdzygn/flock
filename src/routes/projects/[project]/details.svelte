@@ -169,6 +169,12 @@
 				skills: trim(skills),
 				location: trim(location),
 			});
+		} else if ($editingProjectMode === 'details2') {
+			Object.assign(projectDetails, {
+				tags: trim(tags),
+				skills: trim(skills),
+				location: trim(location),
+			});
 		}
 
 		saveProjectDetails(projectDetails, {showProjectInfo: ($editingProjectMode === 'addDetails')});
@@ -226,106 +232,127 @@
 		</Proxy> -->
 
 		<div class="panelContent">
-			<div class="actions topActions">
-				<Button className="saveButton" onClick="{save}" icon="{SaveIcon}" disabled="{!saveEnabled}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
-			</div>
+			{#if ($editingProjectMode !== 'details2')}
+				<div class="actions topActions">
+					<Button className="saveButton" onClick="{save}" icon="{SaveIcon}" disabled="{!saveEnabled}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
+				</div>
+			{/if}
 
 			{#if ($editingProjectMode === 'edit')}
-			<div class="mainProjectDetails">
+				<div class="mainProjectDetails">
+					<div class="field">
+						<div class="label">{locale.NEW_PROJECT.TITLE}</div>
+						<input type="text" bind:value="{title}" on:keypress="{(e) => testInputDefocus(e, {target: descriptionInput})}" />
+					</div>
+					<div class="field descriptionField">
+						<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
+						<!-- <textarea bind:value="{description}" bind:this="{descriptionInput}" on:keypress="{testInputDefocus}" /> -->
+						<div class="fieldCharCount" class:charCountLow="{charCountLow}" class:charCountOver="{descriptionCharsOver}">{descriptionCharsOver ? descriptionCharsOver : remainingChars}{descriptionCharsOver ? ' characters over': (charCountLow ? ' characters remaining' : '')}</div>
+						<LimitedTextfield bind:value="{description}" bind:field="{descriptionInput}" bind:remainingChars="{remainingChars}" bind:charsOver="{descriptionCharsOver}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{testInputDefocus}" />
+					</div>
+					<div class="field headerImageField">
+						<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
+						<ImageSelectionBox bind:image bind:fileIsUploading="{headerImageIsUploading}" uploadType="projectHeader" itemId="{$projectId}" />
+					</div>
+					<div class="field descriptionField">
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
+						<textarea bind:value="{tags}" bind:this="{tagsInput}" />
+					</div>
+					<div class="field descriptionField">
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.SKILLS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.SKILLS_TIP}</span></div>
+						<textarea bind:value="{skills}" bind:this="{skillsInput}" />
+					</div>
+					<div class="field">
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.LOCATION_TIP}</span></div>
+						<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput1})}" />
+					</div>
+				</div>
+			{:else if ($editingProjectMode === 'details2')}
+				<div class="mainProjectDetails">
+					<div class="field descriptionField">
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
+						<textarea bind:value="{tags}" bind:this="{tagsInput}" />
+					</div>
+					<div class="field descriptionField">
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.SKILLS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.SKILLS_TIP}</span></div>
+						<textarea bind:value="{skills}" bind:this="{skillsInput}" />
+					</div>
+					<div class="field">
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.LOCATION_TIP}</span></div>
+						<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput1})}" />
+					</div>
+				</div>
+			{/if}
+
+			{#if ($editingProjectMode !== 'details2')}
+				<div class="sectionTitle">{locale.EDIT_PROJECT_DETAILS.OVERVIEW_HEADING}</div>
+
+				{#if detailImage1 || addingDetailImage[0]}
+					<div class="imageField">
+						<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{() => removeImage(0) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
+					</div>
+					<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage1}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail1ImageIsUploading}" itemIndex="1" uploadType="projectDetail" itemId="{$projectId}" />
+				{:else}
+					<div class="imageField">
+						<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(0) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+					</div>
+				{/if}
+
 				<div class="field">
-					<div class="label">{locale.NEW_PROJECT.TITLE}</div>
-					<input type="text" bind:value="{title}" on:keypress="{(e) => testInputDefocus(e, {target: descriptionInput})}" />
+					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_1_TIP}</span></div>
+					<textarea bind:this="{detailInput1}" bind:value="{detail1}" class="detailTextarea" />
 				</div>
-				<div class="field descriptionField">
-					<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
-					<!-- <textarea bind:value="{description}" bind:this="{descriptionInput}" on:keypress="{testInputDefocus}" /> -->
-					<div class="fieldCharCount" class:charCountLow="{charCountLow}" class:charCountOver="{descriptionCharsOver}">{descriptionCharsOver ? descriptionCharsOver : remainingChars}{descriptionCharsOver ? ' characters over': (charCountLow ? ' characters remaining' : '')}</div>
-					<LimitedTextfield bind:value="{description}" bind:field="{descriptionInput}" bind:remainingChars="{remainingChars}" bind:charsOver="{descriptionCharsOver}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{testInputDefocus}" />
-				</div>
-				<div class="field headerImageField">
-					<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
-					<ImageSelectionBox bind:image bind:fileIsUploading="{headerImageIsUploading}" uploadType="projectHeader" itemId="{$projectId}" />
-				</div>
-				<div class="field descriptionField">
-					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
-					<textarea bind:value="{tags}" bind:this="{tagsInput}" />
-				</div>
-				<div class="field descriptionField">
-					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.SKILLS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.SKILLS_TIP}</span></div>
-					<textarea bind:value="{skills}" bind:this="{skillsInput}" />
-				</div>
+
+				{#if detailImage2 || addingDetailImage[1]}
+					<div class="imageField">
+						<Button className="addImage" onClick="{() => removeImage(1) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
+					</div>
+					<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage2}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail2ImageIsUploading}" itemIndex="2" uploadType="projectDetail" itemId="{$projectId}" />
+				{:else}
+					<div class="imageField">
+						<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(1) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+					</div>
+				{/if}
 				<div class="field">
-					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}</div>
-					<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput1})}" />
+					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_2_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_2_TIP}</span></div>
+					<textarea bind:this="{detailInput2}" bind:value="{detail2}" class="detailTextarea" />
 				</div>
-			</div>
-			{/if}
 
-        	<div class="sectionTitle">{locale.EDIT_PROJECT_DETAILS.OVERVIEW_HEADING}</div>
+				{#if detailImage3 || addingDetailImage[2]}
+					<div class="imageField">
+						<Button className="addImage" onClick="{() => removeImage(2) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
+					</div>
+					<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage3}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail3ImageIsUploading}" itemIndex="3" uploadType="projectDetail" itemId="{$projectId}" />
+				{:else}
+					<div class="imageField">
+						<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(2) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+					</div>
+				{/if}
+				<div class="field">
+					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_3_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_3_TIP}</span></div>
+					<textarea bind:this="{detailInput3}" bind:value="{detail3}" class="detailTextarea" />
+				</div>
 
-			{#if detailImage1 || addingDetailImage[0]}
-				<div class="imageField">
-					<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{() => removeImage(0) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
-				</div>
-				<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage1}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail1ImageIsUploading}" itemIndex="1" uploadType="projectDetail" itemId="{$projectId}" />
-			{:else}
-				<div class="imageField">
-					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(0) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
-				</div>
-			{/if}
-
-			<div class="field">
-				<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_1_TIP}</span></div>
-        		<textarea bind:this="{detailInput1}" bind:value="{detail1}" class="detailTextarea" />
-			</div>
-
-			{#if detailImage2 || addingDetailImage[1]}
-				<div class="imageField">
-					<Button className="addImage" onClick="{() => removeImage(1) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
-				</div>
-				<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage2}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail2ImageIsUploading}" itemIndex="2" uploadType="projectDetail" itemId="{$projectId}" />
-			{:else}
-				<div class="imageField">
-					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(1) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
-				</div>
-			{/if}
-			<div class="field">
-				<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_2_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_2_TIP}</span></div>
-        		<textarea bind:this="{detailInput2}" bind:value="{detail2}" class="detailTextarea" />
-			</div>
-
-			{#if detailImage3 || addingDetailImage[2]}
-				<div class="imageField">
-					<Button className="addImage" onClick="{() => removeImage(2) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
-				</div>
-				<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage3}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail3ImageIsUploading}" itemIndex="3" uploadType="projectDetail" itemId="{$projectId}" />
-			{:else}
-				<div class="imageField">
-					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(2) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+				{#if detailImage4 || addingDetailImage[3]}
+					<div class="imageField">
+						<Button className="addImage" onClick="{() => removeImage(3) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
+					</div>
+					<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage4}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail4ImageIsUploading}" itemIndex="4" uploadType="projectDetail" itemId="{$projectId}" />
+				{:else}
+					<div class="imageField">
+						<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(3) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+					</div>
+				{/if}
+				<div class="field">
+					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_4_TIP}</span></div>
+					<textarea bind:this="{detailInput4}" bind:value="{detail4}" class="detailTextarea" />
 				</div>
 			{/if}
-			<div class="field">
-				<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_3_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_3_TIP}</span></div>
-        		<textarea bind:this="{detailInput3}" bind:value="{detail3}" class="detailTextarea" />
-			</div>
-
-			{#if detailImage4 || addingDetailImage[3]}
-				<div class="imageField">
-					<Button className="addImage" onClick="{() => removeImage(3) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
-				</div>
-				<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage4}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail4ImageIsUploading}" itemIndex="4" uploadType="projectDetail" itemId="{$projectId}" />
-			{:else}
-				<div class="imageField">
-					<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(3) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
-				</div>
-			{/if}
-			<div class="field">
-				<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_4_TIP}</span></div>
-        		<textarea bind:this="{detailInput4}" bind:value="{detail4}" class="detailTextarea" />
-			</div>
 
 			<div class="actions">
-				<Button className="cancelButton" onClick="{cancel}" icon="{CancelIcon}">{locale.EDIT_PROJECT_DETAILS.CANCEL}</Button>
+				{#if ($editingProjectMode !== 'details2')}
+					<Button className="cancelButton" onClick="{cancel}" icon="{CancelIcon}">{locale.EDIT_PROJECT_DETAILS.CANCEL}</Button>
+				{/if}
 				<Button className="saveButton" onClick="{save}" icon="{SaveIcon}" disabled="{!saveEnabled}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
 			</div>
 		</div>

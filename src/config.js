@@ -81,6 +81,8 @@ export const DATE_SHOWN_MESSAGE_DATE_DIFF = 6 * 3600; // 3600 = seconds/hour
 export const MIN_AUTO_SCROLL_BOTTOM_DIST = 200;
 export const MIN_HIDE_MESSAGES_BOTTOM_DIST = 60;
 
+export const ADD_DETAILS_AFTER_PROJECT_CREATE = false;
+
 export const MAX_IMAGE_UPLOAD_SIZE = {
     'image/gif': 8,
     'image/png': 3,

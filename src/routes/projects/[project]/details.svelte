@@ -280,13 +280,13 @@
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
 						<textarea bind:value="{tags}" bind:this="{tagsInput}" />
 					</div>
-					<div class="field descriptionField">
-						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.SKILLS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.SKILLS_TIP}</span></div>
-						<textarea bind:value="{skills}" bind:this="{skillsInput}" />
-					</div>
 					<div class="field">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.LOCATION_TIP}</span></div>
 						<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput1})}" />
+					</div>
+					<div class="field descriptionField">
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.SKILLS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.SKILLS_TIP}</span></div>
+						<textarea bind:value="{skills}" bind:this="{skillsInput}" />
 					</div>
 				</div>
 			{/if}
@@ -362,7 +362,7 @@
 				{/if}
 
 				{#if ($editingProjectMode === 'details2')}
-					<Button className="saveButton" onClick="{save}" disabled="{!saveEnabled}" icon="{NextArrowIcon}">{locale.NEW_PROJECT.DETAILS_2_CONFIRM}</Button>
+					<Button className="saveButton" onClick="{save}" disabled="{!saveEnabled}" icon="{SaveIcon}">{locale.NEW_PROJECT.DETAILS_2_CONFIRM}</Button>
 				{:else if ( $editingProjectMode === 'details3')}
 					<Button className="saveButton" onClick="{save}" disabled="{!saveEnabled}" icon="{SaveIcon}">{locale.NEW_PROJECT.DETAILS_3_CONFIRM}</Button>
 				{:else}
@@ -577,7 +577,7 @@
     	padding-left: 7px;
 		padding-bottom: 12px;
 		padding-top: 2px;
-		margin-bottom: -14px;
+		margin-bottom: -18px;
 
         /* position: absolute;
         right: 20px; */

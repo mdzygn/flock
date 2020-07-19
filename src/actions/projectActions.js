@@ -2,6 +2,8 @@ import { get } from 'svelte/store';
 import { goto } from '@sapper/app';
 import { tick } from 'svelte';
 
+import Config from '../config';
+
 // import { DEBUG } from '../config';
 
 import promptIds from '../config/promptIds';
@@ -133,7 +135,7 @@ export function saveProjectDetails(projectDetails, options) {
         updateProject(curProject, projectDetails);
         project.set(curProject);
 
-        if (options && options.editProjectDetails) {
+        if (Config.ADD_DETAILS_AFTER_PROJECT_CREATE && options && options.editProjectDetails) {
             editProjectDetails({editingProjectMode: 'details3'});
         } else {
             goto('projects/' + curProject.id);

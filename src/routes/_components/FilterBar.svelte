@@ -8,6 +8,8 @@
 
     export let isCategorySelector = false;
 
+    const deselectOtherOnCategory = true;
+
     // , 'narrative'
     let itemSet = ['design', 'arts', 'tech', 'environment', 'community', 'apps', 'games', 'music', 'media', 'education', 'food'];
 
@@ -27,18 +29,26 @@
             filterString = '';
         } else {
             if (allowMultiSelect) {
-                let curFilterItems = filterString.trim().split(', ');
+                if (filterValue) {
+                    let curFilterItems = filterString.trim().split(', ');
 
-                const curItemIndex = curFilterItems.indexOf(filterValue);
-                // console.log('curItemIndex', curItemIndex);
-                if (curItemIndex !== -1) {
-                    curFilterItems.splice(curItemIndex, 1);
-                } else {
-                    curFilterItems.push(filterValue);
+                    if (deselectOtherOnCategory) {
+                        if (filterValue === 'other' || filterString === 'other') {
+                            curFilterItems = [];
+                        }
+                    }
+
+                    const curItemIndex = curFilterItems.indexOf(filterValue);
+                    // console.log('curItemIndex', curItemIndex);
+                    if (curItemIndex !== -1) {
+                        curFilterItems.splice(curItemIndex, 1);
+                    } else {
+                        curFilterItems.push(filterValue);
+                    }
+                    curFilterItems = curFilterItems.filter(item => item);
+
+                    filterString = curFilterItems.join(', ').trim();
                 }
-                curFilterItems = curFilterItems.filter(item => item);
-
-                filterString = curFilterItems.join(', ').trim();
             } else {
                 filterString = filterValue;
             }

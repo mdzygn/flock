@@ -41,6 +41,7 @@ export async function post(req, res, next) {
 				isNew: true,
 
 				location: true,
+				categories: true,
 				tags: true,
 				skills: true,
 				links: true,

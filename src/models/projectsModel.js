@@ -212,12 +212,14 @@ function projectSearchMatch(project, searchString, filterString) {
 		filterMatched = false;
 		if (project.title && project.title.toLowerCase().includes(filterString)) filterMatched = true;
 		if (project.description && project.description.toLowerCase().includes(filterString)) filterMatched = true;
+		if (project.categories && project.categories.toLowerCase().includes(filterString)) filterMatched = true;
 		if (project.tags && project.tags.toLowerCase().includes(filterString)) filterMatched = true;
 	}
 	if (filterMatched) {
 		if (searchString) {
 			if (project.title && project.title.toLowerCase().includes(searchString)) return true;
 			if (project.description && project.description.toLowerCase().includes(searchString)) return true;
+			if (project.categories && project.categories.toLowerCase().includes(searchString)) return true;
 			if (project.tags && project.tags.toLowerCase().includes(searchString)) return true;
 			if (project.skills && typeof project.skills === 'string' && project.skills.toLowerCase().includes(searchString)) return true;  // TODO: remove convertion once all converted
 			// if (project.skills && (project.skills.toLowerCase ? project.skills.toLowerCase().includes(searchString) : project.skills.includes(searchString))) return true;

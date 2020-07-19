@@ -168,12 +168,14 @@
 				title: trim(title),
 				description: trim(description),
 				headerImage: image,
+				categories: trim(categories),
 				tags: trim(tags),
 				skills: trim(skills),
 				location: trim(location),
 			});
 		} else if ($editingProjectMode === 'details2') {
 			Object.assign(projectDetails, {
+				categories: trim(categories),
 				tags: trim(tags),
 				skills: trim(skills),
 				location: trim(location),

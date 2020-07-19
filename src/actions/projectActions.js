@@ -23,6 +23,7 @@ import {
 
 import {
     loadProject,
+    editProjectDetails,
     showProjectInfo,
     showPrompt,
     checkLoggedIn,
@@ -153,6 +154,7 @@ export function createProject(projectDetails) {
 
     if (newProject) {
         loadProject(newProject.id);
+        editProjectDetails({editingProjectMode: 'details2'});
     }
 }
 

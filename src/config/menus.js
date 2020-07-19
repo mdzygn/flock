@@ -62,7 +62,7 @@ export const menus = {
             {
                 label: 'Edit Project',
                 condition: () => { const p = get(project); return p && !p.archived },
-                action: () => editProjectDetails({editingProject: true}),
+                action: editProjectDetails,
             },
             {
                 label: 'Make Private...',

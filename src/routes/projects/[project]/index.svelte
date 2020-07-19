@@ -198,7 +198,7 @@
 						<div class="contentContainer">
 							<Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProjectOptions}"></Button>
 							{#if isTeamMember}
-								<Button className="editButton" onClick="{() => editProjectDetails({editingProject: true})}" icon="{EditIcon}" disabled="{!canEdit}"></Button>
+								<Button className="editButton" onClick="{editProjectDetails}" icon="{EditIcon}" disabled="{!canEdit}"></Button>
 								<Audience {isPublic} onClick="{showTogglePublicDialog}" disabled="{!canEdit}" />
 							{/if}
 							<div class="itemContent">
@@ -242,7 +242,7 @@
 								{#if projectHasDetails && !showInfo && $projectReturnView}
 									<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 								{:else if !projectHasDetails && isTeamMember && !isArchived}
-									<Button className="addProjectDetailsButton" onClick="{editProjectDetails}" icon="{AddDetailsIcon}">add project details</Button>
+									<Button className="addProjectDetailsButton" onClick="{() => editProjectDetails({editingProjectMode: 'addDetails'})}" icon="{AddDetailsIcon}">add project details</Button>
 								{/if}
 								{#if !isTeamMember}
 									<Button disabled="{!$showBetaFeatures}" className="sendMessageButton" onClick="{e => loadConversationByProject($projectId)}" icon="{SendMessageIcon}">message</Button>

@@ -20,7 +20,7 @@
     import CancelIcon from "../../../assets/icons/cancel.png";
 	import SaveIcon from "../../../assets/icons/save.png";
 
-	import { project, projectId, editingProject, showBetaFeatures } from '../../../models/appModel';
+	import { project, projectId, editingProjectMode, showBetaFeatures } from '../../../models/appModel';
 	import { saveProjectDetails } from '../../../actions/projectActions';
 
 	let title = ($project && $project.title) || '';
@@ -45,7 +45,7 @@
 	let descriptionCharsOver;
 	$: charCountLow = (remainingChars !== '') && remainingChars < config.PROJECT_DESCRIPTION_CHARS_LOW;
 
-	$: saveEnabled = (!$editingProject || (trim(title) && trim(description) && !descriptionCharsOver)) && !imageIsUploading;
+	$: saveEnabled = (($editingProjectMode !== 'edit') || (trim(title) && trim(description) && !descriptionCharsOver)) && !imageIsUploading;
 	// $: saveEnabled = (!editingProject || (title && description)) && !imageIsUploading;
 
 	let detail1 = '';
@@ -160,7 +160,7 @@
 			details,
 		};
 
-		if ($editingProject) {
+		if ($editingProjectMode === 'edit') {
 			Object.assign(projectDetails, {
 				title: trim(title),
 				description: trim(description),
@@ -171,7 +171,7 @@
 			});
 		}
 
-		saveProjectDetails(projectDetails, {showProjectInfo: !$editingProject});
+		saveProjectDetails(projectDetails, {showProjectInfo: ($editingProjectMode === 'addDetails')});
 	}
 
 	function addImage(index) {
@@ -230,7 +230,7 @@
 				<Button className="saveButton" onClick="{save}" icon="{SaveIcon}" disabled="{!saveEnabled}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
 			</div>
 
-			{#if $editingProject}
+			{#if ($editingProjectMode === 'edit')}
 			<div class="mainProjectDetails">
 				<div class="field">
 					<div class="label">{locale.NEW_PROJECT.TITLE}</div>

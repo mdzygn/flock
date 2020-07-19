@@ -35,7 +35,7 @@ const appModel = createModel({
 
     projectReturnView: false,
     projectShowingInfo: false,
-    editingProject: false,
+    editingProjectMode: 'edit',
 
     displayingAllMyProjects: false,
     displayingAllFollowingProjects: false,
@@ -116,7 +116,7 @@ export const profileDisplayingAllProjects = appModel.profileDisplayingAllProject
 
 export const projectReturnView = appModel.projectReturnView;
 export const projectShowingInfo = appModel.projectShowingInfo;
-export const editingProject = appModel.editingProject;
+export const editingProjectMode = appModel.editingProjectMode;
 
 export const projectsSearchString = appModel.projectsSearchString;
 export const projectsArchiveSearchString = appModel.projectsArchiveSearchString;

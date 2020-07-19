@@ -90,7 +90,7 @@ import {
 
     projectReturnView,
     projectShowingInfo,
-    editingProject,
+    editingProjectMode,
 
     displayingAllMyProjects,
     displayingAllFollowingProjects,
@@ -265,7 +265,8 @@ export function newProject() {
 export function editProjectDetails(options) {
     if (!checkLoggedIn()) { return; }
 
-    editingProject.set(options && options.editingProject);
+    editingProjectMode.set((options && options.editingProjectMode) || 'edit');
+    // editingProject.set(options && options.editingProject);
 
     goto('projects/' + get(projectId) + '/details');
 }

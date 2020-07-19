@@ -177,7 +177,7 @@
 			});
 		}
 
-		saveProjectDetails(projectDetails, {showProjectInfo: ($editingProjectMode === 'addDetails')});
+		saveProjectDetails(projectDetails, {editProjectDetails: ($editingProjectMode === 'details2'), showProjectInfo: ($editingProjectMode === 'addDetails')});
 	}
 
 	function addImage(index) {

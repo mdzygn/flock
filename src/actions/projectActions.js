@@ -133,11 +133,15 @@ export function saveProjectDetails(projectDetails, options) {
         updateProject(curProject, projectDetails);
         project.set(curProject);
 
-        goto('projects/' + curProject.id);
-        if (options && options.showProjectInfo) {
-            showProjectInfo();
+        if (options && options.editProjectDetails) {
+            editProjectDetails({editingProjectMode: 'addDetails'});
+        } else {
+            goto('projects/' + curProject.id);
+            if (options && options.showProjectInfo) {
+                showProjectInfo();
+            }
+            resetScrollRegionPosition('project');
         }
-        resetScrollRegionPosition('project');
     }
 }
 

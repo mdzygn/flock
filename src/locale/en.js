@@ -41,8 +41,8 @@ const locale = {
 	},
 	EDIT_PROJECT_DETAILS: {
 		OVERVIEW_HEADING: 'Project Overview',
-		CATEGORIES: 'categories',
-		CATEGORIES_TIP: 'project categories, select at least one',
+		CATEGORIES: 'project category',
+		CATEGORIES_TIP: 'select at least one',
 		TAGS: 'tags',
 		TAGS_TIP: 'project keywords, separated by commas',
 		SKILLS: 'seeking skills',

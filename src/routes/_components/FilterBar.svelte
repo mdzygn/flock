@@ -6,8 +6,12 @@
 
     export let filterString = '';
 
+    export let isCategorySelector = false;
+
     // , 'narrative'
-    let items = ['all', 'design', 'arts', 'tech', 'environment', 'community', 'apps', 'games', 'music', 'media', 'education', 'food'];
+    let itemSet = ['design', 'arts', 'tech', 'environment', 'community', 'apps', 'games', 'music', 'media', 'education', 'food'];
+
+    $: items = isCategorySelector ? [...itemSet, 'other'] : ['all', ...itemSet];
 
     function selectFilter(filterValue) {
         // selectingItem = true;
@@ -78,13 +82,13 @@
     }
 </script>
 
-<div class="filterBar">
+<div class="filterBar" class:isCategorySelector="{isCategorySelector}">
     <!-- <TagSet tags="{items}" /> -->
 
     <div class="filterScrollRegion" bind:this="{scrollRegion}">
         <div class="filterSet">
             {#each items as item, index}
-                <Button className="filterButton {(index ? item === filterString : filterString === '') ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item}</Button>
+                <Button className="filterButton {((index || isCategorySelector) ? item === filterString : filterString === '') ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item}</Button>
             {/each}
         </div>
     </div>
@@ -112,6 +116,23 @@
         padding-right: 10px;
         white-space: nowrap;
         display: inline-block;
+    }
+
+    .filterBar.isCategorySelector {
+        padding-bottom: 0;
+    }
+
+    .filterBar.isCategorySelector {
+        white-space: normal;
+    }
+    .filterBar.isCategorySelector .filterSet {
+        white-space: normal;
+        padding: 0;
+        padding-top: 4px;
+        padding-right: 6px;
+    }
+    .filterBar.isCategorySelector :global(.filterButton) {
+        margin-bottom: 6px;
     }
 
     .filterSet :global(.filterButton) {

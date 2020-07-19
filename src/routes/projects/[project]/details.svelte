@@ -14,6 +14,7 @@
 	import LimitedTextfield from '../../../components/LimitedTextfield.svelte';
 	import Button from '../../../components/Button.svelte';
 	import ImageSelectionBox from '../../_components/ImageSelectionBox.svelte';
+	import FilterBar from './../../_components/FilterBar.svelte';
 
 	import AddImageIcon from "../../../assets/icons/add_small.png";
 	import RemoveImageIcon from "../../../assets/icons/clear.png";
@@ -27,6 +28,7 @@
 	let title = ($project && $project.title) || '';
 	let description = ($project && $project.description) || '';
 	let image = ($project && $project.headerImage) || '';
+	let categories = ($project && $project.categories) || '';
 	let tags = ($project && $project.tags) || '';
 	let skills = ($project && $project.skills) || '';
 	// let skills = ($project && $project.skills && (typeof $project.skills === 'string' ? $project.skills : $project.skills.join(', '))) || '';
@@ -239,37 +241,29 @@
 				</div>
 			{/if}
 
-			{#if ($editingProjectMode === 'edit')}
+			{#if ($editingProjectMode === 'edit' || $editingProjectMode === 'details2')}
 				<div class="mainProjectDetails">
-					<div class="field">
-						<div class="label">{locale.NEW_PROJECT.TITLE}</div>
-						<input type="text" bind:value="{title}" on:keypress="{(e) => testInputDefocus(e, {target: descriptionInput})}" />
-					</div>
+					{#if ($editingProjectMode === 'edit')}
+						<div class="field">
+							<div class="label">{locale.NEW_PROJECT.TITLE}</div>
+							<input type="text" bind:value="{title}" on:keypress="{(e) => testInputDefocus(e, {target: descriptionInput})}" />
+						</div>
+						<div class="field descriptionField">
+							<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
+							<!-- <textarea bind:value="{description}" bind:this="{descriptionInput}" on:keypress="{testInputDefocus}" /> -->
+							<div class="fieldCharCount" class:charCountLow="{charCountLow}" class:charCountOver="{descriptionCharsOver}">{descriptionCharsOver ? descriptionCharsOver : remainingChars}{descriptionCharsOver ? ' characters over': (charCountLow ? ' characters remaining' : '')}</div>
+							<LimitedTextfield bind:value="{description}" bind:field="{descriptionInput}" bind:remainingChars="{remainingChars}" bind:charsOver="{descriptionCharsOver}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{testInputDefocus}" />
+						</div>
+						<div class="field headerImageField">
+							<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
+							<ImageSelectionBox bind:image bind:fileIsUploading="{headerImageIsUploading}" uploadType="projectHeader" itemId="{$projectId}" />
+						</div>
+					{/if}
+
 					<div class="field descriptionField">
-						<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
-						<!-- <textarea bind:value="{description}" bind:this="{descriptionInput}" on:keypress="{testInputDefocus}" /> -->
-						<div class="fieldCharCount" class:charCountLow="{charCountLow}" class:charCountOver="{descriptionCharsOver}">{descriptionCharsOver ? descriptionCharsOver : remainingChars}{descriptionCharsOver ? ' characters over': (charCountLow ? ' characters remaining' : '')}</div>
-						<LimitedTextfield bind:value="{description}" bind:field="{descriptionInput}" bind:remainingChars="{remainingChars}" bind:charsOver="{descriptionCharsOver}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{testInputDefocus}" />
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.CATEGORIES}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.CATEGORIES_TIP}</span></div>
+						<FilterBar bind:filterString={categories} isCategorySelector="{true}" />
 					</div>
-					<div class="field headerImageField">
-						<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
-						<ImageSelectionBox bind:image bind:fileIsUploading="{headerImageIsUploading}" uploadType="projectHeader" itemId="{$projectId}" />
-					</div>
-					<div class="field descriptionField">
-						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
-						<textarea bind:value="{tags}" bind:this="{tagsInput}" />
-					</div>
-					<div class="field descriptionField">
-						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.SKILLS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.SKILLS_TIP}</span></div>
-						<textarea bind:value="{skills}" bind:this="{skillsInput}" />
-					</div>
-					<div class="field">
-						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.LOCATION_TIP}</span></div>
-						<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput1})}" />
-					</div>
-				</div>
-			{:else if ($editingProjectMode === 'details2')}
-				<div class="mainProjectDetails">
 					<div class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
 						<textarea bind:value="{tags}" bind:this="{tagsInput}" />

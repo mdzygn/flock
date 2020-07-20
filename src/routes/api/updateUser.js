@@ -25,6 +25,15 @@ export async function post(req, res, next) {
     const curUser = await db.collection('users').findOne({ id: userId });
     if (curUser) {
         if (options.setAccount) {
+            if (resetPass && !curUser.resetPass) {
+                errorResponse(res, {invalid: true}, {errorMsg: 'not resetting password'});
+                return;
+            }
+            if (!resetPass && curUser.resetPass) {
+                errorResponse(res, {invalid: true}, {errorMsg: 'resetting password'});
+                return;
+            }
+
             if (!resetPass) {
                 details.username = details.username.toLowerCase().trim();
 

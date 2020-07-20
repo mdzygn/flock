@@ -1,5 +1,7 @@
 import api from '../api';
 
+import { DEBUG } from '../config';
+
 import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 import { tick } from 'svelte';
@@ -203,6 +205,7 @@ export function setUser(targetUserId) {
         if (curUser && curUser.loaded && (!curUser.username || curUser.set === false)) {
             (async() => {
                 await tick();
+                console.log('curUser', curUser);
                 if (curUser.resetPass) {
                     showPrompt(promptIds.RESET_PASSWORD);
                 } else {
@@ -537,8 +540,11 @@ export function showPrompt(promptId, options) {
         }
 
         hideMenu();
-        if (!promptId) { console.error('Prompt undefined: ' + promptId); }
-        curPrompt.set(promptId);
+        if (promptId) {
+            curPrompt.set(promptId);
+        } else if (DEBUG) {
+            throw new Error('Prompt undefined: ' + promptId);
+        }
     }
 }
 

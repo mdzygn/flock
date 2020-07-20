@@ -327,6 +327,15 @@ const prompts = {
             },
         ],
     },
+    PASSWORD_RESET: {
+        title: 'Password Reset',
+        message: 'New password set',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
     LOG_IN: {
         title: 'Sign In',
         showClose: true,

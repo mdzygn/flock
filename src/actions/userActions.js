@@ -171,9 +171,19 @@ export function setAccountDetails(userDetails, resetPass) {
 
             api.updateUser({details: userDetails}).then(result => {
                 if (result && !result.error && !result.invalid) {
-                    setUserDetails(curUserModel, {set: true});
+                    const newDetails = {set: true};
+                    if (resetPass) {
+                        newDetails.resetPass = resetPass;
+                    }
+                    console.log('newDetails', newDetails);
 
-                    showPrompt(promptIds.ACCOUNT_READY);
+                    setUserDetails(curUserModel, newDetails);
+
+                    if (resetPass) {
+                        showPrompt(promptIds.PASSWORD_RESET);
+                    } else {
+                        showPrompt(promptIds.ACCOUNT_READY);
+                    }
 
                     // goto('profile/' + curUserId);
                 } else {

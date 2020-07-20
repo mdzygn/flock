@@ -267,7 +267,9 @@ const prompts = {
         message: 'An email has been sent this address with instructions to reset your password',
         menuItems: [
             {
-                label: 'Ok',
+                label: 'Log In',
+                default: true,
+                action: () => { showPrompt(promptIds.LOG_IN); },
             },
         ],
     },

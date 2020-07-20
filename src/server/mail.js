@@ -36,7 +36,8 @@ export function sendMail(options) {
                 },
                 content: [
                     {
-                        type: 'text/plain',
+                        // type: 'text/plain',
+                        type: 'text/html',
                         value: options.bodyText, // 'Hello, Email!',
                     },
                 ],

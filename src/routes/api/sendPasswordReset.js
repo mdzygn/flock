@@ -2,6 +2,7 @@ import { init, response, errorResponse, generateId } from '../../server/mongo.js
 import { sendMail } from '../../server/mail.js';
 
 import Config from '../../server/config.js';
+import locale from '../../server/locale';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -32,8 +33,11 @@ export async function post(req, res, next) {
             const result = await db.collection('users').updateOne({ email }, { $set: details } );
 
             if (result) {
-                emailOptions.subject = Config.SUBJECT_PASSWORD_RESET;
-                emailOptions.bodyText = 'Password reset to: ' + newUsercode;
+                emailOptions.subject = locale.PASSWORD_RESET_EMAIL.SUBJECT;
+                emailOptions.bodyText = locale.PASSWORD_RESET_EMAIL.BODY
+                    .split('[USERCODE]').join(newUsercode)
+                    .split('[SITE]').join(Config.SITE)
+                    .split('[SITE_URL]').join(Config.SITE_URL);
 
                 console.log('send email', emailOptions);
 
@@ -55,8 +59,12 @@ export async function post(req, res, next) {
                 // response(res, {error: true});
             }
 		} else {
-            emailOptions.subject = Config.SUBJECT_PASSWORD_RESET_UNREGISTERED;
-            emailOptions.bodyText = 'Someone has requested a password reset for this email address<br/>However this email address is not yet registered.<br/>Sign up here: ' + Config.SITE_URL;
+            emailOptions.subject = locale.PASSWORD_RESET_UNREGISTERED_EMAIL.SUBJECT;
+
+            emailOptions.bodyText = locale.PASSWORD_RESET_UNREGISTERED_EMAIL.BODY
+                .split('[SITE]').join(Config.SITE)
+                .split('[SITE_URL]').join(Config.SITE_URL);
+            // emailOptions.bodyText = 'Someone has requested a password reset for this email address<br/>However this email address is not yet registered.<br/>Sign up here: ' + Config.SITE_URL;
 
             console.log('send general', emailOptions);
 

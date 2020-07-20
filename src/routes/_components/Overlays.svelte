@@ -23,9 +23,6 @@
 
 	$: resetPass = $user && $user.resetPass;
 
-	$: console.log('$user', $user);
-	$: console.log('resetPass', resetPass);
-
 	let logInDetails;
 	let logInUpdateMenuItems;
 	function logInSubmit() {
@@ -44,7 +41,6 @@
 	let setAccountUpdateMenuItems;
 	function setAccountSubmit() {
 		closeOverlay();
-		console.log('resetPass now', resetPass);
 		setAccountDetails(userDetails, resetPass);
 	}
 

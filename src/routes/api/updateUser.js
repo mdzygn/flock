@@ -56,7 +56,7 @@ export async function post(req, res, next) {
                         details.resetPass = false;
                     }
 
-                    console.log('set details', details, 'resetPass', resetPass);
+                    // console.log('set details', details, 'resetPass', resetPass);
 
                     bcrypt.hash(pass, 10, async (err, hash) => {
                         if (!err) {

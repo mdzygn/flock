@@ -61,7 +61,7 @@ export async function post(req, res, next) {
                         user.name = user.fullName;
                 }
 
-                console.log('user', user);
+                // console.log('user', user);
 
                 if (!user.resetPass) {
                         delete user.resetPass;

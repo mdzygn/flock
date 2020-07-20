@@ -165,7 +165,7 @@ export function setAccountDetails(userDetails, resetPass) {
                 newUsername.set(userDetails.username);
             }
 
-            console.log('userDetails.resetPass', userDetails.resetPass);
+            // console.log('userDetails.resetPass', userDetails.resetPass);
 
             // goto('profile/' + curUserId);
 

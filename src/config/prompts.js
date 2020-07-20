@@ -284,6 +284,17 @@ const prompts = {
             },
         ],
     },
+    RESET_PASSWORD: {
+        title: 'Reset Password',
+        menuItems: [
+            {
+                label: 'Confirm',
+                // label: 'Let\'s Go!',
+                disabled: () => !get(setAccountFormValidated),
+                default: true,
+            },
+        ],
+    },
     SIGN_UP_EMAIL_EXISTS: {
         title: 'Create User',
         message: 'Email already exists',

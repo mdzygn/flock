@@ -140,22 +140,32 @@ function addUser(newUserModel) {
 	return newUserModel;
 }
 
-export function setAccountDetails(userDetails) {
+export function setAccountDetails(userDetails, resetPass) {
     if (userDetails && userDetails.id) {
         const curUserId = userDetails.id;
         delete userDetails.id;
 
-        userDetails.username = trim(userDetails.username);
+        if (resetPass) {
+            delete userDetails.username;
+        } else {
+            userDetails.username = trim(userDetails.username);
+        }
 
         const curUserModel = getUser(curUserId);
         if (curUserModel) {
-            const localUserDetails = Object.assign({}, userDetails);
-            delete localUserDetails.pass;
+            if (resetPass) {
+                userDetails.resetPass = true;
+            } else {
+                const localUserDetails = Object.assign({}, userDetails);
+                delete localUserDetails.pass;
 
-            setUserDetails(curUserModel, localUserDetails);
+                setUserDetails(curUserModel, localUserDetails);
 
-            username.set(userDetails.username);
-            newUsername.set(userDetails.username);
+                username.set(userDetails.username);
+                newUsername.set(userDetails.username);
+            }
+
+            console.log('userDetails.resetPass', userDetails.resetPass);
 
             // goto('profile/' + curUserId);
 

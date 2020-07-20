@@ -28,6 +28,7 @@ export async function post(req, res, next) {
             const details = {
                 pass: '',
                 usercode: newUsercode,
+                resetPass: true,
             };
 
             const result = await db.collection('users').updateOne({ email }, { $set: details } );

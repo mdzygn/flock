@@ -47,6 +47,8 @@ export async function post(req, res, next) {
                 projects: true,
 
                 set: true,
+
+                resetPass: true,
         };
 
         for (let user, userI = 0; userI < userResults.length; userI++) {
@@ -57,6 +59,12 @@ export async function post(req, res, next) {
 
                 if (!user.name) {
                         user.name = user.fullName;
+                }
+
+                console.log('user', user);
+
+                if (!user.resetPass) {
+                        delete user.resetPass;
                 }
         }
 

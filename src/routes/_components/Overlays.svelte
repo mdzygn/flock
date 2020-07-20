@@ -6,7 +6,7 @@
 	import SetAccountPrompt from './SetAccountPrompt.svelte';
 	import ForgotPasswordPrompt from './ForgotPasswordPrompt.svelte';
 
-	import { curMenu, curPrompt, dontAllowOverlayClose } from '../../models/appModel';
+	import { user, curMenu, curPrompt, dontAllowOverlayClose } from '../../models/appModel';
 
 	import OverlayMenu from './OverlayMenu.svelte';
 	import OverlayPrompt from './OverlayPrompt.svelte';
@@ -19,7 +19,12 @@
     import prompts from '../../config/prompts';
 
     $: menu = $curMenu ? menus[$curMenu] : null;
-    $: prompt = $curPrompt ? prompts[$curPrompt] : null;
+	$: prompt = $curPrompt ? prompts[$curPrompt] : null;
+
+	$: resetPass = $user && $user.resetPass;
+
+	$: console.log('$user', $user);
+	$: console.log('resetPass', resetPass);
 
 	let logInDetails;
 	let logInUpdateMenuItems;
@@ -39,7 +44,8 @@
 	let setAccountUpdateMenuItems;
 	function setAccountSubmit() {
 		closeOverlay();
-		setAccountDetails(userDetails);
+		console.log('resetPass now', resetPass);
+		setAccountDetails(userDetails, resetPass);
 	}
 
 	let forgotPasswordEmail;
@@ -80,7 +86,7 @@
 						on:change="{signUpUpdateMenuItems}"
 					/>
 				</OverlayPrompt>
-			{:else if $curPrompt === promptIds.SET_ACCOUNT }
+			{:else if $curPrompt === promptIds.SET_ACCOUNT || $curPrompt === promptIds.RESET_PASSWORD }
 				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{setAccountSubmit}" bind:updateMenuItems="{setAccountUpdateMenuItems}">
 					<SetAccountPrompt
 						bind:userDetails="{userDetails}"

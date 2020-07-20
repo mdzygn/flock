@@ -8,8 +8,10 @@ export async function post(req, res, next) {
     const options = req.body;
 
     let details = options.details;
+    let resetPass = details.resetPass;
+    delete details.resetPass;
 
-    if (details.username && details.pass) {
+    if ((details.username || resetPass) && details.pass) {
         options.setAccount = true;
     }
 
@@ -23,15 +25,17 @@ export async function post(req, res, next) {
     const curUser = await db.collection('users').findOne({ id: userId });
     if (curUser) {
         if (options.setAccount) {
-            details.username = details.username.toLowerCase().trim();
+            if (!resetPass) {
+                details.username = details.username.toLowerCase().trim();
 
-            // reference USER_NAME_MIN_LENGTH, USER_NAME_MAX_LENGTH
-            const usernameValid = details.username.length >= 3 && details.username.length <= 16 && details.username.match(/^(?!.*\.\.)(?!.*__)(?!.*\._)(?!.*_\.)(?!.*\.$)(?!\..*$)[a-z0-9._]+$/); // lowercase only
-            // const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-z0-9._]+(?<![_.])$/); // lowercase only
-            // const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i);
-            if (!usernameValid) {
-                errorResponse(res, {invalid: true}, {errorMsg: 'invalid username'});
-                return;
+                // reference USER_NAME_MIN_LENGTH, USER_NAME_MAX_LENGTH
+                const usernameValid = details.username.length >= 3 && details.username.length <= 16 && details.username.match(/^(?!.*\.\.)(?!.*__)(?!.*\._)(?!.*_\.)(?!.*\.$)(?!\..*$)[a-z0-9._]+$/); // lowercase only
+                // const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-z0-9._]+(?<![_.])$/); // lowercase only
+                // const usernameValid = details.username.match(/^(?=.{4,16}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/i);
+                if (!usernameValid) {
+                    errorResponse(res, {invalid: true}, {errorMsg: 'invalid username'});
+                    return;
+                }
             }
 
             if (!curUser.pass) {
@@ -43,10 +47,16 @@ export async function post(req, res, next) {
                     const pass = details.pass;
 
                     const userDetailSchema = {
-                        username: true,
+                        username: !resetPass, // true,
                     };
 
                     details = filterItemDetails(details, userDetailSchema);
+
+                    if (resetPass) {
+                        details.resetPass = false;
+                    }
+
+                    console.log('set details', details, 'resetPass', resetPass);
 
                     bcrypt.hash(pass, 10, async (err, hash) => {
                         if (!err) {

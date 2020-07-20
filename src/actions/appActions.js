@@ -203,7 +203,11 @@ export function setUser(targetUserId) {
         if (curUser && curUser.loaded && (!curUser.username || curUser.set === false)) {
             (async() => {
                 await tick();
-                showPrompt(promptIds.SET_ACCOUNT);
+                if (curUser.resetPass) {
+                    showPrompt(promptIds.RESET_PASSWORD);
+                } else {
+                    showPrompt(promptIds.SET_ACCOUNT);
+                }
             })();
         }
     }

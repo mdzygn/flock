@@ -29,9 +29,11 @@
     $: usernameField && usernameField.focus();
 
     //let username = $user.username || $newUsername || formatAsId($user.firstName + $user.lastName.substr(0, Math.min(1, $user.lastName.length)), config.MAX_ID_LENGTH);
-    let username = $user.username || $newUsername || formatAsId($user.name, config.MAX_ID_LENGTH);
+    let username = $user ? ($user.username || $newUsername || formatAsId($user.name, config.MAX_ID_LENGTH)) : '';
     let pass = '';
     let passRepeat = '';
+
+    $: resetPass = $user && $user.resetPass;
 
 	$: { // prevent disallowed characters
 		username = username.toLowerCase();
@@ -45,7 +47,7 @@
 
     $: passValidated = pass && passRepeat && pass === passRepeat;
 
-    $: $setAccountFormValidated = !!(usernameValidated && pass && passRepeat && passValidated);
+    $: $setAccountFormValidated = !!((usernameValidated || resetPass) && pass && passRepeat && passValidated);
 
     $: {
         userDetails.id = $userId;
@@ -94,14 +96,16 @@
 </script>
 
 <div class="setAccountPrompt">
-    <div class="field usernameField">
-        <div class="label">{locale.SET_ACCOUNT.USERNAME}</div>
-        <input bind:value="{username}" bind:this="{usernameField}" class:invalid="{usernameFlagInvalid}" on:keypress="{(e) => testInputDefocus(e, {target: passField})}" />
-        {#if usernameFlagTooShort}<div class="errorLabel">username too short</div>
-        {:else if usernameFlagTooLong}<div class="errorLabel">username too long</div>
-        {:else if usernameFlagInvalid}<div class="errorLabel">invalid username</div>{/if}
-        <!-- {:else if usernameExists}<div class="errorLabel">username exists</div>{/if} -->
-    </div>
+    {#if !resetPass}
+        <div class="field usernameField">
+            <div class="label">{locale.SET_ACCOUNT.USERNAME}</div>
+            <input bind:value="{username}" bind:this="{usernameField}" class:invalid="{usernameFlagInvalid}" on:keypress="{(e) => testInputDefocus(e, {target: passField})}" />
+            {#if usernameFlagTooShort}<div class="errorLabel">username too short</div>
+            {:else if usernameFlagTooLong}<div class="errorLabel">username too long</div>
+            {:else if usernameFlagInvalid}<div class="errorLabel">invalid username</div>{/if}
+            <!-- {:else if usernameExists}<div class="errorLabel">username exists</div>{/if} -->
+        </div>
+    {/if}
     <div class="field">
         <div class="label">{locale.SET_ACCOUNT.PASS}</div>
         <input type="password" bind:value="{pass}" bind:this="{passField}" on:keypress="{(e) => testInputDefocus(e, {target: passRepeatField})}" />

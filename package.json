@@ -24,6 +24,7 @@
     "mongodb": "^3.5.5",
     "node-fetch": "^2.6.0",
     "polka": "next",
+    "sendgrid": "^5.2.3",
     "sharp": "^0.25.2",
     "sirv": "^0.4.0"
   },

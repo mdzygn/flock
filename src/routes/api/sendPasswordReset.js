@@ -1,7 +1,7 @@
 import { init, response, errorResponse, generateId } from '../../server/mongo.js';
+import { sendMail } from '../../server/mail.js';
 
-const bcrypt = require('bcrypt');
-
+import Config from '../../server/config.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -16,6 +16,11 @@ export async function post(req, res, next) {
 
         let emailSent = false;
         let newUsercode = '';
+        let sendResult = null;
+        let emailOptions = {
+            toEmail: email,
+            fromEmail: Config.FROM_EMAIL,
+        };
 
 		if (user) {
             newUsercode = generateId(8);
@@ -27,19 +32,48 @@ export async function post(req, res, next) {
             const result = await db.collection('users').updateOne({ email }, { $set: details } );
 
             if (result) {
-                emailSent = true;
+                emailOptions.subject = Config.SUBJECT_PASSWORD_RESET;
+                emailOptions.bodyText = 'Password reset to: ' + newUsercode;
+
+                console.log('send email', emailOptions);
+
+                sendResult = await sendMail(emailOptions).then(sendResponse => {
+                        if (sendResponse.success) {
+                            console.log('send response', sendResponse);
+                            response(res, {success: true}); // TODO: for temp debug return: usercode: newUsercode
+                        } else {
+                            console.log('error response', sendResponse);
+                            errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: sendResponse.errorObject && sendResponse.errorObject.response && sendResponse.errorObject.response.statusCode});
+                        }
+                    })
+                    .catch(error => {
+                        console.log('error', error);
+                        errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: error && error.response && error.response.statusCode});
+                    });
             } else {
                 errorResponse(res, {}, {errorMsg: 'can\'t update user details'});
                 // response(res, {error: true});
             }
 		} else {
-            emailSent = true;
-        }
+            emailOptions.subject = Config.SUBJECT_PASSWORD_RESET_UNREGISTERED;
+            emailOptions.bodyText = 'Someone has requested a password reset for this email address<br/>However this email address is not yet registered.<br/>Sign up here: ' + Config.SITE_URL;
 
-        if (emailSent) {
-            response(res, {success: true, usercode: newUsercode}); // TODO: temp debug
-        } else {
-            response(res, {invalid: true});
+            console.log('send general', emailOptions);
+
+            sendResult = await sendMail(emailOptions).then(sendResponse => {
+                    if (sendResponse.success) {
+                        console.log('send general response', sendResponse);
+                        emailSent = true;
+                        response(res, {success: true}); // TODO: temp debug
+                    } else {
+                        console.log('error response', sendResponse);
+                        errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: sendResponse.errorObject && sendResponse.errorObject.response && sendResponse.errorObject.response.statusCode});
+                    }
+                })
+                .catch(error => {
+                    console.log('error', error);
+                    errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: error && error.response && error.response.statusCode});
+                });
         }
 	} else {
 		response(res, {invalid: true}); // no user specified

@@ -41,6 +41,7 @@ export default {
 				'process.env.AWS_ACCESS_KEY_ID': JSON.stringify(envVars.AWS_ACCESS_KEY_ID),
 				'process.env.AWS_SECRET_ACCESS_KEY': JSON.stringify(envVars.AWS_SECRET_ACCESS_KEY),
 				'process.env.S3_CONTENT_BUCKET': JSON.stringify(envVars.S3_CONTENT_BUCKET),
+				'process.env.SENDGRID_API_KEY': JSON.stringify(envVars.SENDGRID_API_KEY),
 			} : {})),
 			json(),
 			svelte({

@@ -173,7 +173,7 @@ export function setAccountDetails(userDetails, resetPass) {
                 if (result && !result.error && !result.invalid) {
                     const newDetails = {set: true};
                     if (resetPass) {
-                        newDetails.resetPass = resetPass;
+                        newDetails.resetPass = false;
                     }
                     console.log('newDetails', newDetails);
 

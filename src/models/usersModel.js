@@ -101,9 +101,9 @@ export function mergeUsers(newUsers) {
 			if (!curUser) {
 				curUser = UserModel(newUserData);
 				curUsers.unshift(curUser);
-				console.log('add user: ', curUser, newUserData);
+				// console.log('add user: ', curUser, newUserData);
 			} else {
-				console.log('update existing user: ', curUser, newUserData);
+				// console.log('update existing user: ', curUser, newUserData);
 				newUser = get(curUser);
 				newUser = Object.assign(newUser, newUserData);
 				curUser.set(newUser);

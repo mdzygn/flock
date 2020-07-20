@@ -57,6 +57,8 @@ export async function post(req, res, next) {
 					location: true,
 
 					set: true,
+
+					resetPass: true,
 				};
 
 				if (!user.pass) {
@@ -66,6 +68,10 @@ export async function post(req, res, next) {
                 if (!user.name) {
 					user.name = user.fullName;
 				}
+
+                if (!user.resetPass) {
+                	delete user.resetPass;
+                }
 
 				const userDetails = filterItemDetails(user, userDetailsSchema);
 

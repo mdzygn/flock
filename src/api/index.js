@@ -394,6 +394,18 @@ function addMessage(options) {
 }
 
 
+// options = { email: email address }
+function sendPasswordReset(options) {
+	return send('sendPasswordReset', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - sendPasswordReset: ', result, options);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
+
 const api = {
 	getProjects,
 	addProject,
@@ -432,6 +444,8 @@ const api = {
 	addMessage,
 
 	requestUpload,
+
+	sendPasswordReset,
 }
 
 export default api;

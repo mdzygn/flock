@@ -182,6 +182,16 @@ export function setAccountDetails(userDetails) {
     }
 }
 
+export function sendPasswordReset(email) {
+    if (email) {
+        api.sendPasswordReset({email}).then(result => {
+            if (result && !result.error && !result.invalid) {
+                showPrompt(promptIds.FORGOT_PASSWORD_RESET);
+            }
+        });
+    }
+}
+
 
 function updateUser(userDetails) {
     if (userDetails && userDetails.id) {

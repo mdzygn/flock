@@ -11,7 +11,7 @@
 	import OverlayMenu from './OverlayMenu.svelte';
 	import OverlayPrompt from './OverlayPrompt.svelte';
 
-	import { createUser, setAccountDetails } from '../../actions/userActions';
+	import { createUser, setAccountDetails, sendPasswordReset } from '../../actions/userActions';
 
 	import { closeOverlay, login } from '../../actions/appActions';
 
@@ -46,7 +46,7 @@
 	let forgotPasswordUpdateMenuItems;
 	function forgotPasswordSubmit() {
 		closeOverlay();
-		// setAccountDetails(userDetails);
+		sendPasswordReset(forgotPasswordEmail);
 	}
 
 	$: canClose = ((menu && menu.allowClose !== false) || (prompt && prompt.allowClose !== false)) && !$dontAllowOverlayClose;

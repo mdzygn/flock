@@ -262,6 +262,15 @@ const prompts = {
             // },
         ],
     },
+    FORGOT_PASSWORD_RESET: {
+        title: 'Reset Password',
+        message: 'An email has been sent this address with instructions to reset your password',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
     SET_ACCOUNT: {
         title: 'Set Account Details',
         menuItems: [
@@ -314,11 +323,11 @@ const prompts = {
                 disabled: () => !get(logInFormValidated),
                 default: true,
             },
-            // {
-            //     className: 'textPanel demphasisText',
-            //     label: 'Forgot Password',
-            //     action: () => { showPrompt(promptIds.FORGOT_PASSWORD); },
-            // },
+            {
+                className: 'textPanel demphasisText',
+                label: 'Forgot Password',
+                action: () => { showPrompt(promptIds.FORGOT_PASSWORD); },
+            },
         ],
     },
     LOG_IN_ERROR: {

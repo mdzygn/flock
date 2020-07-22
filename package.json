@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "aws-sdk": "^2.658.0",
-    "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "compression": "^1.7.1",
     "eventemitter3": "^4.0.0",
@@ -25,7 +24,6 @@
     "node-fetch": "^2.6.0",
     "polka": "next",
     "sendgrid": "^5.2.3",
-    "sharp": "^0.25.2",
     "sirv": "^0.4.0"
   },
   "devDependencies": {

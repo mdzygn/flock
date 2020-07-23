@@ -3,7 +3,8 @@
 /src/node_modules/@sapper/
 yarn-error.log
 /cypress/screenshots/
-/__sapper__/
+/__sapper__/dev/
+/__sapper__/export/
 /.env
 
 # Elastic Beanstalk Files

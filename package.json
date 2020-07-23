@@ -9,8 +9,7 @@
     "upload-dev": "git push dev master",
     "xxx-upload-live": "git push staging master",
     "compile-library": "node scripts/compileLibrary/index.js",
-    "start": "sapper build --legacy && node __sapper__/build",
-    "start-local": "node __sapper__/build",
+    "start": "node __sapper__/build",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
     "test": "run-p --race dev cy:run"
@@ -25,8 +24,9 @@
     "node-fetch": "^2.6.0",
     "polka": "next",
     "sendgrid": "^5.2.3",
-    "sirv": "^0.4.0",
-
+    "sirv": "^0.4.0"
+  },
+  "devDependencies": {
     "@babel/core": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
@@ -48,7 +48,5 @@
     "rollup-plugin-terser": "^4.0.4",
     "sapper": "^0.27.0",
     "svelte": "^3.0.0"
-  },
-  "devDependencies": {
   }
 }

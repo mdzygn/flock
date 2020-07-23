@@ -2077,7 +2077,7 @@ var route_18 = /*#__PURE__*/Object.freeze({
     post: post$i
 });
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 async function post$j(req, res, next) {
 	const { db } = await init();
@@ -2975,7 +2975,7 @@ var route_24 = /*#__PURE__*/Object.freeze({
     post: post$o
 });
 
-const bcrypt$1 = require('bcrypt');
+const bcrypt$1 = require('bcryptjs');
 
 
 async function post$p(req, res, next) {
@@ -10970,7 +10970,7 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, $$slots) => 
 		}
 	}
 
-	
+
 	let viewHeight;
 	let initialHeightSet = false;
 	let initialHeight = false;
@@ -12069,7 +12069,7 @@ const NotificationList = create_ssr_component(($$result, $$props, $$bindings, $$
 	let notifications = writable$1([]);
 
 	$notifications = get_store_value(notifications);
-	
+
 	let { className = "" } = $$props;
 	if ($$props.className === void 0 && $$bindings.className && className !== void 0) $$bindings.className(className);
 	$$result.css.add(css$p);
@@ -12146,7 +12146,7 @@ const NewPostButton = create_ssr_component(($$result, $$props, $$bindings, $$slo
 		{ default: () => `${escape(label)}` }
 	)}
 
-    
+
 </div>`;
 });
 
@@ -12206,7 +12206,7 @@ const PostItem = create_ssr_component(($$result, $$props, $$bindings, $$slots) =
 	let user = writable$1([]);
 
 	$user = get_store_value(user);
-	
+
 	let imageSrc = img$o;
 	let canMaximizeImage = false;
 	let dateString = "";
@@ -12461,7 +12461,7 @@ const U5Bchannelu5D = create_ssr_component(($$result, $$props, $$bindings, $$slo
 	loadCurrentChannel();
 	let posts = writable$1([]);
 	$posts = get_store_value(posts);
-	
+
 
 	function newPost() {
 		if (!canPost) {
@@ -12567,7 +12567,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, { id: "contact
 				{}
 			)}
 
-		
+
 		${validate_component(Hotspot, "Hotspot").$$render(
 				$$result,
 				{
@@ -12961,7 +12961,7 @@ const ActionBar = create_ssr_component(($$result, $$props, $$bindings, $$slots) 
 			{},
 			{}
 		)}
-				
+
 		`}</div>
 	<div class="${"actionContainerButton actionButtonMiddle"}">${$$slots.buttonMiddle
 	? $$slots.buttonMiddle({})
@@ -12984,7 +12984,7 @@ const ActionBar = create_ssr_component(($$result, $$props, $$bindings, $$slots) 
 			{},
 			{}
 		)}
-				
+
 		`}</div>
 	<div class="${"actionContainerButton actionButtonRight"}">${$$slots.buttonRight
 	? $$slots.buttonRight({})
@@ -13101,7 +13101,7 @@ const ProjectItem = create_ssr_component(($$result, $$props, $$bindings, $$slots
 				}
 			)}`
 		: ``}`}
-    
+
 </div>`;
 });
 
@@ -13227,7 +13227,7 @@ const Discover = create_ssr_component(($$result, $$props, $$bindings, $$slots) =
 							{}
 						)}
 
-					
+
 					${validate_component(Hotspot, "Hotspot").$$render(
 							$$result,
 							{
@@ -13359,7 +13359,7 @@ const ExploreFilterBar = create_ssr_component(($$result, $$props, $$bindings, $$
 			{}
 		)}
 
-		
+
 		${validate_component(Hotspot, "Hotspot").$$render(
 			$$result,
 			{
@@ -13443,7 +13443,7 @@ const ExploreZoomed = create_ssr_component(($$result, $$props, $$bindings, $$slo
 			{}
 		)}
 
-			
+
 			${validate_component(Hotspot, "Hotspot").$$render(
 			$$result,
 			{
@@ -13565,7 +13565,7 @@ const ConversationList = create_ssr_component(($$result, $$props, $$bindings, $$
 	let conversations = writable$1(null);
 
 	$conversations = get_store_value(conversations);
-	
+
 	let { className = "" } = $$props;
 	if ($$props.className === void 0 && $$bindings.className && className !== void 0) $$bindings.className(className);
 	$$result.css.add(css$F);
@@ -13846,7 +13846,7 @@ const MessageInput = create_ssr_component(($$result, $$props, $$bindings, $$slot
 		{},
 		{}
 	)}
-        
+
         <div class="${"field svelte-uhjl0u"}"><textarea rows="${"1"}" class="${"svelte-uhjl0u"}"${add_attribute("this", messageField, 1)}>${message || ""}</textarea>
             </div></div>
 </div>`;
@@ -13928,7 +13928,7 @@ const U5Bconversationu5D = create_ssr_component(($$result, $$props, $$bindings, 
 	$messages = get_store_value(messages);
 
 	// messages = ($conversationId && getMessages({ conversationId: $conversationId }, messagesLoaded)) || messages;
-	
+
 
 	function updateMessage() {
 		messages = $conversation && getMessages$1({ conversationId: $conversationId }, null, $conversation.isNew) || messages;
@@ -14367,7 +14367,7 @@ const Projects = create_ssr_component(($$result, $$props, $$bindings, $$slots) =
 				)}</div>`,
 				default: () => `
 
-		
+
 
 		${$loadingProjects && (!$myProjects || !$myProjects.length) && (!$followingProjects || !$followingProjects.length)
 				? `${validate_component(ContentLoader, "ContentLoader").$$render($$result, { label: locale$1.LOADING.FOLLOWING }, {}, {})}`
@@ -14553,8 +14553,8 @@ const LimitedTextfield = create_ssr_component(($$result, $$props, $$bindings, $$
 	let { allowOverflow = true } = $$props;
 	let { remainingChars = "" } = $$props;
 	let { charsOver = "" } = $$props;
-	
-	
+
+
 
 	function checkFieldLimit(event) {
 		if (value.length >= maxlength) {
@@ -18131,7 +18131,7 @@ const ChannelList = create_ssr_component(($$result, $$props, $$bindings, $$slots
 	$project = get_store_value(project);
 	let channels = writable$1(null);
 	$channels = get_store_value(channels);
-	
+
 	let hasActiveChannels = true; // false;
 	let hasInactiveChannels = false;
 
@@ -18175,7 +18175,7 @@ const ChannelList = create_ssr_component(($$result, $$props, $$bindings, $$slots
 	}
 
 	return `
-    
+
     <div class="${[
 		"channelList svelte-14xiuya",
 		(canEdit ? "isEditable" : "") + " " + (channelsLoading || hasActiveChannels || viewAllChannels
@@ -18459,7 +18459,7 @@ const U5Bprojectu5D = create_ssr_component(($$result, $$props, $$bindings, $$slo
 						? "collapsedHeader"
 						: "")
 					].join(" ").trim()}"><div style="${"background-image: url(" + escape(headerImage) + ")"}" class="${"headerImage svelte-1h865aq"}" alt="${"project header image"}"></div>
-					 
+
 
 					<div class="${[
 						"overviewContent svelte-1h865aq",
@@ -18541,7 +18541,7 @@ const U5Bprojectu5D = create_ssr_component(($$result, $$props, $$bindings, $$slo
 									)}`
 								: `<img class="${"projectDetailImage " + escape(!projectDetailItem.detail ? "soloImage" : "") + " svelte-1h865aq"}"${add_attribute("src", getProjectDetailImage(projectDetailItem.image), 0)} alt="${"project header image"}">`}`
 							: ``}
-										
+
 										${projectDetailItem.detail
 							? `<div class="${[
 									"projectInfoDetail svelte-1h865aq",
@@ -18660,7 +18660,7 @@ const U5Bprojectu5D = create_ssr_component(($$result, $$props, $$bindings, $$slo
 					${$showBetaFeatures
 						? `${validate_component(ProjectLinks, "ProjectLinks").$$render($$result, { project: $project }, {}, {})}`
 						: ``}
-					
+
 					${validate_component(ChannelList, "ChannelList").$$render($$result, { project }, {}, {})}
 					${$showBetaFeatures
 						? `${canEdit
@@ -18716,7 +18716,7 @@ const U5Bprojectu5D = create_ssr_component(($$result, $$props, $$bindings, $$slo
 					${$showBetaFeatures
 							? `${validate_component(ProjectLinks, "ProjectLinks").$$render($$result, { project: $project }, {}, {})}`
 							: ``}
-					
+
 					${validate_component(ChannelList, "ChannelList").$$render($$result, { project }, {}, {})}
 					${$showBetaFeatures
 							? `<div id="${"post"}"></div>
@@ -18781,7 +18781,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, { id: "followe
 				{}
 			)}
 
-		
+
 		${validate_component(Hotspot, "Hotspot").$$render(
 				$$result,
 				{
@@ -18828,8 +18828,8 @@ const Messages$1 = create_ssr_component(($$result, $$props, $$bindings, $$slots)
 				{}
 			)}
 
-				
-				
+
+
 				${validate_component(Hotspot, "Hotspot").$$render(
 				$$result,
 				{
@@ -18840,7 +18840,7 @@ const Messages$1 = create_ssr_component(($$result, $$props, $$bindings, $$slots)
 				{}
 			)}
 
-				
+
 				${validate_component(Hotspot, "Hotspot").$$render(
 				$$result,
 				{
@@ -19082,7 +19082,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 				? `<div class="${"field svelte-5t8ucs"}"><div class="${"label svelte-5t8ucs"}">${escape(locale$1.NEW_PROJECT.TITLE)}</div>
 							<input type="${"text"}" class="${"svelte-5t8ucs"}"${add_attribute("value", title, 1)}></div>
 						<div class="${"field descriptionField svelte-5t8ucs"}"><div class="${"label svelte-5t8ucs"}">${escape(locale$1.NEW_PROJECT.DESCRIPTION)}</div>
-							
+
 							<div class="${[
 						"fieldCharCount svelte-5t8ucs",
 						(charCountLow ? "charCountLow" : "") + " " + (descriptionCharsOver ? "charCountOver" : "")
@@ -19573,7 +19573,7 @@ const ProfileOverview = create_ssr_component(($$result, $$props, $$bindings, $$s
 			)}`
 		: ``}`}</div>
 
-            
+
 
             ${!isCurrentUser
 	? `<div class="${"overviewActions svelte-1sqmjsb"}">${validate_component(Button, "Button").$$render(
@@ -19674,14 +19674,14 @@ ${$loadingUsers && (!viewedUserLoaded || $viewedUser.id !== $profileId) || !isUs
 		? `${validate_component(ContentLoader, "ContentLoader").$$render($$result, { label: locale$1.PROFILE.NOT_FOUND }, {}, {})}`
 		: `${validate_component(ScrollView, "ScrollView").$$render($$result, { id: "profile", headerStartHidden: true }, {}, {
 				default: () => `<div class="${"content svelte-1pi8z0p"}"><div class="${"contentItem"}">${validate_component(ProfileOverview, "ProfileOverview").$$render($$result, {}, {}, {})}</div>
-			
-            
+
+
 				${skills && skills.length
 				? `${validate_component(ContentPanel, "ContentPanel").$$render(
 						$$result,
 						{
 							title: "Skills",
-							showEdit: false 
+							showEdit: false
 						},
 						{},
 						{
@@ -19753,7 +19753,7 @@ const Edit = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
 	let $userId = get_store_value(userId);
 	let curUserProps = writable$1(null);
 	$curUserProps = get_store_value(curUserProps);
-	
+
 	let name = $user && $user.name || "";
 	let bio = $user && $user.bio && getFormattedText($user.bio) || "";
 	let image = $user && $user.coverImage || "";
@@ -19892,7 +19892,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 				<div class="${"field svelte-12rfx78"}"><div class="${"label svelte-12rfx78"}">${escape(locale$1.EDIT_PROFILE.NAME)}</div>
 					<input type="${"text"}" class="${"svelte-12rfx78"}"${add_attribute("value", name, 1)}></div>
 				<div class="${"field bioField svelte-12rfx78"}"><div class="${"label svelte-12rfx78"}">${escape(locale$1.EDIT_PROFILE.BIO)}<span class="${"tip svelte-12rfx78"}">${locale$1.EDIT_PROFILE.BIO_TIP}</span></div>
-					
+
 					<textarea class="${"svelte-12rfx78"}"${add_attribute("this", bioInput, 1)}>${bio || ""}</textarea>
 					</div>
 				<div class="${"field headerImageField svelte-12rfx78"}"><div class="${"label headerImageLabel svelte-12rfx78"}">${escape(locale$1.EDIT_PROFILE.COVER_IMAGE)}</div>
@@ -20262,7 +20262,7 @@ const EditPost = create_ssr_component(($$result, $$props, $$bindings, $$slots) =
 			? `<div class="${"field svelte-36jf1o"}"><div class="${"label svelte-36jf1o"}">${escape(locale$1.NEW_THREAD.TITLE)}${!editPost
 				? `<span class="${"tip svelte-36jf1o"}">${locale$1.NEW_THREAD.TITLE_TIP}</span>`
 				: ``}</div>
-                    
+
                     <textarea class="${"titleField svelte-36jf1o"}"${add_attribute("this", titleField, 1)}>${title || ""}</textarea></div>`
 			: ``}
             <div class="${"field messageField svelte-36jf1o"}"><div class="${"label svelte-36jf1o"}">${escape(locale$1.NEW_THREAD.MESSAGE)}</div>
@@ -20462,7 +20462,7 @@ const ThreadPost = create_ssr_component(($$result, $$props, $$bindings, $$slots)
 	$post = get_store_value(post);
 	let postUser = writable$1([]);
 	$postUser = get_store_value(postUser);
-	
+
 	let currentImageSrc = img$o;
 
 	function viewUserProfile() {
@@ -20599,7 +20599,7 @@ const ThreadPost = create_ssr_component(($$result, $$props, $$bindings, $$slots)
 	? `<img class="${"postImage svelte-gkb4jk"}"${add_attribute("src", currentImageSrc, 0)} alt="${"post"}">`
 	: ``}
 
-    
+
 
     ${!isArchived
 	? `${validate_component(ActionBar, "ActionBar").$$render($$result, { targetItemId: postId, targetItem: $post }, {}, {
@@ -20639,11 +20639,11 @@ const ThreadPost = create_ssr_component(($$result, $$props, $$bindings, $$slots)
 				{}
 			)}</div>`,
 			default: () => `
-            
+
             `
 		})}`
 	: ``}
-	
+
 </div>`;
 });
 
@@ -20680,7 +20680,7 @@ const U5Bpostu5D = create_ssr_component(($$result, $$props, $$bindings, $$slots)
 	let posts = writable$1([]);
 
 	$posts = get_store_value(posts);
-	
+
 
 	function reply() {
 		if (!checkLoggedIn()) {
@@ -20832,8 +20832,8 @@ const U5Bpostu5D = create_ssr_component(($$result, $$props, $$bindings, $$slots)
 					: `
 
 			<div class="${"scrollContent"}">${validate_component(ThreadPost, "ThreadPost").$$render($$result, { post: post$q }, {}, {})}
-				
-				
+
+
 
 				<div class="${"contentContainer svelte-1gwl1di"}">
 					<div class="${"postsContainer svelte-1gwl1di"}">${$posts.length

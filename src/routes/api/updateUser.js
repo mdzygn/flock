@@ -1,6 +1,6 @@
 import { init, response, errorResponse, validateCredentials, filterItemDetails } from '../../server/mongo.js';
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 export async function post(req, res, next) {
 	const { db } = await init();

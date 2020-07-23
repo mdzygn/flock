@@ -9,7 +9,7 @@
     "upload-dev": "git push dev master",
     "xxx-upload-live": "git push staging master",
     "compile-library": "node scripts/compileLibrary/index.js",
-    "start": "node __sapper__/build",
+    "start": "node ./index.js",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
     "test": "run-p --race dev cy:run"
@@ -20,6 +20,7 @@
     "compression": "^1.7.1",
     "eventemitter3": "^4.0.0",
     "exifr": "^4.3.5",
+    "express": "^4.17.1",
     "mongodb": "^3.5.5",
     "node-fetch": "^2.6.0",
     "polka": "next",

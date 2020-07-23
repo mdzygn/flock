@@ -11,7 +11,7 @@ import dotenv from 'dotenv';
 
 import image from '@rollup/plugin-image';
 
-const mode = process.env.NODE_ENV;
+const mode = process.env.NODE_ENV || 'production';
 const dev = (mode === 'development');
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 

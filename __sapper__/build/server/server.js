@@ -15,7 +15,7 @@ var https = _interopDefault(require('https'));
 var zlib = _interopDefault(require('zlib'));
 var bodyParser = _interopDefault(require('body-parser'));
 
-const DEBUG = (!!undefined.match(/development|staging/));
+const DEBUG = (!!"production".match(/development|staging/));
 
 const MONGODB_URI = process.env.MONGODB_URI; // + '?retryWrites=false';
 const MONGODB_DB = process.env.MONGODB_DB;
@@ -3332,16 +3332,16 @@ const CONTEXT_KEY = {};
 
 const preload = () => ({});
 
-const DEBUG$1 = (!!undefined.match(/development|staging/));
+const DEBUG$1 = (!!"production".match(/development|staging/));
 
 const HOSTNAME = (typeof window !== 'undefined') ? window.location.hostname : 'localhost';
-const LOCAL = (!!undefined.match(/development/)) && (HOSTNAME === 'localhost' || HOSTNAME === '192.168.1.5');
+const LOCAL = (!!"production".match(/development/)) && (HOSTNAME === 'localhost' || HOSTNAME === '192.168.1.5');
 
 const MAIN_USER = 'sl3p5oms';
 const GENERAL_USER = 'bl20a8lm';
 
-const SITE_CONTENT_URL = (!!undefined.match(/development|staging/)) ? 'https://flock-hub-dev.s3-us-west-2.amazonaws.com/' : 'https://flock-hub.s3-us-west-2.amazonaws.com/';
-const USER_CONTENT_URL = (!!undefined.match(/development|staging/)) ? 'https://flock-hub-dev-content.s3-us-west-2.amazonaws.com/' : 'https://flock-hub-content.s3-us-west-2.amazonaws.com/';
+const SITE_CONTENT_URL = (!!"production".match(/development|staging/)) ? 'https://flock-hub-dev.s3-us-west-2.amazonaws.com/' : 'https://flock-hub.s3-us-west-2.amazonaws.com/';
+const USER_CONTENT_URL = (!!"production".match(/development|staging/)) ? 'https://flock-hub-dev-content.s3-us-west-2.amazonaws.com/' : 'https://flock-hub-content.s3-us-west-2.amazonaws.com/';
 
 const contentFolder = 'content/';
 const projectContentFolder = 'content/projects/';
@@ -4668,11 +4668,11 @@ const promptIds = {
     INVALID_IMAGE_FILESIZE_TOO_LARGE: 'INVALID_IMAGE_FILESIZE_TOO_LARGE',
 };
 
-const DEBUG$2 = (!!undefined.match(/development|staging/));
+const DEBUG$2 = (!!"production".match(/development|staging/));
 
 const hostname = (typeof window !== 'undefined') ? window.location.hostname : 'localhost';
 
-const base = (!!undefined.match(/development/)) ? 'http://' + hostname + ':3000' : ''; // 'http://192.168.1.5:3000' //'http://localhost:3000' //'https://flock-hub.herokuapp.com';
+const base = (!!"production".match(/development/)) ? 'http://' + hostname + ':3000' : ''; // 'http://192.168.1.5:3000' //'http://localhost:3000' //'https://flock-hub.herokuapp.com';
 const folder = 'api';
 
 const API_PATH = base + '/' + folder;
@@ -11026,13 +11026,13 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, $$slots) => 
 
 const css$j = {
 	code: ".content.svelte-n4vlfg.svelte-n4vlfg{padding:20px}.content.svelte-n4vlfg pre.svelte-n4vlfg{overflow-x:scroll}",
-	map: "{\"version\":3,\"file\":\"_error.svelte\",\"sources\":[\"_error.svelte\"],\"sourcesContent\":[\"<script>\\r\\n\\texport let status;\\r\\n\\texport let error;\\r\\n\\r\\n\\tconst dev = (!!undefined.match(/development|staging/));\\r\\n\\r\\n\\t$: {\\r\\n\\t\\t// refresh page if imported module failed - likely site was updating\\r\\n\\t\\tif (typeof window !== 'undefined' && error && (!error.message || error.message.indexOf('Failed to fetch dynamically imported module') !== -1)) {\\r\\n\\t\\t\\tstatus = '';\\r\\n\\t\\t\\terror.message = '';\\r\\n\\t\\t\\terror = error;\\r\\n\\r\\n\\t\\t\\twindow.setTimeout(() => {\\r\\n\\t\\t\\t\\tlocation.href = location.href; // refresh\\r\\n\\t\\t\\t}, 1000); // give delay to avoid infinite loop\\r\\n\\t\\t}\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n<svelte:head>\\r\\n\\t<title>{status}</title>\\r\\n</svelte:head>\\r\\n\\r\\n<div class=\\\"content\\\">\\r\\n\\t<h1>{status}</h1>\\r\\n\\r\\n\\t<p>{error.message}</p>\\r\\n\\r\\n\\t{#if dev && error.stack}\\r\\n\\t\\t<pre>{error.stack}</pre>\\r\\n\\t{/if}\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t/* seems to need any css to compile */\\r\\n\\t* {\\r\\n\\t}\\r\\n\\r\\n\\t.content {\\r\\n\\t\\tpadding: 20px;\\r\\n\\t}\\r\\n\\r\\n\\t.content pre {\\r\\n    \\toverflow-x: scroll;\\r\\n\\t}\\r\\n</style>\"],\"names\":[],\"mappings\":\"AAuCC,QAAQ,4BAAC,CAAC,AACT,OAAO,CAAE,IAAI,AACd,CAAC,AAED,sBAAQ,CAAC,GAAG,cAAC,CAAC,AACV,UAAU,CAAE,MAAM,AACtB,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"_error.svelte\",\"sources\":[\"_error.svelte\"],\"sourcesContent\":[\"<script>\\r\\n\\texport let status;\\r\\n\\texport let error;\\r\\n\\r\\n\\tconst dev = (!!\\\"production\\\".match(/development|staging/));\\r\\n\\r\\n\\t$: {\\r\\n\\t\\t// refresh page if imported module failed - likely site was updating\\r\\n\\t\\tif (typeof window !== 'undefined' && error && (!error.message || error.message.indexOf('Failed to fetch dynamically imported module') !== -1)) {\\r\\n\\t\\t\\tstatus = '';\\r\\n\\t\\t\\terror.message = '';\\r\\n\\t\\t\\terror = error;\\r\\n\\r\\n\\t\\t\\twindow.setTimeout(() => {\\r\\n\\t\\t\\t\\tlocation.href = location.href; // refresh\\r\\n\\t\\t\\t}, 1000); // give delay to avoid infinite loop\\r\\n\\t\\t}\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n<svelte:head>\\r\\n\\t<title>{status}</title>\\r\\n</svelte:head>\\r\\n\\r\\n<div class=\\\"content\\\">\\r\\n\\t<h1>{status}</h1>\\r\\n\\r\\n\\t<p>{error.message}</p>\\r\\n\\r\\n\\t{#if dev && error.stack}\\r\\n\\t\\t<pre>{error.stack}</pre>\\r\\n\\t{/if}\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t/* seems to need any css to compile */\\r\\n\\t* {\\r\\n\\t}\\r\\n\\r\\n\\t.content {\\r\\n\\t\\tpadding: 20px;\\r\\n\\t}\\r\\n\\r\\n\\t.content pre {\\r\\n    \\toverflow-x: scroll;\\r\\n\\t}\\r\\n</style>\"],\"names\":[],\"mappings\":\"AAuCC,QAAQ,4BAAC,CAAC,AACT,OAAO,CAAE,IAAI,AACd,CAAC,AAED,sBAAQ,CAAC,GAAG,cAAC,CAAC,AACV,UAAU,CAAE,MAAM,AACtB,CAAC\"}"
 };
 
 const Error$1 = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
 	let { status } = $$props;
 	let { error } = $$props;
-	const dev = !!undefined.match(/development|staging/);
+	const dev = !!("production").match(/development|staging/);
 	if ($$props.status === void 0 && $$bindings.status && status !== void 0) $$bindings.status(status);
 	if ($$props.error === void 0 && $$bindings.error && error !== void 0) $$bindings.error(error);
 	$$result.css.add(css$j);

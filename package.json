@@ -25,9 +25,7 @@
     "node-fetch": "^2.6.0",
     "polka": "next",
     "sendgrid": "^5.2.3",
-    "sirv": "^0.4.0"
-  },
-  "devDependencies": {
+    "sirv": "^0.4.0",
     "@babel/core": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
     "@babel/plugin-transform-runtime": "^7.0.0",
@@ -49,5 +47,7 @@
     "rollup-plugin-terser": "^4.0.4",
     "sapper": "^0.27.0",
     "svelte": "^3.0.0"
+  },
+  "devDependencies": {
   }
 }

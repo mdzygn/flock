@@ -163,9 +163,9 @@ export function checkDomain() {
             if (!config.STAGING_TEST && location.href.indexOf("flock-hub.herokuapp.") === -1) {
                 let newUrl = location.href;
                 if (location.protocol.indexOf("https") === -1 && location.protocol.indexOf("http") !== -1) {
-                    newUrl = newUrl.replace("flock-hub.herokuapp.", "flockprojects.");
+                    newUrl = newUrl.replace("http", "https");
                 }
-                newUrl = newUrl.replace("http", "https");
+                newUrl = newUrl.replace("flock-hub.herokuapp.", "flockprojects.");
                 location.href = newUrl;
             } else if (location.protocol.indexOf("https") === -1 && location.protocol.indexOf("http") !== -1) {
                 location.href = location.href.replace("http", "https");

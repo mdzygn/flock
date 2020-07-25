@@ -14,6 +14,7 @@
     "cy:open": "cypress open",
     "test": "run-p --race dev cy:run"
   },
+
   "dependencies": {
     "aws-sdk": "^2.658.0",
     "bcryptjs": "^2.4.3",

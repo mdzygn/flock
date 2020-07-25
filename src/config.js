@@ -3,6 +3,8 @@ export const DEBUG = (!!process.env.NODE_ENV.match(/development|staging/));
 export const HOSTNAME = (typeof window !== 'undefined') ? window.location.hostname : 'localhost';
 export const LOCAL = (!!process.env.NODE_ENV.match(/development/)) && (HOSTNAME === 'localhost' || HOSTNAME === '192.168.1.5');
 
+export const STAGING_TEST = (typeof window !== 'undefined' && window.location.search.includes('stage'));
+
 export const MAIN_USER = 'sl3p5oms';
 export const GENERAL_USER = 'bl20a8lm';
 
@@ -91,6 +93,8 @@ export const MAX_IMAGE_UPLOAD_SIZE = {
 
 export default {
     DEBUG,
+
+    STAGING_TEST,
 
     HOSTNAME,
     LOCAL,

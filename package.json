@@ -14,7 +14,6 @@
     "cy:open": "cypress open",
     "test": "run-p --race dev cy:run"
   },
-
   "dependencies": {
     "aws-sdk": "^2.658.0",
     "bcryptjs": "^2.4.3",
@@ -24,7 +23,7 @@
     "exifr": "^4.3.5",
     "mongodb": "^3.5.5",
     "node-fetch": "^2.6.0",
-    "polka": "next",
+    "polka": "^1.0.0-next.11",
     "sendgrid": "^5.2.3",
     "sirv": "^0.4.0"
   },

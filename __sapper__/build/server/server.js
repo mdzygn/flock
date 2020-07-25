@@ -498,15 +498,18 @@ async function post$2(req, res, next) {
                             response(res, {success: true}); // TODO: for temp debug return: usercode: newUsercode
                         } else {
                             console.log('error response', sendResponse);
-                            errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: sendResponse.errorObject && sendResponse.errorObject.response && sendResponse.errorObject.response.statusCode});
+                            errorResponse(res, {errorMsg: 'DEBUG can\'t send email', errorStatus: sendResponse.errorObject && sendResponse.errorObject.response && sendResponse.errorObject.response.statusCode});
+                            // errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: sendResponse.errorObject && sendResponse.errorObject.response && sendResponse.errorObject.response.statusCode});
                         }
                     })
                     .catch(error => {
                         console.log('error', error);
-                        errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: error && error.response && error.response.statusCode});
+                        errorResponse(res, {errorMsg: 'DEBUG 2 can\'t send email', errorStatus: error && error.response && error.response.statusCode});
+                        // errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: error && error.response && error.response.statusCode});
                     });
             } else {
-                errorResponse(res, {}, {errorMsg: 'can\'t update user details'});
+                errorResponse(res, {errorMsg: 'DEBUG can\'t update user details'});
+                // errorResponse(res, {}, {errorMsg: 'can\'t update user details'});
                 // response(res, {error: true});
             }
 		} else {

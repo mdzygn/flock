@@ -5,10 +5,10 @@ export const MONGODB_DB = process.env.MONGODB_DB;
 
 export const MESSAGE_SYNC_DEBUG = false && DEBUG;
 
-export const SITE = 'flock-hub.herokuapp.com';
-export const SITE_URL = 'https://flock-hub.herokuapp.com';
+export const SITE = 'flockprojects.com';
+export const SITE_URL = 'https://flockprojects.com';
 
-export const FROM_EMAIL = 'matt@matthalford.com'; // 'mattdhalford@gmail.com'; // 'support@flock-hub.herokuapp.com';
+export const FROM_EMAIL = 'hello@flockprojects.com'; // 'mattdhalford@gmail.com'; // 'support@flock-hub.herokuapp.com';
 
 
 const config = {

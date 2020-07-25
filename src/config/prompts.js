@@ -264,7 +264,7 @@ const prompts = {
     },
     FORGOT_PASSWORD_RESET: {
         title: 'Reset Password',
-        message: 'An email has been sent this address with instructions to reset your password',
+        message: 'An email has been sent this address with instructions to reset your password.<br/><br/>If you can\'t see the email, be sure to check your spam folder,<br/>otherwise please email <a href="mailto:support@flockprojects.com">support@flockprojects.com</a>.',
         menuItems: [
             {
                 label: 'Log In',

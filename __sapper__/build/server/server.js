@@ -22,10 +22,10 @@ const MONGODB_DB = process.env.MONGODB_DB;
 
 const MESSAGE_SYNC_DEBUG = false ;
 
-const SITE = 'flock-hub.herokuapp.com';
-const SITE_URL = 'https://flock-hub.herokuapp.com';
+const SITE = 'flockprojects.com';
+const SITE_URL = 'https://flockprojects.com';
 
-const FROM_EMAIL = 'matt@matthalford.com'; // 'mattdhalford@gmail.com'; // 'support@flock-hub.herokuapp.com';
+const FROM_EMAIL = 'hello@flockprojects.com'; // 'mattdhalford@gmail.com'; // 'support@flock-hub.herokuapp.com';
 
 
 const config = {
@@ -498,18 +498,15 @@ async function post$2(req, res, next) {
                             response(res, {success: true}); // TODO: for temp debug return: usercode: newUsercode
                         } else {
                             console.log('error response', sendResponse);
-                            errorResponse(res, {errorMsg: 'DEBUG can\'t send email', errorStatus: sendResponse.errorObject && sendResponse.errorObject.response && sendResponse.errorObject.response.statusCode});
-                            // errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: sendResponse.errorObject && sendResponse.errorObject.response && sendResponse.errorObject.response.statusCode});
+                            errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: sendResponse.errorObject && sendResponse.errorObject.response && sendResponse.errorObject.response.statusCode});
                         }
                     })
                     .catch(error => {
                         console.log('error', error);
-                        errorResponse(res, {errorMsg: 'DEBUG 2 can\'t send email', errorStatus: error && error.response && error.response.statusCode});
-                        // errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: error && error.response && error.response.statusCode});
+                        errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: error && error.response && error.response.statusCode});
                     });
             } else {
-                errorResponse(res, {errorMsg: 'DEBUG can\'t update user details'});
-                // errorResponse(res, {}, {errorMsg: 'can\'t update user details'});
+                errorResponse(res, {}, {errorMsg: 'can\'t update user details'});
                 // response(res, {error: true});
             }
 		} else {
@@ -10026,7 +10023,7 @@ const prompts = {
     },
     FORGOT_PASSWORD_RESET: {
         title: 'Reset Password',
-        message: 'An email has been sent this address with instructions to reset your password',
+        message: 'An email has been sent this address with instructions to reset your password.<br/><br/>If you can\'t see the email, be sure to check your spam folder,<br/>otherwise please email <a href="mailto:support@flockprojects.com">support@flockprojects.com</a>.',
         menuItems: [
             {
                 label: 'Log In',

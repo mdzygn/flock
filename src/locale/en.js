@@ -1,8 +1,8 @@
 const locale = {
 	HOME_INTRO: {
-		TITLE: 'Welcome to Flock',
-		HEADER_TEXT: 'Share, discover and collaborate on inspirational projects around the world.',
-		INTRO_TEXT: 'Your platform for building communities and teams around creative and innovative projects.',
+		TITLE: 'Bringing creative, innovative and inspirational projects to life', // 'A platform to bring creative and innovative projects to life', // 'Welcome to Flock',
+		HEADER_TEXT: 'Share and discover projects around the world to grow your community, find the perfect team and turn your ideas and dreams into reality.', // 'Share and discover projects around the world to build your community, find your team and realize your ideas', // 'Share and discover inspirational projects around the world, grow your team and community and realize your ideas.', // 'Share, discover and collaborate on inspirational projects around the world.',
+		// INTRO_TEXT: 'Your platform for building communities and teams around creative and innovative projects.',
 		// HEADER_TEXT: 'Discover and share creative and innovative projects to bring them to life.',
 		// INTRO_TEXT: 'Build you community and find your team by sharing your projects, allowing others to follow, support and start getting involved to make your dreams a reality!',
 		SIGN_UP: 'sign up', // 'create account',
@@ -175,7 +175,7 @@ const locale = {
 		SUGGESTIONS: 'Suggestions to improve the project community',
 	},
 	NOTIFICATIONS: {
-		NO_NOTIFICATIONS: 'no recent activity',
+		NO_NOTIFICATIONS: 'no recent activity yet',
 	},
 	NOTIFICATION: {
 		PROJECT_PREFIX: 'on ',

@@ -49,9 +49,9 @@
         <div class="headerText">{@html locale.HOME_INTRO.HEADER_TEXT}</div>
     </div>
 
-    <div class="panelContent button" on:click="{showFlockInfo}">
+    <!-- <div class="panelContent button" on:click="{showFlockInfo}">
         <div class="introText">{@html locale.HOME_INTRO.INTRO_TEXT}</div>
-    </div>
+    </div> -->
 
     <div class="readMoreContainer">
         <Button className="readMoreButton" onClick="{showFlockInfo}" icon="{MoreArrowIcon}">{locale.HOME_INTRO.LEARN_MORE}</Button>
@@ -122,6 +122,7 @@
 
         padding-top: 14px;
         padding-left: 23px;
+        padding-right: 23px;
         /* padding-bottom: 21px; */
 
         color: #222222;
@@ -129,15 +130,25 @@
     }
 
     .title {
-        font-size: 2.4rem;
+        font-size: 2rem;
+        line-height: 2.5rem;
+
+        /* font-size: 2.4rem;
+        padding-bottom: 5px; */
+
         font-weight: 700;
-        padding-bottom: 5px;
+        padding-top: 5px;
+        padding-bottom: 12px;
     }
 
     .headerText {
         font-size: 1.6rem;
-        font-weight: 700;
-        line-height: 1.8rem;
+
+        line-height: 2.2rem;
+        padding-bottom: 6px;
+
+        /* font-weight: 700;
+        line-height: 1.8rem; */
     }
 
     .panelContent {

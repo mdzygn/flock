@@ -4017,7 +4017,8 @@ function checkDomain() {
                 if (location.protocol.indexOf("https") === -1 && location.protocol.indexOf("http") !== -1) {
                     newUrl = newUrl.replace("http", "https");
                 }
-                newUrl = newUrl.replace("flock-hub.herokuapp.com", "flockprojects.com");
+                // restore when can upload to flockprojects.com
+                // newUrl = newUrl.replace("flock-hub.herokuapp.com", "flockprojects.com");
                 location.href = newUrl;
             } else if (location.protocol.indexOf("https") === -1 && location.protocol.indexOf("http") !== -1) {
                 location.href = location.href.replace("http", "https");

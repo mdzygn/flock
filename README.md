@@ -4,6 +4,12 @@ npm run dev
 
 access locally at: http://localhost:3000/
 
+# deploying
+
+before deploying ensure running npm build
+
+npm: build
+
 # heroku deploy
 
 ensure heroku cli installed:
@@ -14,6 +20,10 @@ git push dev master
 
 push to heroku staging:
 git push staging master
+
+# deploy production to aws
+
+// aws deploy push --application-name HelloWorld_App --s3-location s3://codedeploydemobucket/HelloWorld_App.zip --ignore-hidden-files
 
 
 # mongodb tools

@@ -4012,15 +4012,16 @@ function initApp() {
 function checkDomain() {
     if (typeof window !== 'undefined' && !config$1.LOCAL) {
         if (!get_store_value(userId) || !get_store_value(usercode)) {
-            if (!config$1.STAGING_TEST && location.href.indexOf("flock-hub.herokuapp.com") !== -1) {
+            // restore when can upload to flockprojects.com
+            /* if (!config.STAGING_TEST && location.href.indexOf("flock-hub.herokuapp.com") !== -1) {
                 let newUrl = location.href;
                 if (location.protocol.indexOf("https") === -1 && location.protocol.indexOf("http") !== -1) {
                     newUrl = newUrl.replace("http", "https");
                 }
-                // restore when can upload to flockprojects.com
-                // newUrl = newUrl.replace("flock-hub.herokuapp.com", "flockprojects.com");
+                newUrl = newUrl.replace("flock-hub.herokuapp.com", "flockprojects.com");
                 location.href = newUrl;
-            } else if (location.protocol.indexOf("https") === -1 && location.protocol.indexOf("http") !== -1) {
+            } else */
+            if (location.protocol.indexOf("https") === -1 && location.protocol.indexOf("http") !== -1) {
                 location.href = location.href.replace("http", "https");
             }
         }

@@ -89,7 +89,7 @@
     <!-- && (hasActiveChannels || isTeamMember || following) -->
     <div class="channelList" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}">
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
-        <ContentPanel title="Channels" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
+        <ContentPanel title="{locale.PROJECT.CHANNELS_TITLE}" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
             {#if (!hasActiveChannels || isNew) && viewAllChannels && !isArchived}
                 {#if isTeamMember}
                     <div class="getTheConversationStarted getStartedOwner" class:getStartedOwnerOffset="{canEdit && $showBetaFeatures}">{locale.PROJECT.GET_STARTED}</div>

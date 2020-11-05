@@ -1,3 +1,21 @@
+# watching, serving and running locally
+
+npm run dev
+
+access locally at: http://localhost:3000/
+
+# mongodb tools
+
+ensure mongodb tools installed:
+https://www.mongodb.com/try/download/database-tools
+
+download live mongo db:
+mongodump --uri "mongodb://heroku_4q6g8lwt:jiookdgcmutmsisg2v4inq89it@ds223812.mlab.com:23812/heroku_4q6g8lwt"
+
+download dev mongo db:
+mongodump --uri "mongodb://heroku_j81rj6mx:m3hh52jauntp431k7nk3jsa3p@ds125041.mlab.com:25041/heroku_j81rj6mx"
+
+
 # sapper-template
 
 The default [Sapper](https://github.com/sveltejs/sapper) template, available for Rollup and webpack.

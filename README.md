@@ -4,6 +4,18 @@ npm run dev
 
 access locally at: http://localhost:3000/
 
+# heroku deploy
+
+ensure heroku cli installed:
+https://devcenter.heroku.com/articles/heroku-cli
+
+push to heroku dev:
+git push dev master
+
+push to heroku staging:
+git push staging master
+
+
 # mongodb tools
 
 ensure mongodb tools installed:
@@ -14,7 +26,6 @@ mongodump --uri "mongodb://heroku_4q6g8lwt:jiookdgcmutmsisg2v4inq89it@ds223812.m
 
 download dev mongo db:
 mongodump --uri "mongodb://heroku_j81rj6mx:m3hh52jauntp431k7nk3jsa3p@ds125041.mlab.com:25041/heroku_j81rj6mx"
-
 
 # sapper-template
 

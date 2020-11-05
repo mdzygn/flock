@@ -5,10 +5,10 @@ const locale = {
 		INTRO_TEXT: 'Your platform for building communities and teams around creative and innovative projects.',
 		// HEADER_TEXT: 'Discover and share creative and innovative projects to bring them to life.',
 		// INTRO_TEXT: 'Build you community and find your team by sharing your projects, allowing others to follow, support and start getting involved to make your dreams a reality!',
-		SIGN_UP: 'create account',
+		SIGN_UP: 'sign up', // 'create account',
 		SIGN_IN: 'sign in',
 		LEARN_MORE: 'learn more',
-		DISCOVER: 'discover projects',
+		DISCOVER: 'or discover projects',
 	},
 	GENERAL: {
 		SHOW_MORE: 'show more',
@@ -108,7 +108,7 @@ const locale = {
 		NOT_FOUND: 'project not found',
 		GET_STARTED: 'get the conversations started',
 		FOLLOWER_GET_STARTED: 'no posts yet - be the first!',
-		CHANNELS_TITLE: 'Discussions', // 'Channels
+		CHANNELS_TITLE: 'Discussion Channels', // Discussions, Channels
 		CHANNELS_FOLLOW_LINK: 'Follow',
 		CHANNELS_FOLLOW: ' this project to view discussion channels and get involved.',
 		CHANNELS_FOLLOW_ALL: ' this project to view all discussion channels and get involved.',

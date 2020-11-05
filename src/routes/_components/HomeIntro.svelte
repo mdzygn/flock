@@ -61,7 +61,7 @@
         <div class="actions">
             <!-- <Button className="readMoreButton" onClick="{e => { loadProject(config.FLOCK_PROJECT, { showInfo: true }); }}" icon="{MoreArrowIcon}">{locale.HOME_INTRO.LEARN_MORE}</Button> -->
             <div class="actionButtonsContainer">
-                <Button className="signInButton" onClick="{signIn}">{locale.HOME_INTRO.SIGN_IN}</Button>
+                <!-- <Button className="signInButton" onClick="{signIn}">{locale.HOME_INTRO.SIGN_IN}</Button> -->
                 <Button className="signUpButton" onClick="{signUp}">{locale.HOME_INTRO.SIGN_UP}</Button>
             </div>
         </div>
@@ -170,14 +170,18 @@
 
     .homeIntro :global(.signUpButton) {
         display: inline-block;
-        margin-left: -9px;
+
+        /* margin-left: -9px; */
         /* margin-left: -6px; */
     }
     .homeIntro :global(.signUpButton .buttonContent) {
         margin: 11px;
-        margin-right: 13px;
-        margin-left: 6px;
         margin-top: 15px;
+
+        /* margin-right: 13px;
+        margin-left: 6px; */
+
+        margin-top: 8px;
 
         padding: 8px 21px;
 
@@ -244,17 +248,22 @@
 
         /* padding-top: 5px;
         padding-bottom: 10px; */
-        padding-bottom: 8px;
+
+        padding-bottom: 4px;
+        /* padding-bottom: 8px; */
     }
 
     .homeIntro :global(.discoverIndicator) {
-        padding: 10px;
+        /* padding: 10px; */
         padding-bottom: 42px;
 
-        font-size: 1.7rem;
+        font-size: 1.5rem;
+        /* font-size: 1.7rem; */
     }
     .homeIntro :global(.discoverIndicator .icon) {
         transform-origin: top;
+
+        transform: scale(0.3, 0.3);
     }
     .homeIntro :global(.discoverIndicator .iconContainer) {
         display: block;

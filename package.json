@@ -8,6 +8,7 @@
     "export": "sapper export --legacy && copyfiles ./static/ ./__sapper__/export",
     "upload-dev": "git push dev master",
     "xxx-upload-staging": "git push staging master",
+    "xxx-upload-live": "eb deploy",
     "compile-library": "node scripts/compileLibrary/index.js",
     "start": "node __sapper__/build",
     "cy:run": "cypress run",

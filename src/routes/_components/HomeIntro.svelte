@@ -68,7 +68,7 @@
     {/if}
 
     <div class="discoverIndicatorContainer">
-        <Button className="discoverIndicator" icon="{DiscoverArrowIcon}" onClick="{onDiscoverScrollDown}">{locale.HOME_INTRO.DISCOVER}</Button>
+        <Button className="discoverIndicator" icon="{DiscoverArrowIcon}" onClick="{onDiscoverScrollDown}">{(!loggedIn ? locale.HOME_INTRO.DISCOVER_PREFIX : '') + locale.HOME_INTRO.DISCOVER}</Button>
     </div>
 
 	<FilterBar bind:filterString={$discoverFilterString} />

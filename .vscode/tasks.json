@@ -7,6 +7,13 @@
 			"problemMatcher": [],
 			"label": "npm: upload-dev",
 			"detail": "git push dev master"
+		},
+		{
+			"type": "npm",
+			"script": "xxx-upload-live",
+			"problemMatcher": [],
+			"label": "npm: xxx-upload-live",
+			"detail": "eb deploy"
 		}
 	]
 }

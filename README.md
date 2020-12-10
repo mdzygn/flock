@@ -10,6 +10,10 @@ before deploying ensure running npm build
 
 npm: build
 
+commit build files (in __sapper__ directory)
+
+eb deploy
+
 # heroku deploy
 
 ensure heroku cli installed:

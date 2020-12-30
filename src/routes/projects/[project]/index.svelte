@@ -226,7 +226,7 @@
 											{#if projectDetailItem.image === true}
 												<Proxy image="project_info_image_{index + 1}" className="projectDetailImage {!projectDetailItem.detail ? 'soloImage' : ''}" />
 											{:else}
-												<img class="projectDetailImage {!projectDetailItem.detail ? 'soloImage' : ''}" src="{getProjectDetailImage(projectDetailItem.image)}" alt="project header image" />
+												<img class="projectDetailImage {!projectDetailItem.detail ? 'soloImage' : ''}" src="{getProjectDetailImage(projectDetailItem.image)}" alt="project detail" />
 											{/if}
 										{/if}
 										<!-- <Proxy image="project_info_content_3" className="proxyOverlay" /> -->

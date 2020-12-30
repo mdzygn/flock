@@ -163,7 +163,7 @@
 
 <div class="imageSelectionBox {className}" class:opened="{carouselShown && useLibrary}" class:noLibrary="{!useLibrary}">
     {#if imageSrc}
-        <div class="imageSelectionBoxImage" class:containMode="{containMode}" style="background-image: url({imageSrc})" class:carouselShown="{carouselShown}" on:click="{toggleCarousel}" alt="project header image" />
+        <div class="imageSelectionBoxImage" class:containMode="{containMode}" style="background-image: url({imageSrc})" class:carouselShown="{carouselShown}" on:click="{toggleCarousel}" alt="project header" />
         {#if carouselShown}
             <Button className="selectCancelButton" icon="{CancelIcon}" />
         {:else if fileIsUploading}

@@ -151,19 +151,6 @@
         line-height: 1.8rem; */
     }
 
-    .panelContent {
-        padding-left: 23px;
-        padding-top: 18px;
-        padding-right: 54px;
-        padding-bottom: 6px;
-        /* padding-top: 23px; */
-    }
-
-    .introText {
-        font-size: 1.4rem;
-        line-height: 2rem;
-    }
-
     .actions {
         position: relative;
 		display: flex;

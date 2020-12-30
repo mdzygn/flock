@@ -75,12 +75,10 @@
     }
 
 	function newPost(event) {
-		if (!canPost) { return stopEvent(event); }
-		if (!checkLoggedIn()) { return stopEvent(event); }
+		if (!canPost) { return; }
+		if (!checkLoggedIn()) { return; }
 
 		newThread();
-
-		return stopEvent(event);
 	}
 </script>
 
@@ -116,7 +114,7 @@
 							<ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
 						{:else}
 							<ContentLoader>{locale.CHANNEL.NO_POSTS}
-								{#if canPost}<br/>be the first to <a href="/posts/new" on:click="{newPost}">Add a Post</a>{/if}
+								{#if canPost}<br/>be the first to <a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">Add a Post</a>{/if}
 							</ContentLoader>
 						{/if}
 					{/each}

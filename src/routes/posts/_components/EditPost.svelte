@@ -395,7 +395,7 @@
 			{:else}
 				<div class="fieldNote">{@html locale.NEW_THREAD.EDITING_NOTE}
 					{#if changesSaved}
-						<div><a href="javascript:void(0)" on:click="{resetChanges}">{locale.NEW_THREAD.REST_ACTION}</a>{locale.NEW_THREAD.REST_NOTE}</div>
+						<div><a href="{location.href}" on:click="{resetChanges}">{locale.NEW_THREAD.REST_ACTION}</a>{locale.NEW_THREAD.REST_NOTE}</div>
 					{/if}
 				</div>
 			{/if}

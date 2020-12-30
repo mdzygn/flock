@@ -22,6 +22,8 @@
 
 	import { loadProfile } from '../../../actions/appActions';
 
+	import { stopEvent } from '../../../utils';
+
 	import { setNotificationSeenTimeout, clearNotificationSeenTimeout } from '../../../models/notificationsModel';
 
 	import AppModel, {
@@ -213,7 +215,7 @@
 							{:else if !showAddPost}
 								<ContentLoader>{locale.THREAD.NO_POSTS}<br/>
 									{#if !isArchived}
-										be the first to <a href="javascript:void(0)" on:click="{reply}">Leave a Reply</a>
+										be the first to <a href="{location.href}" on:click="{(e) => { reply(); return stopEvent(e); }}">Leave a Reply</a>
 									{/if}
 								</ContentLoader>
 							{/if}

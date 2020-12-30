@@ -113,7 +113,7 @@
                     <ContentLoader label="This project has no channels" /> -->
                 {/if}
                 {#if (hasInactiveChannels && !following && !isTeamMember) && !isArchived}
-                    <div class="channelsFollowCta"><a href="javascript:void(0)" on:click="{followProject}">{@html locale.PROJECT.CHANNELS_FOLLOW_LINK}</a>{@html hasActiveChannels ? locale.PROJECT.CHANNELS_FOLLOW_ALL : locale.PROJECT.CHANNELS_FOLLOW}</div>
+                    <div class="channelsFollowCta"><a href="{location.href}" on:click="{followProject}">{@html locale.PROJECT.CHANNELS_FOLLOW_LINK}</a>{@html hasActiveChannels ? locale.PROJECT.CHANNELS_FOLLOW_ALL : locale.PROJECT.CHANNELS_FOLLOW}</div>
                 {/if}
             {/if}
         </ContentPanel>

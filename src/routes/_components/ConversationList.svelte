@@ -12,7 +12,9 @@
     import ConversationListItem from './ConversationListItem.svelte';
     import ContentLoader from './../_components/ContentLoader.svelte';
 
-	import { newProject } from '../../actions/appActions';
+    import { newProject } from '../../actions/appActions';
+    
+	import { stopEvent } from '../../utils';
 
     import {
         userId,
@@ -53,7 +55,7 @@
         {:else}
             <div class="noConversations">
                 {locale.CONVERSATIONS.NO_CONVERSATIONS}<br/><br/>
-                <a href="discover">Discover</a> inspiring projects to get involved with<br/>or create a <a href="javascript:void(0)" on:click="{newProject}">New Project</a>
+                <a href="discover">Discover</a> inspiring projects to get involved with<br/>or create a <a href="/projects/new" on:click="{(e) => { newProject(); return stopEvent(e); }}">New Project</a>
             </div>
         {/if}
     {/if}

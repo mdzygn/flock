@@ -6,7 +6,7 @@ import { goto } from '@sapper/app';
 import { get } from 'svelte/store';
 import { tick } from 'svelte';
 
-import { trim, copyToClipboard, stopEvent } from '../utils';
+import { trim, copyToClipboard } from '../utils';
 
 // import conversations from '../data/conversations.json';
 
@@ -264,12 +264,10 @@ export function loadProjectPost(targetProjectId) {
     loadProject(targetProjectId + '#post');
 }
 
-export function newProject(event) {
-    if (!checkLoggedIn()) { return stopEvent(event); }
+export function newProject() {
+    if (!checkLoggedIn()) { return; }
 
     goto('projects/new');
-
-    return stopEvent(event);
 }
 export function editProjectDetails(options) {
     if (!checkLoggedIn()) { return; }

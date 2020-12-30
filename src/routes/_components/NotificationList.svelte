@@ -11,6 +11,8 @@
 	import ContentPanel from './../_components/ContentPanel.svelte';
     import NotificationListItem from './NotificationListItem.svelte';
     import ContentLoader from './../_components/ContentLoader.svelte';
+    
+	import { stopEvent } from '../../utils';
 
 	import { newProject } from '../../actions/appActions';
 
@@ -53,7 +55,7 @@
         {:else}
             <div class="noNotifications">
                 {locale.NOTIFICATIONS.NO_NOTIFICATIONS}<br/><br/>
-                <a href="discover">Discover</a> inspiring projects to get involved with<br/>or create a <a href="javascript:void(0)" on:click="{newProject}">New Project</a>
+                <a href="discover">Discover</a> inspiring projects to get involved with<br/>or create a <a href="/projects/new" on:click="{(e) => { newProject(); return stopEvent(e); }}">New Project</a>
             </div>
         {/each}
     {/if}

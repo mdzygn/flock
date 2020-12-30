@@ -439,3 +439,10 @@ export function gotoAnchor(anchorId) {
         window.location.href = newLocation;
     }
 }
+
+export function stopEvent(event) {
+    if (event) {
+        event.preventDefault();
+    }
+    return false;
+}

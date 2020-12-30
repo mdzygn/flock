@@ -122,7 +122,7 @@
 					{#if searchString}
 						<slot>no projects found matching "{searchString}"</slot>
 					{:else}
-						<slot>you have not shared any projects<br/>create a <a href="javascript:void(0)" on:click="{newProject}">New Project</a></slot>
+						<slot>you have not shared any projects<br/>create a <a href="/projects/new" on:click="{newProject}">New Project</a></slot>
 					{/if}
 				</ProjectList>
 				<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">new project</Button>

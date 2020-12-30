@@ -10,6 +10,8 @@
 	import ContentLoader from '../_components/ContentLoader.svelte';
 	import PostItem from '../_components/PostItem.svelte';
 
+	import { stopEvent } from '../../utils';
+
 	import {
 		project,
 		channel,
@@ -72,11 +74,13 @@
         loadUsersOfItemModels($posts);
     }
 
-	function newPost() {
-		if (!canPost) { return; }
-		if (!checkLoggedIn()) { return; }
+	function newPost(event) {
+		if (!canPost) { return stopEvent(event); }
+		if (!checkLoggedIn()) { return stopEvent(event); }
 
 		newThread();
+
+		return stopEvent(event);
 	}
 </script>
 
@@ -112,7 +116,7 @@
 							<ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
 						{:else}
 							<ContentLoader>{locale.CHANNEL.NO_POSTS}
-								{#if canPost}<br/>be the first to <a href="javascript:void(0)" on:click="{newPost}">Add a Post</a>{/if}
+								{#if canPost}<br/>be the first to <a href="/posts/new" on:click="{newPost}">Add a Post</a>{/if}
 							</ContentLoader>
 						{/if}
 					{/each}

@@ -11,13 +11,13 @@
 
 	import { isDarkBgForPath } from "../models/sectionsModel.js";
 
-	import ScrollView from '../components/ScrollView.svelte';
+	// import ScrollView from '../components/ScrollView.svelte';
 	import HeaderBar from './_components/HeaderBar.svelte';
 	import Nav from './_components/Nav.svelte';
 	import Overlays from './_components/Overlays.svelte';
 
 	import DesktopWarning from './_components/DesktopWarning.svelte';
-	import Splash from './_components/Splash.svelte';
+	// import Splash from './_components/Splash.svelte';
 
 	export let segment;
 	$: path = ($page && $page.path) || '';
@@ -198,7 +198,7 @@
 	<GoogleAnalytics />
 	<appContent class:showFeedBg="{showFeedBg}">
 		<DesktopWarning />
-		<Splash />
+		<!-- <Splash /> -->
 		<Overlays />
 		<div class="pageContent" class:landscapeScrollMode="{landscapeScrollMode}" class:keyboardShown="{keyboardShown}">
 			{#if config.DEBUG && $debugOutput}

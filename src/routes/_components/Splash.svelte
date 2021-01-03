@@ -4,7 +4,7 @@
 
     import config from '../../config';
 
-    import Proxy from '../../components/Proxy.svelte';
+    // import Proxy from '../../components/Proxy.svelte';
 
     import LogoImage from "../../assets/images/logo.png";
     import TagLineImage from "../../assets/images/splash_tagline.png";

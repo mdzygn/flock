@@ -161,14 +161,15 @@ export function checkDomain() {
     if (typeof window !== 'undefined' && !config.LOCAL) {
         if (!get(userId) || !get(usercode)) {
             // restore when can upload to flockprojects.com
-            if (!config.STAGING_TEST && location.href.indexOf("flock-hub.herokuapp.com") !== -1) {
+            /*if (!config.STAGING_TEST && location.href.indexOf("flock-hub.herokuapp.com") !== -1) {
                 let newUrl = location.href;
                 if (location.protocol.indexOf("https") === -1 && location.protocol.indexOf("http") !== -1) {
                     newUrl = newUrl.replace("http", "https");
                 }
                 newUrl = newUrl.replace("flock-hub.herokuapp.com", "flockprojects.com");
                 location.href = newUrl;
-            } else if (location.protocol.indexOf("https") === -1 && location.protocol.indexOf("http") !== -1) {
+            } else */
+            if (location.protocol.indexOf("https") === -1 && location.protocol.indexOf("http") !== -1) {
                 location.href = location.href.replace("http", "https");
             }
         }

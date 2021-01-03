@@ -56,8 +56,9 @@
 		<ul>
 			{#each mainSections as section}
 				{#if $showBetaFeatures || !section.betaHidden}
-					<li><div class="button" class:disabled="{!$showBetaFeatures && section.beta}" aria-current="{mainSection === section.segment ? 'page' : undefined}" on:click="{($showBetaFeatures || !section.beta) ? () => setNavSection(section) : null}" title="{section.label}">
+					<li><div class="button" class:disabled="{!$showBetaFeatures && section.beta}" class:active="{mainSection === section.segment}" aria-current="{mainSection === section.segment ? 'page' : undefined}" on:click="{($showBetaFeatures || !section.beta) ? () => setNavSection(section) : null}" title="{section.label}">
 						<NavIcon iconId="{getIconForSection(section)}" active="{mainSection === section.segment}" label="{section.label}" notificationModel="{notificationModels[getIdForSection(section)]}" />
+						<div class="navLabel">{section.label}</div>
 					</div></li>
 				{/if}
 			{/each}
@@ -87,12 +88,28 @@
 		cursor: pointer;
 
 		text-decoration: none;
-    	padding: 10px 0;
+
+		position: relative;
+		padding: 5px 0 21px 0;
+    	/* padding: 10px 0; */
+
 		display: block;
 
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+
+	.navLabel {
+		position: absolute;
+		bottom: 6px;
+		font-size: 10px;
+		font-weight: bold;
+    	color: #999999;
+	}
+
+	.button.active .navLabel {
+		color: #333333;
 	}
 
 	.disabled {

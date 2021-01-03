@@ -1,7 +1,9 @@
 const locale = {
 	HOME_INTRO: {
 		TITLE: 'Bringing creative projects to life', // 'Turning ideas into reality together', // 'Turning ideas into reality', // 'Bringing creative, innovative and inspirational projects to life', // 'A platform to bring creative and innovative projects to life', // 'Welcome to Flock',
-		HEADER_TEXT: 'Grow your project community, find your dream team and turn your ideas into reality', 
+		HEADER_TEXT: 'Share your projects and build your community to find your team and turn your ideas into reality.', 
+		//HEADER_TEXT: 'Grow your community, find your team and turn your ideas into reality<br/><br/>Share your project now!', 
+		// HEADER_TEXT: 'Grow your project community, find your dream team and turn your ideas into reality', 
 		// HEADER_TEXT: 'Share and discover projects around the world to grow your community, find your dream team and turn your ideas into reality', 
 		// HEADER_TEXT: 'Share and discover projects around the world to grow your community and turn your ideas into reality', 
 		// HEADER_TEXT: 'Share and discover projects around the world to grow your community and find your team to bring your ideas to life', 

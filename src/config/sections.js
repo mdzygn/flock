@@ -10,7 +10,8 @@ export const sections = [
 	},
 	{
 		segment: 'discover',
-		label: 'Discover Projects',
+		label: 'Discover',
+		// label: 'Discover Projects',
 		main: true,
 		darkBg: true,
 	},

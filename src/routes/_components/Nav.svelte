@@ -104,7 +104,7 @@
 		position: absolute;
 		bottom: 6px;
 		font-size: 1rem;
-		font-weight: bold;
+		font-weight: 700;
     	color: #999999;
 	}
 

@@ -153,7 +153,7 @@
 	}
 	.charCountOver {
 		color: #DF3C3C;
-		font-weight: bold;
+		font-weight: 700;
 	}
 
 	.fieldNote {

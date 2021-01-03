@@ -57,7 +57,7 @@
 	}
 	.overlayMenuItem :global(.textPanel .buttonLabel) {
         padding: 0 2px;
-        font-weight: bold;
+        font-weight: 700;
         color: #333333;
 	}
 	.overlayMenuItem :global(.textPanel .button.activeButton:hover) {

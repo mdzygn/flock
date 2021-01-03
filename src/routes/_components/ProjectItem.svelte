@@ -253,7 +253,7 @@
     }
     .skillsLabel {
         font-size: 1.1rem;
-        /* font-weight: bold; */
+        /* font-weight: 700; */
         color: #888888;
 
         display: inline-block;

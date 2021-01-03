@@ -146,7 +146,7 @@
 				<Button className="uploadAvatarButton" onClick="{uploadProfileImage}" icon="{UploadImageIcon}">{locale.EDIT_PROFILE.UPLOAD_PROFILE_IMAGE}</Button>
 				<div class="field">
 					<div class="label">{locale.EDIT_PROFILE.NAME}</div>
-					<input type="text" bind:value="{name}" on:keypress="{(e) => testInputDefocus(e, {target: bioInput})}" />
+					<input type="text" bind:value="{name}" on:keypress="{(e) => testInputDefocus(e, {target: bioInput})}" autocapitalize="words" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
 				<div class="field bioField">
 					<div class="label">{locale.EDIT_PROFILE.BIO}<span class="tip">{@html locale.EDIT_PROFILE.BIO_TIP}</span></div>
@@ -164,7 +164,7 @@
 				</div>
 				<div class="field">
 					<div class="label labelDetails">{locale.EDIT_PROFILE.LOCATION}<span class="tip">{@html locale.EDIT_PROFILE.LOCATION_TIP}</span></div>
-					<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{testInputDefocus}" />
+					<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{testInputDefocus}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
 			</div>
 

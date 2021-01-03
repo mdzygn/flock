@@ -299,8 +299,8 @@ export function updateOtherPublicProjects() {
 	if (newProjects) {
 		newProjects = newProjects.filter(projectModel => {
 			const project = get(projectModel);
-			return !project.following && !project.archived && project.public; // include team projects for now
-			// return !project.following && !getIsProjectTeamMember(project) && !project.archived && project.public;
+			// return !project.following && !project.archived && project.public; // include team projects for now
+			return !project.following && !getIsProjectTeamMember(project) && !project.archived && project.public;
 		});
 		newProjects.sort((a,b) => get(b).lastActiveAt - get(a).lastActiveAt); // sort by reversed updated time
 		// console.log('updateOtherPublicProjects: ', newProjects);
@@ -322,22 +322,23 @@ export function updateArchivedProjects() {
 
 export function updateDiscoveryProjects(updateDependencies) {
 	if (updateDependencies) {
-		// updateMyPublicProjects();
 		updateFollowingProjects();
 		updateOtherPublicProjects();
+		updateMyPublicProjects();
 	}
-	// let sourceMyPublicProjects = get(myPublicProjects); // included my projects in other public projects for now
+	let sourceMyPublicProjects = get(myPublicProjects); // included my projects in other public projects for now
 	// if (sourceMyPublicProjects) {
 		let sourceOtherPublicProjects = get(otherPublicProjects);
 		let sourceFollowingProjects = get(followingProjects);
-		if (sourceFollowingProjects && sourceOtherPublicProjects) {
+		if (sourceFollowingProjects && sourceOtherPublicProjects && sourceMyPublicProjects) {
 			// if (get(locationMode) !== 'local') {
 			// 	sourceOtherPublicProjects = [...sourceOtherPublicProjects].reverse();
 			// 	sourceMyPublicProjects = [...sourceMyPublicProjects].reverse();
 			// 	sourceFollowingProjects = [...sourceFollowingProjects].reverse();
 			// }
 
-			let newProjects = [...sourceOtherPublicProjects, ...sourceFollowingProjects];
+			// let newProjects = [...sourceOtherPublicProjects, ...sourceFollowingProjects];
+			let newProjects = [...sourceOtherPublicProjects, ...sourceFollowingProjects, ...sourceMyPublicProjects];
 			// let newProjects = [...sourceOtherPublicProjects, ...sourceMyPublicProjects, ...sourceFollowingProjects];
 
 			if (!get(showBetaFeatures)) { // if showing home intro and flock project within first 4 projects then move flock project further down list or remove
@@ -401,7 +402,7 @@ function projectsUpdated() {
 	updateMyProjects();
 	updateFollowingProjects();
 	updateOtherPublicProjects();
-	// updateMyPublicProjects();
+	updateMyPublicProjects();
 	updateDiscoveryProjects();
 	updateArchivedProjects();
 }

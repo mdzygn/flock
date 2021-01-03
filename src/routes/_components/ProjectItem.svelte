@@ -58,13 +58,13 @@
             <div class="description">{projectDescription}</div>
             <!-- <ProjectSkillsList project="{$project}" /> -->
         </div>
+        {#if skills}
+            <div class="skills"><a class="skillsLink" href="/projects/{projectId}" title="view project" on:click="{e => {loadProject(projectId, { showInfo: true }); return stopEvent(e); }}">
+                <div class="skillsLabel">{locale.DISCOVER.PROJECT_SKILLS}</div>
+                <TagSet tags="{skills}" linkToDiscoverSearch="{false}" />
+            </a></div>
+        {/if}
     </div>
-    {#if skills}
-        <div class="skills"><a class="skillsLink" href="/projects/{projectId}" title="view project" on:click="{e => {loadProject(projectId, { showInfo: true }); return stopEvent(e); }}">
-            <div class="skillsLabel">{locale.DISCOVER.PROJECT_SKILLS}</div>
-            <TagSet tags="{skills}" linkToDiscoverSearch="{false}" />
-        </a></div>
-    {/if}
     {#if !isTeamMember}
         <ActionBar targetItemId="{projectId}" targetItem="{$project}" />
     {:else if $showProjectCounts}
@@ -234,6 +234,7 @@
     }
 
     .skills {
+        margin-left: -23px;
         padding-left: 23px;
         padding-right: 18px;
         

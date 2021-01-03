@@ -35,7 +35,7 @@
 </script>
 
 {#if skills && skills.length}
-    <div class="content">
+    <div class="content" id="skills">
         <ContentPanel title="Seeking Skills:" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems ? displayAllSkills : false}">
             <TagSet tags="{skills}" displayLimit="{displayLimit}" />
         </ContentPanel>

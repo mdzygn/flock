@@ -1,7 +1,7 @@
 <script>
     import Button from '../../components/Button.svelte';
 
-    let linkToDiscoverSearch = true;
+    export let linkToDiscoverSearch = true;
 
     export let tags = null;
 

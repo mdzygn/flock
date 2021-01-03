@@ -6,7 +6,7 @@
     import { get } from 'svelte/store';
     import { writable } from 'svelte/store';
     
-	import { getSplitItems } from '../../utils';
+	import { getSplitItems, stopEvent } from '../../utils';
 
     import Button from '../../components/Button.svelte';
     import TagSet from './TagSet.svelte';
@@ -60,10 +60,10 @@
         </div>
     </div>
     {#if skills}
-        <div class="skills">
+        <div class="skills"><a class="skillsLink" href="/projects/{projectId}" title="view project" on:click="{e => {loadProject(projectId, { showInfo: true }); return stopEvent(e); }}">
             <div class="skillsLabel">{locale.DISCOVER.PROJECT_SKILLS}</div>
-            <TagSet tags="{skills}" />
-        </div>
+            <TagSet tags="{skills}" linkToDiscoverSearch="{false}" />
+        </a></div>
     {/if}
     {#if !isTeamMember}
         <ActionBar targetItemId="{projectId}" targetItem="{$project}" />
@@ -243,6 +243,9 @@
         -ms-overflow-style: none;
 
         white-space: nowrap;
+    }
+    .skillsLink {
+        text-decoration: none;
     }
 	.skills::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */
         display: none;

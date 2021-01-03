@@ -5,6 +5,7 @@ import EventEmitter from 'eventemitter3';
 
 import { writable, get } from 'svelte/store';
 
+import { getSearchString, removeCommonWordSuffixes } from '../utils/searchUtils';
 import { generateId } from '../utils';
 
 import loadingRequestUtil from '../utils/loadingRequestUtil';
@@ -173,6 +174,7 @@ export function getFilteredProjects(projects, options) { // filteredProjects
 	let searchString = (options && options.searchString) || null;
 	if (searchString) {
 		searchString = searchString.toLowerCase();
+		searchString = getSearchString(searchString);
 	}
 
 	let filterString = (options && options.filterString) || null;
@@ -189,8 +191,9 @@ export function getFilteredProjects(projects, options) { // filteredProjects
 
 	let filteredCount = 0;
 	let project, curProject;
-	for (let index = 0; index < projects.length; index++) {
-		project = projects[index];
+	let projectI = 0;
+	for (projectI = 0; projectI < projects.length; projectI++) {
+		project = projects[projectI];
 		curProject = get(project);
 		if (curProject && ((!searchString && !filterString) || projectSearchMatch(curProject, searchString, filterString))) {
 			newFilteredProjects.push(project);
@@ -198,6 +201,22 @@ export function getFilteredProjects(projects, options) { // filteredProjects
 			filteredCount++;
 			if (limit && filteredCount >= limit) {
 				break;
+			}
+		}
+	}
+
+	let desuffixedSearchString = removeCommonWordSuffixes(searchString);
+	for (let projectI = 0; projectI < projects.length; projectI++) {
+		project = projects[projectI];
+		curProject = get(project);
+		if (curProject && ((!searchString && !filterString) || projectSearchMatch(curProject, desuffixedSearchString, filterString))) {
+			if (newFilteredProjects.indexOf(project) === -1) {
+				newFilteredProjects.push(project);
+
+				filteredCount++;
+				if (limit && filteredCount >= limit) {
+					break;
+				}
 			}
 		}
 	}

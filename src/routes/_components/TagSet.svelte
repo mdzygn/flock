@@ -1,6 +1,8 @@
 <script>
     import Button from '../../components/Button.svelte';
 
+    let linkToDiscoverSearch = true;
+
     export let tags = null;
 
     export let displayLimit = 0;
@@ -10,7 +12,7 @@
     <div class="tagSet">
         {#each tags as tag, index}
             {#if !displayLimit || index < displayLimit}
-                <Button className="tag">{tag}{#if index < tags.length - 1 && (!displayLimit || index < displayLimit-1)}<span class="invisibleSeparator">,&nbsp;</span>{/if}</Button>
+                <Button className="tag" href="{linkToDiscoverSearch ? 'discover?search=' + encodeURIComponent(tag) : ''}">{tag}{#if index < tags.length - 1 && (!displayLimit || index < displayLimit-1)}<span class="invisibleSeparator">,&nbsp;</span>{/if}</Button>
             {/if}
         {/each}
     </div>

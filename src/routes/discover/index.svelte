@@ -12,6 +12,9 @@
 <script>
 	import { viewMode, exploreZoomed } from '../../models/appModel';
 
+	import { stores } from '@sapper/app';
+	const { page } = stores();
+
 	import Discover from './_components/Discover.svelte';
 	import Explore from './_components/Explore.svelte';
 	import ExploreZoomed from './_components/ExploreZoomed.svelte';
@@ -19,6 +22,24 @@
 	// export let projects;
 
 	// $: console.log('projects:', projects);
+
+	import {
+		discoverSearchString,
+		goHome,
+	} from '../../models/appModel';
+	
+	$: {
+		$page;
+		checkParams($page.query);
+	}
+
+	function checkParams(query) {
+		if (query && query.search) {
+			goHome();
+			let searchString = decodeURIComponent(query.search);
+			$discoverSearchString = searchString;
+		}
+	}
 </script>
 
 <svelte:head>

@@ -30,7 +30,7 @@
         <div class="searchButton" on:click="{selectSearchIcon}">
             <div class="searchIcon" style="background-image: url({searchString ? ClearIcon : SearchIcon})" />
         </div>
-        <input bind:this="{input}" class="searchFieldInput" type="text" bind:value="{searchString}" placeholder="{locale.GENERAL.SEARCH_PLACEHOLDER}" on:keypress="{testInputDefocus}" />
+        <input bind:this="{input}" class="searchFieldInput" type="text" bind:value="{searchString}" placeholder="{locale.GENERAL.SEARCH_PLACEHOLDER}" on:keypress="{(e) => testInputDefocus(e, {blur: true})}" />
     </div>
 </div>
 

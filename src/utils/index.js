@@ -107,9 +107,15 @@ export function testInputDefocus(event, options) {
             }
             options.action();
         } else if (options && options.target) {
-            event.target.blur();
+            if (event.target.blur) {
+                event.target.blur();
+            }
             event.preventDefault();
-            options.target.focus();
+            if (options.target.focus) {
+                options.target.focus();
+            }
+        } else if (options && options.blur && event.target.blur) {
+            event.target.blur();
         }
     }
 }

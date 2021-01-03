@@ -87,12 +87,14 @@
         padding-bottom: 2px;
     }
 
-    .homeIntro :global(.filterButton) {
+    .homeIntro :global(.filterBar .filterSet .filterButton) {
+        padding: 0px 6px;
+        margin: 0 9px 0 4px;
+
         background-color: initial;
     }
 
-    .homeIntro :global(.filterButton.selectedItem) {
-        padding: 0px 6px;
+    .homeIntro :global(.filterBar .filterSet .filterButton.selectedItem) {
         border-radius: 0;
         border: none;
         border-bottom: 2px solid #242424;

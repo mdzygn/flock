@@ -31,6 +31,7 @@ const locale = {
 	},
 	DISCOVER: {
 		NO_PROJECTS: 'no projects found',
+		PROJECT_SKILLS: 'seeking skills:',
 	},
 	FOLLOWING_PROJECTS: {
 		BUTTON_ARCHIVED_PROJECTS: 'archived projects',

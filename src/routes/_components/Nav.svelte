@@ -103,7 +103,7 @@
 	.navLabel {
 		position: absolute;
 		bottom: 6px;
-		font-size: 10px;
+		font-size: 1rem;
 		font-weight: bold;
     	color: #999999;
 	}

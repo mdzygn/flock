@@ -1,10 +1,15 @@
 <script>
     // import { onDestroy } from 'svelte'; // afterUpdate
 
+    import locale from '../../locale';
+    
     import { get } from 'svelte/store';
     import { writable } from 'svelte/store';
+    
+	import { getSplitItems } from '../../utils';
 
     import Button from '../../components/Button.svelte';
+    import TagSet from './TagSet.svelte';
 
     import ActionBar from './ActionBar.svelte';
     import ActionButton from './ActionButton.svelte';
@@ -39,6 +44,8 @@
 
     $: projectTitle = ($project && $project.title) || '';
     $: projectDescription = ($project && $project.description) || '';
+
+	$: skills = ($project && $project.skills && getSplitItems($project.skills)) || null;
 </script>
 
 <div class="projectItem" class:ownerProjectItem="{isTeamMember}">
@@ -49,8 +56,15 @@
         <div class="itemContent">
             <div class="header">{projectTitle}</div>
             <div class="description">{projectDescription}</div>
+            <!-- <ProjectSkillsList project="{$project}" /> -->
         </div>
     </div>
+    {#if skills}
+        <div class="skills">
+            <div class="skillsLabel">{locale.DISCOVER.PROJECT_SKILLS}</div>
+            <TagSet tags="{skills}" />
+        </div>
+    {/if}
     {#if !isTeamMember}
         <ActionBar targetItemId="{projectId}" targetItem="{$project}" />
     {:else if $showProjectCounts}
@@ -217,5 +231,42 @@
         min-height: 26px;
 
         color: #555555;
+    }
+
+    .skills {
+        padding-left: 23px;
+        padding-right: 18px;
+        
+        padding-top: 6px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -ms-overflow-style: none;
+
+        white-space: nowrap;
+    }
+	.skills::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */
+        display: none;
+    }
+    .skillsLabel {
+        font-size: 1.1rem;
+        /* font-weight: bold; */
+        color: #888888;
+
+        display: inline-block;
+        /* float: left;
+        padding-top: 5px;
+        padding-right: 5px; */
+    }
+
+    .projectItem :global(.tagSet) {
+        white-space: nowrap;
+        display: inline-block;
+        /* margin-left: -23px;
+        padding-left: 18px; */
+    }
+    .projectItem :global(.tagSet .tag) {
+        font-size: 1.1rem;
+        /* font-weight: 700; */
+        padding: 1px 7px;
     }
 </style>

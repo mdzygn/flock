@@ -3,7 +3,7 @@
 
 	import config from '../../config';
 
-	import { trim, testInputDefocus, delayedTimeout } from '../../utils';
+	import { trim, testInputDefocus, inputFormat, delayedTimeout } from '../../utils';
 
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
@@ -85,7 +85,7 @@
 		<div class="panelContent">
 			<div class="field introField">
 				<div class="label">{locale.NEW_PROJECT.TITLE}</div>
-        		<input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: descriptionField})}" />
+        		<input type="text" bind:value="{title}" bind:this="{titleField}" autocapitalize="sentences" on:keypress="{e => testInputDefocus(e, {target: descriptionField})}" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				<!-- <div class="fieldNote labelNote">{@html locale.NEW_PROJECT.TITLE_NOTE}</div> -->
 			</div>
 			<div class="field descriptionField">

@@ -120,6 +120,13 @@ export function testInputDefocus(event, options) {
     }
 }
 
+export function inputFormat(event, options) {
+    if (options && options.capitalizeFirstKeypress && !event.target.firstCapitalized && event.target.value && event.target.value.length === 1) {
+        event.target.firstCapitalized = true;
+        event.target.value = event.target.value.toUpperCase();
+    }
+}
+
 export function copyToClipboard(string) {
     const textArea = document.createElement('textarea');
     textArea.style.top = 0;

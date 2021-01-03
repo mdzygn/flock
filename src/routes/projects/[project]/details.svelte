@@ -3,7 +3,7 @@
 	import { goto } from '@sapper/app';
 
 	import config from '../../../config';
-	import { gotoAnchor } from '../../../utils';
+	import { gotoAnchor, inputFormat } from '../../../utils';
 	import locale from '../../../locale';
 
 	import { trim, testInputDefocus, getFormattedText } from '../../../utils';
@@ -257,13 +257,13 @@
 					{#if ($editingProjectMode === 'edit')}
 						<div class="field">
 							<div class="label">{locale.NEW_PROJECT.TITLE}</div>
-							<input type="text" bind:value="{title}" on:keypress="{(e) => testInputDefocus(e, {target: descriptionInput})}" />
+							<input type="text" bind:value="{title}" autocapitalize="sentences" on:keypress="{(e) => testInputDefocus(e, {target: descriptionInput})}" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 						</div>
 						<div class="field descriptionField">
 							<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
 							<!-- <textarea bind:value="{description}" bind:this="{descriptionInput}" on:keypress="{testInputDefocus}" /> -->
 							<div class="fieldCharCount" class:charCountLow="{charCountLow}" class:charCountOver="{descriptionCharsOver}">{descriptionCharsOver ? descriptionCharsOver : remainingChars}{descriptionCharsOver ? ' characters over': (charCountLow ? ' characters remaining' : '')}</div>
-							<LimitedTextfield bind:value="{description}" bind:field="{descriptionInput}" bind:remainingChars="{remainingChars}" bind:charsOver="{descriptionCharsOver}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{testInputDefocus}" />
+							<LimitedTextfield bind:value="{description}" bind:field="{descriptionInput}" bind:remainingChars="{remainingChars}" bind:charsOver="{descriptionCharsOver}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" autocapitalize="sentences" on:keypress="{testInputDefocus}" />
 						</div>
 						<div class="field headerImageField">
 							<div class="label headerImageLabel">{locale.NEW_PROJECT.HEADER_IMAGE}</div>
@@ -287,11 +287,11 @@
 					</div>
 					<div class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
-						<textarea bind:value="{tags}" bind:this="{tagsInput}" />
+						<textarea bind:value="{tags}" bind:this="{tagsInput}" on:keyup="{(e) => inputFormat(e, {keepLowerCase: true})}" />
 					</div>
 					<div class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.SKILLS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.SKILLS_TIP}</span></div>
-						<textarea bind:value="{skills}" bind:this="{skillsInput}" />
+						<textarea bind:value="{skills}" bind:this="{skillsInput}" on:keyup="{(e) => inputFormat(e, {keepLowerCase: true})}" />
 					</div>
 				</div>
 			{/if}
@@ -312,7 +312,7 @@
 
 				<div class="field">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_1_TIP}</span></div>
-					<textarea bind:this="{detailInput1}" bind:value="{detail1}" class="detailTextarea" />
+					<textarea bind:this="{detailInput1}" bind:value="{detail1}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
 
 				{#if detailImage2 || addingDetailImage[1]}
@@ -327,7 +327,7 @@
 				{/if}
 				<div class="field">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_2_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_2_TIP}</span></div>
-					<textarea bind:this="{detailInput2}" bind:value="{detail2}" class="detailTextarea" />
+					<textarea bind:this="{detailInput2}" bind:value="{detail2}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
 
 				{#if detailImage3 || addingDetailImage[2]}
@@ -342,7 +342,7 @@
 				{/if}
 				<div class="field">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_3_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_3_TIP}</span></div>
-					<textarea bind:this="{detailInput3}" bind:value="{detail3}" class="detailTextarea" />
+					<textarea bind:this="{detailInput3}" bind:value="{detail3}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
 
 				{#if detailImage4 || addingDetailImage[3]}
@@ -357,7 +357,7 @@
 				{/if}
 				<div class="field">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_4_TIP}</span></div>
-					<textarea bind:this="{detailInput4}" bind:value="{detail4}" class="detailTextarea" />
+					<textarea bind:this="{detailInput4}" bind:value="{detail4}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
 			{/if}
 

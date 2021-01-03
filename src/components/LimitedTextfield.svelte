@@ -1,10 +1,14 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-    const dispatch = createEventDispatcher();
+	const dispatch = createEventDispatcher();
+	
+	import { inputFormat } from '../utils';
 
     export let value = '';
     export let field = null;
 	export let maxlength;
+
+    export let autocapitalize = '';
 
     export let allowOverflow = true;
 
@@ -32,7 +36,7 @@
 	}
 </script>
 
-<textarea bind:value="{value}" class:charsOver="{allowOverflow && charsOver}" bind:this="{field}" maxlength="{maxlength && !allowOverflow ? maxlength : ''}" on:keypress on:keypress />
+<textarea bind:value="{value}" autocapitalize="{autocapitalize}" class:charsOver="{allowOverflow && charsOver}" bind:this="{field}" maxlength="{maxlength && !allowOverflow ? maxlength : ''}" on:keypress on:keypress on:keyup="{autocapitalize ? (e) => inputFormat(e, {capitalizeFirstKeypress: true}) : null}" />
 
 <style>
 	.charsOver {

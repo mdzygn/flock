@@ -6,7 +6,7 @@
 	import config from '../../../config';
 	import locale from '../../../locale';
 
-	import { trim, testInputDefocus, getFormattedText } from '../../../utils';
+	import { trim, testInputDefocus, inputFormat, getFormattedText } from '../../../utils';
 
     import UploadUtil from '../../../utils/UploadUtil';
 
@@ -152,7 +152,7 @@
 					<div class="label">{locale.EDIT_PROFILE.BIO}<span class="tip">{@html locale.EDIT_PROFILE.BIO_TIP}</span></div>
 					<!-- <div class="fieldCharCount" class:charCountLow="{charCountLow}">{remainingChars}{charCountLow ? ' characters remaining' : ''}</div> -->
 					<textarea bind:value="{bio}" bind:this="{bioInput}" on:keypress="{testInputDefocus}" />
-					<!-- <LimitedTextfield bind:value="{bio}" bind:field="{bioInput}" bind:remainingChars="{remainingChars}" maxlength="{config.MAX_PROFILE_DESCRIPTION_CHARS}" on:keypress="{testInputDefocus}" /> -->
+					<!-- <LimitedTextfield bind:value="{bio}" bind:field="{bioInput}" bind:remainingChars="{remainingChars}" maxlength="{config.MAX_PROFILE_DESCRIPTION_CHARS}" autocapitalize="sentences" on:keypress="{testInputDefocus}" /> -->
 				</div>
 				<div class="field headerImageField">
 					<div class="label headerImageLabel">{locale.EDIT_PROFILE.COVER_IMAGE}</div>
@@ -160,7 +160,7 @@
 				</div>
 				<div class="field skillsField">
 					<div class="label labelDetails">{locale.EDIT_PROFILE.SKILLS}<span class="tip">{@html locale.EDIT_PROFILE.SKILLS_TIP}</span></div>
-					<textarea bind:value="{skills}" bind:this="{skillsInput}" />
+					<textarea bind:value="{skills}" bind:this="{skillsInput}" on:keyup="{(e) => inputFormat(e, {keepLowerCase: true})}" />
 				</div>
 				<div class="field">
 					<div class="label labelDetails">{locale.EDIT_PROFILE.LOCATION}<span class="tip">{@html locale.EDIT_PROFILE.LOCATION_TIP}</span></div>

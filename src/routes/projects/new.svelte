@@ -91,7 +91,7 @@
 			<div class="field descriptionField">
 				<div class="label">{locale.NEW_PROJECT.DESCRIPTION}</div>
 				<div class="fieldCharCount" class:charCountLow="{charCountLow}" class:charCountOver="{descriptionCharsOver}">{descriptionCharsOver ? descriptionCharsOver : remainingChars}{descriptionCharsOver ? ' characters over': (charCountLow ? ' characters remaining' : '')}</div>
-				<LimitedTextfield bind:value="{description}" bind:field="{descriptionField}" bind:remainingChars="{remainingChars}" bind:charsOver="{descriptionCharsOver}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" />
+				<LimitedTextfield bind:value="{description}" bind:field="{descriptionField}" bind:remainingChars="{remainingChars}" bind:charsOver="{descriptionCharsOver}" maxlength="{config.MAX_PROJECT_DESCRIPTION_CHARS}" autocapitalize="sentences" on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" />
 				<div class="fieldNote">{@html locale.NEW_PROJECT.DESCRIPTION_NOTE}</div>
 			</div>
 			<div class="field headerImageField">

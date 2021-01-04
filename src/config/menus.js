@@ -211,7 +211,7 @@ export const menus = {
                     // }
                     const curPost = get(post);
                     const canEditPost = (curPost && curPost.userId && curPost.userId === get(userId)) || false;
-                    return canEditPost;
+                    return canEditPost && (!curPost.postCount || curPost.postCount <= 0);
                     // const curPost = get(post);
                     // return (curPost && curPost.userId && curPost.userId === get(userId)) || false;
                     // return get(showBetaFeatures)

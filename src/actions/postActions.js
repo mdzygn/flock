@@ -87,24 +87,26 @@ export function removePost(curPost) {
         result = deletePost(curPost);
         if (result) {
             result.then((result) => {
-                // post.set(null); // should do if viewing thread that is post?
-                if (curThreadId) {
-                    // let curPostId = get(postId);
-                    // postId.set(curPostId); // force posts list to update in [posts]/index
+                if (result && !result.error) {
+                    // post.set(null); // should do if viewing thread that is post?
+                    if (curThreadId) {
+                        // let curPostId = get(postId);
+                        // postId.set(curPostId); // force posts list to update in [posts]/index
 
-                    loadPost(curThreadId); // should use?
-                    // goto('posts/' + curThreadId);
-                    // resetScrollRegionPosition('thread');
-                } else if (curChannelId) {
-                    // removePostFromChannel(curChannelId, curPostId);
-                    loadChannel(curChannelId);
+                        loadPost(curThreadId); // should use?
+                        // goto('posts/' + curThreadId);
+                        // resetScrollRegionPosition('thread');
+                    } else if (curChannelId) {
+                        // removePostFromChannel(curChannelId, curPostId);
+                        loadChannel(curChannelId);
 
-                    // goto('channels/' + curPost.channelId);
-                    // resetScrollRegionPosition('channel');
+                        // goto('channels/' + curPost.channelId);
+                        // resetScrollRegionPosition('channel');
+                    }
+                    setTimeout(() => {
+                        showPrompt(promptIds.DELETE_POST_COMPLETE);
+                    }, 500);
                 }
-                setTimeout(() => {
-                    showPrompt(promptIds.DELETE_POST_COMPLETE);
-                }, 500);
             });
         }
     }

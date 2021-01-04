@@ -260,17 +260,20 @@ export function deletePost(post) {
 	savingPost.set(true);
 	const result = api.deletePost({id: postId});
 	if (result) {
-		result.then(() => {
-			const curPosts = get(posts);
-			let targetPost = curPosts.find(match => get(match).id === postId);
-			if (targetPost) {
-				let targetPostIndex = curPosts.indexOf(targetPost);
-				if (targetPostIndex !== -1) {
-					curPosts.splice(targetPostIndex, 1);
+		result.then((result) => {
+			if (result && !result.error) {
+				const curPosts = get(posts);
+				let targetPost = curPosts.find(match => get(match).id === postId);
+				if (targetPost) {
+					let targetPostIndex = curPosts.indexOf(targetPost);
+					if (targetPostIndex !== -1) {
+						curPosts.splice(targetPostIndex, 1);
+					}
 				}
 			}
 
 			savingPost.set(false);
+			
 			return result;
 		});
 	} else {

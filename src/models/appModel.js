@@ -351,4 +351,8 @@ export function triggerFollowPost(postId) {
     AppModel.emit('followPost', postId);
 }
 
+export function triggerDeletePost(curTargetPost) {
+    AppModel.emit('deletePost', curTargetPost);
+}
+
 export default appModel;

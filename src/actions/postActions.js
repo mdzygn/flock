@@ -1,10 +1,13 @@
 import { get } from 'svelte/store';
 import { goto } from '@sapper/app';
 
+import promptIds from '../config/promptIds';
+
 import {
     checkLoggedIn,
     loadChannel,
     loadPost,
+    showPrompt,
 } from '../actions/appActions';
 
 import AppModel, {
@@ -18,9 +21,11 @@ import {
     setFollowPost,
     getPost,
     updatePost,
+    deletePost,
 } from '../models/postsModel';
 
 AppModel.on('followPost', followPost);
+AppModel.on('deletePost', removePost);
 
 function checkUpdatePost(targetPost) {
     const curPost = get(post);
@@ -60,6 +65,41 @@ export function savePost(postDetails) {
             goto('posts/' + curPost.threadId);
         }
         resetScrollRegionPosition('thread');
+    }
+    return result;
+}
+
+export function removePost(curPost) {
+    if (!checkLoggedIn()) { return; }
+
+    let result = null;
+    if (curPost) {
+        let newPostId = null;
+        let newChannelId = null;
+
+        if (curPost.type !== 'thread' && curPost.threadId) {
+            newPostId = curPost.threadId;
+        } else if (curPost.channelId) {
+            newChannelId = curPost.channelId;
+        }
+
+        result = deletePost(curPost);
+        result.then((result) => {
+            // post.set(null); // should do if viewing thread that is post?
+            if (newPostId) {
+                // loadPost(newPostId); // should use?
+                // goto('posts/' + newPostId);
+                // resetScrollRegionPosition('thread');
+            } else if (newChannelId) {
+                loadChannel(newChannelId);
+
+                // goto('channels/' + curPost.channelId);
+                // resetScrollRegionPosition('channel');
+            }
+            setTimeout(() => {
+                showPrompt(promptIds.DELETE_POST_COMPLETE);
+            }, 500);
+        });
     }
     return result;
 }

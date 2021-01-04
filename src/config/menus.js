@@ -33,6 +33,7 @@ import {
     copyProjectLink,
     copyProfileLink,
     editCurrentPost,
+    showDeletePostDialog,
 } from '../actions/appActions';
 
 import {
@@ -176,9 +177,10 @@ export const menus = {
                 action: editCurrentPost,
             },
             {
-                label: 'Remove Post',
-                visible: () => { return get(showBetaFeatures) },
-                disabled: true,
+                label: 'Delete Post',
+                action: showDeletePostDialog,
+                // visible: () => { return get(showBetaFeatures) },
+                // disabled: true,
             },
             // {
             //     label: 'Report Post',
@@ -201,11 +203,12 @@ export const menus = {
                 }
             },
             {
-                label: 'Remove Post',
+                label: 'Delete Post',
+                action: showDeletePostDialog,
                 visible: () => {
-                    if (!get(showBetaFeatures)) {
-                        return;
-                    }
+                    // if (!get(showBetaFeatures)) {
+                    //     return;
+                    // }
                     const curPost = get(post);
                     const canEditPost = (curPost && curPost.userId && curPost.userId === get(userId)) || false;
                     return canEditPost;
@@ -213,7 +216,7 @@ export const menus = {
                     // return (curPost && curPost.userId && curPost.userId === get(userId)) || false;
                     // return get(showBetaFeatures)
                 },
-                disabled: true,
+                // disabled: true,
             },
             {
                 label: () => { const curPost = get(post); return !curPost.following ? 'Follow Post' : 'Unfollow Post' },

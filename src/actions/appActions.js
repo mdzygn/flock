@@ -107,6 +107,7 @@ import {
     showBetaFeatures,
 
     triggerNewThreadPost,
+    triggerDeletePost,
 
     newConversation,
     newConversationUserIds,
@@ -603,6 +604,10 @@ export function showTogglePublicDialog() {
     }
 }
 
+export function showDeletePostDialog() {
+    showPrompt(promptIds.DELETE_POST);
+}
+
 export function login(details) {
     details.username = trim(details.username);
     username.set(details.username);
@@ -681,6 +686,13 @@ export function editCurrentPost() {
     const curTargetPost = get(targetPost);
     if (curTargetPost) {
         editPost(curTargetPost.id);
+    }
+}
+
+export function deleteCurrentPost() {
+    const curTargetPost = get(targetPost);
+    if (curTargetPost) {
+        triggerDeletePost(curTargetPost);
     }
 }
 

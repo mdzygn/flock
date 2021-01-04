@@ -254,12 +254,24 @@ function addPost(options) {
 	});
 }
 
-// options = { details: {} }
+// options = { id: id, details: {} }
 function updatePost(options) {
 	options = addCredentials(options);
 	return send('updatePost', options).then(result => {
 		if (DEBUG && result && result.error) {
 			console.error('API Error - updatePost: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
+// options = { id: id }
+function deletePost(options) {
+	options = addCredentials(options);
+	return send('deletePost', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - deletePost: ', result);
 		}
 		return result;
 		// return Promise.reject(error); // TODO: prevent followups being called
@@ -429,6 +441,7 @@ const api = {
 	getPosts,
 	addPost,
 	updatePost,
+	deletePost,
 
 	likePost,
 	unlikePost,

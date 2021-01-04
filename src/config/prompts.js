@@ -25,6 +25,7 @@ import {
     copyPostLink,
     copyProjectLink,
     copyProfileLink,
+    deleteCurrentPost,
 } from '../actions/appActions';
 
 
@@ -224,6 +225,31 @@ const prompts = {
             },
             {
                 label: 'Close',
+            },
+        ],
+    },
+
+    DELETE_POST: {
+        title: 'Delete Post',
+        message: 'Are you sure you want to permanently delete this post?',
+        showClose: true,
+        menuItems: [
+            {
+                label: 'Delete Post',
+                action: deleteCurrentPost,
+                default: true,
+            },
+            {
+                label: 'Cancel',
+            },
+        ],
+    },
+    DELETE_POST_COMPLETE: {
+        title: 'Post Deleted',
+        subMessage: 'Post has now been removed',
+        menuItems: [
+            {
+                label: 'Ok',
             },
         ],
     },

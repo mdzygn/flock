@@ -35,6 +35,7 @@ export async function post(req, res, next) {
 	if (channelId) {
 		filter.channelId = channelId;
 	}
+	filter.deleted =  { $ne: true };
 
 	if (!(id || threadId || channelId)) {
 		errorResponse(res, {}, {errorMsg: 'post id, threadId or channelId not set'});

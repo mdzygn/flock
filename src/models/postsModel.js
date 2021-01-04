@@ -248,6 +248,20 @@ export function updatePost(post, postDetails) {
 	return result;
 }
 
+export function deletePost(post) {
+	savingPostId.set(post.id); // need to keep saving post so doesn't override on load
+	savingPost.set(true);
+	const result = api.deletePost({id: post.id});
+	result.then(() => {
+		savingPost.set(false);
+		return result;
+	});
+
+	Object.assign(post, null);
+	
+	return result;
+}
+
 export function setLikePost(targetPost, like) {
 	if (like) {
 		api.likePost({userId: get(userId), postId: targetPost.id});

@@ -11,6 +11,7 @@ import {
     setAccountFormValidated,
     logInFormValidated,
     forgotPasswordFormValidated,
+    addTeamMembersFormValidated,
     signInRequired,
 } from '../models/appModel';
 
@@ -431,7 +432,7 @@ const prompts = {
         menuItems: [
             {
                 label: 'Add Members',
-                // disabled: () => !get(addTeamMembersFormValidated),
+                disabled: () => !get(addTeamMembersFormValidated),
                 default: true,
             },
         ],

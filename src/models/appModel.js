@@ -130,6 +130,7 @@ export const logInFormValidated = writable(false);
 export const signUpFormValidated = writable(false);
 export const setAccountFormValidated = writable(false);
 export const forgotPasswordFormValidated = writable(false);
+export const addTeamMembersFormValidated = writable(false);
 
 export const dontAllowOverlayClose = writable(false);
 export const newUsername = writable(null);

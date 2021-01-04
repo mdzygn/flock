@@ -5,6 +5,7 @@
 	import SignUpPrompt from './SignUpPrompt.svelte';
 	import SetAccountPrompt from './SetAccountPrompt.svelte';
 	import ForgotPasswordPrompt from './ForgotPasswordPrompt.svelte';
+	import AddTeamMembersPrompt from './AddTeamMembersPrompt.svelte';
 
 	import { user, curMenu, curPrompt, dontAllowOverlayClose } from '../../models/appModel';
 
@@ -49,6 +50,13 @@
 	function forgotPasswordSubmit() {
 		closeOverlay();
 		sendPasswordReset(forgotPasswordEmail);
+	}
+
+	let addTeamMembersList;
+	let addTeamMembersUpdateMenuItems;
+	function addTeamMembersSubmit() {
+		closeOverlay();
+		// addProjectTeamMembers(addTeamMembersList);
 	}
 
 	$: canClose = ((menu && menu.allowClose !== false) || (prompt && prompt.allowClose !== false)) && !$dontAllowOverlayClose;
@@ -96,6 +104,14 @@
 						bind:email="{forgotPasswordEmail}"
 						on:confirm="{forgotPasswordSubmit}"
 						on:change="{forgotPasswordUpdateMenuItems}"
+					/>
+				</OverlayPrompt>
+			{:else if $curPrompt === promptIds.ADD_TEAM_MEMBERS }
+				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{addTeamMembersSubmit}" bind:updateMenuItems="{addTeamMembersUpdateMenuItems}">
+					<AddTeamMembersPrompt
+						bind:email="{addTeamMembersList}"
+						on:confirm="{addTeamMembersSubmit}"
+						on:change="{addTeamMembersUpdateMenuItems}"
 					/>
 				</OverlayPrompt>
 			{:else}

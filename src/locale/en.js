@@ -141,6 +141,9 @@ const locale = {
 		USERNAME: 'username or email',
 		PASS: 'password',
 	},
+	ADD_TEAM_MEMBERS: {
+		TEAM_LIST: 'Enter usernames separated by commas',
+	},
 	NEW_THREAD: {
 		PAGE_TITLE: 'New Post',
 		TITLE: 'title',

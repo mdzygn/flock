@@ -37,7 +37,7 @@
 
 	$: { // prevent disallowed characters
 		username = username.toLowerCase();
-		username = username.replace(/[^a-z0-9._]/g, ''); // lowercase only
+		username = username.replace(/[^a-zA-Z0-9._]/g, '').toLowerCase(); // lowercase only
 		// username = username.replace(/[^a-zA-Z0-9._]/gi, '');
     }
 

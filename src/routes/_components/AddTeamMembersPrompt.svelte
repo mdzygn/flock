@@ -62,7 +62,7 @@
         justify-content: center;
         flex-flow: wrap;
 
-        margin-top: -20px;
+        margin-top: -18px;
 
         padding-bottom: 2px;
     }
@@ -76,8 +76,8 @@
 	.label {
 		font-size: 1.2rem;
 
-        padding-left: 0px;
-        margin-right: -10px;
+        /* padding-left: 0px;
+        margin-right: -10px; */
     	/* padding-left: 7px; */
 
 		color: #888888;
@@ -100,6 +100,7 @@
 		color: #333333;
 
         padding: 6px 7px;
+        padding: 6px 0;
         /* padding-left: 0; */
 	}
 

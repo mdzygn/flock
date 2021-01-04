@@ -8,7 +8,7 @@ import { generateId, secondsDiff } from '../utils';
 
 import loadingRequestUtil from '../utils/loadingRequestUtil';
 
-import {
+import AppModel, {
     user,
 	userId,
 	project,
@@ -37,9 +37,24 @@ onPostsUpdated(postsUpdated);
 // const postItems = JSON.parse(JSON.stringify(postsData));
 // mergePosts(postItems);
 
+AppModel.on('createdPost', onCreatedPost);
+
 export function onPostsUpdated(handler) {
 	if (!postsUpdatedHandlers.includes(handler)) {
 		postsUpdatedHandlers.push(handler);
+	}
+}
+
+export function onCreatedPost(curTargetPost) {
+	if (curTargetPost.type === 'threadPost' && curTargetPost.threadId) {
+		const curThreadModel = getPost(curTargetPost.threadId);
+		if (curThreadModel) {
+			const curThread = get(curThreadModel);
+			if (curThread) {
+				curThread.postCount++;
+				curThreadModel.set(curThread);
+			}
+		}
 	}
 }
 

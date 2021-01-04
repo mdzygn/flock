@@ -355,4 +355,8 @@ export function triggerDeletePost(curTargetPost) {
     AppModel.emit('deletePost', curTargetPost);
 }
 
+export function triggerCreatedPost(curTargetPost) {
+    AppModel.emit('createdPost', curTargetPost);
+}
+
 export default appModel;

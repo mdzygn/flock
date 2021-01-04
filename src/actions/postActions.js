@@ -14,6 +14,7 @@ import {
 import AppModel, {
     post,
     resetScrollRegionPosition,
+    triggerCreatedPost,
 } from '../models/appModel';
 
 import {
@@ -42,6 +43,7 @@ export function createPost(postDetails) {
     if (result) {
         result.then((result) => {
             if (result && !result.error) {
+                triggerCreatedPost(postDetails);
                 switch (postDetails.type) {
                     case 'thread':
                         loadChannel(postDetails.channelId);

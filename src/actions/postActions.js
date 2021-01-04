@@ -39,14 +39,19 @@ export function createPost(postDetails) {
     if (!checkLoggedIn()) { return; }
 
     const result = addPost(postDetails);
-
-    switch (postDetails.type) {
-        case 'thread':
-            loadChannel(postDetails.channelId);
-            break;
-        case 'threadPost':
-            loadPost(postDetails.threadId, { anchorToBottom: true });
-            break;
+    if (result) {
+        result.then((result) => {
+            if (result && !result.error) {
+                switch (postDetails.type) {
+                    case 'thread':
+                        loadChannel(postDetails.channelId);
+                        break;
+                    case 'threadPost':
+                        loadPost(postDetails.threadId, { anchorToBottom: true });
+                        break;
+                }
+            }
+        });
     }
     return result;
 }

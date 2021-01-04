@@ -203,14 +203,16 @@ export function addPost(postDetails) {
 	savingPost.set(true);
 
 	const result = api.addPost({details: newPost});
-	result.then(result => {
-		if (!result || result.error || result.invalid) {
-			// console.error(result);
-		}
-		savingPost.set(false);
-		return result;
-		// newPost._id = result.insertedId;
-	});
+	if (result) {
+		result.then(result => {
+			if (!result || result.error || result.invalid) {
+				// console.error(result);
+			}
+			savingPost.set(false);
+			return result;
+			// newPost._id = result.insertedId;
+		});
+	}
 
 	const curPosts = get(posts);
 	curPosts.unshift(newPostModel);
@@ -234,10 +236,14 @@ export function updatePost(post, postDetails) {
 	savingPostId.set(post.id); // need to keep saving post so doesn't override on load
 	savingPost.set(true);
 	const result = api.updatePost({id: post.id, details: postDetails});
-	result.then(() => {
+	if (result) {
+		result.then(() => {
+			savingPost.set(false);
+			return result;
+		});
+	} else {
 		savingPost.set(false);
-		return result;
-	});
+	}
 
 	Object.assign(post, postDetails);
 
@@ -249,16 +255,30 @@ export function updatePost(post, postDetails) {
 }
 
 export function deletePost(post) {
-	savingPostId.set(post.id); // need to keep saving post so doesn't override on load
+	let postId = post.id;
+	savingPostId.set(postId); // need to keep saving post so doesn't override on load
 	savingPost.set(true);
-	const result = api.deletePost({id: post.id});
-	result.then(() => {
+	const result = api.deletePost({id: postId});
+	if (result) {
+		result.then(() => {
+			const curPosts = get(posts);
+			let targetPost = curPosts.find(match => get(match).id === postId);
+			if (targetPost) {
+				let targetPostIndex = curPosts.indexOf(targetPost);
+				if (targetPostIndex !== -1) {
+					curPosts.splice(targetPostIndex, 1);
+				}
+			}
+
+			savingPost.set(false);
+			return result;
+		});
+	} else {
 		savingPost.set(false);
-		return result;
-	});
+	}
 
 	Object.assign(post, null);
-	
+
 	return result;
 }
 

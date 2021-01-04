@@ -242,12 +242,15 @@
 					postDetails.threadId = $postId;
 					break;
 			}
-			createPost(postDetails).then((result) => {
-				// console.log('create post result', result);
-				if (result && (result.success || result.addedPost || result.duplicateKey)) {
-					clearDraftPost(curPostType, draftId, editPost);
-				}
-			});
+			let result = createPost(postDetails);
+			if (result) {
+				result.then((result) => {
+					// console.log('create post result', result);
+					if (result && (result.success || result.addedPost || result.duplicateKey)) {
+						clearDraftPost(curPostType, draftId, editPost);
+					}
+				});
+			}
 			hide();
 		}
     }

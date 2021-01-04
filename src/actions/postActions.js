@@ -6,6 +6,7 @@ import promptIds from '../config/promptIds';
 import {
     checkLoggedIn,
     loadChannel,
+    // removePostFromChannel,
     loadPost,
     showPrompt,
 } from '../actions/appActions';
@@ -74,6 +75,7 @@ export function removePost(curPost) {
 
     let result = null;
     if (curPost) {
+        let postId = curPost.id;
         let newPostId = null;
         let newChannelId = null;
 
@@ -84,22 +86,25 @@ export function removePost(curPost) {
         }
 
         result = deletePost(curPost);
-        result.then((result) => {
-            // post.set(null); // should do if viewing thread that is post?
-            if (newPostId) {
-                // loadPost(newPostId); // should use?
-                // goto('posts/' + newPostId);
-                // resetScrollRegionPosition('thread');
-            } else if (newChannelId) {
-                loadChannel(newChannelId);
+        if (result) {
+            result.then((result) => {
+                // post.set(null); // should do if viewing thread that is post?
+                if (newPostId) {
+                    // loadPost(newPostId); // should use?
+                    // goto('posts/' + newPostId);
+                    // resetScrollRegionPosition('thread');
+                } else if (newChannelId) {
+                    // removePostFromChannel(newChannelId, postId);
+                    loadChannel(newChannelId);
 
-                // goto('channels/' + curPost.channelId);
-                // resetScrollRegionPosition('channel');
-            }
-            setTimeout(() => {
-                showPrompt(promptIds.DELETE_POST_COMPLETE);
-            }, 500);
-        });
+                    // goto('channels/' + curPost.channelId);
+                    // resetScrollRegionPosition('channel');
+                }
+                setTimeout(() => {
+                    showPrompt(promptIds.DELETE_POST_COMPLETE);
+                }, 500);
+            });
+        }
     }
     return result;
 }

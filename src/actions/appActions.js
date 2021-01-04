@@ -33,6 +33,7 @@ import {
     loadChannels,
     onChannelsUpdated,
     loadingChannels,
+    // deletePostFromChannel,
 } from '../models/channelsModel';
 
 import {
@@ -723,6 +724,10 @@ export function newThreadPost() {
 export function editPost(postId) {
     goto('posts/' + postId + '/edit');
 }
+
+// export function removePostFromChannel(channelId, postId) {
+//     deletePostFromChannel(channelId, postId);
+// }
 
 
 export function copyProjectLink(projectId) {

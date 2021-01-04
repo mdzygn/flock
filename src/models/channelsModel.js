@@ -133,6 +133,17 @@ function channelsUpdated() {
 	filterCurrentChannels();
 }
 
+export function deletePostFromChannel(channelId, postId) {
+	const curChannels = get(channels);
+	let targetChannel = curChannels.find(match => get(match).id === channelId);
+	if (targetChannel) {
+		let curChannel = get(targetChannel);
+		if (curChannel) {
+			curChannel.postCount--; // does this work?
+		}
+	}
+}
+
 function clearFilteredChannels() {
 	const curFilteredChannels = get(filteredChannels);
 	curFilteredChannels.length = 0;

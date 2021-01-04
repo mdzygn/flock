@@ -284,60 +284,62 @@ export function addMessage(messageDetails) {
 	savingConversationId.set(messageDetails.conversationId);
 
 	const result = api.addMessage({details: newMessage});
-	result.then(result => {
-		if (!result || result.error || result.invalid) {
-			// console.error(result);
-			// savingConversationId.set(null);
+	if (result) {
+		result.then(result => {
+			if (!result || result.error || result.invalid) {
+				// console.error(result);
+				// savingConversationId.set(null);
 
-			// this sholdn't get called as now getting existing conversation on backend if duplicateKey found
-			if (result.duplicateKey && result.action === 'addConversation' && get(conversationGroupId)) {
-				const curConversation = get(conversation);
-				if (curConversation && curConversation.isNew) {
-					removeConversation(get(conversationId));
+				// this sholdn't get called as now getting existing conversation on backend if duplicateKey found
+				if (result.duplicateKey && result.action === 'addConversation' && get(conversationGroupId)) {
+					const curConversation = get(conversation);
+					if (curConversation && curConversation.isNew) {
+						removeConversation(get(conversationId));
+					}
+
+					loadConversation(get(conversationGroupId)); // refresh conversation if existing conflict hit
 				}
+			} else {
+				// updateMessages();
 
-				loadConversation(get(conversationGroupId)); // refresh conversation if existing conflict hit
+				// const result = api.updateConversation({id: get(conversationId)});
+				// result.then((result) => {
+				// 	savingConversationId.set(null);
+				// 	return result;
+				// })
 			}
-		} else {
-			// updateMessages();
+			savingConversationId.set(null);
 
-			// const result = api.updateConversation({id: get(conversationId)});
-			// result.then((result) => {
-			// 	savingConversationId.set(null);
-			// 	return result;
-			// })
-		}
-		savingConversationId.set(null);
+			if (result.message) {
+				mergeMessages([result.message]);
+			}
 
-		if (result.message) {
-			mergeMessages([result.message]);
-		}
-
-		let curConversationId;
-		if (result.newConversation && result.conversationId) {
-			curConversationId = result.conversationId;
-			if (curConversationId !== get(conversationId)) {
-				const curConversation = get(conversation);
-				// console.log('remove conversatoin? ', get(conversationId), curConversation);
-				if (curConversation.isNew) {
-					removeConversation(curConversation.id);
+			let curConversationId;
+			if (result.newConversation && result.conversationId) {
+				curConversationId = result.conversationId;
+				if (curConversationId !== get(conversationId)) {
+					const curConversation = get(conversation);
+					// console.log('remove conversatoin? ', get(conversationId), curConversation);
+					if (curConversation.isNew) {
+						removeConversation(curConversation.id);
+					}
 				}
+			} else {
+				curConversationId = get(conversationId);
 			}
-		} else {
-			curConversationId = get(conversationId);
-		}
-		//-- console.log('curConversationId : ' + curConversationId, ' result.conversationId: ' + result.conversationId);
+			//-- console.log('curConversationId : ' + curConversationId, ' result.conversationId: ' + result.conversationId);
 
-		if (curConversationId) {
-			getMessages({ conversationId: curConversationId, getUnloaded: true }); // , onMessagesRetrieved);
-			// function onMessagesRetrieved() {
-			// 	checkConversationSeen({conversationId: get(conversationId)}, true);
-			// }
-		}
+			if (curConversationId) {
+				getMessages({ conversationId: curConversationId, getUnloaded: true }); // , onMessagesRetrieved);
+				// function onMessagesRetrieved() {
+				// 	checkConversationSeen({conversationId: get(conversationId)}, true);
+				// }
+			}
 
-		// savingMessage.set(false);
-		return result;
-	});
+			// savingMessage.set(false);
+			return result;
+		});
+	}
 
 	const curMessages = get(messages) || [];
 	newMessage.lastMessage = curMessages.length ? curMessages[curMessages.length - 1] : null;

@@ -21,23 +21,25 @@ export function createMessage(messageDetails) {
     if (!checkLoggedIn()) { return; }
 
     const result = addMessage(messageDetails);
-    result.then((result) => {
-        // debugOutput.set(get(debugOutput) + '<br/>addMessage ' + result.error);
-        if (result && !result.error) {
-            // console.log('createMessage newConversationId', result.conversationId, 'result.conversation', result.conversation);
-            //-- console.log('newConversation', result.newConversation, 'result.conversationId', result.conversationId);
+    if (result) {
+        result.then((result) => {
+            // debugOutput.set(get(debugOutput) + '<br/>addMessage ' + result.error);
+            if (result && !result.error) {
+                // console.log('createMessage newConversationId', result.conversationId, 'result.conversation', result.conversation);
+                //-- console.log('newConversation', result.newConversation, 'result.conversationId', result.conversationId);
 
-			// debugOutput.set(get(debugOutput) + '<br/>newConversation ' + result.newConversation + ' conversationId ' + result.conversationId);
-            if (result.newConversation) {
-                if (result.conversation) {
-                    addAndSetConversation(result.conversation);
-                }
-                if (result.conversationId) {
-                    loadConversation(result.conversationId, true, true);
+                // debugOutput.set(get(debugOutput) + '<br/>newConversation ' + result.newConversation + ' conversationId ' + result.conversationId);
+                if (result.newConversation) {
+                    if (result.conversation) {
+                        addAndSetConversation(result.conversation);
+                    }
+                    if (result.conversationId) {
+                        loadConversation(result.conversationId, true, true);
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 
     return result;
 }

@@ -3,12 +3,22 @@
 
     import TeamMemberItem from './TeamMemberItem.svelte';
 
+	import AddIcon from "../../assets/icons/add.png";
+
 	import Proxy from '../../components/Proxy.svelte';
     import Hotspot from '../../components/Hotspot.svelte';
+
+    import Button from '../../components/Button.svelte';
 
     import { getUser } from '../../models/usersModel';
 
     import { loadProfile } from '../../actions/appActions';
+
+    import promptIds from '../../config/promptIds';
+
+    import {
+        showPrompt,
+    } from '../../actions/appActions';
 
     import {
         getIsProjectTeamMember,
@@ -51,6 +61,10 @@
             }
         }
     }
+
+    function addTeamMembers() {
+		showPrompt(promptIds.ADD_TEAM_MEMBERS);
+    }
 </script>
 
 {#if teamMembers && teamMembers.length}
@@ -64,11 +78,16 @@
         </Proxy> -->
 
         <ContentPanel title="Team" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
-            {#each teamMembers as teamMember, index}
-                {#if index < MAX_TEAM_MEMBERS}
-                    <TeamMemberItem user="{getUser(teamMember)}" />
-                {/if}
-            {/each}
+            {#if canEdit}
+                <Button className="addTeamMembersButton" icon="{AddIcon}" onClick="{addTeamMembers}">add team members</Button>
+            {/if}
+            <div class="scrollRegion">
+                {#each teamMembers as teamMember, index}
+                    {#if index < MAX_TEAM_MEMBERS}
+                        <TeamMemberItem user="{getUser(teamMember)}" />
+                    {/if}
+                {/each}
+            </div>
         </ContentPanel>
     </div>
 {/if}
@@ -100,6 +119,10 @@
 	}
 
 	.content :global(.panelContent) {
+        padding: 0;
+	}
+
+    .scrollRegion {
         white-space: nowrap;
 
         overflow-x: scroll;
@@ -109,8 +132,31 @@
         padding: 0 20px;
 
         -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
-	}
-	.content :global(.panelContent::-webkit-scrollbar) { /* Hide scrollbar for Chrome, Safari and Opera */
+    }
+	.scrollRegion::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */
         display: none;
     }
+
+    .content :global(.addTeamMembersButton) {
+        position: absolute;
+        top: 8px;
+        right: 2px;
+        padding: 10px;
+        padding-right: 45px;
+        padding-left: 10px;
+
+        /* float: right;
+        margin-right: 40px;
+        margin-top: 1px; */
+
+        font-size: 1.3rem;
+        font-weight: 700;
+
+        color: #0D0D0D;
+    }
+
+    .content :global(.addTeamMembersButton .icon) {
+        padding-left: 16px;
+    }
+    
 </style>

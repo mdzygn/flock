@@ -36,6 +36,8 @@ const promptIds = {
 
     DELETE_POST: 'DELETE_POST',
     DELETE_POST_COMPLETE: 'DELETE_POST_COMPLETE',
+
+    ADD_TEAM_MEMBERS: 'ADD_TEAM_MEMBERS',
 }
 
 export default promptIds;

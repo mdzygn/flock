@@ -424,6 +424,18 @@ const prompts = {
             },
         ],
     },
+    ADD_TEAM_MEMBERS: {
+        title: 'Add Team Members',
+        message: 'Team members can view and edit the project, post in team channels and add other members',
+        showClose: true,
+        menuItems: [
+            {
+                label: 'Add Members',
+                // disabled: () => !get(addTeamMembersFormValidated),
+                default: true,
+            },
+        ],
+    },
 }
 
 export default prompts;

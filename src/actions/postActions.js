@@ -75,27 +75,29 @@ export function removePost(curPost) {
 
     let result = null;
     if (curPost) {
-        let postId = curPost.id;
-        let newPostId = null;
-        let newChannelId = null;
+        let curThreadId = null;
+        let curChannelId = null;
 
         if (curPost.type !== 'thread' && curPost.threadId) {
-            newPostId = curPost.threadId;
+            curThreadId = curPost.threadId;
         } else if (curPost.channelId) {
-            newChannelId = curPost.channelId;
+            curChannelId = curPost.channelId;
         }
 
         result = deletePost(curPost);
         if (result) {
             result.then((result) => {
                 // post.set(null); // should do if viewing thread that is post?
-                if (newPostId) {
-                    // loadPost(newPostId); // should use?
-                    // goto('posts/' + newPostId);
+                if (curThreadId) {
+                    // let curPostId = get(postId);
+                    // postId.set(curPostId); // force posts list to update in [posts]/index
+
+                    loadPost(curThreadId); // should use?
+                    // goto('posts/' + curThreadId);
                     // resetScrollRegionPosition('thread');
-                } else if (newChannelId) {
-                    // removePostFromChannel(newChannelId, postId);
-                    loadChannel(newChannelId);
+                } else if (curChannelId) {
+                    // removePostFromChannel(curChannelId, curPostId);
+                    loadChannel(curChannelId);
 
                     // goto('channels/' + curPost.channelId);
                     // resetScrollRegionPosition('channel');

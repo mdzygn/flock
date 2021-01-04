@@ -246,7 +246,7 @@ const prompts = {
     },
     DELETE_POST_COMPLETE: {
         title: 'Post Deleted',
-        subMessage: 'Post has now been removed',
+        subMessage: 'Post has been removed',
         menuItems: [
             {
                 label: 'Ok',

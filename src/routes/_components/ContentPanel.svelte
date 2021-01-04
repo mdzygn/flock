@@ -9,6 +9,7 @@
 
     // export let editButtonAction = null;
     export let showMoreAction = null;
+    export let editAction = null;
 
     export let hideShowMoreWithVisibility = false;
     export let forceShowMoreShow = false;
@@ -22,7 +23,7 @@
         <div class="panelTitle">{title}</div>
     {/if}
     {#if showEdit}
-        <Button className="editButton" icon="{EditIcon}" disabled="{true}" />
+        <Button className="editButton" icon="{EditIcon}" disabled="{!editAction}" onClick="{editAction}" />
     {/if}
     <div class="panelContent">
         <slot></slot>

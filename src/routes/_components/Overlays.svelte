@@ -106,7 +106,7 @@
 						on:change="{forgotPasswordUpdateMenuItems}"
 					/>
 				</OverlayPrompt>
-			{:else if $curPrompt === promptIds.ADD_TEAM_MEMBERS }
+			{:else if $curPrompt === promptIds.ADD_TEAM_MEMBERS || $curPrompt === promptIds.REMOVE_TEAM_MEMBERS}
 				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{addTeamMembersSubmit}" bind:updateMenuItems="{addTeamMembersUpdateMenuItems}">
 					<AddTeamMembersPrompt
 						bind:email="{addTeamMembersList}"

@@ -38,6 +38,7 @@
     $: isNew = (project && project.isNew) || false;
 
 	$: canEdit = (isTeamMember && !project.archived) || false;
+	$: canRemove = canEdit && teamMembers && teamMembers.length >= 2;
 
     $: teamMembers = (project && project.team) || null;
 
@@ -65,6 +66,10 @@
     function addTeamMembers() {
 		showPrompt(promptIds.ADD_TEAM_MEMBERS);
     }
+
+    function onEditTeamMembers() {
+		showPrompt(promptIds.REMOVE_TEAM_MEMBERS);
+    }
 </script>
 
 {#if teamMembers && teamMembers.length}
@@ -77,9 +82,9 @@
                 height: 56px;" />
         </Proxy> -->
 
-        <ContentPanel title="Team" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
+        <ContentPanel title="Team" showEdit="{canRemove}" editAction="{onEditTeamMembers}" showMoreAction="{areMoreItems}">
             {#if canEdit}
-                <Button className="addTeamMembersButton" icon="{AddIcon}" onClick="{addTeamMembers}">add team members</Button>
+                <Button className="addTeamMembersButton{canRemove ? ' canRemove' : ''}" icon="{AddIcon}" onClick="{addTeamMembers}">add team members</Button>
             {/if}
             <div class="scrollRegion">
                 {#each teamMembers as teamMember, index}
@@ -117,6 +122,10 @@
         padding-left: 30px;
         margin-top: -6px;
 	}
+	.content :global(.contentPanel .editButton ) {
+        top: 8px;
+        right: 5px;
+	}
 
 	.content :global(.panelContent) {
         padding: 0;
@@ -140,9 +149,9 @@
     .content :global(.addTeamMembersButton) {
         position: absolute;
         top: 8px;
-        right: 2px;
+        right: 7px;
         padding: 10px;
-        padding-right: 45px;
+        padding-right: 40px;
         padding-left: 10px;
 
         /* float: right;
@@ -155,8 +164,12 @@
         color: #0D0D0D;
     }
 
+    .content :global(.addTeamMembersButton.canRemove) {
+        right: 46px;
+    }
+
     .content :global(.addTeamMembersButton .icon) {
-        padding-left: 16px;
+        padding-left: 12px;
     }
     
 </style>

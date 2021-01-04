@@ -437,6 +437,18 @@ const prompts = {
             },
         ],
     },
+    REMOVE_TEAM_MEMBERS: {
+        title: 'Edit Team Members',
+        message: 'Remove members from the project by entering their usernames',
+        showClose: true,
+        menuItems: [
+            {
+                label: 'Remove Members',
+                disabled: () => !get(addTeamMembersFormValidated),
+                default: true,
+            },
+        ],
+    },
 }
 
 export default prompts;

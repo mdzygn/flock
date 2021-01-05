@@ -59,6 +59,13 @@
 		// addProjectTeamMembers(addTeamMembersList);
 	}
 
+	let removeTeamMembersList;
+	let removeTeamMembersUpdateMenuItems;
+	function removeTeamMembersSubmit() {
+		closeOverlay();
+		// removeProjectTeamMembers(removeTeamMembersList);
+	}
+
 	$: canClose = ((menu && menu.allowClose !== false) || (prompt && prompt.allowClose !== false)) && !$dontAllowOverlayClose;
 
 	function close() {
@@ -112,6 +119,14 @@
 						bind:email="{addTeamMembersList}"
 						on:confirm="{addTeamMembersSubmit}"
 						on:change="{addTeamMembersUpdateMenuItems}"
+					/>
+				</OverlayPrompt>
+			{:else if $curPrompt === promptIds.ADD_TEAM_MEMBERS || $curPrompt === promptIds.REMOVE_TEAM_MEMBERS}
+				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{removeTeamMembersSubmit}" bind:updateMenuItems="{removeTeamMembersUpdateMenuItems}">
+					<AddTeamMembersPrompt
+						bind:email="{removeTeamMembersList}"
+						on:confirm="{removeTeamMembersSubmit}"
+						on:change="{removeTeamMembersUpdateMenuItems}"
 					/>
 				</OverlayPrompt>
 			{:else}

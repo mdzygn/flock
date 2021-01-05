@@ -231,7 +231,7 @@
         min-height: 26px;
 
         color: #555555;
-        
+
         overflow-wrap: break-word;
         word-wrap: break-word;
     }
@@ -260,6 +260,9 @@
         color: #888888;
 
         display: inline-block;
+
+        padding-right: 2px;
+        
         /* float: left;
         padding-top: 5px;
         padding-right: 5px; */

@@ -72,6 +72,7 @@ export async function post(req, res, next) {
 				removeTeamMemberUsernames.forEach((memberUsername) => {
 					if (!removeTeamMembersFoundByUsername[memberUsername]) {
 						membersNotExisting.push(memberUsername);
+						membersNotInGroup.push(memberUsername);
 					}
 				});
 			}
@@ -98,12 +99,12 @@ export async function post(req, res, next) {
 				errorResponse(res, {noMembersSpecified: true}, {errorMsg: 'no members specified to add or remove'});
 			} else if (tryingToRemoveSelf) {
 				errorResponse(res, {tryingToRemoveSelf: true}, {errorMsg: 'cannot remove self from team'});
+			} else if (membersNotInGroup.length) { // prioritise this message above users not existing
+				errorResponse(res, {membersNotInGroup}, {errorMsg: 'members specified to remove are not in team'});
 			} else if (membersNotExisting.length) {
 				errorResponse(res, {membersNotExisting}, {errorMsg: 'members specified do not exist'});
 			} else if (membersAlreadyInGroup.length) {
 				errorResponse(res, {membersAlreadyInGroup}, {errorMsg: 'members specified to add are already in team'});
-			} else if (membersNotInGroup.length) {
-				errorResponse(res, {membersNotInGroup}, {errorMsg: 'members specified to remove are not in team'});
 			} else {
 				const addedUserUsernames = [];
 				const removedUserUsernames = [];

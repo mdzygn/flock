@@ -160,6 +160,9 @@
 		}
 	}
 
+	function postUpdate() {
+
+	}
 
 	// $: {
 	// 	if (isTeamMember) {
@@ -279,32 +282,33 @@
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<ChannelList project="{project}" />
-					{#if $showBetaFeatures}
+					<!-- {#if $showBetaFeatures} -->
 						{#if canEdit}
-							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" />
+							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{postUpdate}" />
 							 <!-- type="project_post_update" -->
 						{/if}
-					{/if}
+					<!-- {/if} -->
 				{:else if $projectReturnView}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<ChannelList project="{project}" />
+					<!-- {#if $showBetaFeatures} -->
+						<!-- {#if canEdit}
+							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{postUpdate}" />
+						{/if} -->
 					{#if $showBetaFeatures}
-						{#if canEdit}
-							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" />
-						{/if}
 						<ProjectLinks project="{$project}" />
 					{/if}
 					<ProjectSkillsList project="{$project}" />
 					<ProjectTeamList project="{$project}" />
+					{#if canEdit}
+						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{postUpdate}" />
+					{/if}
 					{#if $showBetaFeatures}
 						<div>
 							<Proxy image="project_post_1" className="contentItem projectPost" />
 							<Proxy image="project_post_2" className="contentItem projectPost" />
 							<Proxy image="project_post_3" className="contentItem projectPost" />
 						</div>
-						{#if canEdit}
-							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" />
-						{/if}
 					{/if}
 				{:else}
 					<ProjectSkillsList project="{$project}" />
@@ -314,6 +318,9 @@
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<ChannelList project="{project}" />
+					{#if canEdit}
+						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{postUpdate}" />
+					{/if}
 					{#if $showBetaFeatures}
 						<div id="post" />
 						<div>

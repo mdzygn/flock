@@ -216,7 +216,7 @@
 
     .header {
         font-size: 2.2rem;
-        padding-top: 3px;
+        padding-top: 5px;
         padding-right: 105px;
     }
 
@@ -241,7 +241,7 @@
         padding-left: 23px;
         padding-right: 18px;
         
-        padding-top: 6px;
+        padding-top: 12px;
         overflow-x: scroll;
         overflow-y: hidden;
         -ms-overflow-style: none;
@@ -262,7 +262,7 @@
         display: inline-block;
 
         padding-right: 2px;
-        
+
         /* float: left;
         padding-top: 5px;
         padding-right: 5px; */

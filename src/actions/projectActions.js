@@ -165,13 +165,7 @@ export function addProjectTeamMembers(teamMemberList) {
 
     const curProject = get(project);
     const result = addTeamMembers(curProject, teamMembers);
-    if (result) {
-        result.then((result) => {
-            if (result && !result.error) {
-                loadProject(curProject.id);
-            }
-        });
-    }
+    checkEditTeamResult(result, curProject);
 }
 export function removeProjectTeamMembers(teamMemberList) {
     if (!checkLoggedIn() || !teamMemberList) { return; }
@@ -180,10 +174,26 @@ export function removeProjectTeamMembers(teamMemberList) {
 
     const curProject = get(project);
     const result = removeTeamMembers(curProject, teamMembers);
+    checkEditTeamResult(result, curProject);
+}
+
+function checkEditTeamResult(result, curProject) {
     if (result) {
         result.then((result) => {
-            if (result && !result.error) {
-                loadProject(curProject.id);
+            if (result) {
+                if (!result.error) {
+                    loadProject(curProject.id);
+                } else {
+                    if (result.tryingToRemoveSelf) {
+                        showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'You cannot remove yourself from the team'});
+                    } else if (result.membersNotExisting &&  result.membersNotExisting.length) {
+                        showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'User'+((result.membersNotExisting.length > 1)?'s':'')+' not  found with username'+((result.membersNotExisting.length > 1)?'s':'')+':<br/><strong>' + result.membersNotExisting.join(', ') + '</strong>'});
+                    } else if (result.membersAlreadyInGroup &&  result.membersAlreadyInGroup.length) {
+                        showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'User'+((result.membersAlreadyInGroup.length > 1)?'s':'')+' already in team:<br/><strong>' + result.membersAlreadyInGroup.join(', ') + '</strong>'});
+                    } else if (result.membersNotInGroup &&  result.membersNotInGroup.length) {
+                        showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'User'+((result.membersNotInGroup.length > 1)?'s':'')+' not found in team:<br/><strong>' + result.membersNotInGroup.join(', ') + '</strong>'});
+                    }
+                }
             }
         });
     }

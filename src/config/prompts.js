@@ -449,6 +449,15 @@ const prompts = {
             },
         ],
     },
+    EDIT_TEAM_MEMBERS_ERROR: {
+        title: 'Error Updating Team',
+        message: 'Error editing team members',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
 }
 
 export default prompts;

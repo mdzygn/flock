@@ -133,6 +133,7 @@ export const forgotPasswordFormValidated = writable(false);
 export const addTeamMembersFormValidated = writable(false);
 
 export const dontAllowOverlayClose = writable(false);
+export const promptOptions = writable(null);
 export const newUsername = writable(null);
 
 export const newConversation = appModel.newConversation;

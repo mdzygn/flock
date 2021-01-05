@@ -4,7 +4,10 @@
     import OverlayMenuItem from './OverlayMenuItem.svelte';
 
     import { closeOverlay } from '../../actions/appActions';
-    import { dontAllowOverlayClose } from '../../models/appModel';
+    import {
+        dontAllowOverlayClose,
+        promptOptions,
+    } from '../../models/appModel';
 
     import CloseIcon from "../../assets/icons/clear.png";
 
@@ -21,8 +24,8 @@
     $: prompt = prompts[promptId];
     $: menuItems = (prompt && prompt.menuItems) || null;
 
-    $: title = (prompt && prompt.title) || null;
-    $: message = (prompt && prompt.message) || null;
+    $: title = ($promptOptions && $promptOptions.title) || (prompt && prompt.title) || null;
+    $: message = ($promptOptions && $promptOptions.message) || (prompt && prompt.message) || null;
     $: subMessage = (prompt && prompt.subMessage) || null;
 
     $: showClose = (prompt && prompt.showClose) || null;

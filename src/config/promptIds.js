@@ -39,6 +39,7 @@ const promptIds = {
 
     ADD_TEAM_MEMBERS: 'ADD_TEAM_MEMBERS',
     REMOVE_TEAM_MEMBERS: 'REMOVE_TEAM_MEMBERS',
+    EDIT_TEAM_MEMBERS_ERROR: 'EDIT_TEAM_MEMBERS_ERROR',
 }
 
 export default promptIds;

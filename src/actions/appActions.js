@@ -103,6 +103,8 @@ import {
     getIsProjectTeamMember,
 
     dontAllowOverlayClose,
+    promptOptions,
+    
     goHome,
 
     showBetaFeatures,
@@ -540,6 +542,8 @@ export function showPrompt(promptId, options) {
                 signInRequired.set(options && options.signInRequired);
                 break;
         }
+
+        promptOptions.set(options || null);
 
         hideMenu();
         if (promptId) {

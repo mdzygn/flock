@@ -29,6 +29,7 @@ export async function post(req, res, next) {
 			const membersAlreadyInGroup = [];
 			const membersNotInGroup = [];
 
+			let tryingToRemoveOwner = false;
 			let tryingToRemoveSelf = false;
 
 			if (addTeamMemberUsernames && addTeamMemberUsernames.length) {
@@ -63,6 +64,9 @@ export async function post(req, res, next) {
 				if (removeTeamMembers && removeTeamMembers.length) {
 					removeTeamMembers.forEach((member) => {
 						removeTeamMembersFoundByUsername[member.username] = member;
+						if (member.id === curProject.ownerId) {
+							tryingToRemoveOwner = true;
+						}
 						if (member.id === userId) {
 							tryingToRemoveSelf = true;
 						}
@@ -97,6 +101,8 @@ export async function post(req, res, next) {
 
 			if (!(addTeamMemberUsernames && addTeamMemberUsernames.length) && !(removeTeamMemberUsernames && removeTeamMemberUsernames.length)) {
 				errorResponse(res, {noMembersSpecified: true}, {errorMsg: 'no members specified to add or remove'});
+			} else if (tryingToRemoveOwner) {
+				errorResponse(res, {tryingToRemoveOwner: true}, {errorMsg: 'cannot remove project creator from team'});
 			} else if (tryingToRemoveSelf) {
 				errorResponse(res, {tryingToRemoveSelf: true}, {errorMsg: 'cannot remove self from team'});
 			} else if (membersNotInGroup.length) { // prioritise this message above users not existing

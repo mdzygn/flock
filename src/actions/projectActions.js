@@ -197,7 +197,9 @@ function checkEditTeamResult(result, curProject) {
                         updateProjectTeam(result.projectId, result.team);
                     }
                 } else {
-                    if (result.tryingToRemoveSelf) {
+                    if (result.tryingToRemoveOwner) {
+                        showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'You cannot remove project creator from the team'});
+                    } else if (result.tryingToRemoveSelf) {
                         showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'You cannot remove yourself from the team'});
                     } else if (result.membersNotExisting &&  result.membersNotExisting.length) {
                         showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'User'+((result.membersNotExisting.length > 1)?'s':'')+' not  found with username'+((result.membersNotExisting.length > 1)?'s':'')+':<br/><strong>' + result.membersNotExisting.join(', ') + '</strong>'});

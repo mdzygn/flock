@@ -55,13 +55,13 @@ export async function post(req, res, next) {
 
 								response(res, {success: true});
 							} else {
-								errorResponse(res, {addedPost: true});
+								errorResponse(res, {deletedPost: true});
 							}
 						} else {
-							errorResponse(res, {addedPost: true});
+							errorResponse(res, {deletedPost: true});
 						}
 					} else {
-						errorResponse(res, {addedPost: true});
+						errorResponse(res, {deletedPost: true});
 					}
 				} else {
 					errorResponse(res, {});

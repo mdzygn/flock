@@ -100,18 +100,14 @@ export async function post(req, res, next) {
 						}, {
 							postTitle: details.title,
 						}, res, {addedPost: true});
-						if (notificationResult === -1) {
-							return;
-						}
-
-						if (config.DEBUG) {
-							if (notificationResult) {
-								response(res, {success: true});
-							} else {
-								errorResponse(res, {addedPost: true}, {errorMsg: 'error creating addPost notification', result: notificationResult});
-							}
+						// if (notificationResult === -1) {
+						// 	return;
+						// }
+						
+						if (notificationResult && notificationResult !== -1) {
+							response(res, {success: true});
 						} else {
-							errorResponse(res, {addedPost: true});
+							errorResponse(res, {addedPost: true}, config.DEBUG ? {errorMsg: 'error creating addPost notification', result: notificationResult} : null);
 						}
 					} else {
 						errorResponse(res, {addedPost: true});

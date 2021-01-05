@@ -9,6 +9,7 @@ import {
     // removePostFromChannel,
     loadPost,
     showPrompt,
+    closeOverlay,
 } from '../actions/appActions';
 
 import AppModel, {
@@ -91,9 +92,11 @@ export function removePost(curPost) {
             curChannelId = curPost.channelId;
         }
 
+        showPrompt(promptIds.DELETE_POST_PROCESSING);
         result = deletePost(curPost);
         if (result) {
             result.then((result) => {
+                closeOverlay();
                 if (result && !result.error) {
                     // post.set(null); // should do if viewing thread that is post?
                     if (curThreadId) {
@@ -103,16 +106,17 @@ export function removePost(curPost) {
                         loadPost(curThreadId); // should use?
                         // goto('posts/' + curThreadId);
                         // resetScrollRegionPosition('thread');
+                        showPrompt(promptIds.DELETE_POST_COMPLETE);
                     } else if (curChannelId) {
                         // removePostFromChannel(curChannelId, curPostId);
                         loadChannel(curChannelId);
 
                         // goto('channels/' + curPost.channelId);
                         // resetScrollRegionPosition('channel');
+                        setTimeout(() => {
+                            showPrompt(promptIds.DELETE_POST_COMPLETE);
+                        }, 200);
                     }
-                    setTimeout(() => {
-                        showPrompt(promptIds.DELETE_POST_COMPLETE);
-                    }, 500);
                 }
             });
         }

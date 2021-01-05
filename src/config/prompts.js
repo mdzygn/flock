@@ -245,6 +245,9 @@ const prompts = {
             },
         ],
     },
+    DELETE_POST_PROCESSING: {
+        message: 'Deleting Post...',
+    },
     DELETE_POST_COMPLETE: {
         title: 'Post Deleted',
         subMessage: 'Post has been removed',
@@ -450,7 +453,7 @@ const prompts = {
         ],
     },
     EDIT_TEAM_MEMBERS_PROCESSING: {
-        message: 'Updating Team',
+        message: 'Updating Team...',
     },
     EDIT_TEAM_MEMBERS_ERROR: {
         title: 'Error Updating Team',

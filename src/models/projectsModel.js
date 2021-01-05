@@ -523,6 +523,17 @@ export function removeTeamMembers(project, teamMemberUsernames) {
 	return api.updateTeamMembers({id: project.id, removeTeamMemberUsernames: teamMemberUsernames});
 }
 
+export function updateProjectTeam(projectId, newTeam) {
+	const projectModel = getProject(projectId);
+	const targetProject = get(projectModel);
+	if (targetProject) {
+		targetProject.team = newTeam;
+		const curProject = get(project);
+		if (curProject === targetProject) {
+			project.set(curProject);
+		}
+	}
+}
 
 export function setLikeProject(targetProject, like) {
 	if (like) {

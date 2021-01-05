@@ -135,11 +135,11 @@ export async function post(req, res, next) {
 				const result = await db.collection('projects').updateOne({ id: projectId }, { $set: details } );
 				if (result) {
 					if (addedUserUsernames.length) {
-						response(res, {success: true, addedMembers: addedUserUsernames});
+						response(res, {success: true, projectId, team: newTeam, addedMembers: addedUserUsernames});
 					} else if (removedUserUsernames.length) {
-						response(res, {success: true, removedMembers: removedUserUsernames});
+						response(res, {success: true, projectId, team: newTeam, removedMembers: removedUserUsernames});
 					} else {
-						response(res, {success: true});
+						response(res, {success: true, projectId, team: newTeam});
 					}
 				} else {
 					response(res, {error: true});

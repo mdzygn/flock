@@ -16,6 +16,7 @@ import ProjectModel, {
     setLikeProject,
     addTeamMembers,
     removeTeamMembers,
+    updateProjectTeam,
 } from '../models/projectsModel';
 
 import {
@@ -186,11 +187,14 @@ function checkEditTeamResult(result, curProject) {
             closeOverlay();
             if (result) {
                 if (!result.error) {
-                    loadProject(curProject.id);
+                    // loadProject(curProject.id);
                     if (result.addedMembers && result.addedMembers.length) {
                         showPrompt(promptIds.EDIT_TEAM_MEMBERS_COMPLETE, {message: 'Team member'+((result.addedMembers.length > 1)?'s':'')+' added:<br/><strong>' + result.addedMembers.join(', ') + '</strong>'});
                     } else if (result.removedMembers && result.removedMembers.length) {
                         showPrompt(promptIds.EDIT_TEAM_MEMBERS_COMPLETE, {message: 'Team member'+((result.removedMembers.length > 1)?'s':'')+' removed:<br/><strong>' + result.removedMembers.join(', ') + '</strong>'});
+                    }
+                    if (result.projectId, result.team && result.team.length) {
+                        updateProjectTeam(result.projectId, result.team);
                     }
                 } else {
                     if (result.tryingToRemoveSelf) {

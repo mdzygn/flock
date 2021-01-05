@@ -525,6 +525,9 @@
 		line-height: 2rem;
 
 		user-select: text;
+		
+        overflow-wrap: break-word;
+        word-wrap: break-word;
 	}
     .projectInfoDetail :global(a) {
         user-select: text;
@@ -690,6 +693,9 @@
 		color: #555555;
 
 		user-select: text;
+		
+        overflow-wrap: break-word;
+        word-wrap: break-word;
 	}
     .description :global(a) {
         user-select: text;

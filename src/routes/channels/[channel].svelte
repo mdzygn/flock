@@ -140,6 +140,9 @@
 
 		padding: 16px 20px;
 		/* margin-bottom: 5px; */
+		
+        overflow-wrap: break-word;
+        word-wrap: break-word;
 	}
 	.channelHeaderPost {
     	padding-bottom: 0;

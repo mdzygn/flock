@@ -313,6 +313,9 @@
 
         user-select: text;
 
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+
 		color: #555555;
 	}
     .description :global(a) {

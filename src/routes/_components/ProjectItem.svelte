@@ -231,6 +231,9 @@
         min-height: 26px;
 
         color: #555555;
+        
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
 
     .skills {

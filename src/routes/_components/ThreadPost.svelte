@@ -344,6 +344,9 @@
         padding-top: 8px;
 
         user-select: text;
+        
+        overflow-wrap: break-word;
+        word-wrap: break-word;
 
         /* white-space: nowrap;
         overflow: hidden;
@@ -360,6 +363,9 @@
         padding-top: 8px;
 
         user-select: text;
+        
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
     .message :global(a) {
         user-select: text;

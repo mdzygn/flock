@@ -185,6 +185,9 @@
         /* margin-top: 7px; */
 
         user-select: text;
+        
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
     .message :global(a) {
         user-select: text;

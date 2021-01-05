@@ -263,10 +263,10 @@
     </div>
     <div class="info">
         {#if showTitle && title}
-            <div class="title">{@html titleHTML}</div>
+            <div class="title" class:titleLimited="{messageLimited}" class:titleNotLimited="{!messageLimited}">{@html titleHTML}</div>
         {/if}
         {#if message}
-            <div class="message" class:selectable="{textSelectable}" class:messageLimited="{messageLimited}">{@html  messageHTML}</div>
+            <div class="message" class:selectable="{textSelectable}" class:messageLimited="{messageLimited}" class:messageNotLimited="{!messageLimited}">{@html  messageHTML}</div>
         {/if}
     </div>
     {#if image && !useThumbImage}
@@ -380,10 +380,23 @@
         color: #000000;
         font-weight: 700;
         padding-bottom: 8px;
-
+        
+        overflow: hidden;
+        text-overflow: ellipsis;
+        
         /* white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis; */
+    }
+
+    .titleLimited {
+        max-height: 2.8rem;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
+    .titleNotLimited {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
 
     .message {
@@ -395,6 +408,10 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    .messageNotLimited {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
     .selectable {
         user-select: text;

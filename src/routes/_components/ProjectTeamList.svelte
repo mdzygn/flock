@@ -82,7 +82,7 @@
                 height: 56px;" />
         </Proxy> -->
 
-        <ContentPanel title="Team" showEdit="{canRemove}" editAction="{onEditTeamMembers}" showMoreAction="{areMoreItems}">
+        <ContentPanel title="Team" showEdit="{canRemove}" editAction="{onEditTeamMembers}"> <!-- showMoreAction="{areMoreItems}" -->
             {#if canEdit}
                 <Button className="addTeamMembersButton{canRemove ? ' canRemove' : ''}" icon="{AddIcon}" onClick="{addTeamMembers}">add team members</Button>
             {/if}

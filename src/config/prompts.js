@@ -458,6 +458,15 @@ const prompts = {
             },
         ],
     },
+    EDIT_TEAM_MEMBERS_COMPLETE: {
+        title: 'Team Updated',
+        message: 'Team members updated',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
 }
 
 export default prompts;

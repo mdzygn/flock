@@ -59,7 +59,7 @@
     }
 </script>
 
-<div class="overlayPrompt">
+<div class="overlayPrompt" class:noMenuItems="{!menuItems || !menuItems.length}">
     {#if title || message || subMessage}
         <div class="content">
             {#if title}
@@ -136,6 +136,13 @@
         padding-bottom: 12px;
         color: #888888;
 	}
+
+    .overlayPrompt.noMenuItems .content {
+        padding-bottom: 25px;
+    }
+    .overlayPrompt.noMenuItems .message {
+        padding-bottom: 0;
+    }
 
 	.overlayPrompt :global(.overlayMenuItem) {
         border-top: 1px solid #D4D4D4;

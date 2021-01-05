@@ -30,46 +30,46 @@
 {/if}
 
 <style>
-	.overlayMenuItem :global(.button) {
+.overlayMenuItem :global(.button) {
         font-size: 1.6rem;
         padding: 13px 30px;
         /* padding: 13px 17px; */
         padding-right: 30px;
         box-sizing: border-box;
-	}
+}
 
-	.overlayMenuItem :global(.button.activeButton:hover) {
+.overlayMenuItem :global(.button.activeButton:hover) {
         background-color: #EEEEEE;
-	}
+}
 
-	.overlayMenuItem :global(.button.disabled) {
+.overlayMenuItem :global(.button.disabled) {
         opacity: 0.33;
-	}
+}
 
-    .overlayMenuItem :global(.default) {
+.overlayMenuItem :global(.default) {
         font-weight: 700;
-    }
+}
 
-	.overlayMenuItem :global(.textPanel .button) {
+.overlayMenuItem :global(.textPanel .button) {
         font-size: 1.2rem;
         padding: 0 4px;
         padding: 10px 17px;
-	}
-	.overlayMenuItem :global(.textPanel .buttonLabel) {
+}
+.overlayMenuItem :global(.textPanel .buttonLabel) {
         padding: 0 2px;
         font-weight: 700;
         color: #333333;
-	}
-	.overlayMenuItem :global(.textPanel .button.activeButton:hover) {
+}
+.overlayMenuItem :global(.textPanel .button.activeButton:hover) {
         background-color: initial;
-	}
-	.overlayMenuItem :global(.textPanel .button.activeButton:hover .buttonLabel) {
+}
+.overlayMenuItem :global(.textPanel .button.activeButton:hover .buttonLabel) {
         color: #666666;
         text-decoration: underline;
-	}
+}
 
-	.overlayMenuItem :global(.textPanel.demphasisText .buttonLabel) {
+.overlayMenuItem :global(.textPanel.demphasisText .buttonLabel) {
         font-weight: initial;
         color: #888888;
-    }
+}
 </style>

@@ -449,6 +449,9 @@ const prompts = {
             },
         ],
     },
+    EDIT_TEAM_MEMBERS_PROCESSING: {
+        message: 'Updating Team',
+    },
     EDIT_TEAM_MEMBERS_ERROR: {
         title: 'Error Updating Team',
         message: 'Error editing team members',

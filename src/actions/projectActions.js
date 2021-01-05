@@ -30,6 +30,7 @@ import {
     editProjectDetails,
     showProjectInfo,
     showPrompt,
+    closeOverlay,
     checkLoggedIn,
 } from '../actions/appActions';
 
@@ -161,7 +162,7 @@ export function addProjectTeamMembers(teamMemberList) {
 
     const teamMembers = getTeamMemberList(teamMemberList);
 
-    console.log('teamMembers ' + teamMembers);
+    showPrompt(promptIds.EDIT_TEAM_MEMBERS_PROCESSING);
 
     const curProject = get(project);
     const result = addTeamMembers(curProject, teamMembers);
@@ -172,6 +173,8 @@ export function removeProjectTeamMembers(teamMemberList) {
 
     const teamMembers = getTeamMemberList(teamMemberList);
 
+    showPrompt(promptIds.EDIT_TEAM_MEMBERS_PROCESSING);
+    
     const curProject = get(project);
     const result = removeTeamMembers(curProject, teamMembers);
     checkEditTeamResult(result, curProject);
@@ -180,6 +183,7 @@ export function removeProjectTeamMembers(teamMemberList) {
 function checkEditTeamResult(result, curProject) {
     if (result) {
         result.then((result) => {
+            closeOverlay();
             if (result) {
                 if (!result.error) {
                     loadProject(curProject.id);

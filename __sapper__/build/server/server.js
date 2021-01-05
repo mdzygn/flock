@@ -546,6 +546,170 @@ var route_2 = /*#__PURE__*/Object.freeze({
 async function post$3(req, res, next) {
 	const { db } = await init();
 
+	const options = req.body;
+
+	if (!await validateCredentials(db, options)) {
+		response(res, {invalid: true});
+		return;
+	}
+
+	let userId = options.userId;
+
+	let addTeamMemberUsernames = options.addTeamMemberUsernames || null;
+	let removeTeamMemberUsernames = options.removeTeamMemberUsernames || null;
+
+	const projectId = options.id;
+
+    const curProject = await db.collection('projects').findOne({ id: projectId });
+    if (curProject) {
+		if (userId && curProject.team && curProject.team.includes(userId)) { // is allowed to edit project
+			const newTeam = [...curProject.team];
+
+			let addTeamMembers = null;
+			let removeTeamMembers = null;
+
+			const membersNotExisting = [];
+			const membersAlreadyInGroup = [];
+			const membersNotInGroup = [];
+
+			let tryingToRemoveOwner = false;
+			let tryingToRemoveSelf = false;
+
+			if (addTeamMemberUsernames && addTeamMemberUsernames.length) {
+				const ids = options && options.ids;
+
+				const usersFilter = {};
+				usersFilter.username = { $in: addTeamMemberUsernames };
+
+				const addTeamMembersFoundByUsername = {};
+			
+				addTeamMembers = await db.collection('users').find(usersFilter).toArray();
+				if (addTeamMembers && addTeamMembers.length) {
+					addTeamMembers.forEach((member) => {
+						addTeamMembersFoundByUsername[member.username] = member;
+					});
+				}
+
+				addTeamMemberUsernames.forEach((memberUsername) => {
+					if (!addTeamMembersFoundByUsername[memberUsername]) {
+						membersNotExisting.push(memberUsername);
+					}
+				});
+			} else if (removeTeamMemberUsernames && removeTeamMemberUsernames.length) {
+				const ids = options && options.ids;
+
+				const usersFilter = {};
+				usersFilter.username = { $in: removeTeamMemberUsernames };
+			
+				const removeTeamMembersFoundByUsername = {};
+
+				removeTeamMembers = await db.collection('users').find(usersFilter).toArray();
+				if (removeTeamMembers && removeTeamMembers.length) {
+					removeTeamMembers.forEach((member) => {
+						removeTeamMembersFoundByUsername[member.username] = member;
+						if (member.id === curProject.ownerId) {
+							tryingToRemoveOwner = true;
+						}
+						if (member.id === userId) {
+							tryingToRemoveSelf = true;
+						}
+					});
+				}
+
+				removeTeamMemberUsernames.forEach((memberUsername) => {
+					if (!removeTeamMembersFoundByUsername[memberUsername]) {
+						membersNotExisting.push(memberUsername);
+						membersNotInGroup.push(memberUsername);
+					}
+				});
+			}
+
+			if (addTeamMembers && addTeamMembers.length) {
+				addTeamMembers.forEach((member) => {
+					if (newTeam.indexOf(member.id) !== -1) {
+						membersAlreadyInGroup.push(member.username);
+					}
+				});
+			}
+			if (removeTeamMembers && removeTeamMembers.length) {
+				removeTeamMembers.forEach((member) => {
+					if (newTeam.indexOf(member.id) === -1) {
+						membersNotInGroup.push(member.username);
+					}
+				});
+			}
+
+			// console.log('addTeamMembers: ' + addTeamMembers);
+			// console.log('removeTeamMembers: ' + removeTeamMembers);
+
+			if (!(addTeamMemberUsernames && addTeamMemberUsernames.length) && !(removeTeamMemberUsernames && removeTeamMemberUsernames.length)) {
+				errorResponse$1(res, {noMembersSpecified: true}, {errorMsg: 'no members specified to add or remove'});
+			} else if (tryingToRemoveOwner) {
+				errorResponse$1(res, {tryingToRemoveOwner: true}, {errorMsg: 'cannot remove project creator from team'});
+			} else if (tryingToRemoveSelf) {
+				errorResponse$1(res, {tryingToRemoveSelf: true}, {errorMsg: 'cannot remove self from team'});
+			} else if (membersNotInGroup.length) { // prioritise this message above users not existing
+				errorResponse$1(res, {membersNotInGroup}, {errorMsg: 'members specified to remove are not in team'});
+			} else if (membersNotExisting.length) {
+				errorResponse$1(res, {membersNotExisting}, {errorMsg: 'members specified do not exist'});
+			} else if (membersAlreadyInGroup.length) {
+				errorResponse$1(res, {membersAlreadyInGroup}, {errorMsg: 'members specified to add are already in team'});
+			} else {
+				const addedUserUsernames = [];
+				const removedUserUsernames = [];
+
+				if (addTeamMembers && addTeamMembers.length) {
+					addTeamMembers.forEach((member) => {
+						if (newTeam.indexOf(member.id) === -1) {
+							newTeam.push(member.id);
+							addedUserUsernames.push(member.username);
+						}
+					});
+				} else if (removeTeamMembers && removeTeamMembers.length) {
+					removeTeamMembers.forEach((member) => {
+						let foundIndex = newTeam.indexOf(member.id);
+						if (foundIndex !== -1) {
+							newTeam.splice(foundIndex, 1);
+							removedUserUsernames.push(member.username);
+						}
+					});
+				}
+
+				const details = {};
+				details.team = newTeam;
+
+				// console.log('prev team: [' + curProject.team + ']');
+				// console.log('set team: [' + newTeam + ']');
+
+				const result = await db.collection('projects').updateOne({ id: projectId }, { $set: details } );
+				if (result) {
+					if (addedUserUsernames.length) {
+						response(res, {success: true, projectId, team: newTeam, addedMembers: addedUserUsernames});
+					} else if (removedUserUsernames.length) {
+						response(res, {success: true, projectId, team: newTeam, removedMembers: removedUserUsernames});
+					} else {
+						response(res, {success: true, projectId, team: newTeam});
+					}
+				} else {
+					response(res, {error: true});
+				}
+			}
+		} else {
+			response(res, {error: true, invalidUser: true});
+		}
+	} else {
+		response(res, {error: true});
+	}
+}
+
+var route_3 = /*#__PURE__*/Object.freeze({
+    __proto__: null,
+    post: post$3
+});
+
+async function post$4(req, res, next) {
+	const { db } = await init();
+
     const options = req.body;
 
 	if (!options.userId) {
@@ -658,12 +822,12 @@ async function post$3(req, res, next) {
 	}
 }
 
-var route_3 = /*#__PURE__*/Object.freeze({
+var route_4 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$3
+    post: post$4
 });
 
-async function post$4(req, res, next) {
+async function post$5(req, res, next) {
 	const { db } = await init();
 
     const options = req.body;
@@ -735,12 +899,12 @@ async function post$4(req, res, next) {
 	}
 }
 
-var route_4 = /*#__PURE__*/Object.freeze({
+var route_5 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$4
+    post: post$5
 });
 
-async function post$5(req, res, next) {
+async function post$6(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -774,12 +938,12 @@ async function post$5(req, res, next) {
 	}
 }
 
-var route_5 = /*#__PURE__*/Object.freeze({
+var route_6 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$5
+    post: post$6
 });
 
-async function post$6(req, res, next) {
+async function post$7(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -818,9 +982,9 @@ async function post$6(req, res, next) {
 	}
 }
 
-var route_6 = /*#__PURE__*/Object.freeze({
+var route_7 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$6
+    post: post$7
 });
 
 const aws = require('aws-sdk');
@@ -835,7 +999,7 @@ const S3_BUCKET = process.env.S3_CONTENT_BUCKET;
 
 // const fileType= 'image/jpeg';
 
-async function post$7(req, res, next) {
+async function post$8(req, res, next) {
 	const s3 = new aws.S3();
 
 	// aws.config.aws_access_key_id = process.env.AWS_CONTENT_ACCESS_KEY_ID;
@@ -986,12 +1150,12 @@ async function post$7(req, res, next) {
 	//     });
 }
 
-var route_7 = /*#__PURE__*/Object.freeze({
+var route_8 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$7
+    post: post$8
 });
 
-async function post$8(req, res, next) {
+async function post$9(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -1028,12 +1192,12 @@ async function post$8(req, res, next) {
 	}
 }
 
-var route_8 = /*#__PURE__*/Object.freeze({
+var route_9 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$8
+    post: post$9
 });
 
-async function post$9(req, res, next) {
+async function post$a(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -1078,8 +1242,8 @@ async function post$9(req, res, next) {
 				tags: true,
 				skills: true,
 				links: true,
-				team: true, // not to allow updating this way, to create separate function
-				posts: true,
+				// team: true, // not to allow updating this way, to create separate function
+				posts: true, // what is this? can remove?
 				// ownerId: true,
 			};
 
@@ -1107,12 +1271,12 @@ async function post$9(req, res, next) {
 	}
 }
 
-var route_9 = /*#__PURE__*/Object.freeze({
+var route_10 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$9
+    post: post$a
 });
 
-async function post$a(req, res, next) {
+async function post$b(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -1150,12 +1314,12 @@ async function post$a(req, res, next) {
 	}
 }
 
-var route_10 = /*#__PURE__*/Object.freeze({
+var route_11 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$a
+    post: post$b
 });
 
-async function post$b(req, res, next) {
+async function post$c(req, res, next) {
     const { db, client } = await init();
 
 	const options = req.body;
@@ -1372,12 +1536,12 @@ async function post$b(req, res, next) {
 	}
 }
 
-var route_11 = /*#__PURE__*/Object.freeze({
+var route_12 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$b
+    post: post$c
 });
 
-async function post$c(req, res, next) {
+async function post$d(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -1437,12 +1601,12 @@ async function post$c(req, res, next) {
 	}
 }
 
-var route_12 = /*#__PURE__*/Object.freeze({
+var route_13 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$c
+    post: post$d
 });
 
-async function post$d(req, res, next) {
+async function post$e(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -1479,14 +1643,14 @@ async function post$d(req, res, next) {
 	}
 }
 
-var route_13 = /*#__PURE__*/Object.freeze({
+var route_14 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$d
+    post: post$e
 });
 
 const MAX_PREVIEW_TEXT_LENGTH = 40;
 
-async function post$e(req, res, next) {
+async function post$f(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -1755,9 +1919,9 @@ async function post$e(req, res, next) {
 	}
 }
 
-var route_14 = /*#__PURE__*/Object.freeze({
+var route_15 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$e
+    post: post$f
 });
 
 var projectDefaultChannels = [
@@ -1831,7 +1995,7 @@ var projectDefaultChannels = [
 	}
 ];
 
-async function post$f(req, res, next) {
+async function post$g(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -1932,12 +2096,12 @@ async function post$f(req, res, next) {
 	}
 }
 
-var route_15 = /*#__PURE__*/Object.freeze({
+var route_16 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$f
+    post: post$g
 });
 
-async function post$g(req, res, next) {
+async function post$h(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -2018,12 +2182,12 @@ async function post$g(req, res, next) {
 	}
 }
 
-var route_16 = /*#__PURE__*/Object.freeze({
+var route_17 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$g
+    post: post$h
 });
 
-async function post$h(req, res, next) {
+async function post$i(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -2063,12 +2227,12 @@ async function post$h(req, res, next) {
 	}
 }
 
-var route_17 = /*#__PURE__*/Object.freeze({
+var route_18 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$h
+    post: post$i
 });
 
-async function post$i(req, res, next) {
+async function post$j(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -2105,12 +2269,12 @@ async function post$i(req, res, next) {
 	}
 }
 
-var route_18 = /*#__PURE__*/Object.freeze({
+var route_19 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$i
+    post: post$j
 });
 
-async function post$j(req, res, next) {
+async function post$k(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -2158,14 +2322,14 @@ async function post$j(req, res, next) {
 	}
 }
 
-var route_19 = /*#__PURE__*/Object.freeze({
+var route_20 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$j
+    post: post$k
 });
 
 const bcrypt = require('bcryptjs');
 
-async function post$k(req, res, next) {
+async function post$l(req, res, next) {
 	const { db } = await init();
 
     const options = req.body;
@@ -2284,12 +2448,12 @@ async function post$k(req, res, next) {
     }
 }
 
-var route_20 = /*#__PURE__*/Object.freeze({
+var route_21 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$k
+    post: post$l
 });
 
-async function post$l(req, res, next) {
+async function post$m(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -2359,12 +2523,12 @@ async function post$l(req, res, next) {
 	}
 }
 
-var route_21 = /*#__PURE__*/Object.freeze({
+var route_22 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$l
+    post: post$m
 });
 
-async function post$m(req, res, next) {
+async function post$n(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -2444,12 +2608,12 @@ async function post$m(req, res, next) {
 	}
 }
 
-var route_22 = /*#__PURE__*/Object.freeze({
+var route_23 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$m
+    post: post$n
 });
 
-async function post$n(req, res, next) {
+async function post$o(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -2487,9 +2651,9 @@ async function post$n(req, res, next) {
 	}
 }
 
-var route_23 = /*#__PURE__*/Object.freeze({
+var route_24 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$n
+    post: post$o
 });
 
 const NotificationTypes = {
@@ -2872,7 +3036,7 @@ async function createNotification(db, details, data, res, completedData) {
     return result;
 }
 
-async function post$o(req, res, next) {
+async function post$p(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -2979,12 +3143,12 @@ async function post$o(req, res, next) {
 	}
 }
 
-var route_24 = /*#__PURE__*/Object.freeze({
+var route_25 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$o
+    post: post$p
 });
 
-async function post$p(req, res, next) {
+async function post$q(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -3053,15 +3217,15 @@ async function post$p(req, res, next) {
 	}
 }
 
-var route_25 = /*#__PURE__*/Object.freeze({
+var route_26 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$p
+    post: post$q
 });
 
 const bcrypt$1 = require('bcryptjs');
 
 
-async function post$q(req, res, next) {
+async function post$r(req, res, next) {
 	const { db } = await init();
 
 	const options = req.body;
@@ -3145,9 +3309,9 @@ async function post$q(req, res, next) {
 	}
 }
 
-var route_26 = /*#__PURE__*/Object.freeze({
+var route_27 = /*#__PURE__*/Object.freeze({
     __proto__: null,
-    post: post$q
+    post: post$r
 });
 
 function noop() { }
@@ -4123,10 +4287,14 @@ const promptIds = {
     INVALID_IMAGE_FILESIZE_TOO_LARGE: 'INVALID_IMAGE_FILESIZE_TOO_LARGE',
 
     DELETE_POST: 'DELETE_POST',
+    DELETE_POST_PROCESSING: 'DELETE_POST_PROCESSING',
     DELETE_POST_COMPLETE: 'DELETE_POST_COMPLETE',
 
     ADD_TEAM_MEMBERS: 'ADD_TEAM_MEMBERS',
     REMOVE_TEAM_MEMBERS: 'REMOVE_TEAM_MEMBERS',
+    EDIT_TEAM_MEMBERS_PROCESSING: 'EDIT_TEAM_MEMBERS_PROCESSING',
+    EDIT_TEAM_MEMBERS_ERROR: 'EDIT_TEAM_MEMBERS_ERROR',
+    EDIT_TEAM_MEMBERS_COMPLETE: 'EDIT_TEAM_MEMBERS_COMPLETE',
 };
 
 function createModel(props, options, modelId, baseModel) {
@@ -4267,7 +4435,7 @@ const conversation = writable$1(null);
 const viewedUser = writable$1(null);
 const user = writable$1(null);
 const channel = writable$1(null);
-const post$r = writable$1(null);
+const post$s = writable$1(null);
 
 const postType = appModel.postType;
 
@@ -4318,6 +4486,7 @@ const forgotPasswordFormValidated = writable$1(false);
 const addTeamMembersFormValidated = writable$1(false);
 
 const dontAllowOverlayClose = writable$1(false);
+const promptOptions = writable$1(null);
 const newUsername = writable$1(null);
 
 const newConversation = appModel.newConversation;
@@ -4650,6 +4819,18 @@ function updateProject(options) {
 	});
 }
 
+// options = { id: string, addTeamMemberUsernames*: [], removeTeamMemberUsernames*: [] }
+function updateTeamMembers(options) {
+	options = addCredentials(options);
+	return send('updateTeamMembers', options).then(result => {
+		if (DEBUG$2 && result && result.error) {
+			console.error('API Error - updateTeamMembers: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 // options = { details: { userId: id, projectId: id } }
 function followProject(options) {
 	options = addCredentials(options);
@@ -4969,6 +5150,7 @@ const api = {
 	getProjects,
 	addProject,
 	updateProject,
+	updateTeamMembers,
 
 	followProject,
 	unfollowProject,
@@ -5707,7 +5889,7 @@ const ProjectModel = (projectData) => {
 
         links: [],
         team: [],
-        posts: [],
+        posts: [], // what is this? can remove?
     };
     if (projectData) {
         initData = Object.assign(initData, projectData);
@@ -6197,6 +6379,25 @@ function updateProject$1(project, projectDetails, nonModification) {
 	}
 }
 
+function addTeamMembers(project, teamMemberUsernames) {
+	return api.updateTeamMembers({id: project.id, addTeamMemberUsernames: teamMemberUsernames});
+}
+
+function removeTeamMembers(project, teamMemberUsernames) {
+	return api.updateTeamMembers({id: project.id, removeTeamMemberUsernames: teamMemberUsernames});
+}
+
+function updateProjectTeam(projectId, newTeam) {
+	const projectModel = getProject(projectId);
+	const targetProject = get_store_value(projectModel);
+	if (targetProject) {
+		targetProject.team = newTeam;
+		const curProject = get_store_value(project);
+		if (curProject === targetProject) {
+			project.set(curProject);
+		}
+	}
+}
 
 function setLikeProject(targetProject, like) {
 	if (like) {
@@ -7685,7 +7886,7 @@ onChannelsUpdated(() => {
 });
 onPostsUpdated(() => {
     // if channel object not found but channel id set then update channel model
-    if (!get_store_value(post$r) && get_store_value(postId)) {
+    if (!get_store_value(post$s) && get_store_value(postId)) {
         const targetPostId = get_store_value(postId);
         setPost(targetPostId);
     }
@@ -7829,7 +8030,7 @@ function setPost(targetPostId) {
     const curPostModel = getPost(targetPostId);
     const curPost = get_store_value(curPostModel);
 
-    post$r.set(curPost);
+    post$s.set(curPost);
 
     if (curPost) {
         if ((!get_store_value(channelId) || !get_store_value(channel) || get_store_value(channelId) !== curPost.channelId) && curPost.channelId) {
@@ -8015,6 +8216,8 @@ function showPrompt(promptId, options) {
                 break;
         }
 
+        promptOptions.set(options || null);
+
         hideMenu();
         if (promptId) {
             curPrompt.set(promptId);
@@ -8163,7 +8366,7 @@ function deleteCurrentPost() {
 }
 
 function loadCurrentPost() {
-    if (get_store_value(postId) && !get_store_value(post$r) && !get_store_value(loadingPosts)) { // TODO: not to check if loading here?
+    if (get_store_value(postId) && !get_store_value(post$s) && !get_store_value(loadingPosts)) { // TODO: not to check if loading here?
         loadPosts( { id: get_store_value(postId) } );
     }
 }
@@ -8317,6 +8520,69 @@ function saveProjectDetails(projectDetails, options) {
             }
             resetScrollRegionPosition('project');
         }
+    }
+}
+
+function getTeamMemberList(teamMemberList) {
+    let teamMembers = teamMemberList.split(',');
+    teamMembers = teamMembers.map((item) => item.trim());
+    teamMembers = teamMembers.filter((item) => item.length);
+    return teamMembers;
+}
+
+function addProjectTeamMembers(teamMemberList) {
+    if (!checkLoggedIn() || !teamMemberList) { return; }
+
+    const teamMembers = getTeamMemberList(teamMemberList);
+
+    showPrompt(promptIds.EDIT_TEAM_MEMBERS_PROCESSING);
+
+    const curProject = get_store_value(project);
+    const result = addTeamMembers(curProject, teamMembers);
+    checkEditTeamResult(result);
+}
+function removeProjectTeamMembers(teamMemberList) {
+    if (!checkLoggedIn() || !teamMemberList) { return; }
+
+    const teamMembers = getTeamMemberList(teamMemberList);
+
+    showPrompt(promptIds.EDIT_TEAM_MEMBERS_PROCESSING);
+    
+    const curProject = get_store_value(project);
+    const result = removeTeamMembers(curProject, teamMembers);
+    checkEditTeamResult(result);
+}
+
+function checkEditTeamResult(result, curProject) {
+    if (result) {
+        result.then((result) => {
+            closeOverlay();
+            if (result) {
+                if (!result.error) {
+                    // loadProject(curProject.id);
+                    if (result.addedMembers && result.addedMembers.length) {
+                        showPrompt(promptIds.EDIT_TEAM_MEMBERS_COMPLETE, {message: 'Team member'+((result.addedMembers.length > 1)?'s':'')+' added:<br/><strong>' + result.addedMembers.join(', ') + '</strong>'});
+                    } else if (result.removedMembers && result.removedMembers.length) {
+                        showPrompt(promptIds.EDIT_TEAM_MEMBERS_COMPLETE, {message: 'Team member'+((result.removedMembers.length > 1)?'s':'')+' removed:<br/><strong>' + result.removedMembers.join(', ') + '</strong>'});
+                    }
+                    if (result.projectId, result.team && result.team.length) {
+                        updateProjectTeam(result.projectId, result.team);
+                    }
+                } else {
+                    if (result.tryingToRemoveOwner) {
+                        showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'You cannot remove project creator from the team'});
+                    } else if (result.tryingToRemoveSelf) {
+                        showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'You cannot remove yourself from the team'});
+                    } else if (result.membersNotExisting &&  result.membersNotExisting.length) {
+                        showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'User'+((result.membersNotExisting.length > 1)?'s':'')+' not  found with username'+((result.membersNotExisting.length > 1)?'s':'')+':<br/><strong>' + result.membersNotExisting.join(', ') + '</strong>'});
+                    } else if (result.membersAlreadyInGroup &&  result.membersAlreadyInGroup.length) {
+                        showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'User'+((result.membersAlreadyInGroup.length > 1)?'s':'')+' already in team:<br/><strong>' + result.membersAlreadyInGroup.join(', ') + '</strong>'});
+                    } else if (result.membersNotInGroup &&  result.membersNotInGroup.length) {
+                        showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'User'+((result.membersNotInGroup.length > 1)?'s':'')+' not found in team:<br/><strong>' + result.membersNotInGroup.join(', ') + '</strong>'});
+                    }
+                }
+            }
+        });
     }
 }
 
@@ -8622,9 +8888,9 @@ appModel.on('followPost', followPost$1);
 appModel.on('deletePost', removePost);
 
 function checkUpdatePost(targetPost) {
-    const curPost = get_store_value(post$r);
+    const curPost = get_store_value(post$s);
     if (curPost && curPost.id === targetPost.id) {
-        post$r.set(targetPost);
+        post$s.set(targetPost);
     }
 }
 
@@ -8653,11 +8919,11 @@ function createPost(postDetails) {
 function savePost(postDetails) {
     if (!checkLoggedIn()) { return; }
 
-    const curPost = get_store_value(post$r);
+    const curPost = get_store_value(post$s);
     let result = null;
     if (curPost) {
         result = updatePost$1(curPost, postDetails);
-        post$r.set(curPost);
+        post$s.set(curPost);
 
         if (curPost.type === 'thread') {
             goto('posts/' + curPost.id);
@@ -8683,9 +8949,11 @@ function removePost(curPost) {
             curChannelId = curPost.channelId;
         }
 
+        showPrompt(promptIds.DELETE_POST_PROCESSING);
         result = deletePost$1(curPost);
         if (result) {
             result.then((result) => {
+                closeOverlay();
                 if (result && !result.error) {
                     // post.set(null); // should do if viewing thread that is post?
                     if (curThreadId) {
@@ -8695,16 +8963,17 @@ function removePost(curPost) {
                         loadPost(curThreadId); // should use?
                         // goto('posts/' + curThreadId);
                         // resetScrollRegionPosition('thread');
+                        showPrompt(promptIds.DELETE_POST_COMPLETE);
                     } else if (curChannelId) {
                         // removePostFromChannel(curChannelId, curPostId);
                         loadChannel(curChannelId);
 
                         // goto('channels/' + curPost.channelId);
                         // resetScrollRegionPosition('channel');
+                        setTimeout(() => {
+                            showPrompt(promptIds.DELETE_POST_COMPLETE);
+                        }, 200);
                     }
-                    setTimeout(() => {
-                        showPrompt(promptIds.DELETE_POST_COMPLETE);
-                    }, 500);
                 }
             });
         }
@@ -8894,7 +9163,7 @@ const menus = {
                 label: 'Edit Post',
                 action: editCurrentPost,
                 visible: () => {
-                    const curPost = get_store_value(post$r);
+                    const curPost = get_store_value(post$s);
                     const canEditPost = (curPost && curPost.userId && curPost.userId === get_store_value(userId)) || false;
                     return canEditPost;
                     // const curPost = get(post);
@@ -8908,7 +9177,7 @@ const menus = {
                     // if (!get(showBetaFeatures)) {
                     //     return;
                     // }
-                    const curPost = get_store_value(post$r);
+                    const curPost = get_store_value(post$s);
                     const canEditPost = (curPost && curPost.userId && curPost.userId === get_store_value(userId)) || false;
                     return canEditPost && (!curPost.postCount || curPost.postCount <= 0);
                     // const curPost = get(post);
@@ -8918,10 +9187,10 @@ const menus = {
                 // disabled: true,
             },
             {
-                label: () => { const curPost = get_store_value(post$r); return !curPost.following ? 'Follow Post' : 'Unfollow Post' },
-                action: () => { const curPost = get_store_value(post$r); !curPost.following ? followPost$1(curPost.id) : followPost$1(curPost.id, true); },
+                label: () => { const curPost = get_store_value(post$s); return !curPost.following ? 'Follow Post' : 'Unfollow Post' },
+                action: () => { const curPost = get_store_value(post$s); !curPost.following ? followPost$1(curPost.id) : followPost$1(curPost.id, true); },
                 visible: () => {
-                    const curPost = get_store_value(post$r);
+                    const curPost = get_store_value(post$s);
                     const curProject = get_store_value(project);
                     const isTeamMember = (curProject && getIsProjectTeamMember(curProject)) || false;
                     const canEditPost = (curPost && curPost.userId && curPost.userId === get_store_value(userId)) || false;
@@ -10067,8 +10336,8 @@ const AddTeamMembersPrompt = create_ssr_component(($$result, $$props, $$bindings
 /* src\routes\_components\OverlayMenuItem.svelte generated by Svelte v3.23.0 */
 
 const css$a = {
-	code: ".overlayMenuItem.svelte-8lfs15 .button{font-size:1.6rem;padding:13px 30px;padding-right:30px;box-sizing:border-box}.overlayMenuItem.svelte-8lfs15 .button.activeButton:hover{background-color:#EEEEEE}.overlayMenuItem.svelte-8lfs15 .button.disabled{opacity:0.33}.overlayMenuItem.svelte-8lfs15 .default{font-weight:700}.overlayMenuItem.svelte-8lfs15 .textPanel .button{font-size:1.2rem;padding:0 4px;padding:10px 17px}.overlayMenuItem.svelte-8lfs15 .textPanel .buttonLabel{padding:0 2px;font-weight:700;color:#333333}.overlayMenuItem.svelte-8lfs15 .textPanel .button.activeButton:hover{background-color:initial}.overlayMenuItem.svelte-8lfs15 .textPanel .button.activeButton:hover .buttonLabel{color:#666666;text-decoration:underline}.overlayMenuItem.svelte-8lfs15 .textPanel.demphasisText .buttonLabel{font-weight:initial;color:#888888}",
-	map: "{\"version\":3,\"file\":\"OverlayMenuItem.svelte\",\"sources\":[\"OverlayMenuItem.svelte\"],\"sourcesContent\":[\"<script>\\r\\n\\timport { createEventDispatcher } from 'svelte';\\r\\n\\r\\n    const dispatch = createEventDispatcher();\\r\\n\\r\\n    import Button from '../../components/Button.svelte';\\r\\n\\r\\n    export let menuItem;\\r\\n\\r\\n    // $: type = (menuItem && menuItem.type) || 'button';\\r\\n    $: className = (menuItem && menuItem.className) || '';\\r\\n    $: prefixText = (menuItem && menuItem.prefixText) || '';\\r\\n\\r\\n    $: label = (menuItem && menuItem.label && (typeof menuItem.label === 'function' ? menuItem.label() : menuItem.label)) || '';\\r\\n    $: disabled = (menuItem && menuItem.disabled && (typeof menuItem.disabled === 'function' ? menuItem.disabled() : menuItem.disabled)) || false;\\r\\n    $: visible = (menuItem && menuItem.visible !== undefined) ? (typeof menuItem.visible === 'function' ? menuItem.visible() : menuItem.visible) : true;\\r\\n    $: action = (menuItem && menuItem.action) || null;\\r\\n\\r\\n    $: isDefault = (menuItem && menuItem.default) || false;\\r\\n\\r\\n    function onClick() {\\r\\n        dispatch('select', { menuItem });\\r\\n    }\\r\\n</script>\\r\\n\\r\\n{#if visible}\\r\\n    <div class=\\\"overlayMenuItem\\\"><div class=\\\"{className}\\\">\\r\\n        <Button {onClick} {disabled} className=\\\"{isDefault ? 'default' : ''}\\\">{prefixText}<span class=\\\"buttonLabel\\\">{label}</span></Button>\\r\\n    </div></div>\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.overlayMenuItem :global(.button) {\\r\\n        font-size: 1.6rem;\\r\\n        padding: 13px 30px;\\r\\n        /* padding: 13px 17px; */\\r\\n        padding-right: 30px;\\r\\n        box-sizing: border-box;\\r\\n\\t}\\r\\n\\r\\n\\t.overlayMenuItem :global(.button.activeButton:hover) {\\r\\n        background-color: #EEEEEE;\\r\\n\\t}\\r\\n\\r\\n\\t.overlayMenuItem :global(.button.disabled) {\\r\\n        opacity: 0.33;\\r\\n\\t}\\r\\n\\r\\n    .overlayMenuItem :global(.default) {\\r\\n        font-weight: 700;\\r\\n    }\\r\\n\\r\\n\\t.overlayMenuItem :global(.textPanel .button) {\\r\\n        font-size: 1.2rem;\\r\\n        padding: 0 4px;\\r\\n        padding: 10px 17px;\\r\\n\\t}\\r\\n\\t.overlayMenuItem :global(.textPanel .buttonLabel) {\\r\\n        padding: 0 2px;\\r\\n        font-weight: 700;\\r\\n        color: #333333;\\r\\n\\t}\\r\\n\\t.overlayMenuItem :global(.textPanel .button.activeButton:hover) {\\r\\n        background-color: initial;\\r\\n\\t}\\r\\n\\t.overlayMenuItem :global(.textPanel .button.activeButton:hover .buttonLabel) {\\r\\n        color: #666666;\\r\\n        text-decoration: underline;\\r\\n\\t}\\r\\n\\r\\n\\t.overlayMenuItem :global(.textPanel.demphasisText .buttonLabel) {\\r\\n        font-weight: initial;\\r\\n        color: #888888;\\r\\n    }\\r\\n</style>\"],\"names\":[],\"mappings\":\"AAgCC,8BAAgB,CAAC,AAAQ,OAAO,AAAE,CAAC,AAC5B,SAAS,CAAE,MAAM,CACjB,OAAO,CAAE,IAAI,CAAC,IAAI,CAElB,aAAa,CAAE,IAAI,CACnB,UAAU,CAAE,UAAU,AAC7B,CAAC,AAED,8BAAgB,CAAC,AAAQ,0BAA0B,AAAE,CAAC,AAC/C,gBAAgB,CAAE,OAAO,AAChC,CAAC,AAED,8BAAgB,CAAC,AAAQ,gBAAgB,AAAE,CAAC,AACrC,OAAO,CAAE,IAAI,AACpB,CAAC,AAEE,8BAAgB,CAAC,AAAQ,QAAQ,AAAE,CAAC,AAChC,WAAW,CAAE,GAAG,AACpB,CAAC,AAEJ,8BAAgB,CAAC,AAAQ,kBAAkB,AAAE,CAAC,AACvC,SAAS,CAAE,MAAM,CACjB,OAAO,CAAE,CAAC,CAAC,GAAG,CACd,OAAO,CAAE,IAAI,CAAC,IAAI,AACzB,CAAC,AACD,8BAAgB,CAAC,AAAQ,uBAAuB,AAAE,CAAC,AAC5C,OAAO,CAAE,CAAC,CAAC,GAAG,CACd,WAAW,CAAE,GAAG,CAChB,KAAK,CAAE,OAAO,AACrB,CAAC,AACD,8BAAgB,CAAC,AAAQ,qCAAqC,AAAE,CAAC,AAC1D,gBAAgB,CAAE,OAAO,AAChC,CAAC,AACD,8BAAgB,CAAC,AAAQ,kDAAkD,AAAE,CAAC,AACvE,KAAK,CAAE,OAAO,CACd,eAAe,CAAE,SAAS,AACjC,CAAC,AAED,8BAAgB,CAAC,AAAQ,qCAAqC,AAAE,CAAC,AAC1D,WAAW,CAAE,OAAO,CACpB,KAAK,CAAE,OAAO,AAClB,CAAC\"}"
+	code: ".overlayMenuItem.svelte-1oqfwu0 .button{font-size:1.6rem;padding:13px 30px;padding-right:30px;box-sizing:border-box}.overlayMenuItem.svelte-1oqfwu0 .button.activeButton:hover{background-color:#EEEEEE}.overlayMenuItem.svelte-1oqfwu0 .button.disabled{opacity:0.33}.overlayMenuItem.svelte-1oqfwu0 .default{font-weight:700}.overlayMenuItem.svelte-1oqfwu0 .textPanel .button{font-size:1.2rem;padding:0 4px;padding:10px 17px}.overlayMenuItem.svelte-1oqfwu0 .textPanel .buttonLabel{padding:0 2px;font-weight:700;color:#333333}.overlayMenuItem.svelte-1oqfwu0 .textPanel .button.activeButton:hover{background-color:initial}.overlayMenuItem.svelte-1oqfwu0 .textPanel .button.activeButton:hover .buttonLabel{color:#666666;text-decoration:underline}.overlayMenuItem.svelte-1oqfwu0 .textPanel.demphasisText .buttonLabel{font-weight:initial;color:#888888}",
+	map: "{\"version\":3,\"file\":\"OverlayMenuItem.svelte\",\"sources\":[\"OverlayMenuItem.svelte\"],\"sourcesContent\":[\"<script>\\r\\n\\timport { createEventDispatcher } from 'svelte';\\r\\n\\r\\n    const dispatch = createEventDispatcher();\\r\\n\\r\\n    import Button from '../../components/Button.svelte';\\r\\n\\r\\n    export let menuItem;\\r\\n\\r\\n    // $: type = (menuItem && menuItem.type) || 'button';\\r\\n    $: className = (menuItem && menuItem.className) || '';\\r\\n    $: prefixText = (menuItem && menuItem.prefixText) || '';\\r\\n\\r\\n    $: label = (menuItem && menuItem.label && (typeof menuItem.label === 'function' ? menuItem.label() : menuItem.label)) || '';\\r\\n    $: disabled = (menuItem && menuItem.disabled && (typeof menuItem.disabled === 'function' ? menuItem.disabled() : menuItem.disabled)) || false;\\r\\n    $: visible = (menuItem && menuItem.visible !== undefined) ? (typeof menuItem.visible === 'function' ? menuItem.visible() : menuItem.visible) : true;\\r\\n    $: action = (menuItem && menuItem.action) || null;\\r\\n\\r\\n    $: isDefault = (menuItem && menuItem.default) || false;\\r\\n\\r\\n    function onClick() {\\r\\n        dispatch('select', { menuItem });\\r\\n    }\\r\\n</script>\\r\\n\\r\\n{#if visible}\\r\\n    <div class=\\\"overlayMenuItem\\\"><div class=\\\"{className}\\\">\\r\\n        <Button {onClick} {disabled} className=\\\"{isDefault ? 'default' : ''}\\\">{prefixText}<span class=\\\"buttonLabel\\\">{label}</span></Button>\\r\\n    </div></div>\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n.overlayMenuItem :global(.button) {\\r\\n        font-size: 1.6rem;\\r\\n        padding: 13px 30px;\\r\\n        /* padding: 13px 17px; */\\r\\n        padding-right: 30px;\\r\\n        box-sizing: border-box;\\r\\n}\\r\\n\\r\\n.overlayMenuItem :global(.button.activeButton:hover) {\\r\\n        background-color: #EEEEEE;\\r\\n}\\r\\n\\r\\n.overlayMenuItem :global(.button.disabled) {\\r\\n        opacity: 0.33;\\r\\n}\\r\\n\\r\\n.overlayMenuItem :global(.default) {\\r\\n        font-weight: 700;\\r\\n}\\r\\n\\r\\n.overlayMenuItem :global(.textPanel .button) {\\r\\n        font-size: 1.2rem;\\r\\n        padding: 0 4px;\\r\\n        padding: 10px 17px;\\r\\n}\\r\\n.overlayMenuItem :global(.textPanel .buttonLabel) {\\r\\n        padding: 0 2px;\\r\\n        font-weight: 700;\\r\\n        color: #333333;\\r\\n}\\r\\n.overlayMenuItem :global(.textPanel .button.activeButton:hover) {\\r\\n        background-color: initial;\\r\\n}\\r\\n.overlayMenuItem :global(.textPanel .button.activeButton:hover .buttonLabel) {\\r\\n        color: #666666;\\r\\n        text-decoration: underline;\\r\\n}\\r\\n\\r\\n.overlayMenuItem :global(.textPanel.demphasisText .buttonLabel) {\\r\\n        font-weight: initial;\\r\\n        color: #888888;\\r\\n}\\r\\n</style>\"],\"names\":[],\"mappings\":\"AAgCA,+BAAgB,CAAC,AAAQ,OAAO,AAAE,CAAC,AAC3B,SAAS,CAAE,MAAM,CACjB,OAAO,CAAE,IAAI,CAAC,IAAI,CAElB,aAAa,CAAE,IAAI,CACnB,UAAU,CAAE,UAAU,AAC9B,CAAC,AAED,+BAAgB,CAAC,AAAQ,0BAA0B,AAAE,CAAC,AAC9C,gBAAgB,CAAE,OAAO,AACjC,CAAC,AAED,+BAAgB,CAAC,AAAQ,gBAAgB,AAAE,CAAC,AACpC,OAAO,CAAE,IAAI,AACrB,CAAC,AAED,+BAAgB,CAAC,AAAQ,QAAQ,AAAE,CAAC,AAC5B,WAAW,CAAE,GAAG,AACxB,CAAC,AAED,+BAAgB,CAAC,AAAQ,kBAAkB,AAAE,CAAC,AACtC,SAAS,CAAE,MAAM,CACjB,OAAO,CAAE,CAAC,CAAC,GAAG,CACd,OAAO,CAAE,IAAI,CAAC,IAAI,AAC1B,CAAC,AACD,+BAAgB,CAAC,AAAQ,uBAAuB,AAAE,CAAC,AAC3C,OAAO,CAAE,CAAC,CAAC,GAAG,CACd,WAAW,CAAE,GAAG,CAChB,KAAK,CAAE,OAAO,AACtB,CAAC,AACD,+BAAgB,CAAC,AAAQ,qCAAqC,AAAE,CAAC,AACzD,gBAAgB,CAAE,OAAO,AACjC,CAAC,AACD,+BAAgB,CAAC,AAAQ,kDAAkD,AAAE,CAAC,AACtE,KAAK,CAAE,OAAO,CACd,eAAe,CAAE,SAAS,AAClC,CAAC,AAED,+BAAgB,CAAC,AAAQ,qCAAqC,AAAE,CAAC,AACzD,WAAW,CAAE,OAAO,CACpB,KAAK,CAAE,OAAO,AACtB,CAAC\"}"
 };
 
 const OverlayMenuItem = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
@@ -10102,7 +10371,7 @@ const OverlayMenuItem = create_ssr_component(($$result, $$props, $$bindings, $$s
 	let isDefault = menuItem && menuItem.default || false;
 
 	return `${visible
-	? `<div class="${"overlayMenuItem svelte-8lfs15"}"><div class="${escape(null_to_empty(className)) + " svelte-8lfs15"}">${validate_component(Button, "Button").$$render(
+	? `<div class="${"overlayMenuItem svelte-1oqfwu0"}"><div class="${escape(null_to_empty(className)) + " svelte-1oqfwu0"}">${validate_component(Button, "Button").$$render(
 			$$result,
 			{
 				onClick,
@@ -10357,6 +10626,9 @@ const prompts = {
             },
         ],
     },
+    DELETE_POST_PROCESSING: {
+        message: 'Deleting Post...',
+    },
     DELETE_POST_COMPLETE: {
         title: 'Post Deleted',
         subMessage: 'Post has been removed',
@@ -10561,16 +10833,38 @@ const prompts = {
             },
         ],
     },
+    EDIT_TEAM_MEMBERS_PROCESSING: {
+        message: 'Updating Team...',
+    },
+    EDIT_TEAM_MEMBERS_ERROR: {
+        title: 'Error Updating Team',
+        message: 'Error editing team members',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
+    EDIT_TEAM_MEMBERS_COMPLETE: {
+        title: 'Team Updated',
+        message: 'Team members updated',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
 };
 
 /* src\routes\_components\OverlayPrompt.svelte generated by Svelte v3.23.0 */
 
 const css$c = {
-	code: ".overlayPrompt.svelte-1nsstr6{display:inline-block;width:250px;background-color:#ffffff;border-radius:5px;overflow:hidden;text-align:center}.content.svelte-1nsstr6{position:relative;padding-top:25px;padding-bottom:30px}.title.svelte-1nsstr6{font-size:1.6rem;line-height:1.6rem;font-weight:700;padding:0 20px;padding-bottom:15px}.message.svelte-1nsstr6{font-size:1.5rem;line-height:1.7rem;padding:0 20px;padding-bottom:18px}.subMessage.svelte-1nsstr6{font-size:1.4rem;line-height:1.6rem;padding:0 20px;padding-bottom:12px;color:#888888}.overlayPrompt.svelte-1nsstr6 .overlayMenuItem{border-top:1px solid #D4D4D4}.overlayPrompt.svelte-1nsstr6 .closeButton{position:absolute;top:0;right:0;height:36px;width:37px;opacity:0.4}.overlayPrompt.svelte-1nsstr6 .closeButton .iconContainer{display:block}.overlayPrompt.svelte-1nsstr6 .closeButton .iconInnerContainer{justify-content:center;width:100%;height:100%}.overlayPrompt.svelte-1nsstr6 .closeButton .icon{transform-origin:center;transform:scale(0.45, 0.45)}",
-	map: "{\"version\":3,\"file\":\"OverlayPrompt.svelte\",\"sources\":[\"OverlayPrompt.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { tick } from 'svelte';\\r\\n\\r\\n    import OverlayMenuItem from './OverlayMenuItem.svelte';\\r\\n\\r\\n    import { closeOverlay } from '../../actions/appActions';\\r\\n    import { dontAllowOverlayClose } from '../../models/appModel';\\r\\n\\r\\n    import CloseIcon from \\\"../../assets/icons/clear.png\\\";\\r\\n\\r\\n    import Button from '../../components/Button.svelte';\\r\\n\\r\\n    export let promptId;\\r\\n    export let targetItem = null;\\r\\n\\r\\n    export let onConfirm = null;\\r\\n\\r\\n    import promptIds from '../../config/promptIds';\\r\\n    import prompts from '../../config/prompts';\\r\\n\\r\\n    $: prompt = prompts[promptId];\\r\\n    $: menuItems = (prompt && prompt.menuItems) || null;\\r\\n\\r\\n    $: title = (prompt && prompt.title) || null;\\r\\n    $: message = (prompt && prompt.message) || null;\\r\\n    $: subMessage = (prompt && prompt.subMessage) || null;\\r\\n\\r\\n    $: showClose = (prompt && prompt.showClose) || null;\\r\\n\\r\\n    let hasSlots = $$props.$$slots;\\r\\n\\r\\n    async function selectMenuItem(event) {\\r\\n        const menuItem = event.detail && event.detail.menuItem;\\r\\n        const action = menuItem && menuItem.action;\\r\\n\\r\\n        closeOverlay(); // ensure doing first in case opening new menu\\r\\n        await tick();\\r\\n\\r\\n        if (action) {\\r\\n            action(targetItem);\\r\\n        }\\r\\n\\r\\n        if (menuItem.default && onConfirm) {\\r\\n            onConfirm();\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function close() {\\r\\n        if (!$dontAllowOverlayClose) {\\r\\n            closeOverlay();\\r\\n        }\\r\\n    }\\r\\n\\r\\n    export function updateMenuItems() {\\r\\n        menuItems = menuItems;\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<div class=\\\"overlayPrompt\\\">\\r\\n    {#if title || message || subMessage}\\r\\n        <div class=\\\"content\\\">\\r\\n            {#if title}\\r\\n                <div class=\\\"title\\\">{title}</div>\\r\\n            {/if}\\r\\n            {#if showClose && !$dontAllowOverlayClose}\\r\\n                <Button className=\\\"closeButton\\\" onClick=\\\"{close}\\\" icon=\\\"{CloseIcon}\\\" />\\r\\n            {/if}\\r\\n            {#if message}\\r\\n                <div class=\\\"message\\\">{@html message}</div>\\r\\n            {/if}\\r\\n            {#if subMessage}\\r\\n                <div class=\\\"subMessage\\\">{@html subMessage}</div>\\r\\n            {/if}\\r\\n            {#if hasSlots}\\r\\n                <div class=\\\"panelContent\\\">\\r\\n                    <slot></slot>\\r\\n                </div>\\r\\n            {/if}\\r\\n        </div>\\r\\n    {/if}\\r\\n    {#if menuItems && menuItems.length}\\r\\n        <div class=\\\"menuItems\\\">\\r\\n            {#each menuItems as menuItem}\\r\\n                {#if !menuItem.condition || menuItem.condition(targetItem)}\\r\\n                    <OverlayMenuItem {menuItem} on:select=\\\"{selectMenuItem}\\\" />\\r\\n                {/if}\\r\\n            {/each}\\r\\n        </div>\\r\\n    {/if}\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.overlayPrompt {\\r\\n        display: inline-block;\\r\\n\\r\\n        width: 250px;\\r\\n\\r\\n        background-color: #ffffff;\\r\\n        border-radius: 5px;\\r\\n        overflow: hidden;\\r\\n\\r\\n        text-align: center;\\r\\n\\t}\\r\\n\\r\\n    .content {\\r\\n        position: relative;\\r\\n        padding-top: 25px;\\r\\n        padding-bottom: 30px;\\r\\n    }\\r\\n\\r\\n\\t.title {\\r\\n        font-size: 1.6rem;\\r\\n        line-height: 1.6rem;\\r\\n        font-weight: 700;\\r\\n\\r\\n        padding: 0 20px;\\r\\n        padding-bottom: 15px;\\r\\n\\t}\\r\\n\\r\\n\\t.message {\\r\\n        font-size: 1.5rem;\\r\\n        line-height: 1.7rem;\\r\\n\\r\\n        padding: 0 20px;\\r\\n        padding-bottom: 18px;\\r\\n\\t}\\r\\n\\r\\n\\t.subMessage {\\r\\n        font-size: 1.4rem;\\r\\n        line-height: 1.6rem;\\r\\n\\r\\n        padding: 0 20px;\\r\\n        padding-bottom: 12px;\\r\\n        color: #888888;\\r\\n\\t}\\r\\n\\r\\n\\t.overlayPrompt :global(.overlayMenuItem) {\\r\\n        border-top: 1px solid #D4D4D4;\\r\\n\\t}\\r\\n\\t/* .overlayPrompt :global(.overlayMenuItem .button) {\\r\\n        padding: 13px 30px;\\r\\n\\t} */\\r\\n\\r\\n\\t.overlayPrompt :global(.closeButton) {\\r\\n        position: absolute;\\r\\n        top: 0;\\r\\n        right: 0;\\r\\n\\r\\n        height: 36px;\\r\\n        width: 37px;\\r\\n        opacity: 0.4;\\r\\n\\t}\\r\\n\\t.overlayPrompt :global(.closeButton .iconContainer) {\\r\\n        display: block;\\r\\n\\t}\\r\\n\\t.overlayPrompt :global(.closeButton .iconInnerContainer) {\\r\\n        justify-content: center;\\r\\n        width: 100%;\\r\\n        height: 100%;\\r\\n\\t}\\r\\n\\t.overlayPrompt :global(.closeButton .icon) {\\r\\n        transform-origin: center;\\r\\n        transform: scale(0.45, 0.45);\\r\\n\\t}\\r\\n</style>\"],\"names\":[],\"mappings\":\"AA4FC,cAAc,eAAC,CAAC,AACT,OAAO,CAAE,YAAY,CAErB,KAAK,CAAE,KAAK,CAEZ,gBAAgB,CAAE,OAAO,CACzB,aAAa,CAAE,GAAG,CAClB,QAAQ,CAAE,MAAM,CAEhB,UAAU,CAAE,MAAM,AACzB,CAAC,AAEE,QAAQ,eAAC,CAAC,AACN,QAAQ,CAAE,QAAQ,CAClB,WAAW,CAAE,IAAI,CACjB,cAAc,CAAE,IAAI,AACxB,CAAC,AAEJ,MAAM,eAAC,CAAC,AACD,SAAS,CAAE,MAAM,CACjB,WAAW,CAAE,MAAM,CACnB,WAAW,CAAE,GAAG,CAEhB,OAAO,CAAE,CAAC,CAAC,IAAI,CACf,cAAc,CAAE,IAAI,AAC3B,CAAC,AAED,QAAQ,eAAC,CAAC,AACH,SAAS,CAAE,MAAM,CACjB,WAAW,CAAE,MAAM,CAEnB,OAAO,CAAE,CAAC,CAAC,IAAI,CACf,cAAc,CAAE,IAAI,AAC3B,CAAC,AAED,WAAW,eAAC,CAAC,AACN,SAAS,CAAE,MAAM,CACjB,WAAW,CAAE,MAAM,CAEnB,OAAO,CAAE,CAAC,CAAC,IAAI,CACf,cAAc,CAAE,IAAI,CACpB,KAAK,CAAE,OAAO,AACrB,CAAC,AAED,6BAAc,CAAC,AAAQ,gBAAgB,AAAE,CAAC,AACnC,UAAU,CAAE,GAAG,CAAC,KAAK,CAAC,OAAO,AACpC,CAAC,AAKD,6BAAc,CAAC,AAAQ,YAAY,AAAE,CAAC,AAC/B,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,CAAC,CAER,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,OAAO,CAAE,GAAG,AACnB,CAAC,AACD,6BAAc,CAAC,AAAQ,2BAA2B,AAAE,CAAC,AAC9C,OAAO,CAAE,KAAK,AACrB,CAAC,AACD,6BAAc,CAAC,AAAQ,gCAAgC,AAAE,CAAC,AACnD,eAAe,CAAE,MAAM,CACvB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,AACnB,CAAC,AACD,6BAAc,CAAC,AAAQ,kBAAkB,AAAE,CAAC,AACrC,gBAAgB,CAAE,MAAM,CACxB,SAAS,CAAE,MAAM,IAAI,CAAC,CAAC,IAAI,CAAC,AACnC,CAAC\"}"
+	code: ".overlayPrompt.svelte-1d5nx1g.svelte-1d5nx1g{display:inline-block;width:250px;background-color:#ffffff;border-radius:5px;overflow:hidden;text-align:center}.content.svelte-1d5nx1g.svelte-1d5nx1g{position:relative;padding-top:25px;padding-bottom:30px}.title.svelte-1d5nx1g.svelte-1d5nx1g{font-size:1.6rem;line-height:1.6rem;font-weight:700;padding:0 20px;padding-bottom:15px}.message.svelte-1d5nx1g.svelte-1d5nx1g{font-size:1.5rem;line-height:1.7rem;padding:0 20px;padding-bottom:18px}.subMessage.svelte-1d5nx1g.svelte-1d5nx1g{font-size:1.4rem;line-height:1.6rem;padding:0 20px;padding-bottom:12px;color:#888888}.overlayPrompt.noMenuItems.svelte-1d5nx1g .content.svelte-1d5nx1g{padding-bottom:25px}.overlayPrompt.noMenuItems.svelte-1d5nx1g .message.svelte-1d5nx1g{padding-bottom:0}.overlayPrompt.svelte-1d5nx1g.svelte-1d5nx1g .overlayMenuItem{border-top:1px solid #D4D4D4}.overlayPrompt.svelte-1d5nx1g.svelte-1d5nx1g .closeButton{position:absolute;top:0;right:0;height:36px;width:37px;opacity:0.4}.overlayPrompt.svelte-1d5nx1g.svelte-1d5nx1g .closeButton .iconContainer{display:block}.overlayPrompt.svelte-1d5nx1g.svelte-1d5nx1g .closeButton .iconInnerContainer{justify-content:center;width:100%;height:100%}.overlayPrompt.svelte-1d5nx1g.svelte-1d5nx1g .closeButton .icon{transform-origin:center;transform:scale(0.45, 0.45)}",
+	map: "{\"version\":3,\"file\":\"OverlayPrompt.svelte\",\"sources\":[\"OverlayPrompt.svelte\"],\"sourcesContent\":[\"<script>\\r\\n    import { tick } from 'svelte';\\r\\n\\r\\n    import OverlayMenuItem from './OverlayMenuItem.svelte';\\r\\n\\r\\n    import { closeOverlay } from '../../actions/appActions';\\r\\n    import {\\r\\n        dontAllowOverlayClose,\\r\\n        promptOptions,\\r\\n    } from '../../models/appModel';\\r\\n\\r\\n    import CloseIcon from \\\"../../assets/icons/clear.png\\\";\\r\\n\\r\\n    import Button from '../../components/Button.svelte';\\r\\n\\r\\n    export let promptId;\\r\\n    export let targetItem = null;\\r\\n\\r\\n    export let onConfirm = null;\\r\\n\\r\\n    import promptIds from '../../config/promptIds';\\r\\n    import prompts from '../../config/prompts';\\r\\n\\r\\n    $: prompt = prompts[promptId];\\r\\n    $: menuItems = (prompt && prompt.menuItems) || null;\\r\\n\\r\\n    $: title = ($promptOptions && $promptOptions.title) || (prompt && prompt.title) || null;\\r\\n    $: message = ($promptOptions && $promptOptions.message) || (prompt && prompt.message) || null;\\r\\n    $: subMessage = (prompt && prompt.subMessage) || null;\\r\\n\\r\\n    $: showClose = (prompt && prompt.showClose) || null;\\r\\n\\r\\n    let hasSlots = $$props.$$slots;\\r\\n\\r\\n    async function selectMenuItem(event) {\\r\\n        const menuItem = event.detail && event.detail.menuItem;\\r\\n        const action = menuItem && menuItem.action;\\r\\n\\r\\n        closeOverlay(); // ensure doing first in case opening new menu\\r\\n        await tick();\\r\\n\\r\\n        if (action) {\\r\\n            action(targetItem);\\r\\n        }\\r\\n\\r\\n        if (menuItem.default && onConfirm) {\\r\\n            onConfirm();\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function close() {\\r\\n        if (!$dontAllowOverlayClose) {\\r\\n            closeOverlay();\\r\\n        }\\r\\n    }\\r\\n\\r\\n    export function updateMenuItems() {\\r\\n        menuItems = menuItems;\\r\\n    }\\r\\n</script>\\r\\n\\r\\n<div class=\\\"overlayPrompt\\\" class:noMenuItems=\\\"{!menuItems || !menuItems.length}\\\">\\r\\n    {#if title || message || subMessage}\\r\\n        <div class=\\\"content\\\">\\r\\n            {#if title}\\r\\n                <div class=\\\"title\\\">{title}</div>\\r\\n            {/if}\\r\\n            {#if showClose && !$dontAllowOverlayClose}\\r\\n                <Button className=\\\"closeButton\\\" onClick=\\\"{close}\\\" icon=\\\"{CloseIcon}\\\" />\\r\\n            {/if}\\r\\n            {#if message}\\r\\n                <div class=\\\"message\\\">{@html message}</div>\\r\\n            {/if}\\r\\n            {#if subMessage}\\r\\n                <div class=\\\"subMessage\\\">{@html subMessage}</div>\\r\\n            {/if}\\r\\n            {#if hasSlots}\\r\\n                <div class=\\\"panelContent\\\">\\r\\n                    <slot></slot>\\r\\n                </div>\\r\\n            {/if}\\r\\n        </div>\\r\\n    {/if}\\r\\n    {#if menuItems && menuItems.length}\\r\\n        <div class=\\\"menuItems\\\">\\r\\n            {#each menuItems as menuItem}\\r\\n                {#if !menuItem.condition || menuItem.condition(targetItem)}\\r\\n                    <OverlayMenuItem {menuItem} on:select=\\\"{selectMenuItem}\\\" />\\r\\n                {/if}\\r\\n            {/each}\\r\\n        </div>\\r\\n    {/if}\\r\\n</div>\\r\\n\\r\\n<style>\\r\\n\\t.overlayPrompt {\\r\\n        display: inline-block;\\r\\n\\r\\n        width: 250px;\\r\\n\\r\\n        background-color: #ffffff;\\r\\n        border-radius: 5px;\\r\\n        overflow: hidden;\\r\\n\\r\\n        text-align: center;\\r\\n\\t}\\r\\n\\r\\n    .content {\\r\\n        position: relative;\\r\\n        padding-top: 25px;\\r\\n        padding-bottom: 30px;\\r\\n    }\\r\\n\\r\\n\\t.title {\\r\\n        font-size: 1.6rem;\\r\\n        line-height: 1.6rem;\\r\\n        font-weight: 700;\\r\\n\\r\\n        padding: 0 20px;\\r\\n        padding-bottom: 15px;\\r\\n\\t}\\r\\n\\r\\n\\t.message {\\r\\n        font-size: 1.5rem;\\r\\n        line-height: 1.7rem;\\r\\n\\r\\n        padding: 0 20px;\\r\\n        padding-bottom: 18px;\\r\\n\\t}\\r\\n\\r\\n\\t.subMessage {\\r\\n        font-size: 1.4rem;\\r\\n        line-height: 1.6rem;\\r\\n\\r\\n        padding: 0 20px;\\r\\n        padding-bottom: 12px;\\r\\n        color: #888888;\\r\\n\\t}\\r\\n\\r\\n    .overlayPrompt.noMenuItems .content {\\r\\n        padding-bottom: 25px;\\r\\n    }\\r\\n    .overlayPrompt.noMenuItems .message {\\r\\n        padding-bottom: 0;\\r\\n    }\\r\\n\\r\\n\\t.overlayPrompt :global(.overlayMenuItem) {\\r\\n        border-top: 1px solid #D4D4D4;\\r\\n\\t}\\r\\n\\t/* .overlayPrompt :global(.overlayMenuItem .button) {\\r\\n        padding: 13px 30px;\\r\\n\\t} */\\r\\n\\r\\n\\t.overlayPrompt :global(.closeButton) {\\r\\n        position: absolute;\\r\\n        top: 0;\\r\\n        right: 0;\\r\\n\\r\\n        height: 36px;\\r\\n        width: 37px;\\r\\n        opacity: 0.4;\\r\\n\\t}\\r\\n\\t.overlayPrompt :global(.closeButton .iconContainer) {\\r\\n        display: block;\\r\\n\\t}\\r\\n\\t.overlayPrompt :global(.closeButton .iconInnerContainer) {\\r\\n        justify-content: center;\\r\\n        width: 100%;\\r\\n        height: 100%;\\r\\n\\t}\\r\\n\\t.overlayPrompt :global(.closeButton .icon) {\\r\\n        transform-origin: center;\\r\\n        transform: scale(0.45, 0.45);\\r\\n\\t}\\r\\n</style>\"],\"names\":[],\"mappings\":\"AA+FC,cAAc,8BAAC,CAAC,AACT,OAAO,CAAE,YAAY,CAErB,KAAK,CAAE,KAAK,CAEZ,gBAAgB,CAAE,OAAO,CACzB,aAAa,CAAE,GAAG,CAClB,QAAQ,CAAE,MAAM,CAEhB,UAAU,CAAE,MAAM,AACzB,CAAC,AAEE,QAAQ,8BAAC,CAAC,AACN,QAAQ,CAAE,QAAQ,CAClB,WAAW,CAAE,IAAI,CACjB,cAAc,CAAE,IAAI,AACxB,CAAC,AAEJ,MAAM,8BAAC,CAAC,AACD,SAAS,CAAE,MAAM,CACjB,WAAW,CAAE,MAAM,CACnB,WAAW,CAAE,GAAG,CAEhB,OAAO,CAAE,CAAC,CAAC,IAAI,CACf,cAAc,CAAE,IAAI,AAC3B,CAAC,AAED,QAAQ,8BAAC,CAAC,AACH,SAAS,CAAE,MAAM,CACjB,WAAW,CAAE,MAAM,CAEnB,OAAO,CAAE,CAAC,CAAC,IAAI,CACf,cAAc,CAAE,IAAI,AAC3B,CAAC,AAED,WAAW,8BAAC,CAAC,AACN,SAAS,CAAE,MAAM,CACjB,WAAW,CAAE,MAAM,CAEnB,OAAO,CAAE,CAAC,CAAC,IAAI,CACf,cAAc,CAAE,IAAI,CACpB,KAAK,CAAE,OAAO,AACrB,CAAC,AAEE,cAAc,2BAAY,CAAC,QAAQ,eAAC,CAAC,AACjC,cAAc,CAAE,IAAI,AACxB,CAAC,AACD,cAAc,2BAAY,CAAC,QAAQ,eAAC,CAAC,AACjC,cAAc,CAAE,CAAC,AACrB,CAAC,AAEJ,4CAAc,CAAC,AAAQ,gBAAgB,AAAE,CAAC,AACnC,UAAU,CAAE,GAAG,CAAC,KAAK,CAAC,OAAO,AACpC,CAAC,AAKD,4CAAc,CAAC,AAAQ,YAAY,AAAE,CAAC,AAC/B,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,CAAC,CACN,KAAK,CAAE,CAAC,CAER,MAAM,CAAE,IAAI,CACZ,KAAK,CAAE,IAAI,CACX,OAAO,CAAE,GAAG,AACnB,CAAC,AACD,4CAAc,CAAC,AAAQ,2BAA2B,AAAE,CAAC,AAC9C,OAAO,CAAE,KAAK,AACrB,CAAC,AACD,4CAAc,CAAC,AAAQ,gCAAgC,AAAE,CAAC,AACnD,eAAe,CAAE,MAAM,CACvB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,AACnB,CAAC,AACD,4CAAc,CAAC,AAAQ,kBAAkB,AAAE,CAAC,AACrC,gBAAgB,CAAE,MAAM,CACxB,SAAS,CAAE,MAAM,IAAI,CAAC,CAAC,IAAI,CAAC,AACnC,CAAC\"}"
 };
 
 const OverlayPrompt = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
+	let $promptOptions = get_store_value(promptOptions);
 	let $dontAllowOverlayClose = get_store_value(dontAllowOverlayClose);
 	let { promptId } = $$props;
 	let { targetItem = null } = $$props;
@@ -10594,14 +10888,17 @@ const OverlayPrompt = create_ssr_component(($$result, $$props, $$bindings, $$slo
 	$$result.css.add(css$c);
 	let prompt = prompts[promptId];
 	let menuItems = prompt && prompt.menuItems || null;
-	let title = prompt && prompt.title || null;
-	let message = prompt && prompt.message || null;
+	let title = $promptOptions && $promptOptions.title || prompt && prompt.title || null;
+	let message = $promptOptions && $promptOptions.message || prompt && prompt.message || null;
 	let subMessage = prompt && prompt.subMessage || null;
 	let showClose = prompt && prompt.showClose || null;
 
-	return `<div class="${"overlayPrompt svelte-1nsstr6"}">${title || message || subMessage
-	? `<div class="${"content svelte-1nsstr6"}">${title
-		? `<div class="${"title svelte-1nsstr6"}">${escape(title)}</div>`
+	return `<div class="${[
+		"overlayPrompt svelte-1d5nx1g",
+		!menuItems || !menuItems.length ? "noMenuItems" : ""
+	].join(" ").trim()}">${title || message || subMessage
+	? `<div class="${"content svelte-1d5nx1g"}">${title
+		? `<div class="${"title svelte-1d5nx1g"}">${escape(title)}</div>`
 		: ``}
             ${showClose && !$dontAllowOverlayClose
 		? `${validate_component(Button, "Button").$$render(
@@ -10616,10 +10913,10 @@ const OverlayPrompt = create_ssr_component(($$result, $$props, $$bindings, $$slo
 			)}`
 		: ``}
             ${message
-		? `<div class="${"message svelte-1nsstr6"}">${message}</div>`
+		? `<div class="${"message svelte-1d5nx1g"}">${message}</div>`
 		: ``}
             ${subMessage
-		? `<div class="${"subMessage svelte-1nsstr6"}">${subMessage}</div>`
+		? `<div class="${"subMessage svelte-1d5nx1g"}">${subMessage}</div>`
 		: ``}
             ${hasSlots
 		? `<div class="${"panelContent"}">${$$slots.default ? $$slots.default({}) : ``}</div>`
@@ -10637,7 +10934,7 @@ const OverlayPrompt = create_ssr_component(($$result, $$props, $$bindings, $$slo
 
 const css$d = {
 	code: ".overlayContainer.svelte-1jc938x{position:absolute;width:100%;height:100%;z-index:100}@media(max-height: 480px){.overlayContainer.svelte-1jc938x{position:fixed}}.overlayContent.svelte-1jc938x{position:relative;width:100%;min-height:100%;display:flex;align-items:center;justify-content:center}.overlayContainer.svelte-1jc938x .overlayMenu{z-index:101}.overlayContainer.svelte-1jc938x .overlayPrompt{z-index:102;margin:20px 0}.overlayBg.svelte-1jc938x{position:absolute;background:rgba(0, 0, 0, 0.5);width:100%;height:100%}.button.svelte-1jc938x{cursor:pointer}",
-	map: "{\"version\":3,\"file\":\"Overlays.svelte\",\"sources\":[\"Overlays.svelte\"],\"sourcesContent\":[\"<script>\\r\\n\\timport promptIds from '../../config/promptIds';\\r\\n\\r\\n\\timport LogInPrompt from './LogInPrompt.svelte';\\r\\n\\timport SignUpPrompt from './SignUpPrompt.svelte';\\r\\n\\timport SetAccountPrompt from './SetAccountPrompt.svelte';\\r\\n\\timport ForgotPasswordPrompt from './ForgotPasswordPrompt.svelte';\\r\\n\\timport AddTeamMembersPrompt from './AddTeamMembersPrompt.svelte';\\r\\n\\r\\n\\timport { user, curMenu, curPrompt, dontAllowOverlayClose } from '../../models/appModel';\\r\\n\\r\\n\\timport OverlayMenu from './OverlayMenu.svelte';\\r\\n\\timport OverlayPrompt from './OverlayPrompt.svelte';\\r\\n\\r\\n\\timport { createUser, setAccountDetails, sendPasswordReset } from '../../actions/userActions';\\r\\n\\r\\n\\timport { closeOverlay, login } from '../../actions/appActions';\\r\\n\\r\\n    import { menus } from '../../config/menus';\\r\\n    import prompts from '../../config/prompts';\\r\\n\\r\\n    $: menu = $curMenu ? menus[$curMenu] : null;\\r\\n\\t$: prompt = $curPrompt ? prompts[$curPrompt] : null;\\r\\n\\r\\n\\t$: resetPass = $user && $user.resetPass;\\r\\n\\r\\n\\tlet logInDetails;\\r\\n\\tlet logInUpdateMenuItems;\\r\\n\\tfunction logInSubmit() {\\r\\n\\t\\tcloseOverlay();\\r\\n\\t\\tlogin($logInDetails);\\r\\n\\t}\\r\\n\\r\\n\\tlet signUpNewUser;\\r\\n\\tlet signUpUpdateMenuItems;\\r\\n\\tfunction signUpSubmit() {\\r\\n\\t\\tcloseOverlay();\\r\\n\\t\\tcreateUser(signUpNewUser);\\r\\n\\t}\\r\\n\\r\\n\\tlet userDetails;\\r\\n\\tlet setAccountUpdateMenuItems;\\r\\n\\tfunction setAccountSubmit() {\\r\\n\\t\\tcloseOverlay();\\r\\n\\t\\tsetAccountDetails(userDetails, resetPass);\\r\\n\\t}\\r\\n\\r\\n\\tlet forgotPasswordEmail;\\r\\n\\tlet forgotPasswordUpdateMenuItems;\\r\\n\\tfunction forgotPasswordSubmit() {\\r\\n\\t\\tcloseOverlay();\\r\\n\\t\\tsendPasswordReset(forgotPasswordEmail);\\r\\n\\t}\\r\\n\\r\\n\\tlet addTeamMembersList;\\r\\n\\tlet addTeamMembersUpdateMenuItems;\\r\\n\\tfunction addTeamMembersSubmit() {\\r\\n\\t\\tcloseOverlay();\\r\\n\\t\\t// addProjectTeamMembers(addTeamMembersList);\\r\\n\\t}\\r\\n\\r\\n\\tlet removeTeamMembersList;\\r\\n\\tlet removeTeamMembersUpdateMenuItems;\\r\\n\\tfunction removeTeamMembersSubmit() {\\r\\n\\t\\tcloseOverlay();\\r\\n\\t\\t// removeProjectTeamMembers(removeTeamMembersList);\\r\\n\\t}\\r\\n\\r\\n\\t$: canClose = ((menu && menu.allowClose !== false) || (prompt && prompt.allowClose !== false)) && !$dontAllowOverlayClose;\\r\\n\\r\\n\\tfunction close() {\\r\\n\\t\\tif (canClose) {\\r\\n\\t\\t\\tcloseOverlay();\\r\\n\\t\\t}\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n{#if $curMenu || $curPrompt}\\r\\n\\t<div class=\\\"overlayContainer\\\"><div class=\\\"overlayContent\\\">\\r\\n\\t\\t<div class=\\\"overlayBg\\\" class:button=\\\"{canClose}\\\" on:click=\\\"{close}\\\" />\\r\\n\\t\\t{#if $curMenu}\\r\\n\\t\\t\\t<OverlayMenu menuId=\\\"{$curMenu}\\\" />\\r\\n\\t\\t{:else}\\r\\n\\t\\t\\t{#if $curPrompt === promptIds.LOG_IN }\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" onConfirm=\\\"{logInSubmit}\\\" bind:updateMenuItems=\\\"{logInUpdateMenuItems}\\\">\\r\\n\\t\\t\\t\\t\\t<LogInPrompt\\r\\n\\t\\t\\t\\t\\t\\tbind:details=\\\"{logInDetails}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:confirm=\\\"{logInSubmit}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:change=\\\"{logInUpdateMenuItems}\\\"\\r\\n\\t\\t\\t\\t\\t/>\\r\\n\\t\\t\\t\\t</OverlayPrompt>\\r\\n\\t\\t\\t{:else if $curPrompt === promptIds.SIGN_UP }\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" onConfirm=\\\"{signUpSubmit}\\\" bind:updateMenuItems=\\\"{signUpUpdateMenuItems}\\\">\\r\\n\\t\\t\\t\\t\\t<SignUpPrompt\\r\\n\\t\\t\\t\\t\\t\\tbind:newUser=\\\"{signUpNewUser}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:confirm=\\\"{signUpSubmit}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:change=\\\"{signUpUpdateMenuItems}\\\"\\r\\n\\t\\t\\t\\t\\t/>\\r\\n\\t\\t\\t\\t</OverlayPrompt>\\r\\n\\t\\t\\t{:else if $curPrompt === promptIds.SET_ACCOUNT || $curPrompt === promptIds.RESET_PASSWORD }\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" onConfirm=\\\"{setAccountSubmit}\\\" bind:updateMenuItems=\\\"{setAccountUpdateMenuItems}\\\">\\r\\n\\t\\t\\t\\t\\t<SetAccountPrompt\\r\\n\\t\\t\\t\\t\\t\\tbind:userDetails=\\\"{userDetails}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:confirm=\\\"{setAccountSubmit}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:change=\\\"{setAccountUpdateMenuItems}\\\"\\r\\n\\t\\t\\t\\t\\t/>\\r\\n\\t\\t\\t\\t</OverlayPrompt>\\r\\n\\t\\t\\t{:else if $curPrompt === promptIds.FORGOT_PASSWORD }\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" onConfirm=\\\"{forgotPasswordSubmit}\\\" bind:updateMenuItems=\\\"{forgotPasswordUpdateMenuItems}\\\">\\r\\n\\t\\t\\t\\t\\t<ForgotPasswordPrompt\\r\\n\\t\\t\\t\\t\\t\\tbind:email=\\\"{forgotPasswordEmail}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:confirm=\\\"{forgotPasswordSubmit}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:change=\\\"{forgotPasswordUpdateMenuItems}\\\"\\r\\n\\t\\t\\t\\t\\t/>\\r\\n\\t\\t\\t\\t</OverlayPrompt>\\r\\n\\t\\t\\t{:else if $curPrompt === promptIds.ADD_TEAM_MEMBERS || $curPrompt === promptIds.REMOVE_TEAM_MEMBERS}\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" onConfirm=\\\"{addTeamMembersSubmit}\\\" bind:updateMenuItems=\\\"{addTeamMembersUpdateMenuItems}\\\">\\r\\n\\t\\t\\t\\t\\t<AddTeamMembersPrompt\\r\\n\\t\\t\\t\\t\\t\\tbind:email=\\\"{addTeamMembersList}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:confirm=\\\"{addTeamMembersSubmit}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:change=\\\"{addTeamMembersUpdateMenuItems}\\\"\\r\\n\\t\\t\\t\\t\\t/>\\r\\n\\t\\t\\t\\t</OverlayPrompt>\\r\\n\\t\\t\\t{:else if $curPrompt === promptIds.ADD_TEAM_MEMBERS || $curPrompt === promptIds.REMOVE_TEAM_MEMBERS}\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" onConfirm=\\\"{removeTeamMembersSubmit}\\\" bind:updateMenuItems=\\\"{removeTeamMembersUpdateMenuItems}\\\">\\r\\n\\t\\t\\t\\t\\t<AddTeamMembersPrompt\\r\\n\\t\\t\\t\\t\\t\\tbind:email=\\\"{removeTeamMembersList}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:confirm=\\\"{removeTeamMembersSubmit}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:change=\\\"{removeTeamMembersUpdateMenuItems}\\\"\\r\\n\\t\\t\\t\\t\\t/>\\r\\n\\t\\t\\t\\t</OverlayPrompt>\\r\\n\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" />\\r\\n\\t\\t\\t{/if}\\r\\n\\t\\t{/if}\\r\\n\\t</div></div>\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.overlayContainer {\\r\\n\\t\\tposition: absolute;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n\\t\\tz-index: 100;\\r\\n\\t}\\r\\n\\t@media (max-height: 480px) {\\r\\n\\t\\t.overlayContainer {\\r\\n\\t\\t\\tposition: fixed;\\r\\n\\t\\t}\\r\\n\\t}\\r\\n\\r\\n\\t.overlayContent {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\tmin-height: 100%;\\r\\n\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\talign-items: center;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t}\\r\\n\\r\\n\\t.overlayContainer :global(.overlayMenu) {\\r\\n\\t\\tz-index: 101;\\r\\n\\t}\\r\\n\\t.overlayContainer :global(.overlayPrompt) {\\r\\n\\t\\tz-index: 102;\\r\\n    \\tmargin: 20px 0;\\r\\n\\t}\\r\\n\\r\\n\\t.overlayBg {\\r\\n\\t\\tposition: absolute;\\r\\n\\t\\tbackground: rgba(0, 0, 0, 0.5);\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n\\t}\\r\\n\\t.button {\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n</style>\"],\"names\":[],\"mappings\":\"AA2IC,iBAAiB,eAAC,CAAC,AAClB,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,GAAG,AACb,CAAC,AACD,MAAM,AAAC,aAAa,KAAK,CAAC,AAAC,CAAC,AAC3B,iBAAiB,eAAC,CAAC,AAClB,QAAQ,CAAE,KAAK,AAChB,CAAC,AACF,CAAC,AAED,eAAe,eAAC,CAAC,AAChB,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,CACX,UAAU,CAAE,IAAI,CAEhB,OAAO,CAAE,IAAI,CACb,WAAW,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,AACxB,CAAC,AAED,gCAAiB,CAAC,AAAQ,YAAY,AAAE,CAAC,AACxC,OAAO,CAAE,GAAG,AACb,CAAC,AACD,gCAAiB,CAAC,AAAQ,cAAc,AAAE,CAAC,AAC1C,OAAO,CAAE,GAAG,CACT,MAAM,CAAE,IAAI,CAAC,CAAC,AAClB,CAAC,AAED,UAAU,eAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,UAAU,CAAE,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,GAAG,CAAC,CAC9B,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,AACb,CAAC,AACD,OAAO,eAAC,CAAC,AACR,MAAM,CAAE,OAAO,AAChB,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"Overlays.svelte\",\"sources\":[\"Overlays.svelte\"],\"sourcesContent\":[\"<script>\\r\\n\\timport promptIds from '../../config/promptIds';\\r\\n\\r\\n\\timport LogInPrompt from './LogInPrompt.svelte';\\r\\n\\timport SignUpPrompt from './SignUpPrompt.svelte';\\r\\n\\timport SetAccountPrompt from './SetAccountPrompt.svelte';\\r\\n\\timport ForgotPasswordPrompt from './ForgotPasswordPrompt.svelte';\\r\\n\\timport AddTeamMembersPrompt from './AddTeamMembersPrompt.svelte';\\r\\n\\r\\n\\timport { user, curMenu, curPrompt, dontAllowOverlayClose } from '../../models/appModel';\\r\\n\\r\\n\\timport OverlayMenu from './OverlayMenu.svelte';\\r\\n\\timport OverlayPrompt from './OverlayPrompt.svelte';\\r\\n\\r\\n\\timport { createUser, setAccountDetails, sendPasswordReset } from '../../actions/userActions';\\r\\n\\r\\n\\timport { closeOverlay, login } from '../../actions/appActions';\\r\\n\\timport { addProjectTeamMembers, removeProjectTeamMembers} from '../../actions/projectActions';\\r\\n\\r\\n    import { menus } from '../../config/menus';\\r\\n    import prompts from '../../config/prompts';\\r\\n\\r\\n    $: menu = $curMenu ? menus[$curMenu] : null;\\r\\n\\t$: prompt = $curPrompt ? prompts[$curPrompt] : null;\\r\\n\\r\\n\\t$: resetPass = $user && $user.resetPass;\\r\\n\\r\\n\\tlet logInDetails;\\r\\n\\tlet logInUpdateMenuItems;\\r\\n\\tfunction logInSubmit() {\\r\\n\\t\\tcloseOverlay();\\r\\n\\t\\tlogin($logInDetails);\\r\\n\\t}\\r\\n\\r\\n\\tlet signUpNewUser;\\r\\n\\tlet signUpUpdateMenuItems;\\r\\n\\tfunction signUpSubmit() {\\r\\n\\t\\tcloseOverlay();\\r\\n\\t\\tcreateUser(signUpNewUser);\\r\\n\\t}\\r\\n\\r\\n\\tlet userDetails;\\r\\n\\tlet setAccountUpdateMenuItems;\\r\\n\\tfunction setAccountSubmit() {\\r\\n\\t\\tcloseOverlay();\\r\\n\\t\\tsetAccountDetails(userDetails, resetPass);\\r\\n\\t}\\r\\n\\r\\n\\tlet forgotPasswordEmail;\\r\\n\\tlet forgotPasswordUpdateMenuItems;\\r\\n\\tfunction forgotPasswordSubmit() {\\r\\n\\t\\tcloseOverlay();\\r\\n\\t\\tsendPasswordReset(forgotPasswordEmail);\\r\\n\\t}\\r\\n\\r\\n\\tlet addTeamMembersList;\\r\\n\\tlet addTeamMembersUpdateMenuItems;\\r\\n\\tfunction addTeamMembersSubmit() {\\r\\n\\t\\tcloseOverlay();\\r\\n\\t\\taddProjectTeamMembers(addTeamMembersList);\\r\\n\\t}\\r\\n\\r\\n\\tlet removeTeamMembersList;\\r\\n\\tlet removeTeamMembersUpdateMenuItems;\\r\\n\\tfunction removeTeamMembersSubmit() {\\r\\n\\t\\tcloseOverlay();\\r\\n\\t\\tremoveProjectTeamMembers(removeTeamMembersList);\\r\\n\\t}\\r\\n\\r\\n\\t$: canClose = ((menu && menu.allowClose !== false) || (prompt && prompt.allowClose !== false)) && !$dontAllowOverlayClose;\\r\\n\\r\\n\\tfunction close() {\\r\\n\\t\\tif (canClose) {\\r\\n\\t\\t\\tcloseOverlay();\\r\\n\\t\\t}\\r\\n\\t}\\r\\n</script>\\r\\n\\r\\n{#if $curMenu || $curPrompt}\\r\\n\\t<div class=\\\"overlayContainer\\\"><div class=\\\"overlayContent\\\">\\r\\n\\t\\t<div class=\\\"overlayBg\\\" class:button=\\\"{canClose}\\\" on:click=\\\"{close}\\\" />\\r\\n\\t\\t{#if $curMenu}\\r\\n\\t\\t\\t<OverlayMenu menuId=\\\"{$curMenu}\\\" />\\r\\n\\t\\t{:else}\\r\\n\\t\\t\\t{#if $curPrompt === promptIds.LOG_IN }\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" onConfirm=\\\"{logInSubmit}\\\" bind:updateMenuItems=\\\"{logInUpdateMenuItems}\\\">\\r\\n\\t\\t\\t\\t\\t<LogInPrompt\\r\\n\\t\\t\\t\\t\\t\\tbind:details=\\\"{logInDetails}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:confirm=\\\"{logInSubmit}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:change=\\\"{logInUpdateMenuItems}\\\"\\r\\n\\t\\t\\t\\t\\t/>\\r\\n\\t\\t\\t\\t</OverlayPrompt>\\r\\n\\t\\t\\t{:else if $curPrompt === promptIds.SIGN_UP }\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" onConfirm=\\\"{signUpSubmit}\\\" bind:updateMenuItems=\\\"{signUpUpdateMenuItems}\\\">\\r\\n\\t\\t\\t\\t\\t<SignUpPrompt\\r\\n\\t\\t\\t\\t\\t\\tbind:newUser=\\\"{signUpNewUser}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:confirm=\\\"{signUpSubmit}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:change=\\\"{signUpUpdateMenuItems}\\\"\\r\\n\\t\\t\\t\\t\\t/>\\r\\n\\t\\t\\t\\t</OverlayPrompt>\\r\\n\\t\\t\\t{:else if $curPrompt === promptIds.SET_ACCOUNT || $curPrompt === promptIds.RESET_PASSWORD }\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" onConfirm=\\\"{setAccountSubmit}\\\" bind:updateMenuItems=\\\"{setAccountUpdateMenuItems}\\\">\\r\\n\\t\\t\\t\\t\\t<SetAccountPrompt\\r\\n\\t\\t\\t\\t\\t\\tbind:userDetails=\\\"{userDetails}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:confirm=\\\"{setAccountSubmit}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:change=\\\"{setAccountUpdateMenuItems}\\\"\\r\\n\\t\\t\\t\\t\\t/>\\r\\n\\t\\t\\t\\t</OverlayPrompt>\\r\\n\\t\\t\\t{:else if $curPrompt === promptIds.FORGOT_PASSWORD }\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" onConfirm=\\\"{forgotPasswordSubmit}\\\" bind:updateMenuItems=\\\"{forgotPasswordUpdateMenuItems}\\\">\\r\\n\\t\\t\\t\\t\\t<ForgotPasswordPrompt\\r\\n\\t\\t\\t\\t\\t\\tbind:email=\\\"{forgotPasswordEmail}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:confirm=\\\"{forgotPasswordSubmit}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:change=\\\"{forgotPasswordUpdateMenuItems}\\\"\\r\\n\\t\\t\\t\\t\\t/>\\r\\n\\t\\t\\t\\t</OverlayPrompt>\\r\\n\\t\\t\\t{:else if $curPrompt === promptIds.ADD_TEAM_MEMBERS}\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" onConfirm=\\\"{addTeamMembersSubmit}\\\" bind:updateMenuItems=\\\"{addTeamMembersUpdateMenuItems}\\\">\\r\\n\\t\\t\\t\\t\\t<AddTeamMembersPrompt\\r\\n\\t\\t\\t\\t\\t\\tbind:userList=\\\"{addTeamMembersList}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:confirm=\\\"{addTeamMembersSubmit}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:change=\\\"{addTeamMembersUpdateMenuItems}\\\"\\r\\n\\t\\t\\t\\t\\t/>\\r\\n\\t\\t\\t\\t</OverlayPrompt>\\r\\n\\t\\t\\t{:else if $curPrompt === promptIds.REMOVE_TEAM_MEMBERS}\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" onConfirm=\\\"{removeTeamMembersSubmit}\\\" bind:updateMenuItems=\\\"{removeTeamMembersUpdateMenuItems}\\\">\\r\\n\\t\\t\\t\\t\\t<AddTeamMembersPrompt\\r\\n\\t\\t\\t\\t\\t\\tbind:userList=\\\"{removeTeamMembersList}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:confirm=\\\"{removeTeamMembersSubmit}\\\"\\r\\n\\t\\t\\t\\t\\t\\ton:change=\\\"{removeTeamMembersUpdateMenuItems}\\\"\\r\\n\\t\\t\\t\\t\\t/>\\r\\n\\t\\t\\t\\t</OverlayPrompt>\\r\\n\\t\\t\\t{:else}\\r\\n\\t\\t\\t\\t<OverlayPrompt promptId=\\\"{$curPrompt}\\\" />\\r\\n\\t\\t\\t{/if}\\r\\n\\t\\t{/if}\\r\\n\\t</div></div>\\r\\n{/if}\\r\\n\\r\\n<style>\\r\\n\\t.overlayContainer {\\r\\n\\t\\tposition: absolute;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n\\t\\tz-index: 100;\\r\\n\\t}\\r\\n\\t@media (max-height: 480px) {\\r\\n\\t\\t.overlayContainer {\\r\\n\\t\\t\\tposition: fixed;\\r\\n\\t\\t}\\r\\n\\t}\\r\\n\\r\\n\\t.overlayContent {\\r\\n\\t\\tposition: relative;\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\tmin-height: 100%;\\r\\n\\r\\n\\t\\tdisplay: flex;\\r\\n\\t\\talign-items: center;\\r\\n\\t\\tjustify-content: center;\\r\\n\\t}\\r\\n\\r\\n\\t.overlayContainer :global(.overlayMenu) {\\r\\n\\t\\tz-index: 101;\\r\\n\\t}\\r\\n\\t.overlayContainer :global(.overlayPrompt) {\\r\\n\\t\\tz-index: 102;\\r\\n    \\tmargin: 20px 0;\\r\\n\\t}\\r\\n\\r\\n\\t.overlayBg {\\r\\n\\t\\tposition: absolute;\\r\\n\\t\\tbackground: rgba(0, 0, 0, 0.5);\\r\\n\\t\\twidth: 100%;\\r\\n\\t\\theight: 100%;\\r\\n\\t}\\r\\n\\t.button {\\r\\n\\t\\tcursor: pointer;\\r\\n\\t}\\r\\n</style>\"],\"names\":[],\"mappings\":\"AA4IC,iBAAiB,eAAC,CAAC,AAClB,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,CACZ,OAAO,CAAE,GAAG,AACb,CAAC,AACD,MAAM,AAAC,aAAa,KAAK,CAAC,AAAC,CAAC,AAC3B,iBAAiB,eAAC,CAAC,AAClB,QAAQ,CAAE,KAAK,AAChB,CAAC,AACF,CAAC,AAED,eAAe,eAAC,CAAC,AAChB,QAAQ,CAAE,QAAQ,CAClB,KAAK,CAAE,IAAI,CACX,UAAU,CAAE,IAAI,CAEhB,OAAO,CAAE,IAAI,CACb,WAAW,CAAE,MAAM,CACnB,eAAe,CAAE,MAAM,AACxB,CAAC,AAED,gCAAiB,CAAC,AAAQ,YAAY,AAAE,CAAC,AACxC,OAAO,CAAE,GAAG,AACb,CAAC,AACD,gCAAiB,CAAC,AAAQ,cAAc,AAAE,CAAC,AAC1C,OAAO,CAAE,GAAG,CACT,MAAM,CAAE,IAAI,CAAC,CAAC,AAClB,CAAC,AAED,UAAU,eAAC,CAAC,AACX,QAAQ,CAAE,QAAQ,CAClB,UAAU,CAAE,KAAK,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,GAAG,CAAC,CAC9B,KAAK,CAAE,IAAI,CACX,MAAM,CAAE,IAAI,AACb,CAAC,AACD,OAAO,eAAC,CAAC,AACR,MAAM,CAAE,OAAO,AAChB,CAAC\"}"
 };
 
 const Overlays = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
@@ -10684,14 +10981,16 @@ const Overlays = create_ssr_component(($$result, $$props, $$bindings, $$slots) =
 
 	function addTeamMembersSubmit() {
 		closeOverlay();
-	} // addProjectTeamMembers(addTeamMembersList);
+		addProjectTeamMembers(addTeamMembersList);
+	}
 
 	let removeTeamMembersList;
 	let removeTeamMembersUpdateMenuItems;
 
 	function removeTeamMembersSubmit() {
 		closeOverlay();
-	} // removeProjectTeamMembers(removeTeamMembersList);
+		removeProjectTeamMembers(removeTeamMembersList);
+	}
 
 	$$result.css.add(css$d);
 	let $$settled;
@@ -10821,7 +11120,7 @@ const Overlays = create_ssr_component(($$result, $$props, $$bindings, $$slots) =
 										)}`
 									}
 								)}`
-							: `${$curPrompt === promptIds.ADD_TEAM_MEMBERS || $curPrompt === promptIds.REMOVE_TEAM_MEMBERS
+							: `${$curPrompt === promptIds.ADD_TEAM_MEMBERS
 								? `${validate_component(OverlayPrompt, "OverlayPrompt").$$render(
 										$$result,
 										{
@@ -10838,9 +11137,9 @@ const Overlays = create_ssr_component(($$result, $$props, $$bindings, $$slots) =
 										{
 											default: () => `${validate_component(AddTeamMembersPrompt, "AddTeamMembersPrompt").$$render(
 												$$result,
-												{ email: addTeamMembersList },
+												{ userList: addTeamMembersList },
 												{
-													email: $$value => {
+													userList: $$value => {
 														addTeamMembersList = $$value;
 														$$settled = false;
 													}
@@ -10849,7 +11148,7 @@ const Overlays = create_ssr_component(($$result, $$props, $$bindings, $$slots) =
 											)}`
 										}
 									)}`
-								: `${$curPrompt === promptIds.ADD_TEAM_MEMBERS || $curPrompt === promptIds.REMOVE_TEAM_MEMBERS
+								: `${$curPrompt === promptIds.REMOVE_TEAM_MEMBERS
 									? `${validate_component(OverlayPrompt, "OverlayPrompt").$$render(
 											$$result,
 											{
@@ -10866,9 +11165,9 @@ const Overlays = create_ssr_component(($$result, $$props, $$bindings, $$slots) =
 											{
 												default: () => `${validate_component(AddTeamMembersPrompt, "AddTeamMembersPrompt").$$render(
 													$$result,
-													{ email: removeTeamMembersList },
+													{ userList: removeTeamMembersList },
 													{
-														email: $$value => {
+														userList: $$value => {
 															removeTeamMembersList = $$value;
 															$$settled = false;
 														}
@@ -11242,7 +11541,7 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, $$slots) => 
 	let $channelId = get_store_value(channelId);
 	let $channel = get_store_value(channel);
 	let $postId = get_store_value(postId);
-	let $post = get_store_value(post$r);
+	let $post = get_store_value(post$s);
 	let $debugOutput = get_store_value(debugOutput);
 	const { page } = stores$1();
 	$page = get_store_value(page);
@@ -11443,7 +11742,7 @@ ${validate_component(Layout, "Layout").$$render($$result, Object.assign({ segmen
 
 // This file is generated by Sapper — do not edit it!
 
-const ignore = [/^\/api\/updateNotifications\/?$/, /^\/api\/updateConversation\/?$/, /^\/api\/sendPasswordReset\/?$/, /^\/api\/getConversations\/?$/, /^\/api\/getNotifications\/?$/, /^\/api\/unfollowProject\/?$/, /^\/api\/followProject\/?$/, /^\/api\/requestUpload\/?$/, /^\/api\/unlikeProject\/?$/, /^\/api\/updateProject\/?$/, /^\/api\/getChannels\/?$/, /^\/api\/getMessages\/?$/, /^\/api\/getProjects\/?$/, /^\/api\/likeProject\/?$/, /^\/api\/addMessage\/?$/, /^\/api\/addProject\/?$/, /^\/api\/deletePost\/?$/, /^\/api\/followPost\/?$/, /^\/api\/unlikePost\/?$/, /^\/api\/updatePost\/?$/, /^\/api\/updateUser\/?$/, /^\/api\/getPosts\/?$/, /^\/api\/getUsers\/?$/, /^\/api\/likePost\/?$/, /^\/api\/addPost\/?$/, /^\/api\/addUser\/?$/, /^\/api\/login\/?$/];
+const ignore = [/^\/api\/updateNotifications\/?$/, /^\/api\/updateConversation\/?$/, /^\/api\/sendPasswordReset\/?$/, /^\/api\/updateTeamMembers\/?$/, /^\/api\/getConversations\/?$/, /^\/api\/getNotifications\/?$/, /^\/api\/unfollowProject\/?$/, /^\/api\/followProject\/?$/, /^\/api\/requestUpload\/?$/, /^\/api\/unlikeProject\/?$/, /^\/api\/updateProject\/?$/, /^\/api\/getChannels\/?$/, /^\/api\/getMessages\/?$/, /^\/api\/getProjects\/?$/, /^\/api\/likeProject\/?$/, /^\/api\/addMessage\/?$/, /^\/api\/addProject\/?$/, /^\/api\/deletePost\/?$/, /^\/api\/followPost\/?$/, /^\/api\/unlikePost\/?$/, /^\/api\/updatePost\/?$/, /^\/api\/updateUser\/?$/, /^\/api\/getPosts\/?$/, /^\/api\/getUsers\/?$/, /^\/api\/likePost\/?$/, /^\/api\/addPost\/?$/, /^\/api\/addUser\/?$/, /^\/api\/login\/?$/];
 
 const components = [
 	{
@@ -18710,11 +19009,13 @@ const TeamMemberItem = create_ssr_component(($$result, $$props, $$bindings, $$sl
 </div>`;
 });
 
+const img$I = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAYAAACohjseAAADK0lEQVRoQ+2aO28TQRRGT2iBxJEQJbGgpLGEEHS24T/QAUnNQzHQAjG0gG0efSAd/wESOhBCSgpKSEKJkGIHaAF9Eo429uzu7M7sBkaZ1jPX98y9ex8zM0HgYyJwPvYB/3cLF2XBY0AdOA2cBKrAUeDg3w37CXwFNoCPwHvgDfDF94b6BDwCXAIuAGdyKvoOeAm8AL7llLFrmQ9AWesWcBW8fdO/gafAA1erugLeBtoewUaNJtC7wP281swLeAp45uCKWfWV614BPmRdmAfwIvC8QKvFMcial4GlLJBZAW8AD7P8QQFzbwKPbOVmAXSCm52dpdPp0O/36fV6dLtdWx1N86whbQHllgrduUa1WmV9fX1n7WAwoFKp5JIVWaSUlOquNoAKKErENnONSjcaDZaXl3f91mw2WVlZcYHUN6lCIjHw2Cj91jVaFgSozVF0PZu0S2mAynP3XLZZawsElPg7SXkyCVAVimrFtE1I5S8YUK6qWtdYxyYp/xi4lqq9xYSCAaXBE+C6SZU4QBXOqvadrVeCi+ovZEV1K2MFehyAU84b3ckSLKi/NObGOEDnyBmFLAnQGFFNgAoumxaflvWUkgClz8xosDEBOlUtJuoSAceqGxOgt+g5hC0RcCyamgBfAees/c9iYomAr4HzUZVMgJ+A40l61+s6T7IftVptrHuYn59ndXXVXogCw+YmGxuqPWLHZ+BEGuB34JBJhJRaWFhgamoqk2I+J8/NzbG4uBgn8gdwOA3wV1yCV8uj1mcvh/rJ6enpOBWU8A/kBpR7zMwoEu/dWFtbQy4fM6wAE1203W4zOTm5Z4Q+XDQ1yCgqZhnacR1XREer1cocZBSU5KKuQSb4NBF8og++VAu+2NY3HHS7JMDgG97gjyxkRW/RtIRuIvOhkwCDPzYUZNAHv8OKyDmiFuiizkf3ggz+8kWQTtWNrsq2trZ2auTt7W0fTbO367OhYk65URegOhEQrC4//7ULUC+QWVqshLnWt7uSkefuIehHCMONDfoZSdR7gn0IFIUM+ilXFDTYx3imgBfkc0pPWcCvmDxpwq8GBUvbByx4gwsX/weQ8llIQNUgHQAAAABJRU5ErkJggg==";
+
 /* src\routes\_components\ProjectTeamList.svelte generated by Svelte v3.23.0 */
 
 const css$10 = {
 	code: ".content.svelte-6azhy1 .contentItem{width:100%;margin-bottom:10px}.content.svelte-6azhy1 .contentPanel{padding:20px 0}.content.svelte-6azhy1 .contentPanel .panelTitle{padding-left:20px;padding-bottom:10px}.content.svelte-6azhy1 .contentPanel .showMoreButton {padding-left:30px;margin-top:-6px}.content.svelte-6azhy1 .contentPanel .editButton {top:8px;right:5px}.content.svelte-6azhy1 .panelContent{padding:0}.scrollRegion.svelte-6azhy1{white-space:nowrap;overflow-x:scroll;overflow-y:hidden;padding:0 20px;-ms-overflow-style:none}.scrollRegion.svelte-6azhy1::-webkit-scrollbar{display:none}.content.svelte-6azhy1 .addTeamMembersButton{position:absolute;top:8px;right:7px;padding:10px;padding-right:40px;padding-left:10px;font-size:1.3rem;font-weight:700;color:#0D0D0D}.content.svelte-6azhy1 .addTeamMembersButton.canRemove{right:46px}.content.svelte-6azhy1 .addTeamMembersButton .icon{padding-left:12px}",
-	map: "{\"version\":3,\"file\":\"ProjectTeamList.svelte\",\"sources\":[\"ProjectTeamList.svelte\"],\"sourcesContent\":[\"<script>\\n    import ContentPanel from './ContentPanel.svelte';\\n\\n    import TeamMemberItem from './TeamMemberItem.svelte';\\n\\n\\timport AddIcon from \\\"../../assets/icons/add.png\\\";\\n\\n\\timport Proxy from '../../components/Proxy.svelte';\\n    import Hotspot from '../../components/Hotspot.svelte';\\n\\n    import Button from '../../components/Button.svelte';\\n\\n    import { getUser } from '../../models/usersModel';\\n\\n    import { loadProfile } from '../../actions/appActions';\\n\\n    import promptIds from '../../config/promptIds';\\n\\n    import {\\n        showPrompt,\\n    } from '../../actions/appActions';\\n\\n    import {\\n        getIsProjectTeamMember,\\n        showBetaFeatures,\\n        user,\\n    } from '../../models/appModel';\\n\\n    import {\\n        loadUsers,\\n    } from '../../models/usersModel';\\n\\n    export let project = null;\\n\\n    const MAX_TEAM_MEMBERS = 10;\\n\\n\\t$: isTeamMember = $user && getIsProjectTeamMember(project);\\n    $: isNew = (project && project.isNew) || false;\\n\\n\\t$: canEdit = false; // (isTeamMember && !project.archived) || false;\\n\\t$: canRemove = canEdit && teamMembers && teamMembers.length >= 2;\\n\\n    $: teamMembers = (project && project.team) || null;\\n\\n    $: {\\n        if (teamMembers && teamMembers.length) {\\n            loadUsers( { ids: teamMembers } );\\n        }\\n    }\\n\\n    $: areMoreItems = teamMembers && teamMembers.length > MAX_TEAM_MEMBERS;\\n\\n    let proxyImage = 'project_team';\\n    $: {\\n        if (isNew) {\\n            proxyImage = 'project_team_populate';\\n        } else {\\n            if (isTeamMember) {\\n                proxyImage = 'project_team_owner';\\n            } else {\\n                proxyImage = 'project_team';\\n            }\\n        }\\n    }\\n\\n    function addTeamMembers() {\\n\\t\\tshowPrompt(promptIds.ADD_TEAM_MEMBERS);\\n    }\\n\\n    function onEditTeamMembers() {\\n\\t\\tshowPrompt(promptIds.REMOVE_TEAM_MEMBERS);\\n    }\\n</script>\\n\\n{#if teamMembers && teamMembers.length}\\n    <div class=\\\"content\\\">\\n        <!-- <Proxy image=\\\"{proxyImage}\\\" className=\\\"contentItem proxyOverlay\\\" >\\n            <Hotspot onClick=\\\"{e => loadProfile('bl20a8lm')}\\\" style=\\\"\\n                left: 0;\\n                top: 31px;\\n                width: 100%;\\n                height: 56px;\\\" />\\n        </Proxy> -->\\n\\n        <ContentPanel title=\\\"Team\\\" showEdit=\\\"{canRemove}\\\" editAction=\\\"{onEditTeamMembers}\\\" showMoreAction=\\\"{areMoreItems}\\\">\\n            {#if canEdit}\\n                <Button className=\\\"addTeamMembersButton{canRemove ? ' canRemove' : ''}\\\" icon=\\\"{AddIcon}\\\" onClick=\\\"{addTeamMembers}\\\">add team members</Button>\\n            {/if}\\n            <div class=\\\"scrollRegion\\\">\\n                {#each teamMembers as teamMember, index}\\n                    {#if index < MAX_TEAM_MEMBERS}\\n                        <TeamMemberItem user=\\\"{getUser(teamMember)}\\\" />\\n                    {/if}\\n                {/each}\\n            </div>\\n        </ContentPanel>\\n    </div>\\n{/if}\\n\\n<style>\\n\\t.content :global(.contentItem) {\\n\\t\\twidth: 100%;\\n\\n\\t\\tmargin-bottom: 10px;\\n\\t}\\n\\n\\t/* .content :global(.proxyOverlay) {\\n        position: absolute;\\n        opacity: 0.5;\\n\\t} */\\n\\n\\t.content :global(.contentPanel) {\\n        /* background-color: initial; */\\n        padding: 20px 0;\\n\\t}\\n\\n\\t.content :global(.contentPanel .panelTitle) {\\n        padding-left: 20px;\\n        padding-bottom: 10px;\\n\\t}\\n\\t.content :global(.contentPanel .showMoreButton ) {\\n        padding-left: 30px;\\n        margin-top: -6px;\\n\\t}\\n\\t.content :global(.contentPanel .editButton ) {\\n        top: 8px;\\n        right: 5px;\\n\\t}\\n\\n\\t.content :global(.panelContent) {\\n        padding: 0;\\n\\t}\\n\\n    .scrollRegion {\\n        white-space: nowrap;\\n\\n        overflow-x: scroll;\\n        overflow-y: hidden;\\n\\n        /* margin-top: -19px; */\\n        padding: 0 20px;\\n\\n        -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */\\n    }\\n\\t.scrollRegion::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */\\n        display: none;\\n    }\\n\\n    .content :global(.addTeamMembersButton) {\\n        position: absolute;\\n        top: 8px;\\n        right: 7px;\\n        padding: 10px;\\n        padding-right: 40px;\\n        padding-left: 10px;\\n\\n        /* float: right;\\n        margin-right: 40px;\\n        margin-top: 1px; */\\n\\n        font-size: 1.3rem;\\n        font-weight: 700;\\n\\n        color: #0D0D0D;\\n    }\\n\\n    .content :global(.addTeamMembersButton.canRemove) {\\n        right: 46px;\\n    }\\n\\n    .content :global(.addTeamMembersButton .icon) {\\n        padding-left: 12px;\\n    }\\n    \\n</style>\"],\"names\":[],\"mappings\":\"AAoGC,sBAAQ,CAAC,AAAQ,YAAY,AAAE,CAAC,AAC/B,KAAK,CAAE,IAAI,CAEX,aAAa,CAAE,IAAI,AACpB,CAAC,AAOD,sBAAQ,CAAC,AAAQ,aAAa,AAAE,CAAC,AAE1B,OAAO,CAAE,IAAI,CAAC,CAAC,AACtB,CAAC,AAED,sBAAQ,CAAC,AAAQ,yBAAyB,AAAE,CAAC,AACtC,YAAY,CAAE,IAAI,CAClB,cAAc,CAAE,IAAI,AAC3B,CAAC,AACD,sBAAQ,CAAC,AAAQ,8BAA8B,AAAE,CAAC,AAC3C,YAAY,CAAE,IAAI,CAClB,UAAU,CAAE,IAAI,AACvB,CAAC,AACD,sBAAQ,CAAC,AAAQ,0BAA0B,AAAE,CAAC,AACvC,GAAG,CAAE,GAAG,CACR,KAAK,CAAE,GAAG,AACjB,CAAC,AAED,sBAAQ,CAAC,AAAQ,aAAa,AAAE,CAAC,AAC1B,OAAO,CAAE,CAAC,AACjB,CAAC,AAEE,aAAa,cAAC,CAAC,AACX,WAAW,CAAE,MAAM,CAEnB,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,MAAM,CAGlB,OAAO,CAAE,CAAC,CAAC,IAAI,CAEf,kBAAkB,CAAE,IAAI,AAC5B,CAAC,AACJ,2BAAa,mBAAmB,AAAC,CAAC,AAC3B,OAAO,CAAE,IAAI,AACjB,CAAC,AAED,sBAAQ,CAAC,AAAQ,qBAAqB,AAAE,CAAC,AACrC,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,GAAG,CACR,KAAK,CAAE,GAAG,CACV,OAAO,CAAE,IAAI,CACb,aAAa,CAAE,IAAI,CACnB,YAAY,CAAE,IAAI,CAMlB,SAAS,CAAE,MAAM,CACjB,WAAW,CAAE,GAAG,CAEhB,KAAK,CAAE,OAAO,AAClB,CAAC,AAED,sBAAQ,CAAC,AAAQ,+BAA+B,AAAE,CAAC,AAC/C,KAAK,CAAE,IAAI,AACf,CAAC,AAED,sBAAQ,CAAC,AAAQ,2BAA2B,AAAE,CAAC,AAC3C,YAAY,CAAE,IAAI,AACtB,CAAC\"}"
+	map: "{\"version\":3,\"file\":\"ProjectTeamList.svelte\",\"sources\":[\"ProjectTeamList.svelte\"],\"sourcesContent\":[\"<script>\\n    import ContentPanel from './ContentPanel.svelte';\\n\\n    import TeamMemberItem from './TeamMemberItem.svelte';\\n\\n\\timport AddIcon from \\\"../../assets/icons/add.png\\\";\\n\\n\\timport Proxy from '../../components/Proxy.svelte';\\n    import Hotspot from '../../components/Hotspot.svelte';\\n\\n    import Button from '../../components/Button.svelte';\\n\\n    import { getUser } from '../../models/usersModel';\\n\\n    import { loadProfile } from '../../actions/appActions';\\n\\n    import promptIds from '../../config/promptIds';\\n\\n    import {\\n        showPrompt,\\n    } from '../../actions/appActions';\\n\\n    import {\\n        getIsProjectTeamMember,\\n        showBetaFeatures,\\n        user,\\n    } from '../../models/appModel';\\n\\n    import {\\n        loadUsers,\\n    } from '../../models/usersModel';\\n\\n    export let project = null;\\n\\n    const MAX_TEAM_MEMBERS = 10;\\n\\n\\t$: isTeamMember = $user && getIsProjectTeamMember(project);\\n    $: isNew = (project && project.isNew) || false;\\n\\n\\t$: canEdit = (isTeamMember && !project.archived) || false;\\n\\t$: canRemove = canEdit && teamMembers && teamMembers.length >= 2;\\n\\n    $: teamMembers = (project && project.team) || null;\\n\\n    $: {\\n        if (teamMembers && teamMembers.length) {\\n            loadUsers( { ids: teamMembers } );\\n        }\\n    }\\n\\n    $: areMoreItems = teamMembers && teamMembers.length > MAX_TEAM_MEMBERS;\\n\\n    let proxyImage = 'project_team';\\n    $: {\\n        if (isNew) {\\n            proxyImage = 'project_team_populate';\\n        } else {\\n            if (isTeamMember) {\\n                proxyImage = 'project_team_owner';\\n            } else {\\n                proxyImage = 'project_team';\\n            }\\n        }\\n    }\\n\\n    function addTeamMembers() {\\n\\t\\tshowPrompt(promptIds.ADD_TEAM_MEMBERS);\\n    }\\n\\n    function onEditTeamMembers() {\\n\\t\\tshowPrompt(promptIds.REMOVE_TEAM_MEMBERS);\\n    }\\n</script>\\n\\n{#if teamMembers && teamMembers.length}\\n    <div class=\\\"content\\\">\\n        <!-- <Proxy image=\\\"{proxyImage}\\\" className=\\\"contentItem proxyOverlay\\\" >\\n            <Hotspot onClick=\\\"{e => loadProfile('bl20a8lm')}\\\" style=\\\"\\n                left: 0;\\n                top: 31px;\\n                width: 100%;\\n                height: 56px;\\\" />\\n        </Proxy> -->\\n\\n        <ContentPanel title=\\\"Team\\\" showEdit=\\\"{canRemove}\\\" editAction=\\\"{onEditTeamMembers}\\\" showMoreAction=\\\"{areMoreItems}\\\">\\n            {#if canEdit}\\n                <Button className=\\\"addTeamMembersButton{canRemove ? ' canRemove' : ''}\\\" icon=\\\"{AddIcon}\\\" onClick=\\\"{addTeamMembers}\\\">add team members</Button>\\n            {/if}\\n            <div class=\\\"scrollRegion\\\">\\n                {#each teamMembers as teamMember, index}\\n                    {#if index < MAX_TEAM_MEMBERS}\\n                        <TeamMemberItem user=\\\"{getUser(teamMember)}\\\" />\\n                    {/if}\\n                {/each}\\n            </div>\\n        </ContentPanel>\\n    </div>\\n{/if}\\n\\n<style>\\n\\t.content :global(.contentItem) {\\n\\t\\twidth: 100%;\\n\\n\\t\\tmargin-bottom: 10px;\\n\\t}\\n\\n\\t/* .content :global(.proxyOverlay) {\\n        position: absolute;\\n        opacity: 0.5;\\n\\t} */\\n\\n\\t.content :global(.contentPanel) {\\n        /* background-color: initial; */\\n        padding: 20px 0;\\n\\t}\\n\\n\\t.content :global(.contentPanel .panelTitle) {\\n        padding-left: 20px;\\n        padding-bottom: 10px;\\n\\t}\\n\\t.content :global(.contentPanel .showMoreButton ) {\\n        padding-left: 30px;\\n        margin-top: -6px;\\n\\t}\\n\\t.content :global(.contentPanel .editButton ) {\\n        top: 8px;\\n        right: 5px;\\n\\t}\\n\\n\\t.content :global(.panelContent) {\\n        padding: 0;\\n\\t}\\n\\n    .scrollRegion {\\n        white-space: nowrap;\\n\\n        overflow-x: scroll;\\n        overflow-y: hidden;\\n\\n        /* margin-top: -19px; */\\n        padding: 0 20px;\\n\\n        -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */\\n    }\\n\\t.scrollRegion::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */\\n        display: none;\\n    }\\n\\n    .content :global(.addTeamMembersButton) {\\n        position: absolute;\\n        top: 8px;\\n        right: 7px;\\n        padding: 10px;\\n        padding-right: 40px;\\n        padding-left: 10px;\\n\\n        /* float: right;\\n        margin-right: 40px;\\n        margin-top: 1px; */\\n\\n        font-size: 1.3rem;\\n        font-weight: 700;\\n\\n        color: #0D0D0D;\\n    }\\n\\n    .content :global(.addTeamMembersButton.canRemove) {\\n        right: 46px;\\n    }\\n\\n    .content :global(.addTeamMembersButton .icon) {\\n        padding-left: 12px;\\n    }\\n    \\n</style>\"],\"names\":[],\"mappings\":\"AAoGC,sBAAQ,CAAC,AAAQ,YAAY,AAAE,CAAC,AAC/B,KAAK,CAAE,IAAI,CAEX,aAAa,CAAE,IAAI,AACpB,CAAC,AAOD,sBAAQ,CAAC,AAAQ,aAAa,AAAE,CAAC,AAE1B,OAAO,CAAE,IAAI,CAAC,CAAC,AACtB,CAAC,AAED,sBAAQ,CAAC,AAAQ,yBAAyB,AAAE,CAAC,AACtC,YAAY,CAAE,IAAI,CAClB,cAAc,CAAE,IAAI,AAC3B,CAAC,AACD,sBAAQ,CAAC,AAAQ,8BAA8B,AAAE,CAAC,AAC3C,YAAY,CAAE,IAAI,CAClB,UAAU,CAAE,IAAI,AACvB,CAAC,AACD,sBAAQ,CAAC,AAAQ,0BAA0B,AAAE,CAAC,AACvC,GAAG,CAAE,GAAG,CACR,KAAK,CAAE,GAAG,AACjB,CAAC,AAED,sBAAQ,CAAC,AAAQ,aAAa,AAAE,CAAC,AAC1B,OAAO,CAAE,CAAC,AACjB,CAAC,AAEE,aAAa,cAAC,CAAC,AACX,WAAW,CAAE,MAAM,CAEnB,UAAU,CAAE,MAAM,CAClB,UAAU,CAAE,MAAM,CAGlB,OAAO,CAAE,CAAC,CAAC,IAAI,CAEf,kBAAkB,CAAE,IAAI,AAC5B,CAAC,AACJ,2BAAa,mBAAmB,AAAC,CAAC,AAC3B,OAAO,CAAE,IAAI,AACjB,CAAC,AAED,sBAAQ,CAAC,AAAQ,qBAAqB,AAAE,CAAC,AACrC,QAAQ,CAAE,QAAQ,CAClB,GAAG,CAAE,GAAG,CACR,KAAK,CAAE,GAAG,CACV,OAAO,CAAE,IAAI,CACb,aAAa,CAAE,IAAI,CACnB,YAAY,CAAE,IAAI,CAMlB,SAAS,CAAE,MAAM,CACjB,WAAW,CAAE,GAAG,CAEhB,KAAK,CAAE,OAAO,AAClB,CAAC,AAED,sBAAQ,CAAC,AAAQ,+BAA+B,AAAE,CAAC,AAC/C,KAAK,CAAE,IAAI,AACf,CAAC,AAED,sBAAQ,CAAC,AAAQ,2BAA2B,AAAE,CAAC,AAC3C,YAAY,CAAE,IAAI,AACtB,CAAC\"}"
 };
 
 const MAX_TEAM_MEMBERS = 10;
@@ -18722,6 +19023,10 @@ const MAX_TEAM_MEMBERS = 10;
 const ProjectTeamList = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
 	let $user = get_store_value(user);
 	let { project = null } = $$props;
+
+	function addTeamMembers() {
+		showPrompt(promptIds.ADD_TEAM_MEMBERS);
+	}
 
 	function onEditTeamMembers() {
 		showPrompt(promptIds.REMOVE_TEAM_MEMBERS);
@@ -18731,9 +19036,9 @@ const ProjectTeamList = create_ssr_component(($$result, $$props, $$bindings, $$s
 	$$result.css.add(css$10);
 	let isTeamMember = $user && getIsProjectTeamMember(project);
 	let isNew = project && project.isNew || false;
-	let canEdit = false;
+	let canEdit = isTeamMember && !project.archived || false;
 	let teamMembers = project && project.team || null;
-	let canRemove = canEdit  ;
+	let canRemove = canEdit && teamMembers && teamMembers.length >= 2;
 
 	 {
 		{
@@ -18758,7 +19063,18 @@ const ProjectTeamList = create_ssr_component(($$result, $$props, $$bindings, $$s
 			},
 			{},
 			{
-				default: () => `${ ``}
+				default: () => `${canEdit
+				? `${validate_component(Button, "Button").$$render(
+						$$result,
+						{
+							className: "addTeamMembersButton" + (canRemove ? " canRemove" : ""),
+							icon: img$I,
+							onClick: addTeamMembers
+						},
+						{},
+						{ default: () => `add team members` }
+					)}`
+				: ``}
             <div class="${"scrollRegion svelte-6azhy1"}">${each(teamMembers, (teamMember, index) => `${index < MAX_TEAM_MEMBERS
 				? `${validate_component(TeamMemberItem, "TeamMemberItem").$$render($$result, { user: getUser(teamMember) }, {}, {})}`
 				: ``}`)}</div>`
@@ -19337,11 +19653,11 @@ var messages$1 = /*#__PURE__*/Object.freeze({
     'default': Messages$1
 });
 
-const img$I = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAACYUlEQVRYR9WZMYsTQRTHf/FqSTpBtAgoclYBa718A3OtrVp4TRIOtDk5RBsPhKTRQg9S2aqfIKj1kVR3HGcR8BDsEq4+c7zgwmRvNjszO4G8LXffvPnN2zfv/Xe2hLKrpIyXGMD3gQ3gHnAHuA5c/R+IM+APcAwcAN+Bn0WCFAp8C3gKPAJueAKcAp+Bj8Avz7HeEb4G7ALPfCfKsP8AvAL+uvrzifBj4B1QdnXuaDcBtoF9F3tX4PcRo5rFJdHeyoN2Af4KPMxzZD6v1+uMx2OGw6HPMLH9BjQWDcoD9obtdDo0m83ZnN1ul1arFRV6EXBQGkyn0znAUikvJtb1ZKZHljfZYJ98QyP2kYDF1RPbRrQBS+mSQh9UDSICS/WQRjRX8mzAQamQvI2IwOLyUmqkgaWDnYSkwpKAxe1tsyOmgd8Cz1cMeA94kTClgX8HaIO59UVOCfEt2uOmDVhU148i0Y1cJUyUB4nKMyO8A7xeUeCXwBthM4G/5LVFl8UsISVkWum4m2ngQ2DdBWqRzZKAj4C7aeCxrVmY2qDoYhaNF7HU6/Vot9s2M2kilTTwOXDFtBbV1e/3l8l5yXe1WmU0GqXv/wPWcoFrtRqDwWBlga0pIa+p0WhQLgdJC+fFTiaTWUpkyFFrSqjbdOrKmrrGoa41ywZRJX4EWJ28VCfgJcqqPpEEWN1HqECr+sxP2mlQapjyUtptpTITWb6X90FKMoGqo6pgaFF5om8tMjEv0oUPAwulRx5d6nm049bEr6oD7QRa1S8D8w2q+SljS0sVv70891M886Dj8XjT+3u6AOyr3S28YB0TAAAAAElFTkSuQmCC";
+const img$J = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAACYUlEQVRYR9WZMYsTQRTHf/FqSTpBtAgoclYBa718A3OtrVp4TRIOtDk5RBsPhKTRQg9S2aqfIKj1kVR3HGcR8BDsEq4+c7zgwmRvNjszO4G8LXffvPnN2zfv/Xe2hLKrpIyXGMD3gQ3gHnAHuA5c/R+IM+APcAwcAN+Bn0WCFAp8C3gKPAJueAKcAp+Bj8Avz7HeEb4G7ALPfCfKsP8AvAL+uvrzifBj4B1QdnXuaDcBtoF9F3tX4PcRo5rFJdHeyoN2Af4KPMxzZD6v1+uMx2OGw6HPMLH9BjQWDcoD9obtdDo0m83ZnN1ul1arFRV6EXBQGkyn0znAUikvJtb1ZKZHljfZYJ98QyP2kYDF1RPbRrQBS+mSQh9UDSICS/WQRjRX8mzAQamQvI2IwOLyUmqkgaWDnYSkwpKAxe1tsyOmgd8Cz1cMeA94kTClgX8HaIO59UVOCfEt2uOmDVhU148i0Y1cJUyUB4nKMyO8A7xeUeCXwBthM4G/5LVFl8UsISVkWum4m2ngQ2DdBWqRzZKAj4C7aeCxrVmY2qDoYhaNF7HU6/Vot9s2M2kilTTwOXDFtBbV1e/3l8l5yXe1WmU0GqXv/wPWcoFrtRqDwWBlga0pIa+p0WhQLgdJC+fFTiaTWUpkyFFrSqjbdOrKmrrGoa41ywZRJX4EWJ28VCfgJcqqPpEEWN1HqECr+sxP2mlQapjyUtptpTITWb6X90FKMoGqo6pgaFF5om8tMjEv0oUPAwulRx5d6nm049bEr6oD7QRa1S8D8w2q+SljS0sVv70891M886Dj8XjT+3u6AOyr3S28YB0TAAAAAElFTkSuQmCC";
 
-const img$J = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAB6UlEQVRoQ+2YfU0FMRDE5zkAJeAAUAAoAAeAApCAA5CAA8ABDkACoIBMck1eLvcx286+kJfe33ez/e10273dYE+ezZ5woIP8Nye7I92RpAz0rZWU2GrZ7kh16pI+jDpyAOAJwAWANwB3AD5Ma6P2PYBbAF+D9ouqHQFhoFcAx1vi3wDODDBT2gxzCUCCiYA8A7iayFArzBwEQ1H7UHElAsKtdDIjWguzBFFC0XHGXnwiII8AbhbUojAKxA8Avrf6REAoyMwcLagy8KlQMwrE77ADpMMkAsL1O2DsEFxYFKQVJgWiFqQWJg2iBSQKwwtufAeNSy1UE+OPa7bWtoZaM5+ji9QK0epIWYwCs3R8NjlRhFsdaYWxQLgcqYWxQbhB1AOA71khskDWTifGVTuA1dbEXSPFDQWixLbCOIs9AmGHcYAoN/bSFrE40wqiQLCweSE6uubZhLSAqBD8GWOL4voFmISpBYlAlP8JpQOo3mY1IArE3ILSYKIgLRCRDiDsTATEAZEGEwFZGz5Es6hss52Pg6IQEWfs46C5AV0thAKzs3FQK8QaTMrItDSGdOYcwPswcJbmTkIby5p5AHA9jEo5zJbmvhltvLDenFcip1bOCkyqHcSUSJtMd8SWSpNQd8SUSJvM3jjyBzChkjNydQf7AAAAAElFTkSuQmCC";
+const img$K = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAB6UlEQVRoQ+2YfU0FMRDE5zkAJeAAUAAoAAeAApCAA5CAA8ABDkACoIBMck1eLvcx286+kJfe33ez/e10273dYE+ezZ5woIP8Nye7I92RpAz0rZWU2GrZ7kh16pI+jDpyAOAJwAWANwB3AD5Ma6P2PYBbAF+D9ouqHQFhoFcAx1vi3wDODDBT2gxzCUCCiYA8A7iayFArzBwEQ1H7UHElAsKtdDIjWguzBFFC0XHGXnwiII8AbhbUojAKxA8Avrf6REAoyMwcLagy8KlQMwrE77ADpMMkAsL1O2DsEFxYFKQVJgWiFqQWJg2iBSQKwwtufAeNSy1UE+OPa7bWtoZaM5+ji9QK0epIWYwCs3R8NjlRhFsdaYWxQLgcqYWxQbhB1AOA71khskDWTifGVTuA1dbEXSPFDQWixLbCOIs9AmGHcYAoN/bSFrE40wqiQLCweSE6uubZhLSAqBD8GWOL4voFmISpBYlAlP8JpQOo3mY1IArE3ILSYKIgLRCRDiDsTATEAZEGEwFZGz5Es6hss52Pg6IQEWfs46C5AV0thAKzs3FQK8QaTMrItDSGdOYcwPswcJbmTkIby5p5AHA9jEo5zJbmvhltvLDenFcip1bOCkyqHcSUSJtMd8SWSpNQd8SUSJvM3jjyBzChkjNydQf7AAAAAElFTkSuQmCC";
 
-const img$K = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABq0lEQVRoQ+3Y3VHDMBAE4E0FUAIdAB1QAnQAFQAVECqADoAOKAE6oAMogRIyNyMxwZGs1c+dNR75JQ+R7fu0lnzJBis5NitxYEB6S3IkMhJRmoHxaClNbPFlRyLFU8efeAngCcAJgHcANwB+Y6f3msg1gJdJ0V8OI58HR4+QEMIX/gPgPJRMb5A5hMfcA3ieRtIThEFI/Y8Atr1CWITUf+UW/z9LD4nIznRHbmZvAATd3WKXnSlYWKDWKELGLplIM8SSkKaIpSDNETmQYwCnAD7JRRkbpoJgIQ97+7b0OtLzSO+Te6ghGEjs5oJ5zZCoIlIQeXtKGrGDxagjUpBv10LPTXwKY4JIQWQ9HBGPTwxjhkhBpMO8JSAyZIoxRaQgsuV+uG2X8XiMOSIFke9zMQK/YNQAZnsn8hp/w5heKxfD1NAUwSTii2qJaY7IgZQ8ZqFkVBC5kFqMGqIEUopRRZRCcjHqiBoIizFB1EJSGDNEC0gMY4poBfEYafvP3I+ug38CmbdkzRjmzV5zfbNzB8RsqskbjUTIiTIbNhIxm2ryRiMRcqLMhq0mkR0pMVAzrox07wAAAABJRU5ErkJggg==";
+const img$L = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAABq0lEQVRoQ+3Y3VHDMBAE4E0FUAIdAB1QAnQAFQAVECqADoAOKAE6oAMogRIyNyMxwZGs1c+dNR75JQ+R7fu0lnzJBis5NitxYEB6S3IkMhJRmoHxaClNbPFlRyLFU8efeAngCcAJgHcANwB+Y6f3msg1gJdJ0V8OI58HR4+QEMIX/gPgPJRMb5A5hMfcA3ieRtIThEFI/Y8Atr1CWITUf+UW/z9LD4nIznRHbmZvAATd3WKXnSlYWKDWKELGLplIM8SSkKaIpSDNETmQYwCnAD7JRRkbpoJgIQ97+7b0OtLzSO+Te6ghGEjs5oJ5zZCoIlIQeXtKGrGDxagjUpBv10LPTXwKY4JIQWQ9HBGPTwxjhkhBpMO8JSAyZIoxRaQgsuV+uG2X8XiMOSIFke9zMQK/YNQAZnsn8hp/w5heKxfD1NAUwSTii2qJaY7IgZQ8ZqFkVBC5kFqMGqIEUopRRZRCcjHqiBoIizFB1EJSGDNEC0gMY4poBfEYafvP3I+ug38CmbdkzRjmzV5zfbNzB8RsqskbjUTIiTIbNhIxm2ryRiMRcqLMhq0mkR0pMVAzrox07wAAAABJRU5ErkJggg==";
 
 /* src\routes\projects\[project]\details.svelte generated by Svelte v3.23.0 */
 
@@ -19540,7 +19856,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 					{
 						className: "saveButton",
 						onClick: save,
-						icon: img$K,
+						icon: img$L,
 						disabled: !saveEnabled
 					},
 					{},
@@ -19687,7 +20003,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 						$$result,
 						{
 							className: "addImage",
-							icon: img$I,
+							icon: img$J,
 							onClick: () => addImage(0)
 						},
 						{},
@@ -19739,7 +20055,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 						$$result,
 						{
 							className: "addImage",
-							icon: img$I,
+							icon: img$J,
 							onClick: () => addImage(1)
 						},
 						{},
@@ -19790,7 +20106,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 						$$result,
 						{
 							className: "addImage",
-							icon: img$I,
+							icon: img$J,
 							onClick: () => addImage(2)
 						},
 						{},
@@ -19841,7 +20157,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 						$$result,
 						{
 							className: "addImage",
-							icon: img$I,
+							icon: img$J,
 							onClick: () => addImage(3)
 						},
 						{},
@@ -19859,7 +20175,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 					{
 						className: "cancelButton",
 						onClick: cancel,
-						icon: img$J
+						icon: img$K
 					},
 					{},
 					{
@@ -19875,7 +20191,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 						className: "saveButton",
 						onClick: save,
 						disabled: !saveEnabled,
-						icon: img$K
+						icon: img$L
 					},
 					{},
 					{
@@ -19889,7 +20205,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 							className: "saveButton",
 							onClick: save,
 							disabled: !saveEnabled,
-							icon: img$K
+							icon: img$L
 						},
 						{},
 						{
@@ -19902,7 +20218,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 							className: "saveButton",
 							onClick: save,
 							disabled: !saveEnabled,
-							icon: img$K
+							icon: img$L
 						},
 						{},
 						{
@@ -19936,7 +20252,7 @@ var index$5 = /*#__PURE__*/Object.freeze({
     'default': Profile
 });
 
-const img$L = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAA2CAYAAACfkiopAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkJCOTFBM0IyNjcxRjExRUFBRDgwRjVFNTk5QkQ0MkMyIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkJCOTFBM0IzNjcxRjExRUFBRDgwRjVFNTk5QkQ0MkMyIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QkI5MUEzQjA2NzFGMTFFQUFEODBGNUU1OTlCRDQyQzIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QkI5MUEzQjE2NzFGMTFFQUFEODBGNUU1OTlCRDQyQzIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz50mkqLAAAEtklEQVR42uxaS0hVQRg+x0emXk3NVMweElFIuYleVIuColpkQat2PRatItDaRpCLCNqpUUYrq00ERUELF6VCD3t4yUjICiO7lvayutnr9A/9F/5+59wzc+6cK+X54eOec+/MP/PNzP+YX23HcazJKBnWJJWQeEg8JB4SD4n/T5Ll9oNt26o68gC/ADWAZYDFgJ+ALsBNwDvARwNzXQgoBXSS76YAvql0HpeviC9k0CB9EPBKqHJBFLABUORjQxoBPYBRplN81wYoVlU4jl8KxMXq32UTEhN8BhiQLMApQERxnvORnOMBMV5dOomL3XtOJnAbsB6P3nRclGzAfkCMtLusQH6XZIeH0HSuAp5KFqA5HcTzkWhi0JNJjlw+4hZpfxRQKGmbCShhpAXJlZK2JWjrlHxd0MT3kcEuKNpuDtupuS7tOkibK2RB3KSBtI8ls/lUiUeI/b5FQqqyhUzyPOtr447Ro12oqPcs6dcUFPEaMkirjldF2+/DvsOAXPZ7M9G91WOnub8ZJd4+EOL0mK/VjMMi9J0m/WckOea60uPVl/PTzdxqyHOfZt8vgH7yXs1+H8PPZz6Id5HnVUGkrLZkojrywyNaWHhsdcXR5aRL/BF5nuNjglXkecClTa0PvbXMZIwTv0Get6PdqkoFYDk+fwC8Z7/fZ5lblobu+fgZVT8jes5tCnpk0eCJRsgRsoA4IJGBFTAT2slycVVpksR+415d7PBxMtAhRfIi7F0n/dwcUD9p06igdwUJZaO4uJlBZW5C8UsywT2S0MRJn2H5eqHLjWwNXmETbdtIW26WR1jbhnRcUlajh04MegLNoAITE5FUVOIOtJN2jxVst5Hl4DE8woJoPS4Gv6h06pq07UbSoxAxFRBn330F3AO8QHKC9CLWphzwWuEId+DiqsgQjjMcdCEiD3fls8J9mUMkJ9tcLjaZaBZtPvT2EM8eyFEvA3S7DP4ViYlJPAQMJploK0lYqNx0qeBEMZdvwYgQdSlK1AdBfC5zaglcAmzENjOwCFGKiyRC1l6XxWpHv8CrOkOIFnx3kxJ0aDGmt0NW7PBLvEBSTrqDuXuFgh2KRdiB9u2wuMuP/RKNGJ5YuBaJ3pSJT8OMzWFhJmLpSR4uAK+lHUZnSSXbR9rawKo3zakQF6HpAJvoObxb+5VcDGtUZ7Whcvlupnd9Iv7rEhcxbYQo6tbMz5Pl1nGi95qLs/MjTczefe34fraCtYYmVyxJVOZY5oQ6vHm6xEsxLFGHUW5wctnM2R0zqLue+SMt4gVsRzZZZoXn8L2aNTzLI9T9ddPTIb6OdI5rFP90ZDMZY8yw7r/qcDo1t6Xk+QWuomm5xWJymUHdvX4rMDPJ84hmRURVRG3+O3mvNKj7XbICZIaH81EpEqYis60/f1Kmd3JTYrNU2FfNzWaKTMmgFZw4fo867xhP9+QM7ri03KMis7C+leMyeZt8JiPJ21UFdJI8JUvDFq9OwPx6DGWLjs5Rj04A0TfsPWJI71udHb+IV73KNJHulEzwE26ALTEZ1fcuWTHSq9hYRBwbtVHuRBzJu53Etnl78ReWB5aZ/45SKjba4b9th8RD4iHxkHhI/N+X3wIMABGsby6e1oLaAAAAAElFTkSuQmCC";
+const img$M = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAA2CAYAAACfkiopAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkJCOTFBM0IyNjcxRjExRUFBRDgwRjVFNTk5QkQ0MkMyIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkJCOTFBM0IzNjcxRjExRUFBRDgwRjVFNTk5QkQ0MkMyIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6QkI5MUEzQjA2NzFGMTFFQUFEODBGNUU1OTlCRDQyQzIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6QkI5MUEzQjE2NzFGMTFFQUFEODBGNUU1OTlCRDQyQzIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz50mkqLAAAEtklEQVR42uxaS0hVQRg+x0emXk3NVMweElFIuYleVIuColpkQat2PRatItDaRpCLCNqpUUYrq00ERUELF6VCD3t4yUjICiO7lvayutnr9A/9F/5+59wzc+6cK+X54eOec+/MP/PNzP+YX23HcazJKBnWJJWQeEg8JB4SD4n/T5Ll9oNt26o68gC/ADWAZYDFgJ+ALsBNwDvARwNzXQgoBXSS76YAvql0HpeviC9k0CB9EPBKqHJBFLABUORjQxoBPYBRplN81wYoVlU4jl8KxMXq32UTEhN8BhiQLMApQERxnvORnOMBMV5dOomL3XtOJnAbsB6P3nRclGzAfkCMtLusQH6XZIeH0HSuAp5KFqA5HcTzkWhi0JNJjlw+4hZpfxRQKGmbCShhpAXJlZK2JWjrlHxd0MT3kcEuKNpuDtupuS7tOkibK2RB3KSBtI8ls/lUiUeI/b5FQqqyhUzyPOtr447Ro12oqPcs6dcUFPEaMkirjldF2+/DvsOAXPZ7M9G91WOnub8ZJd4+EOL0mK/VjMMi9J0m/WckOea60uPVl/PTzdxqyHOfZt8vgH7yXs1+H8PPZz6Id5HnVUGkrLZkojrywyNaWHhsdcXR5aRL/BF5nuNjglXkecClTa0PvbXMZIwTv0Get6PdqkoFYDk+fwC8Z7/fZ5lblobu+fgZVT8jes5tCnpk0eCJRsgRsoA4IJGBFTAT2slycVVpksR+415d7PBxMtAhRfIi7F0n/dwcUD9p06igdwUJZaO4uJlBZW5C8UsywT2S0MRJn2H5eqHLjWwNXmETbdtIW26WR1jbhnRcUlajh04MegLNoAITE5FUVOIOtJN2jxVst5Hl4DE8woJoPS4Gv6h06pq07UbSoxAxFRBn330F3AO8QHKC9CLWphzwWuEId+DiqsgQjjMcdCEiD3fls8J9mUMkJ9tcLjaZaBZtPvT2EM8eyFEvA3S7DP4ViYlJPAQMJploK0lYqNx0qeBEMZdvwYgQdSlK1AdBfC5zaglcAmzENjOwCFGKiyRC1l6XxWpHv8CrOkOIFnx3kxJ0aDGmt0NW7PBLvEBSTrqDuXuFgh2KRdiB9u2wuMuP/RKNGJ5YuBaJ3pSJT8OMzWFhJmLpSR4uAK+lHUZnSSXbR9rawKo3zakQF6HpAJvoObxb+5VcDGtUZ7Whcvlupnd9Iv7rEhcxbYQo6tbMz5Pl1nGi95qLs/MjTczefe34fraCtYYmVyxJVOZY5oQ6vHm6xEsxLFGHUW5wctnM2R0zqLue+SMt4gVsRzZZZoXn8L2aNTzLI9T9ddPTIb6OdI5rFP90ZDMZY8yw7r/qcDo1t6Xk+QWuomm5xWJymUHdvX4rMDPJ84hmRURVRG3+O3mvNKj7XbICZIaH81EpEqYis60/f1Kmd3JTYrNU2FfNzWaKTMmgFZw4fo867xhP9+QM7ri03KMis7C+leMyeZt8JiPJ21UFdJI8JUvDFq9OwPx6DGWLjs5Rj04A0TfsPWJI71udHb+IV73KNJHulEzwE26ALTEZ1fcuWTHSq9hYRBwbtVHuRBzJu53Etnl78ReWB5aZ/45SKjba4b9th8RD4iHxkHhI/N+X3wIMABGsby6e1oLaAAAAAElFTkSuQmCC";
 
 /* src\routes\_components\ProfileOverview.svelte generated by Svelte v3.23.0 */
 
@@ -20066,7 +20382,7 @@ const ProfileOverview = create_ssr_component(($$result, $$props, $$bindings, $$s
 				{
 					className: "connectButton " + (showConnect ? "isButton" : ""),
 					onClick: showConnect ? userRequestConnection : null,
-					icon: img$L
+					icon: img$M
 				},
 				{},
 				{
@@ -20333,7 +20649,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 				{
 					className: "saveButton",
 					onClick: save,
-					icon: img$K,
+					icon: img$L,
 					disabled: !saveEnabled
 				},
 				{},
@@ -20400,7 +20716,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 				{
 					className: "cancelButton",
 					onClick: cancel,
-					icon: img$J
+					icon: img$K
 				},
 				{},
 				{
@@ -20412,7 +20728,7 @@ ${validate_component(ScrollView, "ScrollView").$$render($$result, {}, {}, {
 				{
 					className: "saveButton",
 					onClick: save,
-					icon: img$K,
+					icon: img$L,
 					disabled: !saveEnabled
 				},
 				{},
@@ -20447,7 +20763,7 @@ var index$7 = /*#__PURE__*/Object.freeze({
     'default': Posts
 });
 
-const img$M = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAA2CAYAAACMRWrdAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNERjRBRTA5OEVBQTExRUFBQkU4QzE5ODQ3NjQwQjQxIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNERjRBRTBBOEVBQTExRUFBQkU4QzE5ODQ3NjQwQjQxIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0RGNEFFMDc4RUFBMTFFQUFCRThDMTk4NDc2NDBCNDEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0RGNEFFMDg4RUFBMTFFQUFCRThDMTk4NDc2NDBCNDEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz64QYgYAAABhUlEQVR42uzY7VHDMAwG4NjJAFkgIRvQEWADNmhXYIJ2hI4AIzABGQE2yGWCDJAP5F7K8aMUKZbKUV796eWSi/q0tmzZTdOUXGP45EoDMMAAAwwwwAADDDDAAAMMsN+JjPugc+7wWVGM47ij64q679p7v2+aptP8UpRiNefIQ462bXfHe9yO37EfJNic8JUu8y+J3tM0vdPCncpB8Uy4jQTmIxMG8O0wDDXdz41QIdZlWT6ZzDH6pbYnEqrhzqA+cUVRbCxgDz8M1cU4BuqYo7KA1Yx5KMZxUXN06jAqEI+cF0twElQoUlRA9uowqnpvVNrvtXBSVKi8Zgu0Fm4JSrqciHcesbhLoMQLtMJQqmJRJjuP2CFF77iJ/acuAltQrpPY4ae+pdKYc5ZzyqRt0cBpb6bV+rEYnDZKvdFcgrNAmXTQEpwVyuxogIOzRJmeeZzDWaPMD3O+wb1Yo1QWaGbPlfd9v8qyrAvYyLVOF/bXAgemgAEGGGCAAQYYYID9O9iHAAMA43prfgVstXUAAAAASUVORK5CYII=";
+const img$N = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAA2CAYAAACMRWrdAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNERjRBRTA5OEVBQTExRUFBQkU4QzE5ODQ3NjQwQjQxIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNERjRBRTBBOEVBQTExRUFBQkU4QzE5ODQ3NjQwQjQxIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Q0RGNEFFMDc4RUFBMTFFQUFCRThDMTk4NDc2NDBCNDEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Q0RGNEFFMDg4RUFBMTFFQUFCRThDMTk4NDc2NDBCNDEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz64QYgYAAABhUlEQVR42uzY7VHDMAwG4NjJAFkgIRvQEWADNmhXYIJ2hI4AIzABGQE2yGWCDJAP5F7K8aMUKZbKUV796eWSi/q0tmzZTdOUXGP45EoDMMAAAwwwwAADDDDAAAMMsN+JjPugc+7wWVGM47ij64q679p7v2+aptP8UpRiNefIQ462bXfHe9yO37EfJNic8JUu8y+J3tM0vdPCncpB8Uy4jQTmIxMG8O0wDDXdz41QIdZlWT6ZzDH6pbYnEqrhzqA+cUVRbCxgDz8M1cU4BuqYo7KA1Yx5KMZxUXN06jAqEI+cF0twElQoUlRA9uowqnpvVNrvtXBSVKi8Zgu0Fm4JSrqciHcesbhLoMQLtMJQqmJRJjuP2CFF77iJ/acuAltQrpPY4ae+pdKYc5ZzyqRt0cBpb6bV+rEYnDZKvdFcgrNAmXTQEpwVyuxogIOzRJmeeZzDWaPMD3O+wb1Yo1QWaGbPlfd9v8qyrAvYyLVOF/bXAgemgAEGGGCAAQYYYID9O9iHAAMA43prfgVstXUAAAAASUVORK5CYII=";
 
 /* src\routes\posts\_components\EditPost.svelte generated by Svelte v3.23.0 */
 
@@ -20459,7 +20775,7 @@ const css$17 = {
 const EditPost = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
 	let $curPath = get_store_value(curPath);
 	let $postId = get_store_value(postId);
-	let $post = get_store_value(post$r);
+	let $post = get_store_value(post$s);
 	let $postType = get_store_value(postType);
 	let $channelId = get_store_value(channelId);
 	let $savingPost = get_store_value(savingPost);
@@ -20728,7 +21044,7 @@ const EditPost = create_ssr_component(($$result, $$props, $$bindings, $$slots) =
 					$$result,
 					{
 						className: "collapsePanel",
-						icon: img$M,
+						icon: img$N,
 						onClick: hide
 					},
 					{},
@@ -20835,7 +21151,7 @@ const EditPost = create_ssr_component(($$result, $$props, $$bindings, $$slots) =
 							$$result,
 							{
 								className: "addImage",
-								icon: img$I,
+								icon: img$J,
 								onClick: addImage
 							},
 							{},
@@ -20885,7 +21201,7 @@ const EditPost = create_ssr_component(($$result, $$props, $$bindings, $$slots) =
 						className: "nextButton",
 						disabled: !nextEnabled,
 						onClick: saveCurrentPost,
-						icon: img$K
+						icon: img$L
 					},
 					{},
 					{
@@ -20920,7 +21236,7 @@ var _new$1 = /*#__PURE__*/Object.freeze({
     'default': New$1
 });
 
-const img$N = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA2CAYAAACbZ/oUAAADaklEQVRoQ+2Zi43UMBCG/6uA6wCoAKgAqACoAKgAqADoACoAOoAKgA6ggrsODioAfVIGzXrt2PHjiLIZabUrbWzP53naOdOJydmJ8WoH3rrFdwvvFt7YDuwu3WDQc0kvJD2Q9FnS+4a5hg3tZeG7kr5KAtoE6CfDNK+cuAdwDNbUuSfpR6VuQ4a1AoewvyX9knRz0vahpG9DNK+ctAU4Bkv8vpN0f9LnraQ3lboNGVYLnILFfbHopoDnYLHKpoBzsJsCLoENgS0OSWS4++X0wQu+DwnSzKSlMVwKy3IfJT0thKFWA/9pyu6Fw+ofKwFeAosmPA+IlaZS7RjDZn0pHVDzXA54KWxKB+ahC+Ob0sV3akNwe0oZVu8uc8C9YFNK35L0WNIzSXciDxHzr3o3Ling0bAhH+u9TMQ+bg44ia9ZYsC43oU7CNAu4obX0ROzNuCvAzLc/HkPa8eAiR9b8DphPSPuTov6KABnM5qOnTFgrMuCCK7Ewv9LiG/Wv+EUwMWxdpXEgP+4mW5PjULV5J0GsfmULJ/YqqFzwGs5zxLbWNo3NFXQMWDf/BMvxM1aJOziFkPHgImbD46QeGHitUgIvejMnarD3sqArh2auzPiPCspYGIGaJ8o1gZNX2D60ZSQYLPNyVxrORKaubPKZczFHDQkVrIwEHdos5I7PNRC0ypyzUNJ4bcdHlLKYC07L6P4z8INoQPketgk64U5YCZaCh0mvdymp/63szLHRSyZEp/EeI5SmvSeEuCl0CgatoS10DbO3mTErnxD157N2qXAS6B9hucah97crnhi4Lg9H9zTvlNnZdweoDAj+/5/NoEtAS6F7nFraRcFqbMyaxCv3tX5bRuVjOWlwCXQPYC9J2B5wGP3ZFgWiyPeysBTpo6kBjgH3RvYlMbdgQrBcXMrR1eOMHoOqAWeg8Ya9uZhxPHSXuf4poi4BdrfmnAnhi4H0gKcgvYLjHyZ5l3Y1qSEWYWIunUr8Bw0tyW4YWtHNVfS7OW7vyDwzx+5dQ9ggw7Pq9mup7U4T+PJ6DQfsZvPo5DqBewTC1a1VyqdmLLTxLpBBh3FcW/grGYDH4hBk8Fx63+yJWCgcG/Koo/pA8atAQMdnqA2Dww09ZcPPffBNfMWLTybJnbggVl0FVPvFl6FGQYqcXIW/gs1ftA35nDwRwAAAABJRU5ErkJggg==";
+const img$O = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA2CAYAAACbZ/oUAAADaklEQVRoQ+2Zi43UMBCG/6uA6wCoAKgAqACoAKgAqADoACoAOoAKgA6ggrsODioAfVIGzXrt2PHjiLIZabUrbWzP53naOdOJydmJ8WoH3rrFdwvvFt7YDuwu3WDQc0kvJD2Q9FnS+4a5hg3tZeG7kr5KAtoE6CfDNK+cuAdwDNbUuSfpR6VuQ4a1AoewvyX9knRz0vahpG9DNK+ctAU4Bkv8vpN0f9LnraQ3lboNGVYLnILFfbHopoDnYLHKpoBzsJsCLoENgS0OSWS4++X0wQu+DwnSzKSlMVwKy3IfJT0thKFWA/9pyu6Fw+ofKwFeAosmPA+IlaZS7RjDZn0pHVDzXA54KWxKB+ahC+Ob0sV3akNwe0oZVu8uc8C9YFNK35L0WNIzSXciDxHzr3o3Ling0bAhH+u9TMQ+bg44ia9ZYsC43oU7CNAu4obX0ROzNuCvAzLc/HkPa8eAiR9b8DphPSPuTov6KABnM5qOnTFgrMuCCK7Ewv9LiG/Wv+EUwMWxdpXEgP+4mW5PjULV5J0GsfmULJ/YqqFzwGs5zxLbWNo3NFXQMWDf/BMvxM1aJOziFkPHgImbD46QeGHitUgIvejMnarD3sqArh2auzPiPCspYGIGaJ8o1gZNX2D60ZSQYLPNyVxrORKaubPKZczFHDQkVrIwEHdos5I7PNRC0ypyzUNJ4bcdHlLKYC07L6P4z8INoQPketgk64U5YCZaCh0mvdymp/63szLHRSyZEp/EeI5SmvSeEuCl0CgatoS10DbO3mTErnxD157N2qXAS6B9hucah97crnhi4Lg9H9zTvlNnZdweoDAj+/5/NoEtAS6F7nFraRcFqbMyaxCv3tX5bRuVjOWlwCXQPYC9J2B5wGP3ZFgWiyPeysBTpo6kBjgH3RvYlMbdgQrBcXMrR1eOMHoOqAWeg8Ya9uZhxPHSXuf4poi4BdrfmnAnhi4H0gKcgvYLjHyZ5l3Y1qSEWYWIunUr8Bw0tyW4YWtHNVfS7OW7vyDwzx+5dQ9ggw7Pq9mup7U4T+PJ6DQfsZvPo5DqBewTC1a1VyqdmLLTxLpBBh3FcW/grGYDH4hBk8Fx63+yJWCgcG/Koo/pA8atAQMdnqA2Dww09ZcPPffBNfMWLTybJnbggVl0FVPvFl6FGQYqcXIW/gs1ftA35nDwRwAAAABJRU5ErkJggg==";
 
 /* src\routes\_components\ThreadPost.svelte generated by Svelte v3.23.0 */
 
@@ -21110,7 +21426,7 @@ const ThreadPost = create_ssr_component(($$result, $$props, $$bindings, $$slots)
 				$$result,
 				{
 					label: "reply",
-					icon: img$N,
+					icon: img$O,
 					action: reply
 				},
 				{},
@@ -21137,7 +21453,7 @@ const DISPLAY_BOTTOM_LINK_POST_COUNT$1 = 3;
 const U5Bpostu5D = create_ssr_component(($$result, $$props, $$bindings, $$slots) => {
 	let $project = get_store_value(project);
 	let $loadingPosts = get_store_value(loadingPosts);
-	let $post = get_store_value(post$r);
+	let $post = get_store_value(post$s);
 	let $postId = get_store_value(postId);
 	let $user = get_store_value(user);
 	let $userId = get_store_value(userId);
@@ -21309,7 +21625,7 @@ const U5Bpostu5D = create_ssr_component(($$result, $$props, $$bindings, $$slots)
 					? `${validate_component(ContentLoader, "ContentLoader").$$render($$result, { label: locale$1.THREAD.NOT_FOUND }, {}, {})}`
 					: `
 
-			<div class="${"scrollContent"}">${validate_component(ThreadPost, "ThreadPost").$$render($$result, { post: post$r }, {}, {})}
+			<div class="${"scrollContent"}">${validate_component(ThreadPost, "ThreadPost").$$render($$result, { post: post$s }, {}, {})}
 				
 				
 
@@ -21332,7 +21648,7 @@ const U5Bpostu5D = create_ssr_component(($$result, $$props, $$bindings, $$slots)
 								$$result,
 								{
 									onClick: reply,
-									icon: img$N,
+									icon: img$O,
 									label: locale$1.THREAD.REPLY
 								},
 								{},
@@ -21420,170 +21736,177 @@ const manifest = {
 		},
 
 		{
+			// api/updateTeamMembers.js
+			pattern: /^\/api\/updateTeamMembers\/?$/,
+			handlers: route_3,
+			params: () => ({})
+		},
+
+		{
 			// api/getConversations.js
 			pattern: /^\/api\/getConversations\/?$/,
-			handlers: route_3,
+			handlers: route_4,
 			params: () => ({})
 		},
 
 		{
 			// api/getNotifications.js
 			pattern: /^\/api\/getNotifications\/?$/,
-			handlers: route_4,
+			handlers: route_5,
 			params: () => ({})
 		},
 
 		{
 			// api/unfollowProject.js
 			pattern: /^\/api\/unfollowProject\/?$/,
-			handlers: route_5,
+			handlers: route_6,
 			params: () => ({})
 		},
 
 		{
 			// api/followProject.js
 			pattern: /^\/api\/followProject\/?$/,
-			handlers: route_6,
+			handlers: route_7,
 			params: () => ({})
 		},
 
 		{
 			// api/requestUpload.js
 			pattern: /^\/api\/requestUpload\/?$/,
-			handlers: route_7,
+			handlers: route_8,
 			params: () => ({})
 		},
 
 		{
 			// api/unlikeProject.js
 			pattern: /^\/api\/unlikeProject\/?$/,
-			handlers: route_8,
+			handlers: route_9,
 			params: () => ({})
 		},
 
 		{
 			// api/updateProject.js
 			pattern: /^\/api\/updateProject\/?$/,
-			handlers: route_9,
+			handlers: route_10,
 			params: () => ({})
 		},
 
 		{
 			// api/getChannels.js
 			pattern: /^\/api\/getChannels\/?$/,
-			handlers: route_10,
+			handlers: route_11,
 			params: () => ({})
 		},
 
 		{
 			// api/getMessages.js
 			pattern: /^\/api\/getMessages\/?$/,
-			handlers: route_11,
+			handlers: route_12,
 			params: () => ({})
 		},
 
 		{
 			// api/getProjects.js
 			pattern: /^\/api\/getProjects\/?$/,
-			handlers: route_12,
+			handlers: route_13,
 			params: () => ({})
 		},
 
 		{
 			// api/likeProject.js
 			pattern: /^\/api\/likeProject\/?$/,
-			handlers: route_13,
+			handlers: route_14,
 			params: () => ({})
 		},
 
 		{
 			// api/addMessage.js
 			pattern: /^\/api\/addMessage\/?$/,
-			handlers: route_14,
+			handlers: route_15,
 			params: () => ({})
 		},
 
 		{
 			// api/addProject.js
 			pattern: /^\/api\/addProject\/?$/,
-			handlers: route_15,
+			handlers: route_16,
 			params: () => ({})
 		},
 
 		{
 			// api/deletePost.js
 			pattern: /^\/api\/deletePost\/?$/,
-			handlers: route_16,
+			handlers: route_17,
 			params: () => ({})
 		},
 
 		{
 			// api/followPost.js
 			pattern: /^\/api\/followPost\/?$/,
-			handlers: route_17,
+			handlers: route_18,
 			params: () => ({})
 		},
 
 		{
 			// api/unlikePost.js
 			pattern: /^\/api\/unlikePost\/?$/,
-			handlers: route_18,
+			handlers: route_19,
 			params: () => ({})
 		},
 
 		{
 			// api/updatePost.js
 			pattern: /^\/api\/updatePost\/?$/,
-			handlers: route_19,
+			handlers: route_20,
 			params: () => ({})
 		},
 
 		{
 			// api/updateUser.js
 			pattern: /^\/api\/updateUser\/?$/,
-			handlers: route_20,
+			handlers: route_21,
 			params: () => ({})
 		},
 
 		{
 			// api/getPosts.js
 			pattern: /^\/api\/getPosts\/?$/,
-			handlers: route_21,
+			handlers: route_22,
 			params: () => ({})
 		},
 
 		{
 			// api/getUsers.js
 			pattern: /^\/api\/getUsers\/?$/,
-			handlers: route_22,
+			handlers: route_23,
 			params: () => ({})
 		},
 
 		{
 			// api/likePost.js
 			pattern: /^\/api\/likePost\/?$/,
-			handlers: route_23,
+			handlers: route_24,
 			params: () => ({})
 		},
 
 		{
 			// api/addPost.js
 			pattern: /^\/api\/addPost\/?$/,
-			handlers: route_24,
+			handlers: route_25,
 			params: () => ({})
 		},
 
 		{
 			// api/addUser.js
 			pattern: /^\/api\/addUser\/?$/,
-			handlers: route_25,
+			handlers: route_26,
 			params: () => ({})
 		},
 
 		{
 			// api/login.js
 			pattern: /^\/api\/login\/?$/,
-			handlers: route_26,
+			handlers: route_27,
 			params: () => ({})
 		}
 	],

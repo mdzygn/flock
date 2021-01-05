@@ -103,6 +103,18 @@ function updateProject(options) {
 	});
 }
 
+// options = { id: string, addTeamMemberUsernames*: [], removeTeamMemberUsernames*: [] }
+function updateTeamMembers(options) {
+	options = addCredentials(options);
+	return send('updateTeamMembers', options).then(result => {
+		if (DEBUG && result && result.error) {
+			console.error('API Error - updateTeamMembers: ', result);
+		}
+		return result;
+		// return Promise.reject(error); // TODO: prevent followups being called
+	});
+}
+
 // options = { details: { userId: id, projectId: id } }
 function followProject(options) {
 	options = addCredentials(options);
@@ -422,6 +434,7 @@ const api = {
 	getProjects,
 	addProject,
 	updateProject,
+	updateTeamMembers,
 
 	followProject,
 	unfollowProject,

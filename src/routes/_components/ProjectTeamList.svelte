@@ -37,7 +37,7 @@
 	$: isTeamMember = $user && getIsProjectTeamMember(project);
     $: isNew = (project && project.isNew) || false;
 
-	$: canEdit = false; // (isTeamMember && !project.archived) || false;
+	$: canEdit = (isTeamMember && !project.archived) || false;
 	$: canRemove = canEdit && teamMembers && teamMembers.length >= 2;
 
     $: teamMembers = (project && project.team) || null;

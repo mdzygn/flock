@@ -45,8 +45,8 @@ export async function post(req, res, next) {
 				tags: true,
 				skills: true,
 				links: true,
-				team: true, // not to allow updating this way, to create separate function
-				posts: true,
+				// team: true, // not to allow updating this way, to create separate function
+				posts: true, // what is this? can remove?
 				// ownerId: true,
 			};
 

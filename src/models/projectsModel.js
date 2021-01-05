@@ -515,6 +515,14 @@ export function updateProject(project, projectDetails, nonModification) {
 	}
 }
 
+export function addTeamMembers(project, teamMemberUsernames) {
+	return api.updateTeamMembers({id: project.id, addTeamMemberUsernames: teamMemberUsernames});
+}
+
+export function removeTeamMembers(project, teamMemberUsernames) {
+	return api.updateTeamMembers({id: project.id, removeTeamMemberUsernames: teamMemberUsernames});
+}
+
 
 export function setLikeProject(targetProject, like) {
 	if (like) {

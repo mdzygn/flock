@@ -29,7 +29,7 @@ const ProjectModel = (projectData) => {
 
         links: [],
         team: [],
-        posts: [],
+        posts: [], // what is this? can remove?
     };
     if (projectData) {
         initData = Object.assign(initData, projectData);

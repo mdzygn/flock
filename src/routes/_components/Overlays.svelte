@@ -15,6 +15,7 @@
 	import { createUser, setAccountDetails, sendPasswordReset } from '../../actions/userActions';
 
 	import { closeOverlay, login } from '../../actions/appActions';
+	import { addProjectTeamMembers, removeProjectTeamMembers} from '../../actions/projectActions';
 
     import { menus } from '../../config/menus';
     import prompts from '../../config/prompts';
@@ -56,14 +57,14 @@
 	let addTeamMembersUpdateMenuItems;
 	function addTeamMembersSubmit() {
 		closeOverlay();
-		// addProjectTeamMembers(addTeamMembersList);
+		addProjectTeamMembers(addTeamMembersList);
 	}
 
 	let removeTeamMembersList;
 	let removeTeamMembersUpdateMenuItems;
 	function removeTeamMembersSubmit() {
 		closeOverlay();
-		// removeProjectTeamMembers(removeTeamMembersList);
+		removeProjectTeamMembers(removeTeamMembersList);
 	}
 
 	$: canClose = ((menu && menu.allowClose !== false) || (prompt && prompt.allowClose !== false)) && !$dontAllowOverlayClose;
@@ -113,18 +114,18 @@
 						on:change="{forgotPasswordUpdateMenuItems}"
 					/>
 				</OverlayPrompt>
-			{:else if $curPrompt === promptIds.ADD_TEAM_MEMBERS || $curPrompt === promptIds.REMOVE_TEAM_MEMBERS}
+			{:else if $curPrompt === promptIds.ADD_TEAM_MEMBERS}
 				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{addTeamMembersSubmit}" bind:updateMenuItems="{addTeamMembersUpdateMenuItems}">
 					<AddTeamMembersPrompt
-						bind:email="{addTeamMembersList}"
+						bind:userList="{addTeamMembersList}"
 						on:confirm="{addTeamMembersSubmit}"
 						on:change="{addTeamMembersUpdateMenuItems}"
 					/>
 				</OverlayPrompt>
-			{:else if $curPrompt === promptIds.ADD_TEAM_MEMBERS || $curPrompt === promptIds.REMOVE_TEAM_MEMBERS}
+			{:else if $curPrompt === promptIds.REMOVE_TEAM_MEMBERS}
 				<OverlayPrompt promptId="{$curPrompt}" onConfirm="{removeTeamMembersSubmit}" bind:updateMenuItems="{removeTeamMembersUpdateMenuItems}">
 					<AddTeamMembersPrompt
-						bind:email="{removeTeamMembersList}"
+						bind:userList="{removeTeamMembersList}"
 						on:confirm="{removeTeamMembersSubmit}"
 						on:change="{removeTeamMembersUpdateMenuItems}"
 					/>

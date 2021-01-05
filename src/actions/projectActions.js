@@ -14,6 +14,8 @@ import ProjectModel, {
     getProject,
     setFollowProject,
     setLikeProject,
+    addTeamMembers,
+    removeTeamMembers,
 } from '../models/projectsModel';
 
 import {
@@ -144,6 +146,46 @@ export function saveProjectDetails(projectDetails, options) {
             }
             resetScrollRegionPosition('project');
         }
+    }
+}
+
+function getTeamMemberList(teamMemberList) {
+    let teamMembers = teamMemberList.split(',');
+    teamMembers = teamMembers.map((item) => item.trim());
+    teamMembers = teamMembers.filter((item) => item.length);
+    return teamMembers;
+}
+
+export function addProjectTeamMembers(teamMemberList) {
+    if (!checkLoggedIn() || !teamMemberList) { return; }
+
+    const teamMembers = getTeamMemberList(teamMemberList);
+
+    console.log('teamMembers ' + teamMembers);
+
+    const curProject = get(project);
+    const result = addTeamMembers(curProject, teamMembers);
+    if (result) {
+        result.then((result) => {
+            if (result && !result.error) {
+                loadProject(curProject.id);
+            }
+        });
+    }
+}
+export function removeProjectTeamMembers(teamMemberList) {
+    if (!checkLoggedIn() || !teamMemberList) { return; }
+
+    const teamMembers = getTeamMemberList(teamMemberList);
+
+    const curProject = get(project);
+    const result = removeTeamMembers(curProject, teamMembers);
+    if (result) {
+        result.then((result) => {
+            if (result && !result.error) {
+                loadProject(curProject.id);
+            }
+        });
     }
 }
 

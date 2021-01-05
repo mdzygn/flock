@@ -216,7 +216,9 @@
 
     .header {
         font-size: 2.2rem;
-        padding-top: 5px;
+        line-height: 2.5rem;
+        padding-top: 8px;
+        padding-bottom: 8px;
         padding-right: 105px;
     }
 

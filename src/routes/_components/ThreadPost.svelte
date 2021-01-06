@@ -240,6 +240,7 @@
 	} */
 
     .threadPost {
+        position: relative;
 		margin-top: 5px;
         background-color: #ffffff;
     }
@@ -279,7 +280,7 @@
     .threadPost :global(.avatarIcon) {
         position: absolute;
         left: 23px;
-        top: 23px;
+        top: 18px;
         height: 65px;
         width: 65px;
     }

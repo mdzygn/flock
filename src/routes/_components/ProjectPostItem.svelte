@@ -17,10 +17,11 @@
 
     // import AvatarIcon from '../_components/AvatarIcon.svelte';
 
-    import ShareIcon from "../../assets/icons/share.png";
-    import LikeIcon from "../../assets/icons/like.png";
-    import LikeSelectedIcon from "../../assets/icons/like_selected.png";
-    import ReplyIcon from "../../assets/icons/reply.png";
+    // import ShareIcon from "../../assets/icons/share.png";
+    // import LikeIcon from "../../assets/icons/like.png";
+    // import LikeSelectedIcon from "../../assets/icons/like_selected.png";
+    // import ReplyIcon from "../../assets/icons/reply.png";
+    import CommentIcon from "../../assets/icons/comment.png";
 	import OptionsMenuIcon from "../../assets/icons/menu.png";
     import FollowIcon from "../../assets/icons/follow.png";
     import FollowSelectedIcon from "../../assets/icons/follow_selected.png";
@@ -79,6 +80,8 @@
     // $: username = ($postUser && $postUser.username && '@' + $postUser.username) || '';
 
     $: projectTitle = ($project && $project.title) || '';
+
+    $: commentsLabel = 'comment' + ($post.postCount >= 1 ? 's' : '');
 
     $: canEdit = ($post && $post.userId && $post.userId === $userId) || false;
 
@@ -179,6 +182,18 @@
 
     {#if !isArchived}
         <ActionBar targetItemId="{postId}" targetItem="{$post}" type="post">
+            <div slot="buttonMiddle">
+                <ActionButton
+                    label = "{commentsLabel}"
+                    icon = "{CommentIcon}"
+
+                    targetItem = "{$post}"
+                    targetItemId = "{postId}"
+                    href = "/posts/{postId}"
+
+                    countProperty= "postCount"
+                />
+            </div>
             <!-- <div slot="buttonLeft">
                 <ActionButton
                     label = "like"

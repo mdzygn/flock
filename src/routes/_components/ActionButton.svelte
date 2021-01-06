@@ -5,6 +5,7 @@
 	export let selectedLabel = null;
 
 	export let action = null;
+	export let href = null;
 	export let icon = null;
 	export let selectedIcon = null;
 
@@ -33,6 +34,7 @@
 	<Button
 		{disabled}
 		icon="{targetItem && targetItemProperty && targetItem[targetItemProperty] ? selectedIcon : icon}"
+		{href}
 		onClick="{action ? (e => action(targetItemId)) : null}"
 		className="{countProperty ? 'buttonContentWithCount' : (icon ? 'buttonContentWithIcon' : null)}"
 		{buttonContentStyle}

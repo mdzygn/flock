@@ -68,7 +68,6 @@
 
 	$: isArchived = ($project && $project.archived) || false;
     $: isTeamMember = $user && $project && getIsProjectTeamMember($project);
-	$: isArchived = ($project && $project.archived) || false;
 
     $: following = ($post && $post.following) || false;
 
@@ -149,7 +148,7 @@
 </script>
 
 <div class="threadPost">
-    <Proxy image="project_post_1" className="postProxy" />
+    <!-- <Proxy image="project_post_1" className="postProxy" /> -->
 
     {#if canEdit || showFollowOption}
         <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showPostOptions}"></Button>
@@ -179,8 +178,8 @@
     {/if}
 
     {#if !isArchived}
-        <ActionBar targetItemId="{postId}" targetItem="{$post}">
-            <div slot="buttonLeft">
+        <ActionBar targetItemId="{postId}" targetItem="{$post}" type="post">
+            <!-- <div slot="buttonLeft">
                 <ActionButton
                     label = "like"
                     icon = "{LikeIcon}"
@@ -210,7 +209,7 @@
 
                     action = "{reply}"
                 />
-            </div>
+            </div> -->
         </ActionBar>
     {/if}
 </div>
@@ -259,9 +258,9 @@
         transform: scale(0.36, 0.36);
 	}
 
-    .button {
+    /* .button {
         cursor: pointer;
-    }
+    } */
 
     /* .threadPost :global(.avatarIcon) {
         position: absolute;
@@ -312,7 +311,8 @@
         /* padding-top: 74px; */
         padding-left: 23px;
         padding-right: 23px;
-        padding-bottom: 22px;
+        padding-bottom: 18px;
+        /* padding-bottom: 22px; */
         /* padding-top: 95px; */
         /* padding-left: 26px;
         padding-right: 40px; */
@@ -378,10 +378,11 @@
 	.postImage {
 		width: 100%;
         background-color: #dedede;
-        margin-bottom: 8px;
+        margin-bottom: 2px;
+        /* margin-bottom: 8px; */
 	}
 
-    .threadPost :global(.actionBar ) {
+    /* .threadPost :global(.actionBar ) {
         position: relative;
     }
 
@@ -449,5 +450,5 @@
     }
     .threadPost :global(.actionContainerButton.actionButtonRight .icon) {
         padding-left: 16px;
-    }
+    } */
 </style>

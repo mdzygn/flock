@@ -14,13 +14,18 @@
 	} from '../../models/appModel';
 
 	import {
-		showShareProjectDialog
+		showShareProjectDialog,
+		showSharePostDialog,
 	} from '../../actions/appActions';
 
 	import {
 		projectToggleFollowing,
 		projectToggleLiked,
 	} from '../../actions/projectActions';
+
+	import {
+		postToggleLiked
+	} from '../../actions/postActions';
 
 	export let targetItemId = null;
 	export let targetItem = null;
@@ -30,6 +35,9 @@
 		switch (type) {
 			case 'project':
 				showShareProjectDialog(targetItemId);
+				break;
+			case 'post':
+				showSharePostDialog(targetItemId);
 				break;
 		}
 	}
@@ -45,10 +53,10 @@
 
 				targetItem = "{targetItem}"
 				targetItemId = "{targetItemId}"
-				action = "{projectToggleLiked}"
+				action = "{type === 'project' ? projectToggleLiked : postToggleLiked}"
 				targetItemProperty = "liked"
 
-				countProperty= "{$showProjectCounts ? 'likeCount' : ''}"
+				countProperty= "{($showProjectCounts || type !== 'project') ? 'likeCount' : ''}"
 			/>
 				<!-- countProperty = "likeCount" -->
 		</slot>
@@ -64,7 +72,7 @@
 
 				targetItem = "{targetItem}"
 				targetItemId = "{targetItemId}"
-				action = "{projectToggleFollowing}"
+				action = "{type === 'project' ? projectToggleFollowing : null}"
 				targetItemProperty = "following"
 
 				buttonContentStyle = "padding-right: 48px;"

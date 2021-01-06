@@ -1,6 +1,9 @@
 <script>
 	import locale from '../../../locale';
 	import config from '../../../config';
+
+	import { writable } from 'svelte/store';
+
 	import { menuIds } from '../../../config/menus';
 	import { getDisplayText } from '../../../utils';
 
@@ -20,6 +23,7 @@
 	import ProjectLinks from '../../_components/ProjectLinks.svelte';
 	import ChannelList from '../../_components/ChannelList.svelte';
 	import ContentLoader from '../../_components/ContentLoader.svelte';
+	import ProjectPostItem from '../../_components/ProjectPostItem.svelte';
 
     import SendMessageIcon from "../../../assets/icons/send.png";
 	import OptionsMenuIcon from "../../../assets/icons/menu.png";
@@ -59,6 +63,10 @@
 		getProjectHasDetails,
 		loadingProjects,
 	} from '../../../models/projectsModel';
+
+	import {
+		getPosts,
+	} from '../../../models/postsModel'
 
 	import {
 		// loadChannel,
@@ -145,6 +153,10 @@
 
 	$: projectHasDetails = getProjectHasDetails($project);
 	$: showInfo = ($projectShowingInfo || forceProjectShowingInfo) && projectHasDetails;
+	
+	let projectPosts = writable([1, 2]);
+	$: { projectPosts = getPosts( { channelId: 'oPK61b2GHC', type: 'thread', sortByCreated: true } ) };
+	// $: { projectPosts = getPosts( { projectId: $projectId, type: 'thread', sortByCreated: true } ) };
 
 	let forceProjectShowingInfo = false;
 	let projectStateLoaded = false;
@@ -283,11 +295,13 @@
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<ChannelList project="{project}" />
 					<!-- {#if $showBetaFeatures} -->
-						{#if canEdit}
-							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{postUpdate}" />
-							 <!-- type="project_post_update" -->
-						{/if}
-					<!-- {/if} -->
+					{#if canEdit}
+						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{postUpdate}" />
+							<!-- type="project_post_update" -->
+					{/if}
+					{#each $projectPosts as post}
+						<ProjectPostItem {post} />
+					{/each}
 				{:else if $projectReturnView}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<ChannelList project="{project}" />
@@ -303,13 +317,16 @@
 					{#if canEdit}
 						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{postUpdate}" />
 					{/if}
-					{#if $showBetaFeatures}
+					{#each $projectPosts as post}
+						<ProjectPostItem {post} />
+					{/each}
+					<!-- {#if $showBetaFeatures}
 						<div>
 							<Proxy image="project_post_1" className="contentItem projectPost" />
 							<Proxy image="project_post_2" className="contentItem projectPost" />
 							<Proxy image="project_post_3" className="contentItem projectPost" />
 						</div>
-					{/if}
+					{/if} -->
 				{:else}
 					<ProjectSkillsList project="{$project}" />
 					<ProjectTeamList project="{$project}" />
@@ -321,14 +338,9 @@
 					{#if canEdit}
 						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{postUpdate}" />
 					{/if}
-					{#if $showBetaFeatures}
-						<div id="post" />
-						<div>
-							<Proxy image="project_post_1" className="contentItem projectPost" />
-							<Proxy image="project_post_2" className="contentItem projectPost" />
-							<Proxy image="project_post_3" className="contentItem projectPost" />
-						</div>
-					{/if}
+					{#each $projectPosts as post}
+						<ProjectPostItem {post} />
+					{/each}
 				{/if}
 			</div>
 
@@ -387,6 +399,7 @@
 	.content {
 		width: 100%;
 
+		padding-bottom: 10px;
     	/* line-height: 0; */
 	}
 

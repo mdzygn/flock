@@ -15,7 +15,7 @@
 	import ActionBar from './ActionBar.svelte';
 	import ActionButton from './ActionButton.svelte';
 
-    import AvatarIcon from '../_components/AvatarIcon.svelte';
+    // import AvatarIcon from '../_components/AvatarIcon.svelte';
 
     import ShareIcon from "../../assets/icons/share.png";
     import LikeIcon from "../../assets/icons/like.png";
@@ -30,7 +30,7 @@
 
 	// import NewPostButton from '../_components/NewPostButton.svelte';
 
-    import { getDisplayText, getDateString, getDateAgeString, secondsDiff } from '../../utils';
+    import { getDisplayText, getDateString, getMessageTime, getDateAgeString, secondsDiff } from '../../utils';
 
     import {
         project,
@@ -68,6 +68,7 @@
 
 	$: isArchived = ($project && $project.archived) || false;
     $: isTeamMember = $user && $project && getIsProjectTeamMember($project);
+	$: isArchived = ($project && $project.archived) || false;
 
     $: following = ($post && $post.following) || false;
 
@@ -75,8 +76,10 @@
     $: postId = ($post && $post.id) || null;
     $: { postUser = getUser(postUserId) };
     $: userLoaded = ($postUser && $postUser.name) || false;
-    $: userName = ($postUser && $postUser.name) || '&nbsp;';
-    $: username = ($postUser && $postUser.username && '@' + $postUser.username) || '';
+    // $: userName = ($postUser && $postUser.name) || '&nbsp;';
+    // $: username = ($postUser && $postUser.username && '@' + $postUser.username) || '';
+
+    $: projectTitle = ($project && $project.title) || '';
 
     $: canEdit = ($post && $post.userId && $post.userId === $userId) || false;
 
@@ -92,7 +95,8 @@
     $: image = ($post && $post.image) || '';
     $: createdAt = ($post && $post.createdAt) || '';
 
-    $: dateString = (createdAt && getDateString(createdAt, 'ddd d MMM') + ' at ' + getDateString(createdAt, 'h:mmtt')) || '&nbsp;';
+    // $: dateString = (createdAt && getDateString(createdAt, 'ddd d MMM') + ' at ' + getDateString(createdAt, 'h:mmtt')) || '&nbsp;';
+    $: dateString = (createdAt && getMessageTime(createdAt)) || '';
 
     $: titleHTML = getDisplayText(title);
     $: messageHTML = getDisplayText(message);
@@ -145,7 +149,7 @@
 </script>
 
 <div class="threadPost">
-    <!-- <Proxy image="project_post_1" className="postProxy" /> -->
+    <Proxy image="project_post_1" className="postProxy" />
 
     {#if canEdit || showFollowOption}
         <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showPostOptions}"></Button>
@@ -155,12 +159,14 @@
     {/if}
 
     <div class="info" on:click="{userLoaded ? viewUserProfile : null}">
-        <div class="userName" class:button="{userLoaded}">{@html userName}</div>
-        <div class="username" class:button="{userLoaded}">{username}</div>
-    </div>
-    <AvatarIcon user="{postUser}" onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" />
-    <div class="postContent">
+        <div class="projectTitle">{projectTitle}</div>
         <div class="date">{@html dateString}{#if showEdited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}</div>
+        <!-- <div class="userName" class:button="{userLoaded}">{@html userName}</div> -->
+        <!-- <div class="username" class:button="{userLoaded}">{username}</div> -->
+    </div>
+    <!-- <AvatarIcon user="{postUser}" onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" /> -->
+    <div class="postContent">
+        <!-- <div class="date">{@html dateString}{#if showEdited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}</div> -->
         {#if title}
             <div class="title">{@html titleHTML}</div>
         {/if}
@@ -210,10 +216,10 @@
 </div>
 
 <style>
-	/* .threadPost :global(.proxyOverlay) {
+	.threadPost :global(.postProxy) {
 		position: absolute;
 		opacity: 0.5;
-	} */
+	}
 
     .threadPost {
         position: relative;
@@ -227,7 +233,8 @@
     .threadPost :global(.optionsButton) {
 		position: absolute;
 
-    	top: 25px;
+        top: 7px;
+    	/* top: 25px; */
         right: 2px;
 
         width: 32px;
@@ -256,22 +263,35 @@
         cursor: pointer;
     }
 
-    .threadPost :global(.avatarIcon) {
+    /* .threadPost :global(.avatarIcon) {
         position: absolute;
         left: 23px;
         top: 18px;
         height: 65px;
         width: 65px;
-    }
+    } */
 
     .info {
         position: absolute;
-        padding-top: 29px;
+        padding-top: 18px;
+        /* padding-top: 24px; */
         padding-right: 100px;
-        padding-left: 104px;
+
+        /* padding-top: 29px;
+        padding-right: 100px;
+        padding-left: 104px; */
+        padding-left: 23px;
     }
 
-    .userName {
+    .projectTitle {
+        font-size: 1.5rem;
+        color: #222222;
+        font-weight: 700;
+
+        user-select: text;
+    }
+
+    /* .userName {
         font-size: 1.7rem;
         color: #222222;
         font-weight: 700;
@@ -285,21 +305,25 @@
         margin-top: -2px;
 
         user-select: text;
-    }
+    } */
 
     .postContent {
-        padding-top: 95px;
+        padding-top: 64px;
+        /* padding-top: 74px; */
         padding-left: 23px;
         padding-right: 23px;
+        padding-bottom: 22px;
+        /* padding-top: 95px; */
         /* padding-left: 26px;
         padding-right: 40px; */
-        padding-bottom: 22px;
     }
 
     .date {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         color: #999999;
+
         padding-bottom: 2px;
+        margin-top: -3px;
 
         user-select: text;
     }

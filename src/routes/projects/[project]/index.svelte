@@ -320,6 +320,7 @@
 					{#each $projectPosts as post}
 						<ProjectPostItem {post} />
 					{/each}
+					<Proxy image="project_post_1" className="contentItem projectPost" />
 					<!-- {#if $showBetaFeatures}
 						<div>
 							<Proxy image="project_post_1" className="contentItem projectPost" />

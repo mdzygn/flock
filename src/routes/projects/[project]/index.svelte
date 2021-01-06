@@ -344,7 +344,7 @@
 				{/if}
 			</div>
 
-			<div slot="scrollHeader">
+			<div slot="scrollHeader"><div class="pageHeader">
 				{#if isArchived}
 					<ArchivedBar onClick="{unarchiveCurrentProject}"/>
 				{:else}
@@ -390,7 +390,7 @@
 						<ActionBar targetItemId="{$projectId}" targetItem="{$project}" />
 					{/if}
 				{/if}
-			</div>
+			</div></div>
 		</ScrollView>
 	{/if}
 </div>
@@ -725,11 +725,11 @@
 		cursor: pointer;
 	}
 
-    .pageContent :global(.actionBar .actionButtonMiddle .buttonContent) {
+    .pageContent :global(.pageHeader .actionBar .actionButtonMiddle .buttonContent) {
         margin-right: -11px;
     }
 
-    .pageContent :global(.actionBar .actionButtonRight .buttonContent) {
+    .pageContent :global(.pageHeader .actionBar .actionButtonRight .buttonContent) {
         margin-right: -20px;
 	}
 

@@ -157,7 +157,7 @@
 	$: showInfo = ($projectShowingInfo || forceProjectShowingInfo) && projectHasDetails;
 	
 	let projectPosts = writable([1, 2]);
-	$: { projectPosts = getPosts( { channelId: 'oPK61b2GHC', type: 'projectPost', sortByCreated: true } ) }; // 'thread'
+	$: { projectPosts = getPosts( { projectId: $projectId, type: 'projectPost', sortByCreated: true } ) }; // 'thread'
 	// $: { projectPosts = getPosts( { projectId: $projectId, type: 'thread', sortByCreated: true } ) };
 
 	let forceProjectShowingInfo = false;

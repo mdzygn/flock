@@ -20,6 +20,7 @@ export async function post(req, res, next) {
 	const id = options && options.id;
 	const channelId = options && options.channelId;
 	const threadId = options && options.threadId;
+	const projectId = options && options.projectId;
 	const getFollowState = options && options.getFollowState;
 
 	const filter = {};
@@ -35,13 +36,16 @@ export async function post(req, res, next) {
 	if (channelId) {
 		filter.channelId = channelId;
 	}
+	if (projectId) {
+		filter.projectId = projectId;
+	}
 	filter.deleted =  { $ne: true };
 
-	if (!(id || threadId || channelId)) {
-		errorResponse(res, {}, {errorMsg: 'post id, threadId or channelId not set'});
+	if (!(id || threadId || channelId || projectId)) {
+		errorResponse(res, {}, {errorMsg: 'post id, threadId, channelId ot projectId not set'});
 		return;
 	}
-	if ((threadId || channelId) && !type) {
+	if ((threadId || channelId || projectId) && !type) {
 		errorResponse(res, {}, {errorMsg: 'type not set'});
 		return;
 	}

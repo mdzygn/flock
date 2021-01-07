@@ -116,11 +116,12 @@ function mergePosts(newPosts) {
 }
 
 export function getPosts(options) {
-	if (options.threadId || options.channelId) {
+	if (options.threadId || options.channelId || options.projectId) {
 		if (curPostFilterOptions && options && (
 			curPostFilterOptions.type !== options.type ||
 			curPostFilterOptions.channelId !== options.channelId ||
-			curPostFilterOptions.threadId !== options.threadId
+			curPostFilterOptions.threadId !== options.threadId ||
+			curPostFilterOptions.projectId !== options.projectId
 		)) {
 			clearFilteredPosts();
 		}
@@ -150,15 +151,16 @@ function clearFilteredPosts() {
 function filterCurrentPosts() {
 	const channelId = curPostFilterOptions && curPostFilterOptions.channelId;
 	const threadId = curPostFilterOptions && curPostFilterOptions.threadId;
+	const projectId = curPostFilterOptions && curPostFilterOptions.projectId;
 	const type = curPostFilterOptions && curPostFilterOptions.type;
 	const sortByCreated = (curPostFilterOptions && curPostFilterOptions.sortByCreated) || false;
 
 	let newFilteredPosts = get(posts);
-	if (channelId || type) {
+	if (channelId || projectId || type) {
 		newFilteredPosts = newFilteredPosts.filter(postModel => {
 			const post = get(postModel);
 			// console.log(post.title + ', ' + post.channelId + ', ' + post.type);
-			return (!type || post.type === type) && (!channelId || post.channelId === channelId) && (!threadId || post.threadId === threadId);
+			return (!type || post.type === type) && (!channelId || post.channelId === channelId) && (!projectId || post.projectId === projectId) && (!threadId || post.threadId === threadId);
 		});
 	}
 	switch (type) {

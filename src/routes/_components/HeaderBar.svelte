@@ -25,6 +25,7 @@
         channelId,
         project,
         post,
+        postType,
         channel,
         conversationGroupId,
         conversation,
@@ -76,8 +77,6 @@
     $: showBack = curSection ? curSection.showBack : false;
     $: isMyProfile = curSection ? (curSection.segment === 'profile') : false;
     // $: sectionLabel = curSection ? curSection.label : '';
-    
-	$: isProjectPost = ($post && $post.type === 'projectPost') || false;
 
 
     $: hasCreated = $project && $project.hasCreated;
@@ -141,7 +140,7 @@
             headerLinkUrl = '';
             overrideParentPath = null;
         } else if (/\/posts\/.+/.test(path)) {
-            if (isProjectPost) {
+            if (($post && $post.type === 'projectPost') || (/\/posts\/new/.test(path) && $postType === 'projectPost')) {
                 hasSuperHeader = false;
                 sectionLabel = ($project && $project.title) || '';
                 headerLinkUrl = '';

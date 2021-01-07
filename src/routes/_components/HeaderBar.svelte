@@ -24,6 +24,7 @@
         projectId,
         channelId,
         project,
+        post,
         channel,
         conversationGroupId,
         conversation,
@@ -75,6 +76,8 @@
     $: showBack = curSection ? curSection.showBack : false;
     $: isMyProfile = curSection ? (curSection.segment === 'profile') : false;
     // $: sectionLabel = curSection ? curSection.label : '';
+    
+	$: isProjectPost = true; // ($post && $post.type === 'project') || false;
 
 
     $: hasCreated = $project && $project.hasCreated;
@@ -88,6 +91,7 @@
     let hasSuperHeader = false;
     let superHeaderLabel = '';
     let headerLinkUrl = '';
+    let overrideParentPath = null;
 
 
     $: {
@@ -135,15 +139,25 @@
                 superHeaderLabel = $project.title;
             }
             headerLinkUrl = '';
+            overrideParentPath = null;
         } else if (/\/posts\/.+/.test(path)) {
-            hasSuperHeader = true;
-            if ($project) {
-                superHeaderLabel = $project.title;
+            if (isProjectPost) {
+                hasSuperHeader = false;
+                sectionLabel = ($project && $project.title) || '';
+                headerLinkUrl = '';
+                overrideParentPath = $projectId ? 'projects/' + $projectId : null;
+            } else {
+                hasSuperHeader = true;
+                if ($project) {
+                    superHeaderLabel = $project.title;
+                }
+                headerLinkUrl = 'channels/' + $channelId;
+                overrideParentPath = null;
             }
-            headerLinkUrl = 'channels/' + $channelId;
         } else {
             hasSuperHeader = false;
             headerLinkUrl = '';
+            overrideParentPath = null;
         }
     }
 
@@ -154,6 +168,8 @@
             goto($lastPreProjectPath);
         } else if (showBack && get(prevPath)) {
             history.back();
+        } else if (overrideParentPath) {
+            goto(overrideParentPath);
         } else if (parentPath) {
             let match;
             if (match = parentPath.match(/\[project\]/)) {

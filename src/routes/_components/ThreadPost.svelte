@@ -73,7 +73,7 @@
 	$: isArchived = ($project && $project.archived) || false;
     $: isTeamMember = $user && $project && getIsProjectTeamMember($project);
 
-	$: isProjectPost = true; // ($project && $project.type === 'project') || false;
+	$: isProjectPost = true; // ($post && $post.type === 'project') || false;
 
     $: following = ($post && $post.following) || false;
 

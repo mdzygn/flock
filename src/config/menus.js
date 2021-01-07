@@ -16,6 +16,7 @@ import promptIds from '../config/promptIds';
 import {
     project,
     post,
+    targetPost,
     userId,
     viewedUser,
     showBetaFeatures,
@@ -195,7 +196,7 @@ export const menus = {
                 label: 'Edit Post',
                 action: editCurrentPost,
                 visible: () => {
-                    const curPost = get(post);
+                    const curPost = get(targetPost);
                     const canEditPost = (curPost && curPost.userId && curPost.userId === get(userId)) || false;
                     return canEditPost;
                     // const curPost = get(post);
@@ -209,7 +210,7 @@ export const menus = {
                     // if (!get(showBetaFeatures)) {
                     //     return;
                     // }
-                    const curPost = get(post);
+                    const curPost = get(targetPost);
                     const canEditPost = (curPost && curPost.userId && curPost.userId === get(userId)) || false;
                     return canEditPost && (!curPost.postCount || curPost.postCount <= 0);
                     // const curPost = get(post);
@@ -219,10 +220,10 @@ export const menus = {
                 // disabled: true,
             },
             {
-                label: () => { const curPost = get(post); return !curPost.following ? 'Follow Post' : 'Unfollow Post' },
-                action: () => { const curPost = get(post); !curPost.following ? followPost(curPost.id) : followPost(curPost.id, true) },
+                label: () => { const curPost = get(targetPost); return !curPost.following ? 'Follow Post' : 'Unfollow Post' },
+                action: () => { const curPost = get(targetPost); !curPost.following ? followPost(curPost.id) : followPost(curPost.id, true) },
                 visible: () => {
-                    const curPost = get(post);
+                    const curPost = get(targetPost);
                     const curProject = get(project);
                     const isTeamMember = (curProject && getIsProjectTeamMember(curProject)) || false;
                     const canEditPost = (curPost && curPost.userId && curPost.userId === get(userId)) || false;

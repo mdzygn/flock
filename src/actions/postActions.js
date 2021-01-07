@@ -53,6 +53,10 @@ export function createPost(postDetails) {
                     case 'threadPost':
                         loadPost(postDetails.threadId, { anchorToBottom: true });
                         break;
+                    case 'projectPost':
+                        loadProject(postDetails.projectId);
+                        // loadPost(postDetails.id);
+                        break;
                 }
             }
         });

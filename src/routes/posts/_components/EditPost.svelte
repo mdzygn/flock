@@ -243,15 +243,22 @@
 				message: trim(message),
 				image,
 				type: $postType,
-				channelId: $channel && $channel.id,
-				projectId: $channel && $channel.projectId,
+				// channelId: $channel && $channel.id,
+				// projectId: $channel && $channel.projectId,
 			};
 			switch ($postType) {
 				case 'thread':
 					postDetails.title = trim(title);
+					postDetails.channelId = $channel && $channel.id;
+					postDetails.projectId = ($channel && $channel.projectId) || $projectId;
 					break;
 				case 'threadPost':
 					postDetails.threadId = $postId;
+					postDetails.channelId = $channel && $channel.id;
+					postDetails.projectId = ($channel && $channel.projectId) || $projectId;
+					break;
+				case 'projectPost':
+					postDetails.projectId = $projectId;
 					break;
 			}
 			let result = createPost(postDetails);

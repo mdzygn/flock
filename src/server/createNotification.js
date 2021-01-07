@@ -51,7 +51,7 @@ async function createNotification(db, details, data, res, completedData) {
                 sendToThreadFollowers = true;
 
                 getThreadTitle = true;
-            } else {
+            } else if (details.channelId) {
                 getChannelTitle = true;
             }
             break;
@@ -219,7 +219,7 @@ async function createNotification(db, details, data, res, completedData) {
         }
     }
 
-    if (getThreadTitle && !threadTitle) {
+    if (getThreadTitle && !threadTitle && details.channelId) {
         getChannelTitle = true;
     }
 

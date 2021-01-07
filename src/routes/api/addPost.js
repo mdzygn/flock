@@ -64,6 +64,9 @@ export async function post(req, res, next) {
 						$inc: { postCount: 1 },
 					});
 					break;
+				case 'projectPost':
+					updateParentCountResult = true;
+					break;
 			}
 
 			if (updateParentCountResult) {
@@ -107,16 +110,16 @@ export async function post(req, res, next) {
 						if (notificationResult && notificationResult !== -1) {
 							response(res, {success: true});
 						} else {
-							errorResponse(res, {addedPost: true}, config.DEBUG ? {errorMsg: 'error creating addPost notification', result: notificationResult} : null);
+							errorResponse(res, {addedPost: true}, {errorMsg: 'error creating addPost notification', result: notificationResult});
 						}
 					} else {
-						errorResponse(res, {addedPost: true});
+						errorResponse(res, {addedPost: true}, {errorMsg: 'project update failed'});
 					}
 				} else {
-					errorResponse(res, {addedPost: true});
+					errorResponse(res, {addedPost: true}, {errorMsg: 'user update failed'});
 				}
 			} else {
-				errorResponse(res, {addedPost: true});
+				errorResponse(res, {addedPost: true}, {errorMsg: 'update parent count failed'});
 			}
 		} else {
 			errorResponse(res, {});

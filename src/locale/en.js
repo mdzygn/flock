@@ -157,9 +157,6 @@ const locale = {
 		ADD_IMAGE: 'add image',
 		REMOVE_IMAGE: 'remove image',
 	},
-	NEW_THREAD_POST: {
-		PAGE_TITLE: 'Reply',
-	},
 	EDIT_THREAD: {
 		PAGE_TITLE: 'Edit Post',
 		CONFIRM: 'Save',
@@ -168,8 +165,17 @@ const locale = {
 		PAGE_TITLE: 'Reply',
 		CONFIRM: 'Reply',
 	},
+	NEW_THREAD_POST: {
+		PAGE_TITLE: 'Reply',
+	},
 	EDIT_THREAD_POST: {
 		PAGE_TITLE: 'Edit Reply',
+	},
+	NEW_PROJECT_POST: {
+		PAGE_TITLE: 'Post Update',
+	},
+	EDIT_PROJECT_POST: {
+		PAGE_TITLE: 'Edit Post',
 	},
 	CHANNEL_DESCRIPTIONS: {
 		ANNOUNCEMENTS: 'Project announcements and news from the team',

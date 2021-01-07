@@ -713,13 +713,23 @@ export function loadCurrentConversation() {
     }
 }
 
-export function newThread() {
-    postType.set('thread');
+export function newProjectPost() {
+    if (!checkLoggedIn()) { return; }
 
+    postType.set('projectPost');
+    goto('posts/new');
+}
+
+export function newThread() {
+    if (!checkLoggedIn()) { return; }
+    
+    postType.set('thread');
     goto('posts/new');
 }
 
 export function newThreadPost() {
+    if (!checkLoggedIn()) { return; }
+
     postType.set('threadPost');
     triggerNewThreadPost();
     // goto('posts/new');

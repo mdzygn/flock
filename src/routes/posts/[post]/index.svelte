@@ -40,7 +40,6 @@
 	import {
 		loadCurrentChannel,
 		loadCurrentPost,
-		checkLoggedIn,
 		newThreadPost,
 	} from '../../../actions/appActions';
 
@@ -105,7 +104,6 @@
 	}
 
     function reply() {
-		if (!checkLoggedIn()) { return; }
 		newThreadPost();
 	}
 

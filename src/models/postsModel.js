@@ -163,6 +163,7 @@ function filterCurrentPosts() {
 	}
 	switch (type) {
 		case 'thread':
+		case 'projectPost':
 			if (sortByCreated) {
 				newFilteredPosts.sort((a,b) => get(b).createdAt - get(a).createdAt ); // sort by reversed created time
 			} else {

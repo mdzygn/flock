@@ -306,6 +306,12 @@ export function getDraftPost(curPostType, draftId, editPost, create, remove) {
                     postArray = curDraftPosts.channels = [];
                 }
                 break;
+            case 'projectPost':
+                postArray = curDraftPosts.projects;
+                if (!postArray && create) {
+                    postArray = curDraftPosts.projects = [];
+                }
+                break;
             default:
                 postArray = curDraftPosts.threads;
                 if (!postArray && create) {

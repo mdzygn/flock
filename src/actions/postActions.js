@@ -8,6 +8,7 @@ import {
     loadChannel,
     // removePostFromChannel,
     loadPost,
+    loadProject,
     showPrompt,
     closeOverlay,
 } from '../actions/appActions';
@@ -68,7 +69,7 @@ export function savePost(postDetails) {
         result = updatePost(curPost, postDetails);
         post.set(curPost);
 
-        if (curPost.type === 'thread') {
+        if (curPost.type === 'thread' || curPost.type === 'projectPost') {
             goto('posts/' + curPost.id);
         } else {
             goto('posts/' + curPost.threadId);
@@ -83,10 +84,13 @@ export function removePost(curPost) {
 
     let result = null;
     if (curPost) {
+        let curProjectId = null;
         let curThreadId = null;
         let curChannelId = null;
 
-        if (curPost.type !== 'thread' && curPost.threadId) {
+        if (curPost.type === 'projectPost' && curPost.projectId) {
+            curProjectId = curPost.projectId;
+        } else if (curPost.type === 'threadPost' && curPost.threadId) {
             curThreadId = curPost.threadId;
         } else if (curPost.channelId) {
             curChannelId = curPost.channelId;
@@ -99,7 +103,12 @@ export function removePost(curPost) {
                 closeOverlay();
                 if (result && !result.error) {
                     // post.set(null); // should do if viewing thread that is post?
-                    if (curThreadId) {
+                    if (curProjectId) {
+                        loadProject(curProjectId); 
+                        setTimeout(() => {
+                            showPrompt(promptIds.DELETE_POST_COMPLETE);
+                        }, 200);
+                    } else if (curThreadId) {
                         // let curPostId = get(postId);
                         // postId.set(curPostId); // force posts list to update in [posts]/index
 

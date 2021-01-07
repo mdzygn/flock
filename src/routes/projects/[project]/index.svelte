@@ -49,6 +49,7 @@
 		projectReturnView,
 		projectShowingInfo,
 		getIsProjectTeamMember,
+		postType,
 		showBetaFeatures,
 		user,
 		userId,
@@ -76,6 +77,7 @@
 		hideProjectInfo,
 		toggleProjectInfo,
 		showProjectFollowers,
+		newProjectPost,
 		showMenu,
 		showTogglePublicDialog,
 	} from '../../../actions/appActions';
@@ -155,7 +157,7 @@
 	$: showInfo = ($projectShowingInfo || forceProjectShowingInfo) && projectHasDetails;
 	
 	let projectPosts = writable([1, 2]);
-	$: { projectPosts = getPosts( { channelId: 'oPK61b2GHC', type: 'thread', sortByCreated: true } ) };
+	$: { projectPosts = getPosts( { channelId: 'oPK61b2GHC', type: 'projectPost', sortByCreated: true } ) }; // 'thread'
 	// $: { projectPosts = getPosts( { projectId: $projectId, type: 'thread', sortByCreated: true } ) };
 
 	let forceProjectShowingInfo = false;
@@ -170,10 +172,6 @@
 				projectStateLoaded = true;
 			}
 		}
-	}
-
-	function postUpdate() {
-
 	}
 
 	// $: {
@@ -296,7 +294,7 @@
 					<ChannelList project="{project}" />
 					<!-- {#if $showBetaFeatures} -->
 					{#if canEdit}
-						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{postUpdate}" />
+						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
 							<!-- type="project_post_update" -->
 					{/if}
 					{#each $projectPosts as post}
@@ -307,7 +305,7 @@
 					<ChannelList project="{project}" />
 					<!-- {#if $showBetaFeatures} -->
 						<!-- {#if canEdit}
-							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{postUpdate}" />
+							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
 						{/if} -->
 					{#if $showBetaFeatures}
 						<ProjectLinks project="{$project}" />
@@ -315,7 +313,7 @@
 					<ProjectSkillsList project="{$project}" />
 					<ProjectTeamList project="{$project}" />
 					{#if canEdit}
-						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{postUpdate}" />
+						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
 					{/if}
 					{#each $projectPosts as post}
 						<ProjectPostItem {post} />
@@ -336,7 +334,7 @@
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<ChannelList project="{project}" />
 					{#if canEdit}
-						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{postUpdate}" />
+						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
 					{/if}
 					{#each $projectPosts as post}
 						<ProjectPostItem {post} />

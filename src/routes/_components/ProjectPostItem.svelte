@@ -49,7 +49,6 @@
 
     import {
         loadProfile,
-        checkLoggedIn,
         newThreadPost,
         showSharePostDialog,
         showMenu,
@@ -130,7 +129,6 @@
     }
 
     function reply() {
-        if (!checkLoggedIn()) { return; }
         newThreadPost();
     }
 

@@ -98,22 +98,34 @@
 
 	$: curPostType = (editPost && $post) ? $post.type : $postType;
 
-	$: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : $postId)) || null;
+	$: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : (curPostType === 'projectPost') ? $projectId : $postId)) || null;
+	// $: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : $postId)) || null;
 
 	$: showTitleField = (curPostType === 'thread');
 
 	$: imageType = (curPostType === 'thread') ? 'image/jpeg' : null;
-	$: useLibrary = (curPostType === 'thread') ? true : false;
+	$: useLibrary = (curPostType === 'thread' || isProjectPost) ? true : false; // TODO: isProjectPost temporary for testing
 
 	$: showImageOption = true; // (curPostType === 'thread');
 
-	$: pageTitle = (curPostType === 'thread') ? (
-        editPost ? locale.EDIT_THREAD.PAGE_TITLE : locale.NEW_THREAD.PAGE_TITLE
+	$: isProjectPost = $postType === 'projectPost';
+	// $: {
+	// 	if (isProjectPost) {
+	// 		addingImage = true;
+	// 	}
+	// }
+
+	$: pageTitle = (curPostType === 'projectPost') ? (
+        editPost ? locale.EDIT_PROJECT_POST.PAGE_TITLE : locale.NEW_PROJECT_POST.PAGE_TITLE
     ) : (
-		(inlineComponent) ? (
-			locale.REPLY_THREAD.PAGE_TITLE
+		(curPostType === 'thread') ? (
+        editPost ? locale.EDIT_THREAD.PAGE_TITLE : locale.NEW_THREAD.PAGE_TITLE
 		) : (
-			editPost ? locale.EDIT_THREAD_POST.PAGE_TITLE : locale.NEW_THREAD_POST.PAGE_TITLE
+			(inlineComponent) ? (
+				locale.REPLY_THREAD.PAGE_TITLE
+			) : (
+				editPost ? locale.EDIT_THREAD_POST.PAGE_TITLE : locale.NEW_THREAD_POST.PAGE_TITLE
+			)
 		)
 	);
 
@@ -342,7 +354,7 @@
 </script>
 
 {#if !editPost || $post }
-    <div class="editPostContent" bind:this="{element}" class:inlineComponent="{inlineComponent}">
+    <div class="editPostContent" class:isProjectPost="{isProjectPost}" bind:this="{element}" class:inlineComponent="{inlineComponent}">
         <!-- <Proxy image="create_project" className="proxyOverlay" /> -->
         <div class="panelContent" class:showImage="{imageShown}">
 			{#if inlineComponent}
@@ -479,6 +491,10 @@
     	margin-top: 4px;
 
 		resize: none;
+	}
+	
+	.isProjectPost textarea {
+    	height: 70px;
 	}
 
 	.titleField {

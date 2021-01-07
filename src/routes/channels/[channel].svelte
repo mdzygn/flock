@@ -29,7 +29,6 @@
 		loadCurrentChannel,
 		newThread,
 		loadPost,
-		checkLoggedIn,
 	} from '../../actions/appActions';
 
 	import {
@@ -76,7 +75,6 @@
 
 	function newPost(event) {
 		if (!canPost) { return; }
-		if (!checkLoggedIn()) { return; }
 
 		newThread();
 	}

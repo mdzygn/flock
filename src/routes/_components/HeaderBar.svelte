@@ -77,7 +77,7 @@
     $: isMyProfile = curSection ? (curSection.segment === 'profile') : false;
     // $: sectionLabel = curSection ? curSection.label : '';
     
-	$: isProjectPost = true; // ($post && $post.type === 'project') || false;
+	$: isProjectPost = ($post && $post.type === 'projectPost') || false;
 
 
     $: hasCreated = $project && $project.hasCreated;

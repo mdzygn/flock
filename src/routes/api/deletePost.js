@@ -1,4 +1,4 @@
-import { init, response, validateCredentials, filterItemDetails } from '../../server/mongo.js';
+import { init, response, errorResponse, validateCredentials, filterItemDetails } from '../../server/mongo.js';
 
 export async function post(req, res, next) {
 	const { db } = await init();
@@ -40,6 +40,9 @@ export async function post(req, res, next) {
 								$inc: { postCount: -1 },
 							});
 							break;
+						case 'projectPost':
+							updateParentCountResult = true;
+							break;
 					}
 
 					if (updateParentCountResult) {
@@ -55,13 +58,13 @@ export async function post(req, res, next) {
 
 								response(res, {success: true});
 							} else {
-								errorResponse(res, {deletedPost: true});
+								errorResponse(res, {deletedPost: true}, {errorMsg: 'project post count update failed'});
 							}
 						} else {
-							errorResponse(res, {deletedPost: true});
+							errorResponse(res, {deletedPost: true}, {errorMsg: 'user post count update failed'});
 						}
 					} else {
-						errorResponse(res, {deletedPost: true});
+						errorResponse(res, {deletedPost: true}, {errorMsg: 'parent post count update failed'});
 					}
 				} else {
 					errorResponse(res, {});

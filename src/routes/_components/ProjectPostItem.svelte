@@ -158,7 +158,7 @@
         <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showPostOptions}"></Button>
     {/if}
 
-    <div class="info" on:click="{userLoaded ? viewUserProfile : null}">
+    <div class="info">
         <div class="projectTitle">{projectTitle}</div>
         <div class="date">{@html dateString}{#if showEdited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}</div>
         <!-- <div class="userName" class:button="{userLoaded}">{@html userName}</div> -->

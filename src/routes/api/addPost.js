@@ -113,13 +113,13 @@ export async function post(req, res, next) {
 							errorResponse(res, {addedPost: true}, {errorMsg: 'error creating addPost notification', result: notificationResult});
 						}
 					} else {
-						errorResponse(res, {addedPost: true}, {errorMsg: 'project update failed'});
+						errorResponse(res, {addedPost: true}, {errorMsg: 'project post count update failed'});
 					}
 				} else {
-					errorResponse(res, {addedPost: true}, {errorMsg: 'user update failed'});
+					errorResponse(res, {addedPost: true}, {errorMsg: 'user post count update failed'});
 				}
 			} else {
-				errorResponse(res, {addedPost: true}, {errorMsg: 'update parent count failed'});
+				errorResponse(res, {addedPost: true}, {errorMsg: 'update parent post count failed'});
 			}
 		} else {
 			errorResponse(res, {});

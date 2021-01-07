@@ -170,15 +170,17 @@
         <Button className="followButton" onClick="{toggleFollowPost}" icon="{following ? FollowSelectedIcon : FollowIcon}" />
     {/if}
 
-    <div class="info" on:click="{userLoaded ? viewUserProfile : null}">
-        {#if isProjectPost}
+    {#if isProjectPost}
+        <div class="info">
             <div class="projectTitle">{projectTitle}</div>
             <div class="date">{@html dateString}{#if showEdited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}</div>
-        {:else}
+        </div>
+    {:else}
+        <div class="info" on:click="{userLoaded ? viewUserProfile : null}">
             <div class="userName" class:button="{userLoaded}">{@html userName}</div>
             <div class="username" class:button="{userLoaded}">{username}</div>
-        {/if}
-    </div>
+        </div>
+    {/if}
     {#if isProjectPost}
         <img class="projectThumb" src="{projectThumbImage}" alt="{projectTitle}" />
     {:else}

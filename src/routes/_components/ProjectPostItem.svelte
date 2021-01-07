@@ -90,15 +90,13 @@
 
     $: canEdit = ($post && $post.userId && $post.userId === $userId) || false;
 
-    $: showFollowOption = !canEdit && !isTeamMember;
-
     $: showEdited = ($post && $post.edited && secondsDiff($post.createdAt, $post.editedAt) > config.SHOW_EDITED_MIN_TIME) || false;
     $: editedDate = (showEdited && $post.editedAt && getDateString($post.editedAt)) || '';
 
     // $: console.log('thread diff', secondsDiff($post.createdAt, $post.editedAt));
 
     $: title = ($post && $post.title) || '';
-    $: message = ($post && $post.message) || '';
+    $: message = ($post && ($post.message || $post.title)) || '';
     $: image = ($post && $post.image) || '';
     $: createdAt = ($post && $post.createdAt) || '';
 
@@ -158,11 +156,8 @@
 <div class="threadPost">
     <!-- <Proxy image="project_post_1" className="postProxy" /> -->
 
-    {#if canEdit || showFollowOption}
+    {#if canEdit}
         <Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showPostOptions}"></Button>
-    {/if}
-    {#if showFollowOption}
-        <Button className="followButton" onClick="{toggleFollowPost}" icon="{following ? FollowSelectedIcon : FollowIcon}" />
     {/if}
 
     <div class="info" on:click="{userLoaded ? viewUserProfile : null}">
@@ -177,9 +172,9 @@
     <!-- <AvatarIcon user="{postUser}" onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" /> -->
     <div class="postContent">
         <!-- <div class="date">{@html dateString}{#if showEdited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}</div> -->
-        {#if title}
+        <!-- {#if title}
             <div class="title">{@html titleHTML}</div>
-        {/if}
+        {/if} -->
         {#if message}
             <div class="message">{@html messageHTML}</div>
         {/if}
@@ -266,19 +261,6 @@
     .threadPost :global(.optionsButton .icon) {
         margin-left: 11px;
         transform: scale(0.45, 0.45);
-	}
-
-    .threadPost :global(.followButton) {
-        position: absolute;
-        top: 30px;
-        right: 33px;
-        width: 24px;
-        height: 26px;
-        padding: 3px 3px;
-	}
-    .threadPost :global(.followButton .icon) {
-        margin-left: 2px;
-        transform: scale(0.36, 0.36);
 	}
 
     /* .button {
@@ -370,7 +352,7 @@
         user-select: none;
     }
 
-    .title {
+    /* .title {
         font-size: 1.9rem;
         line-height: 2rem;
         color: #000000;
@@ -382,14 +364,10 @@
         
         overflow-wrap: break-word;
         word-wrap: break-word;
-
-        /* white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis; */
     }
     .title :global(a) {
         user-select: text;
-    }
+    } */
 
     .message {
         font-size: 1.5rem;

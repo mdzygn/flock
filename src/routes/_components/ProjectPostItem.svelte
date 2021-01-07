@@ -267,9 +267,17 @@
         cursor: pointer;
     } */
 
+    /* .threadPost :global(.avatarIcon) {
+        position: absolute;
+        left: 23px;
+        top: 18px;
+        height: 65px;
+        width: 65px;
+    } */
+
     .thumb {
-        width: 30px;
-        height: 30px;
+        width: 27px;
+        height: 27px;
         position: absolute;
         margin-top: 23px;
         margin-left: 23px;
@@ -279,19 +287,11 @@
         border: 1px solid #D9D9D9;
     }
 
-    /* .threadPost :global(.avatarIcon) {
-        position: absolute;
-        left: 23px;
-        top: 18px;
-        height: 65px;
-        width: 65px;
-    } */
-
     .info {
         position: absolute;
 
-        padding-top: 21px;
-        padding-left: 68px;
+        padding-top: 19px;
+        padding-left: 62px;
         padding-right: 100px;
     }
 

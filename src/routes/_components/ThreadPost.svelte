@@ -59,6 +59,10 @@
         getPost,
     } from '../../models/postsModel';
 
+	import {
+        getProjectHeaderImage,
+	} from '../../models/projectsModel';
+
 
     import { getUser } from '../../models/usersModel';
 
@@ -69,6 +73,8 @@
 	$: isArchived = ($project && $project.archived) || false;
     $: isTeamMember = $user && $project && getIsProjectTeamMember($project);
 
+	$: isProjectPost = true; // ($project && $project.type === 'project') || false;
+
     $: following = ($post && $post.following) || false;
 
     $: postUserId = ($post && $post.userId) || null;
@@ -77,6 +83,9 @@
     $: userLoaded = ($postUser && $postUser.name) || false;
     $: userName = ($postUser && $postUser.name) || '&nbsp;';
     $: username = ($postUser && $postUser.username && '@' + $postUser.username) || '';
+
+    $: projectTitle = ($project && $project.title) || '';
+    $: projectThumbImage = (isProjectPost && ($project && getProjectHeaderImage($project, true))) || null;
 
     $: canEdit = ($post && $post.userId && $post.userId === $userId) || false;
 
@@ -144,7 +153,7 @@
     }
 </script>
 
-<div class="threadPost">
+<div class="threadPost" class:isProjectPost="{isProjectPost}">
     <!-- <div class="proxyOverlay">
         <Proxy image="thread_post" className="proxyTheadPost">
             <Hotspot onClick="{e => loadProfile('bl20a8lm')}" style="
@@ -164,12 +173,23 @@
     {/if}
 
     <div class="info" on:click="{userLoaded ? viewUserProfile : null}">
-        <div class="userName" class:button="{userLoaded}">{@html userName}</div>
-        <div class="username" class:button="{userLoaded}">{username}</div>
+        {#if isProjectPost}
+            <div class="projectTitle">{projectTitle}</div>
+            <div class="date">{@html dateString}{#if showEdited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}</div>
+        {:else}
+            <div class="userName" class:button="{userLoaded}">{@html userName}</div>
+            <div class="username" class:button="{userLoaded}">{username}</div>
+        {/if}
     </div>
-    <AvatarIcon user="{postUser}" onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" />
+    {#if isProjectPost}
+        <img class="projectThumb" src="{projectThumbImage}" alt="{projectTitle}" />
+    {:else}
+        <AvatarIcon user="{postUser}" onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" />
+    {/if}
     <div class="postContent">
-        <div class="date">{@html dateString}{#if showEdited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}</div>
+        {#if !isProjectPost}
+            <div class="date">{@html dateString}{#if showEdited}<span class="edited" title="{editedDate}">{locale.POST.EDITED}</span>{/if}</div>
+        {/if}
         {#if title}
             <div class="title">{@html titleHTML}</div>
         {/if}
@@ -248,7 +268,7 @@
     .threadPost :global(.optionsButton) {
 		position: absolute;
 
-    	top: 25px;
+        top: 20px;
         right: 2px;
 
         width: 32px;
@@ -259,6 +279,10 @@
         margin-left: 11px;
         transform: scale(0.45, 0.45);
 	}
+
+    .threadPost.isProjectPost :global(.optionsButton) {
+        top: 12px;
+    }
 
     .threadPost :global(.followButton) {
         position: absolute;
@@ -277,6 +301,18 @@
         cursor: pointer;
     }
 
+    .projectThumb {
+        width: 38px;
+        height: 38px;
+        position: absolute;
+        margin-top: 23px;
+        margin-left: 23px;
+
+        object-fit: cover;
+
+        border: 1px solid #D9D9D9;
+    }
+
     .threadPost :global(.avatarIcon) {
         position: absolute;
         left: 23px;
@@ -292,7 +328,12 @@
         padding-left: 104px;
     }
 
-    .userName {
+    .isProjectPost .info {
+        padding-top: 21px;
+        padding-left: 79px;
+    }
+
+    .userName, .projectTitle {
         font-size: 1.7rem;
         color: #222222;
         font-weight: 700;
@@ -315,6 +356,10 @@
         /* padding-left: 26px;
         padding-right: 40px; */
         padding-bottom: 22px;
+    }
+    
+    .isProjectPost .postContent {
+        padding-top: 84px;
     }
 
     .date {

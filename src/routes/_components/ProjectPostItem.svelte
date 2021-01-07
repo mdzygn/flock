@@ -84,7 +84,7 @@
     // $: username = ($postUser && $postUser.username && '@' + $postUser.username) || '';
 
     $: projectTitle = ($project && $project.title) || '';
-    $: thumbImage = ($project && getProjectHeaderImage($project, true)) || null;
+    $: projectThumbImage = ($project && getProjectHeaderImage($project, true)) || null;
 
     $: commentsLabel = 'comment' + ($post.postCount >= 1 ? 's' : '');
 
@@ -166,8 +166,8 @@
         <!-- <div class="userName" class:button="{userLoaded}">{@html userName}</div> -->
         <!-- <div class="username" class:button="{userLoaded}">{username}</div> -->
     </div>
-    {#if thumbImage}
-        <img class="thumb" src="{thumbImage}" alt="{projectTitle}" />
+    {#if projectThumbImage}
+        <img class="projectThumb" src="{projectThumbImage}" alt="{projectTitle}" />
     {/if}
     <!-- <AvatarIcon user="{postUser}" onClick="{userLoaded ? viewUserProfile : null}" useThumb="{true}" /> -->
     <div class="postContent">
@@ -275,7 +275,7 @@
         width: 65px;
     } */
 
-    .thumb {
+    .projectThumb {
         width: 27px;
         height: 27px;
         position: absolute;

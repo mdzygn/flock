@@ -68,6 +68,8 @@
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 	$: isArchived = ($project && $project.archived) || false;
 
+	// $: isProjectPost = true; // ($project && $project.type === 'project') || false
+
 	$: threadLoading = ($loadingPosts && (!$post || $post.id !== $postId)) || !isUserLoaded($user, $userId, $loggingIn) || (!$project && $loadingProjects);
 
 	$: isLoadingPosts = ($loadingPosts && (!$posts || !$posts.length));

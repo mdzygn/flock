@@ -19,6 +19,7 @@
 	import Counter from '../../_components/Counter.svelte';
 	import Location from '../../_components/Location.svelte';
 	import Audience from '../../_components/Audience.svelte';
+	import ProjectCollaboratePanel from '../../_components/ProjectCollaboratePanel.svelte';
 	import ProjectSkillsList from '../../_components/ProjectSkillsList.svelte';
 	import ProjectLinks from '../../_components/ProjectLinks.svelte';
 	import ChannelList from '../../_components/ChannelList.svelte';
@@ -150,6 +151,8 @@
 	$: projectDetails = ($project && $project.details) || null;
 
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
+	
+	// $: skills = ($project && $project.skills && getSplitItems($project.skills)) || null;
 
 	// $: forceShowInfo = !following && !isTeamMember;
 
@@ -310,6 +313,9 @@
 					{#if $showBetaFeatures}
 						<ProjectLinks project="{$project}" />
 					{/if}
+					<!-- {#if !(skills && skills.length)} -->
+						<ProjectCollaboratePanel project="{$project}" />
+					<!-- {/if} -->
 					<ProjectSkillsList project="{$project}" />
 					<ProjectTeamList project="{$project}" />
 					{#if canEdit}
@@ -326,6 +332,9 @@
 						</div>
 					{/if} -->
 				{:else}
+					<!-- {#if !(skills && skills.length)} -->
+						<ProjectCollaboratePanel project="{$project}" />
+					<!-- {/if} -->
 					<ProjectSkillsList project="{$project}" />
 					<ProjectTeamList project="{$project}" />
 					{#if $showBetaFeatures}

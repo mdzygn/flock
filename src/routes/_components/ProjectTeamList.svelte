@@ -169,6 +169,7 @@
     }
 
     .content :global(.addTeamMembersButton .icon) {
+        margin-top: -2px;
         padding-left: 12px;
     }
     

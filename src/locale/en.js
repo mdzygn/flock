@@ -1,7 +1,15 @@
 const locale = {
 	HOME_INTRO: {
-		TITLE: 'Bringing creative projects to life', // 'Turning ideas into reality together', // 'Turning ideas into reality', // 'Bringing creative, innovative and inspirational projects to life', // 'A platform to bring creative and innovative projects to life', // 'Welcome to Flock',
-		HEADER_TEXT: 'Share your projects and build your community to find your team and turn your ideas into reality.', 
+		TITLE: 'Share, Connect, Collaborate',
+		HEADER_TEXT: 'Growing communities around creative projects to turn ideas into reality.',
+		// TITLE: 'Bringing creative community-based projects to life.',
+		// HEADER_TEXT: 'Share your projects and grow your community to build your team and turn ideas into reality.',
+		// TITLE: 'Bringing creative projects to life', // 'Turning ideas into reality together', // 'Turning ideas into reality', // 'Bringing creative, innovative and inspirational projects to life', // 'A platform to bring creative and innovative projects to life', // 'Welcome to Flock',
+		// HEADER_TEXT: 'Share your projects and build your community to find your team and turn your ideas into reality.', 
+		// TITLE: 'Share, Connect, Collaborate',
+		// HEADER_TEXT: 'Bringing creative community-based projects to life.',
+		// HEADER_TEXT: 'Bringing creative community-based projects to life.<br/><br/>Grow your community and build your team, to turn your ideas into reality.',
+		// HEADER_TEXT: 'Bringing creative community-based projects to life.<br/><br/>Share, connect and collaborate to grow your project community, find your team, and collaborate turn ideas into reality.',
 		//HEADER_TEXT: 'Grow your community, find your team and turn your ideas into reality<br/><br/>Share your project now!', 
 		// HEADER_TEXT: 'Grow your project community, find your dream team and turn your ideas into reality', 
 		// HEADER_TEXT: 'Share and discover projects around the world to grow your community, find your dream team and turn your ideas into reality', 
@@ -113,6 +121,10 @@ const locale = {
 	},
 	POST: {
 		EDITED: 'edited'
+	},
+	COLLABORATE: {
+		MESSAGE: 'Send Message',
+		SEND: 'Send',
 	},
 	PROJECT: {
 		NOT_FOUND: 'project not found',

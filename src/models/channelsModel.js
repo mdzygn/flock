@@ -25,6 +25,11 @@ let channels = writable(null);
 
 let filteredChannels = writable(null);
 
+const baseChannelNames = [
+	'general',
+	'questions',
+	'ideas',
+];
 const primaryChannelNames = [
 	'announcements',
 	'general',
@@ -235,6 +240,10 @@ export function addChannel(channelDetails) {
 	filterCurrentChannels();
 
 	return newChannelModel;
+}
+
+export function getIsBaseDisplayChannel(channel) {
+	return baseChannelNames && baseChannelNames.includes(channel.title.toLowerCase());
 }
 
 export function getIsPrimaryChannel(channel) {

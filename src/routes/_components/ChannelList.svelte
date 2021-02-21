@@ -19,6 +19,7 @@
 		getChannels,
         getIsTeamManagedChannel,
         loadingChannels,
+        getIsBaseDisplayChannel,
     } from '../../models/channelsModel';
 
 	import {
@@ -44,9 +45,11 @@
     $: {
         let hasActiveChannel = false;
         let hasInactiveChannel = false;
+        let channel;
         if ($channels) {
             for (let i = 0; i < $channels.length; i++) {
-                if (get($channels[i]).postCount) {
+                channel = get($channels[i]);
+                if (channel.postCount || getIsBaseDisplayChannel(channel) ) {
                     hasActiveChannel = true;
                     // break;
                 } else {
@@ -104,7 +107,7 @@
                 {#if $channels && $channels.length && (hasActiveChannels || viewAllChannels)}
                     <div class="channelListContainer">
                         {#each $channels as channel}
-                            {#if isTeamMember || get(channel).postCount || (following && !getIsTeamManagedChannel(get(channel)))}
+                            {#if isTeamMember || get(channel).postCount || getIsBaseDisplayChannel(get(channel)) || (following && !getIsTeamManagedChannel(get(channel)))}
                                 <ChannelListItem channel="{channel}" />
                             {/if}
                         {/each}

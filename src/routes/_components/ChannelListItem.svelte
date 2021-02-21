@@ -4,6 +4,7 @@
 
     import ArrowIcon from "../../assets/icons/next_arrow.png";
 	import AddDetailsIcon from "../../assets/icons/add_highlight.png";
+    import CommentIcon from "../../assets/icons/comment_small.png";
 
 	import {
         project,
@@ -47,6 +48,9 @@
 
 <div class="channelListItem" class:noPosts="{!messageCount}">
     <Button className="channelListItemButton" onClick="{loadCurrentChannel}"># {channelTitle}
+        {#if $unviewedCount || messageCount}
+            <div class="postsIcon" style="background-image: url({CommentIcon})"/>
+        {/if}
         <div class="buttonIcon" style="background-image: url({ArrowIcon})"/>
         {#if $unviewedCount || messageCount}
             <Counter count="{$unviewedCount || messageCount}" hasNew="{$unviewedCount}" />
@@ -72,6 +76,10 @@
     }
     .channelListItem :global(.channelListItemButton:hover) {
         background-color: #f9f9f9;
+    }
+
+    .channelListItem :global(.channelListItemButton) {
+        position: relative;
     }
 
     .channelListItem.noPosts :global(.channelListItemButton) {
@@ -111,4 +119,15 @@
     	padding-left: 16px;
         margin-top: -2px;
 	}
+
+    .postsIcon {
+        position: absolute;
+        right: 64px;
+        top: 12px;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 17px;
+        height: 17px;
+    }
 </style>

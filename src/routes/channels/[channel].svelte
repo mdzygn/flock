@@ -143,11 +143,17 @@
         word-wrap: break-word;
 	}
 	.channelHeaderPost {
-    	padding-bottom: 0;
+		padding-bottom: 14px;
+		padding-right: 150px;
 	}
 
 	.pageContent :global(.newPostHeader) {
 		margin: 0;
+
+		position: absolute;
+		bottom: 1px;
+		right: 0;
+		width: 150px;
 
 	    /* height: 54px;
 		display:flex;

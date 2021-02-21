@@ -31,7 +31,7 @@ const locale = {
 		SHOW_MORE: 'show more',
 		UPLOAD_IMAGE: 'upload',
 		SEARCH_PLACEHOLDER: 'search',
-		NEW_POST: 'new post',
+		NEW_POST: 'add post',
 	},
 	HEADER: {
 		SIGN_IN: 'sign in',
@@ -190,20 +190,20 @@ const locale = {
 		PAGE_TITLE: 'Edit Post',
 	},
 	CHANNEL_DESCRIPTIONS: {
-		ANNOUNCEMENTS: 'Project announcements and news from the team',
+		ANNOUNCEMENTS: 'News and project announcements',
 		// About and FAQs - About the world creation platform and Frequently Asked Questions
 		// RESOURCES: 'Community resources and links',
 		// Questions and Answers - General questions or queries on how to use the app
 		GENERAL: 'General project discussion',
-		WORKSHOP: 'Work in progress, project developments,<br/>and calls for feedback',
-		QUESTIONS: 'Questions about the project', // 'Questions from the community',
+		WORKSHOP: 'Work in progress updates and<br/>calls for feedback',
+		QUESTIONS: 'Questions from the community', // 'Questions from the community',
 		// Current Features Discussion - Discussion of current features and functionality
 		// ISSUES: 'Issues and bugs',
 		ISSUES: 'Issues, bugs and problems',
-		IDEAS: 'Ideas, suggestions and requests for the project', // recommendations
+		IDEAS: 'Ideas and suggestions', // recommendations
 		INSPIRATION: 'Inspirational references and links',
 		RANDOM: 'Off-topic discussions and links',
-		SUGGESTIONS: 'Suggestions to improve the project community',
+		SUGGESTIONS: 'Suggestions to improve the community',
 	},
 	NOTIFICATIONS: {
 		NO_NOTIFICATIONS: 'no recent activity yet',

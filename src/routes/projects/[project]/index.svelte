@@ -261,20 +261,18 @@
 									<Button className="addProjectDetailsButton" onClick="{() => editProjectDetails({editingProjectMode: 'addDetails'})}" icon="{AddDetailsIcon}">add project details</Button>
 								{/if}
 								{#if !isTeamMember}
-									<Button disabled="{!$showBetaFeatures}" className="sendMessageButton" onClick="{e => loadConversationByProject($projectId)}" icon="{SendMessageIcon}">message</Button>
+									<!-- <Button disabled="{!$showBetaFeatures}" className="sendMessageButton" onClick="{e => loadConversationByProject($projectId)}" icon="{SendMessageIcon}">message</Button> -->
 								{:else if isNew && !isPublic}
 									{#if !isArchived}
 										<Button className="makePublicButton isButton" onClick="{showTogglePublicDialog}">make public</Button>
 									{/if}
 								{:else}
-									<Button disabled="{!$showBetaFeatures}" className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
+									<!-- <Button disabled="{!$showBetaFeatures}" className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
 										<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
-									</Button>
+									</Button> -->
 								{/if}
 								{#if (!$projectReturnView || showInfo) && !isTeamMember}
-									<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"><!--<div class="countContainer">
-										<div class="count">{likeCount}</div>
-									</div>--></Button>
+									<!-- <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"></Button> -->
 									<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<!-- <div class="countContainer">
 										<div class="count">{followCount}</div>
 									</div>--></Button>

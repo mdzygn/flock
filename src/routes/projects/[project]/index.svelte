@@ -272,7 +272,7 @@
 									</Button> -->
 								{/if}
 								{#if (!$projectReturnView || showInfo) && !isTeamMember}
-									<!-- <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}"></Button> -->
+									<Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}">like</Button>
 									<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<!-- <div class="countContainer">
 										<div class="count">{followCount}</div>
 									</div>--></Button>
@@ -654,14 +654,23 @@
 		font-weight: 700;
     }
 
-    .projectActions :global(.likeButton ) {
+    .projectActions :global(.likeButton) {
 		position: absolute;
 		top: 4px;
     	right: 140px;
 		/* right: 180px; */
-		width: 28px;
-		height: 26px;
 		padding: 8px;
+
+		/* width: 28px;
+		height: 26px; */
+		
+		top: 6px;
+    	right: 142px;
+    	padding-right: 36px;
+		font-size: 1.5rem;
+    }
+    .projectActions :global(.likeButton .iconContainer) {
+    	padding-left: 7px;
     }
 
     .projectActions :global(.followButton) {

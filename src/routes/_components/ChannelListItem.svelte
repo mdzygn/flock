@@ -122,7 +122,7 @@
 
     .postsIcon {
         position: absolute;
-        right: 64px;
+        right: 67px;
         top: 12px;
         background-size: contain;
         background-position: center;

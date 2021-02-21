@@ -36,8 +36,8 @@
         height: 41px;
         padding-top: 3px;
         padding-bottom: 3px;
-        margin-top: 10px;
-        margin-bottom: 10px;
+        /* margin-top: 10px;
+        margin-bottom: 10px; */
 	}
 
     .newPostButtonPanel :global(.proxy) {

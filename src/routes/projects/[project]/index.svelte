@@ -297,13 +297,15 @@
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<ChannelList project="{project}" />
 					<!-- {#if $showBetaFeatures} -->
-					{#if canEdit}
-						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
-							<!-- type="project_post_update" -->
-					{/if}
-					{#each $projectPosts as post}
-						<ProjectPostItem {post} />
-					{/each}
+					<div class="posts">
+						{#if canEdit}
+							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
+								<!-- type="project_post_update" -->
+						{/if}
+						{#each $projectPosts as post}
+							<ProjectPostItem {post} />
+						{/each}
+					</div>
 				{:else if $projectReturnView}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<ChannelList project="{project}" />
@@ -317,12 +319,14 @@
 					<ProjectSkillsList project="{$project}" />
 					<ProjectCollaboratePanel project="{$project}" />
 					<ProjectTeamList project="{$project}" />
-					{#if canEdit}
-						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
-					{/if}
-					{#each $projectPosts as post}
-						<ProjectPostItem {post} />
-					{/each}
+					<div class="posts">
+						{#if canEdit}
+							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
+						{/if}
+						{#each $projectPosts as post}
+							<ProjectPostItem {post} />
+						{/each}
+					</div>
 					<!-- {#if $showBetaFeatures}
 						<div>
 							<Proxy image="project_post_1" className="contentItem projectPost" />
@@ -339,12 +343,14 @@
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<ChannelList project="{project}" />
-					{#if canEdit}
-						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
-					{/if}
-					{#each $projectPosts as post}
-						<ProjectPostItem {post} />
-					{/each}
+					<div class="posts">
+						{#if canEdit}
+							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
+						{/if}
+						{#each $projectPosts as post}
+							<ProjectPostItem {post} />
+						{/each}
+					</div>
 				{/if}
 			</div>
 
@@ -410,7 +416,12 @@
 	.content :global(.contentItem) {
 		width: 100%;
 
-		margin-bottom: 10px;
+		margin-bottom: 5px;
+		/* margin-bottom: 10px; */
+	}
+
+	.content :global(.contentPanel) {
+		margin-bottom: 5px;
 	}
 
 	/* .pageContent :global(.actionBar .actionButtonMiddle .buttonContent) {
@@ -798,5 +809,9 @@
 	} */
 	.archived :global(.projectPost) {
     	opacity: 0.5;
+	}
+
+	.posts {
+		margin-top: 10px;
 	}
 </style>

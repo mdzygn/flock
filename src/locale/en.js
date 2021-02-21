@@ -136,8 +136,10 @@ const locale = {
 	PROJECT: {
 		NOT_FOUND: 'project not found',
 		GET_STARTED: 'get the conversations started',
-		FOLLOWER_GET_STARTED: 'no posts yet - be the first!',
-		CHANNELS_TITLE: 'Discussion Channels', // Discussions, Channels
+		// FOLLOWER_GET_STARTED: 'no posts yet - be the first!',
+		FOLLOWER_GET_STARTED: 'share your thoughts',
+		GET_INVOLVED: 'share your thoughts',
+		CHANNELS_TITLE: 'Discussion', // Discussions, Channels
 		CHANNELS_FOLLOW_LINK: 'Follow',
 		CHANNELS_FOLLOW: ' this project to view discussion channels and get involved.',
 		CHANNELS_FOLLOW_ALL: ' this project to view all discussion channels and get involved.',

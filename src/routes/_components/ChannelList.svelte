@@ -93,11 +93,15 @@
     <div class="channelList" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}">
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
         <ContentPanel title="{locale.PROJECT.CHANNELS_TITLE}" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
-            {#if (!hasActiveChannels || isNew) && viewAllChannels && !isArchived}
-                {#if isTeamMember}
-                    <div class="getTheConversationStarted getStartedOwner" class:getStartedOwnerOffset="{canEdit && $showBetaFeatures}">{locale.PROJECT.GET_STARTED}</div>
+            {#if !isArchived}
+                {#if (!hasActiveChannels || isNew) && viewAllChannels}
+                    {#if isTeamMember}
+                        <div class="getTheConversationStarted getStartedOwner" class:getStartedOwnerOffset="{canEdit && $showBetaFeatures}">{locale.PROJECT.GET_STARTED}</div>
+                    {:else}
+                        <div class="getTheConversationStarted">{locale.PROJECT.FOLLOWER_GET_STARTED}</div>
+                    {/if}
                 {:else}
-                    <div class="getTheConversationStarted">{locale.PROJECT.FOLLOWER_GET_STARTED}</div>
+                    <div class="getTheConversationStarted">{locale.PROJECT.GET_INVOLVED}</div>
                 {/if}
             {/if}
 
@@ -191,8 +195,9 @@
         padding-left: 20px;
         padding-bottom: 10px;
 
-        font-size: 1.3rem;
-        font-weight: initial;
+        /* font-size: 1.3rem;
+        font-weight: initial; */
+
         margin-top: -4px;
 	}
 	.channelList :global(.contentPanel .showMoreButton ) {

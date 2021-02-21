@@ -681,7 +681,7 @@
 		padding: 6px 41px 6px 18px;
 
 		font-size: 1.5rem;
-		font-weight: 700;
+		font-weight: normal;
 
     	margin-right: -6px;
     }
@@ -693,6 +693,8 @@
 		border: 2px solid #0B0B0B;
 		margin-right: -2px; margin-top: -2px; /* factor in border */
 		border-radius: 999px;
+
+		font-weight: 700;
     }
 
 	.content .collapsedHeader {

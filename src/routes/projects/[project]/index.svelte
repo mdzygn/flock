@@ -290,6 +290,7 @@
 				{#if isNew}
 					<ProjectTeamList project="{$project}" />
 					<ProjectSkillsList project="{$project}" />
+					<ProjectCollaboratePanel project="{$project}" />
 					{#if $showBetaFeatures}
 						<ProjectLinks project="{$project}" />
 					{/if}
@@ -313,10 +314,8 @@
 					{#if $showBetaFeatures}
 						<ProjectLinks project="{$project}" />
 					{/if}
-					<!-- {#if !(skills && skills.length)} -->
-						<ProjectCollaboratePanel project="{$project}" />
-					<!-- {/if} -->
 					<ProjectSkillsList project="{$project}" />
+					<ProjectCollaboratePanel project="{$project}" />
 					<ProjectTeamList project="{$project}" />
 					{#if canEdit}
 						<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
@@ -332,10 +331,8 @@
 						</div>
 					{/if} -->
 				{:else}
-					<!-- {#if !(skills && skills.length)} -->
-						<ProjectCollaboratePanel project="{$project}" />
-					<!-- {/if} -->
 					<ProjectSkillsList project="{$project}" />
+					<ProjectCollaboratePanel project="{$project}" />
 					<ProjectTeamList project="{$project}" />
 					{#if $showBetaFeatures}
 						<ProjectLinks project="{$project}" />

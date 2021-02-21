@@ -31,6 +31,7 @@
     {#if showMoreAction || hideShowMoreWithVisibility || forceShowMoreShow}
         <Button className="showMoreButton {hideShowMoreWithVisibility && !showMoreAction && !forceShowMoreShow ? 'hidden' : ''}" onClick="{showMoreAction && showMoreAction !== true ? showMoreAction : null}" disabled="{!showMoreAction || showMoreAction === true}">{curShowMoreLabel}</Button>
     {/if}
+    <slot name="afterShowMore"></slot>
 </div>
 
 <style>

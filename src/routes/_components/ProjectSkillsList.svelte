@@ -11,6 +11,10 @@
         user,
         showBetaFeatures,
     } from '../../models/appModel';
+    
+    import {
+        editProjectDetails,
+    } from '../../actions/appActions';
 
     export let project = null;
 
@@ -36,7 +40,7 @@
 
 {#if skills && skills.length}
     <div class="content" id="skills">
-        <ContentPanel title="Seeking Skills:" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems ? displayAllSkills : false}">
+        <ContentPanel title="Seeking Skills:" showEdit="{canEdit}" editAction="{editProjectDetails}" showMoreAction="{areMoreItems ? displayAllSkills : false}">
             <TagSet tags="{skills}" displayLimit="{displayLimit}" />
         </ContentPanel>
     </div>

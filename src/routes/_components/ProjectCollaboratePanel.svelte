@@ -20,6 +20,10 @@
 		testInputDefocus,
     } from '../../utils';
 
+    // import {
+    //     editProjectDetails,
+    // } from '../../actions/appActions';
+
     import {
         getIsProjectTeamMember,
         user,
@@ -35,11 +39,13 @@
 
     let messageField;
 
-    $: displayLimit = displayAllTags ? 0 : config.MAX_SKILL_TAG_COUNT;
+    $: displayLimit = (displayAllTags || interestedToCollaborate) ? 0 : config.MAX_SKILL_TAG_COUNT;
 
     // $: skills = (project && project.skills) || null;
 	$: skills = (project && project.skills && getSplitItems(project.skills)) || null;
     $: isTeamMember = $user && getIsProjectTeamMember(project);
+
+    $: hasSkills = false; // skills && skills.length;
 
 	$: canEdit = (isTeamMember && !project.archived) || false;
 
@@ -66,29 +72,40 @@
     
 	function testSubmit() {
 		if (sendMessageEnabled) {
+            collaborateMessage = '';
             showMessageField = false;
 		}
-	}
+    }
 </script>
 
-<div class="content" id="skills">
-    <ContentPanel>
-        <Button className="interestedButton" onClick="{toggleCollaborate}" icon="{interestedToCollaborate ? CollaborateCheckedIcon : CollaborateUncheckedIcon}">interested to collaborate</Button>
-        <!-- <TagSet tags="{skills}" displayLimit="{displayLimit}" /> -->
-        {#if showMessageField}
-            <div class="messagePanel">
-                <div class="messageField">
-                    <div class="label">{locale.COLLABORATE.MESSAGE}</div>
-                    <textarea bind:value="{collaborateMessage}" bind:this="{messageField}" on:keypress="{e => testInputDefocus(e, {action: testSubmit, actionOnCtrl: true})}" />
-                    <!-- on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" -->
+{#if hasSkills || !canEdit}
+    <div class="content" class:skillsShown="{hasSkills}" class:noSkillsShown="{!hasSkills}" id="skills">
+        <ContentPanel title="{(hasSkills || canEdit) ? 'Seeking Skills:' : ''}" showEdit="{canEdit}"editProjectDetails showMoreAction="{areMoreItems ? displayAllSkills : false}">
+            {#if !canEdit}
+                <Button className="interestedButton" onClick="{toggleCollaborate}" icon="{interestedToCollaborate ? CollaborateCheckedIcon : CollaborateUncheckedIcon}">interested to collaborate</Button>
+            {/if}
+            <!-- {#if hasSkills}
+                <div class="skillsContent" id="skills">
+                    <TagSet tags="{skills}" displayLimit="{displayLimit}" />
                 </div>
-                <div class="actions">
-                    <Button className="sendButton" disabled="{!sendMessageEnabled}" onClick="{testSubmit}" icon="{SendMessageIcon}">{locale.COLLABORATE.SEND}</Button>
-                </div>
-            </div>
-        {/if}
-    </ContentPanel>
-</div>
+            {/if} -->
+            <span slot="afterShowMore">
+                {#if showMessageField && !canEdit}
+                        <div class="messagePanel">
+                            <div class="messageField">
+                                <div class="label">{locale.COLLABORATE.MESSAGE}</div>
+                                <textarea bind:value="{collaborateMessage}" bind:this="{messageField}" on:keypress="{e => testInputDefocus(e, {action: testSubmit, actionOnCtrl: true})}" />
+                                <!-- on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" -->
+                            </div>
+                            <div class="actions">
+                                <Button className="sendButton" disabled="{!sendMessageEnabled}" onClick="{testSubmit}" icon="{SendMessageIcon}">{locale.COLLABORATE.SEND}</Button>
+                            </div>
+                        </div>
+                {/if}
+            </span>
+        </ContentPanel>
+    </div>
+{/if}
 
 <style>
     .content :global(.panelTitle) {
@@ -96,7 +113,12 @@
         font-weight: normal;
     }
 
-    .content :global(.panelContent) {
+    .content.noSkillsShown :global(.panelTitle) {
+        padding-bottom: 0;
+        margin-bottom: -6px;
+    }
+
+    .content :global(.contentPanel) {
         min-height: 15px;
     }
 
@@ -115,8 +137,11 @@
         color: #0D0D0D;
     }
 
-    .messagePanel {
+    .content.skillsShown .messagePanel {
         padding-top: 30px;
+    }
+    .content.noSkillsShown .messagePanel {
+        padding-top: 8px;
     }
     
     .content :global(.interestedButton .icon) {

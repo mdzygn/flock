@@ -1,7 +1,14 @@
 const locale = {
 	HOME_INTRO: {
-		TITLE: 'Share, Connect, Collaborate',
-		HEADER_TEXT: 'Growing communities around creative projects to turn ideas into reality.',
+		TITLE: 'Bringing creative community-based projects to life, together.',
+		HEADER_TEXT: 'Share your project, build your community and turn your ideas into reality.',
+		// HEADER_TEXT: 'Share your project, build your collaborative community and turn your ideas into reality.',
+		// HEADER_TEXT: 'Build a collaborative community around your project to turn your ideas into reality.',
+		// HEADER_TEXT: 'Build a community around your project to turn your ideas into reality.',
+		// HEADER_TEXT: 'Building communities around projects to turn ideas into reality.',
+		// HEADER_TEXT: 'Share your projects and build a community to turn your ideas into reality.',
+		// TITLE: 'Share, Connect, Collaborate',
+		// HEADER_TEXT: 'Growing communities around creative projects to turn ideas into reality.',
 		// TITLE: 'Bringing creative community-based projects to life.',
 		// HEADER_TEXT: 'Share your projects and grow your community to build your team and turn ideas into reality.',
 		// TITLE: 'Bringing creative projects to life', // 'Turning ideas into reality together', // 'Turning ideas into reality', // 'Bringing creative, innovative and inspirational projects to life', // 'A platform to bring creative and innovative projects to life', // 'Welcome to Flock',

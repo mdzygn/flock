@@ -127,6 +127,8 @@
         padding-right: 23px;
         /* padding-bottom: 21px; */
 
+        padding-right: 40px; /* for text wrapping */
+
         color: #222222;
         /* color: #ffffff; */
     }

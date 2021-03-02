@@ -62,7 +62,7 @@
 
 	let showAddPost = false;
 
-	const DISPLAY_BOTTOM_LINK_POST_COUNT = 3;
+	const DISPLAY_BOTTOM_LINK_POST_COUNT = 1; // 3;
 
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 	$: isArchived = ($project && $project.archived) || false;

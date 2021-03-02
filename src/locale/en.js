@@ -1,7 +1,10 @@
 const locale = {
 	HOME_INTRO: {
-		TITLE: 'Bringing creative community-based projects to life, together.',
-		HEADER_TEXT: 'Share your project, build your community and turn your ideas into reality.',
+		TITLE: 'Share, Connect, Collaborate',
+		HEADER_TEXT: 'Building communities around creative projects to turn ideas into reality.',
+		// HEADER_TEXT: 'Building communities to bring creative project ideas to life.',
+		// TITLE: 'Bringing creative community-based projects to life, together.',
+		// HEADER_TEXT: 'Share your project, build your community and turn your ideas into reality.',
 		// HEADER_TEXT: 'Share your project, build your collaborative community and turn your ideas into reality.',
 		// HEADER_TEXT: 'Build a collaborative community around your project to turn your ideas into reality.',
 		// HEADER_TEXT: 'Build a community around your project to turn your ideas into reality.',

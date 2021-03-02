@@ -101,7 +101,7 @@
 	$: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : (curPostType === 'projectPost') ? $projectId : $postId)) || null;
 	// $: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : $postId)) || null;
 
-	$: showTitleField = (curPostType === 'thread');
+	$: showTitleField = (curPostType === 'thread'); // trim(title);
 
 	$: imageType = (curPostType === 'thread') ? 'image/jpeg' : null;
 	$: useLibrary = (curPostType === 'thread' || isProjectPost) ? true : false; // TODO: isProjectPost temporary for testing
@@ -213,7 +213,9 @@
 			if (draftPost) {
 				await tick();
 
-				title = draftPost.title || '';
+				if (showTitleField) {
+					title = draftPost.title || '';
+				}
 				message = draftPost.message || '';
 				image = draftPost.image || null;
 
@@ -371,7 +373,6 @@
             {#if showTitleField}
                 <div class="field">
                     <div class="label">{locale.NEW_THREAD.TITLE}{#if !editPost}<span class="tip">{@html locale.NEW_THREAD.TITLE_TIP}</span>{/if}</div>
-                    <!-- <input type="text" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField})}" /> -->
                     <textarea class="titleField" bind:value="{title}" bind:this="{titleField}" on:keypress="{e => testInputDefocus(e, {target: messageField, action: testSubmit, actionOnCtrl: true})}" />
                 </div>
             {/if}

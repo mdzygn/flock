@@ -17,11 +17,22 @@
     import LikesIcon from "../../assets/icons/likes.png";
     import FollowerIcon from "../../assets/icons/followers.png";
 
+    import FollowIcon from "../../assets/icons/follow.png";
+	import FollowSelectedIcon from "../../assets/icons/follow_selected.png";
+    import ShareIcon from "../../assets/icons/share.png";
+
     import Proxy from '../../components/Proxy.svelte';
 
     import { showProjectCounts, user, getIsProjectTeamMember } from '../../models/appModel'; // getProject
     import { getProjectHeaderImage } from '../../models/projectsModel'; // getProject
-    import { loadProject } from '../../actions/appActions';
+    import {
+        loadProject,
+		showShareProjectDialog
+    } from '../../actions/appActions';
+    
+	import {
+		projectToggleFollowing,
+	} from '../../actions/projectActions';
 
     import MoreArrowIcon from "../../assets/icons/more_arrow.png";
 
@@ -46,13 +57,29 @@
     $: projectDescription = ($project && $project.description) || '';
 
 	$: skills = ($project && $project.skills && getSplitItems($project.skills)) || null;
+    
+	$: following = ($project && $project.following) || false;
+
+	function toggleFollowing() {
+		projectToggleFollowing(projectId);
+	}
+
+	function shareItem() {
+		showShareProjectDialog(projectId);
+	}
 </script>
 
 <div class="projectItem" class:ownerProjectItem="{isTeamMember}">
     <!-- <Proxy image="discover1" className="proxyImage" /> -->
     <div class="headerImage" style="background-image: url({headerImage})" alt="project image" on:click="{e => loadProject(projectId, { showInfo: true })}" />
     <div class="contentContainer" on:click="{e => loadProject(projectId, { showInfo: true })}">
-        <Button className="readMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button>
+        <!-- <Button className="readMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button> -->
+        <div class="contentHeader">
+            <Button className="headerButton shareButton}" onClick="{e => {shareItem(); return stopEvent(e); }}" icon="{ShareIcon}" title="Share"></Button>
+            {#if !isTeamMember}
+                <Button className="headerButton followButton {!following ? 'isButton' : ''}" onClick="{e => {toggleFollowing(); return stopEvent(e); }}" icon="{following ? FollowSelectedIcon : FollowIcon}" title="{following ? 'Unfollow' : 'Follow'}"></Button>
+            {/if}
+        </div>
         <div class="itemContent">
             <div class="header">{projectTitle}</div>
             <div class="description">{projectDescription}</div>
@@ -64,8 +91,11 @@
                 <TagSet tags="{skills}" linkToDiscoverSearch="{false}" />
             </a></div>
         {/if}
+        <div class="infoContainer">
+            <Button className="readMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button>
+        </div>
     </div>
-    {#if !isTeamMember}
+    <!-- {#if !isTeamMember}
         <ActionBar targetItemId="{projectId}" targetItem="{$project}" />
     {:else if $showProjectCounts}
         <ActionBar targetItemId="{projectId}" targetItem="{$project}">
@@ -100,7 +130,7 @@
                 />
             </div>
         </ActionBar>
-    {/if}
+    {/if} -->
     <!-- {#if isTeamMember}
         <ActionBar targetItemId="{projectId}" targetItem="{$project}">
             <div slot="buttonLeft">
@@ -280,5 +310,21 @@
         font-size: 1.1rem;
         /* font-weight: 700; */
         padding: 1px 7px;
+    }
+
+    .contentHeader {
+        padding-right: 7px;
+    }
+
+    .projectItem :global(.headerButton) {
+        float: right;
+        width: 28px;
+        height: 28px;
+        padding: 6px;
+    }
+
+    .infoContainer {
+        position: relative;
+        height: 42px;
     }
 </style>

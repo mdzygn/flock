@@ -80,7 +80,8 @@
 
 {#if hasSkills || !canEdit}
     <div class="content" class:skillsShown="{hasSkills}" class:noSkillsShown="{!hasSkills}" id="skills">
-        <ContentPanel title="{(hasSkills || canEdit) ? 'Seeking Skills:' : ''}" showEdit="{canEdit}"editProjectDetails showMoreAction="{areMoreItems ? displayAllSkills : false}">
+        <ContentPanel title="{(hasSkills || canEdit) ? 'Seeking Skills:' : ''}" showEdit="{canEdit}" showMoreAction="{areMoreItems ? displayAllSkills : false}">
+            <!-- editAction="{editProjectDetails}" -->
             {#if !canEdit}
                 <Button className="interestedButton" onClick="{toggleCollaborate}" icon="{interestedToCollaborate ? CollaborateCheckedIcon : CollaborateUncheckedIcon}">interested to collaborate</Button>
             {/if}

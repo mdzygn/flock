@@ -460,8 +460,10 @@ export function gotoAnchor(anchorId) {
 }
 
 export function stopEvent(event) {
+    console.log('event', event);
     if (event) {
-        event.preventDefault();
+        event.preventDefault(); // prevent default href handler
+        event.stopPropagation(); // prevent other elements taking event
     }
     return false;
 }

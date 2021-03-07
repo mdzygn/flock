@@ -5,6 +5,8 @@
     export let className = '';
     export let disabled = false;
 
+    export let title = null;
+
     export let style = null;
     export let buttonContentStyle = null;
     export let iconStyle = null;
@@ -17,7 +19,7 @@
 </script>
 
 {#if href && !disabled}
-    <a {href} bind:this="{element}" class="button {className}" class:disabled="{disabled}" class:activeButton={!disabled &&  onClick} on:click={onClick} {style}>
+    <a {href} bind:this="{element}" class="button {className}" class:disabled="{disabled}" class:activeButton={!disabled &&  onClick} on:click={onClick} {style} {title}>
         <div class="buttonContent" style="{buttonContentStyle}">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
                 <img class="icon" src="{icon}" alt="read more" {iconStyle} />
@@ -25,7 +27,7 @@
         </div>
     </a>
 {:else}
-    <div bind:this="{element}" class="button {className}" class:disabled="{disabled}" class:activeButton={!disabled &&  onClick} on:click={!disabled ? onClick : null} {style}>
+    <div bind:this="{element}" class="button {className}" class:disabled="{disabled}" class:activeButton={!disabled &&  onClick} on:click={!disabled ? onClick : null} {style} {title}>
         <div class="buttonContent" style="{buttonContentStyle}">
             <slot></slot>{#if icon}<div class="iconContainer"><div class="iconInnerContainer">
                 <img class="icon" src="{icon}" alt="read more" style="{iconStyle}" />

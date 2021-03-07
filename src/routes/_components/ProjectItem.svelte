@@ -187,9 +187,9 @@
         /* padding-left: 18px; */
     }
 
-    .projectItem.ownerProjectItem .contentContainer {
+    /* .projectItem.ownerProjectItem .contentContainer {
         padding-bottom: 18px;
-    }
+    } */
 
     .contentContainer :global(.readMoreButton) {
         position: absolute;

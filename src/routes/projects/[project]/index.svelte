@@ -107,7 +107,7 @@
 	}
 	
 	function shareItem() {
-		showShareProjectDialog(projectId);
+		showShareProjectDialog($projectId);
 	}
 
 	function showProjectOptions() {

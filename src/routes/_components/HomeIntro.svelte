@@ -242,6 +242,7 @@
     }
     .homeIntro :global(.readMoreButton .icon) {
         padding-left: 13px;
+        margin-top: -1px;
     }
 
     .discoverIndicatorContainer {

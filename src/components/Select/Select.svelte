@@ -13,8 +13,6 @@
   import isOutOfViewport from "./utils/isOutOfViewport";
   import debounce from "./utils/debounce";
   import DefaultClearIcon from "./ClearIcon.svelte";
-  // import DefaultExpandIcon from "../../assets/icons/expand.png";
-  // import DefaultCollapseIcon from "./ClearIcon.svelte";
 
   const dispatch = createEventDispatcher();
   export let container = undefined;
@@ -67,7 +65,7 @@
 
   export let isSearchable = true;
   export let inputStyles = "";
-  export let isClearable = true;
+  export let isClearable = false;
   export let isWaiting = false;
   export let listPlacement = "auto";
   export let listOpen = false;
@@ -83,12 +81,10 @@
   export let Icon = undefined;
   export let iconProps = {};
   export let showChevron = false;
-  export let showIndicator = false;
+  export let showIndicator = true;
   export let containerClasses = "";
   export let indicatorSvg = undefined;
   export let ClearIcon = DefaultClearIcon;
-  // export let ExpandIcon = DefaultExpandIcon;
-  // export let CollapseIcon = DefaultCollapseIcon;
 
   let target;
   let activeSelectedValue;
@@ -927,11 +923,6 @@
       <svelte:component this={ClearIcon} /> 
     </div>
   {/if}
-  <!-- {:else if ExpandIcon}
-    <div class="dropDownIcon">
-      <img class="icon" src="{ExpandIcon}" alt="expand" />
-    </div>
-  {/if} -->
 
   {#if showIndicator || (showChevron && !selectedValue || (!isSearchable && !isDisabled && !isWaiting && ((showSelectedItem && !isClearable) || !showSelectedItem)))}
     <div class="indicator">

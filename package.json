@@ -23,7 +23,7 @@
     "eventemitter3": "^4.0.0",
     "exifr": "^4.3.5",
     "mongodb": "^3.5.5",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "polka": "^1.0.0-next.11",
     "sendgrid": "^5.2.3",
     "sirv": "^0.4.0"

@@ -103,7 +103,6 @@
         <div class="infoContainer">
             <Button className="readMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button>
             {#if projectType}
-                <!-- <div class="projectType">{projectType}</div> -->
                 <Button className="projectType" href="{'discover?search=' + encodeURIComponent(projectType)}" onClick="{e => {e.stopPropagation()}}">{projectType}</Button>
             {/if}
             {#if projectLocation}

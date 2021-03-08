@@ -144,6 +144,7 @@
 	$: likeCount = ($project && $project.likeCount) || 0;
 	$: followCount = ($project && $project.followCount) || 0;
 
+	$: projectType = ($project && $project.categories && $project.categories.trim && $project.categories.split(',')[0].trim());
     $: projectStatus = ($project && $project.status) || '';
 
     $: headerImage = getProjectHeaderImage($project);
@@ -294,8 +295,15 @@
 									</div>--></Button>
 								{/if}
 							</div>
-							{#if (!$projectReturnView || showInfo) && projectLocation}
-								<Location className="{(isTeamMember && showInfo) ? 'ownerLocation' : ''}" location="{projectLocation}" />
+							{#if (!$projectReturnView || showInfo) && (projectType || projectLocation)}
+								<div class="infoContainer">
+									{#if projectType}
+										<Button className="projectType" href="{'discover?search=' + encodeURIComponent(projectType)}" onClick="{e => {e.stopPropagation()}}">{projectType}</Button>
+									{/if}
+									{#if projectLocation}							
+										<Location className="{(isTeamMember && showInfo) ? 'ownerLocation' : ''}" location="{projectLocation}" />
+									{/if}
+								</div>
 							{/if}
 						</div>
 					</div>
@@ -860,6 +868,31 @@
 	.posts {
 		margin-top: 10px;
 	}
+
+	.infoContainer {
+        position: relative;
+        /* min-height: 42px; */
+        padding-right: 104px;
+        padding-top: 7px;
+    	padding-left: 23px;
+	}
+
+    .infoContainer :global(.projectType) {
+        display: inline-block;
+        padding-bottom: 10px;
+        padding-right: 10px;
+        font-size: 1.2rem;
+        text-decoration: underline;
+        color: #888;
+    }
+
+    .infoContainer :global(.location) {
+        display: inline-block;
+        margin-left: -2px;
+        margin-top: 0;
+        padding: 0;
+        padding-bottom: 10px;
+    }
 
     .projectStatusLine {    
         margin-top: -8px;

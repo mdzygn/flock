@@ -17,6 +17,8 @@
     import LikesIcon from "../../assets/icons/likes.png";
     import FollowerIcon from "../../assets/icons/followers.png";
 
+	import Location from '../_components/Location.svelte';
+
     import FollowIcon from "../../assets/icons/follow.png";
 	import FollowSelectedIcon from "../../assets/icons/follow_selected.png";
     import ShareIcon from "../../assets/icons/share.png";
@@ -49,7 +51,7 @@
     // $: isProjectOwner = projectOwnerId && projectOwnerId === $userId;
     $: isTeamMember = $user && $project && getIsProjectTeamMember($project);
 
-    $: projectSlug = ($project && $project.slug) || null;
+	$: projectLocation = ($project && $project.location) || '';
 
     $: headerImage = getProjectHeaderImage($project);
 
@@ -93,6 +95,9 @@
         {/if}
         <div class="infoContainer">
             <Button className="readMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button>
+            {#if projectLocation}
+                <Location location="{projectLocation}" />
+            {/if}
         </div>
     </div>
     <!-- {#if !isTeamMember}
@@ -325,6 +330,15 @@
 
     .infoContainer {
         position: relative;
-        height: 42px;
+        min-height: 42px;
+        padding-right: 104px;
+    }
+
+    .projectItem :global(.location) {
+        padding: 0;
+        margin-left: -2px;
+        margin-top: 0;
+        padding-top: 11px;
+        padding-bottom: 10px;
     }
 </style>

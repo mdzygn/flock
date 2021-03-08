@@ -5,7 +5,7 @@
 	import { writable } from 'svelte/store';
 
 	import { menuIds } from '../../../config/menus';
-	import { getDisplayText } from '../../../utils';
+	import { getDisplayText, stopEvent } from '../../../utils';
 
 	import { onMount } from 'svelte';
 
@@ -37,6 +37,7 @@
     import LikeSelectedIcon from "../../../assets/icons/like_selected.png";
     import FollowIcon from "../../../assets/icons/follow.png";
 	import FollowSelectedIcon from "../../../assets/icons/follow_selected.png";
+    import ShareIcon from "../../../assets/icons/share.png";
 
     import LikesIcon from "../../../assets/icons/likes.png";
     import FollowerIcon from "../../../assets/icons/followers.png";
@@ -81,6 +82,7 @@
 		newProjectPost,
 		showMenu,
 		showTogglePublicDialog,
+		showShareProjectDialog,
 	} from '../../../actions/appActions';
 
 	import {
@@ -102,6 +104,10 @@
 	}
 	function toggleLiked() {
 		projectToggleLiked($projectId);
+	}
+	
+	function shareItem() {
+		showShareProjectDialog(projectId);
 	}
 
 	function showProjectOptions() {
@@ -213,9 +219,12 @@
 					<div class="overviewContent" class:returnView="{$projectReturnView}">
 						<div class="contentContainer">
 							<Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProjectOptions}"></Button>
+							<Button className="shareButton" onClick="{e => {shareItem(); return stopEvent(e); }}" icon="{ShareIcon}" title="Share"></Button>
 							{#if isTeamMember}
 								<Button className="editButton" onClick="{editProjectDetails}" icon="{EditIcon}" disabled="{!canEdit}"></Button>
 								<Audience {isPublic} onClick="{showTogglePublicDialog}" disabled="{!canEdit}" />
+							{:else}
+								<Button className="followButton {!following ? 'isButton' : ''}" onClick="{e => {toggleFollowing(); return stopEvent(e); }}" icon="{following ? FollowSelectedIcon : FollowIcon}" title="{following ? 'Unfollow' : 'Follow'}"></Button>
 							{/if}
 							<div class="itemContent">
 								<div class="header" class:headerOwner="{isTeamMember}">{projectTitle}</div>
@@ -455,6 +464,31 @@
 	.archived .overviewContent {
     	background-color: #eeeeee;
 	}
+	
+    /* .contentContainer :global(.headerButton) {
+        float: right;
+        width: 28px;
+        height: 28px;
+        padding: 6px;
+    } */
+
+    .contentContainer :global(.shareButton) {
+		position: absolute;
+		top: 16px;
+		right: 37px;
+		width: 28px;
+		height: 26px;
+		padding: 8px 6px;
+    }
+
+	.contentContainer :global(.followButton) {
+		position: absolute;
+		top: 16px;
+		right: 76px;
+		width: 28px;
+		height: 26px;
+		padding: 8px 6px;
+	}
 
     .contentContainer :global(.optionsButton) {
 		position: absolute;
@@ -467,7 +501,7 @@
 		padding: 8px;
 	}
     .contentContainer :global(.optionsButton .icon) {
-		margin-top: 1px;
+		/* margin-top: 1px; */
     	margin-left: 4px;
 	}
 
@@ -475,7 +509,7 @@
 		position: absolute;
 
 		top: 16px;
-    	right: 41px;
+    	right: 76px;
 
 		width: 28px;
 		height: 26px;
@@ -485,7 +519,7 @@
     .contentContainer :global(.audienceButton) {
 		position: absolute;
 		top: 21px;
-    	right: 84px;
+    	right: 118px;
 	}
 
     .overviewContent :global(.readMoreButton) {
@@ -705,7 +739,7 @@
     .header {
 		font-size: 2.4rem;
 		padding-top: 23px;
-		padding-right: 60px;
+    	padding-right: 118px;
 		padding-bottom: 5px;
 		line-height: 3rem;
 
@@ -713,7 +747,7 @@
 	}
 
     .headerOwner {
-    	padding-right: 160px;
+    	padding-right: 188px;
 	}
 
     .description {

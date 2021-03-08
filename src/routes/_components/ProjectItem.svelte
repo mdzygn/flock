@@ -27,7 +27,7 @@
     import { getProjectHeaderImage } from '../../models/projectsModel'; // getProject
     import {
         loadProject,
-		showShareProjectDialog
+		showShareProjectDialog,
     } from '../../actions/appActions';
     
 	import {
@@ -75,7 +75,7 @@
     <div class="contentContainer" on:click="{e => loadProject(projectId, { showInfo: true })}">
         <!-- <Button className="readMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button> -->
         <div class="contentHeader">
-            <Button className="headerButton shareButton}" onClick="{e => {shareItem(); return stopEvent(e); }}" icon="{ShareIcon}" title="Share"></Button>
+            <Button className="headerButton shareButton" onClick="{e => {shareItem(); return stopEvent(e); }}" icon="{ShareIcon}" title="Share"></Button>
             {#if !isTeamMember}
                 <Button className="headerButton followButton {!following ? 'isButton' : ''}" onClick="{e => {toggleFollowing(); return stopEvent(e); }}" icon="{following ? FollowSelectedIcon : FollowIcon}" title="{following ? 'Unfollow' : 'Follow'}"></Button>
             {/if}

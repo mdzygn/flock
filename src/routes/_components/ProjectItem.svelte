@@ -52,6 +52,7 @@
     $: isTeamMember = $user && $project && getIsProjectTeamMember($project);
 
 	$: projectLocation = ($project && $project.location) || '';
+	$: projectType = ($project && $project.categories && $project.categories.trim && $project.categories.split(',')[0].trim());
 
     $: headerImage = getProjectHeaderImage($project);
 
@@ -95,6 +96,10 @@
         {/if}
         <div class="infoContainer">
             <Button className="readMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button>
+            {#if projectType}
+                <!-- <div class="projectType">{projectType}</div> -->
+                <Button className="projectType" href="{'discover?search=' + encodeURIComponent(projectType)}" onClick="{e => {e.stopPropagation()}}">{projectType}</Button>
+            {/if}
             {#if projectLocation}
                 <Location location="{projectLocation}" />
             {/if}
@@ -209,6 +214,7 @@
     }
     .contentContainer :global(.readMoreButton .icon) {
         padding-left: 15px;
+        margin-top: -1px;
     }
 
     .projectItem :global(.proxyImage) {
@@ -332,13 +338,24 @@
         position: relative;
         min-height: 42px;
         padding-right: 104px;
+        padding-top: 7px;
     }
 
     .projectItem :global(.location) {
-        padding: 0;
+        display: inline-block;
         margin-left: -2px;
         margin-top: 0;
-        padding-top: 11px;
+        padding: 0;
         padding-bottom: 10px;
+        /* text-decoration: underline; */
+    }
+
+    .projectItem :global(.projectType) {
+        display: inline-block;
+        padding-bottom: 10px;
+        padding-right: 10px;
+        font-size: 1.2rem;
+        text-decoration: underline;
+        color: #888;
     }
 </style>

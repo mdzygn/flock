@@ -52,7 +52,7 @@
     $: isTeamMember = $user && $project && getIsProjectTeamMember($project);
 
 	$: projectLocation = ($project && $project.location) || '';
-	$: projectType = ($project && $project.categories && $project.categories.trim && $project.categories.split(',')[0].trim());
+	$: projectType = ($project && ($project.projectType || ($project.categories && $project.categories.trim && $project.categories.split(',')[0].trim())));
     $: projectStatus = ($project && $project.status) || '';
 
     $: headerImage = getProjectHeaderImage($project);

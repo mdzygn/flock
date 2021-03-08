@@ -29,7 +29,7 @@
 	import { project, projectId, editingProjectMode, showBetaFeatures } from '../../../models/appModel';
 	import { saveProjectDetails } from '../../../actions/projectActions';
 	
-	import ProjectTypes from '../../../config/ProjectTypes';
+	import ProjectTypes, { ProjectTypeCategories } from '../../../config/ProjectTypes';
 	import ProjectStatuses from '../../../config/ProjectStatuses';
 
 	let title = ($project && $project.title) || '';
@@ -273,6 +273,21 @@
 	function cancel() {
 		goto('projects/' + $projectId);
 	}
+
+	function onProjectTypeSelect() {
+		const projectTypeCategory = ProjectTypeCategories[projectType];
+		console.log('projectTypeCategory', projectTypeCategory);
+		
+		if (projectTypeCategory && projectTypeCategory.length) {
+            const categoryItems = categories.trim().split(', ');
+			projectTypeCategory.forEach(item => {
+				if (categoryItems.indexOf(item) === -1) {
+					categoryItems.push(item);
+				}
+			});
+			categories = categoryItems.join(', ').trim();
+		}
+	}
 </script>
 
 <svelte:head>
@@ -333,7 +348,7 @@
 								<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TYPE_TIP}</span>
 							{/if}
 						</div>
-						<Select items="{projectTypeItems}" bind:selectedValueString="{projectType}"></Select>
+						<Select items="{projectTypeItems}" bind:selectedValueString="{projectType}" on:select="{onProjectTypeSelect}"></Select>
 					</div>
 					<div id="categories" class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.CATEGORIES}

@@ -230,6 +230,9 @@
 							{/if}
 							<div class="itemContent">
 								<div class="header" class:headerOwner="{isTeamMember}">{projectTitle}</div>
+								<div class="projectStatusLine">
+									<div class="projectStatus">IN DEVELOPMENT</div>
+								</div>
 								<div class="description" class:button="{projectHasDetails && !forceProjectShowingInfo}" on:click="{(projectHasDetails && !forceProjectShowingInfo) ? toggleProjectInfo : null}">{@html projectDescriptionHTML}</div>
 							</div>
 							{#if projectHasDetails}
@@ -855,4 +858,18 @@
 	.posts {
 		margin-top: 10px;
 	}
+	
+    .projectStatusLine {    
+        margin-top: -8px;
+        margin-bottom: 5px;
+        margin-left: -1px;
+    }
+
+    .projectStatus {
+        font-size: 1rem;
+        background-color: #eee;
+        padding: 0px 6px;
+        border-radius: 5px;
+        display: inline-block;
+    }
 </style>

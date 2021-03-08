@@ -85,6 +85,9 @@
         </div>
         <div class="itemContent">
             <div class="header">{projectTitle}</div>
+            <div class="projectStatusLine">
+                <div class="projectStatus">IN DEVELOPMENT</div>
+            </div>
             <div class="description">{projectDescription}</div>
             <!-- <ProjectSkillsList project="{$project}" /> -->
         </div>
@@ -357,5 +360,19 @@
         font-size: 1.2rem;
         text-decoration: underline;
         color: #888;
+    }
+
+    .projectStatusLine {    
+        margin-top: -8px;
+        margin-bottom: 5px;
+        margin-left: -1px;
+    }
+
+    .projectStatus {
+        font-size: 1rem;
+        background-color: #eee;
+        padding: 0px 6px;
+        border-radius: 5px;
+        display: inline-block;
     }
 </style>

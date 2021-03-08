@@ -13,6 +13,8 @@
   import isOutOfViewport from "./utils/isOutOfViewport";
   import debounce from "./utils/debounce";
   import DefaultClearIcon from "./ClearIcon.svelte";
+  // import DefaultExpandIcon from "../../assets/icons/expand.png";
+  // import DefaultCollapseIcon from "./ClearIcon.svelte";
 
   const dispatch = createEventDispatcher();
   export let container = undefined;
@@ -85,6 +87,8 @@
   export let containerClasses = "";
   export let indicatorSvg = undefined;
   export let ClearIcon = DefaultClearIcon;
+  // export let ExpandIcon = DefaultExpandIcon;
+  // export let CollapseIcon = DefaultCollapseIcon;
 
   let target;
   let activeSelectedValue;
@@ -769,13 +773,27 @@
     color: var(--clearSelectFocusColor, #3f4f5f);
   }
 
+  .dropDownIcon {
+    position: absolute;
+    right: var(--dropDownIconRight, 0);
+    top: var(--dropDownIconTop, 0);
+    bottom: var(--dropDownIconBottom, 0);
+    display: flex;
+    align-items: center;
+  }
+
+  .dropDownIcon .icon {
+    transform: scale(0.5, 0.5);
+  }
+
+
   .indicator {
     position: absolute;
-    right: var(--indicatorRight, 10px);
-    top: var(--indicatorTop, 11px);
+    right: var(--indicatorRight, 0);
+    top: var(--indicatorTop, 0);
+    bottom: var(--indicatorTop, 0);
     width: var(--indicatorWidth, 20px);
-    height: var(--indicatorHeight, 20px);
-    color: var(--indicatorColor, #c5cacf);
+    color: var(--indicatorColor, #333333);
   }
 
   .indicator svg {
@@ -909,6 +927,11 @@
       <svelte:component this={ClearIcon} /> 
     </div>
   {/if}
+  <!-- {:else if ExpandIcon}
+    <div class="dropDownIcon">
+      <img class="icon" src="{ExpandIcon}" alt="expand" />
+    </div>
+  {/if} -->
 
   {#if showIndicator || (showChevron && !selectedValue || (!isSearchable && !isDisabled && !isWaiting && ((showSelectedItem && !isClearable) || !showSelectedItem)))}
     <div class="indicator">

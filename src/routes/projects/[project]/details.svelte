@@ -342,7 +342,7 @@
 								<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TYPE_TIP}</span>
 							{/if}
 						</div>
-						<Select items="{projectTypeItems}" bind:selectedValueString="{projectType}" isClearable="{false}"></Select>
+						<Select items="{projectTypeItems}" bind:selectedValueString="{projectType}" showIndicator="{true}" showChevron="{true}" isClearable="{false}"></Select>
 					</div>
 					<div id="categories" class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.CATEGORIES}

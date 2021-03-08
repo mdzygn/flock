@@ -481,7 +481,7 @@
 		color: #888888;
 	}
 	.charCountLow {
-		color: #DF3C3C;
+		color: #888888;
 	}
 	.charCountOver {
 		color: #DF3C3C;

@@ -243,6 +243,8 @@ function projectSearchMatch(project, searchString, filterString) {
 			if (project.skills && typeof project.skills === 'string' && project.skills.toLowerCase().includes(searchString)) return true;  // TODO: remove convertion once all converted
 			// if (project.skills && (project.skills.toLowerCase ? project.skills.toLowerCase().includes(searchString) : project.skills.includes(searchString))) return true;
 			if (project.location && project.location.toLowerCase().includes(searchString)) return true;
+			if (project.projectType && project.projectType.toLowerCase().includes(searchString)) return true;
+			// if (project.status && project.status.toLowerCase().includes(searchString)) return true;
 		} else {
 			return true;
 		}

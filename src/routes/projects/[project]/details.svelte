@@ -34,6 +34,8 @@
 	let skills = ($project && $project.skills) || '';
 	// let skills = ($project && $project.skills && (typeof $project.skills === 'string' ? $project.skills : $project.skills.join(', '))) || '';
 	let location = ($project && $project.location) || '';
+	let projectType = ($project && $project.projectType) || '';
+	let projectStatus = ($project && $project.status) || '';
 
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 
@@ -70,6 +72,8 @@
 	let tagsInput;
 	let skillsInput;
 	let locationInput;
+	let typeInput;
+	let statusInput;
 
 	let detailInput1;
 	let detailInput2;
@@ -272,8 +276,8 @@
 					{/if}
 
 					<div class="field">
-						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.LOCATION_TIP}</span></div>
-						<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput1})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TYPE}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TYPE_TIP}</span></div>
+						<input type="text" bind:value="{projectType}" bind:this="{typeInput}" on:keypress="{(e) => testInputDefocus(e, {target: statusInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 					</div>
 					<div id="categories" class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.CATEGORIES}
@@ -288,6 +292,14 @@
 					<div class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TAGS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TAGS_TIP}</span></div>
 						<textarea bind:value="{tags}" bind:this="{tagsInput}" on:keyup="{(e) => inputFormat(e, {keepLowerCase: true})}" />
+					</div>
+					<div class="field">
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.LOCATION_TIP}</span></div>
+						<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: typeInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+					</div>
+					<div class="field">
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.STATUS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.STATUS_TIP}</span></div>
+						<input type="text" bind:value="{projectStatus}" bind:this="{statusInput}" on:keypress="{(e) => testInputDefocus(e, {target: tagsInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 					</div>
 					<div class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.SKILLS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.SKILLS_TIP}</span></div>

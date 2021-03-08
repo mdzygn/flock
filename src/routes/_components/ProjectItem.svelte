@@ -208,7 +208,7 @@
 
     .contentContainer :global(.readMoreButton) {
         position: absolute;
-        top: 1px;
+        top: 2px;
         right: 11px;
 
         padding: 10px;

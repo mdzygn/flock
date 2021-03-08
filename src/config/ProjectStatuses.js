@@ -2,6 +2,7 @@ const ProjectStatuses = [
     'Ideating',
     // 'Concepting',
     'Validating',
+    'Planning',
     // 'Seeking Interest',
     // 'Seeking Advice',
     'Seeking Team',

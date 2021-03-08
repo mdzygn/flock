@@ -124,10 +124,11 @@
 
         padding-top: 14px;
         padding-left: 23px;
-        padding-right: 23px;
+        /* padding-right: 23px; */
         /* padding-bottom: 21px; */
 
         padding-right: 40px; /* for text wrapping */
+        max-width: 295px;
 
         color: #222222;
         /* color: #ffffff; */

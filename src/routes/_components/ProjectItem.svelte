@@ -53,6 +53,7 @@
 
 	$: projectLocation = ($project && $project.location) || '';
 	$: projectType = ($project && $project.categories && $project.categories.trim && $project.categories.split(',')[0].trim());
+    $: projectStatus = ($project && $project.status) || '';
 
     $: headerImage = getProjectHeaderImage($project);
 
@@ -85,9 +86,11 @@
         </div>
         <div class="itemContent">
             <div class="header">{projectTitle}</div>
-            <div class="projectStatusLine">
-                <div class="projectStatus">IN DEVELOPMENT</div>
-            </div>
+            {#if projectStatus}
+                <div class="projectStatusLine">
+                    <div class="projectStatus">{projectStatus}</div>
+                </div>
+            {/if}
             <div class="description">{projectDescription}</div>
             <!-- <ProjectSkillsList project="{$project}" /> -->
         </div>
@@ -366,6 +369,7 @@
         margin-top: -8px;
         margin-bottom: 5px;
         margin-left: -1px;
+        padding-right: 23px;
     }
 
     .projectStatus {

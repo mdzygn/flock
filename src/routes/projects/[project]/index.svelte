@@ -144,7 +144,7 @@
 	$: likeCount = ($project && $project.likeCount) || 0;
 	$: followCount = ($project && $project.followCount) || 0;
 
-	$: projectSlug = ($project && $project.slug) || null;
+    $: projectStatus = ($project && $project.status) || '';
 
     $: headerImage = getProjectHeaderImage($project);
 
@@ -230,9 +230,11 @@
 							{/if}
 							<div class="itemContent">
 								<div class="header" class:headerOwner="{isTeamMember}">{projectTitle}</div>
-								<div class="projectStatusLine">
-									<div class="projectStatus">IN DEVELOPMENT</div>
-								</div>
+								{#if projectStatus}
+									<div class="projectStatusLine">
+										<div class="projectStatus">{projectStatus}</div>
+									</div>
+								{/if}
 								<div class="description" class:button="{projectHasDetails && !forceProjectShowingInfo}" on:click="{(projectHasDetails && !forceProjectShowingInfo) ? toggleProjectInfo : null}">{@html projectDescriptionHTML}</div>
 							</div>
 							{#if projectHasDetails}
@@ -858,11 +860,12 @@
 	.posts {
 		margin-top: 10px;
 	}
-	
+
     .projectStatusLine {    
         margin-top: -8px;
         margin-bottom: 5px;
         margin-left: -1px;
+        padding-right: 23px;
     }
 
     .projectStatus {

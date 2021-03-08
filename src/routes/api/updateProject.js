@@ -48,6 +48,9 @@ export async function post(req, res, next) {
 				// team: true, // not to allow updating this way, to create separate function
 				posts: true, // what is this? can remove?
 				// ownerId: true,
+
+				projectType: true,
+				status: true,
 			};
 
 			details = filterItemDetails(details, setProjectDetailsSchema);

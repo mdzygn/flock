@@ -205,6 +205,8 @@
 				tags: trim(tags),
 				skills: trim(skills),
 				location: trim(location),
+				projectType: trim(projectType),
+				status: trim(projectStatus),
 			});
 		} else if ($editingProjectMode === 'details2') {
 			Object.assign(projectDetails, {
@@ -212,6 +214,8 @@
 				tags: trim(tags),
 				skills: trim(skills),
 				location: trim(location),
+				projectType: trim(projectType),
+				status: trim(projectStatus),
 			});
 		}
 

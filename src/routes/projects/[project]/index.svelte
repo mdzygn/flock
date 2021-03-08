@@ -145,7 +145,7 @@
 	$: followCount = ($project && $project.followCount) || 0;
 
 	$: projectType = ($project && $project.categories && $project.categories.trim && $project.categories.split(',')[0].trim());
-    $: projectStatus = ($project && $project.status) || '';
+    $: projectStatus = ($project && $project.status && $project.status.toUpperCase && $project.status.toUpperCase()) || '';
 
     $: headerImage = getProjectHeaderImage($project);
 

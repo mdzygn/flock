@@ -276,8 +276,7 @@
 
 	function onProjectTypeSelect() {
 		const projectTypeCategory = ProjectTypeCategories[projectType];
-		console.log('projectTypeCategory', projectTypeCategory);
-		
+
 		if (projectTypeCategory && projectTypeCategory.length) {
             const categoryItems = categories.trim().split(', ');
 			projectTypeCategory.forEach(item => {

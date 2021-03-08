@@ -21,6 +21,7 @@
     export let showLastActive = false;
     export let showUpdateCounter = true;
     export let showPrivateIcon = false;
+    export let showProjectStatus = false;
 
     let enableLastActive = false; // hardcode until updating project active dates
 
@@ -61,7 +62,7 @@
     <div class="detailContent">
         <div class="detailInnerContent">
             <div class="title">{$project.title}</div>
-            {#if projectStatus}
+            {#if showProjectStatus && projectStatus}
                 <div class="projectStatusLine">
                     <div class="projectStatus">{projectStatus}</div>
                 </div>

@@ -17,7 +17,7 @@
 
     export let projects;
 
-    export let displayLimit = config.MAX_PROJECT_PREVIEW_COUNT;
+    export let displayLimit = 0; // config.MAX_PROJECT_PREVIEW_COUNT;
 
     export let title = 'Projects';
     export let className = '';
@@ -26,6 +26,8 @@
 
     export let showLastActive = false;
     export let showUpdateCounter = true;
+    
+    export let showProjectStatus = false;
 
     export let showMoreAction = false;
 
@@ -59,7 +61,7 @@
             {:else}
                 {#each $projects as project, index}
                     {#if !displayLimit || index < displayLimit}
-                        <ProjectListItem {project} {showLastActive} {showUpdateCounter} {showPrivateIcon} />
+                        <ProjectListItem {project} {showLastActive} {showProjectStatus} {showUpdateCounter} {showPrivateIcon} />
                     {/if}
                 {:else}
                     <div class="noProjects">

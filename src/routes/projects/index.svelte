@@ -114,6 +114,7 @@
 					projects="{filteredMyProjects}"
 					{searchString}
 					showLastActive="{true}"
+					showProjectStatus="{true}"
 					displayLimit="{$displayingAllMyProjects ? 0 : MY_PROJECTS_DISPLAY_LIMIT}"
 					showMoreAction="{showArchivedButton ? displayArchivedProjects : displayAllMyProjects}"
 					forceShowMoreShow="{showArchivedButton}"
@@ -128,7 +129,16 @@
 					{/if}
 				</ProjectList>
 				<Button className="newProjectButton" onClick="{newProject}" icon="{AddProjectIcon}">new project</Button>
-				<ProjectList title="Following" className="followingProjects" projects="{filteredFollowingProjects}" showLastActive="{true}" displayLimit="{$displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}" showMoreAction="{displayAllFollowingProjects}" {searchString} showIfNoProjects="{true}" showPrivateIcon="{true}">
+				<ProjectList title="Following"
+					className="followingProjects"
+					projects="{filteredFollowingProjects}"
+					showLastActive="{true}"
+					showProjectStatus="{true}"
+					displayLimit="{$displayingAllFollowingProjects ? 0 : FOLLOWED_PROJECTS_DISPLAY_LIMIT}"
+					showMoreAction="{displayAllFollowingProjects}"
+					{searchString}
+					showIfNoProjects="{true}"
+					showPrivateIcon="{true}">
 					{#if searchString}
 						<slot>no followed projects matching "{searchString}"</slot>
 					{:else}

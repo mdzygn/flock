@@ -48,6 +48,7 @@
     $: hasSkills = false; // skills && skills.length;
 
 	$: canEdit = (isTeamMember && !project.archived) || false;
+	$: isArchived = (project && project.archived) || false;
 
     $: areMoreItems = skills && displayLimit && skills.length > displayLimit;
 
@@ -78,11 +79,11 @@
     }
 </script>
 
-{#if hasSkills || !canEdit}
+{#if hasSkills || (!isTeamMember && !isArchived)}
     <div class="content" class:skillsShown="{hasSkills}" class:noSkillsShown="{!hasSkills}" id="skills">
-        <ContentPanel title="{(hasSkills || canEdit) ? 'Seeking Skills:' : ''}" showEdit="{canEdit}" showMoreAction="{areMoreItems ? displayAllSkills : false}">
+        <ContentPanel title="{(hasSkills || isTeamMember) ? 'Seeking Skills:' : ''}" showEdit="{canEdit}" showMoreAction="{areMoreItems ? displayAllSkills : false}">
             <!-- editAction="{editProjectDetails}" -->
-            {#if !canEdit}
+            {#if !isTeamMember && !isArchived}
                 <Button className="interestedButton" onClick="{toggleCollaborate}" icon="{interestedToCollaborate ? CollaborateCheckedIcon : CollaborateUncheckedIcon}">interested to collaborate</Button>
             {/if}
             <!-- {#if hasSkills}
@@ -91,17 +92,17 @@
                 </div>
             {/if} -->
             <span slot="afterShowMore">
-                {#if showMessageField && !canEdit}
-                        <div class="messagePanel">
-                            <div class="messageField">
-                                <div class="label">{locale.COLLABORATE.MESSAGE}</div>
-                                <textarea bind:value="{collaborateMessage}" bind:this="{messageField}" on:keypress="{e => testInputDefocus(e, {action: testSubmit, actionOnCtrl: true})}" />
-                                <!-- on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" -->
-                            </div>
-                            <div class="actions">
-                                <Button className="sendButton" disabled="{!sendMessageEnabled}" onClick="{testSubmit}" icon="{SendMessageIcon}">{locale.COLLABORATE.SEND}</Button>
-                            </div>
+                {#if showMessageField && !isTeamMember && !isArchived}
+                    <div class="messagePanel">
+                        <div class="messageField">
+                            <div class="label">{locale.COLLABORATE.MESSAGE}</div>
+                            <textarea bind:value="{collaborateMessage}" bind:this="{messageField}" on:keypress="{e => testInputDefocus(e, {action: testSubmit, actionOnCtrl: true})}" />
+                            <!-- on:keypress="{e => testInputDefocus(e, {action: testSubmit})}" -->
                         </div>
+                        <div class="actions">
+                            <Button className="sendButton" disabled="{!sendMessageEnabled}" onClick="{testSubmit}" icon="{SendMessageIcon}">{locale.COLLABORATE.SEND}</Button>
+                        </div>
+                    </div>
                 {/if}
             </span>
         </ContentPanel>

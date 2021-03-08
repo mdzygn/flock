@@ -219,12 +219,14 @@
 					<div class="overviewContent" class:returnView="{$projectReturnView}">
 						<div class="contentContainer">
 							<Button className="optionsButton" icon="{OptionsMenuIcon}" onClick="{showProjectOptions}"></Button>
-							<Button className="shareButton" onClick="{e => {shareItem(); return stopEvent(e); }}" icon="{ShareIcon}" title="Share"></Button>
+							<Button className="shareButton" onClick="{e => {shareItem(); return stopEvent(e); }}" icon="{ShareIcon}" title="Share" disabled="{isArchived}"></Button>
 							{#if isTeamMember}
 								<Button className="editButton" onClick="{editProjectDetails}" icon="{EditIcon}" disabled="{!canEdit}"></Button>
 								<Audience {isPublic} onClick="{showTogglePublicDialog}" disabled="{!canEdit}" />
 							{:else}
-								<Button className="followButton {!following ? 'isButton' : ''}" onClick="{e => {toggleFollowing(); return stopEvent(e); }}" icon="{following ? FollowSelectedIcon : FollowIcon}" title="{following ? 'Unfollow' : 'Follow'}"></Button>
+								{#if !isArchived}
+									<Button className="followButton {!following ? 'isButton' : ''}" onClick="{e => {toggleFollowing(); return stopEvent(e); }}" icon="{following ? FollowSelectedIcon : FollowIcon}" title="{following ? 'Unfollow' : 'Follow'}"></Button>
+								{/if}
 							{/if}
 							<div class="itemContent">
 								<div class="header" class:headerOwner="{isTeamMember}">{projectTitle}</div>
@@ -364,7 +366,8 @@
 			<div slot="scrollHeader"><div class="pageHeader">
 				{#if isArchived}
 					<ArchivedBar onClick="{unarchiveCurrentProject}"/>
-				{:else}
+				{/if}
+				<!-- {:else}
 					{#if isTeamMember}
 						<ActionBar targetItemId="{$projectId}" targetItem="{$project}">
 							<div slot="buttonLeft">
@@ -400,13 +403,12 @@
 									iconStyle = "padding-bottom: 4px"
 									countStyle = "left: 40px"
 								/>
-									<!-- action = "{showProjectFollowers}" -->
 							</div>
 						</ActionBar>
 					{:else}
 						<ActionBar targetItemId="{$projectId}" targetItem="{$project}" />
 					{/if}
-				{/if}
+				{/if} -->
 			</div></div>
 		</ScrollView>
 	{/if}

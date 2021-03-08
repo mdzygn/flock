@@ -2,6 +2,9 @@
     import { tick } from 'svelte';
 	import { goto } from '@sapper/app';
 
+	import Select from '../../../components/Select';
+  	// import Select from 'svelte-select';
+
 	import config from '../../../config';
 	import { gotoAnchor, inputFormat } from '../../../utils';
 	import locale from '../../../locale';
@@ -25,6 +28,8 @@
 
 	import { project, projectId, editingProjectMode, showBetaFeatures } from '../../../models/appModel';
 	import { saveProjectDetails } from '../../../actions/projectActions';
+	
+	import ProjectTypes from '../../../config/ProjectTypes';
 
 	let title = ($project && $project.title) || '';
 	let description = ($project && $project.description) || '';
@@ -42,6 +47,16 @@
     let categoriesInvalid = false;
 	let projectTypeInvalid = false;
 	let projectStatusInvalid = false;
+
+	let projectTypeItems = ProjectTypes.map(item => {return {value: item, label: item};});
+	
+	// [
+	// 	{value: 'chocolate', label: 'Chocolate'},
+	// 	{value: 'pizza', label: 'Pizza'},
+	// 	{value: 'cake', label: 'Cake'},
+	// 	{value: 'chips', label: 'Chips'},
+	// 	{value: 'ice-cream', label: 'Ice Cream'},
+	// ];
 
 	let headerImageIsUploading;
 	let detail1ImageIsUploading;
@@ -308,6 +323,17 @@
 							{/if}
 						</div>
 						<input type="text" bind:value="{projectType}" bind:this="{typeInput}" on:keypress="{(e) => testInputDefocus(e, {target: statusInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+					</div>
+					
+					<div id="projectType" class="field">
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TYPE}
+							{#if projectTypeInvalid}
+								<span class="errorLabel">{@html locale.EDIT_PROJECT_DETAILS.TYPE_ERROR}</span>
+							{:else}
+								<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TYPE_TIP}</span>
+							{/if}
+						</div>
+						<Select items="{projectTypeItems}" selectedValue="{projectType}"></Select>
 					</div>
 					<div id="categories" class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.CATEGORIES}

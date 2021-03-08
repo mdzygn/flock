@@ -30,6 +30,7 @@
 	import { saveProjectDetails } from '../../../actions/projectActions';
 	
 	import ProjectTypes from '../../../config/ProjectTypes';
+	import ProjectStatuses from '../../../config/ProjectStatuses';
 
 	let title = ($project && $project.title) || '';
 	let description = ($project && $project.description) || '';
@@ -58,6 +59,7 @@
 	let projectStatusInvalid = false;
 
 	let projectTypeItems = ProjectTypes.map(item => {return {value: item, label: item};});
+	let projectStatusItems = ProjectStatuses.map(item => {return {value: item, label: item};});
 	
 	// [
 	// 	{value: 'chocolate', label: 'Chocolate'},
@@ -323,17 +325,6 @@
 						</div>
 					{/if}
 
-					<!-- <div id="projectType" class="field">
-						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TYPE}
-							{#if projectTypeInvalid}
-								<span class="errorLabel">{@html locale.EDIT_PROJECT_DETAILS.TYPE_ERROR}</span>
-							{:else}
-								<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TYPE_TIP}</span>
-							{/if}
-						</div>
-						<input type="text" bind:value="{projectType}" bind:this="{typeInput}" on:keypress="{(e) => testInputDefocus(e, {target: statusInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
-					</div> -->
-					
 					<div id="projectType" class="field">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TYPE}
 							{#if projectTypeInvalid}
@@ -360,7 +351,7 @@
 					</div>
 					<div class="field">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.LOCATION_TIP}</span></div>
-						<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: typeInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+						<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: skillsInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 					</div>
 					<div id="projectStatus" class="field">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.STATUS}
@@ -370,7 +361,8 @@
 								<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.STATUS_TIP}</span>
 							{/if}
 						</div>
-						<input type="text" bind:value="{projectStatus}" bind:this="{statusInput}" on:keypress="{(e) => testInputDefocus(e, {target: tagsInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+						<Select items="{projectStatusItems}" bind:selectedValueString="{projectStatus}"></Select>
+						<!-- <input type="text" bind:value="{projectStatus}" bind:this="{statusInput}" on:keypress="{(e) => testInputDefocus(e, {target: tagsInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" /> -->
 					</div>
 					<div class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.SKILLS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.SKILLS_TIP}</span></div>

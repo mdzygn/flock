@@ -333,7 +333,7 @@
 								<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TYPE_TIP}</span>
 							{/if}
 						</div>
-						<Select items="{projectTypeItems}" selectedValue="{projectType}"></Select>
+						<Select items="{projectTypeItems}" selectedValue="{projectType}" isClearable="{false}"></Select>
 					</div>
 					<div id="categories" class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.CATEGORIES}

@@ -40,6 +40,8 @@
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 
     let categoriesInvalid = false;
+	let projectTypeInvalid = false;
+	let projectStatusInvalid = false;
 
 	let headerImageIsUploading;
 	let detail1ImageIsUploading;
@@ -138,10 +140,28 @@
 			return;
 		}
 
+		if (!projectType.trim()) {
+			projectTypeInvalid = true;
+			gotoAnchor('projectType');
+			return;
+		} else {
+			projectTypeInvalid = false;
+		}
+
 		if (!categories.trim()) {
 			categoriesInvalid = true;
 			gotoAnchor('categories');
 			return;
+		} else {
+			categoriesInvalid = false;
+		}
+
+		if (!projectStatus.trim()) {
+			projectStatusInvalid = true;
+			gotoAnchor('projectStatus');
+			return;
+		} else {
+			projectStatusInvalid = false;
 		}
 
 		let details = null;
@@ -275,14 +295,20 @@
 						</div>
 					{/if}
 
-					<div class="field">
-						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TYPE}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TYPE_TIP}</span></div>
+					<div id="projectType" class="field">
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TYPE}
+							{#if projectTypeInvalid}
+								<span class="errorLabel">{@html locale.EDIT_PROJECT_DETAILS.TYPE_ERROR}</span>
+							{:else}
+								<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TYPE_TIP}</span>
+							{/if}
+						</div>
 						<input type="text" bind:value="{projectType}" bind:this="{typeInput}" on:keypress="{(e) => testInputDefocus(e, {target: statusInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 					</div>
 					<div id="categories" class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.CATEGORIES}
 							{#if categoriesInvalid}
-								<span class="errorLabel">please select at least one category</span>
+								<span class="errorLabel">{locale.EDIT_PROJECT_DETAILS.CATEGORIES_ERROR}</span>
 							{:else}
 								<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.CATEGORIES_TIP}</span>
 							{/if}
@@ -297,8 +323,14 @@
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.LOCATION_TIP}</span></div>
 						<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: typeInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 					</div>
-					<div class="field">
-						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.STATUS}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.STATUS_TIP}</span></div>
+					<div id="projectStatus" class="field">
+						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.STATUS}
+							{#if projectStatusInvalid}
+								<span class="errorLabel">{@html locale.EDIT_PROJECT_DETAILS.STATUS_ERROR}</span>
+							{:else}
+								<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.STATUS_TIP}</span>
+							{/if}
+						</div>
 						<input type="text" bind:value="{projectStatus}" bind:this="{statusInput}" on:keypress="{(e) => testInputDefocus(e, {target: tagsInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 					</div>
 					<div class="field descriptionField">
@@ -592,7 +624,8 @@
 
     .errorLabel {
     	padding-left: 13px;
-		font-weight: initial;
+		font-weight: 700;
+		/* font-weight: initial; */
 
     	/* padding-left: 7px;
 		padding-bottom: 12px;

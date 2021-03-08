@@ -140,7 +140,7 @@ const locale = {
 		EDITED: 'edited'
 	},
 	COLLABORATE: {
-		MESSAGE: 'Send Message',
+		MESSAGE: 'Add Comment',
 		SEND: 'Send',
 	},
 	PROJECT: {

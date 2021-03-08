@@ -261,7 +261,7 @@
 
 <style>
   .listContainer {
-    box-shadow: var(--listShadow, 0 2px 3px 0 rgba(44, 62, 80, 0.24));
+    box-shadow: var(--listShadow, 2px 2px 11px 0 rgba(44, 62, 80, 0.24));
     border-radius: var(--listBorderRadius, 4px);
     max-height: var(--listMaxHeight, 250px);
     overflow-y: auto;

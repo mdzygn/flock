@@ -651,18 +651,32 @@
   .selectContainer {
     --padding: 0 16px;
 
-    border: var(--border, 1px solid #d8dbdf);
-    border-radius: var(--borderRadius, 3px);
-    height: var(--height, 42px);
+    /* border: var(--border, 1px solid #d8dbdf);
+    border-radius: var(--borderRadius, 3px); */
+    /* height: var(--height, 42px); */
     position: relative;
     display: flex;
     align-items: center;
-    padding: var(--padding);
+    /* padding: var(--padding); */
     background: var(--background, #fff);
   }
 
   .selectContainer input {
+    border: none;
+    outline: none;
+    background: none;
+    border-bottom: 1px solid #cccccc;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1.5rem;
+    color: #555555;
+    padding: 6px 7px;
+    
     cursor: default;
+    /* position: absolute; */
+    /* left: var(--inputLeft, 0); */
+
+    /* cursor: default;
     border: none;
     color: var(--inputColor, #3f4f5f);
     height: var(--height, 42px);
@@ -673,7 +687,7 @@
     font-size: var(--inputFontSize, 14px);
     letter-spacing: var(--inputLetterSpacing, -0.08px);
     position: absolute;
-    left: var(--inputLeft, 0);
+    left: var(--inputLeft, 0); */
   }
 
   .selectContainer input::placeholder {
@@ -705,10 +719,15 @@
   }
 
   .selectedItem {
-    line-height: var(--height, 42px);
-    height: var(--height, 42px);
+    position: absolute;
+
+    font-size: 1.5rem;
+    padding: 6px 7px;
+
+    /* line-height: var(--height, 42px);
+    height: var(--height, 42px); */
     overflow-x: hidden;
-    padding: var(--selectedItemPadding, 0 20px 0 0);
+    /* padding: var(--selectedItemPadding, 0 20px 0 0); */
   }
 
   .selectedItem:focus {
@@ -717,9 +736,9 @@
 
   .clearSelect {
     position: absolute;
-    right: var(--clearSelectRight, 10px);
-    top: var(--clearSelectTop, 11px);
-    bottom: var(--clearSelectBottom, 11px);
+    right: var(--clearSelectRight, 0);
+    top: var(--clearSelectTop, 0);
+    bottom: var(--clearSelectBottom, 0);
     width: var(--clearSelectWidth, 20px);
     color: var(--clearSelectColor, #c5cacf);
     flex: none !important;

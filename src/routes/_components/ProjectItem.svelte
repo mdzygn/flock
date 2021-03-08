@@ -53,7 +53,7 @@
 
 	$: projectLocation = ($project && $project.location) || '';
 	$: projectType = ($project && ($project.projectType || ($project.categories && $project.categories.trim && $project.categories.split(',')[0].trim())));
-    $: projectStatus = ($project && $project.status && $project.status.toUpperCase && $project.status.toUpperCase()) || '';
+    $: projectStatus = (($project && $project.status) || locale.PROJECT.DEFAULT_STATUS).toUpperCase();
 
     $: headerImage = getProjectHeaderImage($project);
 

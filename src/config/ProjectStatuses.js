@@ -1,18 +1,18 @@
 const ProjectStatuses = [
     'Ideating',
-    'Concepting',
+    // 'Concepting',
     'Validating',
     // 'Seeking Interest',
     // 'Seeking Advice',
     'Seeking Team',
     'Seeking Skills',
+    'Seeking Funding',
     'In Development',
     'Trialing',
-    'Building Community',
-    'Seeking Funding',
-    'Raising Funds',
+    // 'Raising Funds',
     'Established',
-    'Scaling',
+    'Building Community',
+    // 'Scaling',
     'On Hold',
 ];
 

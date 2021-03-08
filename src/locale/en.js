@@ -154,6 +154,7 @@ const locale = {
 		CHANNELS_FOLLOW: ' this project to view discussion channels and get involved.',
 		CHANNELS_FOLLOW_ALL: ' this project to view all discussion channels and get involved.',
 		POST_UPDATE: 'post update',
+		DEFAULT_STATUS: 'In Development',
 	},
 	PROFILE: {
 		NOT_FOUND: 'profile not found',

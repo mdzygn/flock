@@ -1,4 +1,5 @@
 <script>
+    import locale from '../../locale';
     import { writable } from 'svelte/store';
 
     import Counter from './Counter.svelte';
@@ -32,6 +33,8 @@
 
     $: projectUnviewedCount = ($project && getUnviewedProjectNotificationCount($project.id)) || writable(0);
 
+    $: projectStatus = (($project && $project.status) || locale.PROJECT.DEFAULT_STATUS).toUpperCase();
+
     let dateString = '';
     $: {
         if (date) {
@@ -58,6 +61,11 @@
     <div class="detailContent">
         <div class="detailInnerContent">
             <div class="title">{$project.title}</div>
+            {#if projectStatus}
+                <div class="projectStatusLine">
+                    <div class="projectStatus">{projectStatus}</div>
+                </div>
+            {/if}
             {#if detail}
                 <div class="detail">{detail}</div>
             {/if}
@@ -155,5 +163,20 @@
         margin-right: 2px;
 
         opacity: 0.75;
+    }
+
+    .projectStatusLine {    
+        margin-top: -2px;
+        margin-bottom: -5px;
+        margin-left: -1px;
+        padding-right: 23px;
+    }
+
+    .projectStatus {
+        font-size: 1rem;
+        background-color: #eee;
+        padding: 0px 4px;
+        border-radius: 5px;
+        display: inline-block;
     }
 </style>

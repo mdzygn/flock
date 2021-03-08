@@ -42,6 +42,15 @@
 	let projectType = ($project && $project.projectType) || '';
 	let projectStatus = ($project && $project.status) || '';
 
+	// let projectTypeValue = undefined;
+	// $: {
+	// 	if (!projectTypeValue) {
+	// 		projectTypeValue = {value: projectType, label: projectType};
+	// 	} else if (projectType !== projectTypeValue.value) {
+	// 		projectType = projectTypeValue.value;
+	// 	}
+	// }
+
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 
     let categoriesInvalid = false;
@@ -314,7 +323,7 @@
 						</div>
 					{/if}
 
-					<div id="projectType" class="field">
+					<!-- <div id="projectType" class="field">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TYPE}
 							{#if projectTypeInvalid}
 								<span class="errorLabel">{@html locale.EDIT_PROJECT_DETAILS.TYPE_ERROR}</span>
@@ -323,7 +332,7 @@
 							{/if}
 						</div>
 						<input type="text" bind:value="{projectType}" bind:this="{typeInput}" on:keypress="{(e) => testInputDefocus(e, {target: statusInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
-					</div>
+					</div> -->
 					
 					<div id="projectType" class="field">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.TYPE}
@@ -333,7 +342,7 @@
 								<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.TYPE_TIP}</span>
 							{/if}
 						</div>
-						<Select items="{projectTypeItems}" selectedValue="{projectType}" isClearable="{false}"></Select>
+						<Select items="{projectTypeItems}" bind:selectedValueString="{projectType}" isClearable="{false}"></Select>
 					</div>
 					<div id="categories" class="field descriptionField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.CATEGORIES}

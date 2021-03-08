@@ -26,6 +26,7 @@
   export let isCreatable = false;
   export let isFocused = false;
   export let selectedValue = undefined;
+  export let selectedValueString = undefined;
   export let filterText = "";
   export let placeholder = "Select...";
   export let items = [];
@@ -128,6 +129,22 @@
   $: disabled = isDisabled;
 
   $: updateSelectedValueDisplay(items);
+
+	$: {
+		if (!selectedValue) {
+      if (selectedValueString) {
+			  selectedValue = {value: selectedValueString, label: selectedValueString};
+      }
+		} else if (typeof selectedValue !== "string" && selectedValueString !== selectedValue.value) {
+			selectedValueString = selectedValue.value;
+		}
+	}
+  
+  // $: selectedValueString = (typeof selectedValue === "string") ? selectedValue : selectedValue[optionIdentifier];
+  // $: selectedValue = {
+  //   [optionIdentifier]: selectedValueString,
+  //   label: selectedValueString
+  // };
 
   $: {
     if (typeof selectedValue === "string") {

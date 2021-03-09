@@ -175,7 +175,8 @@
 	function getDetailTitle(project, index, defaultValue) {
 		let detailText = project && project.details && project.details[index] && project.details[index].detail;
 		let title = project && project.details && project.details[index] && project.details[index].title;
-		if (title === undefined && !detailText && defaultValue) {
+		// if (title === undefined && !detailText && defaultValue) {
+		if (!title && !detailText && defaultValue) {
 			title = defaultValue;
 		} else if (!title) {
 			title = '';
@@ -420,7 +421,7 @@
 			{/if}
 
 			{#if ($editingProjectMode !== 'details2')}
-				<div class="sectionTitle">{locale.EDIT_PROJECT_DETAILS.OVERVIEW_HEADING}</div>
+				<div class="sectionTitle projectOverviewTitle">{locale.EDIT_PROJECT_DETAILS.OVERVIEW_HEADING}</div>
 
 				{#if detailImage1 || addingDetailImage[0]}
 					<div class="imageField">
@@ -555,6 +556,11 @@
 		padding-top: 13px;
 	}
 
+	.projectOverviewTitle {
+        font-size: 1.7rem;
+		padding-bottom: 0;
+		color: #666666;
+	}
 
 	.label {
 		font-size: 1.3rem;

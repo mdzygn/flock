@@ -278,17 +278,23 @@
 							</div>
 						{/if}
 						<div class="projectActions">
-							<div class="projectActionButtons">
+							<!-- <div class="projectActionButtons"> --><!-- TODO: keep outside but scale height depending on child elements -->
 								{#if projectHasDetails && !showInfo && $projectReturnView}
-									<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+									<div class="projectActionButtons">
+										<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+									</div>
 								{:else if !projectHasDetails && isTeamMember && !isArchived}
-									<Button className="addProjectDetailsButton" onClick="{() => editProjectDetails({editingProjectMode: 'addDetails'})}" icon="{AddDetailsIcon}">add project details</Button>
+									<div class="projectActionButtons">
+										<Button className="addProjectDetailsButton" onClick="{() => editProjectDetails({editingProjectMode: 'addDetails'})}" icon="{AddDetailsIcon}">add project details</Button>
+									</div>
 								{/if}
 								{#if !isTeamMember}
 									<!-- <Button disabled="{!$showBetaFeatures}" className="sendMessageButton" onClick="{e => loadConversationByProject($projectId)}" icon="{SendMessageIcon}">message</Button> -->
 								{:else if isNew && !isPublic}
 									{#if !isArchived}
-										<Button className="makePublicButton isButton" onClick="{showTogglePublicDialog}">make public</Button>
+										<div class="projectActionButtons">
+											<Button className="makePublicButton isButton" onClick="{showTogglePublicDialog}">make public</Button>
+										</div>
 									{/if}
 								{:else}
 									<!-- <Button disabled="{!$showBetaFeatures}" className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
@@ -296,12 +302,13 @@
 									</Button> -->
 								{/if}
 								{#if (!$projectReturnView || showInfo) && !isTeamMember}
-									<!-- <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}">like</Button> -->
-									<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<!-- <div class="countContainer">
-										<div class="count">{followCount}</div>
-									</div>--></Button>
+									<div class="projectActionButtons">
+										<!-- <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}">like</Button> -->
+										<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<!-- <div class="countContainer">
+											<div class="count">{followCount}</div>
+										</div>--></Button>
+									</div>
 								{/if}
-							</div>
 							{#if (!$projectReturnView || showInfo) && (projectType || projectLocation)}
 								<div class="infoContainer">
 									{#if projectType}

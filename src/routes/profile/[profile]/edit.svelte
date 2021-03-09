@@ -272,6 +272,7 @@
 	.headerImageLabel {
 		padding-left: 23px;
 		padding-right: 23px;
+    	padding-bottom: 0;
 	}
 
 

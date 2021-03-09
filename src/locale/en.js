@@ -64,7 +64,7 @@ const locale = {
 		DESCRIPTION_NOTE: 'keep it brief, you can add detail later',
 		// DESCRIPTION_NOTE: 'keep your summary as short and to the point as possible,<br/>you have the opportunity to go into more detail later',
 		// DESCRIPTION_NOTE: 'keep your summary as concise as possible, you can go into detail later',
-		HEADER_IMAGE: 'project header',
+		HEADER_IMAGE: 'project header image',
 		PRIVACY_NOTE: 'your project will start private, you can make it public later',
 		CONFIRM: 'next',
 		DETAILS_2_CONFIRM: 'finish',

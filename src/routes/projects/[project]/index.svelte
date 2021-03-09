@@ -254,7 +254,7 @@
 						{#if showInfo}
 							<div class="projectInfo" class:forceShowInfo="{forceProjectShowingInfo}">
 								{#each projectDetails as projectDetailItem, index}
-									{#if projectDetailItem.detail || projectDetailItem.image}
+									{#if projectDetailItem && (projectDetailItem.detail || projectDetailItem.image)}
 										{#if projectDetailItem.image}
 											{#if projectDetailItem.image === true}
 												<Proxy image="project_info_image_{index + 1}" className="projectDetailImage {!projectDetailItem.detail ? 'soloImage' : ''}" />

@@ -237,19 +237,19 @@
 			details = [];
 		}
 
-		const sourceDetailTitles = [
-			detailTitle1,
-			detailTitle2,
-			detailTitle3,
-			detailTitle4,
-			detailTitle5,
-		];
 		const sourceDetails = [
 			detail1,
 			detail2,
 			detail3,
 			detail4,
 			detail5,
+		];
+		const sourceDetailTitles = [
+			detailTitle1,
+			detailTitle2,
+			detailTitle3,
+			detailTitle4,
+			detailTitle5,
 		];
 		const sourceDetailsImages = [
 			detailImage1,
@@ -260,10 +260,18 @@
 		];
 
 		for (let detailI = 0; detailI < sourceDetails.length; detailI++) {
-			details[detailI] = details[detailI] || {};
-			details[detailI].detail = trim(sourceDetails[detailI]);
-			details[detailI].image = sourceDetailsImages[detailI];
-			details[detailI].title = details[detailI].detail ? trim(sourceDetailTitles[detailI]) : undefined;
+			if (sourceDetails[detailI] || sourceDetailsImages[detailI]) {
+				details[detailI] = details[detailI] || {};
+				details[detailI].detail = trim(sourceDetails[detailI]);
+				details[detailI].image = sourceDetailsImages[detailI];
+				if (details[detailI].detail && sourceDetailTitles[detailI]) {
+					details[detailI].title = trim(sourceDetailTitles[detailI]);
+				} else if (details[detailI].title) {
+					delete details[detailI].title;
+				}
+			} else {
+				details[detailI] = null;
+			}
 		}
 
 		const projectDetails = {

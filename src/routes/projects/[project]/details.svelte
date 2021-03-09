@@ -377,6 +377,10 @@
 				<div class="actions topActions">
 					<Button className="saveButton" onClick="{save}" icon="{SaveIcon}" disabled="{!saveEnabled}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
 				</div>
+			{:else if $editingProjectMode === 'details3'}
+				<div class="actions topActions">
+					<Button className="skipForNowButton" onClick="{cancel}" icon="{NextArrowIcon}">{locale.NEW_PROJECT.SKIP_FOR_NOW}</Button>
+				</div>
 			{/if}
 
 			{#if ($editingProjectMode === 'edit' || $editingProjectMode === 'details2')}
@@ -448,7 +452,7 @@
 				<div class="sectionTitle projectOverviewTitle">{locale.EDIT_PROJECT_DETAILS.OVERVIEW_HEADING}</div>
 
 				{#if detailImage1 || addingDetailImage[0]}
-					<div class="imageField">
+					<div class="imageField showingSelector">
 						<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{() => removeImage(0) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 					</div>
 					<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage1}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail1ImageIsUploading}" itemIndex="1" uploadType="projectDetail" itemId="{$projectId}" />
@@ -468,7 +472,7 @@
 				</div>
 
 				{#if detailImage2 || addingDetailImage[1]}
-					<div class="imageField">
+					<div class="imageField showingSelector">
 						<Button className="addImage" onClick="{() => removeImage(1) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 					</div>
 					<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage2}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail2ImageIsUploading}" itemIndex="2" uploadType="projectDetail" itemId="{$projectId}" />
@@ -488,7 +492,7 @@
 				</div>
 
 				{#if detailImage3 || addingDetailImage[2]}
-					<div class="imageField">
+					<div class="imageField showingSelector">
 						<Button className="addImage" onClick="{() => removeImage(2) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 					</div>
 					<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage3}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail3ImageIsUploading}" itemIndex="3" uploadType="projectDetail" itemId="{$projectId}" />
@@ -508,7 +512,7 @@
 				</div>
 
 				{#if detailImage4 || addingDetailImage[3]}
-					<div class="imageField">
+					<div class="imageField showingSelector">
 						<Button className="addImage" onClick="{() => removeImage(3) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 					</div>
 					<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage4}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail4ImageIsUploading}" itemIndex="4" uploadType="projectDetail" itemId="{$projectId}" />
@@ -528,7 +532,7 @@
 				</div>
 
 				{#if detailImage5 || addingDetailImage[4]}
-					<div class="imageField">
+					<div class="imageField showingSelector">
 						<Button className="addImage" onClick="{() => removeImage(4) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
 					</div>
 					<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage5}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail5ImageIsUploading}" itemIndex="5" uploadType="projectDetail" itemId="{$projectId}" />
@@ -588,6 +592,9 @@
 	.imageField {
 		position: relative;
 		height: 44px;
+		margin-bottom: -14px;
+	}
+	.imageField.showingSelector {
 		margin-bottom: -20px;
 	}
 	.content :global(.detailImageSelector) {
@@ -688,6 +695,10 @@
 		color: #DF3C3C;
 	}
 
+	.detailText :global(textarea) {
+		height: 192px;
+	}
+
 	.headerImageField {
     	padding: 0;
     	padding-top: 10px;
@@ -758,6 +769,23 @@
     	margin-top: -1px;
     }
 
+	.content :global(.skipForNowButton) {
+        position: absolute;
+		top: 6px;
+		right: 0;
+		padding: 10px;
+    	padding-right: 45px;
+
+		font-size: 1.2rem;
+		font-weight: initial;
+		color: #999;
+    }
+    .content :global(.skipForNowButton .icon) {
+    	padding-left: 20px;
+		margin-top: -2px;
+    	opacity: 0.7;
+		transform: scale(0.35, 0.35);
+    }
 
 	.content :global(.cancelButton) {
         position: absolute;

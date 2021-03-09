@@ -69,6 +69,7 @@ const locale = {
 		CONFIRM: 'next',
 		DETAILS_NEXT: 'next',
 		DETAILS_FINISH: 'finish',
+		SKIP_FOR_NOW: 'skip for now',
 	},
 	EDIT_PROJECT_DETAILS: {
 		OVERVIEW_HEADING: 'Project Overview',

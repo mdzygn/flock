@@ -434,7 +434,7 @@
 					</div>
 				{/if}
 
-				<div class="field detailTitle">
+				<div class="field detailTitle" class:hasNoDetail="{!detail1}">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_1_TIP}</span></div>
 					<input type="text" bind:value="{detailTitle1}" bind:this="{detailTitleInput1}" placeholder="{locale.EDIT_PROJECT_DETAILS.DETAIL_TITLE_PLACEHOLDER}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput1})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
@@ -454,7 +454,7 @@
 					</div>
 				{/if}
 
-				<div class="field detailTitle">
+				<div class="field detailTitle" class:hasNoDetail="{!detail2}">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_2_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_2_TIP}</span></div>
 					<input type="text" bind:value="{detailTitle2}" bind:this="{detailTitleInput2}" placeholder="{locale.EDIT_PROJECT_DETAILS.DETAIL_TITLE_PLACEHOLDER}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput2})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
@@ -474,7 +474,7 @@
 					</div>
 				{/if}
 
-				<div class="field detailTitle">
+				<div class="field detailTitle" class:hasNoDetail="{!detail3}">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_3_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_3_TIP}</span></div>
 					<input type="text" bind:value="{detailTitle3}" bind:this="{detailTitleInput3}" placeholder="{locale.EDIT_PROJECT_DETAILS.DETAIL_TITLE_PLACEHOLDER}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput3})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
@@ -494,7 +494,7 @@
 					</div>
 				{/if}
 
-				<div class="field detailTitle">
+				<div class="field detailTitle" class:hasNoDetail="{!detail4}">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_4_TIP}</span></div>
 					<input type="text" bind:value="{detailTitle4}" bind:this="{detailTitleInput4}" placeholder="{locale.EDIT_PROJECT_DETAILS.DETAIL_TITLE_PLACEHOLDER}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput4})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
@@ -755,5 +755,9 @@
 	}
 	.detailText {
 		padding-top: 8px;
+	}
+
+	.detailTitle.hasNoDetail input {
+    	color: #bbb;
 	}
 </style>

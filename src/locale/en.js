@@ -94,7 +94,7 @@ const locale = {
 		DETAIL_3_LABEL: 'section 3',
 		DETAIL_4_LABEL: 'section 4',
 		DETAIL_5_LABEL: 'section 5',
-		DETAIL_1_TIP: 'e.g. Introduction - background of the project', // '<strong>what</strong> is the project',
+		DETAIL_1_TIP: 'e.g. Introduction - what the project is about', // '<strong>what</strong> is the project',
 		DETAIL_2_TIP: 'e.g. Why this matters - the problem it solves', // '<strong>why</strong> it matters',
 		DETAIL_3_TIP: 'e.g. How it works - how people interact with it', // '<strong>how</strong> it works',
 		DETAIL_4_TIP: 'e.g. Where we\'re at - current status of the project',

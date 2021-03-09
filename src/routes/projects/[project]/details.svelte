@@ -430,7 +430,7 @@
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.LOCATION}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.LOCATION_TIP}</span></div>
 						<input type="text" bind:value="{location}" bind:this="{locationInput}" on:keypress="{(e) => testInputDefocus(e, {target: skillsInput})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 					</div>
-					<div id="projectStatus" class="field">
+					<div id="projectStatus" class="field projectStatusField">
 						<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.STATUS}
 							{#if projectStatusInvalid}
 								<span class="errorLabel">{@html locale.EDIT_PROJECT_DETAILS.STATUS_ERROR}</span>
@@ -695,7 +695,7 @@
 		color: #DF3C3C;
 	}
 
-	.detailText :global(textarea) {
+	.detailText textarea {
 		height: 192px;
 	}
 
@@ -843,5 +843,10 @@
     	border-bottom-color: #e9e9e9;
 		/* opacity: 0.5; */
     	/* color: #bbb; */
+	}
+
+	.projectStatusField {
+		margin-top: 16px;
+    	margin-bottom: 16px;
 	}
 </style>

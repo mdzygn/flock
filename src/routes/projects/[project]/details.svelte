@@ -84,6 +84,11 @@
 	$: saveEnabled = (($editingProjectMode !== 'edit') || (trim(title) && trim(description) && !descriptionCharsOver)) && !imageIsUploading;
 	// $: saveEnabled = (!editingProject || (title && description)) && !imageIsUploading;
 
+	let detailTitle1 = ''; // locale.EDIT_PROJECT_DETAILS.DETAIL_1_TITLE;
+	let detailTitle2 = ''; // locale.EDIT_PROJECT_DETAILS.DETAIL_2_TITLE;
+	let detailTitle3 = ''; // locale.EDIT_PROJECT_DETAILS.DETAIL_3_TITLE;
+	let detailTitle4 = ''; // locale.EDIT_PROJECT_DETAILS.DETAIL_4_TITLE;
+
 	let detail1 = '';
 	let detail2 = '';
 	let detail3 = '';
@@ -103,6 +108,11 @@
 	let typeInput;
 	let statusInput;
 
+	let detailTitleInput1;
+	let detailTitleInput2;
+	let detailTitleInput3;
+	let detailTitleInput4;
+
 	let detailInput1;
 	let detailInput2;
 	let detailInput3;
@@ -118,7 +128,13 @@
 
 	$: {
 		if (!detailInitialized) {
-			detailInitialized= true;
+			detailInitialized = true;
+
+			detailTitle1 = getDetailTitle($project, 0, locale.EDIT_PROJECT_DETAILS.DETAIL_1_TITLE);
+			detailTitle2 = getDetailTitle($project, 1, locale.EDIT_PROJECT_DETAILS.DETAIL_2_TITLE);
+			detailTitle3 = getDetailTitle($project, 2, locale.EDIT_PROJECT_DETAILS.DETAIL_3_TITLE);
+			detailTitle4 = getDetailTitle($project, 3, locale.EDIT_PROJECT_DETAILS.DETAIL_4_TITLE);
+
 			detail1 = getFormattedDetail($project, 0);
 			detail2 = getFormattedDetail($project, 1);
 			detail3 = getFormattedDetail($project, 2);
@@ -154,6 +170,16 @@
 		} else {
 			return text;
 		}
+	}
+
+	function getDetailTitle(project, index, defaultValue) {
+		let title = project && project.details && project.details[index] && project.details[index].title;
+		if (title === undefined && defaultValue) {
+			title = defaultValue;
+		} else if (!title) {
+			title = '';
+		}
+		return title;
 	}
 
 	function getDetailImage(project, index) {
@@ -399,9 +425,13 @@
 					</div>
 				{/if}
 
-				<div class="field">
+				<div class="field detailTitle">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_1_TIP}</span></div>
-					<textarea bind:this="{detailInput1}" bind:value="{detail1}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+					<input type="text" bind:value="{detailTitle1}" bind:this="{detailTitleInput1}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput1})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+				</div>
+				<div class="field detailText">
+					<!-- <div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_1_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_1_TIP}</span></div> -->
+					<textarea bind:value="{detail1}" bind:this="{detailInput1}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
 
 				{#if detailImage2 || addingDetailImage[1]}
@@ -414,9 +444,14 @@
 						<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(1) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
 					</div>
 				{/if}
-				<div class="field">
+
+				<div class="field detailTitle">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_2_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_2_TIP}</span></div>
-					<textarea bind:this="{detailInput2}" bind:value="{detail2}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+					<input type="text" bind:value="{detailTitle2}" bind:this="{detailTitleInput2}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput2})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+				</div>
+				<div class="field detailText">
+					<!-- <div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_2_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_2_TIP}</span></div> -->
+					<textarea bind:value="{detail2}" bind:this="{detailInput2}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
 
 				{#if detailImage3 || addingDetailImage[2]}
@@ -429,9 +464,14 @@
 						<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(2) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
 					</div>
 				{/if}
-				<div class="field">
+
+				<div class="field detailTitle">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_3_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_3_TIP}</span></div>
-					<textarea bind:this="{detailInput3}" bind:value="{detail3}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+					<input type="text" bind:value="{detailTitle3}" bind:this="{detailTitleInput3}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput3})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+				</div>
+				<div class="field detailText">
+					<!-- <div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_3_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_3_TIP}</span></div> -->
+					<textarea bind:value="{detail3}" bind:this="{detailInput3}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
 
 				{#if detailImage4 || addingDetailImage[3]}
@@ -444,9 +484,14 @@
 						<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(3) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
 					</div>
 				{/if}
-				<div class="field">
+
+				<div class="field detailTitle">
 					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_4_TIP}</span></div>
-					<textarea bind:this="{detailInput4}" bind:value="{detail4}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+					<input type="text" bind:value="{detailTitle4}" bind:this="{detailTitleInput4}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput4})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+				</div>
+				<div class="field detailText">
+					<!-- <div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_4_TIP}</span></div> -->
+					<textarea bind:value="{detail4}" bind:this="{detailInput4}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
 			{/if}
 
@@ -684,4 +729,14 @@
 
         color: #DF3C3C;
     }
+
+	.detailTitle input {
+		padding-bottom: 4px;
+		margin-top: 5px;
+		
+		font-weight: 700;
+	}
+	.detailText {
+		padding-top: 8px;
+	}
 </style>

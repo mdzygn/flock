@@ -250,7 +250,7 @@
 			details[detailI] = details[detailI] || {};
 			details[detailI].detail = trim(sourceDetails[detailI]);
 			details[detailI].image = sourceDetailsImages[detailI];
-			details[detailI].title = sourceDetailTitles[detailI];
+			details[detailI].title = details[detailI].detail ? trim(sourceDetailTitles[detailI]) : undefined;
 		}
 
 		const projectDetails = {

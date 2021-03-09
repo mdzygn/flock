@@ -244,7 +244,7 @@
 										<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 									{/if}
 								{:else}
-									<div class="overviewHeader" class:button="{!forceProjectShowingInfo}" on:click="{!forceProjectShowingInfo ? hideProjectInfo : null}">Overview</div>
+									<div class="overviewHeader" class:button="{!forceProjectShowingInfo}" on:click="{!forceProjectShowingInfo ? hideProjectInfo : null}">{locale.PROJECT.OVERVIEW_HEADER}</div>
 								{/if}
 								<!-- {:else if !forceProjectShowingInfo}
 									<Button className="infoCollapseButton" onClick="{hideProjectInfo}" icon="{HideInfoIcon}" />
@@ -264,7 +264,14 @@
 										{/if}
 										<!-- <Proxy image="project_info_content_3" className="proxyOverlay" /> -->
 										{#if projectDetailItem.detail}
-											<div class="projectInfoDetail" class:noImage="{!projectDetailItem.image}">{@html getDisplayText(projectDetailItem.detail)}</div>
+											<div class="projectInfoDetail" class:noImage="{!projectDetailItem.image}">
+												{#if projectDetailItem.title}
+													<div class="detailTitle">{projectDetailItem.title}</div>
+												{/if}
+												<div class="detailText">
+													{@html getDisplayText(projectDetailItem.detail)}
+												</div>
+											</div>
 										{/if}
 									{/if}
 								{/each}
@@ -553,11 +560,11 @@
 	.overviewHeader {
 		padding: 10px;
 		padding-right: 30px;
-    	padding-top: 4px;
+    	padding-top: 2px;
 
 		margin-left: -10px;
 
-		font-size: 1.5rem;
+		font-size: 1.7rem;
 		font-weight: 700;
 
     	color: #666666;
@@ -611,11 +618,23 @@
         overflow-wrap: break-word;
         word-wrap: break-word;
 	}
+	.projectInfoDetail div {
+        user-select: text;
+	}
     .projectInfoDetail :global(a) {
         user-select: text;
     }
 	.projectInfoDetail.noImage {
 		padding-top: 0;
+	}
+
+	.detailTitle {
+		font-size: 1.5rem;
+		font-weight: 700;
+
+		color: #444444;
+
+    	padding-bottom: 12px;
 	}
 
     .contentContainer :global(.infoCollapseButton) {

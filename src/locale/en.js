@@ -94,7 +94,7 @@ const locale = {
 		DETAIL_4_LABEL: 'section 4',
 		DETAIL_5_LABEL: 'section 5',
 		DETAIL_1_TIP: 'e.g. Introduction - background of the project', // '<strong>what</strong> is the project',
-		DETAIL_2_TIP: 'e.g. Why it matters - what\'s the problem it\'s solving', // '<strong>why</strong> it matters',
+		DETAIL_2_TIP: 'e.g. Why it matters - the problem it solves', // '<strong>why</strong> it matters',
 		DETAIL_3_TIP: 'e.g. How it works - how people interact with it', // '<strong>how</strong> it works',
 		DETAIL_4_TIP: 'e.g. Where it\'s at - current status of the project',
 		DETAIL_5_TIP: 'e.g. What we\'re looking for - what the needs now',
@@ -164,6 +164,7 @@ const locale = {
 	},
 	PROJECT: {
 		NOT_FOUND: 'project not found',
+		OVERVIEW_HEADER: 'Project Overview',
 		GET_STARTED: 'get the conversations started',
 		// FOLLOWER_GET_STARTED: 'no posts yet - be the first!',
 		FOLLOWER_GET_STARTED: 'share your thoughts',

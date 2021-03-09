@@ -97,7 +97,7 @@ const locale = {
 		DETAIL_2_TIP: 'e.g. Why it matters - the problem it solves', // '<strong>why</strong> it matters',
 		DETAIL_3_TIP: 'e.g. How it works - how people interact with it', // '<strong>how</strong> it works',
 		DETAIL_4_TIP: 'e.g. Where we\'re at - current status of the project',
-		DETAIL_5_TIP: 'e.g. What we\'re looking for - what the needs now',
+		DETAIL_5_TIP: 'e.g. What we\'re looking for - what the project needs',
 		DETAIL_1_TITLE: 'Introduction',
 		DETAIL_2_TITLE: 'Why it matters',
 		DETAIL_3_TITLE: 'How it works',

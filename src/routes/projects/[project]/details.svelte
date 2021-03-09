@@ -74,8 +74,9 @@
 	let detail2ImageIsUploading;
 	let detail3ImageIsUploading;
 	let detail4ImageIsUploading;
+	let detail5ImageIsUploading;
 
-	$: imageIsUploading = headerImageIsUploading || detail1ImageIsUploading || detail2ImageIsUploading || detail3ImageIsUploading || detail4ImageIsUploading;
+	$: imageIsUploading = headerImageIsUploading || detail1ImageIsUploading || detail2ImageIsUploading || detail3ImageIsUploading || detail4ImageIsUploading || detail5ImageIsUploading;
 
 	let remainingChars;
 	let descriptionCharsOver;
@@ -88,16 +89,19 @@
 	let detailTitle2 = ''; // locale.EDIT_PROJECT_DETAILS.DETAIL_2_TITLE;
 	let detailTitle3 = ''; // locale.EDIT_PROJECT_DETAILS.DETAIL_3_TITLE;
 	let detailTitle4 = ''; // locale.EDIT_PROJECT_DETAILS.DETAIL_4_TITLE;
+	let detailTitle5 = ''; // locale.EDIT_PROJECT_DETAILS.DETAIL_4_TITLE;
 
 	let detail1 = '';
 	let detail2 = '';
 	let detail3 = '';
 	let detail4 = '';
+	let detail5 = '';
 
 	let detailImage1 = null;
 	let detailImage2 = null;
 	let detailImage3 = null;
 	let detailImage4 = null;
+	let detailImage5 = null;
 
 	let addingDetailImage = [];
 
@@ -112,11 +116,13 @@
 	let detailTitleInput2;
 	let detailTitleInput3;
 	let detailTitleInput4;
+	let detailTitleInput5;
 
 	let detailInput1;
 	let detailInput2;
 	let detailInput3;
 	let detailInput4;
+	let detailInput5;
 
 	let detailInitialized = false;
 
@@ -134,16 +140,19 @@
 			detailTitle2 = getDetailTitle($project, 1, locale.EDIT_PROJECT_DETAILS.DETAIL_2_TITLE);
 			detailTitle3 = getDetailTitle($project, 2, locale.EDIT_PROJECT_DETAILS.DETAIL_3_TITLE);
 			detailTitle4 = getDetailTitle($project, 3, locale.EDIT_PROJECT_DETAILS.DETAIL_4_TITLE);
+			detailTitle5 = getDetailTitle($project, 4, locale.EDIT_PROJECT_DETAILS.DETAIL_5_TITLE);
 
 			detail1 = getFormattedDetail($project, 0);
 			detail2 = getFormattedDetail($project, 1);
 			detail3 = getFormattedDetail($project, 2);
 			detail4 = getFormattedDetail($project, 3);
+			detail5 = getFormattedDetail($project, 4);
 
 			detailImage1 = getDetailImage($project, 0);
 			detailImage2 = getDetailImage($project, 1);
 			detailImage3 = getDetailImage($project, 2);
 			detailImage4 = getDetailImage($project, 3);
+			detailImage5 = getDetailImage($project, 4);
 
 			updateRegionSizes();
 		}
@@ -157,6 +166,7 @@
 		if (detailInput2) { detailInput2.style = 'height: ' + getRegionHeight(detailInput2.scrollHeight) + 'px'; }
 		if (detailInput3) { detailInput3.style = 'height: ' + getRegionHeight(detailInput3.scrollHeight) + 'px'; }
 		if (detailInput4) { detailInput4.style = 'height: ' + getRegionHeight(detailInput4.scrollHeight) + 'px'; }
+		if (detailInput5) { detailInput5.style = 'height: ' + getRegionHeight(detailInput5.scrollHeight) + 'px'; }
 	}
 
 	function getRegionHeight(height) {
@@ -232,21 +242,24 @@
 			detailTitle2,
 			detailTitle3,
 			detailTitle4,
+			detailTitle5,
 		];
 		const sourceDetails = [
 			detail1,
 			detail2,
 			detail3,
 			detail4,
+			detail5,
 		];
 		const sourceDetailsImages = [
 			detailImage1,
 			detailImage2,
 			detailImage3,
 			detailImage4,
+			detailImage5,
 		];
 
-		for (let detailI = 0; detailI < 4; detailI++) {
+		for (let detailI = 0; detailI < sourceDetails.length; detailI++) {
 			details[detailI] = details[detailI] || {};
 			details[detailI].detail = trim(sourceDetails[detailI]);
 			details[detailI].image = sourceDetailsImages[detailI];
@@ -301,6 +314,9 @@
 				break;
 			case 3:
 				detailImage4 = null;
+				break;
+			case 4:
+				detailImage5 = null;
 				break;
 		}
 	}
@@ -501,6 +517,26 @@
 				<div class="field detailText" class:hasNoDetail="{!detail4}">
 					<!-- <div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_4_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_4_TIP}</span></div> -->
 					<textarea bind:value="{detail4}" bind:this="{detailInput4}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+				</div>
+
+				{#if detailImage5 || addingDetailImage[4]}
+					<div class="imageField">
+						<Button className="addImage" onClick="{() => removeImage(4) }">{locale.EDIT_PROJECT_DETAILS.REMOVE_IMAGE}</Button>
+					</div>
+					<ImageSelectionBox className="detailImageSelector" bind:image="{detailImage5}" containMode="{true}" imageType="{detailImageType}" bind:fileIsUploading="{detail5ImageIsUploading}" itemIndex="5" uploadType="projectDetail" itemId="{$projectId}" />
+				{:else}
+					<div class="imageField">
+						<Button className="addImage" icon="{AddImageIcon}" onClick="{() => addImage(4) }">{locale.EDIT_PROJECT_DETAILS.ADD_IMAGE}</Button>
+					</div>
+				{/if}
+
+				<div class="field detailTitle" class:hasNoDetail="{!detail5 || !detailTitle5}">
+					<div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_5_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_5_TIP}</span></div>
+					<input type="text" bind:value="{detailTitle5}" bind:this="{detailTitleInput5}" placeholder="{locale.EDIT_PROJECT_DETAILS.DETAIL_TITLE_PLACEHOLDER}" on:keypress="{(e) => testInputDefocus(e, {target: detailInput5})}" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
+				</div>
+				<div class="field detailText" class:hasNoDetail="{!detail5}">
+					<!-- <div class="label labelDetails">{locale.EDIT_PROJECT_DETAILS.DETAIL_5_LABEL}<span class="tip">{@html locale.EDIT_PROJECT_DETAILS.DETAIL_5_TIP}</span></div> -->
+					<textarea bind:value="{detail5}" bind:this="{detailInput5}" class="detailTextarea" autocapitalize="sentences" on:keyup="{(e) => inputFormat(e, {capitalizeFirstKeypress: true})}" />
 				</div>
 			{/if}
 

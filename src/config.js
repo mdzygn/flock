@@ -83,7 +83,7 @@ export const DATE_SHOWN_MESSAGE_DATE_DIFF = 6 * 3600; // 3600 = seconds/hour
 export const MIN_AUTO_SCROLL_BOTTOM_DIST = 200;
 export const MIN_HIDE_MESSAGES_BOTTOM_DIST = 60;
 
-export const ADD_DETAILS_AFTER_PROJECT_CREATE = false;
+export const ADD_DETAILS_AFTER_PROJECT_CREATE = true; // false;
 
 export const MAX_IMAGE_UPLOAD_SIZE = {
     'image/gif': 8,
@@ -153,6 +153,8 @@ export default {
     MAX_FLOCK_PROJECT_INDEX,
 
     SHOW_EDITED_MIN_TIME,
+
+    ADD_DETAILS_AFTER_PROJECT_CREATE,
 
     MAX_IMAGE_UPLOAD_SIZE,
 

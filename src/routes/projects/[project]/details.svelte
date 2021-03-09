@@ -357,7 +357,7 @@
 	</style>
 </svelte:head>
 
-<ScrollView>
+<ScrollView id="details">
 	<div class="content">
 		<!-- <Proxy image="create_project_2" className="proxyOverlay">
 			<Hotspot onClick="{save}" style="
@@ -554,9 +554,13 @@
 				{/if}
 
 				{#if ($editingProjectMode === 'details2')}
-					<Button className="saveButton" onClick="{save}" disabled="{!saveEnabled}" icon="{SaveIcon}">{locale.NEW_PROJECT.DETAILS_2_CONFIRM}</Button>
+					{#if config.ADD_DETAILS_AFTER_PROJECT_CREATE}
+						<Button className="saveButton" onClick="{save}" disabled="{!saveEnabled}" icon="{NextArrowIcon}">{locale.NEW_PROJECT.DETAILS_NEXT}</Button>
+					{:else}
+						<Button className="saveButton" onClick="{save}" disabled="{!saveEnabled}" icon="{SaveIcon}">{locale.NEW_PROJECT.DETAILS_FINISH}</Button>
+					{/if}
 				{:else if ( $editingProjectMode === 'details3')}
-					<Button className="saveButton" onClick="{save}" disabled="{!saveEnabled}" icon="{SaveIcon}">{locale.NEW_PROJECT.DETAILS_3_CONFIRM}</Button>
+					<Button className="saveButton" onClick="{save}" disabled="{!saveEnabled}" icon="{SaveIcon}">{locale.NEW_PROJECT.DETAILS_FINISH}</Button>
 				{:else}
 					<Button className="saveButton" onClick="{save}" disabled="{!saveEnabled}" icon="{SaveIcon}">{locale.EDIT_PROJECT_DETAILS.CONFIRM}</Button>
 				{/if}

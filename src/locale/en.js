@@ -67,8 +67,8 @@ const locale = {
 		HEADER_IMAGE: 'project header image',
 		PRIVACY_NOTE: 'your project will start private, you can make it public later',
 		CONFIRM: 'next',
-		DETAILS_2_CONFIRM: 'finish',
-		// DETAILS_3_CONFIRM: 'finish',
+		DETAILS_NEXT: 'next',
+		DETAILS_FINISH: 'finish',
 	},
 	EDIT_PROJECT_DETAILS: {
 		OVERVIEW_HEADING: 'Project Overview',

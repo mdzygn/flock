@@ -592,7 +592,8 @@ export function getProjectHasDetails(project) {
 		(projectDetails[0] && projectDetails[0].detail) ||
 		(projectDetails[1] && projectDetails[1].detail) ||
 		(projectDetails[2] && projectDetails[2].detail) ||
-		(projectDetails[3] && projectDetails[3].detail)
+		(projectDetails[3] && projectDetails[3].detail) ||
+		(projectDetails[4] && projectDetails[4].detail)
 	)) {
 		return true;
 	}

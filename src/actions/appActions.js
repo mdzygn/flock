@@ -280,6 +280,7 @@ export function editProjectDetails(options) {
     // editingProject.set(options && options.editingProject);
 
     goto('projects/' + get(projectId) + '/details');
+    resetScrollRegionPosition('details');
 }
 
 export function editProfile() {

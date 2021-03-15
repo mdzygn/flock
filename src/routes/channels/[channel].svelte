@@ -130,7 +130,7 @@
 		<ScrollView id="channel" topOffset="{newPostRegionHeight}" showScrollHeader="{!showAddPost}">
 			<div slot="scrollHeader">
 				{#if channelDescription}
-					<div class="channelHeader" class:channelHeaderPost="{canPost}">{@html channelDescription}</div>
+					<div class="channelHeader" on:click="{newPost}" class:channelHeaderPost="{canPost}">{@html channelDescription}</div>
 				{/if}
 				{#if canPost}
 					<!-- <Proxy image="channel_actions" className="channelActions" /> -->

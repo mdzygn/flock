@@ -29,7 +29,9 @@
 
     $: minHeightStyle = (minScrollContentHeight && !disabledMinHeight) ? 'min-height: ' + minScrollContentHeight + 'px' : '';
 
-    let hasScrollHeader = ($$props.$$slots && $$props.$$slots.scrollHeader && showScrollHeader) || false;
+    let hasScrollHeader = ($$props.$$slots && $$props.$$slots.scrollHeader) || false;
+
+    // $: console.log('hasScrollHeader', hasScrollHeader, 'showScrollHeader', showScrollHeader, '$$props.$$slots', $$props.$$slots, '$$props.$$slots.scrollHeader', $$props.$$slots.scrollHeader);
 
     let windowWidth;
     let minScrollContentHeight = 0;
@@ -63,12 +65,12 @@
         //     regionProps.scrollTop = Math.max(regionProps.scrollTop, scrollHeaderHeight);
         // }
 
-        if (hasScrollHeader && scrollHeader) {
+        if (hasScrollHeader && scrollHeader && showScrollHeader) {
             scrollHeaderHeight = scrollHeader.offsetHeight;
             curScrollHeaderPosition = Math.min(regionProps.scrollTop, Math.max(regionProps.scrollTop - scrollHeaderHeight, curScrollHeaderPosition));
             scrollHeaderOffset = curScrollHeaderPosition - regionProps.scrollTop;
 
-            // console.log('curScrollHeaderPosition: ' + curScrollHeaderPosition + ', scrollHeaderOffset: ' + scrollHeaderOffset);
+            console.log('curScrollHeaderPosition: ' + curScrollHeaderPosition + ', scrollHeaderOffset: ' + scrollHeaderOffset);
         }
 
         if (onScroll) {
@@ -215,18 +217,18 @@
 
 
 {#if hasScrollHeader}
-    <div class="content {className}" style="bottom: {bottomOffset}px; top: {topOffset}px">
-        <div class="scrollView" bind:this="{scrollRegion}" style="padding-top: {scrollHeaderHeight}px">
+    <div class="content {className}" style="bottom: {bottomOffset}px">
+        <div class="scrollView" bind:this="{scrollRegion}" style="padding-top: {showScrollHeader ? scrollHeaderHeight : topOffset}px">
             <div class="scrollContent" style="{minHeightStyle}">
                 <slot></slot>
             </div>
         </div>
-        <div class="scrollHeader" class:shadowHidden="{shadowHidden}" style="top: {scrollHeaderOffset}px" bind:this="{scrollHeader}">
+        <div class="scrollHeader" class:hidden="{!showScrollHeader}" class:shadowHidden="{shadowHidden}" style="top: {scrollHeaderOffset}px" bind:this="{scrollHeader}">
             <slot name="scrollHeader"></slot>
         </div>
     </div>
 {:else}
-    <div class="scrollView {className}" bind:this="{scrollRegion}" style="bottom: {bottomOffset}px; top: {topOffset}px">
+    <div class="scrollView {className}" bind:this="{scrollRegion}" style="bottom: {bottomOffset}px; padding-top: {topOffset}px">
         <div class="scrollContent" style="{minHeightStyle}">
             <slot></slot>
         </div>
@@ -260,6 +262,7 @@
     }
 
     .scrollHeader {
+
         position: absolute;
         width: 100%;
 
@@ -267,6 +270,10 @@
 
         /* transition-property: box-shadow;
         transition-duration: 0.33s; */
+    }
+
+    .scrollHeader.hidden { 
+        display: none;
     }
 
     .scrollHeader.shadowHidden {

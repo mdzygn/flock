@@ -75,7 +75,7 @@
 
 	$: channelDescription = $channel && ($channel.description || getChannelDefaultDescription($channel)) || null;
 
-	let showAddPost = true;
+	let showAddPost = false;
 
 	$: {
 		showAddPost; newPostRegion;
@@ -103,10 +103,15 @@
         loadUsersOfItemModels($posts);
     }
 
-	function newPost(event) {
-		if (!canPost) { return; }
+	function hideAddPostPanel() {
+		showAddPost = false;
+	}
 
-		newThread();
+	function newPost(event) {
+		showAddPost = true;
+		// if (!canPost) { return; }
+
+		// newThread();
 	}
 </script>
 
@@ -153,7 +158,7 @@
 			</div>
 		</ScrollView>
 		{#if showAddPost}
-			<EditPost inlineComponent="{true}" bind:element="{newPostRegion}" on:resize="{onNewPostPanelResized}" />
+			<EditPost inlineComponent="{true}" bind:element="{newPostRegion}" on:hide="{hideAddPostPanel}" on:resize="{onNewPostPanelResized}" />
 		{/if}
 	{/if}
 </div>

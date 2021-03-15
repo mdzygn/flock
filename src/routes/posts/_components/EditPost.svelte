@@ -60,6 +60,9 @@
 
 	export let element = null;
 
+	export let submitLabel = null;
+	export let hideIcon = null;
+
 	let title = '';
 	let message = '';
 	let image = null;
@@ -367,7 +370,7 @@
         <!-- <Proxy image="create_project" className="proxyOverlay" /> -->
         <div class="panelContent" class:showImage="{imageShown}">
 			{#if inlineComponent}
-				<Button className="collapsePanel" icon="{CollapseIcon}" onClick="{hide}" />
+				<Button className="collapsePanel" icon="{hideIcon || CollapseIcon}" onClick="{hide}" />
 			{/if}
             <div class="pageTitle">{pageTitle}</div>
             {#if showTitleField}
@@ -425,7 +428,7 @@
             <div class="actions">
                 {#if !editPost}
 					{#if inlineComponent}
-                    	<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{SendMessageIcon}">{locale.REPLY_THREAD.CONFIRM}</Button>
+                    	<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{SendMessageIcon}">{submitLabel || locale.REPLY_THREAD.CONFIRM}</Button>
 					{:else}
                     	<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{NextArrowIcon}">{locale.NEW_THREAD.CONFIRM}</Button>
 					{/if}

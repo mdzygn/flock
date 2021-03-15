@@ -150,6 +150,7 @@ const locale = {
 	CHANNEL: {
 		NOT_FOUND: 'channel not found',
 		NO_POSTS: 'this channel has no posts',
+		ADD_POST: 'Add Post',
 	},
 	THREAD: {
 		NOT_FOUND: 'post not found',

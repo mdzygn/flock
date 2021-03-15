@@ -12,6 +12,8 @@
 	import PostItem from '../_components/PostItem.svelte';
 	import EditPost from '../posts/_components/EditPost.svelte';
 
+    import CloseIcon from "../../assets/icons/clear.png";
+
 	import { stopEvent } from '../../utils';
 
 	import {
@@ -158,7 +160,7 @@
 			</div>
 		</ScrollView>
 		{#if showAddPost}
-			<EditPost inlineComponent="{true}" bind:element="{newPostRegion}" on:hide="{hideAddPostPanel}" on:resize="{onNewPostPanelResized}" />
+			<EditPost submitLabel="{locale.CHANNEL.ADD_POST}" hideIcon="{CloseIcon}" inlineComponent="{true}" bind:element="{newPostRegion}" on:hide="{hideAddPostPanel}" on:resize="{onNewPostPanelResized}" />
 		{/if}
 	{/if}
 </div>
@@ -234,5 +236,10 @@
 		bottom: initial;
 
         box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
+	}
+
+	.pageContent :global(.editPostContent.inlineComponent .collapsePanel .icon) {
+		margin-top: 12px;
+    	margin-left: 16px;
 	}
 </style>

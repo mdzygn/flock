@@ -120,8 +120,7 @@
 	{:else if !$channel || !$channel.id}
 		<ContentLoader label="{locale.CHANNEL.NOT_FOUND}" />
 	{:else}
-		<EditPost inlineComponent="{true}" bind:element="{newPostRegion}" on:resize="{onNewPostPanelResized}" />
-		<ScrollView id="channel" topOffset="{newPostRegionHeight}">
+		<ScrollView id="channel" topOffset="{newPostRegionHeight}" showScrollHeader="{!showAddPost}">
 			<div slot="scrollHeader">
 				{#if channelDescription}
 					<div class="channelHeader" class:channelHeaderPost="{canPost}">{@html channelDescription}</div>
@@ -153,6 +152,9 @@
 				{/if}
 			</div>
 		</ScrollView>
+		{#if showAddPost}
+			<EditPost inlineComponent="{true}" bind:element="{newPostRegion}" on:resize="{onNewPostPanelResized}" />
+		{/if}
 	{/if}
 </div>
 
@@ -225,5 +227,7 @@
 	.pageContent :global(.editPostContent.inlineComponent) {
 		top: 0;
 		bottom: initial;
+
+        box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
 	}
 </style>

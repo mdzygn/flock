@@ -19,6 +19,8 @@
 
     export let className = '';
 
+    export let showScrollHeader = true;
+
     export let id = null;
     let regionProps = null;
     $: {
@@ -27,7 +29,7 @@
 
     $: minHeightStyle = (minScrollContentHeight && !disabledMinHeight) ? 'min-height: ' + minScrollContentHeight + 'px' : '';
 
-    let hasScrollHeader = ($$props.$$slots && $$props.$$slots.scrollHeader) || false;
+    let hasScrollHeader = ($$props.$$slots && $$props.$$slots.scrollHeader && showScrollHeader) || false;
 
     let windowWidth;
     let minScrollContentHeight = 0;

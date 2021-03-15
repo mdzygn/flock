@@ -101,7 +101,7 @@
 	$: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : (curPostType === 'projectPost') ? $projectId : $postId)) || null;
 	// $: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : $postId)) || null;
 
-	$: showTitleField = (curPostType === 'thread'); // trim(title);
+	$: showTitleField = trim(title); // (curPostType === 'thread'); // 
 
 	$: imageType = (curPostType === 'thread') ? 'image/jpeg' : null;
 	$: useLibrary = (curPostType === 'thread' || isProjectPost) ? true : false; // TODO: isProjectPost temporary for testing

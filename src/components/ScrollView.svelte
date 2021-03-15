@@ -12,6 +12,7 @@
     export let hideHeaderShadowAtTop = false
     export let headerHiddenOffset = 0;
     export let hideShadowMargin = 1;
+    export let topOffset = 0;
     export let bottomOffset = 0;
     export let disabledMinHeight = false;
     export let onScroll = null;
@@ -212,7 +213,7 @@
 
 
 {#if hasScrollHeader}
-    <div class="content {className}" style="bottom: {bottomOffset}px">
+    <div class="content {className}" style="bottom: {bottomOffset}px; top: {topOffset}px">
         <div class="scrollView" bind:this="{scrollRegion}" style="padding-top: {scrollHeaderHeight}px">
             <div class="scrollContent" style="{minHeightStyle}">
                 <slot></slot>
@@ -223,7 +224,7 @@
         </div>
     </div>
 {:else}
-    <div class="scrollView {className}" bind:this="{scrollRegion}" style="bottom: {bottomOffset}px">
+    <div class="scrollView {className}" bind:this="{scrollRegion}" style="bottom: {bottomOffset}px; top: {topOffset}px">
         <div class="scrollContent" style="{minHeightStyle}">
             <slot></slot>
         </div>

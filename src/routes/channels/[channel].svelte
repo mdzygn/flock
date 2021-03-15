@@ -3,12 +3,14 @@
 
 	import { writable } from 'svelte/store';
 	import { goto } from '@sapper/app';
+	import { tick } from 'svelte';
 
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 	import NewPostButton from '../_components/NewPostButton.svelte';
 	import ContentLoader from '../_components/ContentLoader.svelte';
 	import PostItem from '../_components/PostItem.svelte';
+	import EditPost from '../posts/_components/EditPost.svelte';
 
 	import { stopEvent } from '../../utils';
 
@@ -22,6 +24,7 @@
 		userId,
 		isUserLoaded,
 		loggingIn,
+    	postType,
 	} from '../../models/appModel';
 
 	import {
@@ -54,6 +57,9 @@
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 	$: isArchived = ($project && $project.archived) || false;
 
+	
+    $postType = 'thread';
+
 	loadCurrentProject();
 	loadCurrentChannel();
 
@@ -68,6 +74,30 @@
 	$: canPost = $channel && (!$channel.teamOnly || isTeamMember) && !isArchived;
 
 	$: channelDescription = $channel && ($channel.description || getChannelDefaultDescription($channel)) || null;
+
+	let showAddPost = true;
+
+	$: {
+		showAddPost; newPostRegion;
+		onNewPostPanelResized();
+	}
+
+	let newPostRegionHeight = 0;
+	let newPostRegion = null;
+
+	async function onNewPostPanelResized() {
+		await tick();
+
+		if (showAddPost) {
+			newPostRegionHeight = (newPostRegion && newPostRegion.offsetHeight) || 0;
+		} else {
+			newPostRegionHeight = 0;
+		}
+
+		// if (newPostRegionHeight !== 0) {
+		// 	scrollToBottom();
+		// }
+	}
 
     $: {
         loadUsersOfItemModels($posts);
@@ -90,7 +120,8 @@
 	{:else if !$channel || !$channel.id}
 		<ContentLoader label="{locale.CHANNEL.NOT_FOUND}" />
 	{:else}
-		<ScrollView id="channel">
+		<EditPost inlineComponent="{true}" bind:element="{newPostRegion}" on:resize="{onNewPostPanelResized}" />
+		<ScrollView id="channel" topOffset="{newPostRegionHeight}">
 			<div slot="scrollHeader">
 				{#if channelDescription}
 					<div class="channelHeader" class:channelHeaderPost="{canPost}">{@html channelDescription}</div>
@@ -185,5 +216,14 @@
 
 	.postsContainer {
     	padding-top: 5px;
+	}
+
+	/* .pageContent :global(.content) {
+		top: 135px;
+	} */
+
+	.pageContent :global(.editPostContent.inlineComponent) {
+		top: 0;
+		bottom: initial;
 	}
 </style>

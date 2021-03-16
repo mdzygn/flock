@@ -63,7 +63,7 @@
 	}
 	
 	.newMessageArea textarea::placeholder {
-    	color: #cccccc;
+    	color: #999999;
 	}
 	
 	.newMessageArea :global(.nextButton) {

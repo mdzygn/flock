@@ -76,6 +76,8 @@
 
 	$: isLoadingPosts = ($loadingPosts && (!$posts || !$posts.length));
 
+	$: postExists = $post && $post.id;
+
 	$: {
 		if ($postsAnchorToBottom && scrollRegion && !isLoadingPosts && $posts) {
 			(async () => {
@@ -198,7 +200,7 @@
 	<ScrollView id="thread" bind:scrollRegion="{scrollRegion}" anchorToBottom="{$postsAnchorToBottom}" bottomOffset="{replyRegionHeight}" disabledMinHeight="{showAddPost}">
 		{#if threadLoading }
 			<ContentLoader label="{locale.LOADING.THREAD}" />
-		{:else if !$post || !$post.id}
+		{:else if !postExists}
 			<ContentLoader label="{locale.THREAD.NOT_FOUND}" />
 		{:else}
 			<!-- <div slot="scrollHeader">
@@ -244,7 +246,7 @@
 		{/if}
 	</ScrollView>
 
-	{#if !showAddPost}
+	{#if !showAddPost && postExists && !threadLoading}
 		<AddPost {newPostMessage} onClick="{reply}" placeholderLabel="{locale.THREAD.REPLY_PLACEHOLDER}" bind:element="{newPostRegion}" />
 	{/if}
 	<EditPost shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" bind:element="{replyRegion}" on:hide="{hideReplyPanel}" on:resize="{onReplyPanelResized}" />

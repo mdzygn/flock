@@ -63,12 +63,14 @@
 	export let submitLabel = null;
 	export let hideIcon = null;
 
+	export let shown = true;
+
 	let title = '';
-	let message = '';
+	export let message = '';
 	let image = null;
 
 	let titleField;
-	let messageField;
+	export let messageField;
 
 	let origTitle = '';
 	let origMessage = '';
@@ -275,9 +277,19 @@
 					}
 				});
 			}
+			clearCurrentPost();
 			hide();
 		}
     }
+
+	function clearCurrentPost() {
+		message = '';
+		newPostId = getNewPostId();
+		
+		if (inlineComponent) {
+			dispatch('submit');
+		}
+	}
 
     function saveCurrentPost() {
 		if (editPost) {
@@ -366,7 +378,7 @@
 </script>
 
 {#if !editPost || $post }
-    <div class="editPostContent" class:isProjectPost="{isProjectPost}" bind:this="{element}" class:inlineComponent="{inlineComponent}">
+    <div class="editPostContent" class:isProjectPost="{isProjectPost}" class:hidden="{!shown}" class:inlineComponent="{inlineComponent}" bind:this="{element}">
         <!-- <Proxy image="create_project" className="proxyOverlay" /> -->
         <div class="panelContent" class:showImage="{imageShown}">
 			{#if inlineComponent}
@@ -443,6 +455,10 @@
 <style>
 	.panelContent {
     	padding: 28px 0;
+	}
+
+	.hidden {
+		display: none;
 	}
 
 	.pageTitle {

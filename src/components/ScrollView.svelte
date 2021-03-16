@@ -70,7 +70,7 @@
             curScrollHeaderPosition = Math.min(regionProps.scrollTop, Math.max(regionProps.scrollTop - scrollHeaderHeight, curScrollHeaderPosition));
             scrollHeaderOffset = curScrollHeaderPosition - regionProps.scrollTop;
 
-            console.log('curScrollHeaderPosition: ' + curScrollHeaderPosition + ', scrollHeaderOffset: ' + scrollHeaderOffset);
+            // console.log('curScrollHeaderPosition: ' + curScrollHeaderPosition + ', scrollHeaderOffset: ' + scrollHeaderOffset);
         }
 
         if (onScroll) {

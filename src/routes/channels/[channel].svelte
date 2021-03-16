@@ -80,6 +80,7 @@
 	$: channelDescription = $channel && ($channel.description || getChannelDefaultDescription($channel)) || null;
 
 	let newPostMessage = '';
+	let newPostMessageField = null;
 	
 	let showAddPost = false;
 
@@ -105,6 +106,10 @@
 		// }
 	}
 
+	function onNewPostSubmitted() {
+		// newPostMessage = '';
+	}
+
     $: {
         loadUsersOfItemModels($posts);
     }
@@ -113,8 +118,14 @@
 		showAddPost = false;
 	}
 
-	function newPost(event) {
+	async function newPost(event) {
 		showAddPost = true;
+
+		if (newPostMessageField) {
+			await tick();
+			newPostMessageField.focus();
+		}
+
 		// if (!canPost) { return; }
 
 		// newThread();
@@ -139,7 +150,7 @@
 					{/if}
 					{#if canPost}
 						<div class="newMessageArea" on:click="{newPost}">
-							<textarea bind:value="{newPostMessage}" />
+							<textarea bind:value="{newPostMessage}" placeholder="{locale.CHANNEL.ADD_POST_MESSAGE_PLACEHOLDER}" />
 							<Button className="nextButton" disabled="{!newPostMessage}" icon="{SendMessageIcon}">{locale.CHANNEL.ADD_POST}</Button>
 							<!-- <NewPostButton onClick="{newPost}" className="newPostHeader" /> -->
 						</div>
@@ -168,9 +179,8 @@
 				{/if}
 			</div>
 		</ScrollView>
-		{#if showAddPost}
-			<EditPost submitLabel="{locale.CHANNEL.ADD_POST}" hideIcon="{CloseIcon}" inlineComponent="{true}" bind:element="{newPostRegion}" on:hide="{hideAddPostPanel}" on:resize="{onNewPostPanelResized}" />
-		{/if}
+		
+		<EditPost bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" shown="{showAddPost}" submitLabel="{locale.CHANNEL.ADD_POST}" hideIcon="{CloseIcon}" inlineComponent="{true}" bind:element="{newPostRegion}" on:hide="{hideAddPostPanel}" on:resize="{onNewPostPanelResized}" on:submit="{onNewPostSubmitted}" />
 	{/if}
 </div>
 
@@ -297,6 +307,10 @@
     	/* margin-top: 4px; */
 
 		resize: none;
+	}
+	
+	.newMessageArea textarea::placeholder {
+    	color: #cccccc;
 	}
 	
 	.newMessageArea :global(.nextButton) {

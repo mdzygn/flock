@@ -157,6 +157,7 @@ const locale = {
 		NOT_FOUND: 'post not found',
 		NO_POSTS: 'this post has no comments',
 		REPLY: 'reply',
+		REPLY_PLACEHOLDER: 'Add reply...',
 	},
 	POST: {
 		EDITED: 'edited'

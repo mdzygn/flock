@@ -19,6 +19,7 @@
     import ReplyIcon from "../../../assets/icons/reply.png";
 
 	import EditPost from '../../posts/_components/EditPost.svelte';
+	import AddPost from '../../posts/_components/AddPost.svelte';
 
 	import { loadProfile } from '../../../actions/appActions';
 
@@ -61,6 +62,9 @@
 	// $: userLoading = (!($user && $user.loaded) && $userId);
 
 	let showAddPost = false;
+
+	let newPostMessage = '';
+	let newPostMessageField = null;
 
 	const DISPLAY_BOTTOM_LINK_POST_COUNT = 1; // 3;
 
@@ -107,8 +111,13 @@
 		newThreadPost();
 	}
 
-	function onNewThreadPost() {
+	async function onNewThreadPost() {
 		showAddPost = true;
+
+		if (newPostMessageField) {
+			await tick();
+			newPostMessageField.focus();
+		}
 	}
 
 	function hideReplyPanel() {
@@ -207,30 +216,33 @@
 						{#each $posts as post}
 							<PostItem {post} type="threadPost" />
 						{:else}
-
 							{#if isLoadingPosts }
 								<ContentLoader label="{locale.LOADING.THREAD_ITEMS}" />
-							{:else if !showAddPost}
+							<!-- {:else if !showAddPost}
 								<ContentLoader>{locale.THREAD.NO_POSTS}<br/>
 									{#if !isArchived}
 										be the first to <a href="{location.href}" on:click="{(e) => { reply(); return stopEvent(e); }}">Leave a Reply</a>
 									{/if}
-								</ContentLoader>
+								</ContentLoader> -->
 							{/if}
 						{/each}
 					</div>
-					{#if !showAddPost && $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
-						<NewPostButton onClick="{reply}" icon="{ReplyIcon}" label="{locale.THREAD.REPLY}" />
-						<!-- type="reply" -->
+					{#if !showAddPost && $posts && !isLoadingPosts}
+						<AddPost {newPostMessage} onClick="{reply}" placeholderLabel="{locale.THREAD.REPLY_PLACEHOLDER}" />
+						<!-- <div class="newMessageArea" on:click="{newPost}">
+							<textarea bind:value="{newPostMessage}" placeholder="{locale.CHANNEL.ADD_POST_MESSAGE_PLACEHOLDER}" />
+							<Button className="nextButton" disabled="{!newPostMessage}" icon="{SendMessageIcon}">{locale.CHANNEL.ADD_POST}</Button>
+						</div> -->
 					{/if}
+					<!-- {#if !showAddPost && $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
+						<NewPostButton onClick="{reply}" icon="{ReplyIcon}" label="{locale.THREAD.REPLY}" />
+					{/if} -->
 				</div>
 			</div>
 		{/if}
 	</ScrollView>
 
-	{#if showAddPost}
-		<EditPost inlineComponent="{true}" bind:element="{replyRegion}" on:hide="{hideReplyPanel}" on:resize="{onReplyPanelResized}" />
-	{/if}
+	<EditPost shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" bind:element="{replyRegion}" on:hide="{hideReplyPanel}" on:resize="{onReplyPanelResized}" />
 </div>
 
 <style>
@@ -255,6 +267,9 @@
     	background-color: #f2f2f2;
         font-size: 1.3rem;
         line-height: 2.2rem;
+	}
+	.content .postsContainer :global(.postItem:last-child) {
+		border-bottom: none;
 	}
 
 	.contentContainer {

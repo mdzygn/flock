@@ -5,15 +5,15 @@
 	import { goto } from '@sapper/app';
 	import { tick } from 'svelte';
 
-	import Button from '../../components/Button.svelte';
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 	import NewPostButton from '../_components/NewPostButton.svelte';
 	import ContentLoader from '../_components/ContentLoader.svelte';
 	import PostItem from '../_components/PostItem.svelte';
-	import EditPost from '../posts/_components/EditPost.svelte';
 
-    import SendMessageIcon from "../../assets/icons/send.png";
+	import EditPost from '../posts/_components/EditPost.svelte';
+	import AddPost from '../posts/_components/AddPost.svelte';
+
     import CloseIcon from "../../assets/icons/clear.png";
 
 	import { stopEvent } from '../../utils';
@@ -145,11 +145,7 @@
 						<div class="channelHeaderDescription" on:click="{canPost ? newPost : null}" class:channelHeaderPost="{canPost}">{@html channelDescription}</div>
 					{/if}
 					{#if canPost}
-						<div class="newMessageArea" on:click="{newPost}">
-							<textarea bind:value="{newPostMessage}" placeholder="{locale.CHANNEL.ADD_POST_MESSAGE_PLACEHOLDER}" />
-							<Button className="nextButton" disabled="{!newPostMessage}" icon="{SendMessageIcon}">{locale.CHANNEL.ADD_POST}</Button>
-							<!-- <NewPostButton onClick="{newPost}" className="newPostHeader" /> -->
-						</div>
+						<AddPost {newPostMessage} onClick="{newPost}" submitLabel="{locale.CHANNEL.ADD_POST}" />
 					{/if}
 				</div>
 			</div>
@@ -177,7 +173,7 @@
 		</ScrollView>
 		
 		{#if canPost}
-			<EditPost bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" shown="{showAddPost}" submitLabel="{locale.CHANNEL.ADD_POST}" hideIcon="{CloseIcon}" inlineComponent="{true}" bind:element="{newPostRegion}" on:hide="{hideAddPostPanel}" on:resize="{onNewPostPanelResized}" />
+			<EditPost shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" submitLabel="{locale.CHANNEL.ADD_POST}" hideIcon="{CloseIcon}" inlineComponent="{true}" bind:element="{newPostRegion}" on:hide="{hideAddPostPanel}" on:resize="{onNewPostPanelResized}" />
 		{/if}
 	{/if}
 </div>
@@ -321,57 +317,12 @@
     	padding: 5px 11px;
     	font-size: 1.4rem;
 	}
-	
-	
 
-	.newMessageArea {
-    	position: relative;
-
-		padding-left: 16px;
+	.pageContent .channelHeader :global(.addPostPanel) {
+    	margin: 0;
+    	padding: 0;
+	}
+	.pageContent :global(.addPostPanel .newMessageArea) {
 		padding-right: 106px;
 	}
-
-	.newMessageArea textarea {
-        border: 1px solid #cccccc;
-
-        outline: none;
-        background: none;
-
-        width: 100%;
-		height: 30px;
-
-        box-sizing: border-box;
-
-		font-size: 1.5rem;
-		line-height: 2rem;
-    	color: #555555;
-
-        padding: 4px 6px;
-
-    	/* margin-top: 4px; */
-
-		resize: none;
-	}
-	
-	.newMessageArea textarea::placeholder {
-    	color: #cccccc;
-	}
-	
-	.newMessageArea :global(.nextButton) {
-        position: absolute;
-    	top: -5px;
-		right: 12px;
-
-		padding: 10px;
-    	padding-right: 30px;
-		/* padding-right: 39px; */
-
-    	font-size: 1.2rem;
-        font-weight: 700;
-    }
-    .newMessageArea :global(.nextButton .icon) {
-		padding-left: 18px;
-		margin-top: -2px;
-    	transform: scale(0.4, 0.4);
-    }
 </style>

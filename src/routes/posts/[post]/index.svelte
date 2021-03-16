@@ -221,12 +221,12 @@
 						{:else}
 							{#if isLoadingPosts }
 								<ContentLoader label="{locale.LOADING.THREAD_ITEMS}" />
-							<!-- {:else if !showAddPost}
+							{:else if !showAddPost}
 								<ContentLoader>{locale.THREAD.NO_POSTS}<br/>
 									{#if !isArchived}
 										be the first to <a href="{location.href}" on:click="{(e) => { reply(); return stopEvent(e); }}">Leave a Reply</a>
 									{/if}
-								</ContentLoader> -->
+								</ContentLoader>
 							{/if}
 						{/each}
 					</div>
@@ -241,7 +241,7 @@
 		{/if}
 	</ScrollView>
 
-	{#if !showAddPost && $posts && !isLoadingPosts}
+	{#if !showAddPost}
 		<AddPost {newPostMessage} onClick="{reply}" placeholderLabel="{locale.THREAD.REPLY_PLACEHOLDER}" bind:element="{newPostRegion}" />
 	{/if}
 	<EditPost shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" bind:element="{replyRegion}" on:hide="{hideReplyPanel}" on:resize="{onReplyPanelResized}" />

@@ -312,6 +312,7 @@
     }
 
     .hasThumb .info {
+        padding-top: 2px;
         padding-left: 128px;
         min-height: 42px;
     }
@@ -411,7 +412,7 @@
         /* white-space: nowrap; */
         overflow: hidden;
         text-overflow: ellipsis;
-        
+
         max-height: 52px;
         display: -webkit-box;
         -webkit-box-orient: vertical;

@@ -48,10 +48,12 @@ export function createPost(postDetails) {
                 triggerCreatedPost(postDetails);
                 switch (postDetails.type) {
                     case 'thread':
-                        loadChannel(postDetails.channelId);
+                        // don't redirect as already on the channel page
+                        // loadChannel(postDetails.channelId);
                         break;
                     case 'threadPost':
-                        loadPost(postDetails.threadId, { anchorToBottom: true });
+                        // don't redirect as already on the post page
+                        // loadPost(postDetails.threadId, { anchorToBottom: true });
                         break;
                     case 'projectPost':
                         loadProject(postDetails.projectId);

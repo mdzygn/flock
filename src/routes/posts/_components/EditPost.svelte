@@ -285,6 +285,8 @@
 
 	function clearCurrentPost() {
 		message = '';
+		addingImage = false;
+		image = null;
 		newPostId = getNewPostId();
 
 		if (inlineComponent) {

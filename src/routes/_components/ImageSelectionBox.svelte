@@ -1,5 +1,6 @@
 <script>
-    import { tick } from 'svelte';
+    import { tick, createEventDispatcher } from 'svelte';
+    const dispatch = createEventDispatcher();
 
     import locale from '../../locale';
     import promptIds from '../../config/promptIds';
@@ -48,6 +49,11 @@
     let imageLibrarySearchString = '';
 
     let uploadFileInput;
+
+    $: {
+        carouselShown;
+        dispatch('resize');
+    }
 
     export let fileIsUploading = false;
 

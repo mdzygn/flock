@@ -278,6 +278,46 @@
     	margin-left: 16px;
 	}
 
+	
+	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox.opened) {
+		height: 204px;
+		padding-top: 0;
+	}
+	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox .imageCarousel) {
+    	top: 124px;
+	}
+	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox .imageItem) {
+		width: 96px;
+		height: 57px;
+		margin: 0 4px;
+	}
+	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox .uploadButton) {
+		width: 62px;
+		height: 62px;
+		margin-left: -31px;
+	}
+	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox .uploadButtonIcon) {
+		width: 31px;
+		height: 27px;
+	}
+	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox .buttonLabel) {
+		margin-top: -1px;
+		font-size: 1.1rem;
+	}
+	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox .searchBar) {
+		top: 88px;
+	}
+	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox .searchIcon) {
+		width: 18px;
+		height: 18px;
+	}
+	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox .searchFieldInput ) {
+    	padding: 5px 11px;
+    	font-size: 1.4rem;
+	}
+	
+	
+
 	.newMessageArea {
     	position: relative;
 

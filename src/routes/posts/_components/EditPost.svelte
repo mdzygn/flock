@@ -401,7 +401,7 @@
 				{#if inlineComponent}
 					{#if image || addingImage}
 						<div class="field headerImageField">
-							<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" />
+							<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" on:resize="{resize}" />
 						</div>
 						<div class="imageField removeImageField">
 							<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}" title="{locale.NEW_THREAD.REMOVE_IMAGE}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
@@ -418,7 +418,7 @@
 							<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}" title="{locale.NEW_THREAD.REMOVE_IMAGE}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
 						</div>
 						<div class="field headerImageField">
-							<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" />
+							<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" on:resize="{resize}" />
 						</div>
 					{:else}
 						<div class="imageField">

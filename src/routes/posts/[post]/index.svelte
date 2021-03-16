@@ -132,7 +132,9 @@
 	let scrollRegion = null;
 
 	let replyRegionHeight = 0;
+
 	let replyRegion = null;
+	let newPostRegion = null;
 
 	async function onReplyPanelResized() {
 		await tick();
@@ -140,11 +142,12 @@
 		if (showAddPost) {
 			replyRegionHeight = (replyRegion && replyRegion.offsetHeight) || 0;
 		} else {
-			replyRegionHeight = 0;
+			replyRegionHeight = (newPostRegion && newPostRegion.offsetHeight) || 0;
+			// replyRegionHeight = 0;
 		}
 		// console.log('replyRegionHeight', replyRegionHeight);
 
-		if (replyRegionHeight !== 0) {
+		if (replyRegionHeight !== 0 && showAddPost) {
 			scrollToBottom();
 		}
 	}
@@ -227,13 +230,9 @@
 							{/if}
 						{/each}
 					</div>
-					{#if !showAddPost && $posts && !isLoadingPosts}
+					<!-- {#if !showAddPost && $posts && !isLoadingPosts}
 						<AddPost {newPostMessage} onClick="{reply}" placeholderLabel="{locale.THREAD.REPLY_PLACEHOLDER}" />
-						<!-- <div class="newMessageArea" on:click="{newPost}">
-							<textarea bind:value="{newPostMessage}" placeholder="{locale.CHANNEL.ADD_POST_MESSAGE_PLACEHOLDER}" />
-							<Button className="nextButton" disabled="{!newPostMessage}" icon="{SendMessageIcon}">{locale.CHANNEL.ADD_POST}</Button>
-						</div> -->
-					{/if}
+					{/if} -->
 					<!-- {#if !showAddPost && $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
 						<NewPostButton onClick="{reply}" icon="{ReplyIcon}" label="{locale.THREAD.REPLY}" />
 					{/if} -->
@@ -242,6 +241,9 @@
 		{/if}
 	</ScrollView>
 
+	{#if !showAddPost && $posts && !isLoadingPosts}
+		<AddPost {newPostMessage} onClick="{reply}" placeholderLabel="{locale.THREAD.REPLY_PLACEHOLDER}" bind:element="{newPostRegion}" />
+	{/if}
 	<EditPost shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" bind:element="{replyRegion}" on:hide="{hideReplyPanel}" on:resize="{onReplyPanelResized}" />
 </div>
 
@@ -273,7 +275,8 @@
 	}
 
 	.contentContainer {
-    	margin-bottom: 100px;
+    	margin-bottom: 50px;
+    	/* margin-bottom: 100px; */
 	}
 	.showAddPost .contentContainer {
     	margin-bottom: 10px;
@@ -294,4 +297,12 @@
     /* .content :global(.showAddPost) {
     	bottom: 40px;
 	} */
+
+	.content :global(.addPostPanel) {
+		position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+		box-shadow: 0 -2px 5px 0 rgba(0,0,0,0.15);
+	}
 </style>

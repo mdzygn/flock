@@ -24,7 +24,9 @@
 	import RemoveImageIcon from "../../../assets/icons/clear.png";
     import SendMessageIcon from "../../../assets/icons/send.png";
 	import UploadImageIcon from "../../../assets/icons/upload_image.png";
-	import CollapseIcon from "../../../assets/icons/collapse_down.png";
+
+	import CloseIcon from "../../../assets/icons/clear.png";
+	// import CollapseIcon from "../../../assets/icons/collapse_down.png";
 
 	import {
 		channel,
@@ -61,7 +63,6 @@
 	export let element = null;
 
 	export let submitLabel = null;
-	export let hideIcon = null;
 
 	export let shown = true;
 
@@ -382,7 +383,7 @@
         <!-- <Proxy image="create_project" className="proxyOverlay" /> -->
         <div class="panelContent" class:showImage="{imageShown}">
 			{#if inlineComponent}
-				<Button className="collapsePanel" icon="{hideIcon || CollapseIcon}" onClick="{hide}" />
+				<Button className="collapsePanel" icon="{CloseIcon}" onClick="{hide}" />
 			{/if}
             <div class="pageTitle">{pageTitle}</div>
             {#if showTitleField}
@@ -466,8 +467,12 @@
         font-weight: 700;
         color: #444444;
 
-		padding-left: 23px;
-        margin-top: -2px;
+		/* padding-left: 23px;
+        margin-top: -2px; */
+
+		padding-left: 16px;
+		margin-top: -1px;
+
         padding-bottom: 15px;
 	}
 
@@ -706,8 +711,11 @@
 		height: 35px;
 	}
     .inlineComponent :global(.collapsePanel .icon) {
-		margin-top: 5px;
-		margin-left: 10px;
+		/* margin-top: 5px;
+		margin-left: 10px; */
+
+		margin-top: 12px;
+		margin-left: 16px;
 	}
     /* .inlineComponent :global(.headerImageField) {
     	position: absolute;

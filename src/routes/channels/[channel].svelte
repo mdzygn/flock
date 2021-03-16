@@ -14,7 +14,7 @@
 	import EditPost from '../posts/_components/EditPost.svelte';
 	import AddPost from '../posts/_components/AddPost.svelte';
 
-    import CloseIcon from "../../assets/icons/clear.png";
+    // import CloseIcon from "../../assets/icons/clear.png";
 
 	import { stopEvent } from '../../utils';
 
@@ -173,7 +173,7 @@
 		</ScrollView>
 		
 		{#if canPost}
-			<EditPost shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" submitLabel="{locale.CHANNEL.ADD_POST}" hideIcon="{CloseIcon}" inlineComponent="{true}" bind:element="{newPostRegion}" on:hide="{hideAddPostPanel}" on:resize="{onNewPostPanelResized}" />
+			<EditPost shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" submitLabel="{locale.CHANNEL.ADD_POST}" inlineComponent="{true}" bind:element="{newPostRegion}" on:hide="{hideAddPostPanel}" on:resize="{onNewPostPanelResized}" />
 		{/if}
 	{/if}
 </div>
@@ -257,10 +257,10 @@
         box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
 	}
 
-	.pageContent :global(.editPostContent.inlineComponent .pageTitle) {
+	/* .pageContent :global(.editPostContent.inlineComponent .pageTitle) {
 		padding-left: 16px;
 		margin-top: -1px;
-	}
+	} */
 
 	.pageContent :global(.editPostContent.inlineComponent .nextButton) {
     	padding-right: 30px;
@@ -269,10 +269,10 @@
     	transform: scale(0.4, 0.4);
     }
 
-	.pageContent :global(.editPostContent.inlineComponent .collapsePanel .icon) {
+	/* .pageContent :global(.editPostContent.inlineComponent .collapsePanel .icon) {
 		margin-top: 12px;
     	margin-left: 16px;
-	}
+	} */
 
 	
 	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox.opened) {

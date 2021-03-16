@@ -124,12 +124,14 @@
     $: canLinkThrough = (type === 'thread');
     $: linkUserName = (type === 'threadPost');
     // $: displayBreaks = (type !== 'thread');
-    $: collapseBreaks = (type === 'thread');
     $: disallowLinks = (type === 'thread');
     $: showLastActiveTime = (type === 'thread');
     $: textSelectable = (type !== 'thread');
     $: messageLimited = (type === 'thread');
+    $: messageLimitedSingleLine = (type === 'thread' && title);
     // $: compressedMargin = (type === 'threadPost');
+
+    $: collapseBreaks = false; // messageLimitedSingleLine; // (type === 'thread');
 
     $: likeCount = ($post && $post.likeCount) || '';
 
@@ -266,7 +268,7 @@
             <div class="title" class:titleLimited="{messageLimited}" class:titleNotLimited="{!messageLimited}">{@html titleHTML}</div>
         {/if}
         {#if message}
-            <div class="message" class:selectable="{textSelectable}" class:messageLimited="{messageLimited}" class:messageNotLimited="{!messageLimited}">{@html  messageHTML}</div>
+            <div class="message" class:selectable="{textSelectable}" class:messageLimited="{messageLimited && !messageLimitedSingleLine}" class:messageLimitedSingleLine="{messageLimitedSingleLine}" class:messageNotLimited="{!messageLimited && !messageLimitedSingleLine}">{@html  messageHTML}</div>
         {/if}
     </div>
     {#if image && !useThumbImage}
@@ -310,7 +312,7 @@
     }
 
     .hasThumb .info {
-        padding-left: 117px;
+        padding-left: 128px;
         min-height: 42px;
     }
 
@@ -319,8 +321,8 @@
         left: 65px;
         top: 39px;
 
-        width: 42px;
-        height: 42px;
+        width: 50px;
+        height: 50px;
         object-fit: cover;
         border: 1px solid #D9D9D9;
     }
@@ -341,10 +343,10 @@
         text-overflow: ellipsis;
     }
     .showReplyIcon .userName {
-        padding-right: 64px;
+        padding-right: 77px;
     }
     .showRepliesIcon .userName {
-        padding-right: 78px;
+        padding-right: 82px;
     }
     .showReplyIcon.showOptionsButton .userName {
         padding-right: 82px;
@@ -378,6 +380,8 @@
         line-height: 1.7rem;
         color: #000000;
         font-weight: 700;
+        
+        padding-top: 3px;
         padding-bottom: 8px;
         
         overflow: hidden;
@@ -404,9 +408,24 @@
         color: #333333;
     }
     .messageLimited {
+        /* white-space: nowrap; */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        
+        max-height: 52px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+    }
+    .messageLimitedSingleLine {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
+        max-height: 18px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
     }
     .messageNotLimited {
         overflow-wrap: break-word;

@@ -106,10 +106,6 @@
 		// }
 	}
 
-	function onNewPostSubmitted() {
-		// newPostMessage = '';
-	}
-
     $: {
         loadUsersOfItemModels($posts);
     }
@@ -146,7 +142,7 @@
 			<div slot="scrollHeader">
 				<div class="channelHeader">
 					{#if channelDescription}
-						<div class="channelHeaderDescription" on:click="{newPost}" class:channelHeaderPost="{canPost}">{@html channelDescription}</div>
+						<div class="channelHeaderDescription" on:click="{canPost ? newPost : null}" class:channelHeaderPost="{canPost}">{@html channelDescription}</div>
 					{/if}
 					{#if canPost}
 						<div class="newMessageArea" on:click="{newPost}">
@@ -180,7 +176,9 @@
 			</div>
 		</ScrollView>
 		
-		<EditPost bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" shown="{showAddPost}" submitLabel="{locale.CHANNEL.ADD_POST}" hideIcon="{CloseIcon}" inlineComponent="{true}" bind:element="{newPostRegion}" on:hide="{hideAddPostPanel}" on:resize="{onNewPostPanelResized}" on:submit="{onNewPostSubmitted}" />
+		{#if canPost}
+			<EditPost bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" shown="{showAddPost}" submitLabel="{locale.CHANNEL.ADD_POST}" hideIcon="{CloseIcon}" inlineComponent="{true}" bind:element="{newPostRegion}" on:hide="{hideAddPostPanel}" on:resize="{onNewPostPanelResized}" />
+		{/if}
 	{/if}
 </div>
 

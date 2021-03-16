@@ -238,7 +238,7 @@ const locale = {
 		// RESOURCES: 'Community resources and links',
 		// Questions and Answers - General questions or queries on how to use the app
 		GENERAL: 'General project discussion',
-		WORKSHOP: 'Work in progress updates and<br/>calls for feedback',
+		WORKSHOP: 'Work in progress and calls for feedback',
 		QUESTIONS: 'Questions from the community', // 'Questions from the community',
 		// Current Features Discussion - Discussion of current features and functionality
 		// ISSUES: 'Issues and bugs',

@@ -285,7 +285,7 @@
 	function clearCurrentPost() {
 		message = '';
 		newPostId = getNewPostId();
-		
+
 		if (inlineComponent) {
 			dispatch('submit');
 		}
@@ -404,25 +404,25 @@
 							<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" />
 						</div>
 						<div class="imageField removeImageField">
-							<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
+							<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}" title="{locale.NEW_THREAD.REMOVE_IMAGE}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
 						</div>
 					{:else}
 						<div class="imageField">
-							<Button className="addImage" icon="{UploadImageIcon}" onClick="{addImage}"></Button>
+							<Button className="addImage" icon="{UploadImageIcon}" onClick="{addImage}" title="{locale.NEW_THREAD.ADD_IMAGE}"></Button>
 						</div>
 					{/if}
 					<!-- <ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" /> -->
 				{:else}
 					{#if image || addingImage}
 						<div class="imageField">
-							<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
+							<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}" title="{locale.NEW_THREAD.REMOVE_IMAGE}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
 						</div>
 						<div class="field headerImageField">
 							<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" />
 						</div>
 					{:else}
 						<div class="imageField">
-							<Button className="addImage" icon="{AddImageIcon}" onClick="{addImage}">{locale.NEW_THREAD.ADD_IMAGE}</Button>
+							<Button className="addImage" icon="{AddImageIcon}" onClick="{addImage}" title="{locale.NEW_THREAD.ADD_IMAGE}">{locale.NEW_THREAD.ADD_IMAGE}</Button>
 						</div>
 					{/if}
 				{/if}

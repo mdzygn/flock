@@ -409,7 +409,6 @@
         color: #333333;
     }
     .messageLimited {
-        /* white-space: nowrap; */
         overflow: hidden;
         text-overflow: ellipsis;
 
@@ -419,7 +418,6 @@
         -webkit-line-clamp: 3;
     }
     .messageLimitedSingleLine {
-        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
 

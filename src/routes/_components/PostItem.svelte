@@ -302,11 +302,6 @@
         height: 30px;
         width: 30px;
     }
-    .userName {
-        padding-top: 15px;
-        padding-left: 66px;
-        padding-right: 20px;
-    }
     .info {
         /* padding: 15px; */
         padding-bottom: 15px;
@@ -334,8 +329,12 @@
         font-size: 1.3rem;
         color: #777777;
         /* font-weight: 700; */
+
+        padding-top: 15px;
         padding-bottom: 5px;
-        padding-right: 28px;
+        
+        padding-left: 66px;
+        padding-right: 60px;
 
         white-space: nowrap;
         overflow: hidden;

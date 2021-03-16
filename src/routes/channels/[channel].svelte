@@ -36,6 +36,7 @@
 		loadCurrentChannel,
 		newThread,
 		loadPost,
+		checkLoggedIn,
 	} from '../../actions/appActions';
 
 	import {
@@ -115,6 +116,9 @@
 	}
 
 	async function newPost(event) {
+		stopEvent(event);
+		if (!checkLoggedIn()) { return; }
+
 		showAddPost = true;
 
 		if (newPostMessageField) {

@@ -112,7 +112,8 @@
         loadUsersOfItemModels($posts);
 	}
 
-    function reply() {
+    function reply(event) {
+		stopEvent(event);
 		newThreadPost();
 	}
 

@@ -234,12 +234,12 @@ const locale = {
 		PAGE_TITLE: 'Edit Post',
 	},
 	CHANNEL_DESCRIPTIONS: {
-		ANNOUNCEMENTS: 'News and project announcements',
+		ANNOUNCEMENTS: 'News and project announcements from the team',
 		// About and FAQs - About the world creation platform and Frequently Asked Questions
 		// RESOURCES: 'Community resources and links',
 		// Questions and Answers - General questions or queries on how to use the app
 		GENERAL: 'General project discussion',
-		WORKSHOP: 'Work in progress and calls for feedback',
+		WORKSHOP: 'Work in progress and calls for feedback from the team',
 		QUESTIONS: 'Questions from the community', // 'Questions from the community',
 		// Current Features Discussion - Discussion of current features and functionality
 		// ISSUES: 'Issues and bugs',

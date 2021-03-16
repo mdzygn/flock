@@ -636,18 +636,23 @@
     	height: 90px;
     }
     .inlineComponent :global(.addImage) {
-		right: initial;
-		padding-left: 16px;
+		right: 92px;
+		padding-right: 40px;
+		padding-left: 7px;
+		/* right: initial;
+		padding-left: 16px; */
     }
     .inlineComponent :global(.imageField) {
 		height: 0;
     }
     .inlineComponent :global(.removeImage) {
+		right: initial;
     	top: -5px;
+    	padding-left: 13px;
     	padding-right: 24px;
     }
     .inlineComponent :global(.removeImage .buttonContent) {
-    	padding-left: 28px;
+    	padding-left: 34px;
     }
     .inlineComponent :global(.removeImage .iconContainer) {
 		position: absolute;
@@ -663,7 +668,7 @@
     } */
     .inlineComponent :global(.fieldNote) {
 		line-height: 1.3rem;
-		padding-left: 62px;
+		padding-left: 16px;
     	padding-top: 1px;
 		pointer-events: none;
     }

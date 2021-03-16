@@ -291,6 +291,9 @@
 		height: 57px;
 		margin: 0 4px;
 	}
+	.pageContent :global(.editPostContent.inlineComponent .addImage) {
+		right: 99px;
+	}
 	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox .uploadButton) {
 		width: 62px;
 		height: 62px;

@@ -29,8 +29,8 @@
         background-color: #ffffff;
 
         margin-top: 5px;
-        padding-top: 7px;
-        padding-bottom: 2px;
+        padding-top: 8px;
+        padding-bottom: 4px;
     }
 	.newMessageArea {
     	position: relative;

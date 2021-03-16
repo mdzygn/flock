@@ -36,6 +36,7 @@
 		project,
 		isUserLoaded,
 		loggingIn,
+    	postType,
 	} from '../../../models/appModel';
 
 	import {
@@ -66,7 +67,7 @@
 	let newPostMessage = '';
 	let newPostMessageField = null;
 
-	const DISPLAY_BOTTOM_LINK_POST_COUNT = 1; // 3;
+	const DISPLAY_BOTTOM_LINK_POST_COUNT = 3;
 
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 	$: isArchived = ($project && $project.archived) || false;
@@ -90,6 +91,8 @@
 	}
 
 	AppModel.on('newThreadPost', onNewThreadPost);
+
+    $postType = 'threadPost';
 
 	loadCurrentChannel();
 	loadCurrentPost();
@@ -233,9 +236,9 @@
 					<!-- {#if !showAddPost && $posts && !isLoadingPosts}
 						<AddPost {newPostMessage} onClick="{reply}" placeholderLabel="{locale.THREAD.REPLY_PLACEHOLDER}" />
 					{/if} -->
-					<!-- {#if !showAddPost && $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
+					{#if !showAddPost && $posts && $posts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
 						<NewPostButton onClick="{reply}" icon="{ReplyIcon}" label="{locale.THREAD.REPLY}" />
-					{/if} -->
+					{/if}
 				</div>
 			</div>
 		{/if}
@@ -297,6 +300,10 @@
     /* .content :global(.showAddPost) {
     	bottom: 40px;
 	} */
+
+	.content :global(.newPostButtonPanel) {
+		margin-top: 5px;
+	}
 
 	.content :global(.addPostPanel) {
 		position: absolute;

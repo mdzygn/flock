@@ -156,7 +156,7 @@ const locale = {
 	THREAD: {
 		NOT_FOUND: 'post not found',
 		NO_POSTS: 'this post has no comments',
-		REPLY: 'reply',
+		REPLY: 'Add Reply',
 		REPLY_PLACEHOLDER: 'Add reply...',
 	},
 	POST: {

@@ -312,4 +312,17 @@
         bottom: 0;
 		box-shadow: 0 -2px 5px 0 rgba(0,0,0,0.15);
 	}
+
+	
+	.content :global(.newPostButtonPanel) {
+		height: 36px;
+	}
+	.content :global(.newPostButtonPanel .newPostButton) {
+	    padding-right: 46px;
+    	font-size: 1.3rem;
+	}
+	.content :global(.newPostButtonPanel .icon) {
+		padding-left: 16px;
+		transform: scale(0.45, 0.45);
+	}
 </style>

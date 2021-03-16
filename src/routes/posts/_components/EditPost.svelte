@@ -664,10 +664,12 @@
     .inlineComponent :global(.nextButton) {
     	top: -5px;
     	font-size: 1.2rem;
+    	/* padding-right: 30px; */
 	}
     .inlineComponent :global(.nextButton .icon) {
 		padding-left: 18px;
 		margin-top: -2px;
+    	/* transform: scale(0.4, 0.4); */
 	}
 	.inlineComponent :global(.headerImageField) {
 		margin-top: -6px;

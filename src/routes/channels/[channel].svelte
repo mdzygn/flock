@@ -5,6 +5,7 @@
 	import { goto } from '@sapper/app';
 	import { tick } from 'svelte';
 
+	import Button from '../../components/Button.svelte';
 	import ScrollView from '../../components/ScrollView.svelte';
 	import Proxy from '../../components/Proxy.svelte';
 	import NewPostButton from '../_components/NewPostButton.svelte';
@@ -12,6 +13,7 @@
 	import PostItem from '../_components/PostItem.svelte';
 	import EditPost from '../posts/_components/EditPost.svelte';
 
+    import SendMessageIcon from "../../assets/icons/send.png";
     import CloseIcon from "../../assets/icons/clear.png";
 
 	import { stopEvent } from '../../utils';
@@ -77,6 +79,8 @@
 
 	$: channelDescription = $channel && ($channel.description || getChannelDefaultDescription($channel)) || null;
 
+	let newPostMessage = '';
+	
 	let showAddPost = false;
 
 	$: {
@@ -129,13 +133,18 @@
 	{:else}
 		<ScrollView id="channel" topOffset="{newPostRegionHeight}" showScrollHeader="{!showAddPost}">
 			<div slot="scrollHeader">
-				{#if channelDescription}
-					<div class="channelHeader" on:click="{newPost}" class:channelHeaderPost="{canPost}">{@html channelDescription}</div>
-				{/if}
-				{#if canPost}
-					<!-- <Proxy image="channel_actions" className="channelActions" /> -->
-					<NewPostButton onClick="{newPost}" className="newPostHeader" />
-				{/if}
+				<div class="channelHeader">
+					{#if channelDescription}
+						<div class="channelHeaderDescription" on:click="{newPost}" class:channelHeaderPost="{canPost}">{@html channelDescription}</div>
+					{/if}
+					{#if canPost}
+						<div class="newMessageArea" on:click="{newPost}">
+							<textarea bind:value="{newPostMessage}" />
+							<Button className="nextButton" disabled="{!newPostMessage}" icon="{SendMessageIcon}">{locale.CHANNEL.ADD_POST}</Button>
+							<!-- <NewPostButton onClick="{newPost}" className="newPostHeader" /> -->
+						</div>
+					{/if}
+				</div>
 			</div>
 
 			<div class="content">
@@ -173,19 +182,25 @@
 
 	.channelHeader {
 		background-color: #ffffff;
-		font-size: 1.4rem;
-		color: #666666;
 
-		padding: 16px 20px;
+	}
+	.channelHeaderDescription {
+		/* padding: 16px 20px; */
 		/* margin-bottom: 5px; */
+
+		padding: 9px 16px;
+		padding-top: 10px;
+
+		font-size: 1.3rem;
+		color: #666666;
 		
         overflow-wrap: break-word;
         word-wrap: break-word;
 	}
-	.channelHeaderPost {
+	/* .channelHeaderPost {
 		padding-bottom: 14px;
 		padding-right: 150px;
-	}
+	} */
 
 	.pageContent :global(.newPostHeader) {
 		margin: 0;
@@ -238,8 +253,67 @@
         box-shadow: 0 2px 3px 0 rgba(0,0,0,0.1);
 	}
 
+	.pageContent :global(.editPostContent.inlineComponent .pageTitle) {
+		padding-left: 16px;
+		margin-top: -1px;
+	}
+
+	.pageContent :global(.editPostContent.inlineComponent .nextButton) {
+    	padding-right: 30px;
+    }
+    .pageContent :global(.editPostContent.inlineComponent .nextButton .icon) {
+    	transform: scale(0.4, 0.4);
+    }
+
 	.pageContent :global(.editPostContent.inlineComponent .collapsePanel .icon) {
 		margin-top: 12px;
     	margin-left: 16px;
 	}
+
+	.newMessageArea {
+    	position: relative;
+
+		padding-left: 16px;
+		padding-right: 106px;
+	}
+
+	.newMessageArea textarea {
+        border: 1px solid #cccccc;
+
+        outline: none;
+        background: none;
+
+        width: 100%;
+		height: 30px;
+
+        box-sizing: border-box;
+
+		font-size: 1.5rem;
+		line-height: 2rem;
+    	color: #555555;
+
+        padding: 4px 6px;
+
+    	/* margin-top: 4px; */
+
+		resize: none;
+	}
+	
+	.newMessageArea :global(.nextButton) {
+        position: absolute;
+    	top: -5px;
+		right: 12px;
+
+		padding: 10px;
+    	padding-right: 30px;
+		/* padding-right: 39px; */
+
+    	font-size: 1.2rem;
+        font-weight: 700;
+    }
+    .newMessageArea :global(.nextButton .icon) {
+		padding-left: 18px;
+		margin-top: -2px;
+    	transform: scale(0.4, 0.4);
+    }
 </style>

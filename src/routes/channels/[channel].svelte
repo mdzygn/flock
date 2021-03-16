@@ -294,6 +294,9 @@
 	.pageContent :global(.editPostContent.inlineComponent .addImage) {
 		right: 99px;
 	}
+	.pageContent :global(.editPostContent.inlineComponent .removeImage) {
+		right: initial;
+	}
 	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox .uploadButton) {
 		width: 62px;
 		height: 62px;

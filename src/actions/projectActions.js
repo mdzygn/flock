@@ -249,14 +249,36 @@ export async function archiveProject(projectId) {
 
     if (getIsProjectTeamMember(targetProject)) { // targetProject.isOwner) {
         const details = { archived: true };
-        targetProject.archived = details.archived;
-        targetProjectModel.set(targetProject);
-        checkUpdateProject(targetProject);
-        updateProject(targetProject, details, true);
-        resetScrollRegionPosition('project');
 
-        await tick();
-        showPrompt(promptIds.PROJECT_ARCHIVED);
+        // targetProject.archived = details.archived;
+        // targetProjectModel.set(targetProject);
+        // checkUpdateProject(targetProject);
+
+        const result = updateProject(targetProject, details, true);
+
+        // resetScrollRegionPosition('project');
+
+        // await tick();
+        // showPrompt(promptIds.PROJECT_ARCHIVED);
+
+        result.then((result) => {
+            if (result && !result.error && !result.invalid) {
+
+                targetProject.archived = details.archived;
+                targetProjectModel.set(targetProject);
+                checkUpdateProject(targetProject);
+
+                resetScrollRegionPosition('project');
+
+                showPrompt(promptIds.PROJECT_ARCHIVED);
+            } else {
+                targetProject.archived = !details.archived;
+                targetProjectModel.set(targetProject);
+                checkUpdateProject(targetProject);
+
+                triggerShowPrompt(promptIds.SERVER_ERROR);
+            }
+        });
     }
 }
 
@@ -268,12 +290,30 @@ export async function unarchiveProject(projectId) {
 
     if (getIsProjectTeamMember(targetProject)) { // targetProject.isOwner) {
         const details = { archived: false };
-        targetProject.archived = details.archived;
-        targetProjectModel.set(targetProject);
-        checkUpdateProject(targetProject);
-        updateProject(targetProject, details, true);
 
-        await tick();
-        showPrompt(promptIds.PROJECT_UNARCHIVED);
+        // targetProject.archived = details.archived;
+        // targetProjectModel.set(targetProject);
+        // checkUpdateProject(targetProject);
+
+        const result = updateProject(targetProject, details, true);
+
+        // await tick();
+        // showPrompt(promptIds.PROJECT_UNARCHIVED);
+
+        result.then((result) => {
+            if (result && !result.error && !result.invalid) {
+                targetProject.archived = details.archived;
+                targetProjectModel.set(targetProject);
+                checkUpdateProject(targetProject);
+                
+                showPrompt(promptIds.PROJECT_UNARCHIVED);
+            } else {
+                targetProject.archived = !details.archived;
+                targetProjectModel.set(targetProject);
+                checkUpdateProject(targetProject);
+
+                triggerShowPrompt(promptIds.SERVER_ERROR);
+            }
+        });
     }
 }

@@ -513,7 +513,7 @@ function removeProjectModel(projectModel) {
 export function updateProject(project, projectDetails, nonModification) {
 	const isModification = !nonModification;
 
-	api.updateProject({id: project.id, details: projectDetails, isModification}).then(result => {
+	const result = api.updateProject({id: project.id, details: projectDetails, isModification}).then(result => {
 		if (!result || result.error || result.invalid) {
 			triggerShowPrompt(promptIds.SERVER_ERROR);
 		}
@@ -525,6 +525,8 @@ export function updateProject(project, projectDetails, nonModification) {
 	if (isModification) {
 		project.modifiedAt = project.lastActiveAt;
 	}
+
+	return result;
 }
 
 export function addTeamMembers(project, teamMemberUsernames) {

@@ -336,11 +336,21 @@ export function deletePost(post) {
 	return result;
 }
 
-export function setLikePost(targetPost, like) {
-	if (like) {
-		api.likePost({userId: get(userId), postId: targetPost.id});
-	} else {
-		api.unlikePost({userId: get(userId), postId: targetPost.id});
+export function setLikePost(targetPost, targetPostModel, like, updateLocalOnly) {
+	if (!updateLocalOnly) {
+		if (like) {
+			api.likePost({userId: get(userId), postId: targetPost.id}).then(result => {
+				if (!result || result.error || result.invalid) {
+					setLikePost(targetPost, targetPostModel, !like, true);
+				}
+			});
+		} else {
+			api.unlikePost({userId: get(userId), postId: targetPost.id}).then(result => {
+				if (!result || result.error || result.invalid) {
+					setLikePost(targetPost, targetPostModel, !like, true);
+				}
+			});
+		}
 	}
 
 	targetPost.liked = like;
@@ -351,6 +361,8 @@ export function setLikePost(targetPost, like) {
 		curUserDetails.likesCount = curUserDetails.likesCount + (like ? 1 : -1);
 		user.set(curUserDetails);
 	}
+
+	targetPostModel.set(targetPost);
 }
 
 export function setFollowPost(targetPost, unfollow) {

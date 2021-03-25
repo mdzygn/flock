@@ -146,8 +146,7 @@ export function postToggleLiked(postId) {
     const targetPost = get(targetPostModel);
 
     if (targetPost) {
-        setLikePost(targetPost, !targetPost.liked);
-        targetPostModel.set(targetPost);
+        setLikePost(targetPost, targetPostModel, !targetPost.liked);
         checkUpdatePost(targetPost);
     }
 }

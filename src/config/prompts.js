@@ -428,6 +428,15 @@ const prompts = {
             },
         ],
     },
+    ADD_POST_ERROR: {
+        title: 'Error',
+        message: 'Sorry, there was an error creating post.<br />Please try again.',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
     INVALID_IMAGE_TYPE_JPG_PNG: {
         title: 'Sorry',
         message: 'Image must be a<br/>jpeg or png file',

@@ -156,7 +156,7 @@
 
     $: showUnseenIcon = (!repliesCount && $unviewedCount); // (type === 'thread') &&
 
-    $: date = $post && showLastActiveTime ? $post.lastActiveAt : $post.createdAt;
+    $: date = $post && (showLastActiveTime ? $post.lastActiveAt : $post.createdAt);
 
     let dateString = '';
     // $: isRecent = !showLastActiveTime && getDateAge(date).hours < 1;

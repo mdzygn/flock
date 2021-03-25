@@ -12,13 +12,17 @@ import AppModel, {
     user,
 	userId,
 	project,
+	post,
 	savingPost,
 	savingPostId,
 	triggerFollowPost,
     getIsProjectTeamMember,
+	triggerShowPrompt,
 } from '../models/appModel';
 
 import PostModel from '../models/postModel';
+
+import promptIds from '../config/promptIds';
 
 export let loadingPosts = writable(false);
 
@@ -224,7 +228,11 @@ export function addPost(postDetails) {
 	if (result) {
 		result.then(result => {
 			if (!result || result.error || result.invalid) {
+				removePostModel(newPostModel);
 				// console.error(result);
+				setTimeout(() => { // TODO: cleaner
+					triggerShowPrompt(promptIds.ADD_POST_ERROR);
+				}, 100);
 			}
 			savingPost.set(false);
 			return result;
@@ -243,6 +251,21 @@ export function addPost(postDetails) {
 	}
 
 	return result; // newPostModel;
+}
+
+function removePostModel(postModel) {
+	if (postModel && get(postModel)) {
+		const curPosts = get(posts);
+		const postIndex = curPosts.indexOf(postModel);
+
+		curPosts.splice(postIndex, 1);
+		posts.set(curPosts);
+
+		if (get(post) && get(post).id === get(postModel).id) {
+			post.set(null);
+		}
+		postModel.set(null);
+	}
 }
 
 export function updatePost(post, postDetails) {

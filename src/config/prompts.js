@@ -437,6 +437,15 @@ const prompts = {
             },
         ],
     },
+    SEND_MESSAGE_ERROR: {
+        title: 'Error',
+        message: 'Sorry, there was an error sending message.<br />Please try again.',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
     INVALID_IMAGE_TYPE_JPG_PNG: {
         title: 'Sorry',
         message: 'Image must be a<br/>jpeg or png file',

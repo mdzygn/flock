@@ -24,6 +24,7 @@ import {
 	savingConversationId,
 	conversationGroupId,
 	debugOutput,
+	triggerShowPrompt,
 } from '../models/appModel';
 
 import ConversationsModel, {
@@ -33,6 +34,8 @@ import ConversationsModel, {
 	updateConversationSeen,
 	isConversationPage,
 } from '../models/conversationsModel';
+
+import promptIds from '../config/promptIds';
 
 // import messagesTestData from '../data/messages.json';
 
@@ -300,6 +303,11 @@ export function addMessage(messageDetails) {
 					loadConversation(get(conversationGroupId)); // refresh conversation if existing conflict hit
 				}
 			} else {
+				// console.error(result);
+				setTimeout(() => { // TODO: cleaner
+					triggerShowPrompt(promptIds.SEND_MESSAGE_ERROR);
+				}, 100);
+
 				// updateMessages();
 
 				// const result = api.updateConversation({id: get(conversationId)});

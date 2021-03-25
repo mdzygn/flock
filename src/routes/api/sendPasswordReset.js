@@ -18,6 +18,7 @@ export async function post(req, res, next) {
         let emailSent = false;
         let newUsercode = '';
         let sendResult = null;
+
         let emailOptions = {
             toEmail: email,
             fromEmail: Config.FROM_EMAIL,
@@ -25,40 +26,44 @@ export async function post(req, res, next) {
 
 		if (user) {
             newUsercode = generateId(8);
-            const details = {
-                pass: '',
-                usercode: newUsercode,
-                resetPass: true,
-            };
 
-            const result = await db.collection('users').updateOne({ email }, { $set: details } );
+            emailOptions.subject = locale.PASSWORD_RESET_EMAIL.SUBJECT;
+            emailOptions.bodyText = locale.PASSWORD_RESET_EMAIL.BODY
+                .split('[USERCODE]').join(newUsercode)
+                .split('[SITE]').join(Config.SITE)
+                .split('[SITE_URL]').join(Config.SITE_URL);
 
-            if (result) {
-                emailOptions.subject = locale.PASSWORD_RESET_EMAIL.SUBJECT;
-                emailOptions.bodyText = locale.PASSWORD_RESET_EMAIL.BODY
-                    .split('[USERCODE]').join(newUsercode)
-                    .split('[SITE]').join(Config.SITE)
-                    .split('[SITE_URL]').join(Config.SITE_URL);
+            console.log('send email', emailOptions);
 
-                console.log('send email', emailOptions);
+            sendResult = await sendMail(emailOptions).then(async sendResponse => {
+                if (sendResponse.success) {
+                    console.log('send response', sendResponse);
 
-                sendResult = await sendMail(emailOptions).then(sendResponse => {
-                        if (sendResponse.success) {
-                            console.log('send response', sendResponse);
-                            response(res, {success: true}); // TODO: for temp debug return: usercode: newUsercode
-                        } else {
-                            console.log('error response', sendResponse);
-                            errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: sendResponse.errorObject && sendResponse.errorObject.response && sendResponse.errorObject.response.statusCode});
-                        }
-                    })
-                    .catch(error => {
-                        console.log('error', error);
-                        errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: error && error.response && error.response.statusCode});
-                    });
-            } else {
-                errorResponse(res, {}, {errorMsg: 'can\'t update user details'});
-                // response(res, {error: true});
-            }
+                    const details = {
+                        pass: '',
+                        usercode: newUsercode,
+                        resetPass: true,
+                    };
+
+                    const result = await db.collection('users').updateOne({ email }, { $set: details } );
+
+                    if (result) {
+                        response(res, {success: true}); // TODO: for temp debug return: usercode: newUsercode
+                    } else {
+                        errorResponse(res, {}, {errorMsg: 'can\'t update user details'});
+                        // response(res, {error: true});
+                    }
+
+                    // response(res, {success: true}); // TODO: for temp debug return: usercode: newUsercode
+                } else {
+                    console.log('error response', sendResponse);
+                    errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: sendResponse.errorObject && sendResponse.errorObject.response && sendResponse.errorObject.response.statusCode});
+                }
+            })
+            .catch(error => {
+                console.log('error', error);
+                errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: error && error.response && error.response.statusCode});
+            });
 		} else {
             emailOptions.subject = locale.PASSWORD_RESET_UNREGISTERED_EMAIL.SUBJECT;
 
@@ -70,19 +75,19 @@ export async function post(req, res, next) {
             console.log('send general', emailOptions);
 
             sendResult = await sendMail(emailOptions).then(sendResponse => {
-                    if (sendResponse.success) {
-                        console.log('send general response', sendResponse);
-                        emailSent = true;
-                        response(res, {success: true}); // TODO: temp debug
-                    } else {
-                        console.log('error response', sendResponse);
-                        errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: sendResponse.errorObject && sendResponse.errorObject.response && sendResponse.errorObject.response.statusCode});
-                    }
-                })
-                .catch(error => {
-                    console.log('error', error);
-                    errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: error && error.response && error.response.statusCode});
-                });
+                if (sendResponse.success) {
+                    console.log('send general response', sendResponse);
+                    emailSent = true;
+                    response(res, {success: true}); // TODO: temp debug
+                } else {
+                    console.log('error response', sendResponse);
+                    errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: sendResponse.errorObject && sendResponse.errorObject.response && sendResponse.errorObject.response.statusCode});
+                }
+            })
+            .catch(error => {
+                console.log('error', error);
+                errorResponse(res, {}, {errorMsg: 'can\'t send email', errorStatus: error && error.response && error.response.statusCode});
+            });
         }
 	} else {
 		response(res, {invalid: true}); // no user specified

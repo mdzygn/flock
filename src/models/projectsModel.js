@@ -547,21 +547,44 @@ export function updateProjectTeam(projectId, newTeam) {
 	}
 }
 
-export function setLikeProject(targetProject, like) {
-	if (like) {
-		api.likeProject({userId: get(userId), projectId: targetProject.id});
-	} else {
-		api.unlikeProject({userId: get(userId), projectId: targetProject.id});
+export function setLikeProject(targetProject, targetProjectModel, like, updateLocalOnly) {
+	if (!updateLocalOnly) {
+		if (like) {
+			api.likeProject({userId: get(userId), projectId: targetProject.id}).then(result => {
+				if (!result || result.error || result.invalid) {
+					setLikeProject(targetProject, targetProjectModel, !like, true);
+					checkUpdateProject(targetProject);
+				}
+			});
+		} else {
+			api.unlikeProject({userId: get(userId), projectId: targetProject.id}).then(result => {
+				if (!result || result.error || result.invalid) {
+					setLikeProject(targetProject, targetProjectModel, !like, true);
+					checkUpdateProject(targetProject);
+				}
+			});
+		}
 	}
 
 	targetProject.liked = like;
 	targetProject.likeCount = targetProject.likeCount + (like ? 1 : -1);
+
+	targetProjectModel.set(targetProject);
 
 	const curUserDetails = get(user);
 	if (curUserDetails) {
 		curUserDetails.likesCount = curUserDetails.likesCount + (like ? 1 : -1);
 		user.set(curUserDetails);
 	}
+
+	checkUpdateProject(targetProject);
+}
+
+export function checkUpdateProject(targetProject) {
+    const curProject = get(project);
+    if (curProject && curProject.id === targetProject.id) {
+        project.set(targetProject);
+    }
 }
 
 export function setFollowProject(targetProject, follow) {

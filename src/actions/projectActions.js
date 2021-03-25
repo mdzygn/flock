@@ -17,6 +17,7 @@ import ProjectModel, {
     addTeamMembers,
     removeTeamMembers,
     updateProjectTeam,
+    checkUpdateProject,
 } from '../models/projectsModel';
 
 import {
@@ -45,13 +46,6 @@ function loadProjectChannels() {
     loadChannels( { projectId: get(projectId) } );
 }
 
-function checkUpdateProject(targetProject) {
-    const curProject = get(project);
-    if (curProject && curProject.id === targetProject.id) {
-        project.set(targetProject);
-    }
-}
-
 export function projectToggleFollowing(projectId) {
     if (!checkLoggedIn()) { return; }
 
@@ -76,13 +70,12 @@ export function projectToggleLiked(projectId) {
     const targetProject = get(targetProjectModel);
 
     if (targetProject) {
-        setLikeProject(targetProject, !targetProject.liked);
+        setLikeProject(targetProject, targetProjectModel, !targetProject.liked);
         // updateProject(targetProject, {
         //     liked: !targetProject.liked,
         //     likeCount: targetProject.likeCount + (!targetProject.liked ? 1 : -1),
         // });
-        targetProjectModel.set(targetProject);
-        checkUpdateProject(targetProject);
+        // checkUpdateProject(targetProject);
     }
 }
 

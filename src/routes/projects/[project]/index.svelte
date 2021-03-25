@@ -7,7 +7,7 @@
 	import { menuIds } from '../../../config/menus';
 	import { getDisplayText, stopEvent } from '../../../utils';
 
-	import { onMount } from 'svelte';
+	import { tick, onMount } from 'svelte';
 
     import Button from '../../../components/Button.svelte';
 
@@ -44,6 +44,9 @@
 
 	import Proxy from '../../../components/Proxy.svelte';
 	import Hotspot from '../../../components/Hotspot.svelte';
+
+	import EditPost from '../../posts/_components/EditPost.svelte';
+	import AddPost from '../../posts/_components/AddPost.svelte';
 
 	import {
 		projectId,
@@ -83,6 +86,7 @@
 		showMenu,
 		showTogglePublicDialog,
 		showShareProjectDialog,
+		checkLoggedIn,
 	} from '../../../actions/appActions';
 
 	import {
@@ -127,6 +131,23 @@
 		// return config.SITE_CONTENT_URL + config.headerImageLibraryFolder + imageId + config.headerImageExtension;
 	}
 
+	async function addNewProjectPost(event) {
+		stopEvent(event);
+		if (!checkLoggedIn()) { return; }
+
+		newProjectPost();
+		
+		showAddProjectPost = true;
+
+		if (newProjectPostMessageField) {
+			await tick();
+			newProjectPostMessageField.focus();
+		}
+	}
+
+	function hideAddProjectPostPanel() {
+		showAddProjectPost = false;
+	}
 	// let proxyChannelsImage;
 
 	$: isTeamMember = $user && getIsProjectTeamMember($project);
@@ -173,6 +194,29 @@
 	let forceProjectShowingInfo = false;
 	let projectStateLoaded = false;
 
+	let showAddProjectPost = false;
+	let newProjectPostMessageField = null;
+
+	let newProjectPostMessage = '';
+
+	$: {
+		showAddProjectPost;
+		onProjectPostPanelResized();
+	}
+
+	let projectPostRegion = null;
+	let projectPostPanelHeight = 0;
+
+	async function onProjectPostPanelResized() {
+		await tick();
+
+		if (showAddProjectPost) {
+			projectPostPanelHeight = (projectPostRegion && projectPostRegion.offsetHeight) || 0;
+		} else {
+			projectPostPanelHeight = 0;
+		}
+	}
+
 	$: {
 		if (!projectStateLoaded) {
 			if (isProjectLoaded($project, $projectId) && isUserLoaded($user, $userId, $loggingIn)) {
@@ -211,7 +255,7 @@
 	{:else if !$project || !$project.id}
 		<ContentLoader label="{locale.PROJECT.NOT_FOUND}" />
 	{:else}
-		<ScrollView id="project" headerStartHidden="{!isArchived}" headerHideOffset="{$projectReturnView ? config.RETURN_PROJECT_HEADER_OFFSET : 0}">
+		<ScrollView id="project" headerStartHidden="{!isArchived}" headerHideOffset="{$projectReturnView ? config.RETURN_PROJECT_HEADER_OFFSET : 0}" bottomOffset="{projectPostPanelHeight}">
 			<div class="content">
 				<div class="contentItem" class:collapsedOptions="{$projectReturnView && !showInfo}" class:collapsedHeader="{$projectReturnView && !showInfo && !isNew && $showBetaFeatures}">
 					<div style="background-image: url({headerImage})" class="headerImage" alt="project header image" />
@@ -324,6 +368,9 @@
 				</div>
 
 				{#if isNew}
+					{#if canEdit}
+						<AddPost {newProjectPostMessage} onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" />
+					{/if}
 					<ProjectTeamList project="{$project}" />
 					<ProjectSkillsList project="{$project}" />
 					<ProjectCollaboratePanel project="{$project}" />
@@ -335,7 +382,8 @@
 					<!-- {#if $showBetaFeatures} -->
 					<div class="posts">
 						{#if canEdit}
-							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
+							<AddPost {newProjectPostMessage} onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" />
+							<!-- <NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" /> -->
 								<!-- type="project_post_update" -->
 						{/if}
 						{#each $projectPosts as post}
@@ -343,6 +391,9 @@
 						{/each}
 					</div>
 				{:else if $projectReturnView}
+					{#if canEdit}
+						<AddPost {newProjectPostMessage} onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" />
+					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<ChannelList project="{project}" />
 					<!-- {#if $showBetaFeatures} -->
@@ -357,7 +408,8 @@
 					<ProjectTeamList project="{$project}" />
 					<div class="posts">
 						{#if canEdit}
-							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
+							<AddPost {newProjectPostMessage} onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" />
+							<!-- <NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" /> -->
 						{/if}
 						{#each $projectPosts as post}
 							<ProjectPostItem {post} />
@@ -371,6 +423,9 @@
 						</div>
 					{/if} -->
 				{:else}
+					{#if canEdit}
+						<AddPost {newProjectPostMessage} onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" />
+					{/if}
 					<ProjectSkillsList project="{$project}" />
 					<ProjectCollaboratePanel project="{$project}" />
 					<ProjectTeamList project="{$project}" />
@@ -381,7 +436,8 @@
 					<ChannelList project="{project}" />
 					<div class="posts">
 						{#if canEdit}
-							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
+							<AddPost {newProjectPostMessage} onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" />
+							<!-- <NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" /> -->
 						{/if}
 						{#each $projectPosts as post}
 							<ProjectPostItem {post} />
@@ -439,6 +495,8 @@
 			</div></div>
 		</ScrollView>
 	{/if}
+
+	<EditPost shown="{showAddProjectPost}" bind:message="{newProjectPostMessage}" bind:messageField="{newProjectPostMessageField}" inlineComponent="{true}" bind:element="{projectPostRegion}" on:hide="{hideAddProjectPostPanel}" on:resize="{onProjectPostPanelResized}" />
 </div>
 
 <style>

@@ -209,7 +209,9 @@ export function setUser(targetUserId) {
         if (curUser && curUser.loaded && (!curUser.username || curUser.set === false)) {
             (async() => {
                 await tick();
-                console.log('curUser', curUser);
+                if (DEBUG) {
+                    console.log('curUser', curUser);
+                }
                 if (curUser.resetPass) {
                     showPrompt(promptIds.RESET_PASSWORD);
                 } else {
@@ -718,14 +720,14 @@ export function newProjectPost() {
     if (!checkLoggedIn()) { return; }
 
     postType.set('projectPost');
-    goto('posts/new');
+    // goto('posts/new');
 }
 
 export function newThread() {
     if (!checkLoggedIn()) { return; }
     
     postType.set('thread');
-    goto('posts/new');
+    // goto('posts/new');
 }
 
 export function newThreadPost() {

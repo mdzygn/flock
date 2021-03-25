@@ -119,6 +119,8 @@
 		stopEvent(event);
 		if (!checkLoggedIn()) { return; }
 
+		// newThread();
+		
 		showAddPost = true;
 
 		if (newPostMessageField) {

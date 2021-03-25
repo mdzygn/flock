@@ -26,17 +26,11 @@ import {
     getPost,
     updatePost,
     deletePost,
+    checkUpdatePost,
 } from '../models/postsModel';
 
 AppModel.on('followPost', followPost);
 AppModel.on('deletePost', removePost);
-
-function checkUpdatePost(targetPost) {
-    const curPost = get(post);
-    if (curPost && curPost.id === targetPost.id) {
-        post.set(targetPost);
-    }
-}
 
 export function createPost(postDetails) {
     if (!checkLoggedIn()) { return; }
@@ -147,7 +141,7 @@ export function postToggleLiked(postId) {
 
     if (targetPost) {
         setLikePost(targetPost, targetPostModel, !targetPost.liked);
-        checkUpdatePost(targetPost);
+        // checkUpdatePost(targetPost);
     }
 }
 
@@ -159,8 +153,8 @@ export function followPost(postId, unfollow) {
     if (targetPost) {
         const updated = setFollowPost(targetPost, targetPostModel, unfollow);
 
-        if (updated) {
-            checkUpdatePost(targetPost);
-        }
+        // if (updated) {
+        //     checkUpdatePost(targetPost);
+        // }
     }
 }

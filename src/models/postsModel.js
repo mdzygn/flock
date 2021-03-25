@@ -342,12 +342,14 @@ export function setLikePost(targetPost, targetPostModel, like, updateLocalOnly) 
 			api.likePost({userId: get(userId), postId: targetPost.id}).then(result => {
 				if (!result || result.error || result.invalid) {
 					setLikePost(targetPost, targetPostModel, !like, true);
+					checkUpdatePost(targetPost);
 				}
 			});
 		} else {
 			api.unlikePost({userId: get(userId), postId: targetPost.id}).then(result => {
 				if (!result || result.error || result.invalid) {
 					setLikePost(targetPost, targetPostModel, !like, true);
+					checkUpdatePost(targetPost);
 				}
 			});
 		}
@@ -363,6 +365,14 @@ export function setLikePost(targetPost, targetPostModel, like, updateLocalOnly) 
 	}
 
 	targetPostModel.set(targetPost);
+	checkUpdatePost(targetPost);
+}
+
+export function checkUpdatePost(targetPost) {
+    const curPost = get(post);
+    if (curPost && curPost.id === targetPost.id) {
+        post.set(targetPost);
+    }
 }
 
 export function setFollowPost(targetPost, targetPostModel, unfollow, updateLocalOnly) {
@@ -382,6 +392,7 @@ export function setFollowPost(targetPost, targetPostModel, unfollow, updateLocal
 		// targetPost.followTime = (new Date()).getTime();
 
 		targetPostModel.set(targetPost);
+        checkUpdatePost(targetPost);
 
 		return true;
 	}

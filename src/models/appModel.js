@@ -371,4 +371,8 @@ export function triggerShowPrompt(promptId) {
     AppModel.emit('showPrompt', promptId);
 }
 
+export function triggerGotoRoute(newPath) {
+    AppModel.emit('gotoRoute', newPath);
+}
+
 export default appModel;

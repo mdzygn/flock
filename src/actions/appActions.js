@@ -123,6 +123,7 @@ import AppModel, {
 
 ConversationsModel.on('conversationAdded', onConversationAdded);
 AppModel.on('showPrompt', onShowPrompt);
+AppModel.on('gotoRoute', onGotoRoute);
 
 export function loadProject(targetProjectId, options) {
     const path = get(curPath);
@@ -189,6 +190,10 @@ function onConversationAdded(event) {
 
 function onShowPrompt(promptId) {
     showPrompt(promptId);
+}
+
+function onGotoRoute(newPath) {
+    gotoRoute(newPath);
 }
 
 function setViewedUser(targetProfileId, dontResetConversationGroup) {

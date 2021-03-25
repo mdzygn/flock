@@ -28,6 +28,7 @@ import {
 	getHeaderImage,
 	showProjectCounts,
 	triggerShowPrompt,
+	triggerGotoRoute,
 } from '../models/appModel';
 
 import ProjectModel from '../models/projectModel';
@@ -476,7 +477,11 @@ export function addProject(projectDetails) {
 	api.addProject({details: newProject}).then(result => {
 		if (!result || result.error || result.invalid) {
 			removeProjectModel(newProjectModel);
-			triggerShowPrompt(promptIds.ADD_PROJECT_ERROR);
+
+			triggerGotoRoute('projects');
+            setTimeout(() => { // TODO: cleaner
+				triggerShowPrompt(promptIds.ADD_PROJECT_ERROR);
+            }, 100);
 		} else {
 			ProjectsModel.emit('projectAdded');
 		}

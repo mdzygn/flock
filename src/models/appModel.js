@@ -367,4 +367,8 @@ export function triggerCreatedPost(curTargetPost) {
     AppModel.emit('createdPost', curTargetPost);
 }
 
+export function triggerShowPrompt(promptId) {
+    AppModel.emit('showPrompt', promptId);
+}
+
 export default appModel;

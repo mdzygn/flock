@@ -52,7 +52,7 @@ import ConversationsModel, {
     mergeConversations,
 } from '../models/conversationsModel';
 
-import {
+import AppModel, {
     curPath,
     lastPreProjectPath,
 
@@ -122,6 +122,7 @@ import {
 } from '../models/appModel';
 
 ConversationsModel.on('conversationAdded', onConversationAdded);
+AppModel.on('showPrompt', onShowPrompt);
 
 export function loadProject(targetProjectId, options) {
     const path = get(curPath);
@@ -184,6 +185,10 @@ onConversationsUpdated(() => {
 function onConversationAdded(event) {
     conversationId.set(event.conversationId);
     setConversation(event.conversationId);
+}
+
+function onShowPrompt(promptId) {
+    showPrompt(promptId);
 }
 
 function setViewedUser(targetProfileId, dontResetConversationGroup) {
@@ -532,7 +537,7 @@ export function showMenu(menuId, options) {
         dontAllowOverlayClose.set(options && options.allowClose === false);
 
         hidePrompt();
-        if (!menuId) { console.error('Menu undefined: ' + promptId); }
+        if (!menuId && DEBUG) { console.error('Menu undefined: ' + promptId); }
         curMenu.set(menuId);
     }
 }

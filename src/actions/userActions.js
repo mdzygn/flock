@@ -129,6 +129,8 @@ function addUser(newUserModel) {
                         break;
                 }
             }
+        } else if (!result || result.error || result.invalid) {
+            showPrompt(promptIds.SERVER_ERROR);
         }
         loadingUsers.set(false);
 	});
@@ -186,18 +188,19 @@ export function setAccountDetails(userDetails, resetPass) {
                     }
 
                     // goto('profile/' + curUserId);
-                } else {
-                    if (result.invalid) {
-                        switch (result.errorType) {
-                            case 'username_exists':
-                                showPrompt(promptIds.USERNAME_EXISTS);
+                } else if (result && result.invalid) {
+                    switch (result.errorType) {
+                        case 'username_exists':
+                            showPrompt(promptIds.USERNAME_EXISTS);
 
-                                setUserDetails(curUserModel, {username: ''});
-                                break;
-                            default:
-                                showPrompt(promptIds.SET_ACCOUNT_ERROR);
-                        }
+                            setUserDetails(curUserModel, {username: ''});
+                            break;
+                        default:
+                            showPrompt(promptIds.SET_ACCOUNT_ERROR);
                     }
+                } else if (!result || result.error || result.invalid) {
+                    showPrompt(promptIds.SET_ACCOUNT_ERROR);
+                    showPrompt(promptIds.SERVER_ERROR);
                 }
             });
         }

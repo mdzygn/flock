@@ -421,7 +421,7 @@ const prompts = {
     },
     ADD_PROJECT_ERROR: {
         title: 'New Project',
-        message: 'Error adding project',
+        message: 'Sorry, there was an error creating project.<br />Please try again.',
         menuItems: [
             {
                 label: 'Ok',
@@ -500,9 +500,18 @@ const prompts = {
             },
         ],
     },
-    ERROR: {
+    SERVER_ERROR: {
         title: 'Error',
         message: 'Sorry, there was an error processing your request. Please try again.',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
+    IMAGE_UPLOAD_ERROR: {
+        title: 'Upload Error',
+        message: 'Sorry, there was an error uploading your image. Please try again.',
         menuItems: [
             {
                 label: 'Ok',

@@ -160,7 +160,7 @@
                 } else if (error && error.imageFileSizeTooLarge) {
                     showPrompt(promptIds.INVALID_IMAGE_FILESIZE_TOO_LARGE);
                 } else {
-                    console.error('Could not request image upload');
+                    showPrompt(promptIds.IMAGE_UPLOAD_ERROR);
                 }
             },
         });

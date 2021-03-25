@@ -10,9 +10,12 @@ import loadingRequestUtil from '../utils/loadingRequestUtil';
 
 import {
 	userId,
+	triggerShowPrompt,
 } from '../models/appModel';
 
 import ChannelModel from '../models/channelModel';
+
+import promptIds from '../config/promptIds';
 
 export let loadingChannels = writable(false);
 
@@ -225,8 +228,8 @@ export function addChannel(channelDetails) {
 
 	api.addChannel({details: newChannel}).then(result => {
 		if (!result || result.error || result.invalid) {
-			// console.error(result);
-		}
+            triggerShowPrompt(promptIds.SERVER_ERROR);
+        }
 		// newChannel._id = result.insertedId;
 	});
 
@@ -289,7 +292,7 @@ export function getChannelDefaultDescription(channel) {
 
 // 	api.addChannel({details: newChannel}).then(result => {
 // 		if (!result || result.error || result.invalid) {
-// 			// showPrompt(promptIds.ADD_PROJECT_ERROR);
+// 			// triggerShowPrompt(promptIds.ADD_PROJECT_ERROR);
 // 			removeChannelModel(newChannelModel);
 // 		}
 // 		// newChannel._id = result.insertedId;

@@ -119,7 +119,14 @@
 				$curUserProps = $curUserProps;
 
                 profileImageIsUploading = false;
-                console.error('Could not request profile image upload');
+
+                if (error && error.invalidType) {
+                    showPrompt(promptIds.INVALID_IMAGE_TYPE_JPG_PNG);
+                } else if (error && error.imageFileSizeTooLarge) {
+                    showPrompt(promptIds.INVALID_IMAGE_FILESIZE_TOO_LARGE);
+                } else {
+                    showPrompt(promptIds.IMAGE_UPLOAD_ERROR);
+                }
             },
         });
 	}

@@ -1,4 +1,4 @@
-import { response, errorResponse } from '../../server/mongo.js';
+import { init, validateCredentials, response, errorResponse } from '../../server/mongo.js';
 
 const aws = require('aws-sdk');
 const path = require('path');
@@ -13,12 +13,19 @@ const S3_BUCKET = process.env.S3_CONTENT_BUCKET;
 // const fileType= 'image/jpeg';
 
 export async function post(req, res, next) {
+	const { db } = await init();
+
+	const options = req.body;
+
+	if (!await validateCredentials(db, options)) {
+		response(res, {invalid: true});
+		return;
+	}
+
 	const s3 = new aws.S3();
 
 	// aws.config.aws_access_key_id = process.env.AWS_CONTENT_ACCESS_KEY_ID;
 	// aws.config.aws_secret_access_key = process.env.AWS_CONTENT_ACCESS_KEY;
-
-	const options = req.body;
 
 	const uploadType = options.uploadType;
 	const itemId = options.itemId;

@@ -3,6 +3,7 @@ import ImageTools from '../libs/ImageTools';
 import api from '../api';
 
 import config from '../config';
+import { DEBUG } from '../api/config';
 
 function uploadImage(options) {
     const {
@@ -66,7 +67,9 @@ function uploadImage(options) {
 
     function getSignedRequest(imageFile, thumbFile){
         if (!itemId) {
-            console.error('no itemId provided for image selector');
+            if (DEBUG) {
+                console.error('no itemId provided for image selector');
+            }
             return;
         }
 
@@ -113,7 +116,9 @@ function uploadImage(options) {
             thumbRequest.onreadystatechange = () => {
                 if (thumbRequest.readyState === 4){
                     if (thumbRequest.status !== 200){
-                        console.error('Could not upload thumb');
+                        if (DEBUG) {
+                            console.error('Could not upload thumb');
+                        }
                     }
                 }
             };

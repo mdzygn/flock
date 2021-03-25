@@ -14,7 +14,7 @@ import {
     showBetaFeatures,
 } from '../models/appModel';
 
-// import promptIds from '../config/promptIds';
+import promptIds from '../config/promptIds';
 
 import config from '../config';
 
@@ -27,6 +27,7 @@ import {
 	project,
 	getHeaderImage,
 	showProjectCounts,
+	triggerShowPrompt,
 } from '../models/appModel';
 
 import ProjectModel from '../models/projectModel';
@@ -474,8 +475,8 @@ export function addProject(projectDetails) {
 
 	api.addProject({details: newProject}).then(result => {
 		if (!result || result.error || result.invalid) {
-			// showPrompt(promptIds.ADD_PROJECT_ERROR);
 			removeProjectModel(newProjectModel);
+			triggerShowPrompt(promptIds.ADD_PROJECT_ERROR);
 		} else {
 			ProjectsModel.emit('projectAdded');
 		}
@@ -507,7 +508,11 @@ function removeProjectModel(projectModel) {
 export function updateProject(project, projectDetails, nonModification) {
 	const isModification = !nonModification;
 
-	api.updateProject({id: project.id, details: projectDetails, isModification});
+	api.updateProject({id: project.id, details: projectDetails, isModification}).then(result => {
+		if (!result || result.error || result.invalid) {
+			triggerShowPrompt(promptIds.SERVER_ERROR);
+		}
+	});
 
 	Object.assign(project, projectDetails);
 

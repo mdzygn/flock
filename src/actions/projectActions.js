@@ -186,7 +186,7 @@ function checkEditTeamResult(result, curProject) {
         result.then((result) => {
             closeOverlay();
             if (result) {
-                if (!result.error) {
+                if (!result.error && !result.invalid) {
                     // loadProject(curProject.id);
                     if (result.addedMembers && result.addedMembers.length) {
                         showPrompt(promptIds.EDIT_TEAM_MEMBERS_COMPLETE, {message: 'Team member'+((result.addedMembers.length > 1)?'s':'')+' added:<br/><strong>' + result.addedMembers.join(', ') + '</strong>'});
@@ -207,8 +207,12 @@ function checkEditTeamResult(result, curProject) {
                         showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'User'+((result.membersAlreadyInGroup.length > 1)?'s':'')+' already in team:<br/><strong>' + result.membersAlreadyInGroup.join(', ') + '</strong>'});
                     } else if (result.membersNotInGroup &&  result.membersNotInGroup.length) {
                         showPrompt(promptIds.EDIT_TEAM_MEMBERS_ERROR, {message: 'User'+((result.membersNotInGroup.length > 1)?'s':'')+' not found in team:<br/><strong>' + result.membersNotInGroup.join(', ') + '</strong>'});
+                    } else if (!result || result.error || result.invalid) {
+                        showPrompt(promptIds.SERVER_ERROR);
                     }
                 }
+            } else if (!result || result.error || result.invalid) {
+                showPrompt(promptIds.SERVER_ERROR);
             }
         });
     }

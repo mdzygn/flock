@@ -365,15 +365,23 @@ export function setLikePost(targetPost, targetPostModel, like, updateLocalOnly) 
 	targetPostModel.set(targetPost);
 }
 
-export function setFollowPost(targetPost, unfollow) {
+export function setFollowPost(targetPost, targetPostModel, unfollow, updateLocalOnly) {
 	const follow = unfollow ? false : true;
 
 	if (targetPost.following !== follow && targetPost.userId !== get(userId) && !getIsProjectTeamMember(get(project))) {
-		api.followPost({userId: get(userId), postId: targetPost.id, unfollow});
+		if (!updateLocalOnly) {
+			api.followPost({userId: get(userId), postId: targetPost.id, unfollow}).then(result => {
+				if (!result || result.error || result.invalid) {
+					setFollowPost(targetPost, targetPostModel, !unfollow, true);
+				}
+			});
+		}
 
 		targetPost.following = follow;
 		targetPost.followCount = (targetPost.likeCount || 0) + (unfollow ? 1 : -1);
 		// targetPost.followTime = (new Date()).getTime();
+
+		targetPostModel.set(targetPost);
 
 		return true;
 	}

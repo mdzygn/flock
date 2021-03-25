@@ -52,14 +52,14 @@ export function projectToggleFollowing(projectId) {
     const targetProjectModel = getProject(projectId);
     const targetProject = get(targetProjectModel);
     if (targetProject) {
-        setFollowProject(targetProject, !targetProject.following);
+        setFollowProject(targetProject, targetProjectModel, !targetProject.following);
         // updateProject(targetProject, {
         //     following: !targetProject.following,
         //     followCount: targetProject.followCount + (!targetProject.following ? 1 : -1),
         // });
 
-        targetProjectModel.set(targetProject);
-        checkUpdateProject(targetProject);
+        // targetProjectModel.set(targetProject);
+        // checkUpdateProject(targetProject);
     }
 }
 

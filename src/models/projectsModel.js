@@ -587,11 +587,23 @@ export function checkUpdateProject(targetProject) {
     }
 }
 
-export function setFollowProject(targetProject, follow) {
-	if (follow) {
-		api.followProject({userId: get(userId), projectId: targetProject.id});
-	} else {
-		api.unfollowProject({userId: get(userId), projectId: targetProject.id});
+export function setFollowProject(targetProject, targetProjectModel, follow, updateLocalOnly) {
+	if (!updateLocalOnly) {
+		if (follow) {
+			api.followProject({userId: get(userId), projectId: targetProject.id}).then(result => {
+				if (!result || result.error || result.invalid) {
+					setFollowProject(targetProject, targetProjectModel, !follow, true);
+					checkUpdateProject(targetProject);
+				}
+			});
+		} else {
+			api.unfollowProject({userId: get(userId), projectId: targetProject.id}).then(result => {
+				if (!result || result.error || result.invalid) {
+					setFollowProject(targetProject, targetProjectModel, !follow, true);
+					checkUpdateProject(targetProject);
+				}
+			});
+		}
 	}
 
 	targetProject.following = follow;
@@ -603,6 +615,9 @@ export function setFollowProject(targetProject, follow) {
 		curUserDetails.followsCount = curUserDetails.followsCount + (follow ? 1 : -1);
 		user.set(curUserDetails);
 	}
+
+	targetProjectModel.set(targetProject);
+	checkUpdateProject(targetProject);
 }
 
 export function getProjectHeaderImage(project, thumb) {

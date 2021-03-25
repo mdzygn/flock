@@ -303,6 +303,15 @@ const prompts = {
             },
         ],
     },
+    FORGOT_PASSWORD_RESET_ERROR: {
+        title: 'Reset Password',
+        message: 'Error sending password reset.<br/>Please contact <a href="mailto:support@flockprojects.com">support@flockprojects.com</a>.',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
     SET_ACCOUNT: {
         title: 'Set Account Details',
         menuItems: [
@@ -311,6 +320,15 @@ const prompts = {
                 // label: 'Let\'s Go!',
                 disabled: () => !get(setAccountFormValidated),
                 default: true,
+            },
+        ],
+    },
+    SET_ACCOUNT_ERROR: {
+        title: 'Error',
+        message: 'There was an error updating your account details. You may have requested a password reset.',
+        menuItems: [
+            {
+                label: 'Ok',
             },
         ],
     },
@@ -467,6 +485,24 @@ const prompts = {
     EDIT_TEAM_MEMBERS_COMPLETE: {
         title: 'Team Updated',
         message: 'Team members updated',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
+    UPDATE_USER_ERROR: {
+        title: 'Error',
+        message: 'Sorry, there was an error processing your request. Please try again.',
+        menuItems: [
+            {
+                label: 'Ok',
+            },
+        ],
+    },
+    ERROR: {
+        title: 'Error',
+        message: 'Sorry, there was an error processing your request. Please try again.',
         menuItems: [
             {
                 label: 'Ok',

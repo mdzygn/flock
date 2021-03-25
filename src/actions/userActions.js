@@ -194,6 +194,8 @@ export function setAccountDetails(userDetails, resetPass) {
 
                                 setUserDetails(curUserModel, {username: ''});
                                 break;
+                            default:
+                                showPrompt(promptIds.SET_ACCOUNT_ERROR);
                         }
                     }
                 }
@@ -207,6 +209,8 @@ export function sendPasswordReset(email) {
         api.sendPasswordReset({email}).then(result => {
             if (result && !result.error && !result.invalid) {
                 showPrompt(promptIds.FORGOT_PASSWORD_RESET);
+            } else {
+                showPrompt(promptIds.FORGOT_PASSWORD_RESET_ERROR);
             }
         });
     }
@@ -228,6 +232,9 @@ function updateUser(userDetails) {
                 // if (result && !result.error && !result.invalid) {
 
                 // }
+                if (!result || result.error || result.invalid) {
+                    showPrompt(promptIds.UPDATE_USER_ERROR);
+                }
             });
         }
     }

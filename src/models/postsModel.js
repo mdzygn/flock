@@ -278,7 +278,13 @@ export function updatePost(post, postDetails) {
 	savingPost.set(true);
 	const result = api.updatePost({id: post.id, details: postDetails});
 	if (result) {
-		result.then(() => {
+		result.then((result) => {
+			if (!result || result.error || result.invalid) {
+				setTimeout(() => { // TODO: cleaner
+					triggerShowPrompt(promptIds.SERVER_ERROR);
+				}, 100);
+			}
+
 			savingPost.set(false);
 			return result;
 		});
@@ -302,7 +308,7 @@ export function deletePost(post) {
 	const result = api.deletePost({id: postId});
 	if (result) {
 		result.then((result) => {
-			if (result && !result.error) {
+			if (result && !result.error && !result.invalid) {
 				const curPosts = get(posts);
 				let targetPost = curPosts.find(match => get(match).id === postId);
 				if (targetPost) {
@@ -311,6 +317,10 @@ export function deletePost(post) {
 						curPosts.splice(targetPostIndex, 1);
 					}
 				}
+			} else {
+				setTimeout(() => { // TODO: cleaner
+					triggerShowPrompt(promptIds.SERVER_ERROR);
+				}, 100);
 			}
 
 			savingPost.set(false);

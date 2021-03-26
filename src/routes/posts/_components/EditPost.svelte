@@ -10,6 +10,7 @@
 		getFormattedText,
 		strCompare,
 		trim,
+		gotoAnchor,
 	} from '../../../utils';
 
 	import Proxy from '../../../components/Proxy.svelte';
@@ -269,6 +270,7 @@
 					break;
 				case 'projectPost':
 					postDetails.projectId = $projectId;
+					gotoAnchor('projectPosts');
 					break;
 			}
 			let result = createPost(postDetails);
@@ -277,6 +279,12 @@
 					// console.log('create post result', result);
 					if (result && (result.success || result.addedPost || result.duplicateKey)) {
 						clearDraftPost(curPostType, draftId, editPost);
+						
+						// switch ($postType) {
+						// 	case 'projectPost':
+						// 		gotoAnchor('projectPosts');
+						// 		break;
+						// }
 					}
 				});
 			}

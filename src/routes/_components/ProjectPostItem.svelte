@@ -85,7 +85,7 @@
     $: projectTitle = ($project && $project.title) || '';
     $: projectThumbImage = ($project && getProjectHeaderImage($project, true)) || null;
 
-    $: commentsLabel = 'comment' + ($post.postCount >= 1 ? 's' : '');
+    $: commentsLabel = 'comment' + (($post && $post.postCount >= 1) ? 's' : '');
 
     $: canEdit = ($post && $post.userId && $post.userId === $userId) || false;
 

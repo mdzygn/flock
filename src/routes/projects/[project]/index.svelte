@@ -380,7 +380,7 @@
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<ChannelList project="{project}" />
 					<!-- {#if $showBetaFeatures} -->
-					<div class="posts">
+					<div class="posts" id="projectPosts">
 						{#if canEdit && !showAddProjectPost}
 							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 							<!-- <NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" /> -->
@@ -406,7 +406,7 @@
 					<ProjectSkillsList project="{$project}" />
 					<ProjectCollaboratePanel project="{$project}" />
 					<ProjectTeamList project="{$project}" />
-					<div class="posts">
+					<div class="posts" id="projectPosts">
 						{#if canEdit && !showAddProjectPost}
 							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 							<!-- <NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" /> -->
@@ -434,7 +434,7 @@
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<ChannelList project="{project}" />
-					<div class="posts">
+					<div class="posts" id="projectPosts">
 						{#if canEdit && !showAddProjectPost}
 							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 							<!-- <NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" /> -->

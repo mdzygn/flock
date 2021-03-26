@@ -50,6 +50,7 @@ export function createPost(postDetails) {
                         // loadPost(postDetails.threadId, { anchorToBottom: true });
                         break;
                     case 'projectPost':
+                        // don't redirect as already on the project page
                         // loadProject(postDetails.projectId);
                         // loadPost(postDetails.id);
                         break;

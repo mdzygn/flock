@@ -1016,4 +1016,16 @@
 	.pageContent :global(.addPostPanel .newMessageArea) {
 		padding-right: 120px;
 	}
+
+	
+	.pageContent :global(.editPostContent.inlineComponent .pageTitle) {
+		padding-bottom: 7px;
+		font-size: 1.5rem;
+		padding-top: 1px;
+	}
+	.pageContent :global(.editPostContent.inlineComponent .collapsePanel) {
+		top: 2px;
+		right: 2px;
+		height: 40px;
+	}
 </style>

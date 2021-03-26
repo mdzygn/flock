@@ -747,45 +747,39 @@
     	transform: scale(0.4, 0.4);
     }
 
-	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox.opened) {
+	.inlineComponent.useLibrary :global(.imageSelectionBox.opened) {
 		height: 204px;
 		padding-top: 0;
 	}
-	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .imageCarousel) {
+	.inlineComponent.useLibrary :global(.imageSelectionBox .imageCarousel) {
     	top: 124px;
 	}
-	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .imageItem) {
+	.inlineComponent.useLibrary :global(.imageSelectionBox .imageItem) {
 		width: 96px;
 		height: 57px;
 		margin: 0 4px;
 	}
-	/* .inlineComponent.useLibrary :global(.editPostContent.inlineComponent .addImage) {
-		right: 99px;
-	}
-	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .removeImage) {
-		right: initial;
-	} */
-	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .uploadButton) {
+	.inlineComponent.useLibrary :global(.imageSelectionBox .uploadButton) {
 		width: 62px;
 		height: 62px;
 		margin-left: -31px;
 	}
-	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .uploadButtonIcon) {
+	.inlineComponent.useLibrary :global(.imageSelectionBox .uploadButtonIcon) {
 		width: 31px;
 		height: 27px;
 	}
-	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .buttonLabel) {
+	.inlineComponent.useLibrary :global(.imageSelectionBox .buttonLabel) {
 		margin-top: -1px;
 		font-size: 1.1rem;
 	}
-	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .searchBar) {
+	.inlineComponent.useLibrary :global(.imageSelectionBox .searchBar) {
 		top: 88px;
 	}
-	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .searchIcon) {
+	.inlineComponent.useLibrary :global(.imageSelectionBox .searchIcon) {
 		width: 18px;
 		height: 18px;
 	}
-	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .searchFieldInput ) {
+	.inlineComponent.useLibrary :global(.imageSelectionBox .searchFieldInput ) {
     	padding: 5px 11px;
     	font-size: 1.4rem;
 	}

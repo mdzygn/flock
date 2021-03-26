@@ -103,6 +103,8 @@
 
 	//$: userLoading = (!($user && $user.loaded) && $userId);
 
+	const DISPLAY_BOTTOM_LINK_POST_COUNT = 4;
+
 	function toggleFollowing() {
 		projectToggleFollowing($projectId);
 	}
@@ -389,6 +391,9 @@
 						{#each $projectPosts as post}
 							<ProjectPostItem {post} />
 						{/each}
+						{#if canEdit && !showAddProjectPost && $projectPosts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
+							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
+						{/if}
 					</div>
 				{:else if $projectReturnView}
 					{#if canEdit && !showAddProjectPost}
@@ -414,6 +419,9 @@
 						{#each $projectPosts as post}
 							<ProjectPostItem {post} />
 						{/each}
+						{#if canEdit && !showAddProjectPost && $projectPosts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
+							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
+						{/if}
 					</div>
 					<!-- {#if $showBetaFeatures}
 						<div>
@@ -442,6 +450,9 @@
 						{#each $projectPosts as post}
 							<ProjectPostItem {post} />
 						{/each}
+						{#if canEdit && !showAddProjectPost && $projectPosts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
+							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
+						{/if}
 					</div>
 				{/if}
 			</div>

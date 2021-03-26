@@ -50,7 +50,7 @@ export function createPost(postDetails) {
                         // loadPost(postDetails.threadId, { anchorToBottom: true });
                         break;
                     case 'projectPost':
-                        loadProject(postDetails.projectId);
+                        // loadProject(postDetails.projectId);
                         // loadPost(postDetails.id);
                         break;
                 }

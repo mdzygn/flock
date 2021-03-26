@@ -178,8 +178,9 @@ const locale = {
 		CHANNELS_FOLLOW: ' this project to view discussion channels and get involved.',
 		CHANNELS_FOLLOW_ALL: ' this project to view all discussion channels and get involved.',
 		POST_UPDATE: 'post update',
-		POST_UPDATE_PLACEHOLDER: 'Post update...',
+		POST_UPDATE_PLACEHOLDER: 'Post project update...',
 		DEFAULT_STATUS: 'In Development',
+		POST_ACTION: 'Post Update',
 	},
 	PROFILE: {
 		NOT_FOUND: 'profile not found',
@@ -229,7 +230,8 @@ const locale = {
 		PAGE_TITLE: 'Edit Reply',
 	},
 	NEW_PROJECT_POST: {
-		PAGE_TITLE: 'Post Update',
+		PAGE_TITLE: 'Post Project Update',
+		// PAGE_TITLE: 'Post Update',
 	},
 	EDIT_PROJECT_POST: {
 		PAGE_TITLE: 'Edit Post',

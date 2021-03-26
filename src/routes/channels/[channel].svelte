@@ -179,7 +179,7 @@
 		</ScrollView>
 		
 		{#if canPost}
-			<EditPost shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" submitLabel="{locale.CHANNEL.ADD_POST}" inlineComponent="{true}" bind:element="{newPostRegion}" on:hide="{hideAddPostPanel}" on:resize="{onNewPostPanelResized}" />
+			<EditPost shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" submitLabel="{locale.CHANNEL.ADD_POST}" inlineComponent="{true}" smallNextButton="{true}" bind:element="{newPostRegion}" on:hide="{hideAddPostPanel}" on:resize="{onNewPostPanelResized}" />
 		{/if}
 	{/if}
 </div>
@@ -268,12 +268,12 @@
 		margin-top: -1px;
 	} */
 
-	.pageContent :global(.editPostContent.inlineComponent .nextButton) {
+	/* .pageContent :global(.editPostContent.inlineComponent .nextButton) {
     	padding-right: 30px;
     }
     .pageContent :global(.editPostContent.inlineComponent .nextButton .icon) {
     	transform: scale(0.4, 0.4);
-    }
+    } */
 
 	/* .pageContent :global(.editPostContent.inlineComponent .collapsePanel .icon) {
 		margin-top: 12px;
@@ -281,7 +281,7 @@
 	} */
 
 	
-	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox.opened) {
+	/* .pageContent :global(.editPostContent.inlineComponent .imageSelectionBox.opened) {
 		height: 204px;
 		padding-top: 0;
 	}
@@ -322,6 +322,13 @@
 	.pageContent :global(.editPostContent.inlineComponent .imageSelectionBox .searchFieldInput ) {
     	padding: 5px 11px;
     	font-size: 1.4rem;
+	} */
+
+	.pageContent :global(.editPostContent.inlineComponent .addImage) {
+		right: 99px;
+	}
+	.pageContent :global(.editPostContent.inlineComponent .removeImage) {
+		right: initial;
 	}
 
 	.pageContent .channelHeader :global(.addPostPanel) {

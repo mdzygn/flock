@@ -66,6 +66,8 @@
 
 	export let shown = true;
 
+	export let smallNextButton = false;
+
 	let title = '';
 	export let message = '';
 	let image = null;
@@ -381,7 +383,7 @@
 </script>
 
 {#if !editPost || $post }
-    <div class="editPostContent" class:isProjectPost="{isProjectPost}" class:hidden="{!shown}" class:inlineComponent="{inlineComponent}" bind:this="{element}">
+    <div class="editPostContent" bind:this="{element}" class:isProjectPost="{isProjectPost}" class:hidden="{!shown}" class:inlineComponent="{inlineComponent}" class:useLibrary="{useLibrary}">
         <!-- <Proxy image="create_project" className="proxyOverlay" /> -->
         <div class="panelContent" class:showImage="{imageShown}">
 			{#if inlineComponent}
@@ -443,12 +445,12 @@
             <div class="actions">
                 {#if !editPost}
 					{#if inlineComponent}
-                    	<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{SendMessageIcon}">{submitLabel || locale.REPLY_THREAD.CONFIRM}</Button>
+                    	<Button className="nextButton {smallNextButton?'smallNextButton':''}" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{SendMessageIcon}">{submitLabel || locale.REPLY_THREAD.CONFIRM}</Button>
 					{:else}
-                    	<Button className="nextButton" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{NextArrowIcon}">{locale.NEW_THREAD.CONFIRM}</Button>
+                    	<Button className="nextButton {smallNextButton?'smallNextButton':''}" disabled="{!nextEnabled}" onClick="{createNewPost}" icon="{NextArrowIcon}">{locale.NEW_THREAD.CONFIRM}</Button>
 					{/if}
 				{:else}
-                    <Button className="nextButton" disabled="{!nextEnabled}" onClick="{saveCurrentPost}" icon="{SaveIcon}">{locale.EDIT_THREAD.CONFIRM}</Button>
+                    <Button className="nextButton {smallNextButton?'smallNextButton':''}" disabled="{!nextEnabled}" onClick="{saveCurrentPost}" icon="{SaveIcon}">{locale.EDIT_THREAD.CONFIRM}</Button>
                 {/if}
             </div>
         </div>
@@ -737,4 +739,54 @@
     .inlineComponent :global(.carouselContainer) {
 		display: none;
 	} */
+	
+	.inlineComponent :global(.nextButton.smallNextButton) {
+    	padding-right: 30px;
+    }
+    .inlineComponent :global(.nextButton.smallNextButton .icon) {
+    	transform: scale(0.4, 0.4);
+    }
+
+	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox.opened) {
+		height: 204px;
+		padding-top: 0;
+	}
+	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .imageCarousel) {
+    	top: 124px;
+	}
+	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .imageItem) {
+		width: 96px;
+		height: 57px;
+		margin: 0 4px;
+	}
+	/* .inlineComponent.useLibrary :global(.editPostContent.inlineComponent .addImage) {
+		right: 99px;
+	}
+	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .removeImage) {
+		right: initial;
+	} */
+	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .uploadButton) {
+		width: 62px;
+		height: 62px;
+		margin-left: -31px;
+	}
+	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .uploadButtonIcon) {
+		width: 31px;
+		height: 27px;
+	}
+	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .buttonLabel) {
+		margin-top: -1px;
+		font-size: 1.1rem;
+	}
+	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .searchBar) {
+		top: 88px;
+	}
+	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .searchIcon) {
+		width: 18px;
+		height: 18px;
+	}
+	.inlineComponent.useLibrary :global(.editPostContent.inlineComponent .imageSelectionBox .searchFieldInput ) {
+    	padding: 5px 11px;
+    	font-size: 1.4rem;
+	}
 </style>

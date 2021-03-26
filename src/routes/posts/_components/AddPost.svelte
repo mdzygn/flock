@@ -7,6 +7,8 @@
 
     export let newPostMessage = '';
 
+    export let className = '';
+
     export let submitLabel = null;
 
     export let placeholderLabel = locale.CHANNEL.ADD_POST_MESSAGE_PLACEHOLDER;
@@ -16,10 +18,10 @@
 	export let element = null;
 </script>
 
-<div class="addPostPanel" bind:this="{element}">
+<div class="addPostPanel {className}" bind:this="{element}">
     <div class="newMessageArea" on:click="{onClick}">
         <textarea bind:value="{newPostMessage}" placeholder="{placeholderLabel}" />
-        <Button className="nextButton" disabled="{!newPostMessage}" icon="{SendMessageIcon}">{submitLabel || locale.REPLY_THREAD.CONFIRM}</Button>
+        <Button className="nextButton" disabled="{!newPostMessage}" icon="{SendMessageIcon}" {onClick}>{submitLabel || locale.REPLY_THREAD.CONFIRM}</Button>
         <!-- <NewPostButton onClick="{newPost}" className="newPostHeader" /> -->
     </div>
 </div>
@@ -60,7 +62,8 @@
     	/* margin-top: 4px; */
 
 		resize: none;
-	}
+    	overflow: hidden;
+    }
 	
 	.newMessageArea textarea::placeholder {
     	color: #999999;

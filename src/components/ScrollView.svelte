@@ -217,8 +217,8 @@
 
 
 {#if hasScrollHeader}
-    <div class="content {className}" style="bottom: {bottomOffset}px">
-        <div class="scrollView" bind:this="{scrollRegion}" style="padding-top: {showScrollHeader ? scrollHeaderHeight : topOffset}px">
+    <div class="content {className}">
+        <div class="scrollView" bind:this="{scrollRegion}" style="bottom: {bottomOffset}px; padding-top: {showScrollHeader ? scrollHeaderHeight : topOffset}px">
             <div class="scrollContent" style="{minHeightStyle}">
                 <slot></slot>
             </div>

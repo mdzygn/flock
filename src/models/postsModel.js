@@ -180,6 +180,9 @@ function filterCurrentPosts() {
 			newFilteredPosts.sort((a,b) => get(a).createdAt - get(b).createdAt ); // sort by reversed created time
 			break;
 	}
+	if (curPostFilterOptions && curPostFilterOptions.limit) {
+		newFilteredPosts = newFilteredPosts.splice(0, curPostFilterOptions.limit);
+	}
 	filteredPosts.set(newFilteredPosts);
 }
 

@@ -2,12 +2,16 @@
     import locale from '../../locale';
 
     import { get, writable } from 'svelte/store';
+    
+	import { stopEvent } from '../../utils';
 
     import Proxy from '../../components/Proxy.svelte';
 
     import ContentPanel from './ContentPanel.svelte';
     import ChannelListItem from './ChannelListItem.svelte';
 	import ContentLoader from './ContentLoader.svelte';
+
+	import PostItem from './PostItem.svelte';
 
 	import {
 		getIsProjectTeamMember,
@@ -24,9 +28,15 @@
     } from '../../models/channelsModel';
 
 	import {
+		getPosts,
+		loadingPosts,
+	} from '../../models/postsModel';
+
+	import {
 		projectToggleFollowing,
 	} from '../../actions/projectActions';
-import ChannelsBar from './ChannelsBar.svelte';
+
+    import ChannelsBar from './ChannelsBar.svelte';
 
     export let project;
 
@@ -42,6 +52,19 @@ import ChannelsBar from './ChannelsBar.svelte';
     $: isArchived = (isTeamMember && $project && $project.archived) || false;
     $: viewAllChannels = following || isTeamMember;
     $: channelsLoading = $loadingChannels && !$channels;
+
+    //$: curChannelId = 
+    //$: curChannel
+    
+	$: sortByCreated = false; // ($curChannel && $curChannel.sortByCreated) || false;
+
+    const MAX_DISPLAY_POSTS = 3;
+
+    let posts = writable([]);
+	$: { posts = getPosts( { projectId: $projectId, type: 'thread', sortByCreated, limit: MAX_DISPLAY_POSTS} ) }; //channelId: $channelId,
+
+	$: canPost = isTeamMember && !isArchived;
+	// $: canPost = $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
     
     let hasActiveChannels = true; // false;
     let hasInactiveChannels = false;
@@ -67,11 +90,23 @@ import ChannelsBar from './ChannelsBar.svelte';
 
     let areMoreItems = false;
 
-	function followProject() {
-        if ($project) {
-            projectToggleFollowing($project.id);
-        }
-	}
+    async function newPost(event) {
+        stopEvent(event);
+        if (!checkLoggedIn()) { return; }
+        
+        // showAddPost = true;
+
+        // if (newPostMessageField) {
+        // 	await tick();
+        // 	newPostMessageField.focus();
+        // }
+    }
+
+	// function followProject() {
+    //     if ($project) {
+    //         projectToggleFollowing($project.id);
+    //     }
+	// }
 
     // let proxyChannelsImage;
 
@@ -114,7 +149,22 @@ import ChannelsBar from './ChannelsBar.svelte';
             {:else}
                 <ChannelsBar filterString="all" />
 
-                {#if $channels && $channels.length && (hasActiveChannels || viewAllChannels)}
+				<div class="postsContainer">
+					{#each $posts as post}
+						<PostItem {post} />
+					{:else}
+
+						{#if $loadingPosts && (!$posts || !$posts.length) }
+							<ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
+						{:else}
+							<ContentLoader>{locale.CHANNEL.NO_POSTS}
+								{#if canPost}<br/>be the first to <a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">Add a Post</a>{/if}
+							</ContentLoader>
+						{/if}
+					{/each}
+				</div>
+                
+                <!-- {#if $channels && $channels.length && (hasActiveChannels || viewAllChannels)}
                     <div class="channelListContainer">
                         {#each $channels as channel}
                             {#if isTeamMember || get(channel).postCount || getIsBaseDisplayChannel(get(channel)) || (following && !getIsTeamManagedChannel(get(channel)))}
@@ -122,12 +172,10 @@ import ChannelsBar from './ChannelsBar.svelte';
                             {/if}
                         {/each}
                     </div>
-                <!-- {:else}
-                    <ContentLoader label="This project has no channels" /> -->
                 {/if}
                 {#if (hasInactiveChannels && !following && !isTeamMember) && !isArchived}
                     <div class="channelsFollowCta"><a href="{location.href}" on:click="{followProject}">{@html locale.PROJECT.CHANNELS_FOLLOW_LINK}</a>{@html hasActiveChannels ? locale.PROJECT.CHANNELS_FOLLOW_ALL : locale.PROJECT.CHANNELS_FOLLOW}</div>
-                {/if}
+                {/if} -->
             {/if}
         </ContentPanel>
     </div>
@@ -148,13 +196,6 @@ import ChannelsBar from './ChannelsBar.svelte';
         font-size: 1.2rem;
 	}
 
-    .channelListContainer {
-        border-bottom: 1px solid #eeeeee;
-    }
-    .channelListContainer :global(.channelListItem) {
-        border-top: 1px solid #eeeeee;
-    }
-
     .channelList :global(.contentPanel) {
         /* background-color: rgba(255, 255, 255, 0.25); */
         padding: 20px 0;
@@ -170,6 +211,13 @@ import ChannelsBar from './ChannelsBar.svelte';
         font-size: 1.3rem;
     }
 
+    /* .channelListContainer {
+        border-bottom: 1px solid #eeeeee;
+    }
+    .channelListContainer :global(.channelListItem) {
+        border-top: 1px solid #eeeeee;
+    }
+
     .channelsFollowCta {
         padding-top: 0px;
         padding-left: 20px;
@@ -180,7 +228,7 @@ import ChannelsBar from './ChannelsBar.svelte';
     }
     .channelsActive .channelsFollowCta {
         padding-top: 10px;
-    }
+    } */
 
     .getStartedOwner {
         /* right: 41px; */
@@ -219,4 +267,28 @@ import ChannelsBar from './ChannelsBar.svelte';
         top: 0;
         bottom: 5px;
     }
+
+	.postsContainer {
+    	/* padding-top: 5px; */
+		border-top: 2px solid #EEEEEE;
+
+        /* background-color: #DDDDDD; */
+	}
+
+    .postsContainer :global(.contentLoader) {
+        background-color: #f2f2f2;
+        font-size: 1.3rem;
+        line-height: 2.2rem;
+    }
+
+    .postsContainer :global(.contentLoader) {
+        background-color: #f2f2f2;
+        font-size: 1.3rem;
+        line-height: 2.2rem;
+    }
+    .postsContainer :global(.postItem) {
+    	margin-bottom: 0;
+		border-bottom: 2px solid #EEEEEE;
+	}
+
 </style>

@@ -147,7 +147,7 @@
             {#if channelsLoading}
                 <ContentLoader label="{locale.LOADING.CHANNELS}" />
             {:else}
-                <ChannelsBar filterString="all" />
+                <ChannelsBar filterString="" />
 
 				<div class="postsContainer">
 					{#each $posts as post}

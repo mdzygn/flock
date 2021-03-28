@@ -22,7 +22,7 @@
 	import ProjectCollaboratePanel from '../../_components/ProjectCollaboratePanel.svelte';
 	import ProjectSkillsList from '../../_components/ProjectSkillsList.svelte';
 	import ProjectLinks from '../../_components/ProjectLinks.svelte';
-	import ChannelList from '../../_components/ChannelList.svelte';
+	import DiscussionFeed from '../../_components/DiscussionFeed.svelte';
 	import ContentLoader from '../../_components/ContentLoader.svelte';
 	import ProjectPostItem from '../../_components/ProjectPostItem.svelte';
 
@@ -380,7 +380,7 @@
 						<ProjectLinks project="{$project}" />
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
-					<ChannelList project="{project}" />
+					<DiscussionFeed project="{project}" />
 					<!-- {#if $showBetaFeatures} -->
 					<div class="posts" id="projectPosts">
 						{#if canEdit && !showAddProjectPost}
@@ -400,7 +400,7 @@
 						<AddPost className="addProjectPost projectHeaderPostPanel" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
-					<ChannelList project="{project}" />
+					<DiscussionFeed project="{project}" />
 					<!-- {#if $showBetaFeatures} -->
 						<!-- {#if canEdit}
 							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
@@ -441,7 +441,7 @@
 						<ProjectLinks project="{$project}" />
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
-					<ChannelList project="{project}" />
+					<DiscussionFeed project="{project}" />
 					<div class="posts" id="projectPosts">
 						{#if canEdit && !showAddProjectPost}
 							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />

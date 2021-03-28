@@ -11,6 +11,8 @@
     export let showMoreAction = null;
     export let editAction = null;
 
+    export let titleOnClick = null;
+
     export let hideShowMoreWithVisibility = false;
     export let forceShowMoreShow = false;
     export let showMoreLabel = null;
@@ -20,7 +22,11 @@
 
 <div class="contentPanel">
     {#if title}
-        <div class="panelTitle">{title}</div>
+        {#if titleOnClick}
+            <Button className="panelTitle" onClick="{titleOnClick}">{title}</Button>
+        {:else}
+            <div class="panelTitle">{title}</div>
+        {/if}
     {/if}
     {#if showEdit}
         <Button className="editButton" icon="{EditIcon}" disabled="{!editAction}" onClick="{editAction}" />
@@ -47,11 +53,9 @@
         visibility: hidden;
     }
 
-    .panelContent {
-
-    }
-
-	.panelTitle {
+    .contentPanel :global(.panelTitle) {
+        display: block;
+        
         font-size: 1.5rem;
         font-weight: 700;
         color: #444444;

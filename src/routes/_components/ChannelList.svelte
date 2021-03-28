@@ -13,6 +13,7 @@
 		getIsProjectTeamMember,
         showBetaFeatures,
         user,
+        projectId,
     } from '../../models/appModel';
 
 	import {
@@ -28,6 +29,8 @@
 
     export let project;
 
+    export let displayInline = false;
+
     let channels = writable(null);
     $: { channels = $project && getChannels( { projectId: $project.id } ) };
 
@@ -38,7 +41,7 @@
     $: isArchived = (isTeamMember && $project && $project.archived) || false;
     $: viewAllChannels = following || isTeamMember;
     $: channelsLoading = $loadingChannels && !$channels;
-
+    
     let hasActiveChannels = true; // false;
     let hasInactiveChannels = false;
 
@@ -90,10 +93,10 @@
 
 <!-- {#if $channels && $channels.length} -->
     <!-- && (hasActiveChannels || isTeamMember || following) -->
-    <div class="channelList" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}">
+    <div class="channelList" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}" class:displayInline>
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
-        <ContentPanel title="{locale.PROJECT.CHANNELS_TITLE}" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
-            {#if !isArchived}
+        <ContentPanel title="{locale.PROJECT.CHANNELS_TITLE}" titleOnClick="{!displayInline ? 'projects/'+$projectId+'/channels' : null}" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
+            {#if !isArchived && !displayInline}
                 {#if (!hasActiveChannels || isNew) && viewAllChannels}
                     {#if isTeamMember}
                         <div class="getTheConversationStarted getStartedOwner" class:getStartedOwnerOffset="{canEdit && $showBetaFeatures}">{locale.PROJECT.GET_STARTED}</div>

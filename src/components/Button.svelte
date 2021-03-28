@@ -15,6 +15,17 @@
 
     export let element = null;
 
+    $: {
+        onClick;
+        checkHref();
+    }
+
+    function checkHref() {
+        if (typeof onClick === "string") {
+            href = onClick;
+        }
+    }
+
     // let hasSlots = $$props.$$slots;
 </script>
 

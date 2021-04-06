@@ -137,6 +137,17 @@ export function getChannels(options) {
 	return filteredChannels;
 }
 
+export function getDefaultChannel(options) {
+	// TODO: get for specific project
+
+	const curChannels = get(channels);
+	if (curChannels) {
+		return get(channels).find(item => get(item).title === 'General'); // TODO: store default channel in a different way
+	} else {
+		return null;
+	}
+}
+
 function channelsUpdated() {
 	filterCurrentChannels();
 }

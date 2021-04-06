@@ -1,6 +1,8 @@
 <script>
     import locale from '../../locale';
 
+	import { tick } from 'svelte';
+
     import { get, writable } from 'svelte/store';
     
 	import { stopEvent } from '../../utils';
@@ -14,6 +16,7 @@
 	import PostItem from './PostItem.svelte';
     
 	import AddPost from '../posts/_components/AddPost.svelte';
+	import EditPost from '../posts/_components/EditPost.svelte';
 
 	import {
 		getIsProjectTeamMember,
@@ -28,6 +31,7 @@
 
 	import {
 		getChannels,
+        getDefaultChannel,
         getIsTeamManagedChannel,
         loadingChannels,
         getIsBaseDisplayChannel,
@@ -65,6 +69,9 @@
     let currentChannelTitle = null;
     $: currentChannelTargetTitle = currentChannelTitle || 'General';
 
+    $: defaultChannel = $channels && getDefaultChannel();
+    $: targetChannelId = currentChannelId || ($defaultChannel && $defaultChannel.id);
+
     const MAX_DISPLAY_POSTS = 3;
 
     let posts = writable([]);
@@ -97,6 +104,8 @@
 
     let areMoreItems = false;
 
+    let canPostInChannel = true; // TODO: base on current channel postable
+
 	let showAddPost = false;
 	let newPostMessageField = null;
 
@@ -113,6 +122,10 @@
         	newPostMessageField.focus();
         }
     }
+
+	function hideAddPostPanel() {
+		showAddPost = false;
+	}
 
 	// function followProject() {
     //     if ($project) {
@@ -178,16 +191,23 @@
                         {/each} -->
                     </div>
                 {:else}
-                    {#if $loadingPosts && (!$posts || !$posts.length) }
-                        <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
-                    {:else}
-                        <ContentLoader>{locale.CHANNEL.NO_POSTS}
-                            {#if canPost}<br/>be the first to <a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">Add a Post</a>{/if}
-                        </ContentLoader>
+                    {#if !showAddPost}
+                        {#if $loadingPosts && (!$posts || !$posts.length) }
+                            <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
+                        {:else}
+                            <ContentLoader>{locale.CHANNEL.NO_POSTS}
+                                {#if canPost}<br/>be the first to <a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">Add a Post</a>{/if}
+                            </ContentLoader>
+                        {/if}
                     {/if}
                 {/if}
 
-                <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
+                {#if canPostInChannel}
+                    {#if !showAddPost}
+                        <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
+                    {/if}
+                    <EditPost targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" />
+                {/if}
             {/if}
         </ContentPanel>
     </div>
@@ -307,4 +327,25 @@
     	margin-bottom: -20px;
 	}
 
+	.discussionFeed :global(.editPostContent.inlineComponent) {
+        position: initial;
+        box-shadow: initial;
+	}
+
+.discussionFeed :global(.editPostContent.inlineComponent .panelContent) {
+    padding-top: 5px;
+}
+
+.discussionFeed :global(.editPostContent.inlineComponent .pageTitle) {
+    /* font-size: 1.3rem; */
+    padding-bottom: 5px;
+}
+
+.discussionFeed :global(.editPostContent.inlineComponent .collapsePanel) {
+    top: -5px;
+} 
+
+.discussionFeed :global(.editPostContent.inlineComponent .addImage) {
+    right: 76px;
+}
 </style>

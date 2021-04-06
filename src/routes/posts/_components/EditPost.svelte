@@ -68,6 +68,10 @@
 	export let shown = true;
 
 	export let smallNextButton = false;
+	
+    export let className = '';
+
+    export let targetChannelId = null;
 
 	let title = '';
 	export let message = '';
@@ -92,6 +96,8 @@
 	let editPost = false;
 	let editPostInitialized = false;
 
+	$: curChannelId = targetChannelId || ($channel && $channel.id); // $channelId;
+
 	function updateEditPostState() {
 		if (!editPostInitialized) {
 			editPostInitialized = true;
@@ -107,7 +113,7 @@
 
 	$: curPostType = (editPost && $post) ? $post.type : $postType;
 
-	$: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : (curPostType === 'projectPost') ? $projectId : $postId)) || null;
+	$: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? curChannelId : (curPostType === 'projectPost') ? $projectId : $postId)) || null;
 	// $: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : $postId)) || null;
 
 	$: showTitleField = trim(title); // (curPostType === 'thread'); // 
@@ -260,12 +266,12 @@
 			switch ($postType) {
 				case 'thread':
 					postDetails.title = trim(title);
-					postDetails.channelId = $channel && $channel.id;
+					postDetails.channelId = curChannelId; // $channel && $channel.id;
 					postDetails.projectId = ($channel && $channel.projectId) || $projectId;
 					break;
 				case 'threadPost':
 					postDetails.threadId = $postId;
-					postDetails.channelId = $channel && $channel.id;
+					postDetails.channelId = curChannelId; // $channel && $channel.id;
 					postDetails.projectId = ($channel && $channel.projectId) || $projectId;
 					break;
 				case 'projectPost':
@@ -391,7 +397,7 @@
 </script>
 
 {#if !editPost || $post }
-    <div class="editPostContent" bind:this="{element}" class:isProjectPost="{isProjectPost}" class:hidden="{!shown}" class:inlineComponent="{inlineComponent}" class:useLibrary="{useLibrary}">
+    <div class="editPostContent {className}" bind:this="{element}" class:isProjectPost="{isProjectPost}" class:hidden="{!shown}" class:inlineComponent="{inlineComponent}" class:useLibrary="{useLibrary}">
         <!-- <Proxy image="create_project" className="proxyOverlay" /> -->
         <div class="panelContent" class:showImage="{imageShown}">
 			{#if inlineComponent}

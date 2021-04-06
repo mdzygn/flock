@@ -507,7 +507,7 @@
 		</ScrollView>
 	{/if}
 
-	<EditPost shown="{showAddProjectPost}" bind:message="{newProjectPostMessage}" bind:messageField="{newProjectPostMessageField}" inlineComponent="{true}" smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_ACTION}" bind:element="{projectPostRegion}" on:hide="{hideAddProjectPostPanel}" on:resize="{onProjectPostPanelResized}" />
+	<EditPost className="editProjectPost" shown="{showAddProjectPost}" bind:message="{newProjectPostMessage}" bind:messageField="{newProjectPostMessageField}" inlineComponent="{true}" smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_ACTION}" bind:element="{projectPostRegion}" on:hide="{hideAddProjectPostPanel}" on:resize="{onProjectPostPanelResized}" />
 </div>
 
 <style>
@@ -1018,10 +1018,10 @@
     	margin-top: -3px;
 	}
 	
-	.pageContent :global(.editPostContent.inlineComponent .addImage) {
+	.pageContent :global(.editPostContent.editProjectPost.inlineComponent .addImage) {
 		right: 117px;
 	}
-	.pageContent :global(.editPostContent.inlineComponent .removeImage) {
+	.pageContent :global(.editPostContent.editProjectPost.inlineComponent .removeImage) {
 		right: initial;
 	}
 	.pageContent :global(.addPostPanel.addProjectPost .newMessageArea) {
@@ -1029,12 +1029,12 @@
 	}
 
 	
-	.pageContent :global(.editPostContent.inlineComponent .pageTitle) {
+	.pageContent :global(.editPostContent.editProjectPost.inlineComponent .pageTitle) {
 		padding-bottom: 7px;
 		font-size: 1.5rem;
 		padding-top: 1px;
 	}
-	.pageContent :global(.editPostContent.inlineComponent .collapsePanel) {
+	.pageContent :global(.editPostContent.editProjectPost.inlineComponent .collapsePanel) {
 		top: 2px;
 		right: 2px;
 		height: 40px;

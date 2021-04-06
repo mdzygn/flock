@@ -4,22 +4,42 @@
 
     import { onMount, tick } from 'svelte';
 
-    export let filterString = '';
+    import { get, writable } from 'svelte/store';
 
-    let itemSet = ['announcements', 'general', 'workshop', 'questions', 'ideas', 'inspiration', 'random'];
+	import {
+		getChannels,
+    } from '../../models/channelsModel';
 
-    $: items = ['all', ...itemSet];
+    export let project;
 
-    function selectFilter(filterValue) {
-        if (filterValue === 'all') {
-            filterString = '';
-        } else {
-            filterString = filterValue;
-        }
+    // export let filterString = '';
+
+    export let currentChannelId = null;
+
+    let channels = writable(null);
+    $: { channels = $project && getChannels( { projectId: $project.id } ) };
+
+    // let itemSet = ['announcements', 'general', 'workshop', 'questions', 'ideas', 'inspiration', 'random'];
+
+    $: itemSet = $channels && $channels.map(item => {
+        const itemModel = get(item);
+        return {label: '# ' + itemModel.title, value: itemModel.id};
+    });
+
+    $: items = [{label: 'All', value: null}, ...itemSet];
+    // $: items = ['all', ...itemSet];
+
+    function selectFilter(item) {
+        currentChannelId = item.value;
+        // if (item === 'all') {
+        //     filterString = '';
+        // } else {
+        //     filterString = item;
+        // }
     }
 
     $: {
-        filterString;
+        currentChannelId; // filterString;
         if (mounted) {
             (async () => {
                 await tick();
@@ -66,8 +86,9 @@
 <div class="filterBar">
     <div class="filterScrollRegion" bind:this="{scrollRegion}">
         <div class="filterSet">
-            {#each items as item, index}
-                <Button className="filterButton {(index ? filterString.match(new RegExp('\\b' + item + '\\b')) : filterString === '') ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item}</Button>
+            {#each items as item}
+                <Button className="filterButton {item.value === currentChannelId ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item.label}</Button>
+                <!-- <Button className="filterButton {(index ? filterString.match(new RegExp('\\b' + item + '\\b')) : filterString === '') ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item}</Button> -->
             {/each}
         </div>
     </div>

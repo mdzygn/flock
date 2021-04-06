@@ -58,10 +58,12 @@
     
 	$: sortByCreated = false; // ($curChannel && $curChannel.sortByCreated) || false;
 
+    let currentChannelId = null;
+
     const MAX_DISPLAY_POSTS = 3;
 
     let posts = writable([]);
-	$: { posts = getPosts( { projectId: $projectId, type: 'thread', sortByCreated, limit: MAX_DISPLAY_POSTS} ) }; //channelId: $channelId,
+	$: { posts = getPosts( { projectId: $projectId, type: 'thread', channelId: currentChannelId, sortByCreated, limit: MAX_DISPLAY_POSTS} ) }; //channelId: $channelId,
 
 	$: canPost = isTeamMember && !isArchived;
 	// $: canPost = $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
@@ -147,22 +149,33 @@
             {#if channelsLoading}
                 <ContentLoader label="{locale.LOADING.CHANNELS}" />
             {:else}
-                <ChannelsBar filterString="" />
+                <ChannelsBar {project} bind:currentChannelId="{currentChannelId}" />
 
-				<div class="postsContainer">
-					{#each $posts as post}
-						<PostItem {post} />
-					{:else}
+                {#if $posts && $posts.length}
+                    <div class="postsContainer">
+                        {#each $posts as post}
+                            <PostItem {post} />
+                        {/each}
+                        <!-- {:else}
 
-						{#if $loadingPosts && (!$posts || !$posts.length) }
-							<ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
-						{:else}
-							<ContentLoader>{locale.CHANNEL.NO_POSTS}
-								{#if canPost}<br/>be the first to <a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">Add a Post</a>{/if}
-							</ContentLoader>
-						{/if}
-					{/each}
-				</div>
+                            {#if $loadingPosts && (!$posts || !$posts.length) }
+                                <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
+                            {:else}
+                                <ContentLoader>{locale.CHANNEL.NO_POSTS}
+                                    {#if canPost}<br/>be the first to <a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">Add a Post</a>{/if}
+                                </ContentLoader>
+                            {/if}
+                        {/each} -->
+                    </div>
+                {:else}
+                    {#if $loadingPosts && (!$posts || !$posts.length) }
+                        <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
+                    {:else}
+                        <ContentLoader>{locale.CHANNEL.NO_POSTS}
+                            {#if canPost}<br/>be the first to <a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">Add a Post</a>{/if}
+                        </ContentLoader>
+                    {/if}
+                {/if}
                 
                 <!-- {#if $channels && $channels.length && (hasActiveChannels || viewAllChannels)}
                     <div class="channelListContainer">

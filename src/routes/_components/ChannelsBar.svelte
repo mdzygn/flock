@@ -15,6 +15,7 @@
     // export let filterString = '';
 
     export let currentChannelId = null;
+    export let currentChannelTitle = null;
 
     let channels = writable(null);
     $: { channels = $project && getChannels( { projectId: $project.id } ) };
@@ -23,14 +24,16 @@
 
     $: itemSet = $channels && $channels.map(item => {
         const itemModel = get(item);
-        return {label: '# ' + itemModel.title, value: itemModel.id};
+        return {label: '#' + itemModel.title, title: itemModel.title, value: itemModel.id};
     });
 
-    $: items = [{label: 'All', value: null}, ...itemSet];
+    $: items = [{label: 'All', title: null, value: null}, ...itemSet];
     // $: items = ['all', ...itemSet];
 
     function selectFilter(item) {
         currentChannelId = item.value;
+        currentChannelTitle = item.title;
+
         // if (item === 'all') {
         //     filterString = '';
         // } else {

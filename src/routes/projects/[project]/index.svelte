@@ -1024,7 +1024,7 @@
 	.pageContent :global(.editPostContent.inlineComponent .removeImage) {
 		right: initial;
 	}
-	.pageContent :global(.addPostPanel .newMessageArea) {
+	.pageContent :global(.addPostPanel.addProjectPost .newMessageArea) {
 		padding-right: 120px;
 	}
 

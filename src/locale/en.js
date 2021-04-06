@@ -181,6 +181,9 @@ const locale = {
 		POST_UPDATE_PLACEHOLDER: 'Post project update...',
 		DEFAULT_STATUS: 'In Development',
 		POST_ACTION: 'Post Update',
+		POST_DISCUSSION_PLACEHOLDER: 'Post in #',
+		POST_DISCUSSION_PLACEHOLDER_AFFIX: '...',
+		POST_DISCUSSION_ACTION: 'Post',
 	},
 	PROFILE: {
 		NOT_FOUND: 'profile not found',

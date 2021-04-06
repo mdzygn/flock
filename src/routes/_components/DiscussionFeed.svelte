@@ -12,6 +12,8 @@
 	import ContentLoader from './ContentLoader.svelte';
 
 	import PostItem from './PostItem.svelte';
+    
+	import AddPost from '../posts/_components/AddPost.svelte';
 
 	import {
 		getIsProjectTeamMember,
@@ -19,6 +21,10 @@
         user,
         projectId,
     } from '../../models/appModel';
+
+    import {
+		checkLoggedIn,
+	} from '../../actions/appActions';
 
 	import {
 		getChannels,
@@ -53,12 +59,11 @@
     $: viewAllChannels = following || isTeamMember;
     $: channelsLoading = $loadingChannels && !$channels;
 
-    //$: curChannelId = 
-    //$: curChannel
-    
 	$: sortByCreated = false; // ($curChannel && $curChannel.sortByCreated) || false;
 
     let currentChannelId = null;
+    let currentChannelTitle = null;
+    $: currentChannelTargetTitle = currentChannelTitle || 'General';
 
     const MAX_DISPLAY_POSTS = 3;
 
@@ -92,16 +97,21 @@
 
     let areMoreItems = false;
 
+	let showAddPost = false;
+	let newPostMessageField = null;
+
+	let newPostMessage = '';
+
     async function newPost(event) {
         stopEvent(event);
         if (!checkLoggedIn()) { return; }
         
-        // showAddPost = true;
+        showAddPost = true;
 
-        // if (newPostMessageField) {
-        // 	await tick();
-        // 	newPostMessageField.focus();
-        // }
+        if (newPostMessageField) {
+        	await tick();
+        	newPostMessageField.focus();
+        }
     }
 
 	// function followProject() {
@@ -131,7 +141,7 @@
 
 <!-- {#if $channels && $channels.length} -->
     <!-- && (hasActiveChannels || isTeamMember || following) -->
-    <div class="channelList" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}" class:displayInline>
+    <div class="discussionFeed" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}" class:displayInline>
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
         <ContentPanel title="{locale.PROJECT.CHANNELS_TITLE}" titleOnClick="{!displayInline ? 'projects/'+$projectId+'/channels' : null}" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
             {#if !isArchived && !displayInline}
@@ -149,7 +159,7 @@
             {#if channelsLoading}
                 <ContentLoader label="{locale.LOADING.CHANNELS}" />
             {:else}
-                <ChannelsBar {project} bind:currentChannelId="{currentChannelId}" />
+                <ChannelsBar {project} bind:currentChannelId="{currentChannelId}" bind:currentChannelTitle="{currentChannelTitle}" />
 
                 {#if $posts && $posts.length}
                     <div class="postsContainer">
@@ -176,40 +186,29 @@
                         </ContentLoader>
                     {/if}
                 {/if}
-                
-                <!-- {#if $channels && $channels.length && (hasActiveChannels || viewAllChannels)}
-                    <div class="channelListContainer">
-                        {#each $channels as channel}
-                            {#if isTeamMember || get(channel).postCount || getIsBaseDisplayChannel(get(channel)) || (following && !getIsTeamManagedChannel(get(channel)))}
-                                <ChannelListItem channel="{channel}" />
-                            {/if}
-                        {/each}
-                    </div>
-                {/if}
-                {#if (hasInactiveChannels && !following && !isTeamMember) && !isArchived}
-                    <div class="channelsFollowCta"><a href="{location.href}" on:click="{followProject}">{@html locale.PROJECT.CHANNELS_FOLLOW_LINK}</a>{@html hasActiveChannels ? locale.PROJECT.CHANNELS_FOLLOW_ALL : locale.PROJECT.CHANNELS_FOLLOW}</div>
-                {/if} -->
+
+                <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
             {/if}
         </ContentPanel>
     </div>
 <!-- {/if} -->
 
 <style>
-	/* .channelList :global(.proxyOverlay) {
+	/* .discussionFeed :global(.proxyOverlay) {
 		position: absolute;
 		opacity: 0.5;
 	} */
 
-	.channelList :global(.panelContent) {
+	.discussionFeed :global(.panelContent) {
 		position: relative;
 	}
 
-	.channelList :global(.contentLoader) {
+	.discussionFeed :global(.contentLoader) {
         padding: 0 20px;
         font-size: 1.2rem;
 	}
 
-    .channelList :global(.contentPanel) {
+    .discussionFeed :global(.contentPanel) {
         /* background-color: rgba(255, 255, 255, 0.25); */
         padding: 20px 0;
     }
@@ -224,10 +223,10 @@
         font-size: 1.3rem;
     }
 
-    /* .channelListContainer {
+    /* .discussionFeedContainer {
         border-bottom: 1px solid #eeeeee;
     }
-    .channelListContainer :global(.channelListItem) {
+    .discussionFeedContainer :global(.discussionFeedItem) {
         border-top: 1px solid #eeeeee;
     }
 
@@ -253,12 +252,12 @@
         right: 56px;
     }
 
-	.channelList :global(.contentPanel .panelTitle) {
+	.discussionFeed :global(.contentPanel .panelTitle) {
         padding-left: 20px;
         padding-bottom: 10px;
         margin-top: -5px;
 	}
-	.channelList.channelsActive :global(.contentPanel .panelTitle) {
+	.discussionFeed.channelsActive :global(.contentPanel .panelTitle) {
         padding-left: 20px;
         padding-bottom: 10px;
 
@@ -267,16 +266,16 @@
 
         margin-top: -4px;
 	}
-	.channelList :global(.contentPanel .showMoreButton ) {
+	.discussionFeed :global(.contentPanel .showMoreButton ) {
         padding-left: 30px;
         margin-top: 5px;
 	}
 
-    /* .channelList :global(.showMoreButton) {
+    /* .discussionFeed :global(.showMoreButton) {
         padding-top: 16px;
     } */
 
-    .channelList :global(.editButton) {
+    .discussionFeed :global(.editButton) {
         top: 0;
         bottom: 5px;
     }
@@ -302,6 +301,10 @@
     .postsContainer :global(.postItem) {
     	margin-bottom: 0;
 		border-bottom: 2px solid #EEEEEE;
+	}
+
+    .discussionFeed :global(.addPostPanel) {
+    	margin-bottom: -20px;
 	}
 
 </style>

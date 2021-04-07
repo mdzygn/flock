@@ -5,7 +5,11 @@
 	import { writable } from 'svelte/store';
 
 	import { menuIds } from '../../../config/menus';
-	import { getDisplayText, stopEvent } from '../../../utils';
+	import {
+		getDisplayText,
+		stopEvent, 
+		gotoAnchor,
+	} from '../../../utils';
 
     import PostTypes from '../../../config/PostTypes';
 
@@ -147,6 +151,7 @@
 			showAddDiscussionPost = false;
 		}
 		showAddProjectPost = true;
+		gotoAnchor('projectPosts');
 
 		if (newProjectPostMessageField) {
 			await tick();

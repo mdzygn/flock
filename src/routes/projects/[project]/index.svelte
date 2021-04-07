@@ -139,6 +139,9 @@
 
 		newProjectPost();
 		
+		if (showAddDiscussionPost) {
+			showAddDiscussionPost = false;
+		}
 		showAddProjectPost = true;
 
 		if (newProjectPostMessageField) {
@@ -196,10 +199,17 @@
 	let forceProjectShowingInfo = false;
 	let projectStateLoaded = false;
 
+	let showAddDiscussionPost = false;
+
 	let showAddProjectPost = false;
 	let newProjectPostMessageField = null;
 
 	let newProjectPostMessage = '';
+
+	$: {
+		showAddDiscussionPost;
+		onShowAddDiscussionPostChanged();
+	}
 
 	$: {
 		showAddProjectPost;
@@ -216,6 +226,12 @@
 			projectPostPanelHeight = (projectPostRegion && projectPostRegion.offsetHeight) || 0;
 		} else {
 			projectPostPanelHeight = 0;
+		}
+	}
+	
+	function onShowAddDiscussionPostChanged() {
+		if (showAddDiscussionPost) {
+			hideAddProjectPostPanel();
 		}
 	}
 
@@ -380,7 +396,7 @@
 						<ProjectLinks project="{$project}" />
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
-					<DiscussionFeed project="{project}" />
+					<DiscussionFeed project="{project}" bind:showAddPost="{showAddDiscussionPost}" />
 					<!-- {#if $showBetaFeatures} -->
 					<div class="posts" id="projectPosts">
 						{#if canEdit && !showAddProjectPost}
@@ -400,7 +416,7 @@
 						<AddPost className="addProjectPost projectHeaderPostPanel" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
-					<DiscussionFeed project="{project}" />
+					<DiscussionFeed project="{project}" bind:showAddPost="{showAddDiscussionPost}" />
 					<!-- {#if $showBetaFeatures} -->
 						<!-- {#if canEdit}
 							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
@@ -441,7 +457,7 @@
 						<ProjectLinks project="{$project}" />
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
-					<DiscussionFeed project="{project}" />
+					<DiscussionFeed project="{project}" bind:showAddPost="{showAddDiscussionPost}" />
 					<div class="posts" id="projectPosts">
 						{#if canEdit && !showAddProjectPost}
 							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />

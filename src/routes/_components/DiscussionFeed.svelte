@@ -106,7 +106,7 @@
 
     let canPostInChannel = true; // TODO: base on current channel postable
 
-	let showAddPost = false;
+	export let showAddPost = false;
 	let newPostMessageField = null;
 
 	let newPostMessage = '';

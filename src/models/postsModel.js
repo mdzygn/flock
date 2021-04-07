@@ -4,6 +4,8 @@ import config from '../config';
 
 import { writable, get } from 'svelte/store';
 
+import EventEmitter from 'eventemitter3';
+
 import { generateId, secondsDiff } from '../utils';
 
 import loadingRequestUtil from '../utils/loadingRequestUtil';
@@ -23,6 +25,8 @@ import AppModel, {
 import PostModel from '../models/postModel';
 
 import promptIds from '../config/promptIds';
+
+const PostsModel = new EventEmitter();
 
 export let loadingPosts = writable(false);
 
@@ -66,6 +70,8 @@ posts.subscribe(() => {
 	postsUpdatedHandlers.forEach(handler => {
 		handler();
 	});
+
+    PostsModel.emit('postsUpdated');
 
 	// tempProjectsUpdatedHandlers.forEach(handler => {
 	// 	handler();
@@ -120,8 +126,12 @@ function mergePosts(newPosts) {
 }
 
 export function getPosts(options) {
+	let curFilteredPosts = filteredPosts;
+
+	// console.log('getPosts', options);
+	
 	if (options.threadId || options.channelId || options.projectId) {
-		if (curPostFilterOptions && options && (
+		if (!options.createNewSet && curPostFilterOptions && options && (
 			curPostFilterOptions.type !== options.type ||
 			curPostFilterOptions.channelId !== options.channelId ||
 			curPostFilterOptions.threadId !== options.threadId ||
@@ -130,16 +140,23 @@ export function getPosts(options) {
 			clearFilteredPosts();
 		}
 
-		curPostFilterOptions = JSON.parse(JSON.stringify(options));
+		const newPostFilterOptions = JSON.parse(JSON.stringify(options));
 
-		filterCurrentPosts();
+		if (options.createNewSet) {
+			curFilteredPosts = filterCurrentPosts(newPostFilterOptions, options.createNewSet);
+		} else {
+			curPostFilterOptions = newPostFilterOptions;
+			filterCurrentPosts();
+		}
 
-		loadPosts(curPostFilterOptions);
+		if (!options.dontReloadPosts) {
+			loadPosts(newPostFilterOptions);
+		}
 
 		// console.log(get(filteredPosts));
 	}
 
-	return filteredPosts;
+	return curFilteredPosts;
 }
 
 function postsUpdated() {
@@ -152,12 +169,15 @@ function clearFilteredPosts() {
 	filteredPosts.set(curFilteredPosts);
 }
 
-function filterCurrentPosts() {
-	const channelId = curPostFilterOptions && curPostFilterOptions.channelId;
-	const threadId = curPostFilterOptions && curPostFilterOptions.threadId;
-	const projectId = curPostFilterOptions && curPostFilterOptions.projectId;
-	const type = curPostFilterOptions && curPostFilterOptions.type;
-	const sortByCreated = (curPostFilterOptions && curPostFilterOptions.sortByCreated) || false;
+function filterCurrentPosts(postFilterOptions, createNewSet) {
+	if (!postFilterOptions) {
+		postFilterOptions = curPostFilterOptions;
+	}
+	const channelId = postFilterOptions && postFilterOptions.channelId;
+	const threadId = postFilterOptions && postFilterOptions.threadId;
+	const projectId = postFilterOptions && postFilterOptions.projectId;
+	const type = postFilterOptions && postFilterOptions.type;
+	const sortByCreated = (postFilterOptions && postFilterOptions.sortByCreated) || false;
 
 	let newFilteredPosts = get(posts);
 	if (channelId || projectId || type) {
@@ -180,10 +200,21 @@ function filterCurrentPosts() {
 			newFilteredPosts.sort((a,b) => get(a).createdAt - get(b).createdAt ); // sort by reversed created time
 			break;
 	}
-	if (curPostFilterOptions && curPostFilterOptions.limit) {
-		newFilteredPosts = newFilteredPosts.splice(0, curPostFilterOptions.limit);
+	if (postFilterOptions && postFilterOptions.limit) {
+		newFilteredPosts = newFilteredPosts.splice(0, postFilterOptions.limit);
 	}
-	filteredPosts.set(newFilteredPosts);
+
+	// console.log('**** filterCurrentPosts');
+	// newFilteredPosts = newFilteredPosts.forEach(postModel => {
+	// 	const post = get(postModel);
+	// 	console.log(post.type + ', ' + post.channelId + ', ' + post.message);
+	// });
+
+	if (createNewSet) {
+		return writable(newFilteredPosts);
+	} else {
+		filteredPosts.set(newFilteredPosts);
+	}
 }
 
 export function getPost(postId) {
@@ -408,3 +439,5 @@ export function getNewPostId() {
 	if (trialIndex === 99) { return null; }
 	return postId;
 }
+
+export default PostsModel;

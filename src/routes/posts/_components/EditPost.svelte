@@ -115,8 +115,6 @@
 
 	$: curPostType = targetPostType || ((editPost && $post) ? $post.type : $postType);
 
-	$: console.log('curPostType', curPostType);
-
 	$: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? curChannelId : (curPostType === 'projectPost') ? $projectId : $postId)) || null;
 	// $: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : $postId)) || null;
 

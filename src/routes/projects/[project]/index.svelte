@@ -72,7 +72,7 @@
 		loadingProjects,
 	} from '../../../models/projectsModel';
 
-	import {
+	import PostsModel, {
 		getPosts,
 	} from '../../../models/postsModel'
 
@@ -104,6 +104,8 @@
 	import NewPostButton from '../../_components/NewPostButton.svelte';
 
 	//$: userLoading = (!($user && $user.loaded) && $userId);
+
+	PostsModel.on('postsUpdated', onPostsUpdated);
 
 	const DISPLAY_BOTTOM_LINK_POST_COUNT = 4;
 
@@ -194,9 +196,11 @@
 	$: projectHasDetails = getProjectHasDetails($project);
 	$: showInfo = ($projectShowingInfo || forceProjectShowingInfo) && projectHasDetails;
 	
-	let projectPosts = writable([1, 2]);
-	$: { projectPosts = getPosts( { projectId: $projectId, type: 'projectPost', sortByCreated: true } ) }; // 'thread'
-	// $: { projectPosts = getPosts( { projectId: $projectId, type: 'thread', sortByCreated: true } ) };
+	let projectPosts = writable([]);
+	$: { projectPosts = getPosts( { projectId: $projectId, type: 'projectPost', sortByCreated: true, createNewSet: true } ) }; // 'thread'
+	function onPostsUpdated() {
+		projectPosts = getPosts( { projectId: $projectId, type: 'projectPost', sortByCreated: true, createNewSet: true, dontReloadPosts: true } )
+	}
 
 	let forceProjectShowingInfo = false;
 	let projectStateLoaded = false;

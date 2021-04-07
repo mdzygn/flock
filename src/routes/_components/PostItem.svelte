@@ -152,7 +152,7 @@
     // $: console.log('post diff', secondsDiff($post.createdAt, $post.editedAt));
     
     let channels = writable(null);
-    $: { if (showChannelTags && $project) channels = getChannels( { projectId: $project.id } ) };
+    // $: { if (showChannelTags && $project) channels = getChannels( { projectId: $project.id } ) };
 
     $: channelTag = showChannelTags && $channels && 'Announcements'; // getChannelTagTitle();
 

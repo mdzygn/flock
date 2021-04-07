@@ -22,10 +22,10 @@
 
     // let itemSet = ['announcements', 'general', 'workshop', 'questions', 'ideas', 'inspiration', 'random'];
 
-    $: itemSet = $channels && $channels.map(item => {
+    $: itemSet = $channels ? $channels.map(item => {
         const itemModel = get(item);
         return {label: '#' + itemModel.title, title: itemModel.title, value: itemModel.id};
-    });
+    }) : [];
 
     $: items = [{label: 'All', title: null, value: null}, ...itemSet];
     // $: items = ['all', ...itemSet];

@@ -110,10 +110,8 @@ function mergePosts(newPosts) {
 			newPostData = newPosts[postI];
 			postId = newPostData.id;
 			if (postId !== curSavingPostId) {
-				console.log('find', postId, curPosts.length);
 				// curPost = curPosts.find(match => get(match).id === postId);
 				curPost = postsById[postId];
-				console.log('found', postId);
 				if (!curPost) {
 					curPost = PostModel(newPostData);
 					// curPosts.push(curPost);
@@ -178,7 +176,6 @@ function clearFilteredPosts() {
 }
 
 function filterCurrentPosts(postFilterOptions, createNewSet) {
-	console.log('filterCurrentPosts start');
 	if (!postFilterOptions) {
 		postFilterOptions = curPostFilterOptions;
 	}
@@ -224,7 +221,6 @@ function filterCurrentPosts(postFilterOptions, createNewSet) {
 	} else {
 		filteredPosts.set(newFilteredPosts);
 	}
-	console.log('filterCurrentPosts end');
 }
 
 export function getPost(postId) {

@@ -25,7 +25,7 @@
 
     import PlaceholderImage from "../../assets/images/postPlaceholder.png";
 
-    import { getDisplayText, getDateString, getDateAge, getDateAgeString, secondsDiff } from '../../utils';
+    import { getDisplayText, getDateString, getDateAge, getDateAgeString, secondsDiff, stopEvent } from '../../utils';
 
     import { getUser } from '../../models/usersModel';
 
@@ -40,6 +40,7 @@
         loadProfile,
         loadPost,
         showMenu,
+		loadChannel,
     } from '../../actions/appActions';
 
 	import {
@@ -75,7 +76,7 @@
 
     $: postId = ($post && $post.id) || null;
 
-    $: channeId = ($post && $post.channelId) || null;
+    $: channelId = ($post && $post.channelId) || null;
 
     $: postUserId = ($post && $post.userId) || null;
     $: { user = getUser(postUserId) };
@@ -156,7 +157,9 @@
     let channels = writable(null);
     $: { if (showChannelTags && $project) channels = getChannels( { projectId: $project.id } ) };
 
-    $: channelTag = showChannelTags && $channels && getChannelTagTitle();
+    $: channelTagTitle = showChannelTags && $channels && getChannelTagTitle();
+    // $: curChannel = showChannelTags && $channels; // && getChannel();
+    // $: channelTagTitle = showChannelTags && curChannel && get(curChannel) && $curChannel.title;
 
     // $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
     // $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
@@ -212,8 +215,10 @@
         }
     }
 
+    // function getChannel() {
     function getChannelTagTitle() {
-		const curChannel = $channels.find(match => get(match).id === channeId);
+		const curChannel = $channels.find(match => get(match).id === channelId);
+        // return curChannel;
         const channelTagTitle = get(curChannel).title;
         return channelTagTitle;
     }
@@ -289,9 +294,11 @@
         {#if message}
             <div class="message" class:selectable="{textSelectable}" class:messageLimited="{messageLimited && !messageLimitedSingleLine}" class:messageLimitedSingleLine="{messageLimitedSingleLine}" class:messageNotLimited="{!messageLimited && !messageLimitedSingleLine}">{@html  messageHTML}</div>
         {/if}
-        {#if showChannelTags && channelTag}
+        {#if showChannelTags && channelTagTitle}
             <div class="channelTagContainer">
-                <div class="channelTag">#{channelTag}</div>
+                <div class="channelTag">#{channelTagTitle}</div> 
+                <!-- <Button className="channelTag" onClick="{e => loadChannel(channelId)}">#{channelTagTitle}</Button> -->
+                <!-- <Button className="channelTag" onClick="{e => { loadChannel(channelId); return stopEvent(e); }}">#{channelTagTitle}</Button> -->
             </div>
         {/if}
     </div>
@@ -456,17 +463,20 @@
     }
 
     .channelTagContainer {
-        margin-top: 6px;
-        margin-bottom: -6px;
+        margin-top: 2px;
+        margin-bottom: -12px;
+        margin-left: -1px;
+        /* margin-top: 6px;
+        margin-bottom: -6px; */
     }
 
-    .channelTag {
+    .postItem :global(.channelTag) {
         display: inline-block;
-        background-color: #EEEEEE;
-        border-radius: 100px;
         font-size: 1rem;
-        padding: 0px 6px;
         color: #0D0D0D;
+        /* background-color: #EEEEEE; */
+        /* border-radius: 100px; */
+        /* padding: 0px 6px; */
     }
 
     .selectable {

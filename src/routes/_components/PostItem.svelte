@@ -55,9 +55,15 @@
         getThreadUnviewed,
     } from '../../models/notificationsModel';
 
+	import {
+		getChannels,
+    } from '../../models/channelsModel';
+
     export let post;
 
     export let type = 'thread';
+
+    export let showChannelTags = false;
 
     let showFullImage = false;
 
@@ -144,6 +150,11 @@
     $: editedDate = (showEdited && $post.editedAt && getDateString($post.editedAt)) || '';
 
     // $: console.log('post diff', secondsDiff($post.createdAt, $post.editedAt));
+    
+    let channels = writable(null);
+    $: { if (showChannelTags && $project) channels = getChannels( { projectId: $project.id } ) };
+
+    $: channelTag = showChannelTags && $channels && 'Announcements'; // getChannelTagTitle();
 
     // $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
     // $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
@@ -269,6 +280,11 @@
         {/if}
         {#if message}
             <div class="message" class:selectable="{textSelectable}" class:messageLimited="{messageLimited && !messageLimitedSingleLine}" class:messageLimitedSingleLine="{messageLimitedSingleLine}" class:messageNotLimited="{!messageLimited && !messageLimitedSingleLine}">{@html  messageHTML}</div>
+        {/if}
+        {#if showChannelTags && channelTag}
+            <div class="channelTagContainer">
+                <div class="channelTag">{channelTag}</div>
+            </div>
         {/if}
     </div>
     {#if image && !useThumbImage}
@@ -430,6 +446,21 @@
         overflow-wrap: break-word;
         word-wrap: break-word;
     }
+
+    .channelTagContainer {
+        margin-top: 6px;
+        margin-bottom: -6px;
+    }
+
+    .channelTag {
+        display: inline-block;
+        background-color: #EEEEEE;
+        border-radius: 100px;
+        font-size: 1rem;
+        padding: 0px 6px;
+        color: #0D0D0D;
+    }
+
     .selectable {
         user-select: text;
     }

@@ -128,30 +128,6 @@
 	function hideAddPostPanel() {
 		showAddPost = false;
 	}
-
-	// function followProject() {
-    //     if ($project) {
-    //         projectToggleFollowing($project.id);
-    //     }
-	// }
-
-    // let proxyChannelsImage;
-
-	// $: {
-	// 	if (isTeamMember) {
-	// 		if (isNew) {
-	// 			proxyChannelsImage = 'project_channels_populate';
-	// 		} else {
-	// 			proxyChannelsImage = 'project_channels_owner';
-	// 		}
-	// 	} else {
-	// 		if (following) {
-	// 			proxyChannelsImage = 'project_channels_following';
-	// 		} else {
-	// 			proxyChannelsImage = 'project_channels';
-	// 		}
-	// 	}
-	// }
 </script>
 
 <!-- {#if $channels && $channels.length} -->
@@ -179,7 +155,7 @@
                 {#if $posts && $posts.length}
                     <div class="postsContainer">
                         {#each $posts as post}
-                            <PostItem {post} />
+                            <PostItem {post} showChannelTags="{!currentChannelId}" />
                         {/each}
                         <!-- {:else}
 

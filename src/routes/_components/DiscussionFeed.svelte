@@ -7,6 +7,8 @@
     
 	import { stopEvent } from '../../utils';
 
+    import PostTypes from '../../config/PostTypes';
+
     import Proxy from '../../components/Proxy.svelte';
 
     import ContentPanel from './ContentPanel.svelte';
@@ -206,7 +208,7 @@
                     {#if !showAddPost}
                         <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
                     {/if}
-                    <EditPost targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" />
+                    <EditPost targetPostType="{PostTypes.THREAD}" targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" />
                 {/if}
             {/if}
         </ContentPanel>

@@ -7,6 +7,8 @@
 	import { menuIds } from '../../../config/menus';
 	import { getDisplayText, stopEvent } from '../../../utils';
 
+    import PostTypes from '../../../config/PostTypes';
+
 	import { tick, onMount } from 'svelte';
 
     import Button from '../../../components/Button.svelte';
@@ -523,7 +525,7 @@
 		</ScrollView>
 	{/if}
 
-	<EditPost className="editProjectPost" shown="{showAddProjectPost}" bind:message="{newProjectPostMessage}" bind:messageField="{newProjectPostMessageField}" inlineComponent="{true}" smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_ACTION}" bind:element="{projectPostRegion}" on:hide="{hideAddProjectPostPanel}" on:resize="{onProjectPostPanelResized}" />
+	<EditPost targetPostType="{PostTypes.PROJECT_POST}" className="editProjectPost" shown="{showAddProjectPost}" bind:message="{newProjectPostMessage}" bind:messageField="{newProjectPostMessageField}" inlineComponent="{true}" smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_ACTION}" bind:element="{projectPostRegion}" on:hide="{hideAddProjectPostPanel}" on:resize="{onProjectPostPanelResized}" />
 </div>
 
 <style>

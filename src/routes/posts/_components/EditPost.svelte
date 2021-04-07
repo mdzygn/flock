@@ -71,6 +71,8 @@
 	
     export let className = '';
 
+    export let targetPostType = null;
+
     export let targetChannelId = null;
 
 	let title = '';
@@ -111,7 +113,9 @@
 
     $: nextEnabled = (trim(title) || trim(message) || (image && curPostType !== 'thread')) && !imageIsUploading;
 
-	$: curPostType = (editPost && $post) ? $post.type : $postType;
+	$: curPostType = targetPostType || ((editPost && $post) ? $post.type : $postType);
+
+	$: console.log('curPostType', curPostType);
 
 	$: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? curChannelId : (curPostType === 'projectPost') ? $projectId : $postId)) || null;
 	// $: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : $postId)) || null;
@@ -123,7 +127,8 @@
 
 	$: showImageOption = true; // (curPostType === 'thread');
 
-	$: isProjectPost = $postType === 'projectPost';
+	$: isProjectPost = (curPostType === 'projectPost');
+	// $: isProjectPost = $postType === 'projectPost';
 	// $: {
 	// 	if (isProjectPost) {
 	// 		addingImage = true;
@@ -254,25 +259,25 @@
     });
 
 	function createNewPost() {
-		if (!editPost && $postType) {
+		if (!editPost && curPostType) { // $postType) {
 			const postDetails = {
 				id: newPostId,
 				message: trim(message),
 				image,
-				type: $postType,
+				type: curPostType, // $postType,
 				// channelId: $channel && $channel.id,
 				// projectId: $channel && $channel.projectId,
 			};
-			switch ($postType) {
+			switch (curPostType) { // $postType) {
 				case 'thread':
 					postDetails.title = trim(title);
 					postDetails.channelId = curChannelId; // $channel && $channel.id;
-					postDetails.projectId = ($channel && $channel.projectId) || $projectId;
+					postDetails.projectId = (!targetChannelId && $channel && $channel.projectId) || $projectId;
 					break;
 				case 'threadPost':
 					postDetails.threadId = $postId;
 					postDetails.channelId = curChannelId; // $channel && $channel.id;
-					postDetails.projectId = ($channel && $channel.projectId) || $projectId;
+					postDetails.projectId = (!targetChannelId && $channel && $channel.projectId) || $projectId;
 					break;
 				case 'projectPost':
 					postDetails.projectId = $projectId;

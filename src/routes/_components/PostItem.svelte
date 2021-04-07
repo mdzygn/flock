@@ -75,6 +75,8 @@
 
     $: postId = ($post && $post.id) || null;
 
+    $: channeId = ($post && $post.channelId) || null;
+
     $: postUserId = ($post && $post.userId) || null;
     $: { user = getUser(postUserId) };
     $: userLoaded = ($user && $user.name) || false;
@@ -152,9 +154,9 @@
     // $: console.log('post diff', secondsDiff($post.createdAt, $post.editedAt));
     
     let channels = writable(null);
-    // $: { if (showChannelTags && $project) channels = getChannels( { projectId: $project.id } ) };
+    $: { if (showChannelTags && $project) channels = getChannels( { projectId: $project.id } ) };
 
-    $: channelTag = showChannelTags && $channels && 'Announcements'; // getChannelTagTitle();
+    $: channelTag = showChannelTags && $channels && getChannelTagTitle();
 
     // $: titleHTML = displayBreaks ? title : getUnbrokenText(title);
     // $: messageHTML = displayBreaks ? message : getUnbrokenText(message);
@@ -208,6 +210,12 @@
             // loadPost(postId);
             // goto('posts/' + postId);
         }
+    }
+
+    function getChannelTagTitle() {
+		const curChannel = $channels.find(match => get(match).id === channeId);
+        const channelTagTitle = get(curChannel).title;
+        return channelTagTitle;
     }
 
 	function toggleLiked(event) {
@@ -283,7 +291,7 @@
         {/if}
         {#if showChannelTags && channelTag}
             <div class="channelTagContainer">
-                <div class="channelTag">{channelTag}</div>
+                <div class="channelTag">#{channelTag}</div>
             </div>
         {/if}
     </div>

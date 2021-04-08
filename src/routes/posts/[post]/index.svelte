@@ -92,12 +92,6 @@
 		}
 	}
 
-	AppModel.on('newThreadPost', onNewThreadPost);
-
-	onDestroy(() => {
-		AppModel.off('newThreadPost', onNewThreadPost);
-	});
-
     $postType = 'threadPost';
 
 	loadCurrentChannel();
@@ -190,10 +184,14 @@
 	onMount(() => {
 		postSeenTimeout = setNotificationSeenTimeout({postId: $postId});
 		threadSeenTimeout = setNotificationSeenTimeout({threadId: $postId}, config.REPLY_VIEWED_DELAY);
+
+		AppModel.on('newThreadPost', onNewThreadPost);
 	});
 	onDestroy(() => {
 		clearNotificationSeenTimeout(postSeenTimeout);
 		clearNotificationSeenTimeout(threadSeenTimeout);
+
+		AppModel.off('newThreadPost', onNewThreadPost);
 	});
 </script>
 

@@ -37,12 +37,6 @@
 
 	const DISCOVER_SCROLL_DOWN_AMOUNT = 200;
 
-	AppModel.on('home', onHome);
-
-	onDestroy(() => {
-		AppModel.off('home', onHome);
-	});
-
 	let discoveryProjects = writable([]);
 	let filteredDiscoveryProjects = writable([]);
 
@@ -62,7 +56,13 @@
 				scrollToTop();
             })();
 		}
+
+		AppModel.on('home', onHome);
     });
+
+	onDestroy(() => {
+		AppModel.off('home', onHome);
+	});
 
 	let scrollRegion;
 

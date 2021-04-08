@@ -128,6 +128,10 @@
 	function hideAddPostPanel() {
 		showAddPost = false;
 	}
+
+    function onChannelTagSelect(channelId) {
+        currentChannelId = channelId;
+    }
 </script>
 
 <!-- {#if $channels && $channels.length} -->
@@ -155,7 +159,7 @@
                 {#if $posts && $posts.length}
                     <div class="postsContainer">
                         {#each $posts as post}
-                            <PostItem {post} showChannelTags="{!currentChannelId}" />
+                            <PostItem {post} showChannelTags="{!currentChannelId}" onChannelSelect="{onChannelTagSelect}" />
                         {/each}
                         <!-- {:else}
 

@@ -66,6 +66,8 @@
 
     export let showChannelTags = false;
 
+    export let onChannelSelect = null;
+
     let showFullImage = false;
 
     // export let type = 'thread';
@@ -77,6 +79,8 @@
     $: postId = ($post && $post.id) || null;
 
     $: channelId = ($post && $post.channelId) || null;
+
+    // $: console.log('message', message, 'channelId', channelId, 'channelTagTitle', channelTagTitle);
 
     $: postUserId = ($post && $post.userId) || null;
     $: { user = getUser(postUserId) };
@@ -115,9 +119,9 @@
         if (image && imageSrc && imageSrc !== PlaceholderImage) {
             initializedCanMaximizeImage = true;
 
-            var testImage = new Image();
+            let testImage = new Image();
             testImage.onload = () => {
-                if (testImage.width >= window.innerWidth || testImage.height >= window.innerWidth * 0.9) {
+                if (testImage && (testImage.width >= window.innerWidth || testImage.height >= window.innerWidth * 0.9)) {
                     canMaximizeImage = true;
                 }
             };
@@ -157,7 +161,7 @@
     let channels = writable(null);
     $: { if (showChannelTags && $project) channels = getChannels( { projectId: $project.id } ) };
 
-    $: channelTagTitle = showChannelTags && $channels && getChannelTagTitle();
+    $: channelTagTitle = showChannelTags && $post && $channels && getChannelTagTitle();
     // $: curChannel = showChannelTags && $channels; // && getChannel();
     // $: channelTagTitle = showChannelTags && curChannel && get(curChannel) && $curChannel.title;
 
@@ -219,8 +223,13 @@
     function getChannelTagTitle() {
 		const curChannel = $channels.find(match => get(match).id === channelId);
         // return curChannel;
-        const channelTagTitle = get(curChannel).title;
-        return channelTagTitle;
+        if (!curChannel) {
+            return null;
+        } else {
+            // console.log('getChannelTagTitle', message, get(curChannel).title, get(curChannel).id, channelId);
+            const channelTagTitle = get(curChannel).title;
+            return channelTagTitle;
+        }
     }
 
 	function toggleLiked(event) {
@@ -242,6 +251,14 @@
 
     function toggleFullImage() {
         showFullImage = !showFullImage;
+    }
+
+    function loadCurrentChannel(e) {
+        stopEvent(e);
+
+        if (onChannelSelect) {
+            onChannelSelect(channelId);
+        }
     }
 </script>
 
@@ -296,7 +313,10 @@
         {/if}
         {#if showChannelTags && channelTagTitle}
             <div class="channelTagContainer">
-                <div class="channelTag">#{channelTagTitle}</div> 
+                <!-- <div class="channelTag">#{channelTagTitle}</div>  -->
+                <!-- <Button className="channelTag" onClick="{e => loadChannel(channelId)}">#{channelTagTitle}</Button> -->
+                <Button className="channelTag" onClick="{loadCurrentChannel}">#{channelTagTitle}</Button>
+                <!-- <Button className="channelTag" onClick="{e => console.log('hi')}">#{channelTagTitle}</Button> -->
                 <!-- <Button className="channelTag" onClick="{e => loadChannel(channelId)}">#{channelTagTitle}</Button> -->
                 <!-- <Button className="channelTag" onClick="{e => { loadChannel(channelId); return stopEvent(e); }}">#{channelTagTitle}</Button> -->
             </div>

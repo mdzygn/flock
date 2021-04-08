@@ -13,7 +13,7 @@
 
     import PostTypes from '../../../config/PostTypes';
 
-	import { tick, onMount } from 'svelte';
+	import { tick, onMount, onDestroy } from 'svelte';
 
     import Button from '../../../components/Button.svelte';
 
@@ -110,6 +110,10 @@
 	//$: userLoading = (!($user && $user.loaded) && $userId);
 
 	PostsModel.on('postsUpdated', onPostsUpdated);
+
+	onDestroy(() => {
+		PostsModel.off('postsUpdated', onPostsUpdated);
+	});
 
 	const DISPLAY_BOTTOM_LINK_POST_COUNT = 4;
 

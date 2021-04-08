@@ -161,7 +161,7 @@
     let channels = writable(null);
     $: { if (showChannelTags && $project) channels = getChannels( { projectId: $project.id } ) };
 
-    $: channelTagTitle = showChannelTags && $post && $channels && getChannelTagTitle();
+    $: channelTagTitle = showChannelTags && $post && $channels && getChannelTagTitle(); // Need to keep $post here to ensure tagTitle updates when vue reassigns post
     // $: curChannel = showChannelTags && $channels; // && getChannel();
     // $: channelTagTitle = showChannelTags && curChannel && get(curChannel) && $curChannel.title;
 

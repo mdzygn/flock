@@ -94,6 +94,10 @@
 
 	AppModel.on('newThreadPost', onNewThreadPost);
 
+	onDestroy(() => {
+		AppModel.off('newThreadPost', onNewThreadPost);
+	});
+
     $postType = 'threadPost';
 
 	loadCurrentChannel();

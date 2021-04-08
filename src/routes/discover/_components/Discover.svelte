@@ -1,7 +1,7 @@
 <script>
 	import locale from '../../../locale';
 
-	import { onMount, tick } from 'svelte';
+	import { onMount, onDestroy, tick } from 'svelte';
 
 	import { writable } from 'svelte/store';
 
@@ -38,6 +38,10 @@
 	const DISCOVER_SCROLL_DOWN_AMOUNT = 200;
 
 	AppModel.on('home', onHome);
+
+	onDestroy(() => {
+		AppModel.off('home', onHome);
+	});
 
 	let discoveryProjects = writable([]);
 	let filteredDiscoveryProjects = writable([]);

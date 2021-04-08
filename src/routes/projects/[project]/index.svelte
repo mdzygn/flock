@@ -109,7 +109,9 @@
 
 	//$: userLoading = (!($user && $user.loaded) && $userId);
 
-	PostsModel.on('postsUpdated', onPostsUpdated);
+	onMount(() => {
+		PostsModel.on('postsUpdated', onPostsUpdated);
+	});
 
 	onDestroy(() => {
 		PostsModel.off('postsUpdated', onPostsUpdated);

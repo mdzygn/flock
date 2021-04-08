@@ -37,6 +37,7 @@
         getIsTeamManagedChannel,
         loadingChannels,
         getIsBaseDisplayChannel,
+		getChannelDefaultDescription,
     } from '../../models/channelsModel';
 
 	import {
@@ -73,6 +74,15 @@
 
     $: defaultChannel = $channels && getDefaultChannel();
     $: targetChannelId = currentChannelId || ($defaultChannel && $defaultChannel.id);
+    
+    $: curChannel = currentChannelId && $channels && getCurChannel(currentChannelId);
+	$: channelDescription = curChannel && $curChannel && ($curChannel.description || getChannelDefaultDescription($curChannel));
+
+    $: console.log(curChannel, $curChannel, currentChannelId);
+
+    function getCurChannel(channelId) {
+		return $channels.find(match => get(match).id === channelId);
+    }
 
     const MAX_DISPLAY_POSTS = 3;
 
@@ -156,6 +166,10 @@
             {:else}
                 <ChannelsBar {project} bind:currentChannelId="{currentChannelId}" bind:currentChannelTitle="{currentChannelTitle}" />
 
+                {#if channelDescription}
+                    <div class="channelHeaderDescription">{@html channelDescription}</div>
+                {/if}
+
                 {#if $posts && $posts.length}
                     <div class="postsContainer">
                         {#each $posts as post}
@@ -206,8 +220,14 @@
 	}
 
 	.discussionFeed :global(.contentLoader) {
-        padding: 0 20px;
+        /* padding: 0 20px; */
         font-size: 1.2rem;
+        
+        padding: 0 16px;
+        font-size: 1.2rem;
+        border-top: 2px solid #EEEEEE;
+        padding-top: 12px;
+        padding-bottom: 6px;
 	}
 
     .discussionFeed :global(.contentPanel) {
@@ -329,5 +349,18 @@
 
 .discussionFeed :global(.editPostContent.inlineComponent .addImage) {
     right: 76px;
+}
+
+.channelHeaderDescription {
+    border-top: 1px solid #EEEEEE;
+    
+    padding: 6px 16px;
+    /* padding-top: 10px; */
+
+    font-size: 1.3rem;
+    color: #666666;
+
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 </style>

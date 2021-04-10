@@ -85,10 +85,22 @@
 		return $channels.find(match => get(match).id === channelId);
     }
 
-    const MAX_DISPLAY_POSTS = 3;
+    const DEFAULT_DISPLAY_POSTS = 3;
+    const INCREMENT_DISPLAY_POSTS = 5;
+    let curNumDisplayPosts = DEFAULT_DISPLAY_POSTS;
 
+    $: {
+        currentChannelId;
+        resetNumDisplayPosts();
+    }
+    
     let posts = writable([]);
-	$: { posts = getPosts( { projectId: $projectId, type: 'thread', channelId: currentChannelId, sortByCreated, limit: MAX_DISPLAY_POSTS} ) }; //channelId: $channelId,
+	$: { posts = getPosts( { projectId: $projectId, type: 'thread', channelId: currentChannelId, sortByCreated, limit: curNumDisplayPosts} ) }; //channelId: $channelId,
+
+
+    function resetNumDisplayPosts() {
+        curNumDisplayPosts = DEFAULT_DISPLAY_POSTS;
+    }
 
 	$: canPost = isTeamMember && !isArchived;
 	// $: canPost = $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
@@ -149,6 +161,10 @@
             loadChannel(currentChannelId);
         }
     }
+
+    function showMorePosts() {
+        curNumDisplayPosts += INCREMENT_DISPLAY_POSTS;
+    }
 </script>
 
 <!-- {#if $channels && $channels.length} -->
@@ -196,7 +212,9 @@
                             {/if}
                         {/each} -->
                     </div>
-                    <!-- <Button className="showMorePostsButton" onClick="{showMorePosts}">{locale.CHANNEL.VIEW_ALL_POSTS}</Button> -->
+                    <div class="postsFooter">
+                        <Button className="showMorePostsButton" onClick="{showMorePosts}">{locale.CHANNEL.SHOW_MORE_POSTS}</Button>
+                    </div>
                 {:else}
                     {#if !showAddPost}
                         {#if $loadingPosts && (!$posts || !$posts.length) }
@@ -388,12 +406,30 @@
 
     font-size: 1.3rem;
     font-weight: 700;
+}
 
-    /* padding: 10px;
-    padding-right: 30px;
+.postsFooter {
+    position: relative;
 
-    margin-top: 8px;
-    margin-left: -10px;
-    margin-bottom: -14px; */
+    display: flex;
+    flex-direction: column;
+    
+    border-bottom: 2px solid #EEEEEE;
+    margin-top: -5px;
+}
+
+.discussionFeed :global(.showMorePostsButton) {
+    /* display: block;
+    position: absolute;
+
+    top: 7px;
+    right: 10px; */
+
+    font-size: 1.3rem;
+    font-weight: 700;
+
+    padding: 5px;
+    padding-right: 18px;
+    align-self: flex-end;
 }
 </style>

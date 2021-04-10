@@ -153,6 +153,7 @@ const locale = {
 		ADD_POST: 'Add Post',
 		ADD_POST_MESSAGE_PLACEHOLDER: 'Message...',
 		VIEW_ALL_POSTS: 'View All',
+		SHOW_MORE_POSTS: 'Show more',
 	},
 	THREAD: {
 		NOT_FOUND: 'post not found',

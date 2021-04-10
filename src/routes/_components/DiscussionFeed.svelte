@@ -192,7 +192,9 @@
                 {#if channelDescription}
                     <div class="channelHeader">
                         <div class="channelHeaderDescription">{@html channelDescription}</div>
-                        <Button className="viewAllPostsButton" onClick="{viewAllPosts}">{locale.CHANNEL.VIEW_ALL_POSTS}</Button>
+                        {#if areMoreItems}
+                            <Button className="viewAllPostsButton" onClick="{viewAllPosts}">{locale.CHANNEL.VIEW_ALL_POSTS}</Button>
+                        {/if}
                     </div>
                 {/if}
 
@@ -417,6 +419,8 @@
 
         font-size: 1.3rem;
         font-weight: 700;
+
+        color: #666666;
     }
 
     .postsFooter {
@@ -442,6 +446,8 @@
         padding: 5px;
         padding-right: 18px;
         align-self: flex-end;
+        
+        color: #666666;
     }
 
     .getTheConversationStarted {

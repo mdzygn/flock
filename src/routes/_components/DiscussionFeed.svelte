@@ -81,6 +81,10 @@
     $: curChannel = currentChannelId && $channels && getCurChannel(currentChannelId);
 	$: channelDescription = curChannel && $curChannel && ($curChannel.description || getChannelDefaultDescription($curChannel));
 
+    function onChannelSelected(newChannelId) {
+        currentChannelId = newChannelId;
+    }
+
     function getCurChannel(channelId) {
 		return $channels.find(match => get(match).id === channelId);
     }
@@ -249,7 +253,7 @@
                         {/if}
                         <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
                     {/if}
-                    <EditPost targetPostType="{PostTypes.THREAD}" targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" showChannelSelect="{true}" {channels} smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" />
+                    <EditPost targetPostType="{PostTypes.THREAD}" bind:targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" showChannelSelect="{true}" {channels} smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" onChannelSelected="{onChannelSelected}" />
                 {/if}
             {/if}
         </ContentPanel>

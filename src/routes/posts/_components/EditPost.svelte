@@ -82,9 +82,13 @@
 
     export let targetChannelId = null;
 
+	$: console.log('targetChannelId', targetChannelId);
+
 	export let showChannelSelect = false;
 
 	export let channels = null;
+
+	export let onChannelSelected = null;
 	
     $: channelItems = (channels && $channels) ? $channels.map(channel => {
         // const noPosts = !itemModel.postCount;
@@ -419,6 +423,12 @@
 			dispatch('resize');
 		}
 	}
+
+	function onSelectChannelSelected() {
+		if (onChannelSelected) {
+			onChannelSelected(targetChannelId);
+		}
+	}
 </script>
 
 {#if !editPost || $post }
@@ -476,7 +486,7 @@
 				<div class="channelSelectContainer">
 					<div class="channelSelectLabel">{locale.NEW_THREAD.CHANNEL_SELECT}</div>
 					<div class="channelSelectBoxContainer">
-						<Select items="{channelItems}" bind:selectedValueString="{targetChannelId}"></Select>
+						<Select items="{channelItems}" bind:selectedValueString="{targetChannelId}" on:select="{onSelectChannelSelected}"></Select>
 					</div>
 				</div>
 			{:else}

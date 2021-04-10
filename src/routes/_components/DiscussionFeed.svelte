@@ -72,14 +72,15 @@
 	$: sortByCreated = false; // ($curChannel && $curChannel.sortByCreated) || false;
 
     let currentChannelId = null;
-    let currentChannelTitle = null;
-    $: currentChannelTargetTitle = currentChannelTitle || 'General';
 
     $: defaultChannel = $channels && getDefaultChannel();
     $: targetChannelId = currentChannelId || ($defaultChannel && $defaultChannel.id);
     
     $: curChannel = currentChannelId && $channels && getCurChannel(currentChannelId);
+    
+    $: currentChannelTargetTitle = curChannel && $curChannel && $curChannel.title || 'General';
 	$: channelDescription = curChannel && $curChannel && ($curChannel.description || getChannelDefaultDescription($curChannel));
+
 
     function onChannelSelected(newChannelId) {
         currentChannelId = newChannelId;
@@ -192,7 +193,7 @@
             {#if channelsLoading}
                 <ContentLoader label="{locale.LOADING.CHANNELS}" />
             {:else}
-                <ChannelsBar {project} bind:currentChannelId="{currentChannelId}" bind:currentChannelTitle="{currentChannelTitle}" />
+                <ChannelsBar {project} bind:currentChannelId="{currentChannelId}" />
 
                 {#if channelDescription}
                     <div class="channelHeader">

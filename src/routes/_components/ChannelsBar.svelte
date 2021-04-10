@@ -22,7 +22,6 @@
     // export let filterString = '';
 
     export let currentChannelId = null;
-    export let currentChannelTitle = null;
 
     $: isTeamMember = $user && getIsProjectTeamMember($project);
     $: following = ($project && $project.following) || false;
@@ -43,7 +42,6 @@
 
     function selectFilter(item) {
         currentChannelId = item.value;
-        currentChannelTitle = item.title;
 
         // if (item === 'all') {
         //     filterString = '';

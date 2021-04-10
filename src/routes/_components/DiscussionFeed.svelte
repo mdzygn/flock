@@ -103,7 +103,8 @@
         curNumDisplayPosts = DEFAULT_DISPLAY_POSTS;
     }
 
-	$: canPost = isTeamMember && !isArchived;
+	$: canPost = (isTeamMember || !curChannel || ($curChannel && !$curChannel.teamOnly)) && !isArchived;
+	// $: canPost = isTeamMember && !isArchived;
 	// $: canPost = $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
     
     let hasActiveChannels = true; // false;
@@ -127,8 +128,6 @@
         hasActiveChannels = hasActiveChannel;
         hasInactiveChannels = hasInactiveChannel;
     }
-
-    let canPostInChannel = true; // TODO: base on current channel postable
 
 	export let showAddPost = false;
 	let newPostMessageField = null;
@@ -226,13 +225,13 @@
                             <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
                         {:else}
                             <ContentLoader>{currentChannelId ? locale.CHANNEL.NO_POSTS : locale.CHANNEL.ALL_CHANNELS_NO_POSTS}
-                                {#if canPost}<br/>be the first to <a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">Add a Post</a>{/if}
+                                <!-- {#if canPost}<br/>be the first to <a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">Add a Post</a>{/if} -->
                             </ContentLoader>
                         {/if}
                     {/if}
                 {/if}
 
-                {#if canPostInChannel}
+                {#if canPost}
                     {#if !showAddPost}
                         {#if !isArchived && !displayInline}
                             {#if (!hasActiveChannels || isNew) && viewAllChannels}

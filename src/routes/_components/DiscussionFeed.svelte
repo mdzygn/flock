@@ -93,10 +93,11 @@
         currentChannelId;
         resetNumDisplayPosts();
     }
-    
-    let posts = writable([]);
-	$: { posts = getPosts( { projectId: $projectId, type: 'thread', channelId: currentChannelId, sortByCreated, limit: curNumDisplayPosts} ) }; //channelId: $channelId,
 
+    let posts = writable([]);
+	$: { posts = getPosts( { projectId: $projectId, type: 'thread', channelId: currentChannelId, sortByCreated, limit: curNumDisplayPosts + 1} ) }; //get one more to be able to check if there are more posts available
+
+    $: areMoreItems = $posts && ($posts.length > curNumDisplayPosts);
 
     function resetNumDisplayPosts() {
         curNumDisplayPosts = DEFAULT_DISPLAY_POSTS;
@@ -126,8 +127,6 @@
         hasActiveChannels = hasActiveChannel;
         hasInactiveChannels = hasInactiveChannel;
     }
-
-    let areMoreItems = false;
 
     let canPostInChannel = true; // TODO: base on current channel postable
 
@@ -171,7 +170,7 @@
     <!-- && (hasActiveChannels || isTeamMember || following) -->
     <div class="discussionFeed" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}" class:displayInline>
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
-        <ContentPanel title="{locale.PROJECT.CHANNELS_TITLE}" titleOnClick="{!displayInline ? 'projects/'+$projectId+'/channels' : null}" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
+        <ContentPanel title="{locale.PROJECT.CHANNELS_TITLE}" titleOnClick="{!displayInline ? 'projects/'+$projectId+'/channels' : null}" showEdit="{canEdit && $showBetaFeatures}">
             {#if !isArchived && !displayInline}
                 {#if (!hasActiveChannels || isNew) && viewAllChannels}
                     {#if isTeamMember}
@@ -198,8 +197,10 @@
 
                 {#if $posts && $posts.length}
                     <div class="postsContainer">
-                        {#each $posts as post}
-                            <PostItem {post} showChannelTags="{!currentChannelId}" onChannelSelect="{onChannelTagSelect}" />
+                        {#each $posts as post, index}
+                            {#if index < curNumDisplayPosts}
+                                <PostItem {post} showChannelTags="{!currentChannelId}" onChannelSelect="{onChannelTagSelect}" />
+                            {/if}
                         {/each}
                         <!-- {:else}
 
@@ -212,9 +213,11 @@
                             {/if}
                         {/each} -->
                     </div>
-                    <div class="postsFooter">
-                        <Button className="showMorePostsButton" onClick="{showMorePosts}">{locale.CHANNEL.SHOW_MORE_POSTS}</Button>
-                    </div>
+                    {#if areMoreItems}
+                        <div class="postsFooter">
+                            <Button className="showMorePostsButton" onClick="{showMorePosts}">{locale.CHANNEL.SHOW_MORE_POSTS}</Button>
+                        </div>
+                    {/if}
                 {:else}
                     {#if !showAddPost}
                         {#if $loadingPosts && (!$posts || !$posts.length) }
@@ -361,75 +364,77 @@
 	.discussionFeed :global(.editPostContent.inlineComponent) {
         position: initial;
         box-shadow: initial;
+        
+        margin-top: 5px;
 	}
 
-.discussionFeed :global(.editPostContent.inlineComponent .panelContent) {
-    padding-top: 5px;
-}
+    .discussionFeed :global(.editPostContent.inlineComponent .panelContent) {
+        padding-top: 5px;
+    }
 
-.discussionFeed :global(.editPostContent.inlineComponent .pageTitle) {
-    /* font-size: 1.3rem; */
-    padding-bottom: 5px;
-}
+    .discussionFeed :global(.editPostContent.inlineComponent .pageTitle) {
+        /* font-size: 1.3rem; */
+        padding-bottom: 5px;
+    }
 
-.discussionFeed :global(.editPostContent.inlineComponent .collapsePanel) {
-    top: -5px;
-} 
+    .discussionFeed :global(.editPostContent.inlineComponent .collapsePanel) {
+        top: -5px;
+    } 
 
-.discussionFeed :global(.editPostContent.inlineComponent .addImage) {
-    right: 76px;
-}
+    .discussionFeed :global(.editPostContent.inlineComponent .addImage) {
+        right: 76px;
+    }
 
-.channelHeader {
-    position: relative;
-}
+    .channelHeader {
+        position: relative;
+    }
 
-.channelHeaderDescription {
-    border-top: 1px solid #EEEEEE;
+    .channelHeaderDescription {
+        border-top: 1px solid #EEEEEE;
 
-    padding: 6px 16px;
-    padding-right: 65px;
+        padding: 6px 16px;
+        padding-right: 65px;
 
-    font-size: 1.3rem;
-    color: #666666;
+        font-size: 1.3rem;
+        color: #666666;
 
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-}
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
 
-.discussionFeed :global(.viewAllPostsButton) {
-    display: block;
-    position: absolute;
+    .discussionFeed :global(.viewAllPostsButton) {
+        display: block;
+        position: absolute;
 
-    top: 7px;
-    right: 10px;
+        top: 7px;
+        right: 10px;
 
-    font-size: 1.3rem;
-    font-weight: 700;
-}
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
 
-.postsFooter {
-    position: relative;
+    .postsFooter {
+        position: relative;
 
-    display: flex;
-    flex-direction: column;
-    
-    border-bottom: 2px solid #EEEEEE;
-    margin-top: -5px;
-}
+        display: flex;
+        flex-direction: column;
+        
+        border-bottom: 2px solid #EEEEEE;
+        margin-top: -5px;
+    }
 
-.discussionFeed :global(.showMorePostsButton) {
-    /* display: block;
-    position: absolute;
+    .discussionFeed :global(.showMorePostsButton) {
+        /* display: block;
+        position: absolute;
 
-    top: 7px;
-    right: 10px; */
+        top: 7px;
+        right: 10px; */
 
-    font-size: 1.3rem;
-    font-weight: 700;
+        font-size: 1.3rem;
+        font-weight: 700;
 
-    padding: 5px;
-    padding-right: 18px;
-    align-self: flex-end;
-}
+        padding: 5px;
+        padding-right: 18px;
+        align-self: flex-end;
+    }
 </style>

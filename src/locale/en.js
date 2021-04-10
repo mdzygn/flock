@@ -155,7 +155,7 @@ const locale = {
 		ADD_POST_MESSAGE_PLACEHOLDER: 'Message...',
 		VIEW_ALL_POSTS: 'View all',
 		SHOW_MORE_POSTS: 'Show more',
-		VIEW_ALL_CHANNELS: 'View channels',
+		VIEW_ALL_CHANNELS: 'Browse channels',
 	},
 	THREAD: {
 		NOT_FOUND: 'post not found',

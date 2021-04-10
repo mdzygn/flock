@@ -131,14 +131,41 @@
   $: updateSelectedValueDisplay(items);
 
 	$: {
-		if (!selectedValue) {
-      if (selectedValueString) {
-			  selectedValue = {value: selectedValueString, label: selectedValueString};
+    selectedValueString;
+    updateFromSelectedValueString();
+  }
+  
+	$: {
+    selectedValue;
+    updateSelectedValueString();
+	}
+
+  function updateFromSelectedValueString() {
+    if (selectedValueString) {
+      if (items && items.length) {
+        selectedValue = items.find(item => item[optionIdentifier] === selectedValueString) || {value: selectedValueString, label: selectedValueString};
+      } else if (!selectedValue) {
+        selectedValue = {value: selectedValueString, label: selectedValueString};
       }
-		} else if (typeof selectedValue !== "string" && selectedValueString !== selectedValue.value) {
+      prev_selectedValue = selectedValue; // prevent emitting select event on initial set
+    }
+  }
+
+  function updateSelectedValueString() {
+    if (selectedValue && typeof selectedValue !== "string" && selectedValueString !== selectedValue.value) {
 			selectedValueString = selectedValue.value;
 		}
 	}
+
+	// $: {
+	// 	if (!selectedValue) {
+  //     if (selectedValueString) {
+	// 		  selectedValue = {value: selectedValueString, label: selectedValueString};
+  //     }
+	// 	} else if (typeof selectedValue !== "string" && selectedValueString !== selectedValue.value) {
+	// 		selectedValueString = selectedValue.value;
+	// 	}
+	// }
   
   // $: selectedValueString = (typeof selectedValue === "string") ? selectedValue : selectedValue[optionIdentifier];
   // $: selectedValue = {

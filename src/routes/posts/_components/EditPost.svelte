@@ -82,8 +82,6 @@
 
     export let targetChannelId = null;
 
-	$: console.log('targetChannelId', targetChannelId);
-
 	export let showChannelSelect = false;
 
 	export let channels = null;

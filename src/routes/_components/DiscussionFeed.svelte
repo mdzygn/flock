@@ -173,7 +173,7 @@
     }
 </script>
 
-<!-- {#if $channels && $channels.length} -->
+{#if isTeamMember || ($channels && $channels.length)}
     <!-- && (hasActiveChannels || isTeamMember || following) -->
     <div id="discussions" class="discussionFeed" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}" class:displayInline>
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
@@ -262,7 +262,7 @@
             {/if}
         </ContentPanel>
     </div>
-<!-- {/if} -->
+{/if}
 
 <style>
 	/* .discussionFeed :global(.proxyOverlay) {

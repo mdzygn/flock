@@ -204,7 +204,9 @@
 			return;
 		}
 
-		if (!projectType.trim()) {
+		const requireBasicProjectFields = $editingProjectMode === 'edit' || $editingProjectMode === 'details2';
+
+		if (requireBasicProjectFields && !projectType.trim()) {
 			projectTypeInvalid = true;
 			gotoAnchor('projectType');
 			return;
@@ -212,7 +214,7 @@
 			projectTypeInvalid = false;
 		}
 
-		if (!categories.trim()) {
+		if (requireBasicProjectFields && !categories.trim()) {
 			categoriesInvalid = true;
 			gotoAnchor('categories');
 			return;
@@ -220,7 +222,7 @@
 			categoriesInvalid = false;
 		}
 
-		if (!projectStatus.trim()) {
+		if (requireBasicProjectFields && !projectStatus.trim()) {
 			projectStatusInvalid = true;
 			gotoAnchor('projectStatus');
 			return;

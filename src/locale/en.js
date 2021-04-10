@@ -150,10 +150,12 @@ const locale = {
 	CHANNEL: {
 		NOT_FOUND: 'channel not found',
 		NO_POSTS: 'this channel has no posts',
+		ALL_CHANNELS_NO_POSTS: 'this project has no discussion posts',
 		ADD_POST: 'Add Post',
 		ADD_POST_MESSAGE_PLACEHOLDER: 'Message...',
-		VIEW_ALL_POSTS: 'View All',
+		VIEW_ALL_POSTS: 'View all',
 		SHOW_MORE_POSTS: 'Show more',
+		VIEW_ALL_CHANNELS: 'View channels',
 	},
 	THREAD: {
 		NOT_FOUND: 'post not found',
@@ -171,7 +173,7 @@ const locale = {
 	PROJECT: {
 		NOT_FOUND: 'project not found',
 		OVERVIEW_HEADER: 'Project Overview',
-		GET_STARTED: 'get the conversations started',
+		GET_STARTED: 'get the conversation started', // 'get the conversations started',
 		// FOLLOWER_GET_STARTED: 'no posts yet - be the first!',
 		FOLLOWER_GET_STARTED: 'share your thoughts',
 		GET_INVOLVED: 'share your thoughts',

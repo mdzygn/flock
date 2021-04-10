@@ -171,7 +171,9 @@
     <div class="discussionFeed" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}" class:displayInline>
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
         <ContentPanel title="{locale.PROJECT.CHANNELS_TITLE}" titleOnClick="{!displayInline ? 'projects/'+$projectId+'/channels' : null}" showEdit="{canEdit && $showBetaFeatures}">
-            {#if !isArchived && !displayInline}
+            <Button className="viewAllChannels" onClick="{'projects/'+$projectId+'/channels'}">{locale.CHANNEL.VIEW_ALL_CHANNELS}</Button>
+
+            <!-- {#if !isArchived && !displayInline}
                 {#if (!hasActiveChannels || isNew) && viewAllChannels}
                     {#if isTeamMember}
                         <div class="getTheConversationStarted getStartedOwner" class:getStartedOwnerOffset="{canEdit && $showBetaFeatures}">{locale.PROJECT.GET_STARTED}</div>
@@ -181,7 +183,7 @@
                 {:else}
                     <div class="getTheConversationStarted">{locale.PROJECT.GET_INVOLVED}</div>
                 {/if}
-            {/if}
+            {/if} -->
 
             {#if channelsLoading}
                 <ContentLoader label="{locale.LOADING.CHANNELS}" />
@@ -223,7 +225,7 @@
                         {#if $loadingPosts && (!$posts || !$posts.length) }
                             <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
                         {:else}
-                            <ContentLoader>{locale.CHANNEL.NO_POSTS}
+                            <ContentLoader>{currentChannelId ? locale.CHANNEL.NO_POSTS : locale.CHANNEL.ALL_CHANNELS_NO_POSTS}
                                 {#if canPost}<br/>be the first to <a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">Add a Post</a>{/if}
                             </ContentLoader>
                         {/if}
@@ -232,6 +234,17 @@
 
                 {#if canPostInChannel}
                     {#if !showAddPost}
+                        {#if !isArchived && !displayInline}
+                            {#if (!hasActiveChannels || isNew) && viewAllChannels}
+                                {#if isTeamMember}
+                                    <div class="getTheConversationStarted getStartedOwner">{locale.PROJECT.GET_STARTED}</div>
+                                {:else}
+                                    <div class="getTheConversationStarted">{locale.PROJECT.FOLLOWER_GET_STARTED}</div>
+                                {/if}
+                            {:else}
+                                <div class="getTheConversationStarted">{locale.PROJECT.GET_INVOLVED}</div>
+                            {/if}
+                        {/if}
                         <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
                     {/if}
                     <EditPost targetPostType="{PostTypes.THREAD}" targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" />
@@ -267,14 +280,16 @@
         padding: 20px 0;
     }
 
-    .getTheConversationStarted {
+    .discussionFeed :global(.viewAllChannels) {
         position: absolute;
         top: -30px;
 
         right: 20px;
-        color: #aaaaaa;
+        color: #666666;
+        /* color: #aaaaaa; */
 
         font-size: 1.3rem;
+        font-weight: 700;
     }
 
     /* .discussionFeedContainer {
@@ -296,15 +311,9 @@
         padding-top: 10px;
     } */
 
-    .getStartedOwner {
-        /* right: 41px; */
-        font-weight: 700;
-		color: #DF3C3C;
-    }
-
-    .getStartedOwnerOffset {
+    /* .getStartedOwnerOffset {
         right: 56px;
-    }
+    } */
 
 	.discussionFeed :global(.contentPanel .panelTitle) {
         padding-left: 20px;
@@ -357,14 +366,15 @@
 		border-bottom: 2px solid #EEEEEE;
 	}
 
-    .discussionFeed :global(.addPostPanel) {
+    .discussionFeed :global(.contentPanel .addPostPanel) {
     	margin-bottom: -20px;
+        padding-top: 0;
 	}
 
 	.discussionFeed :global(.editPostContent.inlineComponent) {
         position: initial;
         box-shadow: initial;
-        
+
         margin-top: 5px;
 	}
 
@@ -407,7 +417,7 @@
         position: absolute;
 
         top: 7px;
-        right: 10px;
+        right: 18px;
 
         font-size: 1.3rem;
         font-weight: 700;
@@ -436,5 +446,24 @@
         padding: 5px;
         padding-right: 18px;
         align-self: flex-end;
+    }
+
+    .getTheConversationStarted {
+        position: initial;
+        top: initial;
+        right: initial;
+
+        padding: 9px 15px;
+        padding-bottom: 4px;
+        /* padding-top: 0; */
+
+        color: #666666;
+        font-size: 1.3rem;
+    }
+
+    .getStartedOwner {
+        /* right: 41px; */
+        font-weight: 700;
+        color: #DF3C3C;
     }
 </style>

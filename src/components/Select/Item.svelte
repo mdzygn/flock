@@ -22,7 +22,7 @@
 <style>
   .item {
     cursor: default;
-    height: var(--height, 42px);
+    min-height: var(--height, 42px);
     line-height: var(--height, 42px);
     padding: var(--itemPadding, 0 20px);
     color: var(--itemColor, inherit);
@@ -55,10 +55,25 @@
   .item.hover:not(.active) {
     background: var(--itemHoverBG, #e7f2ff);
   }
+  
+  .item .itemDescription {
+    font-size: 1.1rem;
+    margin-top: -6px;
+    color: #999999;
+    
+    line-height: initial;
+    padding-bottom: 12px;
+    
+    width: 170px;
+    white-space: initial;
+  }
 </style>
 
 
 
 <div class="item {itemClasses}">
   {@html getOptionLabel(item, filterText)}
+  {#if item.description}
+    <div class="itemDescription">{item.description}</div>
+  {/if}
 </div>

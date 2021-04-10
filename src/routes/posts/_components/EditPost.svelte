@@ -17,6 +17,7 @@
 
 	import {
 		displayChannelForUser,
+		getChannelDefaultDescription,
 	} from '../../../models/channelsModel';
 
 	import Proxy from '../../../components/Proxy.svelte';
@@ -93,7 +94,7 @@
 		// if (isTeamMember || channelModel.postCount || getIsBaseDisplayChannel(channelModel) || (following && !getIsTeamManagedChannel(channelModel))}
 		if (displayChannelForUser(channel, project)) {
         	const channelModel = get(channel);
-        	return {label: '#' + channelModel.title, value: channelModel.id};
+        	return {label: '#' + channelModel.title, value: channelModel.id, description: channelModel.description || getChannelDefaultDescription(channelModel)};
 		} else {
 			return null;
 		}

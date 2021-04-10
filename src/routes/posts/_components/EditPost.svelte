@@ -430,7 +430,7 @@
 </script>
 
 {#if !editPost || $post }
-    <div class="editPostContent {className}" bind:this="{element}" class:isProjectPost="{isProjectPost}" class:hidden="{!shown}" class:inlineComponent="{inlineComponent}" class:useLibrary="{useLibrary}">
+    <div class="editPostContent {className}" bind:this="{element}" class:isProjectPost="{isProjectPost}" class:hidden="{!shown}" class:showChannelSelect="{showChannelSelect}" class:inlineComponent="{inlineComponent}" class:useLibrary="{useLibrary}">
         <!-- <Proxy image="create_project" className="proxyOverlay" /> -->
         <div class="panelContent" class:showImage="{imageShown}">
 			{#if inlineComponent}
@@ -452,12 +452,19 @@
 			{#if showImageOption}
 				{#if inlineComponent}
 					{#if image || addingImage}
+						{#if showChannelSelect}
+							<div class="imageField removeImageField">
+								<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}" title="{locale.NEW_THREAD.REMOVE_IMAGE}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
+							</div>
+						{/if}
 						<div class="field headerImageField">
 							<ImageSelectionBox bind:image bind:fileIsUploading="{imageIsUploading}" containMode="{true}" {imageType} {useLibrary} uploadType="post" itemId="{curPostId}" on:resize="{resize}" />
 						</div>
-						<div class="imageField removeImageField">
-							<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}" title="{locale.NEW_THREAD.REMOVE_IMAGE}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
-						</div>
+						{#if !showChannelSelect}
+							<div class="imageField removeImageField">
+								<Button className="addImage removeImage" icon="{RemoveImageIcon}" onClick="{removeImage}" title="{locale.NEW_THREAD.REMOVE_IMAGE}">{locale.NEW_THREAD.REMOVE_IMAGE}</Button>
+							</div>
+						{/if}
 					{:else}
 						<div class="imageField">
 							<Button className="addImage" icon="{UploadImageIcon}" onClick="{addImage}" title="{locale.NEW_THREAD.ADD_IMAGE}"></Button>
@@ -871,5 +878,14 @@
 	}
 	.editPostContent :global(.selectContainer .indicator) {
     	padding-right: 4px;
+	}
+
+	.editPostContent.showChannelSelect :global(.removeImageField) {
+    	height: 24px;
+	}
+	.editPostContent.showChannelSelect :global(.removeImageField .removeImage) {
+		top: -9px;
+		padding-right: 16px;
+    	right: 0;
 	}
 </style>

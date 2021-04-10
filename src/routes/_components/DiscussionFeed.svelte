@@ -5,7 +5,7 @@
 
     import { get, writable } from 'svelte/store';
     
-	import { stopEvent } from '../../utils';
+	import { stopEvent, gotoAnchor } from '../../utils';
 
     import Button from '../../components/Button.svelte';
 
@@ -151,6 +151,7 @@
 	}
 
     function onChannelTagSelect(channelId) {
+        gotoAnchor('discussions');
         currentChannelId = channelId;
     }
 
@@ -167,7 +168,7 @@
 
 <!-- {#if $channels && $channels.length} -->
     <!-- && (hasActiveChannels || isTeamMember || following) -->
-    <div class="discussionFeed" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}" class:displayInline>
+    <div id="discussions" class="discussionFeed" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}" class:displayInline>
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
         <ContentPanel title="{locale.PROJECT.CHANNELS_TITLE}" titleOnClick="{!displayInline ? 'projects/'+$projectId+'/channels' : null}" showEdit="{canEdit && $showBetaFeatures}">
             <Button className="viewAllChannels" onClick="{'projects/'+$projectId+'/channels'}">{locale.CHANNEL.VIEW_ALL_CHANNELS}</Button>

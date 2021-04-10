@@ -152,6 +152,7 @@ const locale = {
 		NO_POSTS: 'this channel has no posts',
 		ADD_POST: 'Add Post',
 		ADD_POST_MESSAGE_PLACEHOLDER: 'Message...',
+		VIEW_ALL_POSTS: 'View All',
 	},
 	THREAD: {
 		NOT_FOUND: 'post not found',

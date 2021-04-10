@@ -7,6 +7,8 @@
     
 	import { stopEvent } from '../../utils';
 
+    import Button from '../../components/Button.svelte';
+
     import PostTypes from '../../config/PostTypes';
 
     import Proxy from '../../components/Proxy.svelte';
@@ -29,6 +31,7 @@
 
     import {
 		checkLoggedIn,
+		loadChannel,
 	} from '../../actions/appActions';
 
 	import {
@@ -77,8 +80,6 @@
     
     $: curChannel = currentChannelId && $channels && getCurChannel(currentChannelId);
 	$: channelDescription = curChannel && $curChannel && ($curChannel.description || getChannelDefaultDescription($curChannel));
-
-    $: console.log(curChannel, $curChannel, currentChannelId);
 
     function getCurChannel(channelId) {
 		return $channels.find(match => get(match).id === channelId);
@@ -142,6 +143,12 @@
     function onChannelTagSelect(channelId) {
         currentChannelId = channelId;
     }
+
+    function viewAllPosts() {
+        if (currentChannelId) {
+            loadChannel(currentChannelId);
+        }
+    }
 </script>
 
 <!-- {#if $channels && $channels.length} -->
@@ -167,7 +174,10 @@
                 <ChannelsBar {project} bind:currentChannelId="{currentChannelId}" bind:currentChannelTitle="{currentChannelTitle}" />
 
                 {#if channelDescription}
-                    <div class="channelHeaderDescription">{@html channelDescription}</div>
+                    <div class="channelHeader">
+                        <div class="channelHeaderDescription">{@html channelDescription}</div>
+                        <Button className="viewAllPostsButton" onClick="{viewAllPosts}">{locale.CHANNEL.VIEW_ALL_POSTS}</Button>
+                    </div>
                 {/if}
 
                 {#if $posts && $posts.length}
@@ -186,6 +196,7 @@
                             {/if}
                         {/each} -->
                     </div>
+                    <!-- <Button className="showMorePostsButton" onClick="{showMorePosts}">{locale.CHANNEL.VIEW_ALL_POSTS}</Button> -->
                 {:else}
                     {#if !showAddPost}
                         {#if $loadingPosts && (!$posts || !$posts.length) }
@@ -351,16 +362,38 @@
     right: 76px;
 }
 
+.channelHeader {
+    position: relative;
+}
+
 .channelHeaderDescription {
     border-top: 1px solid #EEEEEE;
-    
+
     padding: 6px 16px;
-    /* padding-top: 10px; */
+    padding-right: 65px;
 
     font-size: 1.3rem;
     color: #666666;
 
     overflow-wrap: break-word;
     word-wrap: break-word;
+}
+
+.discussionFeed :global(.viewAllPostsButton) {
+    display: block;
+    position: absolute;
+
+    top: 7px;
+    right: 10px;
+
+    font-size: 1.3rem;
+    font-weight: 700;
+
+    /* padding: 10px;
+    padding-right: 30px;
+
+    margin-top: 8px;
+    margin-left: -10px;
+    margin-bottom: -14px; */
 }
 </style>

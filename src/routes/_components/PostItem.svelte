@@ -40,7 +40,6 @@
         loadProfile,
         loadPost,
         showMenu,
-		loadChannel,
     } from '../../actions/appActions';
 
 	import {
@@ -313,12 +312,7 @@
         {/if}
         {#if showChannelTags && channelTagTitle}
             <div class="channelTagContainer">
-                <!-- <div class="channelTag">#{channelTagTitle}</div>  -->
-                <!-- <Button className="channelTag" onClick="{e => loadChannel(channelId)}">#{channelTagTitle}</Button> -->
                 <Button className="channelTag" onClick="{loadCurrentChannel}">#{channelTagTitle}</Button>
-                <!-- <Button className="channelTag" onClick="{e => console.log('hi')}">#{channelTagTitle}</Button> -->
-                <!-- <Button className="channelTag" onClick="{e => loadChannel(channelId)}">#{channelTagTitle}</Button> -->
-                <!-- <Button className="channelTag" onClick="{e => { loadChannel(channelId); return stopEvent(e); }}">#{channelTagTitle}</Button> -->
             </div>
         {/if}
     </div>

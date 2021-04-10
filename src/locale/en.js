@@ -211,7 +211,7 @@ const locale = {
 		TEAM_LIST: 'Enter usernames separated by commas',
 	},
 	NEW_THREAD: {
-		PAGE_TITLE: 'New Discussion Post', // 'New Post',
+		PAGE_TITLE: // 'New Post', // 'New Discussion Post', 
 		TITLE: 'title',
 		TITLE_TIP: '(optional)',
 		MESSAGE: 'message',

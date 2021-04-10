@@ -865,17 +865,19 @@
 		display: inline-block;
 	}
 	.editPostContent :global(.selectContainer) {
-    	width: 165px;
+    	width: 142px;
 	}
 	.editPostContent :global(.selectContainer input) {
-		border: 1px solid #cccccc;
-    	border-radius: 100px;
-    	padding: 5px 10px;
+		/* border: 1px solid #cccccc;
+    	border-radius: 100px; */
+    	padding: 5px 0;
     	font-size: 1.3rem;
+    	padding-right: 25px;
 	}
 	.editPostContent :global(.selectContainer .selectedItem) {
-    	padding: 5px 10px;
+    	padding: 5px 0;
     	font-size: 1.3rem;
+    	width: 120px;
 	}
 	.editPostContent :global(.selectContainer .indicator) {
     	padding-right: 4px;

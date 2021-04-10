@@ -851,7 +851,7 @@
 
 	.channelSelectContainer {
 		position: absolute;
-		padding-top: 4px;
+    	padding-top: 2px;
     	padding-left: 16px;
 		display: flex;
 		align-items: center;
@@ -870,11 +870,11 @@
 	.editPostContent :global(.selectContainer input) {
 		border: 1px solid #cccccc;
     	border-radius: 100px;
-    	padding: 3px 10px;
+    	padding: 5px 10px;
     	font-size: 1.3rem;
 	}
 	.editPostContent :global(.selectContainer .selectedItem) {
-    	padding: 3px 10px;
+    	padding: 5px 10px;
     	font-size: 1.3rem;
 	}
 	.editPostContent :global(.selectContainer .indicator) {

@@ -67,6 +67,10 @@
     width: 170px;
     white-space: initial;
   }
+  
+  .item.active .itemDescription {
+    color: rgba(255, 255, 255, 0.8);
+  }
 </style>
 
 

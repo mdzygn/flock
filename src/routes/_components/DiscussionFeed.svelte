@@ -73,11 +73,11 @@
 
     let currentChannelId = null;
 
-    $: defaultChannel = $channels && getDefaultChannel();
+    $: defaultChannel = $channels && getDefaultChannel({projectId: $projectId});
     $: targetChannelId = currentChannelId || ($defaultChannel && $defaultChannel.id);
     
     $: curChannel = currentChannelId && $channels && getCurChannel(currentChannelId);
-    
+
     $: currentChannelTargetTitle = curChannel && $curChannel && $curChannel.title || 'General';
 	$: channelDescription = curChannel && $curChannel && ($curChannel.description || getChannelDefaultDescription($curChannel));
 

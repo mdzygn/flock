@@ -144,7 +144,7 @@ export function getDefaultChannel(options) {
 
 	const curChannels = get(channels);
 	if (curChannels) {
-		return get(channels).find(item => get(item).title === 'General'); // TODO: store default channel in a different way
+		return get(channels).find(item => get(item).projectId === options.projectId && get(item).title === 'General'); // TODO: store default channel in a different way
 	} else {
 		return null;
 	}

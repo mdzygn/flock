@@ -249,7 +249,7 @@
                         {/if}
                         <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
                     {/if}
-                    <EditPost targetPostType="{PostTypes.THREAD}" targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" />
+                    <EditPost targetPostType="{PostTypes.THREAD}" targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" showChannelSelect="{true}" {channels} smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" />
                 {/if}
             {/if}
         </ContentPanel>
@@ -379,6 +379,7 @@
 
     .discussionFeed :global(.editPostContent.inlineComponent .panelContent) {
         padding-top: 5px;
+        margin-bottom: -20px;
     }
 
     .discussionFeed :global(.editPostContent.inlineComponent .pageTitle) {

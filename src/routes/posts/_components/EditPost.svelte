@@ -4,6 +4,8 @@
 	import { onMount, tick, createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
+	import { get } from 'svelte/store';
+
 	import {
 		testInputDefocus,
 		// getUnformattedText,
@@ -13,9 +15,14 @@
 		gotoAnchor,
 	} from '../../../utils';
 
+	import {
+		displayChannelForUser,
+	} from '../../../models/channelsModel';
+
 	import Proxy from '../../../components/Proxy.svelte';
 
 	import Button from '../../../components/Button.svelte';
+	import Select from '../../../components/Select';
 
 	import ImageSelectionBox from '../../_components/ImageSelectionBox.svelte';
 
@@ -74,6 +81,21 @@
     export let targetPostType = null;
 
     export let targetChannelId = null;
+
+	export let showChannelSelect = false;
+
+	export let channels = null;
+	
+    $: channelItems = (channels && $channels) ? $channels.map(channel => {
+        // const noPosts = !itemModel.postCount;
+		// if (isTeamMember || channelModel.postCount || getIsBaseDisplayChannel(channelModel) || (following && !getIsTeamManagedChannel(channelModel))}
+		if (displayChannelForUser(channel, project)) {
+        	const channelModel = get(channel);
+        	return {label: '#' + channelModel.title, value: channelModel.id};
+		} else {
+			return null;
+		}
+    }).filter(item => item) : [];
 
 	let title = '';
 	export let message = '';
@@ -450,15 +472,25 @@
 				{/if}
 			{/if}
 
-			{#if !editPost}
-				<div class="fieldNote">{@html locale.NEW_THREAD.EDIT_NOTE}</div>
-			{:else}
-				<div class="fieldNote">{@html locale.NEW_THREAD.EDITING_NOTE}
-					{#if changesSaved}
-						<div><a href="{location.href}" on:click="{resetChanges}">{locale.NEW_THREAD.REST_ACTION}</a>{locale.NEW_THREAD.REST_NOTE}</div>
-					{/if}
+			{#if showChannelSelect}
+				<div class="channelSelectContainer">
+					<div class="channelSelectLabel">{locale.NEW_THREAD.CHANNEL_SELECT}</div>
+					<div class="channelSelectBoxContainer">
+						<Select items="{channelItems}" bind:selectedValueString="{targetChannelId}"></Select>
+					</div>
 				</div>
+			{:else}
+				{#if !editPost}
+					<div class="fieldNote">{@html locale.NEW_THREAD.EDIT_NOTE}</div>
+				{:else}
+					<div class="fieldNote">{@html locale.NEW_THREAD.EDITING_NOTE}
+						{#if changesSaved}
+							<div><a href="{location.href}" on:click="{resetChanges}">{locale.NEW_THREAD.REST_ACTION}</a>{locale.NEW_THREAD.REST_NOTE}</div>
+						{/if}
+					</div>
+				{/if}
 			{/if}
+
             <div class="actions">
                 {#if !editPost}
 					{#if inlineComponent}
@@ -796,8 +828,40 @@
 		width: 18px;
 		height: 18px;
 	}
-	.inlineComponent.useLibrary :global(.imageSelectionBox .searchFieldInput ) {
+	.inlineComponent.useLibrary :global(.imageSelectionBox .searchFieldInput) {
     	padding: 5px 11px;
     	font-size: 1.4rem;
+	}
+
+	.channelSelectContainer {
+		position: absolute;
+		padding-top: 4px;
+    	padding-left: 16px;
+		display: flex;
+		align-items: center;
+	}
+	.channelSelectLabel {
+		display: inline-block;
+    	font-size: 1.3rem;
+    	padding-right: 7px;
+	}
+	.channelSelectBoxContainer {
+		display: inline-block;
+	}
+	.editPostContent :global(.selectContainer) {
+    	width: 165px;
+	}
+	.editPostContent :global(.selectContainer input) {
+		border: 1px solid #cccccc;
+    	border-radius: 100px;
+    	padding: 3px 10px;
+    	font-size: 1.3rem;
+	}
+	.editPostContent :global(.selectContainer .selectedItem) {
+    	padding: 3px 10px;
+    	font-size: 1.3rem;
+	}
+	.editPostContent :global(.selectContainer .indicator) {
+    	padding-right: 4px;
 	}
 </style>

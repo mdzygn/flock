@@ -9,8 +9,10 @@ import { generateId } from '../utils';
 import loadingRequestUtil from '../utils/loadingRequestUtil';
 
 import {
+	user,
 	userId,
 	triggerShowPrompt,
+	getIsProjectTeamMember,
 } from '../models/appModel';
 
 import ChannelModel from '../models/channelModel';
@@ -254,6 +256,14 @@ export function addChannel(channelDetails) {
 	filterCurrentChannels();
 
 	return newChannelModel;
+}
+
+export function displayChannelForUser(channel, project) {
+	const isTeamMember = get(user) && getIsProjectTeamMember(get(project));
+	const projectModel = get(project);
+	const following = (projectModel && projectModel.following) || false;
+	const channelModel = get(channel);
+	return isTeamMember || channelModel.postCount || getIsBaseDisplayChannel(channelModel) || (following && !getIsTeamManagedChannel(channelModel));
 }
 
 export function getIsBaseDisplayChannel(channel) {

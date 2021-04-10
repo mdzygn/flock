@@ -221,6 +221,7 @@ const locale = {
 		REST_NOTE: ' your changes',
 		ADD_IMAGE: 'add image',
 		REMOVE_IMAGE: 'remove image',
+		CHANNEL_SELECT: 'Channel:',
 	},
 	EDIT_THREAD: {
 		PAGE_TITLE: 'Edit Post',

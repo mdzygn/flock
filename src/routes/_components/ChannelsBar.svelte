@@ -137,7 +137,7 @@
 
     .filterSet :global(.filterButton) {
         display: inline-block;
-        background-color: #e9e9e9;
+        background-color: #e6e6e6;
         /* background-color: #EEEEEE; */
 
         border-radius: 100px;
@@ -153,7 +153,7 @@
     }
 
     .filterSet :global(.filterButton.noPosts) {
-        background-color: #f3f3f3;
+        background-color: #f6f6f6;
     }
 
     .filterSet :global(.filterButton.selectedItem) {

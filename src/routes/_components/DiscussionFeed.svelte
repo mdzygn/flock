@@ -76,10 +76,11 @@
     $: defaultChannel = $channels && getDefaultChannel({projectId: $projectId});
     $: targetChannelId = currentChannelId || ($defaultChannel && $defaultChannel.id);
     
-    $: curChannel = currentChannelId && $channels && getCurChannel(currentChannelId);
+    $: curChannel = targetChannelId && $channels && getCurChannel(targetChannelId);
+    // $: curChannel = currentChannelId && $channels && getCurChannel(currentChannelId);
 
     $: currentChannelTargetTitle = curChannel && $curChannel && $curChannel.title || 'General';
-	$: channelDescription = curChannel && $curChannel && ($curChannel.description || getChannelDefaultDescription($curChannel));
+	$: channelDescription = currentChannelId && curChannel && $curChannel && ($curChannel.description || getChannelDefaultDescription($curChannel));
 
 
     function onChannelSelected(newChannelId) {
@@ -108,7 +109,8 @@
         curNumDisplayPosts = DEFAULT_DISPLAY_POSTS;
     }
 
-	$: canPost = (isTeamMember || !curChannel || ($curChannel && !$curChannel.teamOnly)) && !isArchived;
+	$: canPost = curChannel && $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
+	// $: canPost = (isTeamMember || !curChannel || ($curChannel && !$curChannel.teamOnly)) && !isArchived;
 	// $: canPost = isTeamMember && !isArchived;
 	// $: canPost = $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
     
@@ -175,7 +177,8 @@
     <!-- && (hasActiveChannels || isTeamMember || following) -->
     <div id="discussions" class="discussionFeed" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}" class:displayInline>
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
-        <ContentPanel title="{locale.PROJECT.CHANNELS_TITLE}" titleOnClick="{!displayInline ? 'projects/'+$projectId+'/channels' : null}" showEdit="{canEdit && $showBetaFeatures}">
+        <!-- titleOnClick="{!displayInline ? 'projects/'+$projectId+'/channels' : null}" -->
+        <ContentPanel title="{locale.PROJECT.CHANNELS_TITLE}" showEdit="{canEdit && $showBetaFeatures}">
             <Button className="viewAllChannels" onClick="{'projects/'+$projectId+'/channels'}">{locale.CHANNEL.VIEW_ALL_CHANNELS}</Button>
 
             <!-- {#if !isArchived && !displayInline}

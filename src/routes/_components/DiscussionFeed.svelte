@@ -269,9 +269,11 @@
         
         padding: 0 16px;
         font-size: 1.2rem;
-        border-top: 2px solid #EEEEEE;
         padding-top: 12px;
-        padding-bottom: 6px;
+        padding-bottom: 10px;
+
+        border-top: 2px solid #EEEEEE;
+        border-bottom: 2px solid #EEEEEE;
 	}
 
     .discussionFeed :global(.contentPanel) {
@@ -349,17 +351,12 @@
         /* background-color: #DDDDDD; */
 	}
 
-    .postsContainer :global(.contentLoader) {
+    /* .postsContainer :global(.contentLoader) {
         background-color: #f2f2f2;
         font-size: 1.3rem;
         line-height: 2.2rem;
-    }
+    } */
 
-    .postsContainer :global(.contentLoader) {
-        background-color: #f2f2f2;
-        font-size: 1.3rem;
-        line-height: 2.2rem;
-    }
     .postsContainer :global(.postItem) {
     	margin-bottom: 0;
 		border-bottom: 2px solid #EEEEEE;
@@ -456,7 +453,7 @@
         padding-bottom: 4px;
         /* padding-top: 0; */
 
-        color: #666666;
+        color: #999999;
         font-size: 1.3rem;
     }
 

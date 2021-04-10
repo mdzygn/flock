@@ -34,7 +34,8 @@
 
     $: itemSet = $channels ? $channels.map(item => {
         const itemModel = get(item);
-        return {label: '#' + itemModel.title, title: itemModel.title, value: itemModel.id, channelModel: itemModel};
+        const noPosts = !itemModel.postCount;
+        return {label: '#' + itemModel.title, title: itemModel.title, value: itemModel.id, channelModel: itemModel, noPosts};
     }) : [];
 
     $: items = [{label: 'All', title: null, value: null}, ...itemSet];
@@ -99,9 +100,10 @@
 <div class="filterBar">
     <div class="filterScrollRegion" bind:this="{scrollRegion}">
         <div class="filterSet">
-            {#each items as channel}
-                {#if !channel.channelModel || isTeamMember || channel.channelModel.postCount || getIsBaseDisplayChannel(channel.channelModel) || (following && !getIsTeamManagedChannel(channel.channelModel))}
-                    <Button className="filterButton {channel.value === currentChannelId ? 'selectedItem' : ''}" onClick={e => selectFilter(channel)}>{channel.label}</Button>
+            {#each items as item}
+                <!-- TODO move check here into list build -->
+                {#if !item.channelModel || isTeamMember || item.channelModel.postCount || getIsBaseDisplayChannel(item.channelModel) || (following && !getIsTeamManagedChannel(item.channelModel))}
+                    <Button className="filterButton {item.value === currentChannelId ? 'selectedItem' : ''} {item.noPosts ? 'noPosts' : ''}" onClick={e => selectFilter(item)}>{item.label}</Button>
                     <!-- <Button className="filterButton {(index ? filterString.match(new RegExp('\\b' + item + '\\b')) : filterString === '') ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item}</Button> -->
                 {/if}
             {/each}
@@ -135,7 +137,8 @@
 
     .filterSet :global(.filterButton) {
         display: inline-block;
-        background-color: #EEEEEE;
+        background-color: #e9e9e9;
+        /* background-color: #EEEEEE; */
 
         border-radius: 100px;
 
@@ -149,13 +152,16 @@
         color: #0D0D0D;
     }
 
-    .filterSet :global(.selectedItem) {
+    .filterSet :global(.filterButton.noPosts) {
+        background-color: #f3f3f3;
+    }
+
+    .filterSet :global(.filterButton.selectedItem) {
         border: 2px solid #242424;
         background-color: initial;
 
         padding: 0px 8px;
     }
-
 
     .filterSet :global(.buttonContent) {
         display: inline-block;

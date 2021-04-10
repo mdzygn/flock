@@ -7,7 +7,14 @@
     import { get, writable } from 'svelte/store';
 
 	import {
+		getIsProjectTeamMember,
+        user,
+    } from '../../models/appModel';
+    
+	import {
 		getChannels,
+        getIsBaseDisplayChannel,
+        getIsTeamManagedChannel,
     } from '../../models/channelsModel';
 
     export let project;
@@ -17,6 +24,9 @@
     export let currentChannelId = null;
     export let currentChannelTitle = null;
 
+    $: isTeamMember = $user && getIsProjectTeamMember($project);
+    $: following = ($project && $project.following) || false;
+
     let channels = writable(null);
     $: { channels = $project && getChannels( { projectId: $project.id } ) };
 
@@ -24,7 +34,7 @@
 
     $: itemSet = $channels ? $channels.map(item => {
         const itemModel = get(item);
-        return {label: '#' + itemModel.title, title: itemModel.title, value: itemModel.id};
+        return {label: '#' + itemModel.title, title: itemModel.title, value: itemModel.id, channelModel: itemModel};
     }) : [];
 
     $: items = [{label: 'All', title: null, value: null}, ...itemSet];
@@ -89,9 +99,11 @@
 <div class="filterBar">
     <div class="filterScrollRegion" bind:this="{scrollRegion}">
         <div class="filterSet">
-            {#each items as item}
-                <Button className="filterButton {item.value === currentChannelId ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item.label}</Button>
-                <!-- <Button className="filterButton {(index ? filterString.match(new RegExp('\\b' + item + '\\b')) : filterString === '') ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item}</Button> -->
+            {#each items as channel}
+                {#if !channel.channelModel || isTeamMember || channel.channelModel.postCount || getIsBaseDisplayChannel(channel.channelModel) || (following && !getIsTeamManagedChannel(channel.channelModel))}
+                    <Button className="filterButton {channel.value === currentChannelId ? 'selectedItem' : ''}" onClick={e => selectFilter(channel)}>{channel.label}</Button>
+                    <!-- <Button className="filterButton {(index ? filterString.match(new RegExp('\\b' + item + '\\b')) : filterString === '') ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item}</Button> -->
+                {/if}
             {/each}
         </div>
     </div>

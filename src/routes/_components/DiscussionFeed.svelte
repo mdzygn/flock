@@ -380,7 +380,7 @@
     .postsRegionContainer {
         padding-top: 3px;
         background-color: #DDDDDD;
-        min-height: 150px;
+        min-height: 250px;
     }
 
 	/* .postsContainer { */

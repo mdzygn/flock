@@ -164,7 +164,6 @@ const locale = {
 		NO_POSTS: 'this post has no comments',
 		REPLY: 'Add Reply',
 		REPLY_PLACEHOLDER: 'Add reply...',
-		
 		ADD_POST_CTA_PREFIX: 'be the first to ',
 		ADD_POST_CTA: 'Leave a Reply',
 	},

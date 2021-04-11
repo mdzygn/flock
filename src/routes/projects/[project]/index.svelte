@@ -207,6 +207,11 @@
 	$: projectHasDetails = getProjectHasDetails($project);
 	$: showInfo = ($projectShowingInfo || forceProjectShowingInfo) && projectHasDetails;
 	
+	$: showReadMore = projectHasDetails && !showInfo && $projectReturnView;
+	$: addProjectDetails = !showReadMore && isTeamMember && !projectHasDetails && !isArchived;
+	$: showMakePublicButton = isTeamMember && isNew && !isPublic;
+	$: showFollowButton = (!$projectReturnView || showInfo) && !isTeamMember;
+
 	let projectPosts = writable([]);
 	$: { projectPosts = getPosts( { projectId: $projectId, type: 'projectPost', sortByCreated: true, createNewSet: true } ) }; // 'thread'
 	function onPostsUpdated() {
@@ -357,8 +362,33 @@
 							</div>
 						{/if}
 						<div class="projectActions">
-							<!-- <div class="projectActionButtons"> --><!-- TODO: keep outside but scale height depending on child elements -->
-								{#if projectHasDetails && !showInfo && $projectReturnView}
+							{#if showReadMore || addProjectDetails || showMakePublicButton || showFollowButton}
+								<div class="projectActionButtons"> <!-- TODO: keep outside but scale height depending on child elements -->
+
+									{#if showReadMore}
+										<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
+									{:else if addProjectDetails}
+										<Button className="addProjectDetailsButton" onClick="{() => editProjectDetails({editingProjectMode: 'addDetails'})}" icon="{AddDetailsIcon}">add project details</Button>
+									{/if}
+
+									{#if isTeamMember}
+										{#if showMakePublicButton}
+											<Button className="makePublicButton isButton" onClick="{showTogglePublicDialog}">make public</Button>
+										{/if}
+									{:else}
+										<!-- <Button disabled="{!$showBetaFeatures}" className="sendMessageButton" onClick="{e => loadConversationByProject($projectId)}" icon="{SendMessageIcon}">message</Button> -->
+									{/if}
+
+									{#if showFollowButton}
+										<!-- <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}">like</Button> -->
+										<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<!-- <div class="countContainer">
+											<div class="count">{followCount}</div>
+										</div>--></Button>
+									{/if}
+								</div>
+							{/if}
+
+								<!-- {#if projectHasDetails && !showInfo && $projectReturnView}
 									<div class="projectActionButtons">
 										<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 									</div>
@@ -368,28 +398,27 @@
 									</div>
 								{/if}
 
-								{#if !isTeamMember}
-									<!-- <Button disabled="{!$showBetaFeatures}" className="sendMessageButton" onClick="{e => loadConversationByProject($projectId)}" icon="{SendMessageIcon}">message</Button> -->
-								{:else if isNew && !isPublic}
-									{#if !isArchived}
-										<div class="projectActionButtons">
-											<Button className="makePublicButton isButton" onClick="{showTogglePublicDialog}">make public</Button>
-										</div>
+								{#if isTeamMember}
+									{if isNew && !isPublic}
+										{#if !isArchived}
+											<div class="projectActionButtons">
+												<Button className="makePublicButton isButton" onClick="{showTogglePublicDialog}">make public</Button>
+											</div>
+										{/if}
 									{/if}
-								{:else}
-									<!-- <Button disabled="{!$showBetaFeatures}" className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
+									<Button disabled="{!$showBetaFeatures}" className="messagesButton" href="projects/{$projectId}/messages" icon="{MessagesIcon}">messages
 										<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
-									</Button> -->
+									</Button>
+								{:else}
+									<Button disabled="{!$showBetaFeatures}" className="sendMessageButton" onClick="{e => loadConversationByProject($projectId)}" icon="{SendMessageIcon}">message</Button>
 								{/if}
-								
+
 								{#if (!$projectReturnView || showInfo) && !isTeamMember}
 									<div class="projectActionButtons">
-										<!-- <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}">like</Button> -->
-										<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}<!-- <div class="countContainer">
-											<div class="count">{followCount}</div>
-										</div>--></Button>
+										<Button className="followButton {!following ? 'isButton' : ''}" onClick="{toggleFollowing}" icon="{following ? FollowSelectedIcon : FollowIcon}">{following ? 'following' : 'follow'}</Button>
 									</div>
-								{/if}
+								{/if} -->
+
 							{#if (!$projectReturnView || showInfo) && (projectType || projectLocation)}
 								<div class="infoContainer">
 									{#if projectType}

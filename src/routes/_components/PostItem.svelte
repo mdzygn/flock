@@ -383,23 +383,27 @@
         padding-bottom: 5px;
         
         padding-left: 66px;
-        padding-right: 60px;
+
+        padding-right: 52px;
 
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
+    .showOptionsButton .userName {
+        padding-right: 68px;
+    }
     .showReplyIcon .userName {
-        padding-right: 77px;
+        padding-right: 92px;
     }
     .showRepliesIcon .userName {
-        padding-right: 82px;
+        padding-right: 92px;
     }
     .showReplyIcon.showOptionsButton .userName {
-        padding-right: 82px;
+        padding-right: 108px;
     }
     .showRepliesIcon.showOptionsButton .userName {
-        padding-right: 96px;
+        padding-right: 108px;
     }
     /* .userName.showReplyIcon {
         padding-right: 20px;

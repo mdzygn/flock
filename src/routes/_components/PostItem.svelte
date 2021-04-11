@@ -534,29 +534,30 @@
 
     .postItem :global(.likeButton) {
         position: absolute;
-        right: -4px;
-        top: 8px;
-        width: 30px;
-        margin-right: 9px;
+        right: 13px;
+        top: 10px;
+        width: 26px;
+        /* width: 30px;
+        margin-right: 9px; */
         height: 20px;
         padding: 6px;
     }
     .postItem.showOptionsButton :global(.likeButton) {
-        right: -2px;
+        right: 14px;
     }
     .postItem :global(.likeButton .icon) {
-        margin-top: -3px;
+        margin-top: -8px;
     }
     .postItem.showReplyIcon :global(.likeButton) {
-        right: 30px;
+        right: 53px;
     }
     .postItem.showRepliesIcon :global(.likeButton) {
-        right: 40px;
+        right: 53px;
     }
 
-    .count {
+    .postItem :global(.likeButton .count) {
         position: absolute;
-        margin-top: 3px;
+        margin-top: 1px;
         margin-left: 23px;
         /* width: 20px;
         text-align: center; */
@@ -568,8 +569,14 @@
 
     .postItem :global(.commentButton) {
         position: absolute;
-        right: 48px;
-        top: 16px;
+        /* right: 48px;
+        top: 16px; */
+
+        right: 4px;
+        top: 10px;
+        padding: 6px;
+        width: 38px;
+        height: 20px;
     }
     .commentIcon {
         position: absolute;
@@ -578,6 +585,12 @@
         background-repeat: no-repeat;
         width: 17px;
         height: 17px;
+    }
+
+    .buttonGroup {
+        position: absolute;
+        top: 0px;
+        right: 0;
     }
 
     .buttonGroup.buttonGroupOffset {
@@ -606,6 +619,7 @@
         position: absolute;
         margin-top: -1px;
         margin-left: 20px;
+        color: #444444;
     }
     .postItem :global(.counter) {
         height: 18px;
@@ -626,7 +640,7 @@
 
     .replyIcon {
         position: absolute;
-        right: 18px;
+        right: 23px;
         top: 13px;
         /* right: 19px;
         top: 15px; */
@@ -640,11 +654,9 @@
         display: none;
         /* right: 29px; */
     }
-    .postItem.showUnseenIcon :global(.likeButton) {
+    /* .postItem.showUnseenIcon :global(.likeButton) {
         right: -4px;
-        /* right: 16px; */
-        /* right: 38px; */
-    }
+    } */
 
     .unseenIcon {
         position: absolute;
@@ -664,6 +676,10 @@
         top: 10px;
         height: 32px;
         width: 32px;
+    }
+    .postItem.compactView .buttonGroup {
+        top: -6px;
+        right: -4px;
     }
     .postItem.compactView .userName {
         padding-top: 7px;

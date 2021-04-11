@@ -380,7 +380,8 @@
     .postsRegionContainer {
         padding-top: 3px;
         background-color: #DDDDDD;
-        min-height: 250px;
+        min-height: 200px;
+        padding-bottom: 30px;
     }
 
 	/* .postsContainer { */
@@ -494,12 +495,19 @@
         color: #666666;
     }
 
+    .postsContainer :global(.postItem:last-child) {
+		border-bottom: none;
+	}
+
     .postsFooter {
         position: relative;
 
         display: flex;
         flex-direction: column;
+
+        background-color: #ffffff;
         
+        border-top: 2px solid #EEEEEE;
         /* border-bottom: 2px solid #EEEEEE; */
 
         /* margin-top: -5px; */

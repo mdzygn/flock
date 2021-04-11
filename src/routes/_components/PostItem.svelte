@@ -502,7 +502,8 @@
 
     .postItem :global(.channelTag) {
         display: inline-block;
-        font-size: 1rem;
+        font-size: 1.1rem;
+        font-weight: 700;
         color: #0D0D0D;
 
         padding: 4px 6px;
@@ -692,7 +693,7 @@
     } */
 
     .postItem.hasThumb .info {
-        min-height: 50px;
+        min-height: 49px;
     }
 
     .postItem.compactView {

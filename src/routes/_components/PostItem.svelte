@@ -219,6 +219,13 @@
         }
     }
 
+    function replyCurrentPost(event) {
+        if (postId) {
+            stopEvent(event);
+            loadPost(postId, { reply: true });
+        }
+    }
+
     // function getChannel() {
     function getChannelTagTitle() {
 		const curChannel = $channels.find(match => get(match).id === channelId);
@@ -284,7 +291,8 @@
             </Button>
         {:else if !isArchived}
             {#if showReplyIcon}
-                <div class="replyIcon" style="background-image: url({ReplyIcon})"/>
+                <Button className="replyButton" icon="{ReplyIcon}" onClick="{replyCurrentPost}"></Button>
+                <!-- <div class="replyIcon" style="background-image: url({ReplyIcon})"/> -->
             {/if}
         {/if}
         {#if showUnseenIcon}
@@ -602,6 +610,36 @@
         height: 17px;
     }
 
+    .postItem :global(.replyButton) {
+        position: absolute;
+
+        right: 16px;
+        top: 10px;
+        padding: 6px;
+        width: 22px;
+        height: 20px;
+    }
+    .postItem :global(.replyButton .icon) {
+        margin-top: -8px;
+    }
+
+    /* .replyIcon {
+        position: absolute;
+        right: 23px;
+        top: 13px;
+
+        background-size: cover;
+        width: 22px;
+        height: 22px;
+    } */
+
+    /* .postItem.showUnseenIcon .replyIcon {
+        display: none;
+    } */
+    /* .postItem.showUnseenIcon :global(.likeButton) {
+        right: -4px;
+    } */
+
     .buttonGroup {
         position: absolute;
         top: 0px;
@@ -650,26 +688,6 @@
         background-color: initial;
         font-size: 1rem;
         color: #333333;
-    } */
-
-
-    .replyIcon {
-        position: absolute;
-        right: 23px;
-        top: 13px;
-        /* right: 19px;
-        top: 15px; */
-
-        background-size: cover;
-        width: 22px;
-        height: 22px;
-    }
-
-    /* .postItem.showUnseenIcon .replyIcon {
-        display: none;
-    } */
-    /* .postItem.showUnseenIcon :global(.likeButton) {
-        right: -4px;
     } */
 
     .postItem.compactView {

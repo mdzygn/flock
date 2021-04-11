@@ -119,6 +119,8 @@ import AppModel, {
     signInRequired,
 
     debugOutput,
+
+    triggerReply,
 } from '../models/appModel';
 
 ConversationsModel.on('conversationAdded', onConversationAdded);
@@ -339,7 +341,7 @@ export function addAndSetConversation(conversation) {
     }
 }
 
-export function loadPost(targetPostId, options) {
+export async function loadPost(targetPostId, options) {
     loadPosts({ id: targetPostId, getFollowState: true });
 
     postId.set(targetPostId);
@@ -351,6 +353,13 @@ export function loadPost(targetPostId, options) {
     if (!path || !path.match(/posts\/.+\/edit/)) {
         gotoRoute('posts/' + targetPostId );
         resetScrollRegionPosition('thread');
+
+        await tick();
+        setTimeout(() => {
+            if (options && options.reply) {
+                triggerReply();
+            }
+        }, 200); // find better way, don't scroll to bottom
     }
 }
 

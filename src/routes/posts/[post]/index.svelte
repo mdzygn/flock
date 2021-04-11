@@ -115,6 +115,10 @@
 		newThreadPost();
 	}
 
+	function onReply() {
+		reply();
+	}
+
 	async function onNewThreadPost() {
 		showAddPost = true;
 
@@ -186,12 +190,14 @@
 		threadSeenTimeout = setNotificationSeenTimeout({threadId: $postId}, config.REPLY_VIEWED_DELAY);
 
 		AppModel.on('newThreadPost', onNewThreadPost);
+		AppModel.on('reply', onReply);
 	});
 	onDestroy(() => {
 		clearNotificationSeenTimeout(postSeenTimeout);
 		clearNotificationSeenTimeout(threadSeenTimeout);
 
 		AppModel.off('newThreadPost', onNewThreadPost);
+		AppModel.off('reply', onReply);
 	});
 </script>
 

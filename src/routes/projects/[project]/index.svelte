@@ -130,6 +130,11 @@
 		showShareProjectDialog($projectId);
 	}
 
+	function editCurrentProjectDetails(event) {
+		stopEvent(event);
+		editProjectDetails({editingProjectMode: 'addDetails'});
+	}
+
 	function showProjectOptions() {
 		if (isTeamMember) {
 			showMenu(menuIds.PROJECT_OWNER_MENU);
@@ -328,7 +333,11 @@
 										<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 									{/if}
 								{:else}
-									<div class="overviewHeader" class:button="{!forceProjectShowingInfo}" on:click="{!forceProjectShowingInfo ? hideProjectInfo : null}">{locale.PROJECT.OVERVIEW_HEADER}</div>
+									<div class="overviewHeader" class:button="{!forceProjectShowingInfo}" on:click="{!forceProjectShowingInfo ? hideProjectInfo : null}">{locale.PROJECT.OVERVIEW_HEADER}
+										{#if isTeamMember}
+											<Button className="editDetailsButton editButton" onClick="{editCurrentProjectDetails}" icon="{EditIcon}"></Button>
+										{/if}
+									</div>
 								{/if}
 								<!-- {:else if !forceProjectShowingInfo}
 									<Button className="infoCollapseButton" onClick="{hideProjectInfo}" icon="{HideInfoIcon}" />
@@ -367,7 +376,7 @@
 									{#if showReadMore}
 										<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 									{:else if addProjectDetails}
-										<Button className="addProjectDetailsButton" onClick="{() => editProjectDetails({editingProjectMode: 'addDetails'})}" icon="{AddDetailsIcon}">add project details</Button>
+										<Button className="addProjectDetailsButton" onClick="{editCurrentProjectDetails}" icon="{AddDetailsIcon}">add project details</Button>
 									{/if}
 
 									{#if isTeamMember}
@@ -677,6 +686,16 @@
     	padding: 8px 6px;
 	}
 
+    .contentContainer :global(.editDetailsButton) {
+		top: -6px;
+		right: 14px;
+		width: 23px;
+		height: 25px;
+	}
+    .contentContainer :global(.editDetailsButton .icon) {
+    	transform: scale(0.42, 0.42);
+	}
+
     .contentContainer :global(.audienceButton) {
 		position: absolute;
 		top: 21px;
@@ -697,6 +716,8 @@
 	}
 
 	.overviewHeader {
+		position: relative;
+
 		padding: 10px;
 		padding-right: 30px;
     	padding-top: 2px;

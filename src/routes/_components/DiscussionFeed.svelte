@@ -211,7 +211,7 @@
                     <div class="postsContainer">
                         {#each $posts as post, index}
                             {#if index < curNumDisplayPosts}
-                                <PostItem {post} showChannelTags="{!currentChannelId}" onChannelSelect="{onChannelTagSelect}" />
+                                <PostItem {post} compactView="{true}" showChannelTags="{!currentChannelId}" onChannelSelect="{onChannelTagSelect}" />
                             {/if}
                         {/each}
                         <!-- {:else}
@@ -440,7 +440,7 @@
         flex-direction: column;
         
         border-bottom: 2px solid #EEEEEE;
-        margin-top: -5px;
+        /* margin-top: -5px; */
     }
 
     .discussionFeed :global(.showMorePostsButton) {

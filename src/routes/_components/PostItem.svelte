@@ -63,8 +63,9 @@
 
     export let type = 'thread';
 
-    export let showChannelTags = false;
+    export let compactView = false;
 
+    export let showChannelTags = false;
     export let onChannelSelect = null;
 
     let showFullImage = false;
@@ -261,7 +262,7 @@
     }
 </script>
 
-<div class="postItem" class:hasThumb="{!!thumbImageSrc}" class:button="{canLinkThrough}" class:onlyImageShown="{showFullImage && !title && !message}" on:click="{canLinkThrough ? loadCurrentPost : null}"
+<div class="postItem" class:hasThumb="{!!thumbImageSrc}" class:button="{canLinkThrough}" class:onlyImageShown="{showFullImage && !title && !message}" class:compactView="{compactView}" on:click="{canLinkThrough ? loadCurrentPost : null}"
     class:showReplyIcon="{showReplyIcon}"
     class:showRepliesIcon="{showRepliesIcon}"
     class:showOptionsButton="{showOptionsButton}"
@@ -310,12 +311,12 @@
         {#if message}
             <div class="message" class:selectable="{textSelectable}" class:messageLimited="{messageLimited && !messageLimitedSingleLine}" class:messageLimitedSingleLine="{messageLimitedSingleLine}" class:messageNotLimited="{!messageLimited && !messageLimitedSingleLine}">{@html  messageHTML}</div>
         {/if}
-        {#if showChannelTags && channelTagTitle}
-            <div class="channelTagContainer">
-                <Button className="channelTag" onClick="{loadCurrentChannel}">#{channelTagTitle}</Button>
-            </div>
-        {/if}
     </div>
+    {#if showChannelTags && channelTagTitle}
+        <div class="channelTagContainer">
+            <Button className="channelTag" onClick="{loadCurrentChannel}">#{channelTagTitle}</Button>
+        </div>
+    {/if}
     {#if image && !useThumbImage}
         <div class="postImageContainer" class:button="{canMaximizeImage}" on:click="{canMaximizeImage ? toggleFullImage : null}" class:showFullImage="{showFullImage}">
             <img class="postImage" src="{imageSrc}" alt="{title || 'post'}" />
@@ -477,17 +478,23 @@
     }
 
     .channelTagContainer {
-        margin-top: 2px;
+        padding-left: 66px;
+        padding-bottom: 2px;
+        margin-top: -10px;
+    
+        /* margin-top: 2px;
         margin-bottom: -12px;
-        margin-left: -1px;
-        /* margin-top: 6px;
-        margin-bottom: -6px; */
+        margin-left: -1px; */
     }
 
     .postItem :global(.channelTag) {
         display: inline-block;
         font-size: 1rem;
         color: #0D0D0D;
+
+        padding: 4px 6px;
+        margin-left: -6px;
+
         /* background-color: #EEEEEE; */
         /* border-radius: 100px; */
         /* padding: 0px 6px; */
@@ -648,5 +655,38 @@
         height: 12px;
         background-color: #DF3C3C;
         border-radius: 999px;
+    }
+
+    .postItem.compactView {
+        margin-bottom: 0;
+    }
+    .postItem.compactView :global(.avatarIcon) {
+        top: 10px;
+        height: 32px;
+        width: 32px;
+    }
+    .postItem.compactView .userName {
+        padding-top: 7px;
+        
+        padding-left: 58px;
+    }
+    .postItem.compactView .info {
+        padding-bottom: 11px;
+        
+        padding-left: 58px;
+    }
+    .postItem.compactView.hasThumb .info {
+        padding-top: 0;
+
+        padding-left: 120px;
+        min-height: 50px;
+    }
+    .postItem.compactView .thumb {
+        top: 32px;
+        
+        left: 57px;
+    }
+    .postItem.compactView .channelTagContainer {
+        padding-left: 58px;
     }
 </style>

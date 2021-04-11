@@ -7,14 +7,15 @@
     import { get, writable } from 'svelte/store';
 
 	import {
-		getIsProjectTeamMember,
-        user,
+		// getIsProjectTeamMember,
+        // user,
     } from '../../models/appModel';
     
 	import {
 		getChannels,
-        getIsBaseDisplayChannel,
-        getIsTeamManagedChannel,
+        // getIsBaseDisplayChannel,
+        // getIsTeamManagedChannel,
+		displayChannelForUser,
     } from '../../models/channelsModel';
 
     export let project;
@@ -23,8 +24,8 @@
 
     export let currentChannelId = null;
 
-    $: isTeamMember = $user && getIsProjectTeamMember($project);
-    $: following = ($project && $project.following) || false;
+    // $: isTeamMember = $user && getIsProjectTeamMember($project);
+    // $: following = ($project && $project.following) || false;
 
     let channels = writable(null);
     $: { channels = $project && getChannels( { projectId: $project.id } ) };
@@ -34,8 +35,12 @@
     $: itemSet = $channels ? $channels.map(item => {
         const itemModel = get(item);
         const noPosts = !itemModel.postCount;
-        return {label: '#' + itemModel.title, title: itemModel.title, value: itemModel.id, channelModel: itemModel, noPosts};
-    }) : [];
+        if (displayChannelForUser(item, project)) {
+            return {label: '#' + itemModel.title, value: itemModel.id, title: itemModel.title, noPosts}; // , channelModel: itemModel
+        } else {
+            return null;
+        }
+    }).filter(item => item) : [];
 
     $: items = [{label: 'All', title: null, value: null}, ...itemSet];
     // $: items = ['all', ...itemSet];
@@ -100,10 +105,10 @@
         <div class="filterSet">
             {#each items as item}
                 <!-- TODO move check here into list build -->
-                {#if !item.channelModel || isTeamMember || item.channelModel.postCount || getIsBaseDisplayChannel(item.channelModel) || (following && !getIsTeamManagedChannel(item.channelModel))}
+                <!-- {#if !item.channelModel || isTeamMember || item.channelModel.postCount || getIsBaseDisplayChannel(item.channelModel) || (following && !getIsTeamManagedChannel(item.channelModel))} -->
                     <Button className="filterButton {item.value === currentChannelId ? 'selectedItem' : ''} {item.noPosts ? 'noPosts' : ''}" onClick={e => selectFilter(item)}>{item.label}</Button>
                     <!-- <Button className="filterButton {(index ? filterString.match(new RegExp('\\b' + item + '\\b')) : filterString === '') ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item}</Button> -->
-                {/if}
+                <!-- {/if} -->
             {/each}
         </div>
     </div>

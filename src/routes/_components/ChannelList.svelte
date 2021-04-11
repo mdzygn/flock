@@ -18,9 +18,10 @@
 
 	import {
 		getChannels,
-        getIsTeamManagedChannel,
+        // getIsTeamManagedChannel,
         loadingChannels,
         getIsBaseDisplayChannel,
+        displayChannelForUser
     } from '../../models/channelsModel';
 
 	import {
@@ -114,7 +115,8 @@
                 {#if $channels && $channels.length && (hasActiveChannels || viewAllChannels)}
                     <div class="channelListContainer">
                         {#each $channels as channel}
-                            {#if isTeamMember || get(channel).postCount || getIsBaseDisplayChannel(get(channel)) || (following && !getIsTeamManagedChannel(get(channel)))}
+                            <!-- {#if isTeamMember || get(channel).postCount || getIsBaseDisplayChannel(get(channel)) || (following && !getIsTeamManagedChannel(get(channel)))} -->
+                            {#if displayChannelForUser(channel, project)}
                                 <ChannelListItem channel="{channel}" />
                             {/if}
                         {/each}

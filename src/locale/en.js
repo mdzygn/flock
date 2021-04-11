@@ -163,6 +163,9 @@ const locale = {
 		REPLY: 'Add Reply',
 		REPLY_PLACEHOLDER: 'Add reply...',
 	},
+	TEAM: {
+		TITLE: 'Project Team', // 'Team',
+	},
 	POST: {
 		EDITED: 'edited'
 	},
@@ -177,7 +180,7 @@ const locale = {
 		// FOLLOWER_GET_STARTED: 'no posts yet - be the first!',
 		FOLLOWER_GET_STARTED: 'share your thoughts',
 		GET_INVOLVED: 'share your thoughts',
-		CHANNELS_TITLE: 'Discussions', // Discussions, Channels
+		CHANNELS_TITLE: 'Project Discussions', // 'Discussions', // Discussions, Channels
 		CHANNELS_FOLLOW_LINK: 'Follow',
 		CHANNELS_FOLLOW: ' this project to view discussion channels and get involved.',
 		CHANNELS_FOLLOW_ALL: ' this project to view all discussion channels and get involved.',
@@ -252,11 +255,11 @@ const locale = {
 		// Questions and Answers - General questions or queries on how to use the app
 		GENERAL: 'General project discussion',
 		WORKSHOP: 'Work in progress and calls for feedback from the team',
-		QUESTIONS: 'Questions from the community', // 'Questions from the community',
+		QUESTIONS: 'Questions about the project from the community', // 'Questions from the community',
 		// Current Features Discussion - Discussion of current features and functionality
 		// ISSUES: 'Issues and bugs',
 		ISSUES: 'Issues, bugs and problems',
-		IDEAS: 'Ideas and suggestions', // recommendations
+		IDEAS: 'Project ideas and suggestions', // recommendations
 		INSPIRATION: 'Inspirational references and links',
 		RANDOM: 'Off-topic discussions and links',
 		SUGGESTIONS: 'Suggestions to improve the community',

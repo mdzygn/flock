@@ -1,4 +1,6 @@
 <script>
+	import locale from '../../locale';
+
     import ContentPanel from './ContentPanel.svelte';
 
     import TeamMemberItem from './TeamMemberItem.svelte';
@@ -82,7 +84,7 @@
                 height: 56px;" />
         </Proxy> -->
 
-        <ContentPanel title="Team" showEdit="{canRemove}" editAction="{onEditTeamMembers}"> <!-- showMoreAction="{areMoreItems}" -->
+        <ContentPanel title="{locale.TEAM.TITLE}" showEdit="{canRemove}" editAction="{onEditTeamMembers}"> <!-- showMoreAction="{areMoreItems}" -->
             {#if canEdit}
                 <Button className="addTeamMembersButton{canRemove ? ' canRemove' : ''}" icon="{AddIcon}" onClick="{addTeamMembers}">add team members</Button>
             {/if}

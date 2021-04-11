@@ -363,8 +363,7 @@
 						{/if}
 						<div class="projectActions">
 							{#if showReadMore || addProjectDetails || showMakePublicButton || showFollowButton}
-								<div class="projectActionButtons"> <!-- TODO: keep outside but scale height depending on child elements -->
-
+								<div class="projectActionButtons">
 									{#if showReadMore}
 										<Button className="readMoreButton" onClick="{showProjectInfo}">read more</Button>
 									{:else if addProjectDetails}

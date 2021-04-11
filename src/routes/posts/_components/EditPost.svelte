@@ -146,9 +146,11 @@
 	$: showTitleField = trim(title); // (curPostType === 'thread'); // 
 
 	$: imageType = (curPostType === 'thread') ? 'image/jpeg' : null;
-	$: useLibrary = (curPostType === 'thread' || isProjectPost) ? true : false; // TODO: isProjectPost temporary for testing
+	$: useLibrary = (isProjectPost) ? true : false;
+	// $: useLibrary = (curPostType === 'thread' || isProjectPost) ? true : false;
 
-	$: showImageOption = true; // (curPostType === 'thread');
+	$: showImageOption = true;
+	// (curPostType === 'thread');
 
 	$: isProjectPost = (curPostType === 'projectPost');
 	// $: isProjectPost = $postType === 'projectPost';

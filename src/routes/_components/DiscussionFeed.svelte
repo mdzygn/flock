@@ -546,7 +546,7 @@
         color: #666666;
     }
 
-    .discussionFeed :global(.postItem .avatarIcon) {
+    .discussionFeed :global(.postsContainer .postItem .avatarIcon) {
         left: 22px;
         top: 19px;
         width: 34px;

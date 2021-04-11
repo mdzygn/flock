@@ -25,12 +25,14 @@
 	import Counter from '../../_components/Counter.svelte';
 	import Location from '../../_components/Location.svelte';
 	import Audience from '../../_components/Audience.svelte';
+	import MoreInfoPanel from '../../_components/MoreInfoPanel.svelte';
 	import ProjectCollaboratePanel from '../../_components/ProjectCollaboratePanel.svelte';
 	import ProjectSkillsList from '../../_components/ProjectSkillsList.svelte';
 	import ProjectLinks from '../../_components/ProjectLinks.svelte';
 	import DiscussionFeed from '../../_components/DiscussionFeed.svelte';
 	import ContentLoader from '../../_components/ContentLoader.svelte';
 	import ProjectPostItem from '../../_components/ProjectPostItem.svelte';
+	import UsersMiniList from '../../_components/UsersMiniList.svelte';
 
     import SendMessageIcon from "../../../assets/icons/send.png";
 	import OptionsMenuIcon from "../../../assets/icons/menu.png";
@@ -38,6 +40,9 @@
 	import AddDetailsIcon from "../../../assets/icons/add_highlight.png";
 	import EditIcon from "../../../assets/icons/edit.png";
 	import MessagesIcon from "../../../assets/icons/nav_messages.png";
+
+    import CollaborateCheckedIcon from "../../../assets/icons/collaborate_checked.png";
+    import CollaborateUncheckedIcon from "../../../assets/icons/collaborate_unchecked.png";
 
     import LikeIcon from "../../../assets/icons/like.png";
     import LikeSelectedIcon from "../../../assets/icons/like_selected.png";
@@ -181,6 +186,8 @@
 	$: liked = ($project && $project.liked) || false;
 	$: isPublic = ($project && $project.public) || false;
 
+    $: teamMembers = ($project && $project.team) || null;
+
 	$: canEdit = (isTeamMember && !$project.archived) || false;
 	$: isArchived = (isTeamMember && $project && $project.archived) || false;
 
@@ -275,21 +282,11 @@
 		}
 	}
 
-	// $: {
-	// 	if (isTeamMember) {
-	// 		if (isNew) {
-	// 			proxyChannelsImage = 'project_channels_populate';
-	// 		} else {
-	// 			proxyChannelsImage = 'project_channels_owner';
-	// 		}
-	// 	} else {
-	// 		if (following) {
-	// 			proxyChannelsImage = 'project_channels_following';
-	// 		} else {
-	// 			proxyChannelsImage = 'project_channels';
-	// 		}
-	// 	}
-	// }
+    let interestedToCollaborate = false;
+
+    function toggleCollaborate() {
+        interestedToCollaborate = !interestedToCollaborate;
+    }
 </script>
 
 <svelte:head>
@@ -429,6 +426,13 @@
 									</div>
 								{/if} -->
 
+							<div class="projectInfoDetails">
+								<UsersMiniList users="{teamMembers}" />
+								<!-- {#if !isTeamMember && !isArchived} -->
+									<Button className="interestedButton" onClick="{toggleCollaborate}" icon="{interestedToCollaborate ? CollaborateCheckedIcon : CollaborateUncheckedIcon}">interested to collaborate</Button>
+								<!-- {/if} -->
+							</div>
+
 							{#if (!$projectReturnView || showInfo) && (projectType || projectLocation)}
 								<div class="infoContainer">
 									{#if projectType}
@@ -444,10 +448,11 @@
 				</div>
 
 				{#if isNew}
+					<!-- <MoreInfoPanel project="{$project}" /> -->
 					{#if canEdit && !showAddProjectPost && config.USE_PROJECT_POSTS}
 						<AddPost className="addProjectPost projectHeaderPostPanel" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 					{/if}
-					<ProjectTeamList project="{$project}" />
+					<!-- <ProjectTeamList project="{$project}" /> -->
 					<ProjectSkillsList project="{$project}" />
 					<ProjectCollaboratePanel project="{$project}" />
 					{#if $showBetaFeatures}
@@ -472,10 +477,11 @@
 						</div>
 					{/if}
 				{:else if $projectReturnView}
+					<!-- <MoreInfoPanel project="{$project}" /> -->
 					{#if canEdit && !showAddProjectPost && config.USE_PROJECT_POSTS}
 						<AddPost className="addProjectPost projectHeaderPostPanel" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 					{/if}
-					<ProjectTeamList project="{$project}" />
+					<!-- <ProjectTeamList project="{$project}" /> -->
 					<ProjectSkillsList project="{$project}" />
 					<ProjectCollaboratePanel project="{$project}" />
 					{#if $showBetaFeatures}
@@ -509,10 +515,11 @@
 						</div>
 					{/if} -->
 				{:else}
+					<!-- <MoreInfoPanel project="{$project}" /> -->
 					{#if canEdit && !showAddProjectPost && config.USE_PROJECT_POSTS}
 						<AddPost className="addProjectPost projectHeaderPostPanel" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 					{/if}
-					<ProjectTeamList project="{$project}" />
+					<!-- <ProjectTeamList project="{$project}" /> -->
 					<ProjectSkillsList project="{$project}" />
 					<ProjectCollaboratePanel project="{$project}" />
 					{#if $showBetaFeatures}
@@ -1136,4 +1143,36 @@
 		right: 2px;
 		height: 40px;
 	}
+
+	.projectInfoDetails {
+    	position: relative;
+		
+		/* margin-top: -4px; */
+    	margin-top: 6px;
+
+    	padding-left: 23px;
+    	/* padding-bottom: 4px; */
+    	padding-bottom: 2px;
+	}
+	
+    .content :global(.interestedButton) {
+        position: absolute;
+		top: -10px;
+    	right: 13px;
+
+        padding: 10px;
+        padding-right: 40px;
+        padding-left: 10px;
+
+		font-size: 1.2rem;
+        font-weight: 700;
+
+        color: #0D0D0D;
+    }
+    .content :global(.interestedButton .iconContainer) {
+    	padding-left: 6px;
+    }
+    .content :global(.interestedButton .icon) {
+    	transform: scale(0.45, 0.45);
+    }
 </style>

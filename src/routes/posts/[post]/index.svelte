@@ -129,7 +129,7 @@
 	}
 
 	$: {
-		showAddPost;
+		showAddPost; threadLoading;
 		onReplyPanelResized();
 	}
 

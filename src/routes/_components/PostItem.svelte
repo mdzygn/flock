@@ -286,9 +286,9 @@
             {#if showReplyIcon}
                 <div class="replyIcon" style="background-image: url({ReplyIcon})"/>
             {/if}
-            {#if showUnseenIcon}
-                <div class="unseenIcon" />
-            {/if}
+        {/if}
+        {#if showUnseenIcon}
+            <div class="unseenIcon" />
         {/if}
     </div>
     {#if showOptionsButton}
@@ -542,17 +542,28 @@
         height: 20px;
         padding: 6px;
     }
-    .postItem.showOptionsButton :global(.likeButton) {
+    /* .postItem.showOptionsButton :global(.likeButton) {
         right: 14px;
-    }
+    } */
     .postItem :global(.likeButton .icon) {
         margin-top: -8px;
     }
-    .postItem.showReplyIcon :global(.likeButton) {
+    .postItem.showReplyIcon :global(.likeButton), .postItem.showRepliesIcon :global(.likeButton) {
         right: 53px;
     }
-    .postItem.showRepliesIcon :global(.likeButton) {
-        right: 53px;
+
+    .unseenIcon {
+        position: absolute;
+        top: 18px;
+        right: 56px;
+        /* right: 13px; */
+        width: 12px;
+        height: 12px;
+        background-color: #DF3C3C;
+        border-radius: 999px;
+    }
+    .postItem.showReplyIcon .unseenIcon, .postItem.showRepliesIcon .unseenIcon {
+        right: 95px;
     }
 
     .postItem :global(.likeButton .count) {
@@ -650,24 +661,12 @@
         height: 22px;
     }
 
-    .postItem.showUnseenIcon .replyIcon {
+    /* .postItem.showUnseenIcon .replyIcon {
         display: none;
-        /* right: 29px; */
-    }
+    } */
     /* .postItem.showUnseenIcon :global(.likeButton) {
         right: -4px;
     } */
-
-    .unseenIcon {
-        position: absolute;
-        top: 18px;
-        right: 54px;
-        /* right: 13px; */
-        width: 12px;
-        height: 12px;
-        background-color: #DF3C3C;
-        border-radius: 999px;
-    }
 
     .postItem.compactView {
         margin-bottom: 0;
@@ -682,7 +681,7 @@
         right: -4px;
     }
     .postItem.compactView .userName {
-        padding-top: 7px;
+        padding-top: 8px;
         
         padding-left: 58px;
     }

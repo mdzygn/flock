@@ -324,6 +324,7 @@
 			}
 			clearCurrentPost();
 			hide();
+			dispatch('submit');
 		}
     }
 
@@ -362,6 +363,7 @@
 				});
 			}
 			hide();
+			dispatch('submit');
         }
 	}
 

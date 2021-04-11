@@ -157,6 +157,10 @@
 		showAddPost = false;
 	}
 
+    function onAddPostSubmit() {
+        gotoAnchor('discussions');
+    }
+
     function onChannelTagSelect(channelId) {
         gotoAnchor('discussions');
         currentChannelId = channelId;
@@ -257,7 +261,7 @@
                         {/if}
                         <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{currentChannelId ? locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX : locale.PROJECT.POST_DISCUSSION_ALL_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
                     {/if}
-                    <EditPost targetPostType="{PostTypes.THREAD}" bind:targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" showChannelSelect="{true}" {channels} smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" onChannelSelected="{onChannelSelected}" />
+                    <EditPost targetPostType="{PostTypes.THREAD}" bind:targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" showChannelSelect="{true}" {channels} smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" on:submit="{onAddPostSubmit}" onChannelSelected="{onChannelSelected}" />
                 {/if}
             {/if}
         </ContentPanel>

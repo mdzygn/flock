@@ -213,7 +213,7 @@
 
                 {#if $posts && $posts.length}
                     <div class="postsContainer">
-                        {#each $posts as post, index}
+                        {#each $posts as post, index (get(post).id)}
                             {#if index < curNumDisplayPosts}
                                 <PostItem {post} compactView="{true}" showChannelTags="{!currentChannelId}" onChannelSelect="{onChannelTagSelect}" />
                             {/if}

@@ -181,7 +181,7 @@ const locale = {
 		// FOLLOWER_GET_STARTED: 'no posts yet - be the first!',
 		FOLLOWER_GET_STARTED: 'share your thoughts',
 		GET_INVOLVED: 'share your thoughts',
-		CHANNELS_TITLE: 'Project Discussions', // 'Discussions', // Discussions, Channels
+		CHANNELS_TITLE: 'Posts', // 'Project Discussions', // 'Discussions', // Discussions, Channels
 		CHANNELS_FOLLOW_LINK: 'Follow',
 		CHANNELS_FOLLOW: ' this project to view discussion channels and get involved.',
 		CHANNELS_FOLLOW_ALL: ' this project to view all discussion channels and get involved.',
@@ -215,7 +215,7 @@ const locale = {
 		TEAM_LIST: 'Enter usernames separated by commas',
 	},
 	NEW_THREAD: {
-		PAGE_TITLE: 'New Discussion Post', // 'New Post', //
+		PAGE_TITLE: 'New Post', //'New Discussion Post', // 
 		TITLE: 'title',
 		TITLE_TIP: '(optional)',
 		MESSAGE: 'message',

@@ -185,17 +185,21 @@ function filterCurrentPosts(postFilterOptions, createNewSet) {
 	const type = postFilterOptions && postFilterOptions.type;
 	const sortByCreated = (postFilterOptions && postFilterOptions.sortByCreated) || false;
 
+	const filterTypeArray = (type && type.includes(',')) ? type.split(',') : null;
+
 	let newFilteredPosts = get(posts);
 	if (channelId || projectId || type) {
 		newFilteredPosts = newFilteredPosts.filter(postModel => {
 			const post = get(postModel);
 			// console.log(post.title + ', ' + post.channelId + ', ' + post.type);
-			return (!type || post.type === type) && (!channelId || post.channelId === channelId) && (!projectId || post.projectId === projectId) && (!threadId || post.threadId === threadId);
+			const isFilterType = !type || (filterTypeArray ?  filterTypeArray.includes(post.type) : post.type === type);
+			return isFilterType && (!channelId || post.channelId === channelId) && (!projectId || post.projectId === projectId) && (!threadId || post.threadId === threadId);
 		});
 	}
 	switch (type) {
 		case 'thread':
 		case 'projectPost':
+		case 'thread,projectPost':
 			if (sortByCreated) {
 				newFilteredPosts.sort((a,b) => get(b).createdAt - get(a).createdAt ); // sort by reversed created time
 			} else {

@@ -64,6 +64,7 @@
     export let type = 'thread';
 
     export let compactView = false;
+    export let expandedView = false;
 
     export let showChannelTags = false;
     export let onChannelSelect = null;
@@ -269,7 +270,7 @@
     }
 </script>
 
-<div class="postItem" class:hasThumb="{!!thumbImageSrc}" class:button="{canLinkThrough}" class:onlyImageShown="{showFullImage && !title && !message}" class:compactView="{compactView}" on:click="{canLinkThrough ? loadCurrentPost : null}"
+<div class="postItem" class:hasThumb="{!!thumbImageSrc}" class:button="{canLinkThrough}" class:onlyImageShown="{showFullImage && !title && !message}" class:compactView="{compactView}" class:expandedView="{expandedView}" on:click="{canLinkThrough ? loadCurrentPost : null}"
     class:showReplyIcon="{showReplyIcon}"
     class:showRepliesIcon="{showRepliesIcon}"
     class:showOptionsButton="{showOptionsButton}"

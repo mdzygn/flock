@@ -25,7 +25,13 @@ export async function post(req, res, next) {
 
 	const filter = {};
 	if (type) {
-		filter.type = type;
+		if (type.includes(',')) {
+			// filter.type = type.split(',')[1];
+			filter.type = { $in: type.split(',') };
+		} else {
+			filter.type = type;
+		}
+		// console.log('filter.type', filter.type, 'type', type, type.includes(','), type.split(','));
 	}
 	if (id) {
 		filter.id = id;

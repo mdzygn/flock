@@ -18,6 +18,7 @@
 	import ContentLoader from './ContentLoader.svelte';
 
 	import PostItem from './PostItem.svelte';
+	import ProjectPostItem from './ProjectPostItem.svelte';
     
 	import AddPost from '../posts/_components/AddPost.svelte';
 	import EditPost from '../posts/_components/EditPost.svelte';
@@ -91,6 +92,7 @@
 		return $channels.find(match => get(match).id === channelId);
     }
 
+    const EXPANDED_VIEW = true;
     const COMPACT_POST_VIEW = false;
 
     const DEFAULT_DISPLAY_POSTS = 15; // 5; // 3;
@@ -103,7 +105,8 @@
     }
 
     let posts = writable([]);
-	$: { posts = getPosts( { projectId: $projectId, type: 'thread', channelId: currentChannelId, sortByCreated, limit: curNumDisplayPosts + 1} ) }; //get one more to be able to check if there are more posts available
+    $: filterPostType = currentChannelId ? 'thread' : 'thread,projectPost';
+	$: { posts = getPosts( { projectId: $projectId, type: filterPostType, channelId: currentChannelId, sortByCreated, limit: curNumDisplayPosts + 1} ) }; //get one more to be able to check if there are more posts available
 
     $: areMoreItems = $posts && ($posts.length > curNumDisplayPosts);
 
@@ -252,7 +255,11 @@
                         <div class="postsContainer">
                             {#each $posts as post, index (get(post).id)}
                                 {#if index < curNumDisplayPosts}
-                                    <PostItem {post} compactView="{COMPACT_POST_VIEW}" showChannelTags="{!currentChannelId}" onChannelSelect="{onChannelTagSelect}" />
+                                    {#if get(post).type === 'projectPost'}
+								        <ProjectPostItem {post} />
+                                    {:else}
+                                        <PostItem {post} expandedView="{EXPANDED_VIEW && get(post).image}" compactView="{COMPACT_POST_VIEW}" showChannelTags="{!currentChannelId}" onChannelSelect="{onChannelTagSelect}" />
+                                    {/if}
                                 {/if}
                             {/each}
                             <!-- {:else}
@@ -537,5 +544,17 @@
         align-self: flex-end;
         
         color: #666666;
+    }
+
+    .discussionFeed :global(.postItem .avatarIcon) {
+        left: 22px;
+        top: 19px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .discussionFeed :global(.theadPost) {
+        /* remove margin on project posts */
+        margin-top: 0;
     }
 </style>

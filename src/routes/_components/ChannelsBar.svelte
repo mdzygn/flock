@@ -45,7 +45,11 @@
         }
     }).filter(item => item) : [];
 
-    $: items = [{label: locale.DISCUSSIONS.ALL_FILTER, title: null, value: null}, ...itemSet];
+    $: items = [
+        {label: locale.DISCUSSIONS.ALL_FILTER, title: null, value: null},
+        {label: locale.DISCUSSIONS.UPDATES_FILTER, title: null, value: 'updates'},
+        ...itemSet
+    ];
     // $: items = ['all', ...itemSet];
 
     function selectFilter(item) {

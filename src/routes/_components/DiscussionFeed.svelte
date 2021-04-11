@@ -74,14 +74,17 @@
 
     let currentChannelId = null;
 
+    $: updatesSelected = currentChannelId === 'updates';
+    $: channelSelected = currentChannelId && !updatesSelected;
+
     $: defaultChannel = $channels && getDefaultChannel({projectId: $projectId});
-    $: targetChannelId = currentChannelId || ($defaultChannel && $defaultChannel.id);
+    $: targetChannelId = (channelSelected && currentChannelId) || ($defaultChannel && $defaultChannel.id);
     
     $: curChannel = targetChannelId && $channels && getCurChannel(targetChannelId);
     // $: curChannel = currentChannelId && $channels && getCurChannel(currentChannelId);
 
-    $: currentChannelTargetTitle = curChannel && $curChannel && $curChannel.title || 'General';
-	$: channelDescription = currentChannelId && curChannel && $curChannel && ($curChannel.description || getChannelDefaultDescription($curChannel));
+    $: currentChannelTargetTitle = (channelSelected && curChannel && $curChannel && $curChannel.title) || 'General';
+	$: channelDescription = channelSelected && curChannel && $curChannel && ($curChannel.description || getChannelDefaultDescription($curChannel));
 
 
     function onChannelSelected(newChannelId) {
@@ -105,8 +108,8 @@
     }
 
     let posts = writable([]);
-    $: filterPostType = currentChannelId ? 'thread' : 'thread,projectPost';
-	$: { posts = getPosts( { projectId: $projectId, type: filterPostType, channelId: currentChannelId, sortByCreated, limit: curNumDisplayPosts + 1} ) }; //get one more to be able to check if there are more posts available
+    $: filterPostType = updatesSelected ? 'projectPost' : (currentChannelId ? 'thread' : 'thread,projectPost');
+	$: { posts = getPosts( { projectId: $projectId, type: filterPostType, channelId: channelSelected ? currentChannelId : undefined, sortByCreated, limit: curNumDisplayPosts + 1} ) }; //get one more to be able to check if there are more posts available
 
     $: areMoreItems = $posts && ($posts.length > curNumDisplayPosts);
 
@@ -114,7 +117,7 @@
         curNumDisplayPosts = DEFAULT_DISPLAY_POSTS;
     }
 
-	$: canPost = curChannel && $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
+	$: canPost = channelSelected && curChannel && $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
 	// $: canPost = (isTeamMember || !curChannel || ($curChannel && !$curChannel.teamOnly)) && !isArchived;
 	// $: canPost = isTeamMember && !isArchived;
 	// $: canPost = $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
@@ -174,7 +177,7 @@
     }
 
     function viewAllPosts() {
-        if (currentChannelId) {
+        if (channelSelected) {
             loadChannel(currentChannelId);
         }
     }
@@ -213,7 +216,7 @@
                 <div class="channelHeader">
                     {#if channelDescription}
                         <div class="channelHeaderDescription">{@html channelDescription}</div>
-                    {:else}
+                    {:else if !updatesSelected }
                         {#if !isArchived && !displayInline}
                             {#if (!hasActiveChannels || isNew) && viewAllChannels}
                                 {#if isTeamMember}
@@ -245,7 +248,7 @@
                                 <div class="getTheConversationStarted">{locale.PROJECT.GET_INVOLVED}</div>
                             {/if}
                         {/if} -->
-                        <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{currentChannelId ? locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX : locale.PROJECT.POST_DISCUSSION_ALL_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
+                        <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{channelSelected ? locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX : locale.PROJECT.POST_DISCUSSION_ALL_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
                     {/if}
                     <EditPost targetPostType="{PostTypes.THREAD}" bind:targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" showChannelSelect="{true}" {channels} smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" on:submit="{onAddPostSubmit}" onChannelSelected="{onChannelSelected}" />
                 {/if}
@@ -258,7 +261,7 @@
                                     {#if get(post).type === 'projectPost'}
 								        <ProjectPostItem {post} />
                                     {:else}
-                                        <PostItem {post} expandedView="{EXPANDED_VIEW && get(post).image}" compactView="{COMPACT_POST_VIEW}" showChannelTags="{!currentChannelId}" onChannelSelect="{onChannelTagSelect}" />
+                                        <PostItem {post} expandedView="{EXPANDED_VIEW && get(post).image}" compactView="{COMPACT_POST_VIEW}" showChannelTags="{!channelSelected}" onChannelSelect="{onChannelTagSelect}" />
                                     {/if}
                                 {/if}
                             {/each}
@@ -283,7 +286,7 @@
                             {#if $loadingPosts && (!$posts || !$posts.length) }
                                 <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
                             {:else}
-                                <ContentLoader>{currentChannelId ? locale.CHANNEL.NO_POSTS : locale.CHANNEL.ALL_CHANNELS_NO_POSTS}
+                                <ContentLoader>{updatesSelected ? locale.CHANNEL.UPDATES_NO_POSTS : (channelSelected ? locale.CHANNEL.NO_POSTS : locale.CHANNEL.ALL_CHANNELS_NO_POSTS)}
                                     {#if canPost}<br/>{locale.DISCUSSIONS.ADD_POST_CTA_PREFIX}<a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">{locale.DISCUSSIONS.ADD_POST_CTA}</a>{/if}
                                 </ContentLoader>
                             {/if}
@@ -553,7 +556,7 @@
         height: 34px;
     }
 
-    .discussionFeed :global(.theadPost) {
+    .discussionFeed :global(.postsContainer .theadPost) {
         /* remove margin on project posts */
         margin-top: 0;
     }

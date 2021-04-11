@@ -151,6 +151,7 @@ const locale = {
 		NOT_FOUND: 'channel not found',
 		NO_POSTS: 'this channel has no posts',
 		ALL_CHANNELS_NO_POSTS: 'this project has no discussion posts',
+		UPDATES_NO_POSTS: 'this project has no updates',
 		ADD_POST: 'Add Post',
 		ADD_POST_MESSAGE_PLACEHOLDER: 'Message...',
 	},
@@ -161,6 +162,7 @@ const locale = {
 		ADD_POST_CTA_PREFIX: 'be the first to ',
 		ADD_POST_CTA: 'Add a Post',
 		ALL_FILTER: 'All Posts',
+		UPDATES_FILTER: 'Updates',
 	},
 	CHANNELS: {
 		TITLE: 'Discussion Channels',

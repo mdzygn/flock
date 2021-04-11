@@ -235,7 +235,7 @@
             return null;
         } else {
             // console.log('getChannelTagTitle', message, get(curChannel).title, get(curChannel).id, channelId);
-            const channelTagTitle = get(curChannel).title;
+            const channelTagTitle = (config.CHANNELS_INCLUDE_HASH ? '#' : '') + get(curChannel).title;
             return channelTagTitle;
         }
     }
@@ -323,7 +323,7 @@
     </div>
     {#if showChannelTags && channelTagTitle}
         <div class="channelTagContainer">
-            <Button className="channelTag" onClick="{loadCurrentChannel}">#{channelTagTitle}</Button>
+            <Button className="channelTag" onClick="{loadCurrentChannel}">{channelTagTitle}</Button>
         </div>
     {/if}
     {#if image && !useThumbImage}
@@ -493,7 +493,7 @@
     .channelTagContainer {
         padding-left: 66px;
         padding-bottom: 2px;
-        margin-top: -10px;
+        margin-top: -13px;
     
         /* margin-top: 2px;
         margin-bottom: -12px;
@@ -717,7 +717,7 @@
         padding-top: 0;
 
         padding-left: 120px;
-        min-height: 50px;
+        min-height: 47px;
     }
     .postItem.compactView .thumb {
         top: 32px;

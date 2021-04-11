@@ -183,9 +183,25 @@
 		}
 	}
 
+	$: {
+		if (mounted && !threadLoading) {
+			checkIsReply();
+		}
+	}
+
+	function checkIsReply() {
+		if (window.location.hash.includes('reply')) {
+			reply();
+		}
+	}
+
+	let mounted;
+
 	let postSeenTimeout;
 	let threadSeenTimeout;
 	onMount(() => {
+		mounted = true;
+
 		postSeenTimeout = setNotificationSeenTimeout({postId: $postId});
 		threadSeenTimeout = setNotificationSeenTimeout({threadId: $postId}, config.REPLY_VIEWED_DELAY);
 
@@ -193,6 +209,8 @@
 		AppModel.on('reply', onReply);
 	});
 	onDestroy(() => {
+		mounted = false;
+
 		clearNotificationSeenTimeout(postSeenTimeout);
 		clearNotificationSeenTimeout(threadSeenTimeout);
 

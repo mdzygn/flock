@@ -691,6 +691,10 @@
         color: #333333;
     } */
 
+    .postItem.hasThumb .info {
+        min-height: 50px;
+    }
+
     .postItem.compactView {
         margin-bottom: 0;
     }
@@ -717,7 +721,6 @@
         padding-top: 0;
 
         padding-left: 120px;
-        min-height: 47px;
     }
     .postItem.compactView .thumb {
         top: 32px;

@@ -291,7 +291,7 @@
             </Button>
         {:else if !isArchived}
             {#if showReplyIcon}
-                <Button className="replyButton" icon="{ReplyIcon}" onClick="{replyCurrentPost}"></Button>
+                <Button className="replyButton" icon="{ReplyIcon}" href="/posts/{postId}/#reply"></Button>
                 <!-- <div class="replyIcon" style="background-image: url({ReplyIcon})"/> -->
             {/if}
         {/if}

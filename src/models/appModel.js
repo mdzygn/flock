@@ -375,8 +375,4 @@ export function triggerGotoRoute(newPath) {
     AppModel.emit('gotoRoute', newPath);
 }
 
-export function triggerReply() {
-    AppModel.emit('reply');
-}
-
 export default appModel;

@@ -119,8 +119,6 @@ import AppModel, {
     signInRequired,
 
     debugOutput,
-
-    triggerReply,
 } from '../models/appModel';
 
 ConversationsModel.on('conversationAdded', onConversationAdded);
@@ -354,12 +352,12 @@ export async function loadPost(targetPostId, options) {
         gotoRoute('posts/' + targetPostId );
         resetScrollRegionPosition('thread');
 
-        await tick();
-        setTimeout(() => {
-            if (options && options.reply) {
-                triggerReply();
-            }
-        }, 200); // find better way, don't scroll to bottom
+        // await tick();
+        // setTimeout(() => {
+        //     if (options && options.reply) {
+        //         newThreadPost();
+        //     }
+        // }, 200); // find better way, don't scroll to bottom
     }
 }
 

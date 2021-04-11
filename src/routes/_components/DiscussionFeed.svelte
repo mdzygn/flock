@@ -117,7 +117,7 @@
         curNumDisplayPosts = DEFAULT_DISPLAY_POSTS;
     }
 
-	$: canPost = channelSelected && curChannel && $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
+	$: canPost = !updatesSelected && curChannel && $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
 	// $: canPost = (isTeamMember || !curChannel || ($curChannel && !$curChannel.teamOnly)) && !isArchived;
 	// $: canPost = isTeamMember && !isArchived;
 	// $: canPost = $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
@@ -556,7 +556,7 @@
         height: 34px;
     }
 
-    .discussionFeed :global(.postsContainer .theadPost) {
+    .discussionFeed :global(.postsContainer .threadPost) {
         /* remove margin on project posts */
         margin-top: 0;
     }

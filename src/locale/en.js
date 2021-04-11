@@ -176,6 +176,7 @@ const locale = {
 	PROJECT: {
 		NOT_FOUND: 'project not found',
 		OVERVIEW_HEADER: 'Project Overview',
+		STATUS_LABEL: 'Project Status:',
 		GET_STARTED: 'get the conversation started', // 'get the conversations started',
 		// FOLLOWER_GET_STARTED: 'no posts yet - be the first!',
 		FOLLOWER_GET_STARTED: 'share your thoughts',

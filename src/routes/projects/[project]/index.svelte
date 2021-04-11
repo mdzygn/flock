@@ -321,7 +321,7 @@
 							<div class="itemContent">
 								<div class="header" class:headerOwner="{isTeamMember}">{projectTitle}</div>
 								{#if projectStatus}
-									<div class="projectStatusLine">
+									<div class="projectStatusLine">{locale.PROJECT.STATUS_LABEL}
 										<div class="projectStatus">{projectStatus}</div>
 									</div>
 								{/if}
@@ -1074,14 +1074,17 @@
     }
 
     .projectStatusLine {    
-        margin-top: -8px;
-        margin-bottom: 5px;
-        margin-left: -1px;
-        padding-right: 23px;
+		font-size: 1.1rem;
+		color: #999999;
+		margin-top: -2px;
+		margin-bottom: 5px;
+		margin-left: 1px;
+		padding-right: 23px;
     }
 
     .projectStatus {
         font-size: 1rem;
+		color: #222222;
         background-color: #eee;
         padding: 0px 6px;
         border-radius: 5px;

@@ -595,7 +595,7 @@
         /* right: 48px;
         top: 16px; */
 
-        right: 4px;
+        right: 3px;
         top: 10px;
         padding: 6px;
         width: 38px;
@@ -670,8 +670,8 @@
 
     .postItem :global(.counterContainer) {
         position: absolute;
-        margin-top: -1px;
-        margin-left: 20px;
+        margin-top: 0px;
+        margin-left: 18px;
         color: #444444;
     }
     .postItem :global(.counter) {

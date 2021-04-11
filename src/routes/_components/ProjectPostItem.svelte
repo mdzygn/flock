@@ -85,7 +85,8 @@
     $: projectTitle = ($project && $project.title) || '';
     $: projectThumbImage = ($project && getProjectHeaderImage($project, true)) || null;
 
-    $: commentsLabel = 'comment' + (($post && $post.postCount >= 1) ? 's' : '');
+    $: hasComments = ($post && $post.postCount >= 1);
+    $: commentsLabel = 'comment' + (hasComments ? 's' : '');
 
     $: canEdit = ($post && $post.userId && $post.userId === $userId) || false;
 
@@ -190,7 +191,7 @@
 
                     targetItem = "{$post}"
                     targetItemId = "{postId}"
-                    href = "/posts/{postId}"
+                    href = "/posts/{postId + (!hasComments ? '#reply' : '')}"
 
                     countProperty= "postCount"
                 />

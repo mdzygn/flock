@@ -91,6 +91,8 @@
 		return $channels.find(match => get(match).id === channelId);
     }
 
+    const COMPACT_POST_VIEW = false;
+
     const DEFAULT_DISPLAY_POSTS = 15; // 5; // 3;
     const INCREMENT_DISPLAY_POSTS = 15; // 5;
     let curNumDisplayPosts = DEFAULT_DISPLAY_POSTS;
@@ -250,7 +252,7 @@
                         <div class="postsContainer">
                             {#each $posts as post, index (get(post).id)}
                                 {#if index < curNumDisplayPosts}
-                                    <PostItem {post} compactView="{true}" showChannelTags="{!currentChannelId}" onChannelSelect="{onChannelTagSelect}" />
+                                    <PostItem {post} compactView="{COMPACT_POST_VIEW}" showChannelTags="{!currentChannelId}" onChannelSelect="{onChannelTagSelect}" />
                                 {/if}
                             {/each}
                             <!-- {:else}
@@ -317,6 +319,7 @@
     .discussionFeed :global(.contentPanel) {
         /* background-color: rgba(255, 255, 255, 0.25); */
         padding: 20px 0;
+        padding-bottom: 0;
         padding-top: 14px;
     }
 
@@ -384,7 +387,7 @@
     }
 
     .postsRegionContainer {
-        padding-top: 3px;
+        padding-top: 5px;
         background-color: #DDDDDD;
         min-height: 200px;
         padding-bottom: 30px;
@@ -406,7 +409,7 @@
 
     .postsContainer :global(.postItem) {
     	margin-bottom: 0;
-		border-bottom: 2px solid #EEEEEE;
+		/* border-bottom: 2px solid #EEEEEE; */
 	}
 
     .discussionFeed :global(.contentPanel .addPostPanel) {

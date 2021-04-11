@@ -367,6 +367,7 @@
 										<Button className="addProjectDetailsButton" onClick="{() => editProjectDetails({editingProjectMode: 'addDetails'})}" icon="{AddDetailsIcon}">add project details</Button>
 									</div>
 								{/if}
+
 								{#if !isTeamMember}
 									<!-- <Button disabled="{!$showBetaFeatures}" className="sendMessageButton" onClick="{e => loadConversationByProject($projectId)}" icon="{SendMessageIcon}">message</Button> -->
 								{:else if isNew && !isPublic}
@@ -380,6 +381,7 @@
 										<Counter count="{unreadMessageCount ? unreadMessageCount : messageCount}" hasNew="{unreadMessageCount}" />
 									</Button> -->
 								{/if}
+								
 								{#if (!$projectReturnView || showInfo) && !isTeamMember}
 									<div class="projectActionButtons">
 										<!-- <Button className="likeButton" onClick="{toggleLiked}" icon="{liked ? LikeSelectedIcon : LikeIcon}">like</Button> -->

@@ -250,7 +250,7 @@
 							{:else if !showAddPost}
 								<ContentLoader>{locale.THREAD.NO_POSTS}<br/>
 									{#if !isArchived}
-										be the first to <a href="{location.href}" on:click="{(e) => { reply(); return stopEvent(e); }}">Leave a Reply</a>
+										{locale.THREAD.ADD_POST_CTA_PREFIX}<a href="{location.href}" on:click="{(e) => { reply(); return stopEvent(e); }}">{locale.THREAD.ADD_POST_CTA}</a>
 									{/if}
 								</ContentLoader>
 							{/if}

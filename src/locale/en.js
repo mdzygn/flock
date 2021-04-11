@@ -155,13 +155,18 @@ const locale = {
 		ADD_POST_MESSAGE_PLACEHOLDER: 'Message...',
 		VIEW_ALL_POSTS: 'View all',
 		SHOW_MORE_POSTS: 'Show more',
-		VIEW_ALL_CHANNELS: 'Browse channels',
+		VIEW_ALL_CHANNELS: 'View all channels',
+		ADD_POST_CTA_PREFIX: 'be the first to ',
+		ADD_POST_CTA: 'Add a Post',
 	},
 	THREAD: {
 		NOT_FOUND: 'post not found',
 		NO_POSTS: 'this post has no comments',
 		REPLY: 'Add Reply',
 		REPLY_PLACEHOLDER: 'Add reply...',
+		
+		ADD_POST_CTA_PREFIX: 'be the first to ',
+		ADD_POST_CTA: 'Leave a Reply',
 	},
 	TEAM: {
 		TITLE: 'Project Team', // 'Team',
@@ -177,10 +182,10 @@ const locale = {
 		NOT_FOUND: 'project not found',
 		OVERVIEW_HEADER: 'Project Overview',
 		STATUS_LABEL: 'Project Status:',
-		GET_STARTED: 'get the conversation started', // 'get the conversations started',
+		GET_STARTED: 'Get the conversation started', // 'get the conversations started',
 		// FOLLOWER_GET_STARTED: 'no posts yet - be the first!',
-		FOLLOWER_GET_STARTED: 'share your thoughts',
-		GET_INVOLVED: 'share your thoughts',
+		FOLLOWER_GET_STARTED: 'Share your thoughts',
+		GET_INVOLVED: 'Share your thoughts',
 		CHANNELS_TITLE: 'Posts', // 'Project Discussions', // 'Discussions', // Discussions, Channels
 		CHANNELS_FOLLOW_LINK: 'Follow',
 		CHANNELS_FOLLOW: ' this project to view discussion channels and get involved.',

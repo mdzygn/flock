@@ -91,8 +91,8 @@
 		return $channels.find(match => get(match).id === channelId);
     }
 
-    const DEFAULT_DISPLAY_POSTS = 3;
-    const INCREMENT_DISPLAY_POSTS = 5;
+    const DEFAULT_DISPLAY_POSTS = 15; // 5; // 3;
+    const INCREMENT_DISPLAY_POSTS = 15; // 5;
     let curNumDisplayPosts = DEFAULT_DISPLAY_POSTS;
 
     $: {
@@ -202,52 +202,11 @@
             {:else}
                 <ChannelsBar {project} bind:currentChannelId="{currentChannelId}" />
 
-                {#if channelDescription}
-                    <div class="channelHeader">
+            <!-- {#if channelDescription} -->
+                <div class="channelHeader">
+                    {#if channelDescription}
                         <div class="channelHeaderDescription">{@html channelDescription}</div>
-                        {#if areMoreItems}
-                            <Button className="viewAllPostsButton" onClick="{viewAllPosts}">{locale.CHANNEL.VIEW_ALL_POSTS}</Button>
-                        {/if}
-                    </div>
-                {/if}
-
-                {#if $posts && $posts.length}
-                    <div class="postsContainer">
-                        {#each $posts as post, index (get(post).id)}
-                            {#if index < curNumDisplayPosts}
-                                <PostItem {post} compactView="{true}" showChannelTags="{!currentChannelId}" onChannelSelect="{onChannelTagSelect}" />
-                            {/if}
-                        {/each}
-                        <!-- {:else}
-
-                            {#if $loadingPosts && (!$posts || !$posts.length) }
-                                <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
-                            {:else}
-                                <ContentLoader>{locale.CHANNEL.NO_POSTS}
-                                    {#if canPost}<br/>be the first to <a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">Add a Post</a>{/if}
-                                </ContentLoader>
-                            {/if}
-                        {/each} -->
-                    </div>
-                    {#if areMoreItems}
-                        <div class="postsFooter">
-                            <Button className="showMorePostsButton" onClick="{showMorePosts}">{locale.CHANNEL.SHOW_MORE_POSTS}</Button>
-                        </div>
-                    {/if}
-                {:else}
-                    {#if !showAddPost}
-                        {#if $loadingPosts && (!$posts || !$posts.length) }
-                            <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
-                        {:else}
-                            <ContentLoader>{currentChannelId ? locale.CHANNEL.NO_POSTS : locale.CHANNEL.ALL_CHANNELS_NO_POSTS}
-                                <!-- {#if canPost}<br/>be the first to <a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">Add a Post</a>{/if} -->
-                            </ContentLoader>
-                        {/if}
-                    {/if}
-                {/if}
-
-                {#if canPost}
-                    {#if !showAddPost}
+                    {:else}
                         {#if !isArchived && !displayInline}
                             {#if (!hasActiveChannels || isNew) && viewAllChannels}
                                 {#if isTeamMember}
@@ -259,10 +218,67 @@
                                 <div class="getTheConversationStarted">{locale.PROJECT.GET_INVOLVED}</div>
                             {/if}
                         {/if}
+                    {/if}
+                    <!-- {#if areMoreItems}
+                        <Button className="viewAllPostsButton" onClick="{viewAllPosts}">{locale.CHANNEL.VIEW_ALL_POSTS}</Button>
+                    {/if} -->
+                </div>
+            <!-- {/if} -->
+
+                {#if canPost}
+                    {#if !showAddPost}
+                        <!-- {#if !isArchived && !displayInline}
+                            {#if (!hasActiveChannels || isNew) && viewAllChannels}
+                                {#if isTeamMember}
+                                    <div class="getTheConversationStarted getStartedOwner">{locale.PROJECT.GET_STARTED}</div>
+                                {:else}
+                                    <div class="getTheConversationStarted">{locale.PROJECT.FOLLOWER_GET_STARTED}</div>
+                                {/if}
+                            {:else}
+                                <div class="getTheConversationStarted">{locale.PROJECT.GET_INVOLVED}</div>
+                            {/if}
+                        {/if} -->
                         <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{currentChannelId ? locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX : locale.PROJECT.POST_DISCUSSION_ALL_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
                     {/if}
                     <EditPost targetPostType="{PostTypes.THREAD}" bind:targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" showChannelSelect="{true}" {channels} smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" on:submit="{onAddPostSubmit}" onChannelSelected="{onChannelSelected}" />
                 {/if}
+
+                <div class="postsRegionContainer">
+                    {#if $posts && $posts.length}
+                        <div class="postsContainer">
+                            {#each $posts as post, index (get(post).id)}
+                                {#if index < curNumDisplayPosts}
+                                    <PostItem {post} compactView="{true}" showChannelTags="{!currentChannelId}" onChannelSelect="{onChannelTagSelect}" />
+                                {/if}
+                            {/each}
+                            <!-- {:else}
+
+                                {#if $loadingPosts && (!$posts || !$posts.length) }
+                                    <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
+                                {:else}
+                                    <ContentLoader>{locale.CHANNEL.NO_POSTS}
+                                        {#if canPost}<br/>{locale.CHANNEL.CHANNEL_ADD_POST_CTA_PREFIX}<a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">{locale.CHANNEL.CHANNEL_ADD_POST_CTA}</a>{/if}
+                                    </ContentLoader>
+                                {/if}
+                            {/each} -->
+                        </div>
+                        {#if areMoreItems}
+                            <div class="postsFooter">
+                                <Button className="showMorePostsButton" onClick="{showMorePosts}">{locale.CHANNEL.SHOW_MORE_POSTS}</Button>
+                            </div>
+                        {/if}
+                    {:else}
+                        {#if !showAddPost}
+                            {#if $loadingPosts && (!$posts || !$posts.length) }
+                                <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
+                            {:else}
+                                <ContentLoader>{currentChannelId ? locale.CHANNEL.NO_POSTS : locale.CHANNEL.ALL_CHANNELS_NO_POSTS}
+                                    {#if canPost}<br/>{locale.CHANNEL.ADD_POST_CTA_PREFIX}<a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">{locale.CHANNEL.ADD_POST_CTA}</a>{/if}
+                                </ContentLoader>
+                            {/if}
+                        {/if}
+                    {/if}
+                </div>
             {/if}
         </ContentPanel>
     </div>
@@ -287,13 +303,15 @@
         padding-top: 12px;
         padding-bottom: 10px;
 
-        border-top: 2px solid #EEEEEE;
-        border-bottom: 2px solid #EEEEEE;
+        background-color: #ffffff;
+        /* border-top: 2px solid #EEEEEE;
+        border-bottom: 2px solid #EEEEEE; */
 	}
 
     .discussionFeed :global(.contentPanel) {
         /* background-color: rgba(255, 255, 255, 0.25); */
         padding: 20px 0;
+        padding-bottom: 0;
     }
 
     .discussionFeed :global(.viewAllChannels) {
@@ -359,12 +377,19 @@
         bottom: 5px;
     }
 
-	.postsContainer {
+    .postsRegionContainer {
+        padding-top: 3px;
+        background-color: #DDDDDD;
+        min-height: 150px;
+    }
+
+	/* .postsContainer { */
+        /* border-top: 2px solid #EEEEEE; */
+
     	/* padding-top: 5px; */
-		border-top: 2px solid #EEEEEE;
 
         /* background-color: #DDDDDD; */
-	}
+	/* } */
 
     /* .postsContainer :global(.contentLoader) {
         background-color: #f2f2f2;
@@ -378,7 +403,7 @@
 	}
 
     .discussionFeed :global(.contentPanel .addPostPanel) {
-    	margin-bottom: -20px;
+    	/* margin-bottom: -20px; */
         padding-top: 0;
 	}
 
@@ -386,12 +411,12 @@
         position: initial;
         box-shadow: initial;
 
-        margin-top: 5px;
+        /* margin-top: 5px; */
 	}
 
     .discussionFeed :global(.editPostContent.inlineComponent .panelContent) {
         padding-top: 5px;
-        margin-bottom: -20px;
+        /* margin-bottom: -20px; */
     }
 
     .discussionFeed :global(.editPostContent.inlineComponent .pageTitle) {
@@ -409,19 +434,51 @@
 
     .channelHeader {
         position: relative;
+
+        border-top: 1px solid #EEEEEE;
+    }
+    
+    .channelHeaderDescription, .getTheConversationStarted {
+        padding: 6px 16px;
+        padding-top: 8px;
+        padding-right: 65px;
+        font-size: 1.3rem;
+        color: #666666;
     }
 
     .channelHeaderDescription {
-        border-top: 1px solid #EEEEEE;
+        /* border-top: 1px solid #EEEEEE; */
 
-        padding: 6px 16px;
+        /* padding: 6px 16px;
         padding-right: 65px;
-
         font-size: 1.3rem;
-        color: #666666;
+        color: #666666; */
 
         overflow-wrap: break-word;
         word-wrap: break-word;
+    }
+    
+    /* .getTheConversationStarted {
+        padding: 6px 16px;
+        padding-right: 65px;
+        font-size: 1.3rem;
+        color: #666666; */
+
+        /* position: initial;
+        top: initial;
+        right: initial;
+
+        padding: 9px 15px;
+        padding-bottom: 4px;
+
+        color: #999999;
+        font-size: 1.3rem; */
+    /* } */
+
+    .getStartedOwner {
+        /* right: 41px; */
+        font-weight: 700;
+        color: #DF3C3C;
     }
 
     .discussionFeed :global(.viewAllPostsButton) {
@@ -443,7 +500,8 @@
         display: flex;
         flex-direction: column;
         
-        border-bottom: 2px solid #EEEEEE;
+        /* border-bottom: 2px solid #EEEEEE; */
+
         /* margin-top: -5px; */
     }
 
@@ -457,29 +515,10 @@
         font-size: 1.3rem;
         font-weight: 700;
 
-        padding: 5px;
+        padding: 8px;
         padding-right: 18px;
         align-self: flex-end;
         
         color: #666666;
-    }
-
-    .getTheConversationStarted {
-        position: initial;
-        top: initial;
-        right: initial;
-
-        padding: 9px 15px;
-        padding-bottom: 4px;
-        /* padding-top: 0; */
-
-        color: #999999;
-        font-size: 1.3rem;
-    }
-
-    .getStartedOwner {
-        /* right: 41px; */
-        font-weight: 700;
-        color: #DF3C3C;
     }
 </style>

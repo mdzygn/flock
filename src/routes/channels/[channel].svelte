@@ -167,7 +167,7 @@
 							<ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
 						{:else}
 							<ContentLoader>{locale.CHANNEL.NO_POSTS}
-								{#if canPost}<br/>be the first to <a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">Add a Post</a>{/if}
+								{#if canPost}<br/>{locale.CHANNEL.ADD_POST_CTA_PREFIX}<a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">{locale.CHANNEL.ADD_POST_CTA}</a>{/if}
 							</ContentLoader>
 						{/if}
 					{/each}

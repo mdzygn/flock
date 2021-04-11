@@ -984,7 +984,7 @@
 
 		margin-left: -10px;
 
-    	min-height: 40px;
+		min-height: 15px;
 
 		color: #555555;
 

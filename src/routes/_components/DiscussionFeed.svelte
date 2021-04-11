@@ -317,7 +317,7 @@
     .discussionFeed :global(.contentPanel) {
         /* background-color: rgba(255, 255, 255, 0.25); */
         padding: 20px 0;
-        padding-top: 12px;
+        padding-top: 14px;
     }
 
     .discussionFeed :global(.viewAllChannels) {

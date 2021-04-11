@@ -475,18 +475,18 @@
 					{#if canEdit && !showAddProjectPost && config.USE_PROJECT_POSTS}
 						<AddPost className="addProjectPost projectHeaderPostPanel" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 					{/if}
+					<ProjectTeamList project="{$project}" />
+					<ProjectSkillsList project="{$project}" />
+					<ProjectCollaboratePanel project="{$project}" />
+					{#if $showBetaFeatures}
+						<ProjectLinks project="{$project}" />
+					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<DiscussionFeed project="{project}" bind:showAddPost="{showAddDiscussionPost}" />
 					<!-- {#if $showBetaFeatures} -->
 						<!-- {#if canEdit}
 							<NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" />
 						{/if} -->
-					{#if $showBetaFeatures}
-						<ProjectLinks project="{$project}" />
-					{/if}
-					<ProjectSkillsList project="{$project}" />
-					<ProjectCollaboratePanel project="{$project}" />
-					<ProjectTeamList project="{$project}" />
 					{#if config.USE_PROJECT_POSTS}
 						<div class="posts" id="projectPosts">
 							{#if canEdit && !showAddProjectPost && config.USE_PROJECT_POSTS}
@@ -512,15 +512,14 @@
 					{#if canEdit && !showAddProjectPost && config.USE_PROJECT_POSTS}
 						<AddPost className="addProjectPost projectHeaderPostPanel" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 					{/if}
+					<ProjectTeamList project="{$project}" />
 					<ProjectSkillsList project="{$project}" />
 					<ProjectCollaboratePanel project="{$project}" />
-					<ProjectTeamList project="{$project}" />
 					{#if $showBetaFeatures}
 						<ProjectLinks project="{$project}" />
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<DiscussionFeed project="{project}" bind:showAddPost="{showAddDiscussionPost}" />
-					
 					{#if config.USE_PROJECT_POSTS}
 						<div class="posts" id="projectPosts">
 							{#if canEdit && !showAddProjectPost && config.USE_PROJECT_POSTS}

@@ -167,7 +167,7 @@
 							<ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
 						{:else}
 							<ContentLoader>{locale.CHANNEL.NO_POSTS}
-								{#if canPost}<br/>{locale.CHANNEL.ADD_POST_CTA_PREFIX}<a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">{locale.CHANNEL.ADD_POST_CTA}</a>{/if}
+								{#if canPost}<br/>{locale.DISCUSSIONS.ADD_POST_CTA_PREFIX}<a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">{locale.DISCUSSIONS.ADD_POST_CTA}</a>{/if}
 							</ContentLoader>
 						{/if}
 					{/each}

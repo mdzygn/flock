@@ -100,9 +100,9 @@
         if (/\/projects\/.+/.test(path) && !/\/projects\/new/.test(path) && !/\/projects\/archive/.test(path) && $project) {
             sectionLabel = $project.title;
         } else if (/\/channels\/.+/.test(path) && $channel) {
-            sectionLabel = '#'+$channel.title;
+            sectionLabel = (config.CHANNELS_INCLUDE_HASH ? '#' : '')+$channel.title;
         } else if (/\/posts\/.+/.test(path) && $channel) {
-            sectionLabel = '#'+$channel.title;
+            sectionLabel = (config.CHANNELS_INCLUDE_HASH ? '#' : '')+$channel.title;
         } else if (/\/profile\/.+/.test(path) && $user && $viewedUser) {//$viewedUser && !$viewedUser.isCurrentUser) {
             if (isCurrentUser) {
                 sectionLabel = 'My Profile';

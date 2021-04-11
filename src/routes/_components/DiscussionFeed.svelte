@@ -136,6 +136,8 @@
         hasInactiveChannels = hasInactiveChannel;
     }
 
+    let panelTitle = null; // locale.PROJECT.CHANNELS_TITLE
+
 	export let showAddPost = false;
 	let newPostMessageField = null;
 
@@ -182,8 +184,8 @@
     <div id="discussions" class="discussionFeed" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}" class:displayInline>
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
         <!-- titleOnClick="{!displayInline ? 'projects/'+$projectId+'/channels' : null}" -->
-        <ContentPanel title="{locale.PROJECT.CHANNELS_TITLE}" showEdit="{canEdit && $showBetaFeatures}">
-            <Button className="viewAllChannels" onClick="{'projects/'+$projectId+'/channels'}">{locale.CHANNEL.VIEW_ALL_CHANNELS}</Button>
+        <ContentPanel title="{panelTitle}" showEdit="{canEdit && $showBetaFeatures}">
+            <!-- <Button className="viewAllChannels" onClick="{'projects/'+$projectId+'/channels'}">{locale.DISCUSSIONS.VIEW_ALL_CHANNELS}</Button> -->
 
             <!-- {#if !isArchived && !displayInline}
                 {#if (!hasActiveChannels || isNew) && viewAllChannels}
@@ -220,7 +222,7 @@
                         {/if}
                     {/if}
                     <!-- {#if areMoreItems}
-                        <Button className="viewAllPostsButton" onClick="{viewAllPosts}">{locale.CHANNEL.VIEW_ALL_POSTS}</Button>
+                        <Button className="viewAllPostsButton" onClick="{viewAllPosts}">{locale.DISCUSSIONS.VIEW_ALL_POSTS}</Button>
                     {/if} -->
                 </div>
             <!-- {/if} -->
@@ -257,14 +259,14 @@
                                     <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
                                 {:else}
                                     <ContentLoader>{locale.CHANNEL.NO_POSTS}
-                                        {#if canPost}<br/>{locale.CHANNEL.CHANNEL_ADD_POST_CTA_PREFIX}<a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">{locale.CHANNEL.CHANNEL_ADD_POST_CTA}</a>{/if}
+                                        {#if canPost}<br/>{locale.DISCUSSIONS.ADD_POST_CTA_PREFIX}<a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">{locale.DISCUSSIONS.ADD_POST_CTA}</a>{/if}
                                     </ContentLoader>
                                 {/if}
                             {/each} -->
                         </div>
                         {#if areMoreItems}
                             <div class="postsFooter">
-                                <Button className="showMorePostsButton" onClick="{showMorePosts}">{locale.CHANNEL.SHOW_MORE_POSTS}</Button>
+                                <Button className="showMorePostsButton" onClick="{showMorePosts}">{locale.DISCUSSIONS.SHOW_MORE_POSTS}</Button>
                             </div>
                         {/if}
                     {:else}
@@ -273,7 +275,7 @@
                                 <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
                             {:else}
                                 <ContentLoader>{currentChannelId ? locale.CHANNEL.NO_POSTS : locale.CHANNEL.ALL_CHANNELS_NO_POSTS}
-                                    {#if canPost}<br/>{locale.CHANNEL.ADD_POST_CTA_PREFIX}<a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">{locale.CHANNEL.ADD_POST_CTA}</a>{/if}
+                                    {#if canPost}<br/>{locale.DISCUSSIONS.ADD_POST_CTA_PREFIX}<a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">{locale.DISCUSSIONS.ADD_POST_CTA}</a>{/if}
                                 </ContentLoader>
                             {/if}
                         {/if}
@@ -289,6 +291,10 @@
 		position: absolute;
 		opacity: 0.5;
 	} */
+
+    .discussionFeed {
+        margin-top: -2px;
+    }
 
 	.discussionFeed :global(.panelContent) {
 		position: relative;
@@ -311,7 +317,7 @@
     .discussionFeed :global(.contentPanel) {
         /* background-color: rgba(255, 255, 255, 0.25); */
         padding: 20px 0;
-        padding-bottom: 0;
+        padding-top: 12px;
     }
 
     .discussionFeed :global(.viewAllChannels) {

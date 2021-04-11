@@ -1,4 +1,6 @@
 <script>
+    import config from '../../config';
+
     import Button from '../../components/Button.svelte';
     import Counter from '../_components/Counter.svelte';
 
@@ -47,7 +49,7 @@
 </script>
 
 <div class="channelListItem" class:noPosts="{!messageCount}">
-    <Button className="channelListItemButton" onClick="{loadCurrentChannel}"># {channelTitle}
+    <Button className="channelListItemButton" onClick="{loadCurrentChannel}">{(config.CHANNELS_INCLUDE_HASH ? '# ' : '') + channelTitle}
         {#if $unviewedCount || messageCount}
             <div class="postsIcon" style="background-image: url({CommentIcon})"/>
         {/if}

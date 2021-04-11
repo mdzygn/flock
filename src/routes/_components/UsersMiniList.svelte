@@ -75,6 +75,9 @@
 {/if}
 
 <style>
+    .content {
+        padding-bottom: 2px;
+    }
     .label {
         display: inline-block;
         padding-right: 2px;
@@ -102,6 +105,7 @@
 	.content :global(.contentPanel) {
         /* background-color: initial; */
         padding: 20px 0;
+        padding-top: 12px;
 	}
 
 	.content :global(.contentPanel .panelTitle) {

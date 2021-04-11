@@ -1,4 +1,5 @@
 <script>
+	import config from '../../../config';
 	import locale from '../../../locale';
 
 	import { onMount, tick, createEventDispatcher } from 'svelte';
@@ -94,7 +95,7 @@
 		// if (isTeamMember || channelModel.postCount || getIsBaseDisplayChannel(channelModel) || (following && !getIsTeamManagedChannel(channelModel))}
 		if (displayChannelForUser(channel, project)) {
         	const channelModel = get(channel);
-        	return {label: '#' + channelModel.title, value: channelModel.id, description: channelModel.description || getChannelDefaultDescription(channelModel)};
+        	return {label: (config.CHANNELS_INCLUDE_HASH ? '#' : '') + channelModel.title, value: channelModel.id, description: channelModel.description || getChannelDefaultDescription(channelModel)};
 		} else {
 			return null;
 		}

@@ -153,11 +153,17 @@ const locale = {
 		ALL_CHANNELS_NO_POSTS: 'this project has no discussion posts',
 		ADD_POST: 'Add Post',
 		ADD_POST_MESSAGE_PLACEHOLDER: 'Message...',
+	},
+	DISCUSSIONS: {
 		VIEW_ALL_POSTS: 'View all',
 		SHOW_MORE_POSTS: 'Show more',
 		VIEW_ALL_CHANNELS: 'View all channels',
 		ADD_POST_CTA_PREFIX: 'be the first to ',
 		ADD_POST_CTA: 'Add a Post',
+		ALL_FILTER: 'All Posts',
+	},
+	CHANNELS: {
+		TITLE: 'Discussion Channels',
 	},
 	THREAD: {
 		NOT_FOUND: 'post not found',
@@ -193,7 +199,7 @@ const locale = {
 		POST_UPDATE_PLACEHOLDER: 'Post project update...',
 		DEFAULT_STATUS: 'In Development',
 		POST_ACTION: 'Post Update',
-		POST_DISCUSSION_PLACEHOLDER: 'Post in #',
+		POST_DISCUSSION_PLACEHOLDER: 'Post in ', //#
 		POST_DISCUSSION_PLACEHOLDER_AFFIX: '...',
 		POST_DISCUSSION_ALL_PLACEHOLDER: 'Add post...',
 		POST_DISCUSSION_ACTION: 'Post',

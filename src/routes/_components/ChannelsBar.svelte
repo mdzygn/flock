@@ -1,4 +1,7 @@
 <script>
+    import config from '../../config';
+    import locale from '../../locale';
+
     import Button from '../../components/Button.svelte';
     // import TagSet from './TagSet.svelte';
 
@@ -36,13 +39,13 @@
         const itemModel = get(item);
         const noPosts = !itemModel.postCount;
         if (displayChannelForUser(item, project)) {
-            return {label: '#' + itemModel.title, value: itemModel.id, title: itemModel.title, noPosts}; // , channelModel: itemModel
+            return {label: (config.CHANNELS_INCLUDE_HASH ? '#' : '') + itemModel.title, value: itemModel.id, title: itemModel.title, noPosts}; // , channelModel: itemModel
         } else {
             return null;
         }
     }).filter(item => item) : [];
 
-    $: items = [{label: 'All', title: null, value: null}, ...itemSet];
+    $: items = [{label: locale.DISCUSSIONS.ALL_FILTER, title: null, value: null}, ...itemSet];
     // $: items = ['all', ...itemSet];
 
     function selectFilter(item) {
@@ -169,5 +172,28 @@
     .filterSet :global(.buttonContent) {
         display: inline-block;
         user-select: text;
+    }
+
+    .filterSet :global(.filterButton) {
+        padding: 0px 3px;
+        margin: 0 6px 0 4px;
+
+        background-color: initial;
+
+        border-radius: 0;
+        border: none;
+    }
+
+    .filterSet :global(.filterButton.selectedItem) {
+        padding: 0px 3px;
+
+        border-radius: 0;
+        border: none;
+        border-bottom: 2px solid #242424;
+    }
+
+    .filterSet :global(.filterButton.noPosts) {
+        background-color: initial;
+        color: #aaaaaa;
     }
 </style>

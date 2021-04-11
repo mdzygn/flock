@@ -30,6 +30,8 @@
 
     export let project;
 
+    export let titleLabel = null;
+
     export let displayInline = false;
 
     let channels = writable(null);
@@ -96,7 +98,7 @@
     <!-- && (hasActiveChannels || isTeamMember || following) -->
     <div class="channelList" class:isEditable="{canEdit}" class:channelsActive="{channelsLoading || hasActiveChannels || viewAllChannels}" class:displayInline>
         <!-- <Proxy image="{proxyChannelsImage}" className="proxyOverlay" /> -->
-        <ContentPanel title="{locale.PROJECT.CHANNELS_TITLE}" titleOnClick="{!displayInline ? 'projects/'+$projectId+'/channels' : null}" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
+        <ContentPanel title="{titleLabel || locale.PROJECT.CHANNELS_TITLE}" titleOnClick="{!displayInline ? 'projects/'+$projectId+'/channels' : null}" showEdit="{canEdit && $showBetaFeatures}" showMoreAction="{areMoreItems}">
             {#if !isArchived && !displayInline}
                 {#if (!hasActiveChannels || isNew) && viewAllChannels}
                     {#if isTeamMember}

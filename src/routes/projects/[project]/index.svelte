@@ -218,9 +218,11 @@
 	$: showFollowButton = (!$projectReturnView || showInfo) && !isTeamMember;
 
 	let projectPosts = writable([]);
-	$: { projectPosts = getPosts( { projectId: $projectId, type: 'projectPost', sortByCreated: true, createNewSet: true } ) }; // 'thread'
+	$: { if (config.USE_PROJECT_POSTS) projectPosts = getPosts( { projectId: $projectId, type: 'projectPost', sortByCreated: true, createNewSet: true } ) }; // 'thread'
 	function onPostsUpdated() {
-		projectPosts = getPosts( { projectId: $projectId, type: 'projectPost', sortByCreated: true, createNewSet: true, dontReloadPosts: true } )
+		if (config.USE_PROJECT_POSTS) {
+			projectPosts = getPosts( { projectId: $projectId, type: 'projectPost', sortByCreated: true, createNewSet: true, dontReloadPosts: true } )
+		}
 	}
 
 	let forceProjectShowingInfo = false;
@@ -442,7 +444,7 @@
 				</div>
 
 				{#if isNew}
-					{#if canEdit && !showAddProjectPost}
+					{#if canEdit && !showAddProjectPost && config.USE_PROJECT_POSTS}
 						<AddPost className="addProjectPost projectHeaderPostPanel" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 					{/if}
 					<ProjectTeamList project="{$project}" />
@@ -454,21 +456,23 @@
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<DiscussionFeed project="{project}" bind:showAddPost="{showAddDiscussionPost}" />
 					<!-- {#if $showBetaFeatures} -->
-					<div class="posts" id="projectPosts">
-						{#if canEdit && !showAddProjectPost}
-							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
-							<!-- <NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" /> -->
-								<!-- type="project_post_update" -->
-						{/if}
-						{#each $projectPosts as post}
-							<ProjectPostItem {post} />
-						{/each}
-						{#if canEdit && !showAddProjectPost && $projectPosts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
-							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
-						{/if}
-					</div>
+					{#if config.USE_PROJECT_POSTS}
+						<div class="posts" id="projectPosts">
+							{#if canEdit && !showAddProjectPost && config.USE_PROJECT_POSTS}
+								<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
+								<!-- <NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" /> -->
+									<!-- type="project_post_update" -->
+							{/if}
+							{#each $projectPosts as post}
+								<ProjectPostItem {post} />
+							{/each}
+							{#if canEdit && !showAddProjectPost && $projectPosts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT && config.USE_PROJECT_POSTS}
+								<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
+							{/if}
+						</div>
+					{/if}
 				{:else if $projectReturnView}
-					{#if canEdit && !showAddProjectPost}
+					{#if canEdit && !showAddProjectPost && config.USE_PROJECT_POSTS}
 						<AddPost className="addProjectPost projectHeaderPostPanel" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
@@ -483,18 +487,20 @@
 					<ProjectSkillsList project="{$project}" />
 					<ProjectCollaboratePanel project="{$project}" />
 					<ProjectTeamList project="{$project}" />
-					<div class="posts" id="projectPosts">
-						{#if canEdit && !showAddProjectPost}
-							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
-							<!-- <NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" /> -->
-						{/if}
-						{#each $projectPosts as post}
-							<ProjectPostItem {post} />
-						{/each}
-						{#if canEdit && !showAddProjectPost && $projectPosts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
-							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
-						{/if}
-					</div>
+					{#if config.USE_PROJECT_POSTS}
+						<div class="posts" id="projectPosts">
+							{#if canEdit && !showAddProjectPost && config.USE_PROJECT_POSTS}
+								<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
+								<!-- <NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" /> -->
+							{/if}
+							{#each $projectPosts as post}
+								<ProjectPostItem {post} />
+							{/each}
+							{#if canEdit && !showAddProjectPost && $projectPosts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT && config.USE_PROJECT_POSTS}
+								<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
+							{/if}
+						</div>
+					{/if}
 					<!-- {#if $showBetaFeatures}
 						<div>
 							<Proxy image="project_post_1" className="contentItem projectPost" />
@@ -503,7 +509,7 @@
 						</div>
 					{/if} -->
 				{:else}
-					{#if canEdit && !showAddProjectPost}
+					{#if canEdit && !showAddProjectPost && config.USE_PROJECT_POSTS}
 						<AddPost className="addProjectPost projectHeaderPostPanel" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 					{/if}
 					<ProjectSkillsList project="{$project}" />
@@ -514,18 +520,21 @@
 					{/if}
 					<!-- <Proxy image="{proxyChannelsImage}" className="contentItem channelsItem" onClick="{e => loadChannel('7m2ldksm')}" /> -->
 					<DiscussionFeed project="{project}" bind:showAddPost="{showAddDiscussionPost}" />
-					<div class="posts" id="projectPosts">
-						{#if canEdit && !showAddProjectPost}
-							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
-							<!-- <NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" /> -->
-						{/if}
-						{#each $projectPosts as post}
-							<ProjectPostItem {post} />
-						{/each}
-						{#if canEdit && !showAddProjectPost && $projectPosts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT}
-							<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
-						{/if}
-					</div>
+					
+					{#if config.USE_PROJECT_POSTS}
+						<div class="posts" id="projectPosts">
+							{#if canEdit && !showAddProjectPost && config.USE_PROJECT_POSTS}
+								<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
+								<!-- <NewPostButton label="{locale.PROJECT.POST_UPDATE}" onClick="{newProjectPost}" /> -->
+							{/if}
+							{#each $projectPosts as post}
+								<ProjectPostItem {post} />
+							{/each}
+							{#if canEdit && !showAddProjectPost && $projectPosts.length >= DISPLAY_BOTTOM_LINK_POST_COUNT && config.USE_PROJECT_POSTS}
+								<AddPost className="addProjectPost" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
+							{/if}
+						</div>
+					{/if}
 				{/if}
 			</div>
 
@@ -579,7 +588,9 @@
 		</ScrollView>
 	{/if}
 
-	<EditPost targetPostType="{PostTypes.PROJECT_POST}" className="editProjectPost" shown="{showAddProjectPost}" bind:message="{newProjectPostMessage}" bind:messageField="{newProjectPostMessageField}" inlineComponent="{true}" smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_ACTION}" bind:element="{projectPostRegion}" on:hide="{hideAddProjectPostPanel}" on:resize="{onProjectPostPanelResized}" />
+	{#if config.USE_PROJECT_POSTS}
+		<EditPost targetPostType="{PostTypes.PROJECT_POST}" className="editProjectPost" shown="{showAddProjectPost}" bind:message="{newProjectPostMessage}" bind:messageField="{newProjectPostMessageField}" inlineComponent="{true}" smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_ACTION}" bind:element="{projectPostRegion}" on:hide="{hideAddProjectPostPanel}" on:resize="{onProjectPostPanelResized}" />
+	{/if}
 </div>
 
 <style>

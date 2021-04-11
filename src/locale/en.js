@@ -197,6 +197,7 @@ const locale = {
 		POST_DISCUSSION_PLACEHOLDER_AFFIX: '...',
 		POST_DISCUSSION_ALL_PLACEHOLDER: 'Add post...',
 		POST_DISCUSSION_ACTION: 'Post',
+		PROJECT_SKILLS: 'Seeking Skills:',
 	},
 	PROFILE: {
 		NOT_FOUND: 'profile not found',

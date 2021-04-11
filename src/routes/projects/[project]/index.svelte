@@ -9,6 +9,7 @@
 		getDisplayText,
 		stopEvent, 
 		gotoAnchor,
+		getSplitItems,
 	} from '../../../utils';
 
     import PostTypes from '../../../config/PostTypes';
@@ -16,6 +17,7 @@
 	import { tick, onMount, onDestroy } from 'svelte';
 
     import Button from '../../../components/Button.svelte';
+    import TagSet from '../../_components/TagSet.svelte';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
 
@@ -212,7 +214,7 @@
 
 	$: projectTitleString = ($project && $project.title && $project.title + ' - ') || '';
 	
-	// $: skills = ($project && $project.skills && getSplitItems($project.skills)) || null;
+	$: skills = ($project && $project.skills && getSplitItems($project.skills)) || null;
 
 	// $: forceShowInfo = !following && !isTeamMember;
 
@@ -428,9 +430,18 @@
 
 							<div class="projectInfoDetails">
 								<UsersMiniList users="{teamMembers}" />
-								<!-- {#if !isTeamMember && !isArchived} -->
+								{#if !isTeamMember && !isArchived}
 									<Button className="interestedButton" onClick="{toggleCollaborate}" icon="{interestedToCollaborate ? CollaborateCheckedIcon : CollaborateUncheckedIcon}">interested to collaborate</Button>
-								<!-- {/if} -->
+								{/if}
+								
+								{#if skills}
+									<div class="skillsMiniList">
+										<div class="skillsContainer">
+											<div class="skillsLabel">{locale.PROJECT.PROJECT_SKILLS}</div>
+											<TagSet tags="{skills}"/>
+										</div>
+									</div>
+								{/if}
 							</div>
 
 							{#if (!$projectReturnView || showInfo) && (projectType || projectLocation)}
@@ -453,8 +464,8 @@
 						<AddPost className="addProjectPost projectHeaderPostPanel" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 					{/if}
 					<!-- <ProjectTeamList project="{$project}" /> -->
-					<ProjectSkillsList project="{$project}" />
-					<ProjectCollaboratePanel project="{$project}" />
+					<!-- <ProjectSkillsList project="{$project}" /> -->
+					<!-- <ProjectCollaboratePanel project="{$project}" /> -->
 					{#if $showBetaFeatures}
 						<ProjectLinks project="{$project}" />
 					{/if}
@@ -482,8 +493,8 @@
 						<AddPost className="addProjectPost projectHeaderPostPanel" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 					{/if}
 					<!-- <ProjectTeamList project="{$project}" /> -->
-					<ProjectSkillsList project="{$project}" />
-					<ProjectCollaboratePanel project="{$project}" />
+					<!-- <ProjectSkillsList project="{$project}" /> -->
+					<!-- <ProjectCollaboratePanel project="{$project}" /> -->
 					{#if $showBetaFeatures}
 						<ProjectLinks project="{$project}" />
 					{/if}
@@ -520,8 +531,8 @@
 						<AddPost className="addProjectPost projectHeaderPostPanel" newPostMessage="{newProjectPostMessage}" onClick="{addNewProjectPost}" placeholderLabel="{locale.PROJECT.POST_UPDATE_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_ACTION}" />
 					{/if}
 					<!-- <ProjectTeamList project="{$project}" /> -->
-					<ProjectSkillsList project="{$project}" />
-					<ProjectCollaboratePanel project="{$project}" />
+					<!-- <ProjectSkillsList project="{$project}" /> -->
+					<!-- <ProjectCollaboratePanel project="{$project}" /> -->
 					{#if $showBetaFeatures}
 						<ProjectLinks project="{$project}" />
 					{/if}
@@ -1158,7 +1169,8 @@
     .content :global(.interestedButton) {
         position: absolute;
 		top: -10px;
-    	right: 13px;
+    	right: 6px;
+    	/* right: 13px; */
 
         padding: 10px;
         padding-right: 40px;
@@ -1173,6 +1185,43 @@
     	padding-left: 6px;
     }
     .content :global(.interestedButton .icon) {
-    	transform: scale(0.45, 0.45);
+    	transform: scale(0.4, 0.4);
+    }
+
+	.skillsMiniList {
+		padding-top: 5px;
+	}
+	.skillsMiniList .skillsLabel {
+    	display: inline-block;
+	    font-size: 1.1rem;
+    	padding-right: 4px;
+
+        /* padding-bottom: 4px;
+        font-size: 1.3rem;
+        font-weight: 700;
+        display: block; */
+	}
+    .skillsMiniList .skillsContainer {
+        margin-left: -23px;
+        padding-left: 23px;
+        padding-right: 18px;
+        
+        /* padding-top: 12px; */
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -ms-overflow-style: none;
+
+        white-space: nowrap;
+    }
+	.skillsMiniList .skillsContainer::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */
+        display: none;
+    }
+    .content .skillsMiniList :global(.tagSet) {
+        white-space: nowrap;
+        display: inline-block;
+    }
+    .content .skillsMiniList :global(.tagSet .tag) {
+        font-size: 1.1rem;
+        padding: 1px 7px;
     }
 </style>

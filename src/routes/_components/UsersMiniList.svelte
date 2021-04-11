@@ -34,7 +34,7 @@
 
     export let users = null;
 
-    export let label = 'Team';
+    export let label = locale.TEAM.TITLE;
     export let andOthersLabel = 'and others';
 
     const MAX_USERS_DISPLAYED = 1;
@@ -45,7 +45,7 @@
         }
     }
 
-    $: areMoreItems = true; // users && users.length > MAX_USERS_DISPLAYED;
+    $: areMoreItems = users && users.length > MAX_USERS_DISPLAYED;
 
     // function addTeamMembers() {
 	// 	showPrompt(promptIds.ADD_TEAM_MEMBERS);
@@ -82,9 +82,11 @@
         font-size: 1.3rem;
     }
     .headerLabel {
-        padding-bottom: 4px;
-        /* font-size: 1.3rem; */
-        font-weight: bold;
+        padding-top: 1px;
+        font-size: 1.2rem;
+        /* padding-bottom: 4px;
+        font-size: 1.3rem;
+        font-weight: 700; */
         display: block;
     }
     .usersList {
@@ -119,20 +121,19 @@
         padding: 0;
 	}
 
-    .scrollRegion {
+    /* .scrollRegion {
         white-space: nowrap;
 
         overflow-x: scroll;
         overflow-y: hidden;
 
-        /* margin-top: -19px; */
         padding: 0 20px;
 
-        -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+        -ms-overflow-style: none;
     }
-	.scrollRegion::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */
+	.scrollRegion::-webkit-scrollbar {
         display: none;
-    }
+    }*/
 
     .content :global(.addTeamMembersButton) {
         position: absolute;

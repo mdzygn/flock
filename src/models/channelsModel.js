@@ -265,6 +265,11 @@ export function addChannel(channelDetails) {
 	return newChannelModel;
 }
 
+export function canPostInChannel(channel, project) {
+	const isTeamMember = get(user) && getIsProjectTeamMember(get(project));
+	return isTeamMember || !getIsTeamManagedChannel(get(channel));
+}
+
 export function displayChannelForUser(channel, project) {
 	const isTeamMember = get(user) && getIsProjectTeamMember(get(project));
 	const projectModel = get(project);

@@ -17,7 +17,7 @@
 	} from '../../../utils';
 
 	import {
-		displayChannelForUser,
+		canPostInChannel,
 		getChannelDefaultDescription,
 	} from '../../../models/channelsModel';
 
@@ -93,7 +93,7 @@
     $: channelItems = (channels && $channels) ? $channels.map(channel => {
         // const noPosts = !itemModel.postCount;
 		// if (isTeamMember || channelModel.postCount || getIsBaseDisplayChannel(channelModel) || (following && !getIsTeamManagedChannel(channelModel))}
-		if (displayChannelForUser(channel, project)) {
+		if (canPostInChannel(channel, project)) {
         	const channelModel = get(channel);
         	return {label: (config.CHANNELS_INCLUDE_HASH ? '#' : '') + channelModel.title, value: channelModel.id, description: channelModel.description || getChannelDefaultDescription(channelModel)};
 		} else {

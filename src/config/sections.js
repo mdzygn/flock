@@ -153,7 +153,8 @@ export const sections = [
 		id: 'posts',
 		label: '',
 		// showBack: true,
-		parentPath: 'channels/[channel]',
+		parentPath: 'projects/[project]',
+		// parentPath: 'channels/[channel]',
 		darkBg: true,
 	},
 

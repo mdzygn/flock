@@ -75,16 +75,23 @@
     let currentChannelId = null;
 
     $: updatesSelected = currentChannelId === 'updates';
-    $: channelSelected = currentChannelId && !updatesSelected;
+    $: isOnUpdateChannel = (curChannel && $curChannel && $curChannel.id === currentChannelId && $curChannel.title.toLowerCase() === 'announcements');
+    $: specificChannelSelected = currentChannelId && !updatesSelected;
+    $: isUpdatesView = isTeamMember && !specificChannelSelected;
 
-    $: defaultChannel = $channels && getDefaultChannel({projectId: $projectId});
-    $: targetChannelId = (channelSelected && currentChannelId) || ($defaultChannel && $defaultChannel.id);
+    $: updatesChannel = $channels && (getDefaultChannel({projectId: $projectId, channelName: 'updates'}) || getDefaultChannel({projectId: $projectId, channelName: 'announcements'}));
     
+    $: defaultChannel = $channels && (isTeamMember ? updatesChannel : getDefaultChannel({projectId: $projectId}));
+    // $: defaultChannel = $channels && getDefaultChannel({projectId: $projectId});
+    $: targetChannelId = (specificChannelSelected && currentChannelId) || ($defaultChannel && $defaultChannel.id); // must listen to change in currentChannelId? surely it could update itself?
+
+    // $: console.log('defaultChannel', $defaultChannel, $updatesChannel);
+
     $: curChannel = targetChannelId && $channels && getCurChannel(targetChannelId);
     // $: curChannel = currentChannelId && $channels && getCurChannel(currentChannelId);
 
-    $: currentChannelTargetTitle = (channelSelected && curChannel && $curChannel && $curChannel.title) || 'General';
-	$: channelDescription = channelSelected && curChannel && $curChannel && ($curChannel.description || getChannelDefaultDescription($curChannel));
+    $: currentChannelTargetTitle = (specificChannelSelected && curChannel && $curChannel && $curChannel.title) || 'General';
+	$: channelDescription = specificChannelSelected && curChannel && $curChannel && ($curChannel.description || getChannelDefaultDescription($curChannel));
 
 
     function onChannelSelected(newChannelId) {
@@ -109,7 +116,7 @@
 
     let posts = writable([]);
     $: filterPostType = updatesSelected ? 'projectPost' : (currentChannelId ? 'thread' : 'thread,projectPost');
-	$: { posts = getPosts( { projectId: $projectId, type: filterPostType, channelId: channelSelected ? currentChannelId : undefined, sortByCreated, limit: curNumDisplayPosts + 1} ) }; //get one more to be able to check if there are more posts available
+	$: { posts = getPosts( { projectId: $projectId, type: filterPostType, channelId: specificChannelSelected ? currentChannelId : undefined, sortByCreated, limit: curNumDisplayPosts + 1} ) }; //get one more to be able to check if there are more posts available
 
     $: areMoreItems = $posts && ($posts.length > curNumDisplayPosts);
 
@@ -177,7 +184,7 @@
     }
 
     function viewAllPosts() {
-        if (channelSelected) {
+        if (specificChannelSelected) {
             loadChannel(currentChannelId);
         }
     }
@@ -225,7 +232,7 @@
                                     <div class="getTheConversationStarted">{locale.PROJECT.FOLLOWER_GET_STARTED}</div>
                                 {/if}
                             {:else}
-                                <div class="getTheConversationStarted">{locale.PROJECT.GET_INVOLVED}</div>
+                                <div class="getTheConversationStarted">{isUpdatesView ? locale.PROJECT.GET_INVOLVED_TEAM_MEMBER : locale.PROJECT.GET_INVOLVED}</div>
                             {/if}
                         {/if}
                     {/if}
@@ -248,7 +255,7 @@
                                 <div class="getTheConversationStarted">{locale.PROJECT.GET_INVOLVED}</div>
                             {/if}
                         {/if} -->
-                        <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{channelSelected ? locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX : locale.PROJECT.POST_DISCUSSION_ALL_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
+                        <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{specificChannelSelected ? locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX : locale.PROJECT.POST_DISCUSSION_ALL_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
                     {/if}
                     <EditPost targetPostType="{PostTypes.THREAD}" bind:targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" showChannelSelect="{true}" {channels} smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" on:submit="{onAddPostSubmit}" onChannelSelected="{onChannelSelected}" />
                 {/if}
@@ -258,10 +265,10 @@
                         <div class="postsContainer">
                             {#each $posts as post, index (get(post).id)}
                                 {#if index < curNumDisplayPosts}
-                                    {#if get(post).type === 'projectPost'}
+                                    {#if get(post).type === 'projectPost' || isOnUpdateChannel}
 								        <ProjectPostItem {post} />
                                     {:else}
-                                        <PostItem {post} expandedView="{EXPANDED_VIEW && get(post).image}" compactView="{COMPACT_POST_VIEW}" showChannelTags="{!channelSelected}" onChannelSelect="{onChannelTagSelect}" />
+                                        <PostItem {post} expandedView="{EXPANDED_VIEW && get(post).image}" compactView="{COMPACT_POST_VIEW}" showChannelTags="{!specificChannelSelected}" onChannelSelect="{onChannelTagSelect}" />
                                     {/if}
                                 {/if}
                             {/each}
@@ -286,7 +293,7 @@
                             {#if $loadingPosts && (!$posts || !$posts.length) }
                                 <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
                             {:else}
-                                <ContentLoader>{updatesSelected ? locale.CHANNEL.UPDATES_NO_POSTS : (channelSelected ? locale.CHANNEL.NO_POSTS : locale.CHANNEL.ALL_CHANNELS_NO_POSTS)}
+                                <ContentLoader>{updatesSelected ? locale.CHANNEL.UPDATES_NO_POSTS : (specificChannelSelected ? locale.CHANNEL.NO_POSTS : locale.CHANNEL.ALL_CHANNELS_NO_POSTS)}
                                     {#if canPost}<br/>{locale.DISCUSSIONS.ADD_POST_CTA_PREFIX}<a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">{locale.DISCUSSIONS.ADD_POST_CTA}</a>{/if}
                                 </ContentLoader>
                             {/if}

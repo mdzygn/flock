@@ -193,6 +193,7 @@ const locale = {
 		// FOLLOWER_GET_STARTED: 'no posts yet - be the first!',
 		FOLLOWER_GET_STARTED: 'Share your thoughts',
 		GET_INVOLVED: 'Share your thoughts',
+		GET_INVOLVED_TEAM_MEMBER: 'Share an update',
 		CHANNELS_TITLE: 'Posts', // 'Project Discussions', // 'Discussions', // Discussions, Channels
 		CHANNELS_FOLLOW_LINK: 'Follow',
 		CHANNELS_FOLLOW: ' this project to view discussion channels and get involved.',

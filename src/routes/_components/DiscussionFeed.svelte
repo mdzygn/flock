@@ -80,6 +80,7 @@
     $: isUpdatesView = isTeamMember && !specificChannelSelected;
 
     $: updatesChannel = $channels && (getDefaultChannel({projectId: $projectId, channelName: 'updates'}) || getDefaultChannel({projectId: $projectId, channelName: 'announcements'}));
+    $: updatesChannelId = updatesChannel && $updatesChannel && $updatesChannel.id;
     
     $: defaultChannel = $channels && (isTeamMember ? updatesChannel : getDefaultChannel({projectId: $projectId}));
     // $: defaultChannel = $channels && getDefaultChannel({projectId: $projectId});
@@ -265,7 +266,7 @@
                         <div class="postsContainer">
                             {#each $posts as post, index (get(post).id)}
                                 {#if index < curNumDisplayPosts}
-                                    {#if get(post).type === 'projectPost' || isOnUpdateChannel}
+                                    {#if get(post).type === 'projectPost' || get(post).channelId === updatesChannelId || isOnUpdateChannel}
 								        <ProjectPostItem {post} />
                                     {:else}
                                         <PostItem {post} expandedView="{EXPANDED_VIEW && get(post).image}" compactView="{COMPACT_POST_VIEW}" showChannelTags="{!specificChannelSelected}" onChannelSelect="{onChannelTagSelect}" />

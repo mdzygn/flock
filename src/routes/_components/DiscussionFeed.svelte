@@ -75,12 +75,12 @@
     let currentChannelId = null;
 
     //$: updatesSelected = currentChannelId === 'updates';
-    $: isOnUpdateChannel = (curChannel && $curChannel && $curChannel.id === currentChannelId && ($curChannel.title.toLowerCase() === 'updates' || $curChannel.title.toLowerCase() === 'announcements'));
+    $: isOnUpdateChannel = (curChannel && $curChannel && $curChannel.id === currentChannelId && $curChannel.title.toLowerCase() === 'updates');
     // $: console.log('isOnUpdateChannel', isOnUpdateChannel, curChannel && $curChannel && $curChannel.id, currentChannelId, curChannel && $curChannel && $curChannel.title.toLowerCase());
     $: specificChannelSelected = currentChannelId; // && !updatesSelected;
     $: isUpdatesView = isTeamMember && !specificChannelSelected;
 
-    $: updatesChannel = $channels && (getDefaultChannel({projectId: $projectId, channelName: 'updates'}) || getDefaultChannel({projectId: $projectId, channelName: 'announcements'}));
+    $: updatesChannel = $channels && getDefaultChannel({projectId: $projectId, channelName: 'updates'});
     $: updatesChannelId = updatesChannel && $updatesChannel && $updatesChannel.id;
     
     $: defaultChannel = $channels && (isTeamMember ? updatesChannel : getDefaultChannel({projectId: $projectId}));

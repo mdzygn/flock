@@ -269,14 +269,15 @@ const locale = {
 		// About and FAQs - About the world creation platform and Frequently Asked Questions
 		// RESOURCES: 'Community resources and links',
 		// Questions and Answers - General questions or queries on how to use the app
-		GENERAL: 'General project discussion',
+		GENERAL: 'General project discussion topics and questions',
+		// GENERAL: 'General project discussion',
 		WORKSHOP: 'Work in progress and calls for feedback from the team',
 		QUESTIONS: 'Questions about the project from the community', // 'Questions from the community',
 		// Current Features Discussion - Discussion of current features and functionality
 		// ISSUES: 'Issues and bugs',
 		ISSUES: 'Issues, bugs and problems',
 		IDEAS: 'Project ideas and suggestions', // recommendations
-		INSPIRATION: 'Inspirational references and links',
+		INSPIRATION: 'Inspirational references and links for the project',
 		RANDOM: 'Off-topic discussions and links',
 		SUGGESTIONS: 'Suggestions to improve the community',
 	},

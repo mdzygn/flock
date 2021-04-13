@@ -140,20 +140,23 @@
             headerLinkUrl = '';
             overrideParentPath = null;
         } else if (/\/posts\/.+/.test(path)) {
-            if (($post && $post.type === 'projectPost') || (/\/posts\/new/.test(path) && $postType === 'projectPost')) {
-                hasSuperHeader = false;
-                sectionLabel = ($project && $project.title) || '';
-                headerLinkUrl = '';
-                overrideParentPath = $projectId ? 'projects/' + $projectId : null;
-            } else {
+            // if (($post && $post.type === 'projectPost') || (/\/posts\/new/.test(path) && $postType === 'projectPost')) {
+            //     hasSuperHeader = false;
+            //     sectionLabel = ($project && $project.title) || '';
+            //     headerLinkUrl = '';
+            //     overrideParentPath = $projectId ? 'projects/' + $projectId : null;
+            // } else {
                 hasSuperHeader = true;
                 if ($project) {
                     superHeaderLabel = $project.title;
                 }
+                if (($post && $post.type === 'projectPost') || (/\/posts\/new/.test(path) && $postType === 'projectPost')) {
+                    sectionLabel = 'Updates';
+                }
                 headerLinkUrl = '';
                 // headerLinkUrl = 'channels/' + $channelId;
                 overrideParentPath = null;
-            }
+            // }
         } else {
             hasSuperHeader = false;
             headerLinkUrl = '';

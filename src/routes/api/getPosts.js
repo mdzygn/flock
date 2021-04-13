@@ -23,7 +23,7 @@ export async function post(req, res, next) {
 	const projectId = options && options.projectId;
 	const getFollowState = options && options.getFollowState;
 
-	const hasProjectPostAndChannelSet = type.includes('projectPost') && channelId;
+	const hasProjectPostAndChannelSet = type && type.includes('projectPost') && channelId;
 
 	let filter = {};
 

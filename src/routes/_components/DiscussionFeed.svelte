@@ -74,9 +74,10 @@
 
     let currentChannelId = null;
 
-    $: updatesSelected = currentChannelId === 'updates';
-    $: isOnUpdateChannel = (curChannel && $curChannel && $curChannel.id === currentChannelId && $curChannel.title.toLowerCase() === 'announcements');
-    $: specificChannelSelected = currentChannelId && !updatesSelected;
+    //$: updatesSelected = currentChannelId === 'updates';
+    $: isOnUpdateChannel = (curChannel && $curChannel && $curChannel.id === currentChannelId && ($curChannel.title.toLowerCase() === 'updates' || $curChannel.title.toLowerCase() === 'announcements'));
+    $: console.log('isOnUpdateChannel', isOnUpdateChannel, curChannel && $curChannel && $curChannel.id, currentChannelId, curChannel && $curChannel && $curChannel.title.toLowerCase());
+    $: specificChannelSelected = currentChannelId; // && !updatesSelected;
     $: isUpdatesView = isTeamMember && !specificChannelSelected;
 
     $: updatesChannel = $channels && (getDefaultChannel({projectId: $projectId, channelName: 'updates'}) || getDefaultChannel({projectId: $projectId, channelName: 'announcements'}));
@@ -116,7 +117,10 @@
     }
 
     let posts = writable([]);
-    $: filterPostType = updatesSelected ? 'projectPost' : (currentChannelId ? 'thread' : 'thread,projectPost');
+    // $: filterPostType = updatesSelected ? 'projectPost' : (currentChannelId ? 'thread' : 'thread,projectPost');
+    $: filterPostType = (!currentChannelId || isOnUpdateChannel) ? 'thread,projectPost' : 'thread';
+    // $: filterPostType = !currentChannelId ? 'nil' : ((!currentChannelId || isOnUpdateChannel) ? 'thread,projectPost' : 'thread');
+    // $: filterPostType = (currentChannelId && !isOnUpdateChannel) ? 'thread' : 'thread,projectPost';
 	$: { posts = getPosts( { projectId: $projectId, type: filterPostType, channelId: specificChannelSelected ? currentChannelId : undefined, sortByCreated, limit: curNumDisplayPosts + 1} ) }; //get one more to be able to check if there are more posts available
 
     $: areMoreItems = $posts && ($posts.length > curNumDisplayPosts);
@@ -125,7 +129,7 @@
         curNumDisplayPosts = DEFAULT_DISPLAY_POSTS;
     }
 
-	$: canPost = !updatesSelected && curChannel && $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
+	$: canPost = curChannel && $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived; // !updatesSelected && 
 	// $: canPost = (isTeamMember || !curChannel || ($curChannel && !$curChannel.teamOnly)) && !isArchived;
 	// $: canPost = isTeamMember && !isArchived;
 	// $: canPost = $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived;
@@ -224,7 +228,7 @@
                 <div class="channelHeader">
                     {#if channelDescription}
                         <div class="channelHeaderDescription">{@html channelDescription}</div>
-                    {:else if !updatesSelected }
+                    {:else}
                         {#if !isArchived && !displayInline}
                             {#if (!hasActiveChannels || isNew) && viewAllChannels}
                                 {#if isTeamMember}
@@ -294,7 +298,7 @@
                             {#if $loadingPosts && (!$posts || !$posts.length) }
                                 <ContentLoader label="{locale.LOADING.CHANNEL_ITEMS}" />
                             {:else}
-                                <ContentLoader>{updatesSelected ? locale.CHANNEL.UPDATES_NO_POSTS : (specificChannelSelected ? locale.CHANNEL.NO_POSTS : locale.CHANNEL.ALL_CHANNELS_NO_POSTS)}
+                                <ContentLoader>{isOnUpdateChannel ? locale.CHANNEL.UPDATES_NO_POSTS : (specificChannelSelected ? locale.CHANNEL.NO_POSTS : locale.CHANNEL.ALL_CHANNELS_NO_POSTS)}
                                     {#if canPost}<br/>{locale.DISCUSSIONS.ADD_POST_CTA_PREFIX}<a href="/posts/new" on:click="{(e) => { newPost(); return stopEvent(e); }}">{locale.DISCUSSIONS.ADD_POST_CTA}</a>{/if}
                                 </ContentLoader>
                             {/if}

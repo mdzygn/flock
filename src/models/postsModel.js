@@ -186,6 +186,9 @@ function filterCurrentPosts(postFilterOptions, createNewSet) {
 	const sortByCreated = (postFilterOptions && postFilterOptions.sortByCreated) || false;
 
 	const filterTypeArray = (type && type.includes(',')) ? type.split(',') : null;
+	const hasProjectPostSet = type && type.includes('projectPost');
+
+	// console.log(get(posts).map(item => get(item)));
 
 	let newFilteredPosts = get(posts);
 	if (channelId || projectId || type) {
@@ -193,7 +196,7 @@ function filterCurrentPosts(postFilterOptions, createNewSet) {
 			const post = get(postModel);
 			// console.log(post.title + ', ' + post.channelId + ', ' + post.type);
 			const isFilterType = !type || (filterTypeArray ?  filterTypeArray.includes(post.type) : post.type === type);
-			return isFilterType && (!channelId || post.channelId === channelId) && (!projectId || post.projectId === projectId) && (!threadId || post.threadId === threadId);
+			return isFilterType && (!channelId || (post.channelId === channelId || (hasProjectPostSet && post.type === 'projectPost'))) && (!projectId || post.projectId === projectId) && (!threadId || post.threadId === threadId);
 		});
 	}
 	switch (type) {

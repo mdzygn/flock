@@ -23,15 +23,20 @@ export async function post(req, res, next) {
 	const projectId = options && options.projectId;
 	const getFollowState = options && options.getFollowState;
 
-	const filter = {};
-	if (type) {
-		if (type.includes(',')) {
-			// filter.type = type.split(',')[1];
-			filter.type = { $in: type.split(',') };
-		} else {
-			filter.type = type;
+	const hasProjectPostAndChannelSet = type.includes('projectPost') && channelId;
+
+	let filter = {};
+
+	console.log('hasProjectPostAndChannelSet', hasProjectPostAndChannelSet, type, channelId);
+
+	if (!hasProjectPostAndChannelSet) {
+		if (type) {
+			filter.type = type.includes(',') ? { $in: type.split(',') } : type;
+			// console.log('filter.type', filter.type, 'type', type, type.includes(','), type.split(','));
 		}
-		// console.log('filter.type', filter.type, 'type', type, type.includes(','), type.split(','));
+		if (channelId) {
+			filter.channelId = channelId;
+		}
 	}
 	if (id) {
 		filter.id = id;
@@ -39,13 +44,23 @@ export async function post(req, res, next) {
 	if (threadId) {
 		filter.threadId = threadId;
 	}
-	if (channelId) {
-		filter.channelId = channelId;
-	}
 	if (projectId) {
 		filter.projectId = projectId;
 	}
-	filter.deleted =  { $ne: true };
+	filter.deleted = { $ne: true };
+
+	if (hasProjectPostAndChannelSet) {
+		const filterA = JSON.parse(JSON.stringify(filter));
+		filterA.type = 'projectPost';
+
+		const filterB = JSON.parse(JSON.stringify(filter));
+		filterB.type = type.includes(',') ? { $in: type.split(',').filter(item => item !== 'projectPost') } : type;
+		filterB.channelId = channelId;
+
+		filter = {$or: [filterA, filterB]};
+
+		// console.log(JSON.stringify(filter, null, 2));
+	}
 
 	if (!(id || threadId || channelId || projectId)) {
 		errorResponse(res, {}, {errorMsg: 'post id, threadId, channelId ot projectId not set'});

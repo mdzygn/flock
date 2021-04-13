@@ -150,7 +150,8 @@
                 if ($project) {
                     superHeaderLabel = $project.title;
                 }
-                headerLinkUrl = 'channels/' + $channelId;
+                headerLinkUrl = '';
+                // headerLinkUrl = 'channels/' + $channelId;
                 overrideParentPath = null;
             }
         } else {

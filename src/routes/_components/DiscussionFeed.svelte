@@ -429,10 +429,9 @@
         line-height: 2.2rem;
     } */
 
-    .postsContainer :global(.postItem) {
+    /* .postsContainer :global(.postItem) {
     	margin-bottom: 0;
-		/* border-bottom: 2px solid #EEEEEE; */
-	}
+	} */
 
     .discussionFeed :global(.contentPanel .addPostPanel) {
     	/* margin-bottom: -20px; */
@@ -538,7 +537,7 @@
 
         background-color: #ffffff;
         
-        border-top: 2px solid #EEEEEE;
+        /* border-top: 2px solid #EEEEEE; */
         /* border-bottom: 2px solid #EEEEEE; */
 
         /* margin-top: -5px; */

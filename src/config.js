@@ -88,6 +88,8 @@ export const ADD_DETAILS_AFTER_PROJECT_CREATE = true; // false;
 export const USE_PROJECT_POSTS = false;
 export const CHANNELS_INCLUDE_HASH = false;
 
+export const POSTS_SHOW_LAST_ACTIVE_TIME = true;
+
 export const MAX_IMAGE_UPLOAD_SIZE = {
     'image/gif': 8,
     'image/png': 3,
@@ -186,4 +188,6 @@ export default {
 
     USE_PROJECT_POSTS,
     CHANNELS_INCLUDE_HASH,
+
+    POSTS_SHOW_LAST_ACTIVE_TIME,
 };

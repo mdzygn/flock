@@ -139,7 +139,7 @@
     $: linkUserName = (type === 'threadPost');
     // $: displayBreaks = (type !== 'thread');
     $: disallowLinks = (type === 'thread');
-    $: showLastActiveTime = (type === 'thread');
+    $: showLastActiveTime = config.POSTS_SHOW_LAST_ACTIVE_TIME && (type === 'thread');
     $: textSelectable = (type !== 'thread');
     $: messageLimited = (type === 'thread');
     $: messageLimitedSingleLine = (type === 'thread' && title);
@@ -180,8 +180,6 @@
     $: date = $post && (showLastActiveTime ? $post.lastActiveAt : $post.createdAt);
 
     let dateString = '';
-    // $: isRecent = !showLastActiveTime && getDateAge(date).hours < 1;
-    // $: dateString = (showLastActiveTime && repliesCount) ? 'active ' + getDateAgeString(date) : (isRecent ? getDateAgeString(date) : getDateString(date));
     $: {
         if (date) {
             if (showLastActiveTime && repliesCount) {

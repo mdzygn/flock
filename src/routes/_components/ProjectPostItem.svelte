@@ -98,10 +98,35 @@
     $: title = ($post && $post.title) || '';
     $: message = ($post && ($post.message || $post.title)) || '';
     $: image = ($post && $post.image) || '';
-    $: createdAt = ($post && $post.createdAt) || '';
 
-    // $: dateString = (createdAt && getDateString(createdAt, 'ddd d MMM') + ' at ' + getDateString(createdAt, 'h:mmtt')) || '&nbsp;';
-    $: dateString = (createdAt && getMessageTime(createdAt)) || '';
+    // $: createdAt = ($post && $post.createdAt) || '';
+    // $: dateString = (createdAt && getMessageTime(createdAt)) || '';
+
+    let showLastActiveTime = config.POSTS_SHOW_LAST_ACTIVE_TIME; // true;
+    
+    $: repliesCount = ($post && $post.postCount) || 0;
+    
+    $: date = $post && (showLastActiveTime ? $post.lastActiveAt : $post.createdAt);
+
+    let dateString = '';
+    $: {
+        if (date) {
+            if (showLastActiveTime && repliesCount) {
+                dateString = 'active ' + getDateAgeString(date, {allowLessThanMinute: false});
+            } else {
+                dateString = getMessageTime(date);
+
+                // const dateAge = getDateAge(date);
+                // if (dateAge.hours < 0.66) {
+                //     dateString = getDateAgeString(date);
+                // } else if (dateAge.days < 0.66) {
+                //     dateString = getDateString(date, 'h:mmtt');
+                // } else {
+                //     dateString = getDateString(date);
+                // }
+            }
+        }
+    }
 
     $: titleHTML = getDisplayText(title);
     $: messageHTML = getDisplayText(message);
@@ -120,8 +145,6 @@
             }, 0);
         })();
     }
-
-    const date = ''; //'5 Jan at 4:23pm';
 
     function viewUserProfile() {
         if (userLoaded) {

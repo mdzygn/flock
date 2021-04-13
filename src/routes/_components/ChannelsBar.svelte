@@ -47,7 +47,7 @@
 
     $: items = [
         {label: locale.DISCUSSIONS.ALL_FILTER, title: null, value: null},
-        {label: locale.DISCUSSIONS.UPDATES_FILTER, title: null, value: 'updates'},
+        // {label: locale.DISCUSSIONS.UPDATES_FILTER, title: null, value: 'updates'},
         ...itemSet
     ];
     // $: items = ['all', ...itemSet];

@@ -36,10 +36,12 @@ const baseChannelNames = [
 	'ideas',
 ];
 const primaryChannelNames = [
+	'updates',
 	'announcements',
 	'general',
 ];
 const teamManagedChannelNames = [
+	'updates',
 	'announcements',
 	'workshop',
 ];

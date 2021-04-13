@@ -264,6 +264,7 @@ const locale = {
 		PAGE_TITLE: 'Edit Post',
 	},
 	CHANNEL_DESCRIPTIONS: {
+		UPDATES: 'Updates, news and announcements from the team',
 		ANNOUNCEMENTS: 'News and project announcements from the team',
 		// About and FAQs - About the world creation platform and Frequently Asked Questions
 		// RESOURCES: 'Community resources and links',

@@ -76,7 +76,7 @@
 
     //$: updatesSelected = currentChannelId === 'updates';
     $: isOnUpdateChannel = (curChannel && $curChannel && $curChannel.id === currentChannelId && ($curChannel.title.toLowerCase() === 'updates' || $curChannel.title.toLowerCase() === 'announcements'));
-    $: console.log('isOnUpdateChannel', isOnUpdateChannel, curChannel && $curChannel && $curChannel.id, currentChannelId, curChannel && $curChannel && $curChannel.title.toLowerCase());
+    // $: console.log('isOnUpdateChannel', isOnUpdateChannel, curChannel && $curChannel && $curChannel.id, currentChannelId, curChannel && $curChannel && $curChannel.title.toLowerCase());
     $: specificChannelSelected = currentChannelId; // && !updatesSelected;
     $: isUpdatesView = isTeamMember && !specificChannelSelected;
 

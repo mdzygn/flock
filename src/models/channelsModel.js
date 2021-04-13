@@ -104,6 +104,11 @@ function mergeChannels(newChannels) {
 			newChannelData = newChannels[channelI];
 			channelId = newChannelData.id;
 			curChannel = curChannels.find(match => get(match).id === channelId);
+
+			if (newChannelData.title.toLowerCase() === 'announcements') {
+				newChannelData.title = 'Updates';
+			}
+
 			if (!curChannel) {
 				curChannel = ChannelModel(newChannelData);
 				curChannels.push(curChannel);

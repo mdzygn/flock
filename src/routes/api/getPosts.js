@@ -27,8 +27,6 @@ export async function post(req, res, next) {
 
 	let filter = {};
 
-	console.log('hasProjectPostAndChannelSet', hasProjectPostAndChannelSet, type, channelId);
-
 	if (!hasProjectPostAndChannelSet) {
 		if (type) {
 			filter.type = type.includes(',') ? { $in: type.split(',') } : type;

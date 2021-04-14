@@ -1,7 +1,7 @@
 <script>
     import locale from '../../locale';
 
-	import { tick } from 'svelte';
+	import { onMount, onDestroy, tick } from 'svelte';
 
     import { get, writable } from 'svelte/store';
     
@@ -126,7 +126,7 @@
     let checkedFilteredChannel = false;
 
     $: {
-        if (!checkedFilteredChannel && $filteredChannelId && channels && $channels) {
+        if (!checkedFilteredChannel && $filteredChannelId && channels && $channels && mounted) {
             checkFilteredChannelId();
         }
     }
@@ -137,7 +137,7 @@
 
     async function checkFilteredChannelId() {
         checkedFilteredChannel = true;
-        // console.log('filteredChannelId', $filteredChannelId);
+        // console.log('get filteredChannelId', $filteredChannelId);
         if (currentChannelId !== $filteredChannelId) {
             if ($filteredChannelId) {
                 const targetChannel = getChannel($filteredChannelId);
@@ -165,13 +165,21 @@
     $: areMoreItems = $posts && ($posts.length > curNumDisplayPosts);
 
     function onCurrentChanneIdChanged() {
-        if (currentChannelId || checkedFilteredChannel) {
+        if (mounted) {
             // console.log('set filteredChannelId', currentChannelId);
             $filteredChannelId = currentChannelId;
         }
 
         curNumDisplayPosts = DEFAULT_DISPLAY_POSTS;
     }
+
+    let mounted = false;
+    onMount(() => {
+        mounted = true;
+    });
+    onDestroy(() => {
+        mounted = false;
+    });
 
 	$: canPost = curChannel && $curChannel && (!$curChannel.teamOnly || isTeamMember) && !isArchived; // !updatesSelected && 
 	// $: canPost = (isTeamMember || !curChannel || ($curChannel && !$curChannel.teamOnly)) && !isArchived;

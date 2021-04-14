@@ -1213,6 +1213,7 @@
         display: block; */
 	}
     .skillsMiniList .skillsContainer {
+    	display: inline-block;
         padding-left: 23px;
 	}
     /* .skillsMiniList .skillsContainer {

@@ -68,14 +68,12 @@
         itemSet;
         scrollList && scrollList.resize();
     }
-
     $: {
-        currentChannelId; // filterString;
+        currentChannelId;
         if (mounted) {
             (async () => {
                 await tick();
-                scrollList.scrollToSelectedItem();
-                // scrollToSelectedItem();
+                scrollList && scrollList.scrollToSelectedItem();
             })();
         }
     }

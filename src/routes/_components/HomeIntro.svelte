@@ -280,4 +280,8 @@
         align-items: initial;
     }
 
+    .homeIntro :global(.scrollIndicator) {
+        top: -6px;
+    }
+
 </style>

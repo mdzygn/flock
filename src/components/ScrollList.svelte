@@ -79,11 +79,11 @@
         <slot></slot>
     </div>
     {#if showArrows}
-        <div class="scrollIndicatorLeft" class:indicatorShown="{scrollLeftShown}">
+        <div class="scrollIndicatorLeft scrollIndicator" class:indicatorShown="{scrollLeftShown}">
             <div class="fadeBgLeft fadeBg"></div>
             <Button className="scrollLeftArrow arrowButton" icon="{ScrollLeftIcon}" onClick="{scrollLeft}"></Button>
         </div>
-        <div class="scrollIndicatorRight" class:indicatorShown="{scrollRightShown}">
+        <div class="scrollIndicatorRight scrollIndicator" class:indicatorShown="{scrollRightShown}">
             <div class="fadeBgRight fadeBg"></div>
             <Button className="scrollRightArrow arrowButton" icon="{ScrollRightIcon}" onClick="{scrollRight}"></Button>
         </div>
@@ -105,7 +105,8 @@
         display: none;
     }
 
-    .scrollIndicatorLeft, .scrollIndicatorRight {
+    .scrollIndicator {
+        pointer-events: none;
         opacity: 0;
         position: absolute;
         top: -5px;
@@ -155,5 +156,6 @@
 
     .indicatorShown {
         opacity: 1;
+        pointer-events: initial;
     }
 </style>

@@ -144,7 +144,7 @@
 	$: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? curChannelId : (curPostType === 'projectPost') ? $projectId : $postId)) || null;
 	// $: draftId = (editPost ? ($post && $post.id) : ((curPostType === 'thread') ? $channelId : $postId)) || null;
 
-	$: showTitleField = true; //trim(title); // (curPostType === 'thread'); // 
+	$: showTitleField = trim(title); // (curPostType === 'thread'); // 
 
 	$: imageType = (curPostType === 'thread') ? 'image/jpeg' : null;
 	$: useLibrary = (isProjectPost) ? true : false;

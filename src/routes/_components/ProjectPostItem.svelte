@@ -197,6 +197,9 @@
         <!-- {#if title}
             <div class="title">{@html titleHTML}</div>
         {/if} -->
+        {#if title}
+            <div class="title">{@html titleHTML}</div>
+        {/if}
         {#if message}
             <div class="message">{@html messageHTML}</div>
         {/if}

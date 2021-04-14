@@ -67,6 +67,8 @@
 		projectReturnView,
 		projectShowingInfo,
 		getIsProjectTeamMember,
+		postId,
+		channelId,
 		postType,
 		showBetaFeatures,
 		user,
@@ -115,6 +117,10 @@
 	import NewPostButton from '../../_components/NewPostButton.svelte';
 
 	//$: userLoading = (!($user && $user.loaded) && $userId);
+
+	// clear channel and post so doesn't load different channel and project
+	$postId = null;
+	$channelId = null;
 
 	onMount(() => {
 		PostsModel.on('postsUpdated', onPostsUpdated);

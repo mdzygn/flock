@@ -122,12 +122,15 @@
         position: absolute;
         opacity: 0.7;
 
-        width: 11px;
+        width: 18px;
         padding: 5px;
         height: 25px;
     }
     .content :global(.arrowButton .icon) {
         transform: scale(0.3, 0.3);
+    }
+    .content :global(.scrollRightArrow .icon) {
+        margin-left: 6px;
     }
     .content :global(.scrollLeftArrow) {
         left: 0;

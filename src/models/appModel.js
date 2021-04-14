@@ -18,6 +18,7 @@ const appModel = createModel({
     conversationId: null,
     profileId: null,
     userId: null, // 'bl20a8lm', // default user
+    filteredChannelId: null,
 
     username: null,
     usercode: null,
@@ -65,6 +66,7 @@ export const postId = appModel.postId;
 export const conversationId = appModel.conversationId;
 export const profileId = appModel.profileId;
 export const userId = appModel.userId;
+export const filteredChannelId = appModel.filteredChannelId;
 
 const draftPosts = appModel.draftPosts;
 

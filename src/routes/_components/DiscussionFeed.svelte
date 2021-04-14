@@ -24,6 +24,7 @@
 	import EditPost from '../posts/_components/EditPost.svelte';
 
 	import {
+        filteredChannelId,
 		getIsProjectTeamMember,
         showBetaFeatures,
         user,
@@ -36,12 +37,14 @@
 	} from '../../actions/appActions';
 
 	import {
+        getChannel,
 		getChannels,
         getDefaultChannel,
         getIsTeamManagedChannel,
         loadingChannels,
         getIsBaseDisplayChannel,
 		getChannelDefaultDescription,
+        displayChannelForUser,
     } from '../../models/channelsModel';
 
 	import {
@@ -120,9 +123,32 @@
     const INCREMENT_DISPLAY_POSTS = 15; // 5;
     let curNumDisplayPosts = DEFAULT_DISPLAY_POSTS;
 
+    let checkedFilteredChannel = false;
+
+    $: console.log('filteredChannelId', $filteredChannelId);
+
+    $: {
+        if (!checkedFilteredChannel && $filteredChannelId && channels && $channels) {
+            checkFilteredChannelId();
+        }
+    }
     $: {
         currentChannelId;
-        resetNumDisplayPosts();
+        onCurrentChanneIdChanged();
+    }
+
+    function checkFilteredChannelId() {
+        checkedFilteredChannel = true;
+        // console.log('filteredChannelId', $filteredChannelId);
+        if (currentChannelId !== $filteredChannelId) {
+            if ($filteredChannelId) {
+                const targetChannel = getChannel($filteredChannelId);
+                // console.log(get(targetChannel), targetChannel && get(targetChannel).projectId === $project.id, targetChannel && displayChannelForUser(targetChannel, project));
+                if (targetChannel && get(targetChannel).projectId === $project.id && displayChannelForUser(targetChannel, project)) {
+                    currentChannelId = $filteredChannelId;
+                }
+            }
+        }
     }
 
     let posts = writable([]);
@@ -137,7 +163,12 @@
 
     $: areMoreItems = $posts && ($posts.length > curNumDisplayPosts);
 
-    function resetNumDisplayPosts() {
+    function onCurrentChanneIdChanged() {
+        if (currentChannelId || checkedFilteredChannel) {
+            // console.log('set filteredChannelId', currentChannelId);
+            $filteredChannelId = currentChannelId;
+        }
+
         curNumDisplayPosts = DEFAULT_DISPLAY_POSTS;
     }
 

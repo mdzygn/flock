@@ -377,8 +377,8 @@
         user-select: none;
     }
 
-    /* .title {
-        font-size: 1.9rem;
+    .title {
+        font-size: 1.5rem;
         line-height: 2rem;
         color: #000000;
         font-weight: 700;
@@ -392,7 +392,7 @@
     }
     .title :global(a) {
         user-select: text;
-    } */
+    }
 
     .message {
         font-size: 1.5rem;

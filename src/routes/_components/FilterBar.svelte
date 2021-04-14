@@ -127,7 +127,7 @@
     <!-- <TagSet tags="{items}" /> -->
 
     <!-- <div class="filterScrollRegion" bind:this="{scrollRegion}"> -->
-    <ScrollList bind:this="{scrollList}">
+    <ScrollList bind:this="{scrollList}" showArrows="{!isCategorySelector}">
         <div class="filterSet">
             {#each items as item, index}
                 <Button className="filterButton {((index || isCategorySelector) ? filterString.match(new RegExp('\\b' + item + '\\b')) : filterString === '') ? 'selectedItem' : ''}" onClick={e => selectFilter(item)}>{item}</Button>

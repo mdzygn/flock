@@ -39,10 +39,14 @@
         <slot></slot>
     </div>
     {#if showArrows}
-        <div class="fadeBgLeft fadeBg"></div>
-        <div class="fadeBgRight fadeBg"></div>
-        <Button className="scrollLeftArrow arrowButton" icon="{ScrollLeftIcon}"></Button>
-        <Button className="scrollRightArrow arrowButton" icon="{ScrollRightIcon}"></Button>
+        <div class="scrollIndicatorLeft">
+            <div class="fadeBgLeft fadeBg"></div>
+            <Button className="scrollLeftArrow arrowButton" icon="{ScrollLeftIcon}"></Button>
+        </div>
+        <div class="scrollIndicatorRight">
+            <div class="fadeBgRight fadeBg"></div>
+            <Button className="scrollRightArrow arrowButton" icon="{ScrollRightIcon}"></Button>
+        </div>
     {/if}
 </div>
 
@@ -61,9 +65,21 @@
         display: none;
     }
 
-    .content :global(.arrowButton) {
+    .scrollIndicatorLeft, .scrollIndicatorRight {
         position: absolute;
         top: -6px;
+    }
+    .scrollIndicatorLeft {
+        left: 0;
+    }
+    .scrollIndicatorRight {
+        right: 0;
+    }
+
+    .content :global(.arrowButton) {
+        position: absolute;
+        /* top: -6px; */
+        opacity: 0.7;
 
         width: 11px;
         padding: 5px;
@@ -81,7 +97,7 @@
 
     .content :global(.fadeBg) {
         position: absolute;
-        top: -6px;
+        /* top: -6px; */
 
         width: 24px;
         height: 38px;

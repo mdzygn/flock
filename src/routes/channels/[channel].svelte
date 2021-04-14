@@ -74,6 +74,9 @@
 
     let posts = writable([]);
 	$: { posts = getPosts( { channelId: $channelId, type: 'thread', sortByCreated } ) };
+	$: {
+		loadUsersOfItemModels($posts);
+	}
 
     $: isTeamMember = $user && getIsProjectTeamMember($project);
 	$: canPost = $channel && (!$channel.teamOnly || isTeamMember) && !isArchived;
@@ -106,10 +109,6 @@
 		// 	scrollToBottom();
 		// }
 	}
-
-    $: {
-        loadUsersOfItemModels($posts);
-    }
 
 	function hideAddPostPanel() {
 		showAddPost = false;

@@ -49,6 +49,10 @@
 		loadingPosts,
 	} from '../../models/postsModel';
 
+    import {
+        loadUsersOfItemModels,
+	} from '../../models/usersModel';
+
 	import {
 		projectToggleFollowing,
 	} from '../../actions/projectActions';
@@ -127,6 +131,9 @@
     // $: filterPostType = !currentChannelId ? 'nil' : ((!currentChannelId || isOnUpdateChannel) ? 'thread,projectPost' : 'thread');
     // $: filterPostType = (currentChannelId && !isOnUpdateChannel) ? 'thread' : 'thread,projectPost';
 	$: { posts = getPosts( { projectId: $projectId, type: filterPostType, channelId: specificChannelSelected ? currentChannelId : undefined, sortByCreated, limit: curNumDisplayPosts + 1} ) }; //get one more to be able to check if there are more posts available
+    $: {
+        loadUsersOfItemModels($posts);
+	}
 
     $: areMoreItems = $posts && ($posts.length > curNumDisplayPosts);
 

@@ -102,14 +102,14 @@
 
     let posts = writable([]);
 	$: { posts = getPosts( { threadId: $postId, type: 'threadPost' } ) };
-
-    $: {
-        loadUsersOfItem($post);
-	}
     $: {
         loadUsersOfItemModels($posts);
 	}
 
+    $: {
+        loadUsersOfItem($post);
+	}
+	
     function reply(event) {
 		stopEvent(event);
 		newThreadPost();

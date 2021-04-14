@@ -84,7 +84,7 @@
     //$: updatesSelected = currentChannelId === 'updates';
     $: isOnUpdateChannel = (curChannel && $curChannel && $curChannel.id === currentChannelId && $curChannel.title.toLowerCase() === 'updates');
     // $: console.log('isOnUpdateChannel', isOnUpdateChannel, curChannel && $curChannel && $curChannel.id, currentChannelId, curChannel && $curChannel && $curChannel.title.toLowerCase());
-    $: specificChannelSelected = currentChannelId; // && !updatesSelected;
+    $: specificChannelSelected = !!currentChannelId; // && !updatesSelected;
     $: isUpdatesView = isTeamMember && (!specificChannelSelected || isOnUpdateChannel);
 
     $: updatesChannel = $channels && getDefaultChannel({projectId: $projectId, channelName: 'updates'});
@@ -125,8 +125,6 @@
 
     let checkedFilteredChannel = false;
 
-    $: console.log('filteredChannelId', $filteredChannelId);
-
     $: {
         if (!checkedFilteredChannel && $filteredChannelId && channels && $channels) {
             checkFilteredChannelId();
@@ -137,7 +135,7 @@
         onCurrentChanneIdChanged();
     }
 
-    function checkFilteredChannelId() {
+    async function checkFilteredChannelId() {
         checkedFilteredChannel = true;
         // console.log('filteredChannelId', $filteredChannelId);
         if (currentChannelId !== $filteredChannelId) {
@@ -145,6 +143,8 @@
                 const targetChannel = getChannel($filteredChannelId);
                 // console.log(get(targetChannel), targetChannel && get(targetChannel).projectId === $project.id, targetChannel && displayChannelForUser(targetChannel, project));
                 if (targetChannel && get(targetChannel).projectId === $project.id && displayChannelForUser(targetChannel, project)) {
+                    // console.log('set currentChannelId', $filteredChannelId);
+                    await tick();
                     currentChannelId = $filteredChannelId;
                 }
             }
@@ -156,7 +156,8 @@
     $: filterPostType = (!currentChannelId || isOnUpdateChannel) ? 'thread,projectPost' : 'thread';
     // $: filterPostType = !currentChannelId ? 'nil' : ((!currentChannelId || isOnUpdateChannel) ? 'thread,projectPost' : 'thread');
     // $: filterPostType = (currentChannelId && !isOnUpdateChannel) ? 'thread' : 'thread,projectPost';
-	$: { posts = getPosts( { projectId: $projectId, type: filterPostType, channelId: specificChannelSelected ? currentChannelId : undefined, sortByCreated, limit: curNumDisplayPosts + 1} ) }; //get one more to be able to check if there are more posts available
+	// $: { posts = getPosts( { projectId: $projectId, type: filterPostType, channelId: specificChannelSelected ? currentChannelId : undefined, sortByCreated, limit: curNumDisplayPosts + 1} ) }; //get one more to be able to check if there are more posts available
+    $: { posts = getPosts( { projectId: $projectId, type: filterPostType, channelId: currentChannelId, sortByCreated, limit: curNumDisplayPosts + 1} ) }; //get one more to be able to check if there are more posts available
     $: {
         loadUsersOfItemModels($posts);
 	}

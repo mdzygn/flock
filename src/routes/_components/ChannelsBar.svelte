@@ -3,6 +3,7 @@
     import locale from '../../locale';
 
     import Button from '../../components/Button.svelte';
+    import ScrollList from '../../components/ScrollList.svelte';
     // import TagSet from './TagSet.svelte';
 
     import { onMount, tick } from 'svelte';
@@ -62,53 +63,58 @@
         // }
     }
 
+    let scrollList;
+
     $: {
         currentChannelId; // filterString;
         if (mounted) {
             (async () => {
                 await tick();
-                scrollToSelectedItem();
+                scrollList.scrollToSelectedItem();
+                // scrollToSelectedItem();
             })();
         }
     }
 
-    let scrollRegion;
     let mounted = false;
-
-    // let selectingItem;
-
-    const SCROLL_FOCUS_MARGIN = 10;
-    const SCROLL_FOCUS_OFFSET = 40;
 
     onMount(() => {
         mounted = true;
     });
 
-    function scrollToSelectedItem() {
-        if (scrollRegion) { //  && !selectingItem
-            const selectedElementArray = scrollRegion.getElementsByClassName('selectedItem');
-            const selectedElement = selectedElementArray && selectedElementArray.length ? selectedElementArray[0] : null;
-            if (selectedElement) {
-                const selectedElementLeft = selectedElement.offsetLeft;
-                const selectedElementRight = selectedElement.offsetLeft + selectedElement.offsetWidth;
-                const scrollRegionWidth = scrollRegion.offsetWidth;
-                const scrollRegionLeft = scrollRegion.scrollLeft;
-                const scrollRegionRight = scrollRegion.scrollLeft + scrollRegionWidth;
+    // let selectingItem;
 
-                if (selectedElementRight < scrollRegionWidth - SCROLL_FOCUS_MARGIN) {
-                    scrollRegion.scrollTo(0, 0);
-                } else if (selectedElementRight > scrollRegionRight - SCROLL_FOCUS_MARGIN
-                || selectedElementLeft < scrollRegionLeft + SCROLL_FOCUS_MARGIN) {
-                    const offsetX = selectedElement.offsetLeft - SCROLL_FOCUS_OFFSET;
-                    scrollRegion.scrollTo(offsetX, 0);
-                }
-            }
-        }
-    }
+    // const SCROLL_FOCUS_MARGIN = 10;
+    // const SCROLL_FOCUS_OFFSET = 40;
+
+    // let scrollRegion;
+
+    // function scrollToSelectedItem() {
+    //     if (scrollRegion) { //  && !selectingItem
+    //         const selectedElementArray = scrollRegion.getElementsByClassName('selectedItem');
+    //         const selectedElement = selectedElementArray && selectedElementArray.length ? selectedElementArray[0] : null;
+    //         if (selectedElement) {
+    //             const selectedElementLeft = selectedElement.offsetLeft;
+    //             const selectedElementRight = selectedElement.offsetLeft + selectedElement.offsetWidth;
+    //             const scrollRegionWidth = scrollRegion.offsetWidth;
+    //             const scrollRegionLeft = scrollRegion.scrollLeft;
+    //             const scrollRegionRight = scrollRegion.scrollLeft + scrollRegionWidth;
+
+    //             if (selectedElementRight < scrollRegionWidth - SCROLL_FOCUS_MARGIN) {
+    //                 scrollRegion.scrollTo(0, 0);
+    //             } else if (selectedElementRight > scrollRegionRight - SCROLL_FOCUS_MARGIN
+    //             || selectedElementLeft < scrollRegionLeft + SCROLL_FOCUS_MARGIN) {
+    //                 const offsetX = selectedElement.offsetLeft - SCROLL_FOCUS_OFFSET;
+    //                 scrollRegion.scrollTo(offsetX, 0);
+    //             }
+    //         }
+    //     }
+    // }
 </script>
 
 <div class="filterBar">
-    <div class="filterScrollRegion" bind:this="{scrollRegion}">
+    <!-- <div class="filterScrollRegion" bind:this="{scrollRegion}"> -->
+    <ScrollList bind:this="{scrollList}">
         <div class="filterSet">
             {#each items as item}
                 <!-- TODO move check here into list build -->
@@ -118,7 +124,8 @@
                 <!-- {/if} -->
             {/each}
         </div>
-    </div>
+    </ScrollList>
+    <!-- </div> -->
 </div>
 
 <style>
@@ -128,15 +135,15 @@
         padding-bottom: 10px;
     }
 
-    .filterScrollRegion {
+    /* .filterScrollRegion {
         overflow-x: scroll;
         overflow-y: hidden;
-        -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+        -ms-overflow-style: none;
         white-space: nowrap;
 	}
-	.filterBar :global(.filterScrollRegion::-webkit-scrollbar) { /* Hide scrollbar for Chrome, Safari and Opera */
+	.filterBar :global(.filterScrollRegion::-webkit-scrollbar) {
         display: none;
-    }
+    } */
 
     .filterSet {
         padding-left: 17px;

@@ -137,15 +137,15 @@
     $: showTitle = (type === 'thread');
     $: canLinkThrough = (type === 'thread');
     $: linkUserName = (type === 'threadPost');
-    // $: displayBreaks = (type !== 'thread');
-    $: disallowLinks = (type === 'thread');
     $: showLastActiveTime = config.POSTS_SHOW_LAST_ACTIVE_TIME && (type === 'thread');
     $: textSelectable = (type !== 'thread');
     $: messageLimited = (type === 'thread');
     $: messageLimitedSingleLine = (type === 'thread' && title);
     // $: compressedMargin = (type === 'threadPost');
 
+    $: disallowLinks = false; // (type === 'thread');
     $: collapseBreaks = false; // messageLimitedSingleLine; // (type === 'thread');
+    // $: displayBreaks = (type !== 'thread');
 
     $: likeCount = ($post && $post.likeCount) || '';
 
@@ -505,6 +505,7 @@
         color: #0D0D0D;
 
         padding: 4px 6px;
+        padding-top: 2px;
         margin-left: -6px;
 
         /* background-color: #EEEEEE; */

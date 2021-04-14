@@ -1,5 +1,6 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
+	import { stopEvent } from '../utils';
 
     import Button from './Button.svelte';
 
@@ -58,13 +59,15 @@
         scrollRightShown = scrollRegion.scrollLeft < scrollRegion.scrollWidth - scrollRegion.offsetWidth - SCROLL_INDICATOR_MARGIN;
     }
 
-    function scrollLeft() {
+    function scrollLeft(e) {
         if (!scrollRegion) { return; }
+        stopEvent(e);
 
         scrollRegion.scrollLeft -= Math.round(scrollRegion.offsetWidth * SCROLL_AMOUNT);
     }
-    function scrollRight() {
+    function scrollRight(e) {
         if (!scrollRegion) { return; }
+        stopEvent(e);
 
         scrollRegion.scrollLeft += Math.round(scrollRegion.offsetWidth * SCROLL_AMOUNT);
     }

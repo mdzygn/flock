@@ -17,6 +17,8 @@
 	import { tick, onMount, onDestroy } from 'svelte';
 
     import Button from '../../../components/Button.svelte';
+    import ScrollList from '../../../components/ScrollList.svelte';
+
     import TagSet from '../../_components/TagSet.svelte';
 
 	import ScrollView from '../../../components/ScrollView.svelte';
@@ -442,10 +444,12 @@
 								
 								{#if skills}
 									<div class="skillsMiniList">
-										<div class="skillsContainer">
-											<div class="skillsLabel">{locale.PROJECT.PROJECT_SKILLS}</div>
-											<TagSet tags="{skills}"/>
-										</div>
+										<ScrollList>
+											<div class="skillsContainer">
+												<div class="skillsLabel">{locale.PROJECT.PROJECT_SKILLS}</div>
+												<TagSet tags="{skills}"/>
+											</div>
+										</ScrollList>
 									</div>
 								{/if}
 							</div>
@@ -1196,6 +1200,7 @@
 
 	.skillsMiniList {
 		padding-top: 5px;
+    	margin-left: -23px;
 	}
 	.skillsMiniList .skillsLabel {
     	display: inline-block;
@@ -1208,23 +1213,26 @@
         display: block; */
 	}
     .skillsMiniList .skillsContainer {
+        padding-left: 23px;
+	}
+    /* .skillsMiniList .skillsContainer {
         margin-left: -23px;
         padding-left: 23px;
         padding-right: 18px;
         
-        /* padding-top: 12px; */
         overflow-x: scroll;
         overflow-y: hidden;
         -ms-overflow-style: none;
 
         white-space: nowrap;
     }
-	.skillsMiniList .skillsContainer::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */
+	.skillsMiniList .skillsContainer::-webkit-scrollbar {
         display: none;
-    }
+    } */
     .content .skillsMiniList :global(.tagSet) {
         white-space: nowrap;
         display: inline-block;
+    	padding-right: 8px;
     }
     .content .skillsMiniList :global(.tagSet .tag) {
         font-size: 1.1rem;

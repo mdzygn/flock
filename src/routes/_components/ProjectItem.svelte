@@ -9,6 +9,8 @@
 	import { getSplitItems, stopEvent } from '../../utils';
 
     import Button from '../../components/Button.svelte';
+    import ScrollList from '../../components/ScrollList.svelte';
+
     import TagSet from './TagSet.svelte';
 
     import ActionBar from './ActionBar.svelte';
@@ -95,10 +97,16 @@
             <!-- <ProjectSkillsList project="{$project}" /> -->
         </div>
         {#if skills}
-            <div class="skills"><a class="skillsLink" href="/projects/{projectId}" title="view project" on:click="{e => {loadProject(projectId, { showInfo: true }); return stopEvent(e); }}">
-                <div class="skillsLabel">{locale.DISCOVER.PROJECT_SKILLS}</div>
-                <TagSet tags="{skills}" linkToDiscoverSearch="{false}" />
-            </a></div>
+            <div class="skills">  
+				<ScrollList>
+                    <div class="skillsContainer">  
+                        <a class="skillsLink" href="/projects/{projectId}" title="view project" on:click="{e => {loadProject(projectId, { showInfo: true }); return stopEvent(e); }}">
+                            <div class="skillsLabel">{locale.DISCOVER.PROJECT_SKILLS}</div>
+                            <TagSet tags="{skills}" linkToDiscoverSearch="{false}" />
+                        </a>
+                    </div>
+                </ScrollList>
+            </div>
         {/if}
         <div class="infoContainer">
             <Button className="readMoreButton" onClick="{e => { loadProject(projectId, { showInfo: true }); e.stopPropagation() }}" icon="{MoreArrowIcon}">read more</Button>
@@ -285,6 +293,15 @@
     }
 
     .skills {
+    	margin-left: -23px;
+	}
+    .skillsContainer {
+        padding-left: 23px;
+    }
+    .skills :global(.scrollIndicator) {
+        top: -4px;
+    }
+    /* .skills {
         margin-left: -23px;
         padding-left: 23px;
         padding-right: 18px;
@@ -296,11 +313,11 @@
 
         white-space: nowrap;
     }
+	.skills::-webkit-scrollbar {
+        display: none;
+    } */
     .skillsLink {
         text-decoration: none;
-    }
-	.skills::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */
-        display: none;
     }
     .skillsLabel {
         font-size: 1.1rem;
@@ -319,6 +336,7 @@
     .projectItem :global(.tagSet) {
         white-space: nowrap;
         display: inline-block;
+    	padding-right: 8px;
         /* margin-left: -23px;
         padding-left: 18px; */
     }

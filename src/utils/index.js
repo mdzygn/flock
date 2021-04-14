@@ -405,7 +405,7 @@ export function delayedTimeout(id, callback, delay) {
 
 export function getSplitItems(items) {
     if (typeof items === 'string') {
-        items = items.split(',').map((item) => item.trim());
+        items = items.trim().split(',').map(item => item.trim()).filter(item => !!item);
     }
     return items;
 }

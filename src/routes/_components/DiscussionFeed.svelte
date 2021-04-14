@@ -78,7 +78,7 @@
     $: isOnUpdateChannel = (curChannel && $curChannel && $curChannel.id === currentChannelId && $curChannel.title.toLowerCase() === 'updates');
     // $: console.log('isOnUpdateChannel', isOnUpdateChannel, curChannel && $curChannel && $curChannel.id, currentChannelId, curChannel && $curChannel && $curChannel.title.toLowerCase());
     $: specificChannelSelected = currentChannelId; // && !updatesSelected;
-    $: isUpdatesView = isTeamMember && !specificChannelSelected;
+    $: isUpdatesView = isTeamMember && (!specificChannelSelected || isOnUpdateChannel);
 
     $: updatesChannel = $channels && getDefaultChannel({projectId: $projectId, channelName: 'updates'});
     $: updatesChannelId = updatesChannel && $updatesChannel && $updatesChannel.id;
@@ -95,6 +95,11 @@
     $: currentChannelTargetTitle = (specificChannelSelected && curChannel && $curChannel && $curChannel.title) || 'General';
 	$: channelDescription = specificChannelSelected && curChannel && $curChannel && ($curChannel.description || getChannelDefaultDescription($curChannel));
 
+    $: postPlaceholderLabel = isUpdatesView ? locale.PROJECT.POST_DISCUSSION_UPDATE_PLACEHOLDER : (
+        specificChannelSelected ?
+            (locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX)
+            : locale.PROJECT.POST_DISCUSSION_ALL_PLACEHOLDER
+        );
 
     function onChannelSelected(newChannelId) {
         currentChannelId = newChannelId;
@@ -260,7 +265,7 @@
                                 <div class="getTheConversationStarted">{locale.PROJECT.GET_INVOLVED}</div>
                             {/if}
                         {/if} -->
-                        <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{specificChannelSelected ? locale.PROJECT.POST_DISCUSSION_PLACEHOLDER + currentChannelTargetTitle + locale.PROJECT.POST_DISCUSSION_PLACEHOLDER_AFFIX : locale.PROJECT.POST_DISCUSSION_ALL_PLACEHOLDER}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
+                        <AddPost newPostMessage="{newPostMessage}" onClick="{newPost}" placeholderLabel="{postPlaceholderLabel}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" />
                     {/if}
                     <EditPost targetPostType="{PostTypes.THREAD}" bind:targetChannelId="{targetChannelId}" shown="{showAddPost}" bind:message="{newPostMessage}" bind:messageField="{newPostMessageField}" inlineComponent="{true}" showChannelSelect="{true}" {channels} smallNextButton="{true}" submitLabel="{locale.PROJECT.POST_DISCUSSION_ACTION}" on:hide="{hideAddPostPanel}" on:submit="{onAddPostSubmit}" onChannelSelected="{onChannelSelected}" />
                 {/if}

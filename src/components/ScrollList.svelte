@@ -1,8 +1,13 @@
 <script>
-    // import Button from './components/Button.svelte';
+    import Button from './Button.svelte';
+
+    import ScrollLeftIcon from "../assets/icons/scroll_left.png";
+    import ScrollRightIcon from "../assets/icons/scroll_right.png";
+
+    export let showArrows = true;
 
     let scrollRegion;
-    
+
     const SCROLL_FOCUS_MARGIN = 10;
     const SCROLL_FOCUS_OFFSET = 40;
 
@@ -29,12 +34,23 @@
     }
 </script>
 
-
-<div class="scrollRegion" bind:this="{scrollRegion}">
-    <slot></slot>
+<div class="content">
+    <div class="scrollRegion" bind:this="{scrollRegion}">
+        <slot></slot>
+    </div>
+    {#if showArrows}
+        <div class="fadeBgLeft fadeBg"></div>
+        <div class="fadeBgRight fadeBg"></div>
+        <Button className="scrollLeftArrow arrowButton" icon="{ScrollLeftIcon}"></Button>
+        <Button className="scrollRightArrow arrowButton" icon="{ScrollRightIcon}"></Button>
+    {/if}
 </div>
 
 <style>
+    .content {
+        position: relative;
+    }
+
     .scrollRegion {
         overflow-x: scroll;
         overflow-y: hidden;
@@ -43,5 +59,42 @@
 	}
 	.scrollRegion::-webkit-scrollbar { /* Hide scrollbar for Chrome, Safari and Opera */
         display: none;
+    }
+
+    .content :global(.arrowButton) {
+        position: absolute;
+        top: -6px;
+
+        width: 11px;
+        padding: 5px;
+        height: 25px;
+    }
+    .content :global(.arrowButton .icon) {
+        transform: scale(0.3, 0.3);
+    }
+    .content :global(.scrollLeftArrow) {
+        left: 0;
+    }
+    .content :global(.scrollRightArrow) {
+        right: 0;
+    }
+
+    .content :global(.fadeBg) {
+        position: absolute;
+        top: -6px;
+
+        width: 24px;
+        height: 38px;
+        pointer-events: none;
+    }
+    .content :global(.fadeBgLeft) {
+        left: 0;
+
+        background-image: linear-gradient(to right, rgba(255,255,255,1) 62%, rgba(255,255,255,0));
+    }
+    .content :global(.fadeBgRight) {
+        right: 0;
+
+        background-image: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1) 28%);
     }
 </style>

@@ -147,7 +147,8 @@
 
     .filterSet {
         padding-left: 17px;
-        padding-right: 10px;
+        padding-right: 17px;
+        /* padding-right: 10px; */
         white-space: nowrap;
         display: inline-block;
     }

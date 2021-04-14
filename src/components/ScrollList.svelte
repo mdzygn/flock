@@ -1,4 +1,6 @@
 <script>
+    import { onMount, onDestroy } from 'svelte';
+
     import Button from './Button.svelte';
 
     import ScrollLeftIcon from "../assets/icons/scroll_left.png";
@@ -10,6 +12,12 @@
 
     const SCROLL_FOCUS_MARGIN = 10;
     const SCROLL_FOCUS_OFFSET = 40;
+
+    const SCROLL_INDICATOR_MARGIN = 8;
+    const SCROLL_AMOUNT = 0.33;
+
+    let scrollLeftShown = false;
+    let scrollRightShown = false;
 
     export function scrollToSelectedItem() {
         if (scrollRegion) { //  && !selectingItem
@@ -32,6 +40,38 @@
             }
         }
     }
+    onMount(() => {
+        scrollRegion.addEventListener('scroll', updateScroll);
+        updateScroll();
+    });
+
+	onDestroy(() => {
+        if (scrollRegion) {
+            scrollRegion.removeEventListener('scroll', updateScroll);
+        }
+    });
+
+    function updateScroll() {
+        if (!scrollRegion) { return; }
+
+        scrollLeftShown = scrollRegion.scrollLeft > SCROLL_INDICATOR_MARGIN;
+        scrollRightShown = scrollRegion.scrollLeft < scrollRegion.scrollWidth - scrollRegion.offsetWidth - SCROLL_INDICATOR_MARGIN;
+    }
+
+    function scrollLeft() {
+        if (!scrollRegion) { return; }
+
+        scrollRegion.scrollLeft -= Math.round(scrollRegion.offsetWidth * SCROLL_AMOUNT);
+    }
+    function scrollRight() {
+        if (!scrollRegion) { return; }
+
+        scrollRegion.scrollLeft += Math.round(scrollRegion.offsetWidth * SCROLL_AMOUNT);
+    }
+
+    export function resize() {
+        updateScroll();
+    }
 </script>
 
 <div class="content">
@@ -39,13 +79,13 @@
         <slot></slot>
     </div>
     {#if showArrows}
-        <div class="scrollIndicatorLeft">
+        <div class="scrollIndicatorLeft" class:indicatorShown="{scrollLeftShown}">
             <div class="fadeBgLeft fadeBg"></div>
-            <Button className="scrollLeftArrow arrowButton" icon="{ScrollLeftIcon}"></Button>
+            <Button className="scrollLeftArrow arrowButton" icon="{ScrollLeftIcon}" onClick="{scrollLeft}"></Button>
         </div>
-        <div class="scrollIndicatorRight">
+        <div class="scrollIndicatorRight" class:indicatorShown="{scrollRightShown}">
             <div class="fadeBgRight fadeBg"></div>
-            <Button className="scrollRightArrow arrowButton" icon="{ScrollRightIcon}"></Button>
+            <Button className="scrollRightArrow arrowButton" icon="{ScrollRightIcon}" onClick="{scrollRight}"></Button>
         </div>
     {/if}
 </div>
@@ -66,8 +106,9 @@
     }
 
     .scrollIndicatorLeft, .scrollIndicatorRight {
+        opacity: 0;
         position: absolute;
-        top: -6px;
+        top: -5px;
     }
     .scrollIndicatorLeft {
         left: 0;
@@ -78,7 +119,6 @@
 
     .content :global(.arrowButton) {
         position: absolute;
-        /* top: -6px; */
         opacity: 0.7;
 
         width: 11px;
@@ -97,7 +137,6 @@
 
     .content :global(.fadeBg) {
         position: absolute;
-        /* top: -6px; */
 
         width: 24px;
         height: 38px;
@@ -112,5 +151,9 @@
         right: 0;
 
         background-image: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,1) 28%);
+    }
+
+    .indicatorShown {
+        opacity: 1;
     }
 </style>

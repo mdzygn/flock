@@ -64,6 +64,10 @@
     }
 
     let scrollList;
+    $: {
+        itemSet;
+        scrollList && scrollList.resize();
+    }
 
     $: {
         currentChannelId; // filterString;

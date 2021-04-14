@@ -189,17 +189,17 @@
         }
     }
 
-    onMount(() => {
-        scrollRegion.addEventListener('scroll', updateScroll);
-        updateScrollPosition();
-    });
-
     const scrollRegionResetUnsubscribe = scrollRegionProperties.subscribe(event => {
         if (scrollUpdateInited) {
             updateScrollPosition();
         } else {
             scrollUpdateInited = true;
         }
+    });
+
+    onMount(() => {
+        scrollRegion.addEventListener('scroll', updateScroll);
+        updateScrollPosition();
     });
 
 	onDestroy(() => {
